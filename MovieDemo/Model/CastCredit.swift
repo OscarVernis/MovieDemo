@@ -7,16 +7,24 @@
 //
 //
 
-import Alamofire
-import MagicalRecord
 import ObjectMapper
 
-@objc(CastCredit)
-public class CastCredit: MappableManagedObject {
-
+public class CastCredit: Mappable {
+    var castId: Int?
+    var character: String?
+    var creditId: Int?
+    var gender: Int?
+    var id: Int?
+    var name: String?
+    var order: Int?
+    var profilePath: String?
+    
     //MARK: - ObjectMapper
     
-    public override func mapping(map: Map) {
+    public required init?(map: Map) {
+    }
+    
+    public func mapping(map: Map) {
         castId <- map["cast_id"]
         creditId <- map["credit_id"]
         gender <- map["gender"]
@@ -26,4 +34,5 @@ public class CastCredit: MappableManagedObject {
         name <- map["name"]
         profilePath <- map["profile_path"]
     }
+    
 }

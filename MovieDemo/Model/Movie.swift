@@ -8,15 +8,26 @@
 //
 
 import Alamofire
-import MagicalRecord
 import ObjectMapper
 
-@objc(Movie)
-public class Movie: MappableManagedObject {
+public class Movie: Mappable {
+    var backdropPath: String?
+    var id: Int?
+    var overview: String?
+    var posterPath: String?
+    var releaseDate: Date?
+    var runtime: Int?
+    var title: String?
+    var voteAverage: Double?
+    var cast: [CastCredit]?
+    var crew: [CrewCredit]?
     
     //MARK: - ObjectMapper
+    
+    public required init?(map: Map) {
+    }
 
-    public override func mapping(map: Map) {
+    public func mapping(map: Map) {
         backdropPath <- map["backdrop_path"]
         id <- map["id"]
         overview <- map["overview"]
@@ -32,7 +43,12 @@ public class Movie: MappableManagedObject {
     //MARK: Fetch Movie Details
 
     func fetchDetails(completion: @escaping (Error?) -> ()) {
-        let url = MovieDBService.urlForEndpoint("/movie/\(id)")
+        guard let movieId = id else {
+            completion(nil)
+            return
+        }
+        
+        let url = MovieDBService.urlForEndpoint("/movie/\(movieId)")
         let params = MovieDBService.defaultParameters()
         
         Alamofire.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
@@ -48,7 +64,12 @@ public class Movie: MappableManagedObject {
     }
     
     func fetchCredits(completion: @escaping (Error?) -> ()) {
-        let url = MovieDBService.urlForEndpoint("/movie/\(id)/credits")
+        guard let movieId = id else {
+            completion(nil)
+            return
+        }
+        
+        let url = MovieDBService.urlForEndpoint("/movie/\(movieId)/credits")
         let params = MovieDBService.defaultParameters()
         
         Alamofire.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
@@ -58,11 +79,8 @@ public class Movie: MappableManagedObject {
             }
             
             if let castData = json["cast"] as? [[String: Any]], let crewData = json["crew"] as? [[String: Any]] {
-                let cast = Array<CastCredit>.init(JSONArray: castData)
-                self.cast = NSSet(array: cast)
-                
-                let crew = Array<CrewCredit>.init(JSONArray: crewData)
-                self.crew = NSSet(array: crew)
+                self.cast = Array<CastCredit>.init(JSONArray: castData)
+                self.crew = Array<CrewCredit>.init(JSONArray: crewData)
                 
                 completion(nil)
             } else {
@@ -72,7 +90,12 @@ public class Movie: MappableManagedObject {
     }
     
     func fetchRecommendMovies(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        Movie.fetchMovies(endpoint: "/movie/\(id)/recommendations", page: page) { movies, page, error in
+        guard let movieId = id else {
+            completion([], 0, nil)
+            return
+        }
+        
+        Movie.fetchMovies(endpoint: "/movie/\(movieId)/recommendations", page: page) { movies, page, error in
             if error != nil {
                 completion([], 0, error)
                 return

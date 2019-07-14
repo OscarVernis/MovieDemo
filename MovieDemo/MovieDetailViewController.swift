@@ -35,11 +35,11 @@ class MovieDetailViewController: UITableViewController {
                 print(error!)
             }
             
-//            print(movie)
+            print(movie)
         }
         
         movie.fetchRecommendMovies(page: 1) { movies, totalPages, error in
-            print(movies)
+//            print(movies)
         }
         
     }
