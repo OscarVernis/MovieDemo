@@ -22,6 +22,7 @@ public class CastCredit: Mappable {
     //MARK: - ObjectMapper
     
     public required init?(map: Map) {
+        
     }
     
     public func mapping(map: Map) {

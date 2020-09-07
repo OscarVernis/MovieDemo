@@ -111,6 +111,10 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
             Movie.search(query: query, page: currentPage, completion: fetchHandler)
         }
     }
+    
+    func cacheJSON() {
+        
+    }
 
     // MARK: - Table view data source
     

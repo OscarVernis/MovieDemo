@@ -21,6 +21,7 @@ public class CrewCredit: Mappable {
     //MARK: - ObjectMapper
     
     public required init?(map: Map) {
+        
     }
 
     public func mapping(map: Map) {

@@ -20,12 +20,10 @@
 		559D132822D98E4B00C96FC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559D132722D98E4B00C96FC8 /* Assets.xcassets */; };
 		559D132B22D98E4B00C96FC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 559D132922D98E4B00C96FC8 /* LaunchScreen.storyboard */; };
 		559D133322D98EFF00C96FC8 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D133222D98EFF00C96FC8 /* MoviesViewController.swift */; };
-		55E07D8422D9985600AF0144 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D7C22D9985600AF0144 /* CoreDataManager.swift */; };
 		55E07D8522D9985600AF0144 /* RestClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D7D22D9985600AF0144 /* RestClient.swift */; };
 		55E07D8622D9985600AF0144 /* NSSetRelationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D7F22D9985600AF0144 /* NSSetRelationTransform.swift */; };
 		55E07D8722D9985600AF0144 /* StringArrayRelationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D8022D9985600AF0144 /* StringArrayRelationTransform.swift */; };
 		55E07D8822D9985600AF0144 /* StringToIntTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D8122D9985600AF0144 /* StringToIntTransform.swift */; };
-		55E07D8922D9985600AF0144 /* MappableManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D8222D9985600AF0144 /* MappableManagedObject.swift */; };
 		55E07D8A22D9985600AF0144 /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E07D8322D9985600AF0144 /* TableViewManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,12 +42,10 @@
 		559D132A22D98E4B00C96FC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		559D132C22D98E4B00C96FC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		559D133222D98EFF00C96FC8 /* MoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
-		55E07D7C22D9985600AF0144 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		55E07D7D22D9985600AF0144 /* RestClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestClient.swift; sourceTree = "<group>"; };
 		55E07D7F22D9985600AF0144 /* NSSetRelationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSSetRelationTransform.swift; sourceTree = "<group>"; };
 		55E07D8022D9985600AF0144 /* StringArrayRelationTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringArrayRelationTransform.swift; sourceTree = "<group>"; };
 		55E07D8122D9985600AF0144 /* StringToIntTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringToIntTransform.swift; sourceTree = "<group>"; };
-		55E07D8222D9985600AF0144 /* MappableManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappableManagedObject.swift; sourceTree = "<group>"; };
 		55E07D8322D9985600AF0144 /* TableViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
 		7288FC9D1365A49BB3D42BEC /* Pods_MovieDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A79899A0F75735965CF6290 /* Pods-MovieDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieDemo.release.xcconfig"; path = "Target Support Files/Pods-MovieDemo/Pods-MovieDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -119,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				55E07D7E22D9985600AF0144 /* ObjectMapper */,
-				55E07D7C22D9985600AF0144 /* CoreDataManager.swift */,
 				55E07D7D22D9985600AF0144 /* RestClient.swift */,
 				55E07D8322D9985600AF0144 /* TableViewManager.swift */,
 			);
@@ -132,7 +127,6 @@
 				55E07D7F22D9985600AF0144 /* NSSetRelationTransform.swift */,
 				55E07D8022D9985600AF0144 /* StringArrayRelationTransform.swift */,
 				55E07D8122D9985600AF0144 /* StringToIntTransform.swift */,
-				55E07D8222D9985600AF0144 /* MappableManagedObject.swift */,
 			);
 			path = ObjectMapper;
 			sourceTree = "<group>";
@@ -275,11 +269,9 @@
 				55E07D8622D9985600AF0144 /* NSSetRelationTransform.swift in Sources */,
 				5536610722DB037500BE03BB /* CrewCredit.swift in Sources */,
 				553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */,
-				55E07D8422D9985600AF0144 /* CoreDataManager.swift in Sources */,
 				554BD9D122DA79C3003A74ED /* LoadingCell.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				55E07D8A22D9985600AF0144 /* TableViewManager.swift in Sources */,
-				55E07D8922D9985600AF0144 /* MappableManagedObject.swift in Sources */,
 				559D133322D98EFF00C96FC8 /* MoviesViewController.swift in Sources */,
 				55E07D8822D9985600AF0144 /* StringToIntTransform.swift in Sources */,
 				5545203822D99CB0004B7924 /* Movie.swift in Sources */,

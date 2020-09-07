@@ -22,11 +22,11 @@ public class Movie: Mappable {
     var cast: [CastCredit]?
     var crew: [CrewCredit]?
     
-    //MARK: - ObjectMapper
     
+//MARK: - ObjectMapper
     public required init?(map: Map) {
     }
-
+    
     public func mapping(map: Map) {
         backdropPath <- map["backdrop_path"]
         id <- map["id"]
@@ -36,19 +36,21 @@ public class Movie: Mappable {
         title <- map["title"]
         voteAverage <- map["vote_average"]
         runtime <- map["runtime"]
-
+        
     }
-    
-    //MARK: - Requests
-    //MARK: Fetch Movie Details
+}
 
+//MARK: - Requests
+extension Movie {
+//MARK: Fetch Movie Details
+    
     func fetchDetails(completion: @escaping (Error?) -> ()) {
         guard let movieId = id else {
             completion(nil)
             return
         }
         
-        let url = MovieDBService.urlForEndpoint("/movie/\(movieId)")
+        let url = MovieDBService.endpoint(forPath: "/movie/\(movieId)")
         let params = MovieDBService.defaultParameters()
         
         Alamofire.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
@@ -69,7 +71,7 @@ public class Movie: Mappable {
             return
         }
         
-        let url = MovieDBService.urlForEndpoint("/movie/\(movieId)/credits")
+        let url = MovieDBService.endpoint(forPath: "/movie/\(movieId)/credits")
         let params = MovieDBService.defaultParameters()
         
         Alamofire.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
@@ -105,29 +107,29 @@ public class Movie: Mappable {
         }
     }
     
-    //MARK: Fetch list of movies
+//MARK: Fetch list of movies
     
-    private class func fetchMovies(endpoint: String, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        let url = MovieDBService.urlForEndpoint(endpoint)
+    private class func fetchMovies(endpoint path: String, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        let url = MovieDBService.endpoint(forPath: path)
         
         var params = MovieDBService.defaultParameters()
         params.merge(parameters) { _, new in new }
         params["page"] = page
-//        params["region"] = "US"
+        //        params["region"] = "US"
         
         Alamofire.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             guard response.result.isSuccess, let json = response.result.value as? [String: Any] else {
-                completion([], 0, response.error)
+                completion([], page, response.error)
                 return
             }
             
             if let moviesData = json["results"] as? [[String: Any]] {
                 let movies = Array<Movie>.init(JSONArray: moviesData)
-                let totalPages = json["total_pages"] as? Int ?? 1
+                let totalPages = json["total_pages"] as? Int ?? page
                 
                 completion(movies, totalPages, nil)
             } else {
-                completion([], 0, nil)
+                completion([], page, nil)
             }
         }
     }

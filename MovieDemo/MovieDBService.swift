@@ -17,6 +17,7 @@ enum BackdropSize: String {
 }
 
 struct MovieDBService {
+    
     static let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     
     static let baseURL = "https://api.themoviedb.org/3"
@@ -30,10 +31,10 @@ struct MovieDBService {
         return params
     }
     
-    static func urlForEndpoint(_ endpoint: String) -> URL {
+    static func endpoint(forPath path: String) -> URL {
         let url = URL(string: MovieDBService.baseURL)!
         
-        return url.appendingPathComponent(endpoint)
+        return url.appendingPathComponent(path)
     }
     
     static func posterImageURL(forPath path: String, size: MoviePosterSize = .original) -> URL {
