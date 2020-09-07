@@ -8,28 +8,10 @@
 
 import UIKit
 
-enum MovieService: Int {
-    case NowPlaying = 0, Popular, TopRated, Upcoming, Searching
-}
-
 class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetching, UISearchResultsUpdating, UISearchControllerDelegate {
     @IBOutlet weak var serviceSegmentedControl: UISegmentedControl!
     
-    var movies = [Movie]() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
-    var movieService = MovieService.NowPlaying {
-        didSet {
-            refreshMovies()
-        }
-    }
-    
-    var isFetching = false
-    var currentPage = 1
-    var totalPages = 1
+    var dataProvider = MoviesDataProvider()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,87 +28,42 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
         tableView.refreshControl?.tintColor  = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         tableView.refreshControl?.addTarget(self, action: #selector(refreshMovies), for: .valueChanged)
         
-        fetchMovies()
+        refreshMovies()
     }
     
     @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        movieService = MovieService(rawValue: sender.selectedSegmentIndex)!
+        dataProvider.movieService = MovieService(rawValue: sender.selectedSegmentIndex)!
+        refreshMovies()
     }
     
     @objc func refreshMovies() {
-        currentPage = 1
-        fetchMovies()
-    }
-    
-    func refreshSearch() {
-        currentPage = 1
-        let query = navigationItem.searchController?.searchBar.text ?? ""
-        if !query.isEmpty {
-            fetchMovies()
-        }
-    }
-    
-    func fetchMovies() {
-        if isFetching {
-            return
-        }
-        
-        isFetching = true
-        
-        let fetchHandler: ([Movie], Int, Error?) -> () = { [weak self] movies, totalPages, error in
-            guard let self = self else { return }
-            
-            self.isFetching = false
-            
-            if let error = error {
-                print(error)
-                return
-            }
-            
-            if self.currentPage == 1 {
-                self.movies.removeAll()
-            }
-            
-            self.totalPages = totalPages
-            self.currentPage += 1
-            
-            self.movies.append(contentsOf: movies)
-            
+        dataProvider.refresh {
             if self.tableView.refreshControl?.isRefreshing ?? false {
                 self.tableView.refreshControl?.endRefreshing()
             }
-        }
-        
-        switch movieService {
-        case .NowPlaying:
-            Movie.fetchNowPlaying(page: currentPage, completion: fetchHandler)
-        case .Popular:
-            Movie.fetchPopular(page: currentPage, completion: fetchHandler)
-        case .TopRated:
-            Movie.fetchTopRated(page: currentPage, completion: fetchHandler)
-        case .Upcoming:
-            Movie.fetchUpcoming(page: currentPage, completion: fetchHandler)
-        case .Searching:
-            let query = navigationItem.searchController?.searchBar.text ?? ""
-            Movie.search(query: query, page: currentPage, completion: fetchHandler)
+            self.tableView.reloadData()
         }
     }
     
-    func cacheJSON() {
-        
+    func refreshSearch() {
+        let query = navigationItem.searchController?.searchBar.text ?? ""
+        if !query.isEmpty {
+            dataProvider.searchQuery = query
+            refreshMovies()
+        }
     }
-
+    
     // MARK: - Table view data source
     
     func isLoadingCell(indexPath: IndexPath) -> Bool {
-        return indexPath.row >= movies.count
+        return indexPath.row >= dataProvider.movies.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if currentPage < totalPages {
-            return movies.count + 1
+        if dataProvider.currentPage < dataProvider.totalPages {
+            return dataProvider.movies.count + 1
         } else {
-            return movies.count
+            return dataProvider.movies.count
         }
     }
     
@@ -135,7 +72,7 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
             return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-            let movie = movies[indexPath.row]
+            let movie = dataProvider.movies[indexPath.row]
             
             cell.movie = movie
             
@@ -153,7 +90,7 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let detail = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController {
-            detail.movie = movies[indexPath.row]
+            detail.movie = dataProvider.movies[indexPath.row]
             
             navigationController?.pushViewController(detail, animated: true)
         }
@@ -171,21 +108,22 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
-            fetchMovies()
+            dataProvider.fetchNextPage {
+                self.tableView.reloadData()
+            }
         }
     }
     
     // MARK: - Searching
     
     func didPresentSearchController(_ searchController: UISearchController) {
-        currentPage = 1
-        movieService = .Searching
-
+        dataProvider.movieService = .Searching
+        refreshSearch()
     }
     
     func didDismissSearchController(_ searchController: UISearchController) {
-        currentPage = 1
-        movieService = .NowPlaying
+        dataProvider.movieService = .NowPlaying
+        refreshMovies()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
