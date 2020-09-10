@@ -19,24 +19,48 @@ enum MovieService: Int {
 class MoviesDataProvider {
     var movies = [Movie]()
     
-    var movieService = MovieService.NowPlaying
-    var searchQuery = ""
+    var movieService: MovieService = .NowPlaying {
+        didSet {
+           movieServiceChanged()
+        }
+    }
+    
+    var searchQuery = "" {
+        didSet {
+            refresh()
+        }
+    }
     
     var isFetching = false
     var currentPage = 1
     var totalPages = 1
     
-    func fetchNextPage(completionHandler: @escaping () -> Void) {
+    var completionHandler: (() -> Void)?
+    
+    func movieServiceChanged() {
+        if movieService != .Searching {
+            searchQuery = ""
+        }
+        
+        refresh()
+    }
+    
+    func fetchNextPage() {
+        if(currentPage >= totalPages) {
+            return
+        }
+        
         currentPage += 1
-        fetchMovies(completionHandler: completionHandler)
+        fetchMovies()
     }
     
-    func refresh(completionHandler: @escaping () -> Void) {
+    func refresh() {
         currentPage = 1
-        fetchMovies(completionHandler: completionHandler)
+        totalPages = 1
+        fetchMovies()
     }
     
-    func fetchMovies(completionHandler: @escaping () -> Void) {
+    func fetchMovies() {
         if isFetching {
             return
         }
@@ -62,7 +86,7 @@ class MoviesDataProvider {
             
             self.movies.append(contentsOf: movies)
             
-            completionHandler()
+            self.completionHandler?()
         }
         
         switch movieService {

@@ -192,11 +192,10 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="4Fu-2b-ZlV" id="8LY-cN-QCh"/>
                             <outlet property="delegate" destination="4Fu-2b-ZlV" id="239-Ui-F2h"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="UIN-X7-gzE">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="UIN-X7-gzE">
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="I9L-Jd-4K8">
                             <rect key="frame" x="15.5" y="5.5" width="383" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

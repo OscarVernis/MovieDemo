@@ -8,14 +8,22 @@
 
 import UIKit
 
-class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetching, UISearchResultsUpdating, UISearchControllerDelegate {
+class MoviesViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate {
     @IBOutlet weak var serviceSegmentedControl: UISegmentedControl!
     
     var dataProvider = MoviesDataProvider()
-
+    var dataSource: MoviesTableViewDataSource?
+    
+    var previousMovieService:MovieService = .NowPlaying
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
+        setUp()
+        refreshMovies()
+    }
+    
+    fileprivate func setUp() {
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
         search.delegate = self
@@ -23,68 +31,48 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
         self.navigationItem.searchController = search
         
         tableView.estimatedRowHeight = 0
-        tableView.prefetchDataSource = self
         tableView.refreshControl = UIRefreshControl()
         tableView.refreshControl?.tintColor  = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         tableView.refreshControl?.addTarget(self, action: #selector(refreshMovies), for: .valueChanged)
+                
+        self.dataSource = MoviesTableViewDataSource(dataProvider: dataProvider, reuseIdentifier: "MovieCell")
+        self.tableView.dataSource = dataSource
+        self.tableView.prefetchDataSource = dataSource
         
-        refreshMovies()
+        dataProvider.completionHandler = refreshHandler
     }
     
-    @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        dataProvider.movieService = MovieService(rawValue: sender.selectedSegmentIndex)!
-        refreshMovies()
+    func refreshHandler() {
+        if tableView.refreshControl?.isRefreshing ?? false {
+            tableView.refreshControl?.endRefreshing()
+        }
+        
+        tableView.reloadData()
+        
+        //Búsqueda
+        let query = navigationItem.searchController?.searchBar.text ?? ""
+        if(dataProvider.movieService == .Searching && query != dataProvider.searchQuery) {
+            refreshSearch()
+        }
     }
     
     @objc func refreshMovies() {
-        dataProvider.refresh {
-            if self.tableView.refreshControl?.isRefreshing ?? false {
-                self.tableView.refreshControl?.endRefreshing()
-            }
-            self.tableView.reloadData()
-        }
+        dataProvider.refresh()
     }
     
     func refreshSearch() {
         let query = navigationItem.searchController?.searchBar.text ?? ""
         if !query.isEmpty {
             dataProvider.searchQuery = query
-            refreshMovies()
         }
     }
     
-    // MARK: - Table view data source
-    
-    func isLoadingCell(indexPath: IndexPath) -> Bool {
-        return indexPath.row >= dataProvider.movies.count
+    // MARK: - Actions
+
+    @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        dataProvider.movieService = MovieService(rawValue: sender.selectedSegmentIndex)!
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if dataProvider.currentPage < dataProvider.totalPages {
-            return dataProvider.movies.count + 1
-        } else {
-            return dataProvider.movies.count
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isLoadingCell(indexPath: indexPath) {
-            return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-            let movie = dataProvider.movies[indexPath.row]
-            
-            cell.movie = movie
-            
-            return cell
-        }
-    }
-    
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.isDragging && navigationItem.searchController?.searchBar.isFirstResponder ?? false {
-            navigationItem.searchController?.searchBar.resignFirstResponder()
-        }
-    }
     
     // MARK: - Table view delegate
     
@@ -97,37 +85,32 @@ class MoviesViewController: UITableViewController, UITableViewDataSourcePrefetch
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if isLoadingCell(indexPath: indexPath) {
+        if dataSource!.isLoadingCell(indexPath: indexPath) {
             return 58
         } else {
             return 151
         }
     }
     
-    // MARK: - Table view prefetching
-    
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: isLoadingCell) {
-            dataProvider.fetchNextPage {
-                self.tableView.reloadData()
-            }
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.isDragging && navigationItem.searchController?.searchBar.isFirstResponder ?? false {
+            navigationItem.searchController?.searchBar.resignFirstResponder()
         }
     }
     
     // MARK: - Searching
     
     func didPresentSearchController(_ searchController: UISearchController) {
+        previousMovieService = dataProvider.movieService
         dataProvider.movieService = .Searching
-        refreshSearch()
-    }
-    
-    func didDismissSearchController(_ searchController: UISearchController) {
-        dataProvider.movieService = .NowPlaying
-        refreshMovies()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         refreshSearch()
+    }
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
+        dataProvider.movieService = previousMovieService
     }
 
 }
