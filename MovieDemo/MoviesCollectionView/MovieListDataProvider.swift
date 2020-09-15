@@ -1,5 +1,5 @@
 //
-//  MoviesDataProvider.swift
+//  MovieListDataProvider.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 07/09/20.
@@ -8,18 +8,24 @@
 
 import Foundation
 
-enum MovieService: Int {
-    case NowPlaying = 0
-    case Popular
-    case TopRated
-    case Upcoming
-    case Searching
-}
-
-class MoviesDataProvider {
+class MovieListDataProvider {
+    enum Service: Int {
+        case NowPlaying
+        case Popular
+        case TopRated
+        case Upcoming
+        case Search
+    }
+    
+    init(withService service: Service = .NowPlaying) {
+        self.currentService = service
+    }
+    
+    let movieService = MovieDBService()
+    
     var movies = [Movie]()
     
-    var movieService: MovieService = .NowPlaying {
+    var currentService: Service = .NowPlaying {
         didSet {
            movieServiceChanged()
         }
@@ -31,14 +37,14 @@ class MoviesDataProvider {
         }
     }
     
-    var isFetching = false
+    private var isFetching = false
     var currentPage = 1
     var totalPages = 1
     
     var completionHandler: (() -> Void)?
     
     func movieServiceChanged() {
-        if movieService != .Searching {
+        if currentService != .Search {
             searchQuery = ""
         }
         
@@ -60,7 +66,7 @@ class MoviesDataProvider {
         fetchMovies()
     }
     
-    func fetchMovies() {
+    private func fetchMovies() {
         if isFetching {
             return
         }
@@ -89,17 +95,17 @@ class MoviesDataProvider {
             self.completionHandler?()
         }
         
-        switch movieService {
+        switch currentService {
         case .NowPlaying:
-            Movie.fetchNowPlaying(page: currentPage, completion: fetchHandler)
+            movieService.fetchNowPlaying(page: currentPage, completion: fetchHandler)
         case .Popular:
-            Movie.fetchPopular(page: currentPage, completion: fetchHandler)
+            movieService.fetchPopular(page: currentPage, completion: fetchHandler)
         case .TopRated:
-            Movie.fetchTopRated(page: currentPage, completion: fetchHandler)
+            movieService.fetchTopRated(page: currentPage, completion: fetchHandler)
         case .Upcoming:
-            Movie.fetchUpcoming(page: currentPage, completion: fetchHandler)
-        case .Searching:
-            Movie.search(query: searchQuery, page: currentPage, completion: fetchHandler)
+            movieService.fetchUpcoming(page: currentPage, completion: fetchHandler)
+        case .Search:
+            movieService.search(query: searchQuery, page: currentPage, completion: fetchHandler)
         }
     }
     

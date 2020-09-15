@@ -15,9 +15,9 @@ struct MovieBannerCellConfigurator: CollectionViewCellConfigurator {
     func configure(cell: MovieBannerCell, forModel movie: Movie) {
         cell.backgroundColor = .red
         cell.imageView?.image = nil
-        if let posterPath = movie.posterPath {
-            let url = MovieDBService.posterImageURL(forPath: posterPath, size: .w342)
-            cell.imageView?.af_setImage(withURL: url, imageTransition: .crossDissolve(0.3))
-        }
+//        if let posterPath = movie.posterPath {
+//            let url = MovieDBService.posterImageURL(forPath: posterPath, size: .w342)
+//            cell.imageView?.af_setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+//        }
     }
 }

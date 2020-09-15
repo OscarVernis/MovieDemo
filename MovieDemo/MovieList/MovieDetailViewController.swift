@@ -23,25 +23,6 @@ class MovieDetailViewController: UITableViewController {
         guard let movie = movie else { return }
         
         title = movie.title
-        
-        movie.fetchDetails { error in
-            if error != nil {
-                print(error!)
-            }
-        }
-        
-        movie.fetchCredits { error in
-            if error != nil {
-                print(error!)
-            }
-            
-            print(movie)
-        }
-        
-        movie.fetchRecommendMovies(page: 1) { movies, totalPages, error in
-//            print(movies)
-        }
-        
     }
 
     // MARK: - Table view data source

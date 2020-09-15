@@ -9,12 +9,12 @@
 import UIKit
 
 class MoviesTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDataSourcePrefetching {
-    var dataProvider: MoviesDataProvider
-    var cellConfigurator = MovieCellConfigurator()
+    var dataProvider: MovieListDataProvider
+    lazy var cellConfigurator = MovieCellConfigurator(movieService: dataProvider.movieService)
     
     private let reuseIdentifier: String
     
-    init(dataProvider: MoviesDataProvider, reuseIdentifier: String) {
+    init(dataProvider: MovieListDataProvider, reuseIdentifier: String) {
         self.dataProvider = dataProvider
         self.reuseIdentifier = reuseIdentifier
     }

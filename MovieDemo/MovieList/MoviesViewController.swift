@@ -11,10 +11,10 @@ import UIKit
 class MoviesViewController: UITableViewController, UISearchResultsUpdating, UISearchControllerDelegate {
     @IBOutlet weak var serviceSegmentedControl: UISegmentedControl!
     
-    var dataProvider = MoviesDataProvider()
+    var dataProvider = MovieListDataProvider()
     var dataSource: MoviesTableViewDataSource?
     
-    var previousMovieService:MovieService = .NowPlaying
+    var previousMovieService:MovieListDataProvider.Service = .NowPlaying
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class MoviesViewController: UITableViewController, UISearchResultsUpdating, UISe
         
         //Búsqueda
         let query = navigationItem.searchController?.searchBar.text ?? ""
-        if(dataProvider.movieService == .Searching && query != dataProvider.searchQuery) {
+        if(dataProvider.currentService == .Search && query != dataProvider.searchQuery) {
             refreshSearch()
         }
     }
@@ -70,7 +70,7 @@ class MoviesViewController: UITableViewController, UISearchResultsUpdating, UISe
     // MARK: - Actions
 
     @IBAction func segmentedControlValueChanged(_ sender: UISegmentedControl) {
-        dataProvider.movieService = MovieService(rawValue: sender.selectedSegmentIndex)!
+        dataProvider.currentService = MovieListDataProvider.Service(rawValue: sender.selectedSegmentIndex)!
     }
     
     
@@ -101,8 +101,8 @@ class MoviesViewController: UITableViewController, UISearchResultsUpdating, UISe
     // MARK: - Searching
     
     func didPresentSearchController(_ searchController: UISearchController) {
-        previousMovieService = dataProvider.movieService
-        dataProvider.movieService = .Searching
+        previousMovieService = dataProvider.currentService
+        dataProvider.currentService = .Search
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -110,7 +110,7 @@ class MoviesViewController: UITableViewController, UISearchResultsUpdating, UISe
     }
     
     func didDismissSearchController(_ searchController: UISearchController) {
-        dataProvider.movieService = previousMovieService
+        dataProvider.currentService = previousMovieService
     }
 
 }

@@ -31,14 +31,7 @@ class HomeDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDele
         let section = HomeSection.allCases[indexPath.section]
         switch section {
         case .NowPlaying:
-            cell.title.text = "Now Playing"
-            cell.collectionView.register(UINib(nibName: "MovieBannerCell", bundle: .main), forCellWithReuseIdentifier: "BannerCell")
-            
-            Movie.fetchNowPlaying { (movies, totalPages, error) in
-                let dataSource = CollectionViewDataSource(models: movies, configurator: MovieBannerCellConfigurator(), reuseIdentifier: "BannerCell")
-                cell.collectionView.dataSource = dataSource
-            }
-            
+            cell.title.text = "Now Playing"            
         case .Popular:
             cell.title.text = "Popular"
         case .TopRated:
