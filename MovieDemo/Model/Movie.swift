@@ -18,9 +18,11 @@ class Movie: Mappable {
     var releaseDate: Date?
     var runtime: Int?
     var title: String?
-    var voteAverage: Double?
+    var voteAverage: Float?
+    var voteCount: Int?
     var cast: [CastCredit]?
     var crew: [CrewCredit]?
+    var genres: [MovieGenre]?
     
     
 //MARK: - ObjectMapper
@@ -35,7 +37,9 @@ class Movie: Mappable {
         releaseDate <- (map["release_date"], CustomDateFormatTransform(formatString: "yyyy-MM-dd"))
         title <- map["title"]
         voteAverage <- map["vote_average"]
+        voteCount <- map["vote_count"]
         runtime <- map["runtime"]
+        genres <- (map["genre_ids"], MovieGenreTransformer())
     }
     
 }

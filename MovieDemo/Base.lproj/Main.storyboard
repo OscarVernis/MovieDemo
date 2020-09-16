@@ -1,39 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="k8h-25-krS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qcw-iS-AyY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="sB0-0U-RoK">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="k8h-25-krS" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="uN0-xu-HiY">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y5V-Mm-RBP">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="Qcw-iS-AyY" kind="relationship" relationship="rootViewController" id="MYW-J9-PhM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wKm-0U-Lew" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="-558.48214285714278"/>
-        </scene>
         <!--Movies-->
         <scene sceneID="3Ll-WI-kjp">
             <objects>
-                <collectionViewController id="Qcw-iS-AyY" customClass="HomeCollectionViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="HomeCollectionViewController" id="Qcw-iS-AyY" customClass="HomeCollectionViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="K40-NP-Iri">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,14 +32,14 @@
             </objects>
             <point key="canvasLocation" x="921.73913043478262" y="-558.48214285714278"/>
         </scene>
-        <!--Movies View Controller-->
+        <!--Movie List View Controller-->
         <scene sceneID="YgW-rx-3db">
             <objects>
-                <tableViewController storyboardIdentifier="MoviesViewController" definesPresentationContext="YES" id="4Fu-2b-ZlV" customClass="MoviesViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MovieListViewController" definesPresentationContext="YES" id="4Fu-2b-ZlV" customClass="MovieListViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VBH-he-7Q6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="151" id="B9q-ud-UbD" customClass="MovieCell" customModule="MovieDemo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="151"/>
@@ -87,28 +64,42 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUW-ws-61A">
-                                            <rect key="frame" x="132" y="40" width="262" height="18"/>
+                                            <rect key="frame" x="132" y="52" width="262" height="18"/>
                                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iqy-rD-nLu" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                                            <rect key="frame" x="132" y="36" width="50" height="10"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="10" id="KPs-kP-3PT"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="IUW-ws-61A" secondAttribute="bottom" constant="11" id="0TD-3Q-q63"/>
-                                        <constraint firstItem="IUW-ws-61A" firstAttribute="top" secondItem="dxm-Tz-xbI" secondAttribute="bottom" constant="8" id="3jB-Zb-hXA"/>
                                         <constraint firstItem="IUW-ws-61A" firstAttribute="leading" secondItem="cFc-if-kff" secondAttribute="trailing" constant="16" id="7Xx-QJ-cQu"/>
                                         <constraint firstItem="dxm-Tz-xbI" firstAttribute="leading" secondItem="cFc-if-kff" secondAttribute="trailing" constant="16" id="Il2-zU-O1b"/>
                                         <constraint firstItem="dxm-Tz-xbI" firstAttribute="top" secondItem="d4k-kq-Qgb" secondAttribute="top" constant="11" id="Njw-3G-Sbm"/>
+                                        <constraint firstItem="iqy-rD-nLu" firstAttribute="top" secondItem="dxm-Tz-xbI" secondAttribute="bottom" constant="4" id="PzV-Nf-15k"/>
                                         <constraint firstItem="cFc-if-kff" firstAttribute="top" secondItem="d4k-kq-Qgb" secondAttribute="top" constant="11" id="Rpg-b0-PiD"/>
                                         <constraint firstItem="cFc-if-kff" firstAttribute="leading" secondItem="d4k-kq-Qgb" secondAttribute="leading" constant="20" id="SpU-Fh-g53"/>
                                         <constraint firstAttribute="trailing" secondItem="dxm-Tz-xbI" secondAttribute="trailing" constant="20" id="WIQ-mK-Gtm"/>
+                                        <constraint firstItem="iqy-rD-nLu" firstAttribute="leading" secondItem="dxm-Tz-xbI" secondAttribute="leading" id="otP-Fq-jIC"/>
                                         <constraint firstAttribute="bottom" secondItem="cFc-if-kff" secondAttribute="bottom" constant="11" id="vCt-ar-kzq"/>
                                         <constraint firstAttribute="trailing" secondItem="IUW-ws-61A" secondAttribute="trailing" constant="20" id="vzi-1Z-Tsu"/>
+                                        <constraint firstItem="IUW-ws-61A" firstAttribute="top" secondItem="iqy-rD-nLu" secondAttribute="bottom" constant="6" id="z5s-ba-SoX"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="overviewLabel" destination="IUW-ws-61A" id="BwV-m7-c9s"/>
                                     <outlet property="posterImageView" destination="cFc-if-kff" id="zcy-Z7-Arm"/>
+                                    <outlet property="ratingsView" destination="iqy-rD-nLu" id="XsU-EA-of7"/>
                                     <outlet property="titleLabel" destination="dxm-Tz-xbI" id="bub-kr-ZaC"/>
                                 </connections>
                             </tableViewCell>
@@ -150,7 +141,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oao-nn-ngd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1725" y="-558"/>
+            <point key="canvasLocation" x="1724.6376811594205" y="-558.48214285714278"/>
         </scene>
         <!--Movie Detail View Controller-->
         <scene sceneID="T0C-Rb-r4t">
@@ -159,7 +150,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mFC-fj-PmO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
                             <tableViewSection id="RCW-MI-kdO">
                                 <cells>
@@ -200,16 +191,10 @@
             <point key="canvasLocation" x="2547.826086956522" y="-558.48214285714278"/>
         </scene>
     </scenes>
-    <color key="tintColor" systemColor="systemPurpleColor"/>
+    <color key="tintColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <namedColor name="AppBackgroundColor">
             <color red="0.94900000095367432" green="0.94900000095367432" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

@@ -50,30 +50,28 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         let movie = section.movies[indexPath.row]
         
         var cell: UICollectionViewCell!
-        switch section.index {
-        case 0:
+        switch section.sectionType {
+        case .NowPlaying:
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieImageCell.reuseIdentifier, for: indexPath) as? MovieImageCell else { fatalError() }
             
             bannerCell.configureBackdrop(withMovie: movie)
             cell = bannerCell
-        case 1:
+        case .Upcoming:
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieImageCell.reuseIdentifier, for: indexPath) as? MovieImageCell else { fatalError() }
             
             bannerCell.configurePoster(withMovie: movie)
             cell = bannerCell
-        case 2:
+        case .TopRated:
             guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as? MovieListCell else { fatalError() }
             
             let isLastCell = indexPath.row == 9 //dataProvider.movies.count - 1
             listCell.configure(withMovie: movie, showSeparator: !isLastCell)
             cell = listCell
-        case 3:
+        case .Popular:
             guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as? MovieInfoCell else { fatalError() }
             
             infoCell.configure(withMovie: movie)
             cell = infoCell
-        default:
-            fatalError()
         }
         
         return cell

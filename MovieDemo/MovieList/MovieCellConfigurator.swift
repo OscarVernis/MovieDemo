@@ -14,6 +14,9 @@ struct MovieCellConfigurator {
         cell.titleLabel?.text = movie.title
         cell.overviewLabel?.text = movie.overview
         
+        cell.ratingsView.rating = movie.voteAverage ?? 0
+        cell.ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+
         cell.posterImageView?.image = nil
         if let url = movie.posterImageURL(size: .w342) {
             cell.posterImageView?.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))

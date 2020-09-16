@@ -12,6 +12,8 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     static let sectionBackgroundDecorationElementKind = "section-background-element-kind"
     static let sectionHeaderElementKind = "section-header-element-kind"
     
+    weak var mainCoordinator: MainCoordinator!
+    
     var dataSource: HomeCollectionViewDataSource!
     var searchDataProvider = MovieListDataProvider(.Search)
     
@@ -26,9 +28,9 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     fileprivate func setupDataSource() {
         let sections = [
             HomeSection(.NowPlaying, index: 0, didUpdate: updateSection(_:)),
-            HomeSection(.Popular, index: 1, didUpdate: updateSection(_:)),
-            HomeSection(.TopRated, index: 2, didUpdate: updateSection(_:)),
-            HomeSection(.Upcoming, index: 3, didUpdate: updateSection(_:)),
+            HomeSection(.Upcoming, index: 1, didUpdate: updateSection(_:)),
+            HomeSection(.Popular, index: 2, didUpdate: updateSection(_:)),
+            HomeSection(.TopRated, index: 3, didUpdate: updateSection(_:))
         ]
         
         dataSource = HomeCollectionViewDataSource(sections: sections)
@@ -38,8 +40,9 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func setupSearch() {
-        let movieListController = MoviesViewController.instantiateFromStoryboard()
+        let movieListController = MovieListViewController.instantiateFromStoryboard()
         movieListController.dataProvider = searchDataProvider
+        movieListController.mainCoordinator = self.mainCoordinator
         
         let search = UISearchController(searchResultsController: movieListController)
         search.searchResultsUpdater = self
@@ -58,11 +61,8 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     
 //MARK: - Actions
     func showMovieList(section: HomeSection) {
-        let movieListController = MoviesViewController.instantiateFromStoryboard()
-        
-        movieListController.title = section.title
-        movieListController.dataProvider = MovieListDataProvider(section.dataProvider.currentService)
-        show(movieListController, sender: nil)
+        let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
+        mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
     }
     
     func updateSection(_ section: Int) {
@@ -86,9 +86,9 @@ extension HomeCollectionViewController {
             case 1:
                 section = sectionBuilder.createHorizontalPosterSection()
             case 2:
-                section = sectionBuilder.createDecoratedListSection()
-            case 3:
                 section = sectionBuilder.createInfoListSection()
+            case 3:
+                section = sectionBuilder.createDecoratedListSection()
             default:
                 section = nil
             }
@@ -106,12 +106,10 @@ extension HomeCollectionViewController {
 // MARK: - CollectionView Delegate
 extension HomeCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detail = MovieDetailViewController.instantiateFromStoryboard()
         let section = dataSource.sections[indexPath.section]
         let movie = section.movies[indexPath.row]
-        detail.movie = movie
-        
-        navigationController?.pushViewController(detail, animated: true)
+                
+        mainCoordinator.showMovieDetail(movie: movie)
     }
     
 }

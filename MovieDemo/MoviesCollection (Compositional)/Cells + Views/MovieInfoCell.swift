@@ -13,9 +13,9 @@ class MovieInfoCell: UICollectionViewCell {
 
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var genresLabel: UILabel!
-    @IBOutlet weak var runtimeLabel: UILabel!
+    @IBOutlet weak var releaseDateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +30,17 @@ class MovieInfoCell: UICollectionViewCell {
         }
         
         titleLabel.text = movie.title
-        ratingLabel.text = "\(movie.voteAverage!)"
-        runtimeLabel.text = "\(movie.runtime ?? 0) m"
+        
+        ratingsView.rating = movie.voteAverage ?? 0
+        ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+
+        let genres = movie.genres?.map { $0.string() } ?? []
+        let genresString = genres.joined(separator: ", ")
+        genresLabel.text = genresString
+        
+        let dateFormatter = DateFormatter(withFormat: "yyyy", locale: "en_US")
+        if let releaseDate = movie.releaseDate {
+            releaseDateLabel.text = dateFormatter.string(from: releaseDate)
+        }
     }
 }

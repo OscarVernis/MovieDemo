@@ -12,8 +12,8 @@ class MovieListCell: UICollectionViewCell {
     static let reuseIdentifier = "MovieListCell"
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var separator: UIView!
+    @IBOutlet weak var ratingsView: RatingsView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +22,10 @@ class MovieListCell: UICollectionViewCell {
     
     func configure(withMovie movie: Movie, showSeparator: Bool = true) {
         titleLabel.text = movie.title
-        ratingLabel.text = "\(movie.voteAverage!)"
+        
+        ratingsView.rating = movie.voteAverage ?? 0
+        ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+        
         separator.isHidden = !showSeparator
     }
 

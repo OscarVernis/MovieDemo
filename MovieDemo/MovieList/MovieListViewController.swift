@@ -1,5 +1,5 @@
 //
-//  MoviesViewController.swift
+//  MovieListViewController.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 7/12/19.
@@ -8,10 +8,12 @@
 
 import UIKit
 
-class MoviesViewController: UITableViewController {
+class MovieListViewController: UITableViewController {
     var dataProvider: MovieListDataProvider!
     var dataSource: MoviesTableViewDataSource?
         
+    weak var mainCoordinator: MainCoordinator!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -49,10 +51,9 @@ class MoviesViewController: UITableViewController {
     // MARK: - Table view delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = MovieDetailViewController.instantiateFromStoryboard()
-        detail.movie = dataProvider.movies[indexPath.row]
+        let movie = dataProvider.movies[indexPath.row]
         
-        navigationController?.pushViewController(detail, animated: true)
+        mainCoordinator.showMovieDetail(movie: movie)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
