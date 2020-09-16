@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,35 +16,40 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TN-UF-p86">
-                    <rect key="frame" x="0.0" y="16.5" width="314" height="27.5"/>
+                    <rect key="frame" x="0.0" y="16.5" width="328" height="27.5"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-Kz-J1T">
-                    <rect key="frame" x="320" y="0.0" width="70" height="44"/>
-                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="15"/>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-Kz-J1T">
+                    <rect key="frame" x="334" y="0.0" width="56" height="46"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                     <state key="normal" title="VIEW ALL">
-                        <color key="titleColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleColor" systemColor="systemPurpleColor"/>
                     </state>
                     <connections>
                         <action selector="buttonTapped:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="Esa-uF-FR7"/>
                     </connections>
                 </button>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <constraints>
                 <constraint firstItem="fDu-Kz-J1T" firstAttribute="leading" secondItem="8TN-UF-p86" secondAttribute="trailing" constant="6" id="4fD-5D-P55"/>
+                <constraint firstItem="fDu-Kz-J1T" firstAttribute="firstBaseline" secondItem="8TN-UF-p86" secondAttribute="firstBaseline" constant="-1" id="F8A-Ha-fkI"/>
                 <constraint firstAttribute="trailing" secondItem="fDu-Kz-J1T" secondAttribute="trailing" id="MiH-7r-kwh"/>
-                <constraint firstItem="fDu-Kz-J1T" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="Oez-lw-Ivp"/>
-                <constraint firstItem="fDu-Kz-J1T" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="YeW-C2-Bg4"/>
+                <constraint firstItem="fDu-Kz-J1T" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="g4H-Q4-fKU"/>
                 <constraint firstItem="8TN-UF-p86" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="krK-1N-aph"/>
                 <constraint firstItem="8TN-UF-p86" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="xbq-5g-H5n"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
                 <outlet property="titleLabel" destination="8TN-UF-p86" id="BcM-GS-I5Z"/>
             </connections>
             <point key="canvasLocation" x="188.40579710144928" y="132.58928571428572"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

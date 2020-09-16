@@ -1,5 +1,5 @@
 //
-//  MovieImageCell.swift
+//  MovieBannerCell.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 14/09/20.
@@ -9,26 +9,27 @@
 import UIKit
 import AlamofireImage
 
-class MovieImageCell: UICollectionViewCell {
+class MovieBannerCell: UICollectionViewCell {
     static let reuseIdentifier = "BannerMovieCell"
     
     @IBOutlet weak var bannerImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var ratingsView: RatingsView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        contentView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 12
+        bannerImageView.layer.masksToBounds = true
+        bannerImageView.layer.cornerRadius = 12
     }
     
-    func configureBackdrop(withMovie movie: Movie) {        
+    func configure(withMovie movie: Movie) {
+        titleLabel.text = movie.title
+        
+        ratingsView.rating = movie.voteAverage ?? 0
+        ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+        
         if let url = movie.backdropImageURL(size: .w780) {
-            bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
-        }
-    }
-    
-    func configurePoster(withMovie movie: Movie) {
-        if let url = movie.posterImageURL(size: .w342) {
             bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }

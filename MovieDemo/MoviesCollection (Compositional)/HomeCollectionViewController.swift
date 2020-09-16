@@ -51,7 +51,8 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func setupCollectionView() {
-        collectionView.register(UINib(nibName: "MovieImageCell", bundle: .main), forCellWithReuseIdentifier: MovieImageCell.reuseIdentifier)
+        collectionView.register(UINib(nibName: "MovieBannerCell", bundle: .main), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
+        collectionView.register(UINib(nibName: "MoviePosterCell", bundle: .main), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
         collectionView.register(UINib(nibName: "MovieListCell", bundle: .main), forCellWithReuseIdentifier: MovieListCell.reuseIdentifier)
         collectionView.register(UINib(nibName: "MovieInfoCell", bundle: .main), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
         collectionView.register(UINib(nibName: "SectionTitleView", bundle: .main), forSupplementaryViewOfKind: HomeCollectionViewController.sectionHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)

@@ -52,15 +52,15 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         var cell: UICollectionViewCell!
         switch section.sectionType {
         case .NowPlaying:
-            guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieImageCell.reuseIdentifier, for: indexPath) as? MovieImageCell else { fatalError() }
+            guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieBannerCell.reuseIdentifier, for: indexPath) as? MovieBannerCell else { fatalError() }
             
-            bannerCell.configureBackdrop(withMovie: movie)
+            bannerCell.configure(withMovie: movie)
             cell = bannerCell
         case .Upcoming:
-            guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieImageCell.reuseIdentifier, for: indexPath) as? MovieImageCell else { fatalError() }
+            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }
             
-            bannerCell.configurePoster(withMovie: movie)
-            cell = bannerCell
+            posterCell.configure(withMovie: movie)
+            cell = posterCell
         case .TopRated:
             guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as? MovieListCell else { fatalError() }
             

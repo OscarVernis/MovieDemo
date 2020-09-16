@@ -55,7 +55,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxm-Tz-xbI">
-                                            <rect key="frame" x="132" y="11" width="262" height="21"/>
+                                            <rect key="frame" x="132" y="11" width="222" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="MKV-b9-Cfl"/>
                                             </constraints>
@@ -64,12 +64,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IUW-ws-61A">
-                                            <rect key="frame" x="132" y="52" width="262" height="18"/>
+                                            <rect key="frame" x="132" y="49" width="262" height="18"/>
                                             <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iqy-rD-nLu" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                                        <stackView opaque="NO" contentMode="scaleToFill" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iqy-rD-nLu" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
                                             <rect key="frame" x="132" y="36" width="50" height="10"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="10" id="KPs-kP-3PT"/>
@@ -80,20 +80,28 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </stackView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOS-Yt-lOJ">
+                                            <rect key="frame" x="362" y="13" width="32" height="20"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                            <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="IUW-ws-61A" secondAttribute="bottom" constant="11" id="0TD-3Q-q63"/>
                                         <constraint firstItem="IUW-ws-61A" firstAttribute="leading" secondItem="cFc-if-kff" secondAttribute="trailing" constant="16" id="7Xx-QJ-cQu"/>
+                                        <constraint firstItem="OOS-Yt-lOJ" firstAttribute="firstBaseline" secondItem="dxm-Tz-xbI" secondAttribute="firstBaseline" id="Hhl-OY-a3q"/>
                                         <constraint firstItem="dxm-Tz-xbI" firstAttribute="leading" secondItem="cFc-if-kff" secondAttribute="trailing" constant="16" id="Il2-zU-O1b"/>
                                         <constraint firstItem="dxm-Tz-xbI" firstAttribute="top" secondItem="d4k-kq-Qgb" secondAttribute="top" constant="11" id="Njw-3G-Sbm"/>
+                                        <constraint firstAttribute="trailing" secondItem="OOS-Yt-lOJ" secondAttribute="trailing" constant="20" id="OFr-hr-Xkh"/>
                                         <constraint firstItem="iqy-rD-nLu" firstAttribute="top" secondItem="dxm-Tz-xbI" secondAttribute="bottom" constant="4" id="PzV-Nf-15k"/>
                                         <constraint firstItem="cFc-if-kff" firstAttribute="top" secondItem="d4k-kq-Qgb" secondAttribute="top" constant="11" id="Rpg-b0-PiD"/>
                                         <constraint firstItem="cFc-if-kff" firstAttribute="leading" secondItem="d4k-kq-Qgb" secondAttribute="leading" constant="20" id="SpU-Fh-g53"/>
-                                        <constraint firstAttribute="trailing" secondItem="dxm-Tz-xbI" secondAttribute="trailing" constant="20" id="WIQ-mK-Gtm"/>
+                                        <constraint firstItem="OOS-Yt-lOJ" firstAttribute="leading" secondItem="dxm-Tz-xbI" secondAttribute="trailing" constant="8" id="gOG-oW-TZQ"/>
                                         <constraint firstItem="iqy-rD-nLu" firstAttribute="leading" secondItem="dxm-Tz-xbI" secondAttribute="leading" id="otP-Fq-jIC"/>
                                         <constraint firstAttribute="bottom" secondItem="cFc-if-kff" secondAttribute="bottom" constant="11" id="vCt-ar-kzq"/>
                                         <constraint firstAttribute="trailing" secondItem="IUW-ws-61A" secondAttribute="trailing" constant="20" id="vzi-1Z-Tsu"/>
-                                        <constraint firstItem="IUW-ws-61A" firstAttribute="top" secondItem="iqy-rD-nLu" secondAttribute="bottom" constant="6" id="z5s-ba-SoX"/>
+                                        <constraint firstItem="IUW-ws-61A" firstAttribute="top" secondItem="iqy-rD-nLu" secondAttribute="bottom" constant="3" id="z5s-ba-SoX"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
