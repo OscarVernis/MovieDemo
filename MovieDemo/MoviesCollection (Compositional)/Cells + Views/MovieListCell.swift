@@ -20,15 +20,11 @@ class MovieListCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func configure(withMovie movie: Movie, showSeparator: Bool = true) {
+    func configure(withMovie movie: MovieViewModel, showSeparator: Bool = true) {
         titleLabel.text = movie.title
         
-        if (movie.voteCount == nil || movie.voteCount == 0 || movie.voteAverage == nil) {
-            ratingsView.isRatingAvailable = false
-        } else {
-            ratingsView.isRatingAvailable = true
-            ratingsView.rating = movie.voteAverage!
-        }
+        ratingsView.isRatingAvailable = movie.isRatingAvailable
+        ratingsView.rating = movie.rating
         
         separator.isHidden = !showSeparator
     }

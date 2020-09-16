@@ -68,7 +68,6 @@ class RatingsView: UIStackView {
         
     }
     
-    
     fileprivate func imageViewWithSymbol(_ name: String) -> UIImageView {
         let imageView = UIImageView(image: UIImage(systemName: name))
         imageView.tintColor = .systemOrange

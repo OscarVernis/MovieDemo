@@ -40,7 +40,7 @@ class MoviesTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDat
             let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
             let movie = dataProvider.movies[indexPath.row]
             
-            cellConfigurator.configure(cell: cell, withMovie: movie)
+            cellConfigurator.configure(cell: cell, withMovie: MovieViewModel(movie: movie))
             
             return cell
         }

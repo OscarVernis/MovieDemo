@@ -23,14 +23,14 @@ class MovieBannerCell: UICollectionViewCell {
         bannerImageView.layer.cornerRadius = 12
     }
     
-    func configure(withMovie movie: Movie) {
+    func configure(withMovie movie: MovieViewModel) {
         bannerImageView.af.cancelImageRequest()
         bannerImageView.image = UIImage(systemName: "film")
         
         titleLabel.text = movie.title
         
-        ratingsView.rating = movie.voteAverage ?? 0
-        ratingsView.isRatingAvailable = !(movie.voteCount == nil || movie.voteCount == 0)
+        ratingsView.rating = movie.rating
+        ratingsView.isRatingAvailable = movie.isRatingAvailable
         
         if let url = movie.backdropImageURL(size: .w780) {
             bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))

@@ -54,23 +54,23 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         case .NowPlaying:
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieBannerCell.reuseIdentifier, for: indexPath) as? MovieBannerCell else { fatalError() }
             
-            bannerCell.configure(withMovie: movie)
+            bannerCell.configure(withMovie: MovieViewModel(movie: movie))
             cell = bannerCell
         case .Upcoming:
             guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }
             
-            posterCell.configure(withMovie: movie)
+            posterCell.configure(withMovie: MovieViewModel(movie: movie))
             cell = posterCell
         case .TopRated:
             guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as? MovieListCell else { fatalError() }
             
             let isLastCell = indexPath.row == 9 //dataProvider.movies.count - 1
-            listCell.configure(withMovie: movie, showSeparator: !isLastCell)
+            listCell.configure(withMovie: MovieViewModel(movie: movie), showSeparator: !isLastCell)
             cell = listCell
         case .Popular:
             guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as? MovieInfoCell else { fatalError() }
             
-            infoCell.configure(withMovie: movie)
+            infoCell.configure(withMovie: MovieViewModel(movie: movie))
             cell = infoCell
         }
         

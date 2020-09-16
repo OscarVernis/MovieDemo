@@ -23,19 +23,16 @@ class MoviePosterCell: UICollectionViewCell {
         posterImageView.layer.cornerRadius = 12
     }
     
-    func configure(withMovie movie: Movie) {
+    func configure(withMovie movie: MovieViewModel) {
         posterImageView.af.cancelImageRequest()
         posterImageView.image = UIImage(systemName: "film")
         
         titleLabel.text = movie.title
-        
-        let dateFormatter = DateFormatter(withFormat: "MMM dd", locale: "en_US")
-        if let releaseDate = movie.releaseDate {
-            infoLabel.text = dateFormatter.string(from: releaseDate)
-        }
+        infoLabel.text = movie.releaseDateWithoutYear
         
         if let url = movie.posterImageURL(size: .w342) {
             posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }
+    
 }

@@ -27,7 +27,7 @@ class MovieInfoCell: UICollectionViewCell {
         posterImageView.layer.cornerRadius = 8
     }
     
-    func configure(withMovie movie: Movie) {
+    func configure(withMovie movie: MovieViewModel) {
         posterImageView.af.cancelImageRequest()
         posterImageView.image = UIImage(systemName: "film")
         
@@ -36,23 +36,11 @@ class MovieInfoCell: UICollectionViewCell {
         }
         
         titleLabel.text = movie.title
-        
-        if (movie.voteCount == nil || movie.voteCount == 0 || movie.voteAverage == nil) {
-            ratingsView.isRatingAvailable = false
-        } else {
-            ratingsView.isRatingAvailable = true
-            ratingsView.rating = movie.voteAverage!
-        }
-        
+        ratingsView.isRatingAvailable = movie.isRatingAvailable
+        ratingsView.rating = movie.rating
         overviewLabel.text = movie.overview
-
-        let genres = movie.genres?.map { $0.string() } ?? []
-        let genresString = genres.joined(separator: ", ")
-        genresLabel.text = genresString
-        
-        let dateFormatter = DateFormatter(withFormat: "yyyy", locale: "en_US")
-        if let releaseDate = movie.releaseDate {
-            releaseDateLabel.text = dateFormatter.string(from: releaseDate)
-        }
+        genresLabel.text = movie.genresString
+        releaseDateLabel.text = movie.releaseYear
     }
+    
 }
