@@ -24,6 +24,9 @@ class MovieBannerCell: UICollectionViewCell {
     }
     
     func configure(withMovie movie: Movie) {
+        bannerImageView.af.cancelImageRequest()
+        bannerImageView.image = UIImage(systemName: "film")
+        
         titleLabel.text = movie.title
         
         ratingsView.rating = movie.voteAverage ?? 0

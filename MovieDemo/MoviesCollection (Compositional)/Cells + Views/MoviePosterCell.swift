@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+import AlamofireImage
 
 class MoviePosterCell: UICollectionViewCell {
     static let reuseIdentifier = "MoviePosterCell"
@@ -24,6 +24,9 @@ class MoviePosterCell: UICollectionViewCell {
     }
     
     func configure(withMovie movie: Movie) {
+        posterImageView.af.cancelImageRequest()
+        posterImageView.image = UIImage(systemName: "film")
+        
         titleLabel.text = movie.title
         
         let dateFormatter = DateFormatter(withFormat: "MMM dd", locale: "en_US")

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,6 +20,7 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b5T-qQ-WYX">
                         <rect key="frame" x="0.0" y="0.0" width="441" height="249"/>
+                        <color key="tintColor" name="PosterPlaceholderColor"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-9F-1Im">
                         <rect key="frame" x="5" y="256" width="431" height="24"/>
@@ -38,6 +41,7 @@
                     </stackView>
                 </subviews>
             </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="b5T-qQ-WYX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="06o-Xz-kUT"/>
                 <constraint firstItem="ihj-9F-1Im" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Fcm-2C-ZPh"/>
@@ -49,7 +53,6 @@
                 <constraint firstItem="b5T-qQ-WYX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="rr5-KA-Cgs"/>
                 <constraint firstItem="NiB-WH-8Me" firstAttribute="top" secondItem="ihj-9F-1Im" secondAttribute="bottom" constant="2" id="vPu-Kj-WqZ"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="441" height="299"/>
             <connections>
                 <outlet property="bannerImageView" destination="b5T-qQ-WYX" id="Jt1-6b-Zhn"/>
@@ -59,4 +62,9 @@
             <point key="canvasLocation" x="38.405797101449281" y="13.058035714285714"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <namedColor name="PosterPlaceholderColor">
+            <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

@@ -16,15 +16,21 @@ class MovieInfoCell: UICollectionViewCell {
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var overviewLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        backgroundColor = .clear
         
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 8
     }
     
     func configure(withMovie movie: Movie) {
+        posterImageView.af.cancelImageRequest()
+        posterImageView.image = UIImage(systemName: "film")
+        
         if let url = movie.posterImageURL(size: .w342) {
             posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
@@ -33,6 +39,8 @@ class MovieInfoCell: UICollectionViewCell {
         
         ratingsView.rating = movie.voteAverage ?? 0
         ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+        
+        overviewLabel.text = movie.overview
 
         let genres = movie.genres?.map { $0.string() } ?? []
         let genresString = genres.joined(separator: ", ")
