@@ -36,21 +36,7 @@ class Movie: Mappable {
         title <- map["title"]
         voteAverage <- map["vote_average"]
         runtime <- map["runtime"]
-        
     }
     
 }
 
-extension Movie: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(title)
-        hasher.combine(posterPath)
-    }
-}
-
-extension Movie: Equatable {
-    static func == (lhs: Movie, rhs: Movie) -> Bool {
-        return lhs.id == rhs.id
-    }
-}

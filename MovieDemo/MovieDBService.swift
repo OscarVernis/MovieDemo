@@ -10,19 +10,10 @@ import Foundation
 import Alamofire
 import ObjectMapper
 
-enum MoviePosterSize: String {
-    case w92, w154, w185, w342, w500, w780, original
-}
-
-enum BackdropSize: String {
-    case w300, w780, w1280, original
-}
-
 struct MovieDBService {
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     
     let baseURL = "https://api.themoviedb.org/3"
-    let baseImageURL = "https://image.tmdb.org/t/p/"
     
     let language = "en-US"
     
@@ -38,14 +29,28 @@ struct MovieDBService {
         return url.appendingPathComponent(path)
     }
     
-    func backdropImageURL(forPath path: String, size: BackdropSize = .w300) -> URL {
+}
+
+//MARK: - Image Utils
+extension MovieDBService {
+    enum MoviePosterSize: String {
+        case w92, w154, w185, w342, w500, w780, original
+    }
+    
+    enum BackdropSize: String {
+        case w300, w780, w1280, original
+    }
+    
+    static let baseImageURL = "https://image.tmdb.org/t/p/"
+    
+    static func backdropImageURL(forPath path: String, size: BackdropSize = .w300) -> URL {
         var url = URL(string: baseImageURL)!
         url.appendPathComponent(size.rawValue)
         
         return url.appendingPathComponent(path)
     }
     
-    func posterImageURL(forPath path: String, size: MoviePosterSize = .original) -> URL {
+    static func posterImageURL(forPath path: String, size: MoviePosterSize = .original) -> URL {
         var url = URL(string: baseImageURL)!
         url.appendPathComponent(size.rawValue)
         
@@ -53,7 +58,7 @@ struct MovieDBService {
     }
 }
 
-//MARK: - Fetch list of movies
+//MARK: - Fetch lists of movies
 extension MovieDBService {
     private func fetchMovies(endpoint path: String, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
         let url = endpoint(forPath: path)
@@ -111,7 +116,7 @@ extension MovieDBService {
 
 }
 
-////MARK: - Movie Details
+//MARK: - Movie Details
 extension MovieDBService {
     func fetchMovieDetails(movieId: Int, completion: @escaping (Movie?, Error?) -> ()) {
         let url = endpoint(forPath: "/movie/\(movieId)")

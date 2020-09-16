@@ -17,7 +17,7 @@ class MovieListDataProvider {
         case Search
     }
     
-    init(withService service: Service = .NowPlaying) {
+    init(_ service: Service = .NowPlaying) {
         self.currentService = service
     }
     
@@ -61,6 +61,10 @@ class MovieListDataProvider {
     }
     
     func refresh() {
+        if currentService == .Search, searchQuery.isEmpty {
+            return
+        }
+        
         currentPage = 1
         totalPages = 1
         fetchMovies()

@@ -1,5 +1,5 @@
 //
-//  BannerMovieCell.swift
+//  MovieImageCell.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 14/09/20.
@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class BannerMovieCell: UICollectionViewCell {
+class MovieImageCell: UICollectionViewCell {
     static let reuseIdentifier = "BannerMovieCell"
     
     @IBOutlet weak var bannerImageView: UIImageView!
@@ -22,13 +22,15 @@ class BannerMovieCell: UICollectionViewCell {
     }
     
     func configureBackdrop(withMovie movie: Movie) {        
-        let url = MovieDBService().backdropImageURL(forPath: movie.backdropPath!, size: .w780)
-        bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        if let url = movie.backdropImageURL(size: .w780) {
+            bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        }
     }
     
     func configurePoster(withMovie movie: Movie) {
-        let url = MovieDBService().posterImageURL(forPath: movie.posterPath!, size: .w342)
-        bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        if let url = movie.posterImageURL(size: .w342) {
+            bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        }
     }
     
 }

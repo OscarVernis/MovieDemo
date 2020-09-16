@@ -10,7 +10,7 @@ import UIKit
 
 class MoviesTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDataSourcePrefetching {
     var dataProvider: MovieListDataProvider
-    lazy var cellConfigurator = MovieCellConfigurator(movieService: dataProvider.movieService)
+    lazy var cellConfigurator = MovieCellConfigurator()
     
     private let reuseIdentifier: String
     

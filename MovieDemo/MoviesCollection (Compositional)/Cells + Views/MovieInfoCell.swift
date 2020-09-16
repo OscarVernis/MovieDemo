@@ -22,12 +22,12 @@ class MovieInfoCell: UICollectionViewCell {
         
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 8
-        
     }
     
     func configure(withMovie movie: Movie) {
-        let url = MovieDBService().posterImageURL(forPath: movie.posterPath!, size: .w342)
-        posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        if let url = movie.posterImageURL(size: .w342) {
+            posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        }
         
         titleLabel.text = movie.title
         ratingLabel.text = "\(movie.voteAverage!)"
