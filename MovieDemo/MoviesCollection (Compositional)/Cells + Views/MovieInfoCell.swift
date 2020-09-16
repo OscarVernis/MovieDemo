@@ -37,8 +37,12 @@ class MovieInfoCell: UICollectionViewCell {
         
         titleLabel.text = movie.title
         
-        ratingsView.rating = movie.voteAverage ?? 0
-        ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+        if (movie.voteCount == nil || movie.voteCount == 0 || movie.voteAverage == nil) {
+            ratingsView.isRatingAvailable = false
+        } else {
+            ratingsView.isRatingAvailable = true
+            ratingsView.rating = movie.voteAverage!
+        }
         
         overviewLabel.text = movie.overview
 

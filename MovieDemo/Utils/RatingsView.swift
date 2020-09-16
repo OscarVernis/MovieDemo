@@ -12,6 +12,11 @@ import UIKit
 class RatingsView: UIStackView {
     
     @IBInspectable
+    var isRatingAvailable: Bool = true {
+        didSet { updateRating() }
+    }
+    
+    @IBInspectable
     var rating: Float = 0 {
         didSet {
             if rating > 10 {
@@ -26,11 +31,29 @@ class RatingsView: UIStackView {
         }
     }
     
+    override func awakeFromNib() {
+        spacing = 2
+    }
+    
     func updateRating() {
         for view in subviews {
             view.removeFromSuperview()
         }
         
+        if !isRatingAvailable {
+            self.alpha = 0.6
+            
+            addArrangedSubview(imageViewWithSymbol("slash.circle"))
+            addArrangedSubview(imageViewWithSymbol("slash.circle"))
+            addArrangedSubview(imageViewWithSymbol("slash.circle"))
+            addArrangedSubview(imageViewWithSymbol("slash.circle"))
+            addArrangedSubview(imageViewWithSymbol("slash.circle"))
+
+            return
+        }
+        
+        self.alpha = 1.0
+
         let halfRating = rating / 2
         for n in 0...4 {
             if halfRating >= Float(n) + 0.9 {
@@ -50,8 +73,8 @@ class RatingsView: UIStackView {
         let imageView = UIImageView(image: UIImage(systemName: name))
         imageView.tintColor = .systemOrange
         
-        let rationConstraint = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1, constant: 0)
-        imageView.addConstraint(rationConstraint)
+        let ratioConstraint = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1, constant: 0)
+        imageView.addConstraint(ratioConstraint)
         
         return imageView
     }

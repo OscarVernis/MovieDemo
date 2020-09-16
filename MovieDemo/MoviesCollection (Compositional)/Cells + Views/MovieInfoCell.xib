@@ -41,6 +41,7 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="rating">
                                 <real key="value" value="7.2999999999999998"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isRatingAvailable" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tin-rp-HcE" userLabel="Separator">

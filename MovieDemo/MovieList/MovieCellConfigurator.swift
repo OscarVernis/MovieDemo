@@ -18,7 +18,7 @@ struct MovieCellConfigurator {
         cell.overviewLabel?.text = movie.overview
         
         cell.ratingsView.rating = movie.voteAverage ?? 0
-        cell.ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+        cell.ratingsView.isRatingAvailable = !(movie.voteCount == nil || movie.voteCount == 0)
 
         cell.posterImageView.layer.masksToBounds = true
         cell.posterImageView.layer.cornerRadius = 8

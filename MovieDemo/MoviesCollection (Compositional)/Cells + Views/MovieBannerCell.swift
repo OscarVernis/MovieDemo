@@ -30,7 +30,7 @@ class MovieBannerCell: UICollectionViewCell {
         titleLabel.text = movie.title
         
         ratingsView.rating = movie.voteAverage ?? 0
-        ratingsView.isHidden = (movie.voteCount == nil || movie.voteCount == 0)
+        ratingsView.isRatingAvailable = !(movie.voteCount == nil || movie.voteCount == 0)
         
         if let url = movie.backdropImageURL(size: .w780) {
             bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
