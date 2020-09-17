@@ -93,6 +93,7 @@ class MovieDetailViewController: UICollectionViewController {
         
         collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
         collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
+        collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
         collectionView.register(MovieDetailHeaderView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.mainHeaderElementKind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier)
         collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.sectionTitleHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
 
@@ -120,11 +121,15 @@ extension MovieDetailViewController {
             case .Cast:
                 section = sectionBuilder.createHorizontalCreditSection()
                 
+                section?.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
+                
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Crew:
-                section = sectionBuilder.createHorizontalCreditSection()
+                section = sectionBuilder.createInfoListSection(withHeight: 50)
                 
+                section?.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 10, trailing: 20)
+
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .RecommendedMovies:
@@ -143,58 +148,6 @@ extension MovieDetailViewController {
 
 }
 
-////MARK: - CollectionView Diffable DataSource
-//extension MovieDetailViewController {
-//    func createDataSource() {
-//        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: cell)
-//    }
-//
-//    func reloadData(animated: Bool = false) {
-//        var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
-//
-//        let cast = dataProvider.movie.cast! as [AnyHashable]
-//        let crew = dataProvider.movie.cast! as [AnyHashable]
-//        let movies = dataProvider.recommendedMovies as [AnyHashable]
-//
-//        snapshot.appendSections(Section.allCases)
-//        snapshot.appendItems(cast, toSection: .Cast)
-//        snapshot.appendItems(crew, toSection: .Crew)
-//        snapshot.appendItems(movies, toSection: .RecommendedMovies)
-//
-//        dataSource?.apply(snapshot, animatingDifferences: animated)
-//    }
-//
-//    func cell(collectioView: UICollectionView, indexPath: IndexPath, model: AnyHashable) -> UICollectionViewCell {
-//        let section = Section(rawValue: indexPath.section)!
-//        switch section {
-//        case .Header:
-//            fatalError("This section should be empty!")
-//        case .Cast:
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
-//
-//            let cast = model as! CastCredit
-//            cell.configure(castCredit: cast)
-//
-//            return cell
-//        case .Crew:
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
-//
-//            let crew = model as! CrewCredit
-//            cell.configure(crewCredit: crew)
-//
-//            return cell
-//        case .RecommendedMovies:
-//            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }
-//
-//            let movie = model as! Movie
-//
-//            posterCell.configure(withMovie: MovieViewModel(movie: movie))
-//            return posterCell
-//        }
-//    }
-//
-//}
-
 extension MovieDetailViewController {
 // MARK: UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -207,7 +160,7 @@ extension MovieDetailViewController {
         case .Header:
             return 0
         case .Cast:
-            return dataProvider.movieViewModel.cast.count
+            return dataProvider.movieViewModel.topCast.count
         case .Crew:
             return dataProvider.movieViewModel.topCrew.count
         case .RecommendedMovies:
@@ -223,12 +176,12 @@ extension MovieDetailViewController {
         case .Cast:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
             
-            let cast = dataProvider.movieViewModel.cast[indexPath.row]
+            let cast = dataProvider.movieViewModel.topCast[indexPath.row]
             cell.configure(castCredit: cast)
             
             return cell
         case .Crew:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditListCell.reuseIdentifier, for: indexPath) as? CreditListCell else { fatalError() }
             
             let crew = dataProvider.movieViewModel.topCrew[indexPath.row]
             cell.configure(crewCredit: crew)

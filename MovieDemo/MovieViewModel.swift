@@ -28,6 +28,7 @@ struct MovieViewModel {
     mutating func updateMovie(_ movie: Movie) {
         self.movie = movie
         updateTopCrew()
+        updateTopCast()
     }
     
     var id: Int? {
@@ -83,6 +84,7 @@ struct MovieViewModel {
         }
         set(cast) {
             movie.cast = cast
+            updateTopCast()
         }
     }
     
@@ -117,6 +119,14 @@ struct MovieViewModel {
         }
         
         topCrew = filteredCrew
+    }
+    
+    var topCast = [CastCredit]()
+    
+    mutating func updateTopCast() {
+        guard let cast = movie.cast else { return }
+        
+        topCast = Array(cast.prefix(8))
     }
     
 }

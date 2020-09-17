@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CreditListCell" id="sMv-Fr-8B2" customClass="CreditListCell" customModule="MovieDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="457" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="VPh-Pf-Khg">
+                <rect key="frame" x="0.0" y="0.0" width="457" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqW-Wk-pDi">
+                        <rect key="frame" x="0.0" y="6" width="457" height="16"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Job" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21F-nh-6YN">
+                        <rect key="frame" x="0.0" y="22" width="457" height="16"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9X-hg-d3R">
+                        <rect key="frame" x="0.0" y="43.5" width="457" height="0.5"/>
+                        <color key="backgroundColor" systemColor="separatorColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="G6f-El-fYk"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="dqW-Wk-pDi" firstAttribute="top" secondItem="VPh-Pf-Khg" secondAttribute="top" constant="6" id="0vJ-dA-gSB"/>
+                    <constraint firstAttribute="trailing" secondItem="C9X-hg-d3R" secondAttribute="trailing" id="7cj-gQ-yPM"/>
+                    <constraint firstAttribute="bottom" secondItem="C9X-hg-d3R" secondAttribute="bottom" id="8EF-7j-5gX"/>
+                    <constraint firstItem="21F-nh-6YN" firstAttribute="leading" secondItem="VPh-Pf-Khg" secondAttribute="leading" id="KhC-GP-BIl"/>
+                    <constraint firstItem="dqW-Wk-pDi" firstAttribute="leading" secondItem="VPh-Pf-Khg" secondAttribute="leading" id="KnG-Fb-awg"/>
+                    <constraint firstItem="C9X-hg-d3R" firstAttribute="leading" secondItem="VPh-Pf-Khg" secondAttribute="leading" id="RqR-dh-WXm"/>
+                    <constraint firstAttribute="trailing" secondItem="21F-nh-6YN" secondAttribute="trailing" id="SNy-qg-ZtW"/>
+                    <constraint firstItem="21F-nh-6YN" firstAttribute="top" secondItem="dqW-Wk-pDi" secondAttribute="bottom" id="c9N-Lv-8AZ"/>
+                    <constraint firstItem="21F-nh-6YN" firstAttribute="height" secondItem="dqW-Wk-pDi" secondAttribute="height" id="gdj-tx-p1A"/>
+                    <constraint firstAttribute="trailing" secondItem="dqW-Wk-pDi" secondAttribute="trailing" id="ge4-Vm-Uvg"/>
+                    <constraint firstAttribute="bottom" secondItem="21F-nh-6YN" secondAttribute="bottom" constant="6" id="jwg-1c-4B2"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="457" height="44"/>
+            <connections>
+                <outlet property="jobLabel" destination="21F-nh-6YN" id="WSm-N2-46n"/>
+                <outlet property="nameLabel" destination="dqW-Wk-pDi" id="l1z-jP-CLe"/>
+            </connections>
+            <point key="canvasLocation" x="244.20289855072465" y="45.535714285714285"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

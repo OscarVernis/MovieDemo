@@ -15,6 +15,7 @@ struct MoviesCompositionalLayoutBuilder {
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: HomeCollectionViewController.sectionHeaderElementKind, alignment: .top)
+        sectionHeader.pinToVisibleBounds = false
         
         return sectionHeader
     }
@@ -89,13 +90,13 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
-    func createInfoListSection() ->  NSCollectionLayoutSection {
+    func createInfoListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(150))
+                                               heightDimension: .absolute(height))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -120,13 +121,13 @@ struct MoviesCompositionalLayoutBuilder {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(115),
-                                               heightDimension: .absolute(230))
+                                               heightDimension: .estimated(220))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 20
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
 
         return section
     }

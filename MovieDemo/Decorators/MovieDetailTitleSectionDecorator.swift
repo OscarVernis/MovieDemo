@@ -10,7 +10,7 @@ import UIKit
 
 struct MovieDetailTitleSectionDecorator {
     func configure(headerView: SectionTitleView, title: String, tapHandler: (() -> ())? = nil) {
-        headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)!
+        headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 20)!
         
         headerView.titleLabel.text = title
         

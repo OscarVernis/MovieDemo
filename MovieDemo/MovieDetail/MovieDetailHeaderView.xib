@@ -45,7 +45,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="2" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eO4-bs-p5M" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="2" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eO4-bs-p5M" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
                     <rect key="frame" x="148" y="203.5" width="58" height="10"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="bUG-ej-HM7"/>

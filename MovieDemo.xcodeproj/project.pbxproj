@@ -16,6 +16,8 @@
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
 		5507AB672509F9DA00112C3A /* MovieDetailsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5507AB662509F9DA00112C3A /* MovieDetailsDataProvider.swift */; };
 		55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55135E712512C866004C4361 /* MovieDetailHeaderView.swift */; };
+		551E79272513CBD700EE2FCA /* CreditListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551E79252513CBD700EE2FCA /* CreditListCell.swift */; };
+		551E79282513CBD700EE2FCA /* CreditListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 551E79262513CBD700EE2FCA /* CreditListCell.xib */; };
 		553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553660F922DAFC0B00BE03BB /* CastCredit.swift */; };
 		5536610722DB037500BE03BB /* CrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5536610522DB037500BE03BB /* CrewCredit.swift */; };
 		5545203822D99CB0004B7924 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203622D99CB0004B7924 /* Movie.swift */; };
@@ -70,6 +72,8 @@
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
 		5507AB662509F9DA00112C3A /* MovieDetailsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsDataProvider.swift; sourceTree = "<group>"; };
 		55135E712512C866004C4361 /* MovieDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailHeaderView.swift; sourceTree = "<group>"; };
+		551E79252513CBD700EE2FCA /* CreditListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditListCell.swift; sourceTree = "<group>"; };
+		551E79262513CBD700EE2FCA /* CreditListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditListCell.xib; sourceTree = "<group>"; };
 		553660F922DAFC0B00BE03BB /* CastCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCredit.swift; sourceTree = "<group>"; };
 		5536610522DB037500BE03BB /* CrewCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewCredit.swift; sourceTree = "<group>"; };
 		5545203622D99CB0004B7924 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
@@ -171,6 +175,8 @@
 			children = (
 				5506BAB72512EC9F0052B0F2 /* CreditCell.swift */,
 				5506BABA2512ECB00052B0F2 /* CreditCell.xib */,
+				551E79252513CBD700EE2FCA /* CreditListCell.swift */,
+				551E79262513CBD700EE2FCA /* CreditListCell.xib */,
 				554BD9D022DA79C3003A74ED /* LoadingCell.swift */,
 				558A5A8A251053C600E5FB40 /* MovieBannerCell.swift */,
 				558A5A8B251053C600E5FB40 /* MovieBannerCell.xib */,
@@ -353,6 +359,7 @@
 				559D132B22D98E4B00C96FC8 /* LaunchScreen.storyboard in Resources */,
 				559D132822D98E4B00C96FC8 /* Assets.xcassets in Resources */,
 				558A5A8D251053C600E5FB40 /* MovieBannerCell.xib in Resources */,
+				551E79282513CBD700EE2FCA /* CreditListCell.xib in Resources */,
 				5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */,
 				5587114B25108079005A0975 /* MovieInfoCell.xib in Resources */,
 				558A63B12512B4260064438D /* MovieCell.xib in Resources */,
@@ -382,6 +389,7 @@
 				554BD9D122DA79C3003A74ED /* LoadingCell.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
+				551E79272513CBD700EE2FCA /* CreditListCell.swift in Sources */,
 				55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */,
 				55A6A9922511A72800305C29 /* MovieGenreTransformer.swift in Sources */,
 				554677882506C9E4002FF7B5 /* MoviesTableViewDataSource.swift in Sources */,
