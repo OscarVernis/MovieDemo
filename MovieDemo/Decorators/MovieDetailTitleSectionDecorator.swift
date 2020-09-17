@@ -9,11 +9,17 @@
 import UIKit
 
 struct MovieDetailTitleSectionDecorator {
-    func configure(headerView: SectionTitleView, title: String) {
+    func configure(headerView: SectionTitleView, title: String, tapHandler: (() -> ())? = nil) {
         headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)!
         
         headerView.titleLabel.text = title
-        headerView.actionButton.isHidden = true
         
+        if tapHandler == nil {
+            headerView.actionButton.isHidden = true
+        } else {
+            headerView.actionButton.isHidden = false
+            headerView.tapHandler = tapHandler
+        }
     }
+    
 }

@@ -209,7 +209,7 @@ extension MovieDetailViewController {
         case .Cast:
             return dataProvider.movieViewModel.cast.count
         case .Crew:
-            return dataProvider.movieViewModel.crew.count
+            return dataProvider.movieViewModel.topCrew.count
         case .RecommendedMovies:
             return dataProvider.movieViewModel.recommendedMovies.count
         }
@@ -230,7 +230,7 @@ extension MovieDetailViewController {
         case .Crew:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
             
-            let crew = dataProvider.movieViewModel.crew[indexPath.row]
+            let crew = dataProvider.movieViewModel.topCrew[indexPath.row]
             cell.configure(crewCredit: crew)
             
             return cell
@@ -245,9 +245,9 @@ extension MovieDetailViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let s = Section(rawValue: indexPath.section)!
+        let section = Section(rawValue: indexPath.section)!
 
-        if s == .Header {
+        if section == .Header {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
             
             headerView.configure(movie: movie)
@@ -256,8 +256,16 @@ extension MovieDetailViewController {
         } else {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
             
-            let section = Section(rawValue: indexPath.section)!
-            MovieDetailTitleSectionDecorator().configure(headerView: headerView, title: section.title())
+            
+            //TODO: Open Movie List when tapping header button
+            var tapHandler: (() -> ())? =  nil
+            if section == .RecommendedMovies {
+                tapHandler = {
+                    print("Recommended Movies")
+                }
+            }
+            
+            MovieDetailTitleSectionDecorator().configure(headerView: headerView, title: section.title(), tapHandler: tapHandler)
             
             return headerView
         }
@@ -265,6 +273,7 @@ extension MovieDetailViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //TODO: Show Cast List when tapping
         let section = Section(rawValue: indexPath.section)!
         switch section {
         case .Header:

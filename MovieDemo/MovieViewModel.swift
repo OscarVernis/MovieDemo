@@ -9,6 +9,16 @@
 import Foundation
 
 struct MovieViewModel {
+    //Used to filter the top crew jobs to show on the detail
+    private let topCrewJobs = [
+        "Director",
+        "Writer",
+        "Producer",
+        "Editor",
+        "Director of Photography",
+        "Original Music Composer"
+    ]
+    
     private var movie: Movie
     
     init(movie: Movie) {
@@ -17,6 +27,7 @@ struct MovieViewModel {
     
     mutating func updateMovie(_ movie: Movie) {
         self.movie = movie
+        updateTopCrew()
     }
     
     var id: Int? {
@@ -81,6 +92,7 @@ struct MovieViewModel {
         }
         set(crew) {
             movie.crew = crew
+            updateTopCrew()
         }
     }
     
@@ -91,6 +103,20 @@ struct MovieViewModel {
         set(movies) {
             movie.recommendedMovies = movies
         }
+    }
+    
+    var topCrew = [CrewCredit]()
+    
+    mutating func updateTopCrew() {
+        guard let crew = movie.crew else { return }
+        
+        var filteredCrew = [CrewCredit]()
+        for job in topCrewJobs {
+            let crewWithJob = crew.filter { $0.job == job }
+            filteredCrew.append(contentsOf: crewWithJob)
+        }
+        
+        topCrew = filteredCrew
     }
     
 }
