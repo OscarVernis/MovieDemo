@@ -186,6 +186,8 @@ extension MovieDetailViewController {
             let crew = dataProvider.movieViewModel.topCrew[indexPath.row]
             cell.configure(crewCredit: crew)
             
+            cell.jobLabel.text = dataProvider.movieViewModel.crewCreditJobString(crewCreditId: crew.id!)
+            
             return cell
         case .RecommendedMovies:
             guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }

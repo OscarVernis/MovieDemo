@@ -13,7 +13,8 @@ struct MovieViewModel {
     private let topCrewJobs = [
         "Director",
         "Writer",
-        "Producer",
+        "Story",
+        "Screenplay",
         "Editor",
         "Director of Photography",
         "Original Music Composer"
@@ -114,11 +115,25 @@ struct MovieViewModel {
         
         var filteredCrew = [CrewCredit]()
         for job in topCrewJobs {
-            let crewWithJob = crew.filter { $0.job == job }
+            let crewWithJob = crew.filter { crewCredit in
+                crewCredit.job == job && !filteredCrew.contains { filteredCrewCredit in
+                    filteredCrewCredit.id == crewCredit.id
+                }
+            }
             filteredCrew.append(contentsOf: crewWithJob)
         }
-        
+
         topCrew = filteredCrew
+    }
+    
+    func crewCreditJobString(crewCreditId: Int) -> String {
+        let jobs = crew.compactMap { crew in
+            crew.id == crewCreditId ? crew.job : nil
+        }
+                
+        let jobsString = jobs.joined(separator: ", ")
+        
+        return jobsString
     }
     
     var topCast = [CastCredit]()
