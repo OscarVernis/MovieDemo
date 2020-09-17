@@ -40,7 +40,7 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         
         collectionView.keyboardDismissMode = .onDrag
         
-        collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
+        collectionView.register(PhotoCreditListCell.namedNib(), forCellWithReuseIdentifier: PhotoCreditListCell.reuseIdentifier)
         collectionView.register(MovieInfoCell.namedNib(), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
         collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
         

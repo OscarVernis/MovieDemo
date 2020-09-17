@@ -44,7 +44,7 @@ final class MainCoordinator {
         let mdvc = ListViewController<Provider, CrewCreditCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditListCell.reuseIdentifier, configurator: CrewCreditCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: PhotoCreditListCell.reuseIdentifier, configurator: CrewCreditCellConfigurator())
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
@@ -54,7 +54,7 @@ final class MainCoordinator {
         let mdvc = ListViewController<Provider, CastCreditCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditListCell.reuseIdentifier, configurator: CastCreditCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: PhotoCreditListCell.reuseIdentifier, configurator: CastCreditCellConfigurator())
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)

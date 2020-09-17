@@ -7,14 +7,23 @@
 //
 
 import UIKit
+import AlamofireImage
 
 struct CastCreditCellConfigurator: CellConfigurator {
     typealias Model = CastCredit
-    typealias Cell = CreditListCell
+    typealias Cell = PhotoCreditListCell
     
     func configure(cell: Cell, with model: Model) {
+        cell.creditImageView.af.cancelImageRequest()
+        
         cell.nameLabel.text = model.name
-        cell.jobLabel.text = model.character
+        cell.roleLabel.text = model.character
+        
+        if let pathString = model.profilePath {
+            let url = MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+            cell.creditImageView.contentMode = .scaleAspectFill
+            cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+        }
     }
     
 }

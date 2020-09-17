@@ -218,7 +218,7 @@ extension MovieDetailViewController {
                     self.mainCoordinator.showCastCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.cast))
                 }
             case .Crew:
-                tapHandler = {
+                tapHandler = {                    
                     self.mainCoordinator.showCrewCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.crew))
                 }
             case .RecommendedMovies:
