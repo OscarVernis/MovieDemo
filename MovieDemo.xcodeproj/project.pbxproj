@@ -29,6 +29,7 @@
 		55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E0F251317AC00A2B821 /* UIView+Nib.swift */; };
 		5587114A25108079005A0975 /* MovieInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587114825108079005A0975 /* MovieInfoCell.swift */; };
 		5587114B25108079005A0975 /* MovieInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5587114925108079005A0975 /* MovieInfoCell.xib */; };
+		55893B6E2513F56D00233677 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55893B6D2513F56D00233677 /* DataProvider.swift */; };
 		558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A5A8A251053C600E5FB40 /* MovieBannerCell.swift */; };
 		558A5A8D251053C600E5FB40 /* MovieBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558A5A8B251053C600E5FB40 /* MovieBannerCell.xib */; };
 		558A5A90251054C700E5FB40 /* ObjectMapper in Frameworks */ = {isa = PBXBuildFile; productRef = 558A5A8F251054C700E5FB40 /* ObjectMapper */; };
@@ -53,7 +54,6 @@
 		55EDD3542513E346004F8117 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55EDD3522513E346004F8117 /* LoadingCell.xib */; };
 		55EDD3572513F0C0004F8117 /* ListViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3562513F0C0004F8117 /* ListViewDataSource.swift */; };
 		55EDD3602513F2E0004F8117 /* MovieInfoCellDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD35F2513F2E0004F8117 /* MovieInfoCellDecorator.swift */; };
-		55EECCDD2511907B0041EAE7 /* Movie+ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCDC2511907B0041EAE7 /* Movie+ImageUtils.swift */; };
 		55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */; };
 		55EECCE525119A1A0041EAE7 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */; };
 		55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */; };
@@ -84,6 +84,7 @@
 		55596E0F251317AC00A2B821 /* UIView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Nib.swift"; sourceTree = "<group>"; };
 		5587114825108079005A0975 /* MovieInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCell.swift; sourceTree = "<group>"; };
 		5587114925108079005A0975 /* MovieInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieInfoCell.xib; sourceTree = "<group>"; };
+		55893B6D2513F56D00233677 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		558A5A8A251053C600E5FB40 /* MovieBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieBannerCell.swift; sourceTree = "<group>"; };
 		558A5A8B251053C600E5FB40 /* MovieBannerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieBannerCell.xib; sourceTree = "<group>"; };
 		558A5A9725106C1400E5FB40 /* SectionBackgroundDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundDecorationView.swift; sourceTree = "<group>"; };
@@ -107,7 +108,6 @@
 		55EDD3522513E346004F8117 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		55EDD3562513F0C0004F8117 /* ListViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDataSource.swift; sourceTree = "<group>"; };
 		55EDD35F2513F2E0004F8117 /* MovieInfoCellDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCellDecorator.swift; sourceTree = "<group>"; };
-		55EECCDC2511907B0041EAE7 /* Movie+ImageUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+ImageUtils.swift"; sourceTree = "<group>"; };
 		55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboard.swift"; sourceTree = "<group>"; };
 		55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +171,7 @@
 		5587114C25108082005A0975 /* Cells + Views */ = {
 			isa = PBXGroup;
 			children = (
+				55893B6A2513F4EA00233677 /* CollectionView Reusable */,
 				5506BAB72512EC9F0052B0F2 /* CreditCell.swift */,
 				5506BABA2512ECB00052B0F2 /* CreditCell.xib */,
 				551E79252513CBD700EE2FCA /* CreditListCell.swift */,
@@ -183,13 +184,20 @@
 				558A5A9A25106F8900E5FB40 /* MovieListCell.xib */,
 				55FBFB80251279C000708A4E /* MoviePosterCell.swift */,
 				55FBFB81251279C000708A4E /* MoviePosterCell.xib */,
-				558A5A9725106C1400E5FB40 /* SectionBackgroundDecorationView.swift */,
-				55518D422511292E00DAEB7F /* SectionTitleView.swift */,
-				55518D432511292E00DAEB7F /* SectionTitleView.xib */,
 				55EDD3512513E346004F8117 /* LoadingCell.swift */,
 				55EDD3522513E346004F8117 /* LoadingCell.xib */,
 			);
 			path = "Cells + Views";
+			sourceTree = "<group>";
+		};
+		55893B6A2513F4EA00233677 /* CollectionView Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				558A5A9725106C1400E5FB40 /* SectionBackgroundDecorationView.swift */,
+				55518D422511292E00DAEB7F /* SectionTitleView.swift */,
+				55518D432511292E00DAEB7F /* SectionTitleView.xib */,
+			);
+			path = "CollectionView Reusable";
 			sourceTree = "<group>";
 		};
 		559D131422D98E4700C96FC8 = {
@@ -266,6 +274,7 @@
 		55EECCD825117C3B0041EAE7 /* Data Providers */ = {
 			isa = PBXGroup;
 			children = (
+				55893B6D2513F56D00233677 /* DataProvider.swift */,
 				55AA47112506B1B900E25C59 /* MovieListDataProvider.swift */,
 				5507AB662509F9DA00112C3A /* MovieDetailsDataProvider.swift */,
 			);
@@ -275,7 +284,6 @@
 		55EECCDB2511905A0041EAE7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				55EECCDC2511907B0041EAE7 /* Movie+ImageUtils.swift */,
 				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
 				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
 			);
@@ -376,7 +384,6 @@
 				5507AB672509F9DA00112C3A /* MovieDetailsDataProvider.swift in Sources */,
 				55A6A9942511B6ED00305C29 /* RatingsView.swift in Sources */,
 				5506BAAE2512E2B10052B0F2 /* HomeCollectionViewController.swift in Sources */,
-				55EECCDD2511907B0041EAE7 /* Movie+ImageUtils.swift in Sources */,
 				5536610722DB037500BE03BB /* CrewCredit.swift in Sources */,
 				558A5A9825106C1400E5FB40 /* SectionBackgroundDecorationView.swift in Sources */,
 				5587114A25108079005A0975 /* MovieInfoCell.swift in Sources */,
@@ -398,6 +405,7 @@
 				55AA47122506B1B900E25C59 /* MovieListDataProvider.swift in Sources */,
 				55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */,
 				55D00F3D2505EACF00266167 /* CollectionViewCellConfigurator.swift in Sources */,
+				55893B6E2513F56D00233677 /* DataProvider.swift in Sources */,
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,
 				55EDD3572513F0C0004F8117 /* ListViewDataSource.swift in Sources */,

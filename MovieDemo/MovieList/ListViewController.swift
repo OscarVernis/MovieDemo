@@ -39,7 +39,7 @@ class ListViewController: UICollectionViewController {
         self.collectionView.dataSource = dataSource
         self.collectionView.prefetchDataSource = dataSource
         
-        dataProvider.completionHandler = refreshHandler
+        dataProvider.didUpdate = refreshHandler
         dataProvider.refresh()
     }
     

@@ -59,7 +59,7 @@ struct HomeSection {
             self.dataProvider = MovieListDataProvider(.Upcoming)
         }
         
-        self.dataProvider.completionHandler = dataProviderUpdated
+        self.dataProvider.didUpdate = dataProviderUpdated
         self.dataProvider.refresh()
     }
     

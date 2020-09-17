@@ -9,6 +9,8 @@
 import Foundation
 
 class MovieListDataProvider {
+    typealias Model = Movie
+        
     enum Service: Int {
         case NowPlaying
         case Popular
@@ -23,7 +25,10 @@ class MovieListDataProvider {
     
     let movieService = MovieDBService()
     
-    var movies = [Movie]()
+    var models = [Movie]()
+    var movies: [Movie] {
+        models
+    }
     
     var currentService: Service = .NowPlaying {
         didSet {
@@ -41,7 +46,11 @@ class MovieListDataProvider {
     var currentPage = 1
     var totalPages = 1
     
-    var completionHandler: (() -> Void)?
+    var isLastPage: Bool {
+        currentPage == totalPages
+    }
+    
+    var didUpdate: (() -> Void)?
     
     func movieServiceChanged() {
         if currentService != .Search {
@@ -88,15 +97,15 @@ class MovieListDataProvider {
             }
             
             if self.currentPage == 1 {
-                self.movies.removeAll()
+                self.models.removeAll()
             }
             
             self.totalPages = totalPages
             self.currentPage += 1
             
-            self.movies.append(contentsOf: movies)
+            self.models.append(contentsOf: movies)
             
-            self.completionHandler?()
+            self.didUpdate?()
         }
         
         switch currentService {
