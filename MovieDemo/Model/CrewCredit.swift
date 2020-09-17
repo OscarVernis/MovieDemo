@@ -9,7 +9,7 @@
 
 import ObjectMapper
 
-public class CrewCredit: Mappable {
+class CrewCredit: Mappable {
     var creditId: Int?
     var department: String?
     var gender: Int?
@@ -20,11 +20,11 @@ public class CrewCredit: Mappable {
     
     //MARK: - ObjectMapper
     
-    public required init?(map: Map) {
+    required init?(map: Map) {
         
     }
 
-    public func mapping(map: Map) {
+    func mapping(map: Map) {
         creditId <- map["credit_id"]
         department <- map["department"]
         gender <- map["gender"]
@@ -32,6 +32,20 @@ public class CrewCredit: Mappable {
         job <- map["job"]
         name <- map["name"]
         profilePath <- map["profile_path"]
+    }
+    
+}
+
+extension CrewCredit: Hashable {
+   func hash(into hasher: inout Hasher) {
+        hasher.combine(job)
+        hasher.combine(creditId)
+    }
+}
+
+extension CrewCredit: Equatable {
+    static func == (lhs: CrewCredit, rhs: CrewCredit) -> Bool {
+        return lhs.creditId == lhs.creditId
     }
     
 }

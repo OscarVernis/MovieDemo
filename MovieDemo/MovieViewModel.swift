@@ -9,7 +9,19 @@
 import Foundation
 
 struct MovieViewModel {
-    let movie: Movie
+    private var movie: Movie
+    
+    init(movie: Movie) {
+        self.movie = movie
+    }
+    
+    mutating func updateMovie(_ movie: Movie) {
+        self.movie = movie
+    }
+    
+    var id: Int? {
+        return movie.id
+    }
     
     var title: String {
         return movie.title ?? ""
@@ -52,6 +64,33 @@ struct MovieViewModel {
     func posterImageURL(size: MovieDBService.MoviePosterSize = .original) -> URL? {
         let url = (movie.posterPath != nil) ? MovieDBService.posterImageURL(forPath:movie.posterPath!, size: size) : nil
         return url
+    }
+    
+    var cast: [CastCredit] {
+        get {
+            return movie.cast ?? [CastCredit]()
+        }
+        set(cast) {
+            movie.cast = cast
+        }
+    }
+    
+    var crew: [CrewCredit] {
+        get {
+            return movie.crew ?? [CrewCredit]()
+        }
+        set(crew) {
+            movie.crew = crew
+        }
+    }
+    
+    var recommendedMovies: [Movie] {
+        get {
+            return movie.recommendedMovies ?? [Movie]()
+        }
+        set(movies) {
+            movie.recommendedMovies = movies
+        }
     }
     
 }

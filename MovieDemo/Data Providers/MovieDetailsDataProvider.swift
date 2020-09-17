@@ -10,10 +10,9 @@ import Foundation
 
 class MoviesDetailsDataProvider {
     private let movieService = MovieDBService()
+        
+    var movieViewModel:MovieViewModel!
     
-    var movie:Movie 
-    
-    var recommendedMovies = [Movie]()
     var isFetching = false
     var currentPage = 1
     var totalPages = 1
@@ -23,8 +22,8 @@ class MoviesDetailsDataProvider {
     var recommendedMoviesDidUpdate: (() -> Void)?
 
     
-    init(movie: Movie) {
-        self.movie = movie
+    init(movieViewModel: MovieViewModel) {
+        self.movieViewModel = movieViewModel
     }
     
     func refresh() {
@@ -37,7 +36,7 @@ class MoviesDetailsDataProvider {
     }
     
     private func fetchMovieDetails() {
-        movieService.fetchMovieDetails(movieId: movie.id!) { [weak self] movie, error in
+        movieService.fetchMovieDetails(movieId: movieViewModel.id!) { [weak self] movie, error in
             guard let self = self else { return }
 
             if error != nil {
@@ -45,22 +44,22 @@ class MoviesDetailsDataProvider {
             }
             
             if let movie = movie {
-                self.movie = movie
+                self.movieViewModel.updateMovie(movie)
                 self.detailsDidUpdate?()
             }
         }
     }
     
     private func fetchCredits() {
-        movieService.fetchMovieCredits(movieId: movie.id!) { [weak self] cast, crew, error in
+        movieService.fetchMovieCredits(movieId: movieViewModel.id!) { [weak self] cast, crew, error in
             guard let self = self else { return }
             
             if error != nil {
                 print(error!)
             }
             
-            self.movie.cast = cast
-            self.movie.crew = crew
+            self.movieViewModel.cast = cast!
+            self.movieViewModel.crew = crew!
             self.creditsDidUpdate?()
         }
     }
@@ -72,19 +71,21 @@ class MoviesDetailsDataProvider {
         
         isFetching = true
         
-        movieService.fetchRecommendMovies(movieId: movie.id!) { [weak self]  movies, totalPages, error in
+        movieService.fetchRecommendMovies(movieId: movieViewModel.id!) { [weak self]  movies, totalPages, error in
             guard let self = self, error == nil else { return }
             
             self.isFetching = false
 
-            if self.currentPage == 1 {
-                self.recommendedMovies.removeAll()
+            var recommendedMovies = [Movie]()
+            if self.currentPage != 1 {
+                recommendedMovies = self.movieViewModel.recommendedMovies
             }
             
             self.totalPages = totalPages
             self.currentPage += 1
             
-            self.recommendedMovies.append(contentsOf: movies)
+            recommendedMovies.append(contentsOf: movies)
+            self.movieViewModel.recommendedMovies = recommendedMovies
             self.recommendedMoviesDidUpdate?()
         }
     }

@@ -29,7 +29,7 @@ class MovieListViewController: UITableViewController {
         
         tableView.keyboardDismissMode = .onDrag
         
-        tableView.register(UINib(nibName: "MovieCell", bundle: .main), forCellReuseIdentifier: MovieCell.reuseIdentifier)
+        tableView.register(MovieCell.namedNib(), forCellReuseIdentifier: MovieCell.reuseIdentifier)
                 
         self.dataSource = MoviesTableViewDataSource(dataProvider: dataProvider, reuseIdentifier: "MovieCell")
         self.tableView.dataSource = dataSource

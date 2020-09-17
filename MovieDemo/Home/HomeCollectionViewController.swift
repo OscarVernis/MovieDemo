@@ -27,10 +27,10 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     
     fileprivate func setupDataSource() {
         let sections = [
-            HomeSection(.NowPlaying, index: 0, didUpdate: updateSection(_:)),
-            HomeSection(.Upcoming, index: 1, didUpdate: updateSection(_:)),
-            HomeSection(.Popular, index: 2, didUpdate: updateSection(_:)),
-            HomeSection(.TopRated, index: 3, didUpdate: updateSection(_:))
+            HomeSection(.NowPlaying, index: 0, didUpdate: updateSection),
+            HomeSection(.Upcoming, index: 1, didUpdate: updateSection),
+            HomeSection(.Popular, index: 2, didUpdate: updateSection),
+            HomeSection(.TopRated, index: 3, didUpdate: updateSection)
         ]
         
         dataSource = HomeCollectionViewDataSource(sections: sections)
@@ -51,11 +51,11 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func setupCollectionView() {
-        collectionView.register(UINib(nibName: "MovieBannerCell", bundle: .main), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
-        collectionView.register(UINib(nibName: "MoviePosterCell", bundle: .main), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
-        collectionView.register(UINib(nibName: "MovieListCell", bundle: .main), forCellWithReuseIdentifier: MovieListCell.reuseIdentifier)
-        collectionView.register(UINib(nibName: "MovieInfoCell", bundle: .main), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
-        collectionView.register(UINib(nibName: "SectionTitleView", bundle: .main), forSupplementaryViewOfKind: HomeCollectionViewController.sectionHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
+        collectionView.register(MovieBannerCell.namedNib(), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
+        collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
+        collectionView.register(MovieListCell.namedNib(), forCellWithReuseIdentifier: MovieListCell.reuseIdentifier)
+        collectionView.register(MovieInfoCell.namedNib(), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
+        collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: HomeCollectionViewController.sectionHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
         
         collectionView.collectionViewLayout = createLayout()
     }
