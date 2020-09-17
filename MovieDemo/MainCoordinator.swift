@@ -41,17 +41,15 @@ final class MainCoordinator {
     }
     
     func showMovieList(title: String, dataProvider: MovieListDataProvider) {
-//        let mdvc = MovieListViewController.instantiateFromStoryboard()
-//        mdvc.title = title
-//        mdvc.dataProvider = dataProvider
-//        mdvc.mainCoordinator = self
-//
-//        rootNavigationViewController?.pushViewController(mdvc, animated: true)
-        
-        let mdvc = ListViewController<MovieListDataProvider>()
+        let mdvc = ListViewController<MovieListDataProvider, MovieInfoCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
         mdvc.mainCoordinator = self
+        
+        mdvc.didSelectedItem = { index, movie in
+            self.showMovieDetail(movie: movie)
+        }
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }

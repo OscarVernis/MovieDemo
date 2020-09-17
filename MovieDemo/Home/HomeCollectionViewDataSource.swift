@@ -41,7 +41,7 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
             self.sectionHeaderButtonHandler?(section)
         }
         
-        HomeTitleSectionDecorator().configure(headerView: sectionTitleView, title: section.title, tapHandler: tapHandler)
+        HomeTitleSectionConfigurator().configure(headerView: sectionTitleView, title: section.title, tapHandler: tapHandler)
         
         return sectionTitleView
     }
@@ -71,7 +71,7 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         case .Popular:
             guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as? MovieInfoCell else { fatalError() }
             
-            MovieInfoCellDecorator().configure(cell: infoCell, withMovie: MovieViewModel(movie: movie))
+            MovieInfoCellConfigurator().configure(cell: infoCell, with: movie)
             cell = infoCell
         }
         

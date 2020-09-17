@@ -8,14 +8,15 @@
 
 import UIKit
 
-open class ListViewDataSource<Provider: ArrayDataProvider>: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
-    var dataProvider: Provider
+open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellConfigurator>: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+    var dataProvider: Provider!
+    var cellConfigurator: Configurator
     
     private let reuseIdentifier: String
     
-    init(dataProvider: Provider, reuseIdentifier: String) {
-        self.dataProvider = dataProvider
+    init(reuseIdentifier: String, configurator: Configurator) {
         self.reuseIdentifier = reuseIdentifier
+        self.cellConfigurator = configurator
     }
     
     func isLoadingCell(indexPath: IndexPath) -> Bool {
@@ -34,10 +35,10 @@ open class ListViewDataSource<Provider: ArrayDataProvider>: NSObject, UICollecti
         if isLoadingCell(indexPath: indexPath) {
             return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as! MovieInfoCell
-            let movie = dataProvider.models[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as! Configurator.Cell
+            let model = dataProvider.models[indexPath.row] as! Configurator.Model
             
-            MovieInfoCellDecorator().configure(cell: cell, withMovie: MovieViewModel(movie: movie as! Movie))
+            cellConfigurator.configure(cell: cell, with: model)
             
             return cell
         }

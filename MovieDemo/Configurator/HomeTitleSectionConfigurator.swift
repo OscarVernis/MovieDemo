@@ -1,5 +1,5 @@
 //
-//  HomeTitleSectionDecorator.swift
+//  HomeTitleSectionConfigurator.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 16/09/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HomeTitleSectionDecorator {
+struct HomeTitleSectionConfigurator {
     func configure(headerView: SectionTitleView, title: String, tapHandler: (() -> ())? = nil) {
         headerView.titleLabel.text = title
         headerView.tapHandler = tapHandler

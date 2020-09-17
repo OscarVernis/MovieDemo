@@ -1,5 +1,5 @@
 //
-//  MovieDetailTitleSectionDecorator.swift
+//  MovieDetailTitleSectionConfigurator.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 16/09/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct MovieDetailTitleSectionDecorator {
+struct MovieDetailTitleSectionConfigurator {
     func configure(headerView: SectionTitleView, title: String, tapHandler: (() -> ())? = nil) {
         headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 20)!
         

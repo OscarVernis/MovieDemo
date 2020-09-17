@@ -40,9 +40,14 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func setupSearch() {
-        let movieListController = ListViewController<MovieListDataProvider>()
+        let movieListController = ListViewController<MovieListDataProvider, MovieInfoCellConfigurator>()
         movieListController.dataProvider = searchDataProvider
+        movieListController.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
         movieListController.mainCoordinator = self.mainCoordinator
+        
+        movieListController.didSelectedItem = { index, movie in
+            self.mainCoordinator.showMovieDetail(movie: movie)
+        }
         
         let search = UISearchController(searchResultsController: movieListController)
         search.searchResultsUpdater = self

@@ -217,7 +217,7 @@ extension MovieDetailViewController {
                 }
             }
             
-            MovieDetailTitleSectionDecorator().configure(headerView: headerView, title: section.title(), tapHandler: tapHandler)
+            MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: section.title(), tapHandler: tapHandler)
             
             return headerView
         }
