@@ -40,6 +40,7 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         
         collectionView.keyboardDismissMode = .onDrag
         
+        collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
         collectionView.register(MovieInfoCell.namedNib(), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
         collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
         
@@ -64,6 +65,10 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row >= dataProvider.models.count {
+            return
+        }
+        
         let model = dataProvider.models[indexPath.row]
         
         didSelectedItem?(indexPath.row, model)

@@ -209,13 +209,24 @@ extension MovieDetailViewController {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
             
             
-            //TODO: Open Movie List when tapping header button
-            var tapHandler: (() -> ())? =  nil
-            if section == .RecommendedMovies {
+            var tapHandler: (() -> ())?
+            switch section {
+            case .Header:
+                tapHandler = nil
+            case .Cast:
                 tapHandler = {
-                    print("Recommended Movies")
+                    self.mainCoordinator.showCastCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.cast))
+                }
+            case .Crew:
+                tapHandler = {
+                    self.mainCoordinator.showCrewCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.crew))
+                }
+            case .RecommendedMovies:
+                tapHandler = {
+                    self.mainCoordinator.showMovieList(title: section.title(), dataProvider: RecommendedMoviesDataProvider(movieId: self.movie.id!))
                 }
             }
+            
             
             MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: section.title(), tapHandler: tapHandler)
             

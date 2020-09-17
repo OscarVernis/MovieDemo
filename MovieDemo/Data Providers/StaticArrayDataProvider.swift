@@ -30,7 +30,7 @@ class StaticArrayDataProvider<T>: ArrayDataProvider {
     }
     
     func refresh() {
-        
+        didUpdate?()
     }
     
 }

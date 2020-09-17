@@ -56,6 +56,8 @@ class RecommendedMoviesDataProvider: ArrayDataProvider {
         isFetching = true
         
         let fetchHandler: ([Movie], Int, Error?) -> () = { [weak self] movies, totalPages, error in
+            print("TotalPages: \(totalPages)")
+            
             guard let self = self else { return }
             
             self.isFetching = false

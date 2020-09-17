@@ -24,7 +24,7 @@ open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellCon
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if dataProvider.currentPage < dataProvider.totalPages {
+        if !dataProvider.isLastPage {
             return dataProvider.models.count + 1
         } else {
             return dataProvider.models.count
@@ -35,7 +35,7 @@ open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellCon
         if isLoadingCell(indexPath: indexPath) {
             return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as! Configurator.Cell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Configurator.Cell
             let model = dataProvider.models[indexPath.row] as! Configurator.Model
             
             cellConfigurator.configure(cell: cell, with: model)
