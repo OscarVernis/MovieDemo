@@ -71,7 +71,7 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         case .Popular:
             guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as? MovieInfoCell else { fatalError() }
             
-            infoCell.configure(withMovie: MovieViewModel(movie: movie))
+            MovieInfoCellDecorator().configure(cell: infoCell, withMovie: MovieViewModel(movie: movie))
             cell = infoCell
         }
         

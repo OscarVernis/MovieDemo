@@ -1,16 +1,15 @@
 //
-//  PagingTableViewDataSource.swift
+//  ListViewDataSource.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 07/09/20.
+//  Created by Oscar Vernis on 17/09/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-class MoviesTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDataSourcePrefetching {
+class ListViewDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     var dataProvider: MovieListDataProvider
-    lazy var cellConfigurator = MovieCellDecorator()
     
     private let reuseIdentifier: String
     
@@ -22,10 +21,11 @@ class MoviesTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDat
     func isLoadingCell(indexPath: IndexPath) -> Bool {
         return indexPath.row >= dataProvider.movies.count
     }
+}
     
-    // MARK: - Table view data source
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // MARK: - CollectionView data source
+extension ListViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if dataProvider.currentPage < dataProvider.totalPages {
             return dataProvider.movies.count + 1
         } else {
@@ -33,25 +33,23 @@ class MoviesTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDat
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if isLoadingCell(indexPath: indexPath) {
-            return tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath)
+            return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as! MovieInfoCell
             let movie = dataProvider.movies[indexPath.row]
             
-            cellConfigurator.configure(cell: cell, withMovie: MovieViewModel(movie: movie))
+            MovieInfoCellDecorator().configure(cell: cell, withMovie: MovieViewModel(movie: movie))
             
             return cell
         }
     }
     
-    // MARK: - Table view prefetching
-    
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         if indexPaths.contains(where: isLoadingCell) {
             dataProvider.fetchNextPage()
         }
     }
+    
 }
-

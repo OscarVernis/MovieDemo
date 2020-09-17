@@ -5,6 +5,8 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,51 +36,40 @@
             </objects>
             <point key="canvasLocation" x="921.73913043478262" y="-558.48214285714278"/>
         </scene>
-        <!--Movie List View Controller-->
-        <scene sceneID="YgW-rx-3db">
+        <!--List View Controller-->
+        <scene sceneID="t1X-sw-ngB">
             <objects>
-                <tableViewController storyboardIdentifier="MovieListViewController" definesPresentationContext="YES" id="4Fu-2b-ZlV" customClass="MovieListViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="VBH-he-7Q6">
+                <collectionViewController storyboardIdentifier="ListViewController" id="ABV-gY-UB3" customClass="ListViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Cj8-bk-xxg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" name="AppBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadingCell" rowHeight="58" id="uQk-lz-1bA" customClass="LoadingCell" customModule="MovieDemo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="58"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uQk-lz-1bA" id="qNa-pu-Gbb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gni-FX-Rc4">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SFx-gW-Lrz">
+                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TsB-hr-9Le">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="l0b-XN-j8Y">
-                                            <rect key="frame" x="188.5" y="10.5" width="37" height="37"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="37" id="4Nf-9I-BEJ"/>
-                                                <constraint firstAttribute="width" constant="37" id="JTd-eM-vzY"/>
-                                            </constraints>
-                                            <color key="color" red="0.23529411759999999" green="0.2784313725" blue="0.3411764706" alpha="1" colorSpace="calibratedRGB"/>
-                                        </activityIndicatorView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="l0b-XN-j8Y" firstAttribute="centerY" secondItem="qNa-pu-Gbb" secondAttribute="centerY" id="GD8-nw-wOz"/>
-                                        <constraint firstItem="l0b-XN-j8Y" firstAttribute="centerX" secondItem="qNa-pu-Gbb" secondAttribute="centerX" id="qaf-nK-z0L"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="activityIndicator" destination="l0b-XN-j8Y" id="rIW-G2-431"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
                         <connections>
-                            <outlet property="delegate" destination="4Fu-2b-ZlV" id="239-Ui-F2h"/>
+                            <outlet property="dataSource" destination="ABV-gY-UB3" id="wps-Cu-KHL"/>
+                            <outlet property="delegate" destination="ABV-gY-UB3" id="QJ0-1h-hBV"/>
+                            <outlet property="prefetchDataSource" destination="ABV-gY-UB3" id="30l-jL-Rfp"/>
                         </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="UIN-X7-gzE"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oao-nn-ngd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kBG-N4-8wm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1724.6376811594205" y="-558.48214285714278"/>
+            <point key="canvasLocation" x="1658" y="-558"/>
         </scene>
         <!--Movie Detail View Controller-->
         <scene sceneID="RLV-u3-CPG">
@@ -104,7 +95,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bb8-zL-Iw7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2486.9565217391305" y="-564.50892857142856"/>
+            <point key="canvasLocation" x="2417" y="-558"/>
         </scene>
     </scenes>
     <color key="tintColor" systemColor="systemPurpleColor"/>
@@ -112,6 +103,9 @@
         <namedColor name="AppBackgroundColor">
             <color red="0.94900000095367432" green="0.94900000095367432" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

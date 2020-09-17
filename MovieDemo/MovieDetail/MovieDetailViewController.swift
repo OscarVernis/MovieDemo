@@ -39,13 +39,10 @@ class MovieDetailViewController: UICollectionViewController {
     var movie: MovieViewModel!
     var dataProvider: MoviesDetailsDataProvider!
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>! = nil
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCollectionView()
-//        createDataSource()
         
         dataProvider = MoviesDetailsDataProvider(movieViewModel: movie)
         dataProvider.detailsDidUpdate = {

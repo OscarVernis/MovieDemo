@@ -32,7 +32,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-CN-0Ho" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ib7-CN-0Ho" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="102" y="40" width="50" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="Ikm-yR-Yw0"/>
