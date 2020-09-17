@@ -51,7 +51,7 @@ final class MainCoordinator {
     
     func showMovieDetail(movie: Movie) {
         let mdvc = MovieDetailViewController.instantiateFromStoryboard()
-        mdvc.movie = movie
+        mdvc.movie = MovieViewModel(movie: movie)
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }
     

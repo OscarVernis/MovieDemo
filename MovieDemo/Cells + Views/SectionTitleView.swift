@@ -9,7 +9,7 @@
 import UIKit
 
 class SectionTitleView: UICollectionReusableView {
-    static let reuseIdentifier = "title-supplementary-reuse-identifier"
+    static let reuseIdentifier = "SectionTitleView"
 
     @IBOutlet weak var titleLabel: UILabel!
     var tapHandler: (() -> ())? = nil

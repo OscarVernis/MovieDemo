@@ -28,6 +28,8 @@ class MovieListViewController: UITableViewController {
         tableView.refreshControl?.addTarget(self, action: #selector(refreshMovies), for: .valueChanged)
         
         tableView.keyboardDismissMode = .onDrag
+        
+        tableView.register(UINib(nibName: "MovieCell", bundle: .main), forCellReuseIdentifier: MovieCell.reuseIdentifier)
                 
         self.dataSource = MoviesTableViewDataSource(dataProvider: dataProvider, reuseIdentifier: "MovieCell")
         self.tableView.dataSource = dataSource

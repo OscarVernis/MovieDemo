@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="151" id="VYy-fX-XZ4" customClass="MovieCell" customModule="MovieDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="151"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VYy-fX-XZ4" id="50p-si-0jh">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="151"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7ts-o1-xhW">
+                        <rect key="frame" x="20" y="11" width="86" height="129"/>
+                        <color key="tintColor" name="PosterPlaceholderColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="7ts-o1-xhW" secondAttribute="height" multiplier="2:3" id="FIz-jF-zZ3"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IcZ-CE-8pU">
+                        <rect key="frame" x="122" y="15" width="272" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="xiE-u6-PZi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C02-28-2sz">
+                        <rect key="frame" x="122" y="55" width="272" height="36"/>
+                        <string key="text">As the gang return to Jumanji to rescue one of their own, they discover that nothing is as they expect. The players will have to brave parts unknown and unexplored in order to escape the world’s most dangerous game.</string>
+                        <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="13"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EYC-RZ-ZqO" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                        <rect key="frame" x="122" y="38" width="50" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="z1L-OR-vF5"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cv7-Y9-uDt">
+                        <rect key="frame" x="122" y="116" width="272" height="20"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sci Fi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2J-Aw-9rQ">
+                        <rect key="frame" x="122" y="95.5" width="272" height="19.5"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="EYC-RZ-ZqO" firstAttribute="top" secondItem="IcZ-CE-8pU" secondAttribute="bottom" constant="2" id="0NM-Dj-qPq"/>
+                    <constraint firstItem="P2J-Aw-9rQ" firstAttribute="leading" secondItem="IcZ-CE-8pU" secondAttribute="leading" id="2ys-xy-oJB"/>
+                    <constraint firstItem="7ts-o1-xhW" firstAttribute="top" secondItem="50p-si-0jh" secondAttribute="top" constant="11" id="5n4-6z-26g"/>
+                    <constraint firstItem="7ts-o1-xhW" firstAttribute="leading" secondItem="50p-si-0jh" secondAttribute="leading" constant="20" id="6h4-Mc-giQ"/>
+                    <constraint firstAttribute="trailing" secondItem="cv7-Y9-uDt" secondAttribute="trailing" constant="20" id="HPZ-kh-9lC"/>
+                    <constraint firstAttribute="trailing" secondItem="IcZ-CE-8pU" secondAttribute="trailing" constant="20" id="KHh-uL-oP9"/>
+                    <constraint firstItem="EYC-RZ-ZqO" firstAttribute="leading" secondItem="IcZ-CE-8pU" secondAttribute="leading" id="LNe-Pe-Lj2"/>
+                    <constraint firstAttribute="bottom" secondItem="cv7-Y9-uDt" secondAttribute="bottom" constant="15" id="MDh-j7-pVF"/>
+                    <constraint firstItem="IcZ-CE-8pU" firstAttribute="leading" secondItem="7ts-o1-xhW" secondAttribute="trailing" constant="16" id="OKg-4H-aYf"/>
+                    <constraint firstAttribute="trailing" secondItem="P2J-Aw-9rQ" secondAttribute="trailing" constant="20" id="VXk-pw-mld"/>
+                    <constraint firstItem="IcZ-CE-8pU" firstAttribute="top" secondItem="50p-si-0jh" secondAttribute="top" constant="15" id="ZC2-gQ-0Fy"/>
+                    <constraint firstItem="C02-28-2sz" firstAttribute="leading" secondItem="IcZ-CE-8pU" secondAttribute="leading" id="j2J-2m-saL"/>
+                    <constraint firstItem="C02-28-2sz" firstAttribute="top" secondItem="EYC-RZ-ZqO" secondAttribute="bottom" constant="7" id="pxo-jN-ffZ"/>
+                    <constraint firstAttribute="bottom" secondItem="7ts-o1-xhW" secondAttribute="bottom" constant="11" id="q0e-jE-ACN"/>
+                    <constraint firstItem="cv7-Y9-uDt" firstAttribute="top" secondItem="P2J-Aw-9rQ" secondAttribute="bottom" constant="1" id="tHa-y7-01g"/>
+                    <constraint firstItem="cv7-Y9-uDt" firstAttribute="leading" secondItem="IcZ-CE-8pU" secondAttribute="leading" id="vHj-0D-jyP"/>
+                    <constraint firstAttribute="trailing" secondItem="C02-28-2sz" secondAttribute="trailing" constant="20" id="w4V-bk-TRh"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="genresLabel" destination="P2J-Aw-9rQ" id="nIc-Kd-85b"/>
+                <outlet property="overviewLabel" destination="C02-28-2sz" id="Emp-EV-ppD"/>
+                <outlet property="posterImageView" destination="7ts-o1-xhW" id="G0I-NX-hYT"/>
+                <outlet property="ratingsView" destination="EYC-RZ-ZqO" id="ZgJ-ea-LJn"/>
+                <outlet property="releaseLabel" destination="cv7-Y9-uDt" id="RPy-pc-zKe"/>
+                <outlet property="titleLabel" destination="IcZ-CE-8pU" id="qsW-oJ-Dca"/>
+            </connections>
+            <point key="canvasLocation" x="143" y="81"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="PosterPlaceholderColor">
+            <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieDetailHeaderView" id="PMf-Op-O5r" customClass="MovieDetailHeaderView" customModule="MovieDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="493"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Jbr-GZ-3vS">
+                    <rect key="frame" x="0.0" y="1" width="414" height="167.5"/>
+                    <color key="tintColor" name="PosterPlaceholderColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="170" id="NEh-zV-MbP"/>
+                    </constraints>
+                </imageView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LQo-bM-Dgs">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TFu-sZ-VLy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="170"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="prominent"/>
+                </visualEffectView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="film" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ye6-aS-T8q">
+                    <rect key="frame" x="20" y="102.5" width="120" height="174.5"/>
+                    <color key="tintColor" name="PosterPlaceholderColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="J9N-hh-qC1"/>
+                        <constraint firstAttribute="width" secondItem="Ye6-aS-T8q" secondAttribute="height" multiplier="2:3" constant="2" id="tSV-32-4eR"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgl-PC-hzp">
+                    <rect key="frame" x="148" y="176" width="246" height="23.5"/>
+                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="2" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eO4-bs-p5M" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                    <rect key="frame" x="148" y="203.5" width="58" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="bUG-ej-HM7"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                            <real key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lm2-Uv-SaX">
+                    <rect key="frame" x="148" y="245.5" width="246" height="20"/>
+                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sci Fi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8S-bT-NPy">
+                    <rect key="frame" x="148" y="221.5" width="246" height="20"/>
+                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XQE-0V-edo">
+                    <rect key="frame" x="20" y="298.5" width="374" height="23.5"/>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBi-TM-Eh1">
+                    <rect key="frame" x="20" y="324" width="374" height="149"/>
+                    <string key="text">As the gang return to Jumanji to rescue one of their own, they discover that nothing is as they expect. The players will have to brave parts unknown and unexplored in order to escape the world’s most dangerous game.</string>
+                    <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="14"/>
+                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="pgs-zj-cHP"/>
+            <constraints>
+                <constraint firstItem="Jbr-GZ-3vS" firstAttribute="leading" secondItem="pgs-zj-cHP" secondAttribute="leading" id="03g-b3-Nwh"/>
+                <constraint firstItem="ZBi-TM-Eh1" firstAttribute="top" secondItem="XQE-0V-edo" secondAttribute="bottom" constant="2" id="2jF-k0-vzO"/>
+                <constraint firstItem="pgs-zj-cHP" firstAttribute="trailing" secondItem="xgl-PC-hzp" secondAttribute="trailing" constant="20" id="5fD-ZZ-QzQ"/>
+                <constraint firstItem="pgs-zj-cHP" firstAttribute="trailing" secondItem="c8S-bT-NPy" secondAttribute="trailing" constant="20" id="6tw-e3-eN8"/>
+                <constraint firstItem="pgs-zj-cHP" firstAttribute="trailing" secondItem="ZBi-TM-Eh1" secondAttribute="trailing" constant="20" id="8GE-MY-VKp"/>
+                <constraint firstItem="Lm2-Uv-SaX" firstAttribute="leading" secondItem="Ye6-aS-T8q" secondAttribute="trailing" constant="8" symbolic="YES" id="BvE-Oe-Ciy"/>
+                <constraint firstItem="XQE-0V-edo" firstAttribute="top" secondItem="Ye6-aS-T8q" secondAttribute="bottom" constant="20" id="DbU-dd-ZkY"/>
+                <constraint firstItem="Lm2-Uv-SaX" firstAttribute="top" secondItem="c8S-bT-NPy" secondAttribute="bottom" constant="4" id="G5M-JB-Htt"/>
+                <constraint firstItem="pgs-zj-cHP" firstAttribute="trailing" secondItem="Lm2-Uv-SaX" secondAttribute="trailing" constant="20" id="GRR-Ms-Vg4"/>
+                <constraint firstItem="c8S-bT-NPy" firstAttribute="top" secondItem="eO4-bs-p5M" secondAttribute="bottom" constant="8" id="Jn8-pB-iyi"/>
+                <constraint firstItem="Jbr-GZ-3vS" firstAttribute="top" secondItem="PMf-Op-O5r" secondAttribute="top" id="MKA-2W-rwI"/>
+                <constraint firstItem="XQE-0V-edo" firstAttribute="leading" secondItem="pgs-zj-cHP" secondAttribute="leading" constant="20" id="OQk-Mb-4wI"/>
+                <constraint firstItem="xgl-PC-hzp" firstAttribute="top" secondItem="Jbr-GZ-3vS" secondAttribute="bottom" constant="6" id="P1g-bR-v8J"/>
+                <constraint firstItem="xgl-PC-hzp" firstAttribute="leading" secondItem="Ye6-aS-T8q" secondAttribute="trailing" constant="8" id="QlN-RR-Xmn"/>
+                <constraint firstItem="pgs-zj-cHP" firstAttribute="bottom" secondItem="ZBi-TM-Eh1" secondAttribute="bottom" constant="20" id="So9-uW-jhX"/>
+                <constraint firstItem="Jbr-GZ-3vS" firstAttribute="leading" secondItem="pgs-zj-cHP" secondAttribute="leading" id="TNH-iZ-ibe"/>
+                <constraint firstItem="Ye6-aS-T8q" firstAttribute="centerY" secondItem="Jbr-GZ-3vS" secondAttribute="bottom" constant="20" id="UqL-Z9-U57"/>
+                <constraint firstItem="ZBi-TM-Eh1" firstAttribute="leading" secondItem="pgs-zj-cHP" secondAttribute="leading" constant="20" id="Xxz-Mt-4BH"/>
+                <constraint firstItem="eO4-bs-p5M" firstAttribute="top" secondItem="xgl-PC-hzp" secondAttribute="bottom" constant="4" id="Ysh-z6-35e"/>
+                <constraint firstItem="LQo-bM-Dgs" firstAttribute="leading" secondItem="Jbr-GZ-3vS" secondAttribute="leading" id="Z3n-xL-Lvx"/>
+                <constraint firstItem="Ye6-aS-T8q" firstAttribute="leading" secondItem="pgs-zj-cHP" secondAttribute="leading" constant="20" id="Zyx-1f-GE3"/>
+                <constraint firstItem="LQo-bM-Dgs" firstAttribute="top" secondItem="Jbr-GZ-3vS" secondAttribute="top" id="cNc-2b-YDo"/>
+                <constraint firstItem="c8S-bT-NPy" firstAttribute="leading" secondItem="Ye6-aS-T8q" secondAttribute="trailing" constant="8" id="eh1-jj-xoh"/>
+                <constraint firstItem="LQo-bM-Dgs" firstAttribute="trailing" secondItem="Jbr-GZ-3vS" secondAttribute="trailing" id="fIr-w7-ffi"/>
+                <constraint firstItem="eO4-bs-p5M" firstAttribute="leading" secondItem="xgl-PC-hzp" secondAttribute="leading" id="kVw-1h-Ok1"/>
+                <constraint firstItem="Jbr-GZ-3vS" firstAttribute="trailing" secondItem="pgs-zj-cHP" secondAttribute="trailing" id="nWQ-As-j6J"/>
+                <constraint firstItem="pgs-zj-cHP" firstAttribute="trailing" secondItem="XQE-0V-edo" secondAttribute="trailing" constant="20" id="qvC-be-slH"/>
+                <constraint firstItem="LQo-bM-Dgs" firstAttribute="bottom" secondItem="Jbr-GZ-3vS" secondAttribute="bottom" id="ypC-09-vtL"/>
+            </constraints>
+            <connections>
+                <outlet property="backdropImageView" destination="Jbr-GZ-3vS" id="9V5-wy-MgB"/>
+                <outlet property="genresLabel" destination="c8S-bT-NPy" id="KpW-fr-0Aw"/>
+                <outlet property="overviewLabel" destination="ZBi-TM-Eh1" id="Qwr-Da-A1n"/>
+                <outlet property="posterImageView" destination="Ye6-aS-T8q" id="W1S-7a-eqa"/>
+                <outlet property="ratingsView" destination="eO4-bs-p5M" id="XJz-zc-A8o"/>
+                <outlet property="releaseDateLabel" destination="Lm2-Uv-SaX" id="fJ0-3v-M44"/>
+                <outlet property="titleLabel" destination="xgl-PC-hzp" id="F1m-Pd-lyD"/>
+            </connections>
+            <point key="canvasLocation" x="-288" y="95"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="film" catalog="system" width="128" height="93"/>
+        <namedColor name="PosterPlaceholderColor">
+            <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
