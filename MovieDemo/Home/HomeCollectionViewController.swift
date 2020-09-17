@@ -81,6 +81,8 @@ extension HomeCollectionViewController {
             var section: NSCollectionLayoutSection?
             let sectionBuilder = MoviesCompositionalLayoutBuilder()
             
+            let sectionHeader = sectionBuilder.createTitleSectionHeader()
+            
             switch sectionIndex {
             case 0:
                 section = sectionBuilder.createBannerSection()
@@ -90,9 +92,12 @@ extension HomeCollectionViewController {
                 section = sectionBuilder.createInfoListSection()
             case 3:
                 section = sectionBuilder.createDecoratedListSection()
+                sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
             default:
                 section = nil
             }
+            
+            section?.boundarySupplementaryItems = [sectionHeader]
 
             return section
         }

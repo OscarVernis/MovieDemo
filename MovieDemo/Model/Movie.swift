@@ -22,6 +22,7 @@ class Movie: Mappable {
     var voteCount: Int?
     var cast: [CastCredit]?
     var crew: [CrewCredit]?
+    var recommendedMovies: [Movie]?
     var genres: [MovieGenre]?
     
     

@@ -10,7 +10,7 @@ import UIKit
 
 class MovieDetailHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "MovieDetailHeaderView"
-
+    
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

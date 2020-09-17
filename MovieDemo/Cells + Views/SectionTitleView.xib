@@ -17,7 +17,7 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TN-UF-p86">
                     <rect key="frame" x="0.0" y="16.5" width="328" height="27.5"/>
-                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -42,6 +42,7 @@
                 <constraint firstItem="8TN-UF-p86" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="xbq-5g-H5n"/>
             </constraints>
             <connections>
+                <outlet property="actionButton" destination="fDu-Kz-J1T" id="6uQ-My-OuM"/>
                 <outlet property="titleLabel" destination="8TN-UF-p86" id="BcM-GS-I5Z"/>
             </connections>
             <point key="canvasLocation" x="188.40579710144928" y="132.58928571428572"/>

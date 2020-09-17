@@ -9,7 +9,7 @@
 import UIKit
  
 struct MoviesCompositionalLayoutBuilder {
-    func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .absolute(48))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
@@ -17,6 +17,21 @@ struct MoviesCompositionalLayoutBuilder {
             elementKind: HomeCollectionViewController.sectionHeaderElementKind, alignment: .top)
         
         return sectionHeader
+    }
+    
+    //This section is used to show a Header without any items
+    func createEmptySection() ->  NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .absolute(1.0))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+                        
+        return section
     }
     
     func createBannerSection() ->  NSCollectionLayoutSection {
@@ -32,10 +47,7 @@ struct MoviesCompositionalLayoutBuilder {
         section.orthogonalScrollingBehavior = .groupPaging
         section.interGroupSpacing = 20
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
-                
-        let sectionHeader = createSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
+                        
         return section
     }
     
@@ -53,9 +65,6 @@ struct MoviesCompositionalLayoutBuilder {
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
         section.interGroupSpacing = 20
         
-        let sectionHeader = createSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-
         return section
     }
     
@@ -77,10 +86,6 @@ struct MoviesCompositionalLayoutBuilder {
         sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
         section.decorationItems = [sectionBackgroundDecoration]
                 
-        let sectionHeader = createSectionHeader()
-        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-        section.boundarySupplementaryItems = [sectionHeader]
-                
         return section
     }
     
@@ -95,10 +100,34 @@ struct MoviesCompositionalLayoutBuilder {
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 30, trailing: 20)
+                        
+        return section
+    }
+    
+    func createMovieDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .estimated(500))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: MovieDetailViewController.mainHeaderElementKind, alignment: .top)
         
-        let sectionHeader = createSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-                
+        return sectionHeader
+    }
+    
+    func createHorizontalCreditSection() ->  NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(115),
+                                               heightDimension: .absolute(230))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 20
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+
         return section
     }
     

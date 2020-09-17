@@ -41,9 +41,13 @@ extension MovieDBService {
         case w300, w780, w1280, original
     }
     
+    enum ProfileSize: String {
+        case w45, w185, h632, original
+    }
+    
     static let baseImageURL = "https://image.tmdb.org/t/p/"
     
-    static func backdropImageURL(forPath path: String, size: BackdropSize = .w300) -> URL {
+    static func backdropImageURL(forPath path: String, size: BackdropSize = .original) -> URL {
         var url = URL(string: baseImageURL)!
         url.appendPathComponent(size.rawValue)
         
@@ -51,6 +55,13 @@ extension MovieDBService {
     }
     
     static func posterImageURL(forPath path: String, size: MoviePosterSize = .original) -> URL {
+        var url = URL(string: baseImageURL)!
+        url.appendPathComponent(size.rawValue)
+        
+        return url.appendingPathComponent(path)
+    }
+    
+    static func profileImageURL(forPath path: String, size: ProfileSize = .original) -> URL {
         var url = URL(string: baseImageURL)!
         url.appendPathComponent(size.rawValue)
         

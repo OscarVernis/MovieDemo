@@ -10,14 +10,11 @@ import UIKit
 
 class SectionTitleView: UICollectionReusableView {
     static let reuseIdentifier = "SectionTitleView"
-
-    @IBOutlet weak var titleLabel: UILabel!
-    var tapHandler: (() -> ())? = nil
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var actionButton: UIButton!
+
+    var tapHandler: (() -> ())? = nil
     
     @IBAction func buttonTapped(_ sender: Any) {
         tapHandler?()

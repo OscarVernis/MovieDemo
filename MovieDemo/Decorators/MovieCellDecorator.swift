@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-struct MovieCellConfigurator {
+struct MovieCellDecorator {
     func configure(cell: MovieCell, withMovie movie: MovieViewModel) {
         cell.posterImageView.af.cancelImageRequest()
         cell.posterImageView.image = UIImage(systemName: "film")

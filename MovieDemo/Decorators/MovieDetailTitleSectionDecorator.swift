@@ -1,0 +1,19 @@
+//
+//  MovieDetailTitleSectionDecorator.swift
+//  MovieDemo
+//
+//  Created by Oscar Vernis on 16/09/20.
+//  Copyright © 2020 Oscar Vernis. All rights reserved.
+//
+
+import UIKit
+
+struct MovieDetailTitleSectionDecorator {
+    func configure(headerView: SectionTitleView, title: String) {
+        headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 18)!
+        
+        headerView.titleLabel.text = title
+        headerView.actionButton.isHidden = true
+        
+    }
+}
