@@ -10,26 +10,21 @@ import Foundation
 
 class MoviesDetailsDataProvider {
     private let movieService = MovieDBService()
-        
+    
     var movieViewModel:MovieViewModel!
     
     var isFetching = false
-    var currentPage = 1
-    var totalPages = 1
-
+    
     var detailsDidUpdate: (() -> Void)?
     var creditsDidUpdate: (() -> Void)?
     var recommendedMoviesDidUpdate: (() -> Void)?
-
+    
     
     init(movieViewModel: MovieViewModel) {
         self.movieViewModel = movieViewModel
     }
     
     func refresh() {
-        currentPage = 1
-        totalPages = 1
-        
         fetchMovieDetails()
         fetchCredits()
         fetchRecomendedMovies()
@@ -38,7 +33,7 @@ class MoviesDetailsDataProvider {
     private func fetchMovieDetails() {
         movieService.fetchMovieDetails(movieId: movieViewModel.id!) { [weak self] movie, error in
             guard let self = self else { return }
-
+            
             if error != nil {
                 print(error!)
             }
@@ -75,33 +70,13 @@ class MoviesDetailsDataProvider {
             guard let self = self, error == nil else { return }
             
             self.isFetching = false
-
-            var recommendedMovies = [Movie]()
-            if self.currentPage != 1 {
-                recommendedMovies = self.movieViewModel.recommendedMovies
-            }
             
-            self.totalPages = totalPages
-            self.currentPage += 1
-            
-            recommendedMovies.append(contentsOf: movies)
-            self.movieViewModel.recommendedMovies = recommendedMovies
+            self.movieViewModel.recommendedMovies = movies
             self.recommendedMoviesDidUpdate?()
         }
     }
     
     private func refreshRecommendedMovies() {
-        currentPage = 1
-        totalPages = 1
-        fetchRecomendedMovies()
-    }
-    
-    func fetchNextPageOfRecomendedMovies() {
-        if(currentPage >= totalPages) {
-            return
-        }
-        
-        currentPage += 1
         fetchRecomendedMovies()
     }
     
