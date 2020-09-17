@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MovieListDataProvider {
+class MovieListDataProvider: ArrayDataProvider {
     typealias Model = Movie
         
     enum Service: Int {

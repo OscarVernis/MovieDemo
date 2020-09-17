@@ -8,23 +8,31 @@
 
 import UIKit
 
-class ListViewController: UICollectionViewController {
+public class ListViewController<Provider: ArrayDataProvider> : UIViewController, UICollectionViewDelegate {
     enum Section: Int, CaseIterable {
         case Main
     }
     
-    var dataProvider: MovieListDataProvider!
-    var dataSource: ListViewDataSource?
+    var collectionView: UICollectionView!
+    
+    var dataProvider: Provider!
+    var dataSource: ListViewDataSource<Provider>?
     
     weak var mainCoordinator: MainCoordinator!
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
     }
     
     fileprivate func setup() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.delegate = self
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
+        view.addSubview(collectionView)
+        
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(refreshMovies), for: .valueChanged)
         
@@ -33,8 +41,6 @@ class ListViewController: UICollectionViewController {
         collectionView.register(MovieInfoCell.namedNib(), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
         collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
         
-        collectionView.collectionViewLayout = createLayout()
-
         self.dataSource = ListViewDataSource(dataProvider: dataProvider, reuseIdentifier: MovieInfoCell.reuseIdentifier)
         self.collectionView.dataSource = dataSource
         self.collectionView.prefetchDataSource = dataSource
@@ -55,9 +61,9 @@ class ListViewController: UICollectionViewController {
         dataProvider.refresh()
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = dataProvider.movies[indexPath.row]
-        mainCoordinator.showMovieDetail(movie: movie)
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let movie = dataProvider.models[indexPath.row]
+//        mainCoordinator.showMovieDetail(movie: movie)
     }
 }
 

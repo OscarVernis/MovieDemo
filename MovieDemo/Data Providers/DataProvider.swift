@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ArrayDataProvider {
+public protocol ArrayDataProvider {
     associatedtype Model
     
     var models: [Model] { get }

@@ -40,7 +40,7 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func setupSearch() {
-        let movieListController = ListViewController.instantiateFromStoryboard()
+        let movieListController = ListViewController<MovieListDataProvider>()
         movieListController.dataProvider = searchDataProvider
         movieListController.mainCoordinator = self.mainCoordinator
         

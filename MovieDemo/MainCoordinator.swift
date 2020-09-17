@@ -48,7 +48,7 @@ final class MainCoordinator {
 //
 //        rootNavigationViewController?.pushViewController(mdvc, animated: true)
         
-        let mdvc = ListViewController.instantiateFromStoryboard()
+        let mdvc = ListViewController<MovieListDataProvider>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
         mdvc.mainCoordinator = self
