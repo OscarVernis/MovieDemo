@@ -310,18 +310,18 @@
 			isa = PBXGroup;
 			children = (
 				559D132022D98E4800C96FC8 /* AppDelegate.swift */,
+				55A6A9902511A70E00305C29 /* Utils */,
+				55EECCDB2511905A0041EAE7 /* Extensions */,
 				556246192515610F005E63AB /* Coordinator */,
 				5562461A2515611A005E63AB /* Service */,
-				5562461B25156121005E63AB /* ViewModel */,
-				55A6A9902511A70E00305C29 /* Utils */,
 				55E07D7A22D9983C00AF0144 /* Model */,
-				55EECCDB2511905A0041EAE7 /* Extensions */,
+				5562461B25156121005E63AB /* ViewModel */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
 				5587114C25108082005A0975 /* Cells + Views */,
 				55596E022513071400A2B821 /* Configurators */,
 				5506BAA92512E2B10052B0F2 /* Home */,
 				55518D4A251151B300DAEB7F /* Movie Detail */,
-				55AA47102506B13A00E25C59 /* ListViewController */,
+				55AA47102506B13A00E25C59 /* Lists */,
 				559D132722D98E4B00C96FC8 /* Assets.xcassets */,
 				55164AFE25154AD200D219BC /* ExampleImages.xcassets */,
 				559D132922D98E4B00C96FC8 /* LaunchScreen.storyboard */,
@@ -339,13 +339,13 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		55AA47102506B13A00E25C59 /* ListViewController */ = {
+		55AA47102506B13A00E25C59 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
 				55EDD34E2513E161004F8117 /* ListViewController.swift */,
 				55EDD3562513F0C0004F8117 /* ListViewDataSource.swift */,
 			);
-			path = ListViewController;
+			path = Lists;
 			sourceTree = "<group>";
 		};
 		55E07D7A22D9983C00AF0144 /* Model */ = {
