@@ -18,24 +18,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="331" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-Jn-hzN">
-                        <rect key="frame" x="20" y="11" width="221" height="28"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Tenet Tenet Tenet Tenet Tenet Tenet Tenet Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-Jn-hzN">
+                        <rect key="frame" x="20" y="11" width="279" height="28"/>
                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ZJH-A4-S9F" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="253" y="20" width="58" height="10"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="10" id="OvK-Vv-79d"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                <real key="value" value="4"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="isRatingAvailable" value="YES"/>
-                        </userDefinedRuntimeAttributes>
-                    </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="diF-3h-MUb">
                         <rect key="frame" x="20" y="49.5" width="291" height="0.5"/>
                         <color key="backgroundColor" systemColor="separatorColor"/>
@@ -43,23 +31,38 @@
                             <constraint firstAttribute="height" constant="0.5" id="FLF-Xb-15l"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="YP1-zH-oWm" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                        <rect key="frame" x="311" y="20" width="0.0" height="10"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="jeo-qX-gIa"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacing">
+                                <integer key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="diF-3h-MUb" secondAttribute="bottom" id="8vK-zG-RPx"/>
                 <constraint firstItem="qIW-Jn-hzN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="Bhf-9K-iRU"/>
-                <constraint firstItem="ZJH-A4-S9F" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="CGp-Fw-Uuk"/>
-                <constraint firstItem="ZJH-A4-S9F" firstAttribute="leading" secondItem="qIW-Jn-hzN" secondAttribute="trailing" constant="12" id="L0M-Ws-UNk"/>
                 <constraint firstItem="qIW-Jn-hzN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="OAH-Kr-nkm"/>
-                <constraint firstAttribute="trailing" secondItem="ZJH-A4-S9F" secondAttribute="trailing" constant="20" id="Ymi-gU-tSu"/>
+                <constraint firstAttribute="trailing" secondItem="YP1-zH-oWm" secondAttribute="trailing" constant="20" id="SNt-xs-TM5"/>
+                <constraint firstItem="YP1-zH-oWm" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="UA0-JK-D8x"/>
+                <constraint firstItem="YP1-zH-oWm" firstAttribute="leading" secondItem="qIW-Jn-hzN" secondAttribute="trailing" constant="12" id="Zmf-4J-8Hn"/>
                 <constraint firstAttribute="bottom" secondItem="qIW-Jn-hzN" secondAttribute="bottom" constant="11" id="fLJ-V3-3qi"/>
                 <constraint firstItem="diF-3h-MUb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="l5w-zq-qIf"/>
                 <constraint firstAttribute="trailing" secondItem="diF-3h-MUb" secondAttribute="trailing" constant="20" id="uKq-cK-VeB"/>
             </constraints>
             <size key="customSize" width="331" height="44"/>
             <connections>
-                <outlet property="ratingsView" destination="ZJH-A4-S9F" id="n7J-V6-JMa"/>
+                <outlet property="ratingsView" destination="YP1-zH-oWm" id="Iyu-fz-lpv"/>
                 <outlet property="separator" destination="diF-3h-MUb" id="Djq-9N-x6i"/>
                 <outlet property="titleLabel" destination="qIW-Jn-hzN" id="qbP-0Z-l7v"/>
             </connections>

@@ -2,19 +2,14 @@
 //  RatingsView.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 15/09/20.
+//  Created by Oscar Vernis on 17/09/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
 @IBDesignable
-class RatingsView: UIStackView {
-    
-    @IBInspectable
-    var isRatingAvailable: Bool = true {
-        didSet { updateRating() }
-    }
+class RatingsView: UIView {
     
     @IBInspectable
     var rating: Float = 0 {
@@ -27,55 +22,61 @@ class RatingsView: UIStackView {
                 rating = 0
             }
             
-            updateRating()
+            setNeedsDisplay()
         }
     }
     
-    override func awakeFromNib() {
-        spacing = 2
+    @IBInspectable
+    var isRatingAvailable: Bool = true {
+        didSet { setNeedsDisplay() }
     }
     
-    func updateRating() {
-        for view in subviews {
-            view.removeFromSuperview()
-        }
+    @IBInspectable
+    var spacing: Int = 3 {
+        didSet { setNeedsDisplay() }
+    }
+     
+    private func drawRatingImage(_ name: String, position: Int, alpha: CGFloat = 1.0) {
+        let itemSize = bounds.height
         
-        if !isRatingAvailable {
-            self.alpha = 0.6
-            
-            addArrangedSubview(imageViewWithSymbol("slash.circle"))
-            addArrangedSubview(imageViewWithSymbol("slash.circle"))
-            addArrangedSubview(imageViewWithSymbol("slash.circle"))
-            addArrangedSubview(imageViewWithSymbol("slash.circle"))
-            addArrangedSubview(imageViewWithSymbol("slash.circle"))
+        let imageToDraw = UIImage(systemName: name)!.withTintColor(.systemOrange)
+        let rect = CGRect(x: (itemSize * CGFloat(position)) + CGFloat(spacing * position), y: 0, width: itemSize, height: itemSize)
+        imageToDraw.draw(in: rect, blendMode: .normal, alpha: alpha)
+    }
 
+    override func draw(_ rect: CGRect) {        
+        if !isRatingAvailable {
+            for n in 0...4 {
+                drawRatingImage("slash.circle", position: n, alpha: 0.6)
+            }
+            
             return
         }
         
-        self.alpha = 1.0
-
         let halfRating = rating / 2
         for n in 0...4 {
             if halfRating >= Float(n) + 0.9 {
-                addArrangedSubview(imageViewWithSymbol("circle.fill"))
+                drawRatingImage("circle.fill", position: n)
             }
             else if halfRating >= Float(n) + 0.4, halfRating < Float(n) + 0.9  {
-                addArrangedSubview(imageViewWithSymbol("circle.lefthalf.fill"))
+                drawRatingImage("circle.lefthalf.fill", position: n)
             } else {
-                addArrangedSubview(imageViewWithSymbol("circle"))
+                drawRatingImage("circle", position: n)
             }
         }
-        
     }
     
-    fileprivate func imageViewWithSymbol(_ name: String) -> UIImageView {
-        let imageView = UIImageView(image: UIImage(systemName: name))
-        imageView.tintColor = .systemOrange
-        
-        let ratioConstraint = NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: imageView, attribute: .height, multiplier: 1, constant: 0)
-        imageView.addConstraint(ratioConstraint)
-        
-        return imageView
+    override func contentHuggingPriority(for axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        return .required
+    }
+    
+    override func contentCompressionResistancePriority(for axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        return .required
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let itemSize = bounds.height
+        return CGSize(width: (itemSize  * 5) + CGFloat(spacing * 4), height: itemSize)
     }
     
 }

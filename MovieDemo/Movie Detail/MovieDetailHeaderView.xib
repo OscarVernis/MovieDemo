@@ -24,17 +24,6 @@
                         <constraint firstAttribute="width" constant="180" id="w2w-8m-7wU"/>
                     </constraints>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="2" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iTd-dL-kjt" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                    <rect key="frame" x="178" y="412.5" width="58" height="10"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="10" id="WUF-IC-1XY"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                            <real key="value" value="4"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" text="2020" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNd-sO-Ne0">
                     <rect key="frame" x="20" y="460.5" width="374" height="22"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
@@ -53,6 +42,21 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5FW-8A-qEE" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                    <rect key="frame" x="176" y="412.5" width="62" height="10"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="r1N-Vk-ghd"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="spacing">
+                            <integer key="value" value="3"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                            <real key="value" value="4"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Em8-ZA-zQ9">
                     <rect key="frame" x="20" y="380.5" width="374" height="29"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="21"/>
@@ -69,7 +73,6 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="DNB-Gv-WPX"/>
             <constraints>
-                <constraint firstItem="iTd-dL-kjt" firstAttribute="top" secondItem="Em8-ZA-zQ9" secondAttribute="bottom" constant="3" id="0SC-mn-3r3"/>
                 <constraint firstItem="vNd-sO-Ne0" firstAttribute="top" secondItem="IiY-az-QcY" secondAttribute="bottom" constant="4" id="5hT-HR-y2L"/>
                 <constraint firstItem="Em8-ZA-zQ9" firstAttribute="top" secondItem="jnN-nM-tlo" secondAttribute="bottom" constant="15" id="Jwh-oo-iHh"/>
                 <constraint firstItem="0pa-iL-dUc" firstAttribute="top" secondItem="vNd-sO-Ne0" secondAttribute="bottom" constant="8" id="L90-x8-6cA"/>
@@ -81,9 +84,10 @@
                 <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="vNd-sO-Ne0" secondAttribute="trailing" constant="20" id="c3H-Hl-NJK"/>
                 <constraint firstItem="vNd-sO-Ne0" firstAttribute="leading" secondItem="DNB-Gv-WPX" secondAttribute="leading" constant="20" id="cFh-pO-uSh"/>
                 <constraint firstItem="Vii-H4-uJz" firstAttribute="leading" secondItem="DNB-Gv-WPX" secondAttribute="leading" constant="20" id="cPd-FS-50o"/>
-                <constraint firstItem="iTd-dL-kjt" firstAttribute="centerX" secondItem="qol-Ef-Vfl" secondAttribute="centerX" id="cw0-ny-qZP"/>
                 <constraint firstItem="Vii-H4-uJz" firstAttribute="top" secondItem="0pa-iL-dUc" secondAttribute="bottom" id="dcM-iG-wOa"/>
-                <constraint firstItem="IiY-az-QcY" firstAttribute="top" secondItem="iTd-dL-kjt" secondAttribute="bottom" constant="12" id="h5d-Hl-Nq1"/>
+                <constraint firstItem="5FW-8A-qEE" firstAttribute="top" secondItem="Em8-ZA-zQ9" secondAttribute="bottom" constant="3" id="e0e-7O-sl6"/>
+                <constraint firstItem="IiY-az-QcY" firstAttribute="top" secondItem="5FW-8A-qEE" secondAttribute="bottom" constant="12" id="egO-EL-YdI"/>
+                <constraint firstItem="5FW-8A-qEE" firstAttribute="centerX" secondItem="qol-Ef-Vfl" secondAttribute="centerX" id="fM6-ce-pY4"/>
                 <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="0pa-iL-dUc" secondAttribute="trailing" constant="20" id="mK5-Fx-etv"/>
                 <constraint firstItem="jnN-nM-tlo" firstAttribute="centerX" secondItem="qol-Ef-Vfl" secondAttribute="centerX" id="nO7-e5-iZu"/>
                 <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="Vii-H4-uJz" secondAttribute="trailing" constant="20" id="prO-Ut-3M6"/>
@@ -94,7 +98,7 @@
                 <outlet property="genresLabel" destination="IiY-az-QcY" id="T2j-nq-kei"/>
                 <outlet property="overviewLabel" destination="Vii-H4-uJz" id="qcZ-w2-VjJ"/>
                 <outlet property="posterImageView" destination="jnN-nM-tlo" id="c24-aV-izZ"/>
-                <outlet property="ratingsView" destination="iTd-dL-kjt" id="eYx-jC-fac"/>
+                <outlet property="ratingsView" destination="5FW-8A-qEE" id="zTj-T2-d3F"/>
                 <outlet property="releaseDateLabel" destination="vNd-sO-Ne0" id="a5L-Yi-6fd"/>
                 <outlet property="titleLabel" destination="Em8-ZA-zQ9" id="m9v-kF-7q6"/>
             </connections>

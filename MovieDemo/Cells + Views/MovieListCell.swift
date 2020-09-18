@@ -15,6 +15,7 @@ class MovieListCell: UICollectionViewCell {
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var ratingsView: RatingsView!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
