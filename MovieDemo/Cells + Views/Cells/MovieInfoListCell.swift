@@ -1,5 +1,5 @@
 //
-//  MovieInfoCell.swift
+//  MovieInfoListCell.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 14/09/20.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class MovieInfoCell: UICollectionViewCell {
-    static let reuseIdentifier = "MovieInfoCell"
+class MovieInfoListCell: UICollectionViewCell {
+    static let reuseIdentifier = "MovieInfoListCell"
 
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

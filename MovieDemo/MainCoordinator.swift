@@ -44,7 +44,7 @@ final class MainCoordinator {
         let mdvc = ListViewController<Provider, CrewCreditCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: PhotoCreditListCell.reuseIdentifier, configurator: CrewCreditCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CrewCreditCellConfigurator())
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
@@ -54,7 +54,7 @@ final class MainCoordinator {
         let mdvc = ListViewController<Provider, CastCreditCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: PhotoCreditListCell.reuseIdentifier, configurator: CastCreditCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CastCreditCellConfigurator())
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
@@ -64,7 +64,7 @@ final class MainCoordinator {
         let mdvc = ListViewController<Provider, MovieInfoCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
         mdvc.mainCoordinator = self
         
         mdvc.didSelectedItem = { index, movie in

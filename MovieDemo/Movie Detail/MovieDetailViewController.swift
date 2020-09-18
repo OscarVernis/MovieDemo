@@ -99,10 +99,9 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
-        collectionView.register(PosterStackCell.namedNib(), forCellWithReuseIdentifier: PosterStackCell.reuseIdentifier)
+        collectionView.register(MoviePosterInfoCell.namedNib(), forCellWithReuseIdentifier: MoviePosterInfoCell.reuseIdentifier)
         
         collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
-        collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
         collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
         collectionView.register(MovieDetailHeaderView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.mainHeaderElementKind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier)
         collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.sectionTitleHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
@@ -236,11 +235,11 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                         
             return cell
         case .RecommendedMovies:
-            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterStackCell.reuseIdentifier, for: indexPath) as? PosterStackCell else { fatalError() }
+            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as? MoviePosterInfoCell else { fatalError() }
             
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             
-            PosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
+            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
 //            posterCell.configure(withMovie: MovieViewModel(movie: recommendedMovie))
             return posterCell
         }

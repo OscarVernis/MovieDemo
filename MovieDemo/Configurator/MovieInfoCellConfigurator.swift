@@ -10,9 +10,9 @@ import UIKit
 
 struct MovieInfoCellConfigurator: CellConfigurator {
     typealias Model = Movie
-    typealias Cell = MovieInfoCell
+    typealias Cell = MovieInfoListCell
     
-    func configure(cell: MovieInfoCell, with model: Model) {
+    func configure(cell: MovieInfoListCell, with model: Model) {
         let viewModel = MovieViewModel(movie: model)
         
         cell.posterImageView.af.cancelImageRequest()

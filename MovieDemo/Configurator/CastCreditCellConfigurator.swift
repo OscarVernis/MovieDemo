@@ -11,7 +11,7 @@ import AlamofireImage
 
 struct CastCreditCellConfigurator: CellConfigurator {
     typealias Model = CastCredit
-    typealias Cell = PhotoCreditListCell
+    typealias Cell = CreditPhotoListCell
     
     func configure(cell: Cell, with model: Model) {
         cell.creditImageView.af.cancelImageRequest()

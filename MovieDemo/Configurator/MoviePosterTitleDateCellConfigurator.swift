@@ -1,5 +1,5 @@
 //
-//  PosterStackCellConfigurator.swift
+//  MoviePosterTitleDateCellConfigurator.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 18/09/20.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-struct PosterTitleRatingCellConfigurator {
-    func configure(cell: PosterStackCell, with model: MovieViewModel) {
+struct MoviePosterTitleDateCellConfigurator {
+    func configure(cell: MoviePosterInfoCell, with model: MovieViewModel) {
         cell.posterImageView.af.cancelImageRequest()
         cell.posterImageView.image = UIImage(systemName: "film")
         
@@ -20,7 +20,7 @@ struct PosterTitleRatingCellConfigurator {
         cell.setPosterRatio((3/2))
         
         cell.title = model.title
-        cell.rating = model.rating
+        cell.secondaryInfo = model.releaseDateWithoutYear
         
         cell.loadViews()
     }

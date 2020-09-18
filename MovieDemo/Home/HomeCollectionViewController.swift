@@ -46,7 +46,7 @@ class HomeCollectionViewController: UIViewController {
     fileprivate func setupSearch() {
         let movieListController = ListViewController<MovieListDataProvider, MovieInfoCellConfigurator>()
         movieListController.dataProvider = searchDataProvider
-        movieListController.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
+        movieListController.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
         movieListController.mainCoordinator = self.mainCoordinator
         
         movieListController.didSelectedItem = { index, movie in
@@ -66,11 +66,10 @@ class HomeCollectionViewController: UIViewController {
         collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
         view.addSubview(collectionView)
         
-        collectionView.register(PosterStackCell.namedNib(), forCellWithReuseIdentifier: PosterStackCell.reuseIdentifier)
+        collectionView.register(MoviePosterInfoCell.namedNib(), forCellWithReuseIdentifier: MoviePosterInfoCell.reuseIdentifier)
         collectionView.register(MovieBannerCell.namedNib(), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
-        collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
-        collectionView.register(MovieListCell.namedNib(), forCellWithReuseIdentifier: MovieListCell.reuseIdentifier)
-        collectionView.register(MovieInfoCell.namedNib(), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
+        collectionView.register(MovieRatingListCell.namedNib(), forCellWithReuseIdentifier: MovieRatingListCell.reuseIdentifier)
+        collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
         collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: HomeCollectionViewController.sectionHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
         
         collectionView.collectionViewLayout = createLayout()

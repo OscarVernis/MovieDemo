@@ -58,18 +58,18 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
             bannerCell.configure(withMovie: MovieViewModel(movie: movie))
             cell = bannerCell
         case .Upcoming:
-            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterStackCell.reuseIdentifier, for: indexPath) as? PosterStackCell else { fatalError() }
+            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as? MoviePosterInfoCell else { fatalError() }
             
-            PosterTitleDateCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
+            MoviePosterTitleDateCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
             cell = posterCell
         case .TopRated:
-            guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as? MovieListCell else { fatalError() }
+            guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieRatingListCell.reuseIdentifier, for: indexPath) as? MovieRatingListCell else { fatalError() }
             
             let isLastCell = indexPath.row == 9 //dataProvider.movies.count - 1
             listCell.configure(withMovie: MovieViewModel(movie: movie), showSeparator: !isLastCell)
             cell = listCell
         case .Popular:
-            guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoCell.reuseIdentifier, for: indexPath) as? MovieInfoCell else { fatalError() }
+            guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as? MovieInfoListCell else { fatalError() }
             
             MovieInfoCellConfigurator().configure(cell: infoCell, with: movie)
             cell = infoCell

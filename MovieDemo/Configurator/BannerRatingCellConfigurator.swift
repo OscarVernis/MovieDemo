@@ -9,7 +9,7 @@
 import UIKit
 
 struct BannerRatingCellConfigurator {
-    func configure(cell: PosterStackCell, with model: MovieViewModel) {
+    func configure(cell: MoviePosterInfoCell, with model: MovieViewModel) {
         cell.posterImageView.af.cancelImageRequest()
         cell.posterImageView.image = UIImage(systemName: "film")
         

@@ -1,5 +1,5 @@
 //
-//  PhotoCreditListCell.swift
+//  CreditPhotoListCell.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 17/09/20.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class PhotoCreditListCell: UICollectionViewCell {
-    static let reuseIdentifier = "PhotoCreditListCell"
+class CreditPhotoListCell: UICollectionViewCell {
+    static let reuseIdentifier = "CreditPhotoListCell"
 
     @IBOutlet weak var creditImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

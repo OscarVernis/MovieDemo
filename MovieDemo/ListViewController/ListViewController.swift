@@ -40,8 +40,8 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         
         collectionView.keyboardDismissMode = .onDrag
         
-        collectionView.register(PhotoCreditListCell.namedNib(), forCellWithReuseIdentifier: PhotoCreditListCell.reuseIdentifier)
-        collectionView.register(MovieInfoCell.namedNib(), forCellWithReuseIdentifier: MovieInfoCell.reuseIdentifier)
+        collectionView.register(CreditPhotoListCell.namedNib(), forCellWithReuseIdentifier: CreditPhotoListCell.reuseIdentifier)
+        collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
         collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
         
         collectionView.prefetchDataSource = dataSource

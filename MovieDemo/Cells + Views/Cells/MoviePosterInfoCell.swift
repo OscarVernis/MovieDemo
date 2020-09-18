@@ -1,5 +1,5 @@
 //
-//  PosterStackCell.swift
+//  MoviePosterInfoCell.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 18/09/20.
@@ -8,8 +8,8 @@
 
 import UIKit
 
-class PosterStackCell: UICollectionViewCell {
-    static let reuseIdentifier = "PosterStackCell"
+class MoviePosterInfoCell: UICollectionViewCell {
+    static let reuseIdentifier = "MoviePosterInfoCell"
 
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
