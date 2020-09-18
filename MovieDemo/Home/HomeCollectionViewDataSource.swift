@@ -58,9 +58,9 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
             bannerCell.configure(withMovie: MovieViewModel(movie: movie))
             cell = bannerCell
         case .Upcoming:
-            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }
+            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterStackCell.reuseIdentifier, for: indexPath) as? PosterStackCell else { fatalError() }
             
-            posterCell.configure(withMovie: MovieViewModel(movie: movie))
+            PosterTitleDateCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
             cell = posterCell
         case .TopRated:
             guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as? MovieListCell else { fatalError() }

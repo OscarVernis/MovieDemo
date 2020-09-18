@@ -41,7 +41,7 @@ struct MoviesCompositionalLayoutBuilder {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
-                                               heightDimension: .estimated(300))
+                                               heightDimension: .absolute(300))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -58,7 +58,7 @@ struct MoviesCompositionalLayoutBuilder {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(140),
-                                               heightDimension: .absolute(260))
+                                               heightDimension: .estimated(260))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)

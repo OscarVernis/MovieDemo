@@ -28,7 +28,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nWO-kl-edL" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nWO-kl-edL" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="5" y="282" width="62" height="10"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -66,6 +66,11 @@
             <point key="canvasLocation" x="38.405797101449281" y="12.723214285714285"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="nWO-kl-edL">
+            <size key="intrinsicContentSize" width="62" height="10"/>
+        </designable>
+    </designables>
     <resources>
         <namedColor name="PosterPlaceholderColor">
             <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>

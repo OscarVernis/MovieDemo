@@ -46,6 +46,9 @@ class MovieDetailViewController: UIViewController {
     
     var collectionView: UICollectionView!
     
+    var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
+    var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
+    
     required init(dataProvider: MoviesDetailsDataProvider) {
         self.dataProvider = dataProvider
         super.init(nibName: nil, bundle: nil)
@@ -83,10 +86,8 @@ class MovieDetailViewController: UIViewController {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)?.safeAreaInsets.top
-        if topInset != nil {
-            collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset!, left: 0, bottom: 0, right: 0)
-        }
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        
 
         //Load Background Blur View
         if let imageURL = movie.posterImageURL(size: .w342) {
@@ -97,6 +98,8 @@ class MovieDetailViewController: UIViewController {
             bgView.imageView.af.setImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
+        
+        collectionView.register(PosterStackCell.namedNib(), forCellWithReuseIdentifier: PosterStackCell.reuseIdentifier)
         
         collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
         collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
@@ -144,14 +147,16 @@ extension MovieDetailViewController {
             case .Cast:
                 section = sectionBuilder.createHorizontalCreditSection()
                 
-                section?.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
+                section?.contentInsets.top = 5
+                section?.contentInsets.bottom = 0
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Crew:
                 section = sectionBuilder.createInfoListSection(withHeight: 50)
                 
-                section?.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 10, trailing: 20)
+                section?.contentInsets.top = 5
+                section?.contentInsets.bottom = 10
 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
@@ -159,6 +164,7 @@ extension MovieDetailViewController {
                 section = sectionBuilder.createHorizontalPosterSection()
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
+                section?.contentInsets.bottom = self.bottomInset + 10
                 section?.boundarySupplementaryItems = [sectionHeader]
             }
             
@@ -230,11 +236,12 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                         
             return cell
         case .RecommendedMovies:
-            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }
+            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterStackCell.reuseIdentifier, for: indexPath) as? PosterStackCell else { fatalError() }
             
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             
-            posterCell.configure(withMovie: MovieViewModel(movie: recommendedMovie))
+            PosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
+//            posterCell.configure(withMovie: MovieViewModel(movie: recommendedMovie))
             return posterCell
         }
     }
@@ -246,8 +253,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
             
             //Adjust the top of the Poster Image so it doesn't go unde the bar
-            let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)?.safeAreaInsets.top
-            headerView.topConstraint.constant = topInset! + 55
+            headerView.topConstraint.constant = topInset + 55
             
             headerView.configure(movie: movie)
             self.movieHeader = headerView
@@ -273,7 +279,6 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                     self.mainCoordinator.showMovieList(title: section.title(), dataProvider: RecommendedMoviesDataProvider(movieId: self.movie.id!))
                 }
             }
-            
             
             MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: section.title(), tapHandler: tapHandler)
             

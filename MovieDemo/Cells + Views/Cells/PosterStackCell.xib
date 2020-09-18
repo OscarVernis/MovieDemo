@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Qpd-aH-vM8" customClass="PosterStackCell" customModule="MovieDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="247"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aWX-c4-sGV">
+                <rect key="frame" x="0.0" y="0.0" width="140" height="247"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="cWA-gu-tFe">
+                        <rect key="frame" x="0.0" y="0.0" width="140" height="210"/>
+                        <color key="tintColor" name="PosterPlaceholderColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="cWA-gu-tFe" secondAttribute="height" multiplier="2:3" placeholder="YES" id="XZ3-DP-2jP"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pRz-I2-y3r">
+                        <rect key="frame" x="5" y="215" width="130" height="32"/>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="pRz-I2-y3r" firstAttribute="top" secondItem="cWA-gu-tFe" secondAttribute="bottom" constant="5" id="0ME-V4-usk"/>
+                    <constraint firstAttribute="bottom" secondItem="pRz-I2-y3r" secondAttribute="bottom" id="261-7W-zoL"/>
+                    <constraint firstAttribute="trailing" secondItem="pRz-I2-y3r" secondAttribute="trailing" constant="5" id="AjL-Mh-vZT"/>
+                    <constraint firstAttribute="trailing" secondItem="cWA-gu-tFe" secondAttribute="trailing" id="MJc-c0-4li"/>
+                    <constraint firstItem="cWA-gu-tFe" firstAttribute="top" secondItem="aWX-c4-sGV" secondAttribute="top" id="cSc-Ef-vcs"/>
+                    <constraint firstItem="pRz-I2-y3r" firstAttribute="leading" secondItem="aWX-c4-sGV" secondAttribute="leading" constant="5" id="lkn-6c-24V"/>
+                    <constraint firstItem="cWA-gu-tFe" firstAttribute="leading" secondItem="aWX-c4-sGV" secondAttribute="leading" id="pA4-jZ-qLg"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="140" height="247"/>
+            <connections>
+                <outlet property="posterImageView" destination="cWA-gu-tFe" id="ZQz-pb-Rh2"/>
+                <outlet property="stackView" destination="pRz-I2-y3r" id="Bio-OS-5q3"/>
+            </connections>
+            <point key="canvasLocation" x="-521.73913043478262" y="8.3705357142857135"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="PosterPlaceholderColor">
+            <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

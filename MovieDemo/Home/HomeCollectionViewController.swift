@@ -66,6 +66,7 @@ class HomeCollectionViewController: UIViewController {
         collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
         view.addSubview(collectionView)
         
+        collectionView.register(PosterStackCell.namedNib(), forCellWithReuseIdentifier: PosterStackCell.reuseIdentifier)
         collectionView.register(MovieBannerCell.namedNib(), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
         collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
         collectionView.register(MovieListCell.namedNib(), forCellWithReuseIdentifier: MovieListCell.reuseIdentifier)
