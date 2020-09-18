@@ -17,10 +17,8 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
-        
     
-    @IBOutlet weak var posterImageViewTopConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
     override func awakeFromNib() {
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 12
@@ -28,6 +26,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     
     func configure(movie: MovieViewModel) {
         if let url = movie.posterImageURL(size: .w342) {
+            posterImageView.contentMode = .scaleAspectFill
             posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
         
@@ -38,7 +37,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         overviewLabel.text = movie.overview
         
         if let runtime = movie.runtime {
-            releaseDateLabel.text = "\(runtime) • \(movie.releaseYear)"
+            releaseDateLabel.text = "\(movie.releaseYear)  •  \(runtime)"
         } else {
             releaseDateLabel.text = "\(movie.releaseYear)"
         }

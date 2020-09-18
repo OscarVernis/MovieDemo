@@ -60,7 +60,14 @@ struct MovieViewModel {
     }
     
     var runtime: String? {
-        return movie.runtime != nil ? "\(movie.runtime!) m" : nil
+        guard let runtime = movie.runtime else { return nil }
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        guard let formattedString = formatter.string(from: Double(runtime * 60)) else { return nil }
+        
+        return formattedString
     }
     
     var releaseYear: String {

@@ -19,9 +19,9 @@ class CreditListCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func configure(crewCredit: CrewCredit) {
+    func configure(crewCredit: CrewCredit, jobsString: String?) {
         nameLabel.text = crewCredit.name
-        jobLabel.text = crewCredit.job
+        jobLabel.text = jobsString ?? ""
     }
 
 }

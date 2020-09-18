@@ -36,21 +36,32 @@ class MovieDetailViewController: UIViewController {
 
     weak var mainCoordinator: MainCoordinator!
     
-    var movie: MovieViewModel!
-    var dataProvider: MoviesDetailsDataProvider!
+    var movie: MovieViewModel {
+        return dataProvider.movieViewModel
+    }
+    
+    var dataProvider: MoviesDetailsDataProvider
     
     var movieHeader: MovieDetailHeaderView?
     
     var collectionView: UICollectionView!
     
+    required init(dataProvider: MoviesDetailsDataProvider) {
+        self.dataProvider = dataProvider
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    convenience init() {
+        fatalError("init() has not been implemented")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-        navigationItem.setHidesBackButton(false, animated: true)
-        navigationItem.leftItemsSupplementBackButton = true
-
         setupCollectionView()
         setupDataProvider()
 
@@ -65,14 +76,19 @@ class MovieDetailViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
+        //Set NavigationBar/ScrollView settings for design
+        self.navigationItem.largeTitleDisplayMode = .always
+
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
+        //Set so the scrollIndicator stops before the status bar
         let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)?.safeAreaInsets.top
         if topInset != nil {
             collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset!, left: 0, bottom: 0, right: 0)
         }
-                                
+
+        //Load Background Blur View
         if let imageURL = movie.posterImageURL(size: .w342) {
             collectionView.backgroundColor = .clear
 
@@ -92,7 +108,6 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataProvider() {
-        dataProvider = MoviesDetailsDataProvider(movieViewModel: movie)
         dataProvider.detailsDidUpdate = {
             self.collectionView.reloadData()
         }
@@ -157,24 +172,20 @@ extension MovieDetailViewController {
 
 // MARK: UICollectionViewDelegate
 extension MovieDetailViewController: UICollectionViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let scrollY = scrollView.contentOffset.y
-//        self.movieHeader?.posterImageViewTopConstraint.constant = scrollY < 0 ? scrollY + 100 : 100
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: Show Cast List when tapping
+        //TODO: Show Credit Movie List or Credit Detail when tapping
         let section = Section(rawValue: indexPath.section)!
         switch section {
         case .Header:
-            print("Tap")
+            break
         case .Cast:
             print("Tap")
         case .Crew:
             print("Tap")
         case .RecommendedMovies:
-            let movie = dataProvider.movieViewModel.recommendedMovies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: movie)
+            let recommendedMovie = movie.recommendedMovies[indexPath.row]
+            mainCoordinator.showMovieDetail(movie: recommendedMovie)
         }
     }
 }
@@ -186,46 +197,44 @@ extension MovieDetailViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let s = Section(rawValue: section)!
-        switch s {
+        let sectionIndex = Section(rawValue: section)!
+        switch sectionIndex {
         case .Header:
-            return 0
+            return 0 //Dummy section to show Header
         case .Cast:
-            return dataProvider.movieViewModel.topCast.count
+            return movie.topCast.count
         case .Crew:
-            return dataProvider.movieViewModel.topCrew.count
+            return movie.topCrew.count
         case .RecommendedMovies:
-            return dataProvider.movieViewModel.recommendedMovies.count
+            return movie.recommendedMovies.count
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let s = Section(rawValue: indexPath.section)!
-        switch s {
+        let sectionIndex = Section(rawValue: indexPath.section)!
+        switch sectionIndex {
         case .Header:
             fatalError("This section should be empty!")
         case .Cast:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
             
-            let cast = dataProvider.movieViewModel.topCast[indexPath.row]
+            let cast = movie.topCast[indexPath.row]
             cell.configure(castCredit: cast)
             
             return cell
         case .Crew:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditListCell.reuseIdentifier, for: indexPath) as? CreditListCell else { fatalError() }
             
-            let crew = dataProvider.movieViewModel.topCrew[indexPath.row]
-            cell.configure(crewCredit: crew)
-            
-            cell.jobLabel.text = dataProvider.movieViewModel.crewCreditJobString(crewCreditId: crew.id!)
-            
+            let crew = movie.topCrew[indexPath.row]
+            cell.configure(crewCredit: crew, jobsString: movie.crewCreditJobString(crewCreditId: crew.id!))
+                        
             return cell
         case .RecommendedMovies:
             guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.reuseIdentifier, for: indexPath) as? MoviePosterCell else { fatalError() }
             
-            let movie = dataProvider.movieViewModel.recommendedMovies[indexPath.row]
+            let recommendedMovie = movie.recommendedMovies[indexPath.row]
             
-            posterCell.configure(withMovie: MovieViewModel(movie: movie))
+            posterCell.configure(withMovie: MovieViewModel(movie: recommendedMovie))
             return posterCell
         }
     }
@@ -236,6 +245,10 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         if section == .Header {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
             
+            //Adjust the top of the Poster Image so it doesn't go unde the bar
+            let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)?.safeAreaInsets.top
+            headerView.topConstraint.constant = topInset! + 55
+            
             headerView.configure(movie: movie)
             self.movieHeader = headerView
             
@@ -243,11 +256,10 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         } else {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
             
-            
             var tapHandler: (() -> ())?
             switch section {
             case .Header:
-                tapHandler = nil
+                break
             case .Cast:
                 tapHandler = {
                     self.mainCoordinator.showCastCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.cast))
