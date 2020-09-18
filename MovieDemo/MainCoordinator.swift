@@ -34,7 +34,7 @@ final class MainCoordinator {
     }
     
     func showHome() {
-        let hvc = HomeCollectionViewController.instantiateFromStoryboard()
+        let hvc = HomeCollectionViewController()
         hvc.mainCoordinator = self
         
         rootNavigationViewController?.viewControllers = [hvc]
@@ -75,7 +75,7 @@ final class MainCoordinator {
     }
     
     func showMovieDetail(movie: Movie) {
-        let mdvc = MovieDetailViewController.instantiateFromStoryboard()
+        let mdvc = MovieDetailViewController()
         mdvc.movie = MovieViewModel(movie: movie)
         mdvc.mainCoordinator = self
         

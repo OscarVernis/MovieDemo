@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import AlamofireImage
 
-
-class MovieDetailViewController: UICollectionViewController {
+class MovieDetailViewController: UIViewController {
     enum Section: Int, CaseIterable {
         case Header
         case Cast
@@ -39,14 +39,57 @@ class MovieDetailViewController: UICollectionViewController {
     var movie: MovieViewModel!
     var dataProvider: MoviesDetailsDataProvider!
     
+    var movieHeader: MovieDetailHeaderView?
+    
+    var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftItemsSupplementBackButton = true
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        navigationItem.setHidesBackButton(false, animated: true)
+        navigationItem.leftItemsSupplementBackButton = true
+
         setupCollectionView()
+        setupDataProvider()
+
+    }
+    
+    fileprivate func setupCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
+        view.addSubview(collectionView)
         
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+                                
+        if let imageURL = movie.posterImageURL(size: .w342) {
+            collectionView.backgroundColor = .clear
+
+            let bgView = UINib(nibName: "BlurBackgroundView", bundle: .main).instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
+
+            bgView.imageView.af.setImage(withURL: imageURL)
+            collectionView.backgroundView = bgView
+        }
+        
+        collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
+        collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
+        collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
+        collectionView.register(MovieDetailHeaderView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.mainHeaderElementKind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier)
+        collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.sectionTitleHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
+
+        collectionView.collectionViewLayout = createLayout()
+    }
+    
+    fileprivate func setupDataProvider() {
         dataProvider = MoviesDetailsDataProvider(movieViewModel: movie)
         dataProvider.detailsDidUpdate = {
-            
+            self.collectionView.reloadData()
         }
         
         dataProvider.creditsDidUpdate = {
@@ -64,37 +107,27 @@ class MovieDetailViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         
         //Set Navigation Bar background transparent
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithTransparentBackground()
+//        
+//        let image = UIImage(systemName: "arrow.left.circle.fill")
+//        appearance.setBackIndicatorImage(image, transitionMaskImage: image)
+//        
+//        navigationController?.navigationBar.standardAppearance = appearance
+//        navigationController?.navigationBar.compactAppearance = appearance
+//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         //Revert Navigation Bar background to default
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.compactAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    }
-    
-    fileprivate func setupCollectionView() {
-        collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        
-        collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
-        collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
-        collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
-        collectionView.register(MovieDetailHeaderView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.mainHeaderElementKind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier)
-        collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.sectionTitleHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
-
-        collectionView.collectionViewLayout = createLayout()
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithDefaultBackground()
+//
+//        navigationController?.navigationBar.standardAppearance = appearance
+//        navigationController?.navigationBar.compactAppearance = appearance
+//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
 }
@@ -136,7 +169,6 @@ extension MovieDetailViewController {
                 section?.boundarySupplementaryItems = [sectionHeader]
             }
             
-
             return section
         }
                 
@@ -145,13 +177,32 @@ extension MovieDetailViewController {
 
 }
 
-extension MovieDetailViewController {
+// MARK: UICollectionViewDelegate
+extension MovieDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //TODO: Show Cast List when tapping
+        let section = Section(rawValue: indexPath.section)!
+        switch section {
+        case .Header:
+            print("Tap")
+        case .Cast:
+            print("Tap")
+        case .Crew:
+            print("Tap")
+        case .RecommendedMovies:
+            let movie = dataProvider.movieViewModel.recommendedMovies[indexPath.row]
+            mainCoordinator.showMovieDetail(movie: movie)
+        }
+    }
+}
+
 // MARK: UICollectionViewDataSource
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+extension MovieDetailViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return Section.allCases.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let s = Section(rawValue: section)!
         switch s {
         case .Header:
@@ -165,7 +216,7 @@ extension MovieDetailViewController {
         }
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let s = Section(rawValue: indexPath.section)!
         switch s {
         case .Header:
@@ -196,13 +247,14 @@ extension MovieDetailViewController {
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let section = Section(rawValue: indexPath.section)!
 
         if section == .Header {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
             
             headerView.configure(movie: movie)
+            self.movieHeader = headerView
             
             return headerView
         } else {
@@ -232,24 +284,6 @@ extension MovieDetailViewController {
             
             return headerView
         }
-        
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: Show Cast List when tapping
-        let section = Section(rawValue: indexPath.section)!
-        switch section {
-        case .Header:
-            print("Tap")
-        case .Cast:
-            print("Tap")
-        case .Crew:
-            print("Tap")
-        case .RecommendedMovies:
-            let movie = dataProvider.movieViewModel.recommendedMovies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: movie)
-        }
-        
     }
     
 }

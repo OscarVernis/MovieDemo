@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BlurBackgroundView" customModule="MovieDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="453"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ImR-sy-5CQ">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="453"/>
+                </imageView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPZ-Jz-Smd">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="453"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EQU-Pp-0Ls">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="453"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="systemThickMaterial"/>
+                </visualEffectView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="ImR-sy-5CQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="EWv-AK-pQF"/>
+                <constraint firstItem="KPZ-Jz-Smd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="aBj-G3-VBJ"/>
+                <constraint firstAttribute="trailing" secondItem="ImR-sy-5CQ" secondAttribute="trailing" id="e2Z-aA-yP2"/>
+                <constraint firstItem="ImR-sy-5CQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="juX-Zh-3XP"/>
+                <constraint firstAttribute="bottom" secondItem="KPZ-Jz-Smd" secondAttribute="bottom" id="oUz-M2-q2b"/>
+                <constraint firstAttribute="trailing" secondItem="KPZ-Jz-Smd" secondAttribute="trailing" id="ple-US-wrN"/>
+                <constraint firstItem="KPZ-Jz-Smd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="seh-xa-ihI"/>
+                <constraint firstAttribute="bottom" secondItem="ImR-sy-5CQ" secondAttribute="bottom" id="zAG-15-Cv0"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageView" destination="ImR-sy-5CQ" id="smh-Nk-bhX"/>
+            </connections>
+            <point key="canvasLocation" x="222" y="-167"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

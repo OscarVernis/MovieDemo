@@ -52,11 +52,15 @@ struct MovieViewModel {
         return movie.voteAverage ?? 0
     }
     
-    var genresString: String {
+    func genresString(separatedBy separator: String = ", ") -> String {
         let genres = movie.genres?.map { $0.string() } ?? []
-        let genresString = genres.joined(separator: ", ")
+        let genresString = genres.joined(separator: separator)
         
         return genresString
+    }
+    
+    var runtime: String? {
+        return movie.runtime != nil ? "\(movie.runtime!) m" : nil
     }
     
     var releaseYear: String {

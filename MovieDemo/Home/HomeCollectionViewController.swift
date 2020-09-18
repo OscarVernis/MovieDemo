@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HomeCollectionViewController: UIViewController {
     static let sectionBackgroundDecorationElementKind = "section-background-element-kind"
     static let sectionHeaderElementKind = "section-header-element-kind"
     
@@ -17,9 +17,13 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     var dataSource: HomeCollectionViewDataSource!
     var searchDataProvider = MovieListDataProvider(.Search)
     
+    var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
                 
+        self.title = "Movies"
+        
         setupSearch()
         setupCollectionView()
         setupDataSource()
@@ -56,6 +60,12 @@ class HomeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     fileprivate func setupCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.delegate = self
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
+        view.addSubview(collectionView)
+        
         collectionView.register(MovieBannerCell.namedNib(), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
         collectionView.register(MoviePosterCell.namedNib(), forCellWithReuseIdentifier: MoviePosterCell.reuseIdentifier)
         collectionView.register(MovieListCell.namedNib(), forCellWithReuseIdentifier: MovieListCell.reuseIdentifier)
@@ -115,8 +125,8 @@ extension HomeCollectionViewController {
 }
 
 // MARK: - CollectionView Delegate
-extension HomeCollectionViewController {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+extension HomeCollectionViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = dataSource.sections[indexPath.section]
         let movie = section.movies[indexPath.row]
                 
