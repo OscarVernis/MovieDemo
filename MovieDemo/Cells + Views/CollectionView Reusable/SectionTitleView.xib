@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TN-UF-p86">
-                    <rect key="frame" x="0.0" y="16.5" width="328" height="27.5"/>
+                    <rect key="frame" x="0.0" y="16" width="328" height="28"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-Kz-J1T">
-                    <rect key="frame" x="334" y="0.0" width="56" height="46"/>
+                    <rect key="frame" x="334" y="0.0" width="56" height="45.5"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
                     <state key="normal" title="VIEW ALL">
                         <color key="titleColor" systemColor="systemPurpleColor"/>
@@ -39,7 +39,7 @@
                 <constraint firstAttribute="trailing" secondItem="fDu-Kz-J1T" secondAttribute="trailing" id="MiH-7r-kwh"/>
                 <constraint firstItem="fDu-Kz-J1T" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="g4H-Q4-fKU"/>
                 <constraint firstItem="8TN-UF-p86" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="krK-1N-aph"/>
-                <constraint firstItem="8TN-UF-p86" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="xbq-5g-H5n"/>
+                <constraint firstItem="8TN-UF-p86" firstAttribute="bottom" secondItem="U6b-Vx-4bR" secondAttribute="bottom" id="xbq-5g-H5n"/>
             </constraints>
             <connections>
                 <outlet property="actionButton" destination="fDu-Kz-J1T" id="6uQ-My-OuM"/>

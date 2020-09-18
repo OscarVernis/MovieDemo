@@ -67,6 +67,11 @@ class MovieDetailViewController: UIViewController {
         
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        
+        let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)?.safeAreaInsets.top
+        if topInset != nil {
+            collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset!, left: 0, bottom: 0, right: 0)
+        }
                                 
         if let imageURL = movie.posterImageURL(size: .w342) {
             collectionView.backgroundColor = .clear
@@ -101,33 +106,6 @@ class MovieDetailViewController: UIViewController {
         }
         
         dataProvider.refresh()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        //Set Navigation Bar background transparent
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithTransparentBackground()
-//        
-//        let image = UIImage(systemName: "arrow.left.circle.fill")
-//        appearance.setBackIndicatorImage(image, transitionMaskImage: image)
-//        
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.compactAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        //Revert Navigation Bar background to default
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithDefaultBackground()
-//
-//        navigationController?.navigationBar.standardAppearance = appearance
-//        navigationController?.navigationBar.compactAppearance = appearance
-//        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
 }
@@ -179,6 +157,11 @@ extension MovieDetailViewController {
 
 // MARK: UICollectionViewDelegate
 extension MovieDetailViewController: UICollectionViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let scrollY = scrollView.contentOffset.y
+//        self.movieHeader?.posterImageViewTopConstraint.constant = scrollY < 0 ? scrollY + 100 : 100
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //TODO: Show Cast List when tapping
         let section = Section(rawValue: indexPath.section)!
