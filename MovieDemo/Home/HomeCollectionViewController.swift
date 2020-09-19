@@ -23,22 +23,28 @@ class HomeCollectionViewController: UIViewController {
         super.viewDidLoad()
                 
         self.title = "Movies"
-        
+                
         setupSearch()
         setupCollectionView()
         setupDataSource()
     }
     
     fileprivate func setupDataSource() {
+        let didUpdate: (Int) -> Void = { [weak self] section in
+            self?.collectionView.reloadSections(IndexSet(integer: section))
+        }
+        
         let sections = [
-            HomeSection(.NowPlaying, index: 0, didUpdate: updateSection),
-            HomeSection(.Upcoming, index: 1, didUpdate: updateSection),
-            HomeSection(.Popular, index: 2, didUpdate: updateSection),
-            HomeSection(.TopRated, index: 3, didUpdate: updateSection)
+            HomeSection(.NowPlaying, index: 0, didUpdate: didUpdate),
+            HomeSection(.Upcoming, index: 1, didUpdate: didUpdate),
+            HomeSection(.Popular, index: 2, didUpdate: didUpdate),
+            HomeSection(.TopRated, index: 3, didUpdate: didUpdate)
         ]
         
         dataSource = HomeCollectionViewDataSource(sections: sections)
-        dataSource.sectionHeaderButtonHandler = showMovieList(section:)
+        dataSource.sectionHeaderButtonHandler = { [weak self] section in
+            self?.showMovieList(section: section)
+        }
         
         collectionView.dataSource = dataSource
     }
@@ -47,16 +53,16 @@ class HomeCollectionViewController: UIViewController {
         let movieListController = ListViewController<MovieListDataProvider, MovieInfoCellConfigurator>()
         movieListController.dataProvider = searchDataProvider
         movieListController.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
-        movieListController.mainCoordinator = self.mainCoordinator
-        
-        movieListController.didSelectedItem = { index, movie in
-            self.mainCoordinator.showMovieDetail(movie: movie)
+        movieListController.mainCoordinator = mainCoordinator
+
+        movieListController.didSelectedItem = { [weak self] index, movie in
+            self?.mainCoordinator.showMovieDetail(movie: movie)
         }
-        
-//        let search = UISearchController(searchResultsController: movieListController)
-//        search.searchResultsUpdater = self
-//        search.delegate = self
-//        self.navigationItem.searchController = search
+
+        let search = UISearchController(searchResultsController: movieListController)
+        search.searchResultsUpdater = self
+        search.delegate = self
+        navigationItem.searchController = search
     }
     
     fileprivate func setupCollectionView() {
@@ -71,8 +77,6 @@ class HomeCollectionViewController: UIViewController {
         collectionView.register(MovieRatingListCell.namedNib(), forCellWithReuseIdentifier: MovieRatingListCell.reuseIdentifier)
         collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
         collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: HomeCollectionViewController.sectionHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
-        
-        collectionView.collectionViewLayout = createLayout()
     }
     
 //MARK: - Actions
@@ -80,11 +84,7 @@ class HomeCollectionViewController: UIViewController {
         let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
         mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
     }
-    
-    func updateSection(_ section: Int) {
-        collectionView.reloadSections(IndexSet(integer: section))
-    }
-    
+
 }
 
 //MARK: - CollectionView CompositionalLayout

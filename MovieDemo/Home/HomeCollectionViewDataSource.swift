@@ -37,8 +37,8 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         guard let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as? SectionTitleView  else { fatalError() }
         
         let section = sections[indexPath.section]
-        let tapHandler: (() -> ())? = {
-            self.sectionHeaderButtonHandler?(section)
+        let tapHandler: (() -> ())? = { [weak self] in
+            self?.sectionHeaderButtonHandler?(section)
         }
         
         HomeTitleSectionConfigurator().configure(headerView: sectionTitleView, title: section.title, tapHandler: tapHandler)

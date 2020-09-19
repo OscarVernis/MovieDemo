@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HomeSection {
+class HomeSection {
     enum SectionType: Int, CaseIterable {
         case NowPlaying
         case Popular
@@ -59,11 +59,11 @@ struct HomeSection {
             self.dataProvider = MovieListDataProvider(.Upcoming)
         }
         
-        self.dataProvider.didUpdate = dataProviderUpdated
+        self.dataProvider.didUpdate = { [weak self] in
+            self?.didUpdate?(index)
+        }
+        
         self.dataProvider.refresh()
     }
     
-    func dataProviderUpdated() {
-        didUpdate?(index)
-    }
 }

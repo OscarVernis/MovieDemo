@@ -49,16 +49,18 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         dataSource?.dataProvider = dataProvider
         
         dataProvider.didUpdate = { [weak self] in
-            guard let self = self else { return }
-
-            if self.collectionView.refreshControl?.isRefreshing ?? false {
-                self.collectionView.refreshControl?.endRefreshing()
-            }
-
-            self.collectionView.reloadData()
+            self?.reload()
         }
                 
         dataProvider.refresh()
+    }
+    
+    func reload() {
+        if self.collectionView.refreshControl?.isRefreshing ?? false {
+            self.collectionView.refreshControl?.endRefreshing()
+        }
+
+        self.collectionView.reloadData()
     }
     
     @objc func refresh() {
