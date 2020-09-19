@@ -115,8 +115,6 @@ class MovieDetailViewController: UIViewController {
         }
         
         dataProvider.detailsDidUpdate = updateCollectionView
-        dataProvider.creditsDidUpdate = updateCollectionView
-        dataProvider.recommendedMoviesDidUpdate = updateCollectionView
         
         dataProvider.refresh()
     }

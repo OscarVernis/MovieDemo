@@ -15,10 +15,7 @@ class MoviesDetailsDataProvider {
     
     var isFetching = false
     
-    var detailsDidUpdate: (() -> Void)?
-    var creditsDidUpdate: (() -> Void)?
-    var recommendedMoviesDidUpdate: (() -> Void)?
-    
+    var detailsDidUpdate: (() -> Void)?    
     
     init(movieViewModel: MovieViewModel) {
         self.movieViewModel = movieViewModel
@@ -26,8 +23,6 @@ class MoviesDetailsDataProvider {
     
     func refresh() {
         fetchMovieDetails()
-        fetchCredits()
-        fetchRecomendedMovies()
     }
     
     private func fetchMovieDetails() {
@@ -43,41 +38,6 @@ class MoviesDetailsDataProvider {
                 self.detailsDidUpdate?()
             }
         }
-    }
-    
-    private func fetchCredits() {
-        movieService.fetchMovieCredits(movieId: movieViewModel.id!) { [weak self] cast, crew, error in
-            guard let self = self else { return }
-            
-            if error != nil {
-                print(error!)
-            }
-            
-            self.movieViewModel.cast = cast!
-            self.movieViewModel.crew = crew!
-            self.creditsDidUpdate?()
-        }
-    }
-    
-    private func fetchRecomendedMovies() {
-        if isFetching {
-            return
-        }
-        
-        isFetching = true
-        
-        movieService.fetchRecommendMovies(movieId: movieViewModel.id!) { [weak self]  movies, totalPages, error in
-            guard let self = self, error == nil else { return }
-            
-            self.isFetching = false
-            
-            self.movieViewModel.recommendedMovies = movies
-            self.recommendedMoviesDidUpdate?()
-        }
-    }
-    
-    private func refreshRecommendedMovies() {
-        fetchRecomendedMovies()
     }
     
 }

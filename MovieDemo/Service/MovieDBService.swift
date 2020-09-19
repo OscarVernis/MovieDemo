@@ -131,7 +131,8 @@ extension MovieDBService {
 extension MovieDBService {
     func fetchMovieDetails(movieId: Int, completion: @escaping (Movie?, Error?) -> ()) {
         let url = endpoint(forPath: "/movie/\(movieId)")
-        let params = defaultParameters()
+        var params = defaultParameters()
+        params["append_to_response"] = "credits,recommendations"
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
@@ -146,34 +147,6 @@ extension MovieDBService {
                 completion(nil, error)
             }
         }
-    }
-
-    func fetchMovieCredits(movieId: Int, completion: @escaping ([CastCredit]?, [CrewCredit]?, Error?) -> ()) {
-        let url = endpoint(forPath: "/movie/\(movieId)/credits")
-        let params = defaultParameters()
-        
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any] else {
-                    completion(nil, nil, response.error)
-                    return
-                }
-                
-                if let castData = json["cast"] as? [[String: Any]], let crewData = json["crew"] as? [[String: Any]] {
-                    let cast = Array<CastCredit>.init(JSONArray: castData)
-                    let crew = Array<CrewCredit>.init(JSONArray: crewData)
-                    
-                    completion(cast, crew, nil)
-                } else {
-                    completion(nil, nil, response.error)
-                }
-            case .failure(let error):
-                completion(nil, nil, error)
-            }
-        }
-        
     }
     
     func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {

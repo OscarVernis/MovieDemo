@@ -42,6 +42,9 @@ class Movie: Mappable {
         runtime <- map["runtime"]
         genres <- (map["genre_ids"], MovieGenreTransformer()) //Movie lists return genres as this: "genre_ids": [14, 28, 80]
         genres <- (map["genres"], MovieGenreDictionaryTransformer()) //Movie details returns as this: "genres": [{" id": 18, "name": "Drama" }]
+        cast <- map["credits.cast"]
+        crew <- map["credits.crew"]
+        recommendedMovies <- map["recommendations.results"]
     }
     
 }
