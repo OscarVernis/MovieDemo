@@ -146,7 +146,7 @@ extension MovieDetailViewController {
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Crew:
-                section = sectionBuilder.createInfoListSection(withHeight: 50)
+                section = sectionBuilder.createTwoColumListSection(withHeight: 50)
                 
                 section?.contentInsets.top = 5
                 section?.contentInsets.bottom = 10

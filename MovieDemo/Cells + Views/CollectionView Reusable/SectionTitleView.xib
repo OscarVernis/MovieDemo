@@ -16,15 +16,15 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8TN-UF-p86">
-                    <rect key="frame" x="0.0" y="16" width="328" height="28"/>
+                    <rect key="frame" x="0.0" y="16" width="338" height="28"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-Kz-J1T">
-                    <rect key="frame" x="334" y="0.0" width="56" height="45.5"/>
+                    <rect key="frame" x="344" y="0.0" width="46" height="45.5"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="12"/>
-                    <state key="normal" title="VIEW ALL">
+                    <state key="normal" title="SEE ALL">
                         <color key="titleColor" systemColor="systemPurpleColor"/>
                     </state>
                     <connections>
