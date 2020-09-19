@@ -265,18 +265,30 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             case .Header:
                 break
             case .Cast:
+                if movie.cast.count == 0 {
+                    break
+                }
+                
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
                     self.mainCoordinator.showCastCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
                 }
             case .Crew:
+                if movie.crew.count == 0 {
+                    break
+                }
+                
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
                     self.mainCoordinator.showCrewCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
                 }
             case .RecommendedMovies:
+                if movie.recommendedMovies.count == 0 {
+                    break
+                }
+                
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
 

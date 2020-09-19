@@ -11,8 +11,10 @@ import UIKit
 class LoadingCell: UICollectionViewCell {
     static let reuseIdentifier = "LoadingCell"
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    override func prepareForReuse() {
+        activityIndicator.startAnimating()
     }
-
+    
 }

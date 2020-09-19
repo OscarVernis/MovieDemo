@@ -119,6 +119,14 @@ struct MovieViewModel {
         }
     }
     
+    var topCast = [CastCredit]()
+    
+    mutating func updateTopCast() {
+        guard let cast = movie.cast else { return }
+        
+        topCast = Array(cast.prefix(8)).sorted { ($0.order ?? 0) < ($1.order ?? 0) }
+    }
+    
     var topCrew = [CrewCredit]()
     
     mutating func updateTopCrew() {
@@ -145,14 +153,6 @@ struct MovieViewModel {
         let jobsString = jobs.joined(separator: ", ")
         
         return jobsString
-    }
-    
-    var topCast = [CastCredit]()
-    
-    mutating func updateTopCast() {
-        guard let cast = movie.cast else { return }
-        
-        topCast = Array(cast.prefix(8))
     }
     
 }

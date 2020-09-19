@@ -81,6 +81,7 @@ class MovieListDataProvider: ArrayDataProvider {
     
     private func fetchMovies() {
         if isFetching {
+            print("Already fetching")
             return
         }
         
@@ -101,7 +102,6 @@ class MovieListDataProvider: ArrayDataProvider {
             }
             
             self.totalPages = totalPages
-            self.currentPage += 1
             
             self.models.append(contentsOf: movies)
             

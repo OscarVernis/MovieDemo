@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellConfigurator>: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellConfigurator>: NSObject, UICollectionViewDataSource {
     weak var dataProvider: Provider!
     var cellConfigurator: Configurator
     
@@ -41,12 +41,6 @@ open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellCon
             cellConfigurator.configure(cell: cell, with: model)
             
             return cell
-        }
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: isLoadingCell) {
-            dataProvider.fetchNextPage()
         }
     }
     

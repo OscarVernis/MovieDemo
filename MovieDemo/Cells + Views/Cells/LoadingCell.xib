@@ -28,6 +28,9 @@
                 <constraint firstItem="RUd-7N-MuB" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="mY2-VP-Z6X"/>
             </constraints>
             <size key="customSize" width="118" height="149"/>
+            <connections>
+                <outlet property="activityIndicator" destination="RUd-7N-MuB" id="s7k-Nf-mJP"/>
+            </connections>
             <point key="canvasLocation" x="-372.46376811594206" y="-11.71875"/>
         </collectionViewCell>
     </objects>

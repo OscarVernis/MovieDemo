@@ -55,9 +55,7 @@ class RecommendedMoviesDataProvider: ArrayDataProvider {
         
         isFetching = true
         
-        let fetchHandler: ([Movie], Int, Error?) -> () = { [weak self] movies, totalPages, error in
-            print("TotalPages: \(totalPages)")
-            
+        let fetchHandler: ([Movie], Int, Error?) -> () = { [weak self] movies, totalPages, error in            
             guard let self = self else { return }
             
             self.isFetching = false
@@ -72,7 +70,6 @@ class RecommendedMoviesDataProvider: ArrayDataProvider {
             }
             
             self.totalPages = totalPages
-            self.currentPage += 1
             
             self.models.append(contentsOf: movies)
             

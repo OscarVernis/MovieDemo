@@ -44,7 +44,6 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
         collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
         
-        collectionView.prefetchDataSource = dataSource
         collectionView.dataSource = dataSource
         dataSource?.dataProvider = dataProvider
         
@@ -65,6 +64,14 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
     
     @objc func refresh() {
         dataProvider.refresh()
+    }
+    
+    
+    //MARK: - CollectionView Delegate
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row >= dataProvider.models.count { //Loads next page when Loading Cell is showing
+            dataProvider.fetchNextPage()
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
