@@ -42,7 +42,7 @@ class MovieDetailViewController: UIViewController {
     
     var dataProvider: MoviesDetailsDataProvider
     
-    var movieHeader: MovieDetailHeaderView?
+    weak var movieHeader: MovieDetailHeaderView?
     
     var collectionView: UICollectionView!
     
@@ -109,17 +109,17 @@ class MovieDetailViewController: UIViewController {
         collectionView.collectionViewLayout = createLayout()
     }
     
-    fileprivate func setupDataProvider() {
-        dataProvider.detailsDidUpdate = {
-            self.collectionView.reloadData()
+    fileprivate func setupDataProvider()  {
+        dataProvider.detailsDidUpdate = { [weak self] in
+            self?.collectionView.reloadData()
         }
         
-        dataProvider.creditsDidUpdate = {
-            self.collectionView.reloadData()
+        dataProvider.creditsDidUpdate = { [weak self] in
+            self?.collectionView.reloadData()
         }
         
-        dataProvider.recommendedMoviesDidUpdate = {
-            self.collectionView.reloadData()
+        dataProvider.recommendedMoviesDidUpdate = { [weak self] in
+            self?.collectionView.reloadData()
         }
         
         dataProvider.refresh()
@@ -130,7 +130,7 @@ class MovieDetailViewController: UIViewController {
 //MARK: - CollectionView CompositionalLayout
 extension MovieDetailViewController {
     func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int,
             layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 
             var section: NSCollectionLayoutSection?
@@ -163,7 +163,7 @@ extension MovieDetailViewController {
                 section = sectionBuilder.createHorizontalPosterSection()
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                section?.contentInsets.bottom = self.bottomInset + 10
+                section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 10
                 section?.boundarySupplementaryItems = [sectionHeader]
             }
             
@@ -240,7 +240,6 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             
             MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
-//            posterCell.configure(withMovie: MovieViewModel(movie: recommendedMovie))
             return posterCell
         }
     }
@@ -266,15 +265,21 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             case .Header:
                 break
             case .Cast:
-                tapHandler = {
-                    self.mainCoordinator.showCastCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.cast))
+                tapHandler = { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.mainCoordinator.showCastCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
                 }
             case .Crew:
-                tapHandler = {                    
-                    self.mainCoordinator.showCrewCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.dataProvider.movieViewModel.crew))
+                tapHandler = { [weak self] in
+                    guard let self = self else { return }
+                    
+                    self.mainCoordinator.showCrewCreditList(title: section.title(), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
                 }
             case .RecommendedMovies:
-                tapHandler = {
+                tapHandler = { [weak self] in
+                    guard let self = self else { return }
+
                     self.mainCoordinator.showMovieList(title: section.title(), dataProvider: RecommendedMoviesDataProvider(movieId: self.movie.id!))
                 }
             }

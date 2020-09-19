@@ -36,7 +36,7 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         view.addSubview(collectionView)
         
         collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(self, action: #selector(refreshMovies), for: .valueChanged)
+        collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         collectionView.keyboardDismissMode = .onDrag
         
@@ -48,19 +48,20 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         collectionView.dataSource = dataSource
         dataSource?.dataProvider = dataProvider
         
-        dataProvider.didUpdate = refreshHandler
+        dataProvider.didUpdate = { [weak self] in
+            guard let self = self else { return }
+
+            if self.collectionView.refreshControl?.isRefreshing ?? false {
+                self.collectionView.refreshControl?.endRefreshing()
+            }
+
+            self.collectionView.reloadData()
+        }
+                
         dataProvider.refresh()
     }
     
-    func refreshHandler() {
-        if collectionView.refreshControl?.isRefreshing ?? false {
-            collectionView.refreshControl?.endRefreshing()
-        }
-        
-        collectionView.reloadData()
-    }
-    
-    @objc func refreshMovies() {
+    @objc func refresh() {
         dataProvider.refresh()
     }
     

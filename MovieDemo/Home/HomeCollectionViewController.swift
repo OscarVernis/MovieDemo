@@ -53,10 +53,10 @@ class HomeCollectionViewController: UIViewController {
             self.mainCoordinator.showMovieDetail(movie: movie)
         }
         
-        let search = UISearchController(searchResultsController: movieListController)
-        search.searchResultsUpdater = self
-        search.delegate = self
-        self.navigationItem.searchController = search
+//        let search = UISearchController(searchResultsController: movieListController)
+//        search.searchResultsUpdater = self
+//        search.delegate = self
+//        self.navigationItem.searchController = search
     }
     
     fileprivate func setupCollectionView() {

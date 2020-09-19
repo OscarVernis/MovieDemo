@@ -9,7 +9,7 @@
 import UIKit
 
 open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellConfigurator>: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
-    var dataProvider: Provider!
+    weak var dataProvider: Provider!
     var cellConfigurator: Configurator
     
     private let reuseIdentifier: String

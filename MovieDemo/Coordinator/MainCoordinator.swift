@@ -40,6 +40,28 @@ final class MainCoordinator {
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
+    func showMovieList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
+        let mdvc = ListViewController<Provider, MovieInfoCellConfigurator>()
+        mdvc.title = title
+        mdvc.dataProvider = dataProvider
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
+        mdvc.mainCoordinator = self
+        
+        mdvc.didSelectedItem = { [weak self] index, movie in
+            self?.showMovieDetail(movie: movie as! Movie)
+        }
+        
+        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+    }
+    
+    func showMovieDetail(movie: Movie) {
+        let dataProvider = MoviesDetailsDataProvider(movieViewModel: MovieViewModel(movie: movie))
+        let mdvc = MovieDetailViewController(dataProvider: dataProvider)
+        mdvc.mainCoordinator = self
+        
+        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+    }
+    
     func showCrewCreditList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
         let mdvc = ListViewController<Provider, CrewCreditCellConfigurator>()
         mdvc.title = title
@@ -55,28 +77,6 @@ final class MainCoordinator {
         mdvc.title = title
         mdvc.dataProvider = dataProvider
         mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CastCreditCellConfigurator())
-        mdvc.mainCoordinator = self
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
-    }
-    
-    func showMovieList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
-        let mdvc = ListViewController<Provider, MovieInfoCellConfigurator>()
-        mdvc.title = title
-        mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
-        mdvc.mainCoordinator = self
-        
-        mdvc.didSelectedItem = { index, movie in
-            self.showMovieDetail(movie: movie as! Movie)
-        }
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
-    }
-    
-    func showMovieDetail(movie: Movie) {
-        let dataProvider = MoviesDetailsDataProvider(movieViewModel: MovieViewModel(movie: movie))
-        let mdvc = MovieDetailViewController(dataProvider: dataProvider)
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)

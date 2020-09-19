@@ -19,7 +19,6 @@ class MoviePosterInfoCell: UICollectionViewCell {
     var title: String?
     var rating: Float?
     var secondaryInfo: String?
-    var tertiaryInfo: String?
     
     override func awakeFromNib() {
         stackView.spacing = 2
@@ -81,17 +80,6 @@ class MoviePosterInfoCell: UICollectionViewCell {
             stackView.setCustomSpacing(3, after: secondaryLabel)
         }
         
-        if let tertiaryInfo = tertiaryInfo {
-            let tertiaryLabel = UILabel()
-            tertiaryLabel.font = UIFont(name: "Avenir-Medium", size: 14)
-            tertiaryLabel.textColor = .secondaryLabel
-            tertiaryLabel.numberOfLines = 1
-            
-            tertiaryLabel.text = tertiaryInfo
-            stackView.addArrangedSubview(tertiaryLabel)
-            stackView.setCustomSpacing(3, after: tertiaryLabel)
-        }
-        
     }
     
     private func removeViews() {
@@ -106,7 +94,6 @@ class MoviePosterInfoCell: UICollectionViewCell {
         title = nil
         rating = nil
         secondaryInfo = nil
-        tertiaryInfo = nil
     }
     
 }
