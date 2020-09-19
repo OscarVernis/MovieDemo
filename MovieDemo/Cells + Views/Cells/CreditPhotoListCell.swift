@@ -16,8 +16,7 @@ class CreditPhotoListCell: UICollectionViewCell {
     @IBOutlet weak var roleLabel: UILabel!
     
     override func prepareForReuse() {
-        creditImageView.image = UIImage(systemName: "person.fill")
-        creditImageView.contentMode = .scaleAspectFit
+        creditImageView.image = UIImage(named: "PersonPlaceholder")
     }
     
     override func awakeFromNib() {

@@ -11,7 +11,7 @@ import UIKit
 struct MoviePosterTitleRatingCellConfigurator {
     func configure(cell: MoviePosterInfoCell, with model: MovieViewModel) {
         cell.posterImageView.af.cancelImageRequest()
-        cell.posterImageView.image = UIImage(systemName: "film")
+        cell.posterImageView.image = UIImage(named: "PosterPlaceholder")
         
         if let url = model.posterImageURL(size: .w342) {
             cell.posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))

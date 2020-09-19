@@ -26,7 +26,7 @@ class MovieBannerCell: UICollectionViewCell {
     
     func configure(withMovie movie: MovieViewModel) {
         bannerImageView.af.cancelImageRequest()
-        bannerImageView.image = UIImage(systemName: "film")
+        bannerImageView.image = UIImage(named: "BackdropPlaceholder")
         
         titleLabel.text = movie.title
         

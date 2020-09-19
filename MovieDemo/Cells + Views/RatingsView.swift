@@ -62,12 +62,12 @@ class RatingsView: UIView {
     }
     
     private let greenRatingColor = #colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4784313725, alpha: 1)
-    private let greenTrackColor = #colorLiteral(red: 0.06365625043, green: 0.4012272754, blue: 0.2353352288, alpha: 0.6956208882)
+    private let greenTrackColor = #colorLiteral(red: 0.06365625043, green: 0.4012272754, blue: 0.2353352288, alpha: 0.5)
     private let yellowRatingColor = #colorLiteral(red: 1, green: 0.8392156863, blue: 0.03921568627, alpha: 1)
-    private let yellowTrackColor = #colorLiteral(red: 0.4769007564, green: 0.3958523571, blue: 0.01167693827, alpha: 0.6986019737)
+    private let yellowTrackColor = #colorLiteral(red: 0.4769007564, green: 0.3958523571, blue: 0.01167693827, alpha: 0.5)
     private let redRatingColor = #colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1)
-    private let redTrackColor = #colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.7033599624)
-    private let grayTrackColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 0.5032307331)
+    private let redTrackColor = #colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.5)
+    private let grayTrackColor = UIColor.systemGray4
         
     override func draw(_ rect: CGRect) {
         var trackColor: UIColor!

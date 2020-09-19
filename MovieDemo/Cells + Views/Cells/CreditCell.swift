@@ -22,8 +22,9 @@ class CreditCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        creditImageView.image = UIImage(systemName: "person.fill")
-        creditImageView.contentMode = .scaleAspectFit
+        
+        creditImageView.image = UIImage(named: "PersonPlaceholder")
+
     }
     
     func configure(castCredit: CastCredit) {
@@ -34,7 +35,6 @@ class CreditCell: UICollectionViewCell {
         
         if let pathString = castCredit.profilePath {
             let url = MovieDBService.profileImageURL(forPath: pathString, size: .h632)
-            creditImageView.contentMode = .scaleAspectFill
             creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }
