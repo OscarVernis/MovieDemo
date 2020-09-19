@@ -14,6 +14,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!
+    @IBOutlet weak var ratingsLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
@@ -31,9 +32,10 @@ class MovieDetailHeaderView: UICollectionReusableView {
         }
         
         titleLabel.text = movie.title
-        ratingsView.rating = movie.rating
+        ratingsView.rating = movie.percentRating
         ratingsView.isRatingAvailable = movie.isRatingAvailable
-        genresLabel.text = movie.genresString(separatedBy: " • ")
+        ratingsLabel.text = movie.ratingString
+        genresLabel.text = movie.genresString(separatedBy: ", ")
         overviewLabel.text = movie.overview
         
         if let runtime = movie.runtime {

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,61 +18,72 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b5T-qQ-WYX">
-                        <rect key="frame" x="0.0" y="0.0" width="441" height="249"/>
+                        <rect key="frame" x="0.0" y="0.0" width="441" height="247"/>
                         <color key="tintColor" name="PosterPlaceholderColor"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-9F-1Im">
-                        <rect key="frame" x="5" y="256" width="431" height="24"/>
+                        <rect key="frame" x="5" y="254" width="43" height="24"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nWO-kl-edL" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="5" y="282" width="62" height="10"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SpN-K0-2qk" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                        <rect key="frame" x="405" y="255.5" width="36" height="36"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="of2-cb-Lhg"/>
+                            <constraint firstAttribute="width" constant="36" id="y7N-4B-utu"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="spacing">
-                                <integer key="value" value="3"/>
-                            </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                <real key="value" value="4"/>
+                                <integer key="value" value="46"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
+                                <real key="value" value="7"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imh-t8-Ffx">
+                        <rect key="frame" x="5" y="280" width="392" height="20"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="b5T-qQ-WYX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="06o-Xz-kUT"/>
-                <constraint firstItem="nWO-kl-edL" firstAttribute="top" secondItem="ihj-9F-1Im" secondAttribute="bottom" constant="2" id="70V-hr-FL7"/>
+                <constraint firstItem="SpN-K0-2qk" firstAttribute="leading" secondItem="imh-t8-Ffx" secondAttribute="trailing" constant="8" id="1P8-kx-h8y"/>
                 <constraint firstItem="ihj-9F-1Im" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Fcm-2C-ZPh"/>
                 <constraint firstItem="ihj-9F-1Im" firstAttribute="top" secondItem="b5T-qQ-WYX" secondAttribute="bottom" constant="7" id="Kzv-eK-CX3"/>
-                <constraint firstAttribute="bottom" secondItem="nWO-kl-edL" secondAttribute="bottom" constant="8" id="a7t-5p-3ke"/>
-                <constraint firstAttribute="trailing" secondItem="ihj-9F-1Im" secondAttribute="trailing" constant="5" id="bkJ-qa-HVi"/>
-                <constraint firstItem="nWO-kl-edL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="dlX-NC-GPT"/>
+                <constraint firstAttribute="bottom" secondItem="SpN-K0-2qk" secondAttribute="bottom" constant="8.5" id="UBk-AI-oCU"/>
+                <constraint firstItem="imh-t8-Ffx" firstAttribute="top" secondItem="ihj-9F-1Im" secondAttribute="bottom" constant="2" id="UeB-LJ-Gfx"/>
+                <constraint firstAttribute="bottom" secondItem="imh-t8-Ffx" secondAttribute="bottom" id="Wqn-ZJ-ce0"/>
+                <constraint firstItem="imh-t8-Ffx" firstAttribute="leading" secondItem="ihj-9F-1Im" secondAttribute="leading" id="ePE-tT-zd1"/>
+                <constraint firstItem="SpN-K0-2qk" firstAttribute="width" secondItem="SpN-K0-2qk" secondAttribute="height" multiplier="1:1" id="iDA-zg-4JL"/>
+                <constraint firstAttribute="trailing" secondItem="SpN-K0-2qk" secondAttribute="trailing" id="oBg-mb-V3m"/>
                 <constraint firstAttribute="trailing" secondItem="b5T-qQ-WYX" secondAttribute="trailing" id="rho-Pa-Xit"/>
                 <constraint firstItem="b5T-qQ-WYX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="rr5-KA-Cgs"/>
             </constraints>
             <size key="customSize" width="441" height="299"/>
             <connections>
                 <outlet property="bannerImageView" destination="b5T-qQ-WYX" id="Jt1-6b-Zhn"/>
-                <outlet property="ratingsView" destination="nWO-kl-edL" id="Mjh-Cn-Iza"/>
+                <outlet property="infoLabel" destination="imh-t8-Ffx" id="fNW-Wt-LJu"/>
+                <outlet property="ratingsView" destination="SpN-K0-2qk" id="PnB-fU-X5g"/>
                 <outlet property="titleLabel" destination="ihj-9F-1Im" id="lt7-lr-VGu"/>
             </connections>
             <point key="canvasLocation" x="38.405797101449281" y="12.723214285714285"/>
         </collectionViewCell>
     </objects>
-    <designables>
-        <designable name="nWO-kl-edL">
-            <size key="intrinsicContentSize" width="62" height="10"/>
-        </designable>
-    </designables>
     <resources>
         <namedColor name="PosterPlaceholderColor">
             <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

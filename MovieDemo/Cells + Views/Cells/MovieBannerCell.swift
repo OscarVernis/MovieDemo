@@ -15,6 +15,7 @@ class MovieBannerCell: UICollectionViewCell {
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!
+    @IBOutlet weak var infoLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +30,9 @@ class MovieBannerCell: UICollectionViewCell {
         
         titleLabel.text = movie.title
         
-        ratingsView.rating = movie.rating
+        infoLabel.text = movie.genresString()
+        
+        ratingsView.rating = movie.percentRating
         ratingsView.isRatingAvailable = movie.isRatingAvailable
         
         if let url = movie.backdropImageURL(size: .w780) {

@@ -31,7 +31,7 @@ struct MovieViewModel {
         updateTopCrew()
         updateTopCast()
     }
-    
+        
     var id: Int? {
         return movie.id
     }
@@ -48,10 +48,18 @@ struct MovieViewModel {
         return !(movie.voteCount == nil || movie.voteCount == 0 || movie.voteAverage == nil)
     }
     
-    var rating: Float {
-        return movie.voteAverage ?? 0
+    var ratingString: String {
+        if isRatingAvailable {
+            return "\(percentRating)"
+        } else {
+            return "NR"
+        }
     }
     
+    var percentRating: UInt {
+        return  UInt((movie.voteAverage ?? 0) * 10)
+    }
+        
     func genresString(separatedBy separator: String = ", ") -> String {
         let genres = movie.genres?.map { $0.string() } ?? []
         let genresString = genres.joined(separator: separator)
@@ -65,6 +73,8 @@ struct MovieViewModel {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute]
         formatter.unitsStyle = .abbreviated
+        
+        //Runtime returned from the service is in minutes, so we have to convert it to seconds
         guard let formattedString = formatter.string(from: Double(runtime * 60)) else { return nil }
         
         return formattedString
@@ -119,14 +129,16 @@ struct MovieViewModel {
         }
     }
     
+    //Stores only the first 8 credits from the cast
     var topCast = [CastCredit]()
     
     mutating func updateTopCast() {
         guard let cast = movie.cast else { return }
         
-        topCast = Array(cast.prefix(8)).sorted { ($0.order ?? 0) < ($1.order ?? 0) }
+        topCast = Array(cast.prefix(8))
     }
     
+    //Stores only the credits with jobs inclueded in the topCrewJobs array
     var topCrew = [CrewCredit]()
     
     mutating func updateTopCrew() {
@@ -145,6 +157,7 @@ struct MovieViewModel {
         topCrew = filteredCrew
     }
     
+    //Returns a job string including all of the job credits by the same person
     func crewCreditJobString(crewCreditId: Int) -> String {
         let jobs = crew.compactMap { crew in
             crew.id == crewCreditId ? crew.job : nil

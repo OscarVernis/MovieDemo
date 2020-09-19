@@ -18,7 +18,7 @@ struct BannerRatingCellConfigurator {
         }
                 
         cell.title = model.title
-        cell.rating = model.rating
+        cell.rating = model.percentRating
 
         cell.loadViews()
     }

@@ -110,17 +110,13 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataProvider()  {
-        dataProvider.detailsDidUpdate = { [weak self] in
+        let updateCollectionView:() -> () = { [weak self] in
             self?.collectionView.reloadData()
         }
         
-        dataProvider.creditsDidUpdate = { [weak self] in
-            self?.collectionView.reloadData()
-        }
-        
-        dataProvider.recommendedMoviesDidUpdate = { [weak self] in
-            self?.collectionView.reloadData()
-        }
+        dataProvider.detailsDidUpdate = updateCollectionView
+        dataProvider.creditsDidUpdate = updateCollectionView
+        dataProvider.recommendedMoviesDidUpdate = updateCollectionView
         
         dataProvider.refresh()
     }

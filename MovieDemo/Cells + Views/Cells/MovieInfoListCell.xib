@@ -25,18 +25,26 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="8D8-oH-n9S" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="102" y="41.5" width="62" height="10"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bX-0i-c9N" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                        <rect key="frame" x="102" y="41.5" width="100" height="6"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="10" id="ST0-QM-h47"/>
+                            <constraint firstAttribute="width" constant="100" id="7hL-Ri-eQe"/>
+                            <constraint firstAttribute="height" constant="6" id="LVK-Od-rcy"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="spacing">
-                                <integer key="value" value="3"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleInt">
+                                <integer key="value" value="1"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                <real key="value" value="3"/>
+                                <integer key="value" value="88"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isRatingAvailable" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
+                                <real key="value" value="1"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -55,7 +63,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvQ-pd-sJj">
-                        <rect key="frame" x="102" y="57.5" width="277" height="36"/>
+                        <rect key="frame" x="102" y="55.5" width="277" height="36"/>
                         <string key="text">As the gang return to Jumanji to rescue one of their own, they discover that nothing is as they expect. The players will have to brave parts unknown and unexplored in order to escape the world’s most dangerous game.</string>
                         <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="13"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -83,14 +91,13 @@
                 <constraint firstAttribute="bottom" secondItem="Q9B-66-kXg" secondAttribute="bottom" constant="15" id="ARg-uJ-qbR"/>
                 <constraint firstAttribute="trailing" secondItem="Q9B-66-kXg" secondAttribute="trailing" id="BI0-P8-ecV"/>
                 <constraint firstItem="tin-rp-HcE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="E5O-vQ-R6L"/>
-                <constraint firstItem="8D8-oH-n9S" firstAttribute="leading" secondItem="Shc-PW-Ypm" secondAttribute="leading" id="Mfb-6I-2W5"/>
-                <constraint firstItem="bvQ-pd-sJj" firstAttribute="top" secondItem="8D8-oH-n9S" secondAttribute="bottom" constant="6" id="OwV-lz-RqT"/>
+                <constraint firstItem="5bX-0i-c9N" firstAttribute="leading" secondItem="Shc-PW-Ypm" secondAttribute="leading" id="Gg8-1D-Pe3"/>
                 <constraint firstItem="Shc-PW-Ypm" firstAttribute="leading" secondItem="wFs-O6-OUM" secondAttribute="trailing" constant="16" id="P0b-Bj-BEF"/>
                 <constraint firstItem="wFs-O6-OUM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="PRe-yK-vbk"/>
                 <constraint firstAttribute="trailing" secondItem="CRK-ux-OAZ" secondAttribute="trailing" id="QT6-CL-0Fz"/>
                 <constraint firstAttribute="trailing" secondItem="tin-rp-HcE" secondAttribute="trailing" id="QbX-ON-t2G"/>
                 <constraint firstAttribute="bottom" secondItem="tin-rp-HcE" secondAttribute="bottom" id="VqC-ir-tJx"/>
-                <constraint firstItem="8D8-oH-n9S" firstAttribute="top" secondItem="Shc-PW-Ypm" secondAttribute="bottom" constant="3" id="WdD-Nq-r2Z"/>
+                <constraint firstItem="bvQ-pd-sJj" firstAttribute="top" secondItem="5bX-0i-c9N" secondAttribute="bottom" constant="8" id="Yf2-QB-xdT"/>
                 <constraint firstAttribute="trailing" secondItem="bvQ-pd-sJj" secondAttribute="trailing" id="a9R-mX-OvK"/>
                 <constraint firstItem="CRK-ux-OAZ" firstAttribute="leading" secondItem="Shc-PW-Ypm" secondAttribute="leading" id="ajw-ba-Dgw"/>
                 <constraint firstItem="bvQ-pd-sJj" firstAttribute="leading" secondItem="Shc-PW-Ypm" secondAttribute="leading" id="hHr-Vx-krI"/>
@@ -98,24 +105,20 @@
                 <constraint firstItem="Q9B-66-kXg" firstAttribute="leading" secondItem="Shc-PW-Ypm" secondAttribute="leading" id="ojM-AY-AuJ"/>
                 <constraint firstAttribute="trailing" secondItem="Shc-PW-Ypm" secondAttribute="trailing" id="tvk-pV-iuK"/>
                 <constraint firstAttribute="bottom" secondItem="wFs-O6-OUM" secondAttribute="bottom" constant="11" id="xal-RC-KOr"/>
+                <constraint firstItem="5bX-0i-c9N" firstAttribute="top" secondItem="Shc-PW-Ypm" secondAttribute="bottom" constant="3" id="yTp-LN-WvU"/>
             </constraints>
             <size key="customSize" width="379" height="140"/>
             <connections>
                 <outlet property="genresLabel" destination="CRK-ux-OAZ" id="P3W-UJ-foJ"/>
                 <outlet property="overviewLabel" destination="bvQ-pd-sJj" id="Jnc-cl-1mV"/>
                 <outlet property="posterImageView" destination="wFs-O6-OUM" id="3M7-Wo-hXf"/>
-                <outlet property="ratingsView" destination="8D8-oH-n9S" id="ePh-B3-RRY"/>
+                <outlet property="ratingsView" destination="5bX-0i-c9N" id="ohm-bt-Wlx"/>
                 <outlet property="releaseDateLabel" destination="Q9B-66-kXg" id="YKj-y6-LvH"/>
                 <outlet property="titleLabel" destination="Shc-PW-Ypm" id="Fwg-f8-ufy"/>
             </connections>
-            <point key="canvasLocation" x="-150" y="-8.3705357142857135"/>
+            <point key="canvasLocation" x="-105.07246376811595" y="-0.33482142857142855"/>
         </collectionViewCell>
     </objects>
-    <designables>
-        <designable name="8D8-oH-n9S">
-            <size key="intrinsicContentSize" width="62" height="10"/>
-        </designable>
-    </designables>
     <resources>
         <namedColor name="PosterPlaceholderColor">
             <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
@@ -125,6 +128,9 @@
         </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

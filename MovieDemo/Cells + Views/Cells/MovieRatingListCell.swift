@@ -25,7 +25,7 @@ class MovieRatingListCell: UICollectionViewCell {
         titleLabel.text = movie.title
         
         ratingsView.isRatingAvailable = movie.isRatingAvailable
-        ratingsView.rating = movie.rating
+        ratingsView.rating = movie.percentRating
         
         separator.isHidden = !showSeparator
     }

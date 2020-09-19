@@ -17,11 +17,11 @@ class MoviePosterInfoCell: UICollectionViewCell {
     var posterRatioConstraint: NSLayoutConstraint?
     
     var title: String?
-    var rating: Float?
-    var secondaryInfo: String?
+    var rating: UInt?
+    var info: String?
     
     override func awakeFromNib() {
-        stackView.spacing = 2
+        stackView.spacing = 0
 
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 12
@@ -55,21 +55,22 @@ class MoviePosterInfoCell: UICollectionViewCell {
             
             titleLabel.text = title
             stackView.addArrangedSubview(titleLabel)
-            stackView.setCustomSpacing(3, after: titleLabel)
+//            stackView.setCustomSpacing(1, after: titleLabel)
         }
         
         if let rating = rating {
             let ratingsView = RatingsView()
             ratingsView.backgroundColor = .clear
+            ratingsView.style = .line
             ratingsView.rating = rating
             
-            ratingsView.heightAnchor.constraint(equalToConstant: 10).isActive = true
+            ratingsView.heightAnchor.constraint(equalToConstant: 6).isActive = true
             
             stackView.addArrangedSubview(ratingsView)
             stackView.setCustomSpacing(3, after: ratingsView)
         }
         
-        if let secondaryInfo = secondaryInfo {
+        if let secondaryInfo = info {
             let secondaryLabel = UILabel()
             secondaryLabel.font = UIFont(name: "Avenir-Medium", size: 14)
             secondaryLabel.textColor = .secondaryLabel
@@ -93,7 +94,7 @@ class MoviePosterInfoCell: UICollectionViewCell {
         
         title = nil
         rating = nil
-        secondaryInfo = nil
+        info = nil
     }
     
 }

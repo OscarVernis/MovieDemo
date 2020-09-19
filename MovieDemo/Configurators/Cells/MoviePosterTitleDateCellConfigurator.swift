@@ -20,7 +20,7 @@ struct MoviePosterTitleDateCellConfigurator {
         cell.setPosterRatio((3/2))
         
         cell.title = model.title
-        cell.secondaryInfo = model.releaseDateWithoutYear
+        cell.info = model.releaseDateWithoutYear
         
         cell.loadViews()
     }

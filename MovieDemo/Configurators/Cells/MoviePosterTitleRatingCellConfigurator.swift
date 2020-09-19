@@ -20,7 +20,7 @@ struct MoviePosterTitleRatingCellConfigurator {
         cell.setPosterRatio((3/2))
         
         cell.title = model.title
-        cell.rating = model.rating
+        cell.rating = model.percentRating
         
         cell.loadViews()
     }
