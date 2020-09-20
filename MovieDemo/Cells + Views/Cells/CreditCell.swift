@@ -9,9 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class CreditCell: UICollectionViewCell, ConfigurableCell {
-    static let reuseIdentifier = "CreditCell"
-
+class CreditCell: UICollectionViewCell {
     @IBOutlet weak var creditImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!

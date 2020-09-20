@@ -8,9 +8,7 @@
 
 import UIKit
 
-class MovieRatingListCell: UICollectionViewCell, ConfigurableCell {
-    static let reuseIdentifier = "MovieRatingListCell"
-
+class MovieRatingListCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var ratingsView: RatingsView!

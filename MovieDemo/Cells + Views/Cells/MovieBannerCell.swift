@@ -9,9 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class MovieBannerCell: UICollectionViewCell, ConfigurableCell {
-    static let reuseIdentifier = "BannerMovieCell"
-    
+class MovieBannerCell: UICollectionViewCell {    
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!

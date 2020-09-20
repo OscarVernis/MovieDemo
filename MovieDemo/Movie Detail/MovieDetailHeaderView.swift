@@ -8,9 +8,7 @@
 
 import UIKit
 
-class MovieDetailHeaderView: UICollectionReusableView, ConfigurableReusableView {
-    static let reuseIdentifier = "MovieDetailHeaderView"
-    
+class MovieDetailHeaderView: UICollectionReusableView {    
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!

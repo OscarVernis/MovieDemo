@@ -8,9 +8,7 @@
 
 import UIKit
 
-class InfoListCell: UICollectionViewCell, ConfigurableCell {
-    static let reuseIdentifier = "InfoListCell"
-    
+class InfoListCell: UICollectionViewCell {    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
 }

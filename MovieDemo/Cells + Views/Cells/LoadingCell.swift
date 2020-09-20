@@ -8,9 +8,7 @@
 
 import UIKit
 
-class LoadingCell: UICollectionViewCell, ConfigurableCell {
-    static let reuseIdentifier = "LoadingCell"
-
+class LoadingCell: UICollectionViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func prepareForReuse() {

@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol ConfigurableCell: UICollectionViewCell {
-    static var reuseIdentifier: String { get }
-    
-    static func register(withCollectionView collectionView: UICollectionView)
-}
-
-extension ConfigurableCell {
+extension UICollectionViewCell {
     static func register(withCollectionView collectionView: UICollectionView) {
         collectionView.register(namedNib(), forCellWithReuseIdentifier: reuseIdentifier)
     }

@@ -37,7 +37,7 @@ class MovieListDataProvider: ArrayDataProvider {
         }
     }
     
-    var isFetching = false
+    private var isFetching = false
     var currentPage = 0
     var totalPages = 1
     

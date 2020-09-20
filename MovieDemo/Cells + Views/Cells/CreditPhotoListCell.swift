@@ -9,8 +9,6 @@
 import UIKit
 
 class CreditPhotoListCell: UICollectionViewCell {
-    static let reuseIdentifier = "CreditPhotoListCell"
-
     @IBOutlet weak var creditImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!

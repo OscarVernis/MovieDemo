@@ -129,8 +129,8 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
-        SectionTitleView.registerHeader(toCollectionView: collectionView)
-        MovieDetailHeaderView.registerHeader(toCollectionView: collectionView)
+        SectionTitleView.registerHeader(withCollectionView: collectionView)
+        MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
 
         LoadingCell.register(withCollectionView: collectionView)
         

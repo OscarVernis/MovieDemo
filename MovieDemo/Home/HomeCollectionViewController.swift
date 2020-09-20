@@ -87,7 +87,7 @@ class HomeCollectionViewController: UIViewController {
         MovieBannerCell.register(withCollectionView: collectionView)
         MovieRatingListCell.register(withCollectionView: collectionView)
         MovieInfoListCell.register(withCollectionView: collectionView)
-        SectionTitleView.registerHeader(toCollectionView: collectionView)
+        SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
 //MARK: - Actions

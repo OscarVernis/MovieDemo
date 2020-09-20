@@ -20,7 +20,6 @@ class StaticArrayDataProvider<T>: ArrayDataProvider {
     var currentPage = 1
     var totalPages = 1
     var isLastPage = true
-    var isFetching: Bool = false
     
     var didUpdate: ((Error?) -> Void)?
     

@@ -16,8 +16,7 @@ public protocol ArrayDataProvider: AnyObject {
     var totalPages: Int { get }
     var isLastPage: Bool { get }
     var didUpdate: ((Error?) -> Void)? { get set }
-    var isFetching: Bool { get }
-    
+
     func fetchNextPage()
     func refresh()
 

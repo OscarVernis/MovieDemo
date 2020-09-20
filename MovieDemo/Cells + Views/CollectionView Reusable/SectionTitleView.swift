@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SectionTitleView: UICollectionReusableView, ConfigurableReusableView {    
-    static let reuseIdentifier = "SectionTitleView"
-    
+class SectionTitleView: UICollectionReusableView {        
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var actionButton: UIButton!
 
