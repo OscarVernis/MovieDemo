@@ -30,6 +30,7 @@ struct MovieViewModel {
         self.movie = movie
         updateTopCrew()
         updateTopCast()
+        updateInfoArray()
     }
         
     var id: Int? {
@@ -90,6 +91,11 @@ struct MovieViewModel {
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : ""
     }
     
+    var releaseDate: String? {
+        let dateFormatter = DateFormatter(withFormat: "MMMM dd yyy", locale: "en_US")
+        return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : nil
+    }
+    
     func backdropImageURL(size: MovieDBService.BackdropSize = .w300) -> URL? {
         let url = (movie.backdropPath != nil) ? MovieDBService.backdropImageURL(forPath:movie.backdropPath!, size: size) : nil
         return url
@@ -98,6 +104,69 @@ struct MovieViewModel {
     func posterImageURL(size: MovieDBService.MoviePosterSize = .original) -> URL? {
         let url = (movie.posterPath != nil) ? MovieDBService.posterImageURL(forPath:movie.posterPath!, size: size) : nil
         return url
+    }
+    
+    var status: String? {
+        return movie.status
+    }
+    
+    var originalLanguage: String? {
+        guard let languageCode = movie.originalLanguage else { return nil }
+        
+        return Locale.current.localizedString(forLanguageCode: languageCode)
+    }
+    
+    var budget: String? {
+        guard let budget = movie.budget, budget > 0 else { return nil }
+        
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.maximumFractionDigits = 0
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = Locale(identifier: "en_US")
+        
+        return currencyFormatter.string(from: NSNumber(value: budget))
+    }
+    
+    var revenue: String? {
+        guard let revenue = movie.revenue, revenue > 0 else { return nil }
+        
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.maximumFractionDigits = 0
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = Locale(identifier: "en_US")
+        
+        return currencyFormatter.string(from: NSNumber(value: revenue))
+    }
+    
+    var infoArray = [[String : String]]()
+    
+    private mutating func updateInfoArray() {
+        var info = [[String : String]]()
+        
+        
+        if let releaseDate = releaseDate {
+            info.append(["Release Date": releaseDate])
+        }
+        
+        if let status = status {
+            info.append(["Status": status])
+        }
+        
+        if let originalLanguage = originalLanguage {
+            info.append(["Original Language": originalLanguage])
+        }
+
+        if let budget = budget {
+            info.append(["Budget": budget])
+        }
+        
+        if let revenue = revenue {
+            info.append(["Revenue": revenue])
+        }
+        
+        infoArray = info
     }
     
     var cast: [CastCredit] {
@@ -132,7 +201,7 @@ struct MovieViewModel {
     //Stores only the first 8 credits from the cast
     var topCast = [CastCredit]()
     
-    mutating func updateTopCast() {
+    private mutating func updateTopCast() {
         guard let cast = movie.cast else { return }
         
         topCast = Array(cast.prefix(8))
@@ -141,7 +210,7 @@ struct MovieViewModel {
     //Stores only the credits with jobs inclueded in the topCrewJobs array
     var topCrew = [CrewCredit]()
     
-    mutating func updateTopCrew() {
+    private mutating func updateTopCrew() {
         guard let crew = movie.crew else { return }
         
         var filteredCrew = [CrewCredit]()

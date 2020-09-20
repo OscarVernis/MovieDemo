@@ -23,6 +23,7 @@ class MovieDetailViewController: UIViewController {
         case Cast
         case Crew
         case RecommendedMovies
+        case Info
         
         func title() -> String {
             switch self {
@@ -34,6 +35,8 @@ class MovieDetailViewController: UIViewController {
                 return "Crew"
             case .RecommendedMovies:
                 return "Recommended Movies"
+            case .Info:
+                return "Info"
             }
         }
         
@@ -69,7 +72,7 @@ class MovieDetailViewController: UIViewController {
         
         // Only show the header and the loading cell while loading
         sections = [
-            .Header
+            .Header,
         ]
                 
         setupCollectionView()
@@ -92,6 +95,10 @@ class MovieDetailViewController: UIViewController {
 
         if movie.recommendedMovies.count > 0 {
             sections.append(.RecommendedMovies)
+        }
+        
+        if movie.infoArray.count > 0 {
+            sections.append(.Info)
         }
 
         isLoading = false
@@ -134,7 +141,7 @@ class MovieDetailViewController: UIViewController {
         
         collectionView.register(MoviePosterInfoCell.namedNib(), forCellWithReuseIdentifier: MoviePosterInfoCell.reuseIdentifier)
         collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
-        collectionView.register(CreditListCell.namedNib(), forCellWithReuseIdentifier: CreditListCell.reuseIdentifier)
+        collectionView.register(InfoListCell.namedNib(), forCellWithReuseIdentifier: InfoListCell.reuseIdentifier)
 
         collectionView.collectionViewLayout = createLayout()
     }
@@ -188,7 +195,15 @@ extension MovieDetailViewController {
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.contentInsets.top = 12
+                section?.contentInsets.bottom = 10
+                section?.boundarySupplementaryItems = [sectionHeader]
+            case .Info:
+                section = sectionBuilder.createInfoListSection(withHeight: 50)
+                
+                section?.contentInsets.top = 5
                 section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 10
+
+                let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .none:
                 break
@@ -218,6 +233,8 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case .RecommendedMovies:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
+        case .Info:
+            break
         }
     }
 }
@@ -239,6 +256,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             return movie.topCrew.count
         case .RecommendedMovies:
             return movie.recommendedMovies.count
+        case .Info:
+            return movie.infoArray.count
         }
     }
 
@@ -254,26 +273,34 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 fatalError("Should be empty!")
             }
         case .Cast:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as? CreditCell else { fatalError() }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
             
             let cast = movie.topCast[indexPath.row]
             cell.configure(castCredit: cast)
             
             return cell
         case .Crew:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditListCell.reuseIdentifier, for: indexPath) as? CreditListCell else { fatalError() }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
             
             let crew = movie.topCrew[indexPath.row]
-            cell.configure(crewCredit: crew, jobsString: movie.crewCreditJobString(crewCreditId: crew.id!))
+            CrewCreditInfoListCellConfigurator().configure(cell: cell, with: crew, jobString: movie.crewCreditJobString(crewCreditId: crew.id!))
                         
             return cell
         case .RecommendedMovies:
-            guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as? MoviePosterInfoCell else { fatalError() }
+            let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
             
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             
             MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
+            
             return posterCell
+        case .Info:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
+            
+            let info = movie.infoArray[indexPath.row]
+            MovieDetailsInfoCellConfigurator().configure(cell: cell, info: info)
+                                    
+            return cell
         }
     }
     
@@ -315,6 +342,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                     
                     self.mainCoordinator.showMovieList(title: sectionType.title(), dataProvider: RecommendedMoviesDataProvider(movieId: self.movie.id!))
                 }
+            case .Info:
+                break
             }
             
             MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: sectionType.title(), tapHandler: tapHandler)

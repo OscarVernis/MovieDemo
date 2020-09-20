@@ -66,15 +66,15 @@
                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
                                     <integer key="value" value="75"/>
                                 </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="isRatingAvailable" value="NO"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="isRatingAvailable" value="YES"/>
                                 <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
-                                    <real key="value" value="5"/>
+                                    <real key="value" value="4"/>
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nCS-mw-kg6">
-                            <rect key="frame" x="16" y="14.5" width="18" height="23.5"/>
-                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nCS-mw-kg6">
+                            <rect key="frame" x="10" y="12.5" width="30" height="27.5"/>
+                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="20"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -82,8 +82,9 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="BZj-H7-VF3" firstAttribute="top" secondItem="F2n-nN-wJU" secondAttribute="top" id="8e8-i0-isI"/>
+                        <constraint firstItem="nCS-mw-kg6" firstAttribute="leading" secondItem="F2n-nN-wJU" secondAttribute="leading" constant="10" id="DUm-dj-fhR"/>
                         <constraint firstItem="nCS-mw-kg6" firstAttribute="centerY" secondItem="F2n-nN-wJU" secondAttribute="centerY" constant="1" id="K4Q-ai-PxY"/>
-                        <constraint firstItem="nCS-mw-kg6" firstAttribute="centerX" secondItem="F2n-nN-wJU" secondAttribute="centerX" id="XyH-q9-yf3"/>
+                        <constraint firstAttribute="trailing" secondItem="nCS-mw-kg6" secondAttribute="trailing" constant="10" id="QKp-CL-O91"/>
                         <constraint firstItem="BZj-H7-VF3" firstAttribute="leading" secondItem="F2n-nN-wJU" secondAttribute="leading" id="bNa-ae-Lgo"/>
                         <constraint firstAttribute="height" constant="50" id="kBw-tO-pMc"/>
                         <constraint firstAttribute="width" secondItem="F2n-nN-wJU" secondAttribute="height" multiplier="1:1" id="pOV-QX-WRT"/>
@@ -129,6 +130,11 @@
             <point key="canvasLocation" x="98.550724637681171" y="123.54910714285714"/>
         </collectionReusableView>
     </objects>
+    <designables>
+        <designable name="BZj-H7-VF3">
+            <size key="intrinsicContentSize" width="50" height="50"/>
+        </designable>
+    </designables>
     <resources>
         <image name="film" catalog="system" width="128" height="93"/>
         <namedColor name="PosterPlaceholderColor">

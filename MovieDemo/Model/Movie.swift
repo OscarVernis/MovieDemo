@@ -24,6 +24,10 @@ class Movie: Mappable {
     var crew: [CrewCredit]?
     var recommendedMovies: [Movie]?
     var genres: [MovieGenre]?
+    var status: String?
+    var originalLanguage: String?
+    var budget: Int?
+    var revenue: Int?
     
     
 //MARK: - ObjectMapper
@@ -45,6 +49,10 @@ class Movie: Mappable {
         cast <- map["credits.cast"]
         crew <- map["credits.crew"]
         recommendedMovies <- map["recommendations.results"]
+        status <- map["status"]
+        originalLanguage <- map["original_language"]
+        budget <- map["budget"]
+        revenue <- map["revenue"]
     }
     
 }

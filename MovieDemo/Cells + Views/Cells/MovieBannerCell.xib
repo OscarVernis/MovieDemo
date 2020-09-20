@@ -82,11 +82,6 @@
             <point key="canvasLocation" x="-82" y="-21"/>
         </collectionViewCell>
     </objects>
-    <designables>
-        <designable name="SpN-K0-2qk">
-            <size key="intrinsicContentSize" width="36" height="36"/>
-        </designable>
-    </designables>
     <resources>
         <image name="BackdropPlaceholder" width="422" height="240"/>
         <systemColor name="secondaryLabelColor">
