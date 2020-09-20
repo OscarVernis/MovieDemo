@@ -64,7 +64,7 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         setupCollectionView()
         setupDataProvider()
 
@@ -140,7 +140,7 @@ extension MovieDetailViewController {
             case .Cast:
                 section = sectionBuilder.createHorizontalCreditSection()
                 
-                section?.contentInsets.top = 5
+                section?.contentInsets.top = 8
                 section?.contentInsets.bottom = 0
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -157,6 +157,7 @@ extension MovieDetailViewController {
                 section = sectionBuilder.createHorizontalPosterSection()
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
+                section?.contentInsets.top = 12
                 section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 10
                 section?.boundarySupplementaryItems = [sectionHeader]
             }

@@ -21,10 +21,10 @@ final class MainCoordinator {
         rootNavigationViewController?.navigationBar.prefersLargeTitles = true
         rootNavigationViewController?.navigationBar.tintColor = .systemPurple
         rootNavigationViewController?.navigationBar.standardAppearance.titleTextAttributes = [
-            .font: UIFont(name: "AvenirNext-DemiBold", size: 18)!
+            .font: UIFont(name: "AvenirNextCondensed-DemiBold", size: 22)!
         ]
         rootNavigationViewController?.navigationBar.standardAppearance.largeTitleTextAttributes = [
-            .font: UIFont(name: "AvenirNext-Bold", size: 34)!
+            .font: UIFont(name: "AvenirNextCondensed-Bold", size: 34)!,
         ]
         
         window.rootViewController = rootNavigationViewController

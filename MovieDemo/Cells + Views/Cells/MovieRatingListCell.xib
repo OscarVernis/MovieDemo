@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-Jn-hzN">
-                        <rect key="frame" x="20" y="11" width="247" height="28"/>
+                        <rect key="frame" x="20" y="11" width="244" height="28"/>
                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -29,48 +31,77 @@
                             <constraint firstAttribute="height" constant="0.5" id="FLF-Xb-15l"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHN-LS-tXK" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="275" y="7" width="36" height="36"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mT3-5v-qeN" userLabel="Ratings Container">
+                        <rect key="frame" x="276" y="7.5" width="35" height="35"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97c-wR-ulK" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                        <integer key="value" value="75"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isRatingAvailable" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
+                                        <real key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
+                                        <real key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="styleInt">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H4K-3t-eZ3">
+                                <rect key="frame" x="6" y="8.5" width="23" height="20.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="a0k-Sb-fWn"/>
-                            <constraint firstAttribute="width" secondItem="gHN-LS-tXK" secondAttribute="height" multiplier="1:1" id="nC4-jX-nvE"/>
+                            <constraint firstAttribute="width" secondItem="mT3-5v-qeN" secondAttribute="height" multiplier="1:1" id="1rO-EE-fn2"/>
+                            <constraint firstAttribute="bottom" secondItem="97c-wR-ulK" secondAttribute="bottom" id="3oh-rw-lvG"/>
+                            <constraint firstItem="97c-wR-ulK" firstAttribute="top" secondItem="mT3-5v-qeN" secondAttribute="top" id="Nzh-RF-Y5X"/>
+                            <constraint firstItem="H4K-3t-eZ3" firstAttribute="centerY" secondItem="mT3-5v-qeN" secondAttribute="centerY" constant="1" id="Rvy-cW-hhf"/>
+                            <constraint firstItem="H4K-3t-eZ3" firstAttribute="leading" secondItem="mT3-5v-qeN" secondAttribute="leading" constant="6" id="TqM-Mo-gqH"/>
+                            <constraint firstAttribute="height" constant="35" id="VRI-zS-deS"/>
+                            <constraint firstAttribute="trailing" secondItem="H4K-3t-eZ3" secondAttribute="trailing" constant="6" id="ePD-zL-vF4"/>
+                            <constraint firstAttribute="trailing" secondItem="97c-wR-ulK" secondAttribute="trailing" id="fFy-VW-ZSw"/>
+                            <constraint firstItem="97c-wR-ulK" firstAttribute="leading" secondItem="mT3-5v-qeN" secondAttribute="leading" id="zAo-QD-5sH"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                <integer key="value" value="46"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
-                                <real key="value" value="3"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
-                                <real key="value" value="7"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
+                <constraint firstItem="mT3-5v-qeN" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="1Ct-NA-Qdv"/>
+                <constraint firstAttribute="trailing" secondItem="mT3-5v-qeN" secondAttribute="trailing" constant="20" id="5Ey-Zx-dP4"/>
                 <constraint firstAttribute="bottom" secondItem="diF-3h-MUb" secondAttribute="bottom" id="8vK-zG-RPx"/>
                 <constraint firstItem="qIW-Jn-hzN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="Bhf-9K-iRU"/>
-                <constraint firstAttribute="trailing" secondItem="gHN-LS-tXK" secondAttribute="trailing" constant="20" id="DQA-8c-1xq"/>
                 <constraint firstItem="qIW-Jn-hzN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="OAH-Kr-nkm"/>
-                <constraint firstItem="gHN-LS-tXK" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="SSy-3L-77j"/>
                 <constraint firstAttribute="bottom" secondItem="qIW-Jn-hzN" secondAttribute="bottom" constant="11" id="fLJ-V3-3qi"/>
                 <constraint firstItem="diF-3h-MUb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="l5w-zq-qIf"/>
                 <constraint firstAttribute="trailing" secondItem="diF-3h-MUb" secondAttribute="trailing" constant="20" id="uKq-cK-VeB"/>
-                <constraint firstItem="gHN-LS-tXK" firstAttribute="leading" secondItem="qIW-Jn-hzN" secondAttribute="trailing" constant="8" id="wZt-D1-V9l"/>
+                <constraint firstItem="mT3-5v-qeN" firstAttribute="leading" secondItem="qIW-Jn-hzN" secondAttribute="trailing" constant="12" id="yp2-34-y5R"/>
             </constraints>
             <size key="customSize" width="331" height="44"/>
             <connections>
-                <outlet property="ratingsView" destination="gHN-LS-tXK" id="SmH-md-ec2"/>
+                <outlet property="ratingsLabel" destination="H4K-3t-eZ3" id="meX-vD-Cd1"/>
+                <outlet property="ratingsView" destination="97c-wR-ulK" id="6e6-88-x07"/>
                 <outlet property="separator" destination="diF-3h-MUb" id="Djq-9N-x6i"/>
                 <outlet property="titleLabel" destination="qIW-Jn-hzN" id="qbP-0Z-l7v"/>
             </connections>
             <point key="canvasLocation" x="-563.04347826086962" y="32.8125"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="97c-wR-ulK">
+            <size key="intrinsicContentSize" width="35" height="35"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
