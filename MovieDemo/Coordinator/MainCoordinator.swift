@@ -55,8 +55,7 @@ final class MainCoordinator {
     }
     
     func showMovieDetail(movie: Movie) {
-        let dataProvider = MoviesDetailsDataProvider(movieViewModel: MovieViewModel(movie: movie))
-        let mdvc = MovieDetailViewController(dataProvider: dataProvider)
+        let mdvc = MovieDetailViewController(viewModel: MovieViewModel(movie: movie))
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)

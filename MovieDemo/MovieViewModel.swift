@@ -8,31 +8,60 @@
 
 import Foundation
 
-struct MovieViewModel {
-    //Used to filter the top crew jobs to show on the detail
-    private let topCrewJobs = [
-        "Director",
-        "Writer",
-        "Story",
-        "Screenplay",
-        "Editor",
-        "Director of Photography",
-        "Original Music Composer"
-    ]
-    
+class MovieViewModel {
     private var movie: Movie
+    
+    private let movieService = MovieDBService()
+    private var isFetching = false
+    var didUpdate: ((Error?) -> Void)?
+    
+    //Stores basic info about the movie
+    var infoArray = [[String : String]]()
+    
+    //Stores only the first 8 credits from the cast
+    var topCast = [CastCredit]()
+    
+    //Stores only the credits with jobs inclueded in the topCrewJobs array
+    var topCrew = [CrewCredit]()
     
     init(movie: Movie) {
         self.movie = movie
     }
     
-    mutating func updateMovie(_ movie: Movie) {
+    func updateMovie(_ movie: Movie) {
         self.movie = movie
         updateTopCrew()
         updateTopCast()
         updateInfoArray()
     }
-        
+    
+}
+
+//MARK:- Fetch Movie Details
+extension MovieViewModel {
+    func refresh() {
+        fetchMovieDetails()
+    }
+    
+    private func fetchMovieDetails() {
+        movieService.fetchMovieDetails(movieId: movie.id!) { [weak self] movie, error in
+            guard let self = self else { return }
+            
+            if error != nil {
+                self.didUpdate?(error)
+            }
+            
+            if let movie = movie {
+                self.updateMovie(movie)
+                self.didUpdate?(nil)
+            }
+        }
+    }
+    
+}
+
+//MARK:- Properties
+extension MovieViewModel {
     var id: Int? {
         return movie.id
     }
@@ -61,7 +90,7 @@ struct MovieViewModel {
         return  UInt((movie.voteAverage ?? 0) * 10)
     }
         
-    func genresString(separatedBy separator: String = ", ") -> String {
+    func genres(separatedBy separator: String = ", ") -> String {
         let genres = movie.genres?.map { $0.string() } ?? []
         let genresString = genres.joined(separator: separator)
         
@@ -81,6 +110,11 @@ struct MovieViewModel {
         return formattedString
     }
     
+    var releaseDate: String? {
+        let dateFormatter = DateFormatter(withFormat: "MMMM dd, yyyy", locale: "en_US")
+        return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : nil
+    }
+    
     var releaseYear: String {
         let dateFormatter = DateFormatter(withFormat: "yyyy", locale: "en_US")
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : ""
@@ -89,11 +123,6 @@ struct MovieViewModel {
     var releaseDateWithoutYear: String {
         let dateFormatter = DateFormatter(withFormat: "MMM dd", locale: "en_US")
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : ""
-    }
-    
-    var releaseDate: String? {
-        let dateFormatter = DateFormatter(withFormat: "MMMM dd yyy", locale: "en_US")
-        return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : nil
     }
     
     func backdropImageURL(size: MovieDBService.BackdropSize = .w300) -> URL? {
@@ -140,11 +169,24 @@ struct MovieViewModel {
         return currencyFormatter.string(from: NSNumber(value: revenue))
     }
     
-    var infoArray = [[String : String]]()
+    var cast: [CastCredit] {
+        return movie.cast ?? [CastCredit]()
+    }
     
-    private mutating func updateInfoArray() {
+    var crew: [CrewCredit] {
+        return movie.crew ?? [CrewCredit]()
+    }
+    
+    var recommendedMovies: [Movie] {
+        return movie.recommendedMovies ?? [Movie]()
+    }
+    
+}
+
+//MARK:- Generated data
+extension MovieViewModel {
+    private func updateInfoArray() {
         var info = [[String : String]]()
-        
         
         if let releaseDate = releaseDate {
             info.append(["Release Date": releaseDate])
@@ -169,60 +211,41 @@ struct MovieViewModel {
         infoArray = info
     }
     
-    var cast: [CastCredit] {
-        get {
-            return movie.cast ?? [CastCredit]()
-        }
-        set(cast) {
-            movie.cast = cast
-            updateTopCast()
-        }
-    }
-    
-    var crew: [CrewCredit] {
-        get {
-            return movie.crew ?? [CrewCredit]()
-        }
-        set(crew) {
-            movie.crew = crew
-            updateTopCrew()
-        }
-    }
-    
-    var recommendedMovies: [Movie] {
-        get {
-            return movie.recommendedMovies ?? [Movie]()
-        }
-        set(movies) {
-            movie.recommendedMovies = movies
-        }
-    }
-    
-    //Stores only the first 8 credits from the cast
-    var topCast = [CastCredit]()
-    
-    private mutating func updateTopCast() {
+    private func updateTopCast() {
         guard let cast = movie.cast else { return }
         
         topCast = Array(cast.prefix(8))
     }
     
-    //Stores only the credits with jobs inclueded in the topCrewJobs array
-    var topCrew = [CrewCredit]()
+    //Used to filter the top crew jobs to show on the detail
+    private func topCrewJobs() -> [String] {
+        return [
+            "Director",
+            "Writer",
+            "Story",
+            "Screenplay",
+            "Editor",
+            "Director of Photography",
+            "Original Music Composer"
+        ]
+    }
     
-    private mutating func updateTopCrew() {
+    private func updateTopCrew() {
+        let crewJobs = topCrewJobs()
+        
         guard let crew = movie.crew else { return }
         
         var filteredCrew = [CrewCredit]()
-        for job in topCrewJobs {
+        for job in crewJobs {
             let crewWithJob = crew.filter { crewCredit in
                 crewCredit.job == job && !filteredCrew.contains { filteredCrewCredit in
                     filteredCrewCredit.id == crewCredit.id
                 }
             }
+            
             filteredCrew.append(contentsOf: crewWithJob)
         }
-
+        
         topCrew = filteredCrew
     }
     
@@ -231,10 +254,11 @@ struct MovieViewModel {
         let jobs = crew.compactMap { crew in
             crew.id == crewCreditId ? crew.job : nil
         }
-                
+        
         let jobsString = jobs.joined(separator: ", ")
         
         return jobsString
     }
     
 }
+

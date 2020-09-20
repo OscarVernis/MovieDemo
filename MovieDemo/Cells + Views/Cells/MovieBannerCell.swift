@@ -28,7 +28,7 @@ class MovieBannerCell: UICollectionViewCell {
         
         titleLabel.text = movie.title
         
-        infoLabel.text = movie.genresString()
+        infoLabel.text = movie.genres()
         
         ratingsView.rating = movie.percentRating
         ratingsView.isRatingAvailable = movie.isRatingAvailable

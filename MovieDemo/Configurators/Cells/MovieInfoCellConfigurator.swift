@@ -26,7 +26,7 @@ struct MovieInfoCellConfigurator: CellConfigurator {
         cell.ratingsView.rating = viewModel.percentRating
         cell.ratingsView.isRatingAvailable = viewModel.isRatingAvailable
         cell.overviewLabel.text = viewModel.overview
-        cell.genresLabel.text = viewModel.genresString()
+        cell.genresLabel.text = viewModel.genres()
         cell.releaseDateLabel.text = viewModel.releaseYear
     }
     

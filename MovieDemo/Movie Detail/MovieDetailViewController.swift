@@ -42,17 +42,13 @@ class MovieDetailViewController: UIViewController {
     private var sections: [Section]!
     private var isLoading = true
     
-    private var movie: MovieViewModel {
-        return dataProvider.movieViewModel
-    }
-    
-    private var dataProvider: MoviesDetailsDataProvider
-    
+    private var movie: MovieViewModel!
+        
     private weak var movieHeader: MovieDetailHeaderView?
     private var collectionView: UICollectionView!
     
-    required init(dataProvider: MoviesDetailsDataProvider) {
-        self.dataProvider = dataProvider
+    required init(viewModel: MovieViewModel) {
+        self.movie = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -154,8 +150,8 @@ class MovieDetailViewController: UIViewController {
             self.reloadSections()
         }
         
-        dataProvider.didUpdate = updateCollectionView
-        dataProvider.refresh()
+        movie.didUpdate = updateCollectionView
+        movie.refresh()
     }
     
 }

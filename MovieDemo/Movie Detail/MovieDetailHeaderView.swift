@@ -33,7 +33,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         ratingsView.rating = movie.percentRating
         ratingsView.isRatingAvailable = movie.isRatingAvailable
         ratingsLabel.text = movie.ratingString
-        genresLabel.text = movie.genresString(separatedBy: ", ")
+        genresLabel.text = movie.genres(separatedBy: ", ")
         overviewLabel.text = movie.overview
         
         if let runtime = movie.runtime {
