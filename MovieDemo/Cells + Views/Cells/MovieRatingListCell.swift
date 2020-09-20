@@ -8,19 +8,13 @@
 
 import UIKit
 
-class MovieRatingListCell: UICollectionViewCell {
+class MovieRatingListCell: UICollectionViewCell, ConfigurableCell {
     static let reuseIdentifier = "MovieRatingListCell"
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var ratingsLabel: UILabel!
-
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
     func configure(withMovie movie: MovieViewModel, showSeparator: Bool = true) {
         titleLabel.text = movie.title

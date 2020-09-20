@@ -35,6 +35,8 @@
 		55596E00251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596DFF251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift */; };
 		55596E062513076E00A2B821 /* HomeTitleSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E052513076E00A2B821 /* HomeTitleSectionConfigurator.swift */; };
 		55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E0F251317AC00A2B821 /* UIView+Nib.swift */; };
+		55677462251735E90066B6E4 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55677461251735E90066B6E4 /* ConfigurableCell.swift */; };
+		556774652517385F0066B6E4 /* ConfigurableReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556774642517385F0066B6E4 /* ConfigurableReusableView.swift */; };
 		556AB18F2514656C0023D278 /* UIView+Anchoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AB18E2514656C0023D278 /* UIView+Anchoring.swift */; };
 		556AB1942514680A0023D278 /* DotRatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AB1932514680A0023D278 /* DotRatingsView.swift */; };
 		5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587114825108079005A0975 /* MovieInfoListCell.swift */; };
@@ -104,6 +106,8 @@
 		55596DFF251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTitleSectionConfigurator.swift; sourceTree = "<group>"; };
 		55596E052513076E00A2B821 /* HomeTitleSectionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTitleSectionConfigurator.swift; sourceTree = "<group>"; };
 		55596E0F251317AC00A2B821 /* UIView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Nib.swift"; sourceTree = "<group>"; };
+		55677461251735E90066B6E4 /* ConfigurableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
+		556774642517385F0066B6E4 /* ConfigurableReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableReusableView.swift; sourceTree = "<group>"; };
 		556AB18E2514656C0023D278 /* UIView+Anchoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Anchoring.swift"; sourceTree = "<group>"; };
 		556AB1932514680A0023D278 /* DotRatingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotRatingsView.swift; sourceTree = "<group>"; };
 		5587114825108079005A0975 /* MovieInfoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoListCell.swift; sourceTree = "<group>"; };
@@ -383,6 +387,8 @@
 				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
 				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
 				556AB18E2514656C0023D278 /* UIView+Anchoring.swift */,
+				55677461251735E90066B6E4 /* ConfigurableCell.swift */,
+				556774642517385F0066B6E4 /* ConfigurableReusableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -494,10 +500,12 @@
 				55EDD34F2513E161004F8117 /* ListViewController.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
+				556774652517385F0066B6E4 /* ConfigurableReusableView.swift in Sources */,
 				551E79272513CBD700EE2FCA /* InfoListCell.swift in Sources */,
 				55893B782513FD2900233677 /* RecommendedMoviesDataProvider.swift in Sources */,
 				556AB18F2514656C0023D278 /* UIView+Anchoring.swift in Sources */,
 				55893B7B2513FEEE00233677 /* StaticArrayDataProvider.swift in Sources */,
+				55677462251735E90066B6E4 /* ConfigurableCell.swift in Sources */,
 				55EDD3602513F2E0004F8117 /* MovieInfoCellConfigurator.swift in Sources */,
 				55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */,
 				55A6A9922511A72800305C29 /* MovieGenreTransformer.swift in Sources */,
@@ -669,7 +677,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FRHHJ2P5W9;
 				INFOPLIST_FILE = MovieDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -688,7 +696,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FRHHJ2P5W9;
 				INFOPLIST_FILE = MovieDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

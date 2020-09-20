@@ -9,6 +9,7 @@
 import UIKit
 
 class SectionBackgroundDecorationView: UICollectionReusableView {
+    static let elementKind = "SectionBackgroundDecorationView"
 
     override init(frame: CGRect) {
         super.init(frame: frame)

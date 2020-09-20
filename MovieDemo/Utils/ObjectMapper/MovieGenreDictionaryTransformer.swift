@@ -22,5 +22,6 @@ class MovieGenreDictionaryTransformer: TransformType {
     }
     
     func transformToJSON(_ value: MovieGenre?) -> [String: Any]? {
-        return nil    }
+        return nil
+    }
 }

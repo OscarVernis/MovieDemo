@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingCell: UICollectionViewCell {
+class LoadingCell: UICollectionViewCell, ConfigurableCell {
     static let reuseIdentifier = "LoadingCell"
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!

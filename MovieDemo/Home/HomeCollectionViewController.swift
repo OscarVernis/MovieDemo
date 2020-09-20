@@ -8,14 +8,11 @@
 
 import UIKit
 
-class HomeCollectionViewController: UIViewController {
-    static let sectionBackgroundDecorationElementKind = "section-background-element-kind"
-    static let sectionHeaderElementKind = "section-header-element-kind"
-    
+class HomeCollectionViewController: UIViewController {    
     weak var mainCoordinator: MainCoordinator!
     
     var dataSource: HomeCollectionViewDataSource!
-    var searchDataProvider = MovieListDataProvider(.Search)
+    var searchDataProvider = MovieListDataProvider()
     
     var collectionView: UICollectionView!
     
@@ -72,11 +69,11 @@ class HomeCollectionViewController: UIViewController {
         collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
         view.addSubview(collectionView)
         
-        collectionView.register(MoviePosterInfoCell.namedNib(), forCellWithReuseIdentifier: MoviePosterInfoCell.reuseIdentifier)
-        collectionView.register(MovieBannerCell.namedNib(), forCellWithReuseIdentifier: MovieBannerCell.reuseIdentifier)
-        collectionView.register(MovieRatingListCell.namedNib(), forCellWithReuseIdentifier: MovieRatingListCell.reuseIdentifier)
-        collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
-        collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: HomeCollectionViewController.sectionHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
+        MoviePosterInfoCell.register(withCollectionView: collectionView)
+        MovieBannerCell.register(withCollectionView: collectionView)
+        MovieRatingListCell.register(withCollectionView: collectionView)
+        MovieInfoListCell.register(withCollectionView: collectionView)
+        SectionTitleView.registerHeader(toCollectionView: collectionView)
     }
     
 //MARK: - Actions
@@ -117,7 +114,7 @@ extension HomeCollectionViewController {
             return section
         }
         
-        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: HomeCollectionViewController.sectionBackgroundDecorationElementKind)
+        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
         
         return layout
     }
@@ -138,7 +135,9 @@ extension HomeCollectionViewController: UICollectionViewDelegate {
 // MARK: - Searching
 extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControllerDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        searchDataProvider.searchQuery = searchController.searchBar.text ?? ""
+        if let searchQuery = searchController.searchBar.text, !searchQuery.isEmpty {
+            searchDataProvider.currentService = .Search(query: searchQuery)
+        }
     }
 }
 

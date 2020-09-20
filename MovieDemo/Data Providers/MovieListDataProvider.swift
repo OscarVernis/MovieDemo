@@ -11,12 +11,12 @@ import Foundation
 class MovieListDataProvider: ArrayDataProvider {
     typealias Model = Movie
         
-    enum Service: Int {
+    enum Service: Equatable {
         case NowPlaying
         case Popular
         case TopRated
         case Upcoming
-        case Search
+        case Search(query: String)
     }
     
     init(_ service: Service = .NowPlaying) {
@@ -32,13 +32,7 @@ class MovieListDataProvider: ArrayDataProvider {
     
     var currentService: Service = .NowPlaying {
         didSet {
-           movieServiceChanged()
-        }
-    }
-    
-    var searchQuery = "" {
-        didSet {
-            refresh()
+           refresh()
         }
     }
     
@@ -52,14 +46,6 @@ class MovieListDataProvider: ArrayDataProvider {
     
     var didUpdate: (() -> Void)?
     
-    func movieServiceChanged() {
-        if currentService != .Search {
-            searchQuery = ""
-        }
-        
-        refresh()
-    }
-    
     func fetchNextPage() {
         if(currentPage >= totalPages) {
             return
@@ -70,10 +56,6 @@ class MovieListDataProvider: ArrayDataProvider {
     }
     
     func refresh() {
-        if currentService == .Search, searchQuery.isEmpty {
-            return
-        }
-        
         currentPage = 1
         totalPages = 1
         fetchMovies()
@@ -81,7 +63,6 @@ class MovieListDataProvider: ArrayDataProvider {
     
     private func fetchMovies() {
         if isFetching {
-            print("Already fetching")
             return
         }
         
@@ -103,7 +84,16 @@ class MovieListDataProvider: ArrayDataProvider {
             
             self.totalPages = totalPages
             
-            self.models.append(contentsOf: movies)
+            if self.currentService == .Upcoming { //If is upcoming sort by Release Date
+                self.models.append(contentsOf: movies.sorted {
+                    guard let releaseDate1 = $0.releaseDate else { return false }
+                    guard let releaseDate2 = $1.releaseDate else { return false }
+
+                    return releaseDate1 < releaseDate2
+                })
+            } else {
+                self.models.append(contentsOf: movies)
+            }
             
             self.didUpdate?()
         }
@@ -117,9 +107,10 @@ class MovieListDataProvider: ArrayDataProvider {
             movieService.fetchTopRated(page: currentPage, completion: fetchHandler)
         case .Upcoming:
             movieService.fetchUpcoming(page: currentPage, completion: fetchHandler)
-        case .Search:
-            movieService.search(query: searchQuery, page: currentPage, completion: fetchHandler)
+        case .Search(let query):
+            movieService.search(query: query, page: currentPage, completion: fetchHandler)
         }
+        
     }
     
 }

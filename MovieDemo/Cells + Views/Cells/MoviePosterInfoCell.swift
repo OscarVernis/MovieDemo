@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoviePosterInfoCell: UICollectionViewCell {
+class MoviePosterInfoCell: UICollectionViewCell, ConfigurableCell {
     static let reuseIdentifier = "MoviePosterInfoCell"
 
     @IBOutlet weak var posterImageView: UIImageView!

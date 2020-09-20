@@ -15,9 +15,8 @@ struct MovieDBService {
     
     let baseURL = "https://api.themoviedb.org/3"
     
-    let language = "en-US"
-    
     func defaultParameters() -> [String: Any] {
+        let language = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
         let params = ["language": language, "api_key": apiKey]
         
         return params
@@ -77,7 +76,7 @@ extension MovieDBService {
         var params = defaultParameters()
         params.merge(parameters) { _, new in new }
         params["page"] = page
-        //        params["region"] = "US"
+        params["region"] = "US"
         
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {

@@ -20,7 +20,6 @@ class CastCredit: Mappable {
     var profilePath: String?
     
     //MARK: - ObjectMapper
-    
     required init?(map: Map) {
         
     }

@@ -15,7 +15,8 @@ struct MoviesCompositionalLayoutBuilder {
                                                 heightDimension: .absolute(48))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
-            elementKind: HomeCollectionViewController.sectionHeaderElementKind, alignment: .top)
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top)
         sectionHeader.pinToVisibleBounds = false
         
         return sectionHeader
@@ -88,7 +89,7 @@ struct MoviesCompositionalLayoutBuilder {
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
         
         let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(
-            elementKind: HomeCollectionViewController.sectionBackgroundDecorationElementKind)
+            elementKind: SectionBackgroundDecorationView.elementKind)
         sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
         section.decorationItems = [sectionBackgroundDecoration]
                 
@@ -135,7 +136,7 @@ struct MoviesCompositionalLayoutBuilder {
                                                 heightDimension: .estimated(500))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
-            elementKind: MovieDetailViewController.mainHeaderElementKind, alignment: .top)
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
         return sectionHeader
     }

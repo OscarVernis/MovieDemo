@@ -9,10 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class MovieDetailViewController: UIViewController {
-    static let mainHeaderElementKind = "movie-detail-header-view"
-    static let sectionTitleHeaderElementKind = "section-header-element-kind"
-    
+class MovieDetailViewController: UIViewController {    
     weak var mainCoordinator: MainCoordinator!
     
     private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
@@ -77,12 +74,10 @@ class MovieDetailViewController: UIViewController {
                 
         setupCollectionView()
         setupDataProvider()
-
     }
     
     fileprivate func reloadSections() {
         sections.removeAll()
-
         sections.append(.Header)
 
         if movie.cast.count > 0 {
@@ -128,20 +123,20 @@ class MovieDetailViewController: UIViewController {
         if let imageURL = movie.posterImageURL(size: .w342) {
             collectionView.backgroundColor = .clear
 
-            let bgView = UINib(nibName: "BlurBackgroundView", bundle: .main).instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
+            let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
 
             bgView.imageView.af.setImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
         
-        collectionView.register(MovieDetailHeaderView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.mainHeaderElementKind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier)
-        collectionView.register(SectionTitleView.namedNib(), forSupplementaryViewOfKind: MovieDetailViewController.sectionTitleHeaderElementKind, withReuseIdentifier: SectionTitleView.reuseIdentifier)
+        SectionTitleView.registerHeader(toCollectionView: collectionView)
+        MovieDetailHeaderView.registerHeader(toCollectionView: collectionView)
 
-        collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
+        LoadingCell.register(withCollectionView: collectionView)
         
-        collectionView.register(MoviePosterInfoCell.namedNib(), forCellWithReuseIdentifier: MoviePosterInfoCell.reuseIdentifier)
-        collectionView.register(CreditCell.namedNib(), forCellWithReuseIdentifier: CreditCell.reuseIdentifier)
-        collectionView.register(InfoListCell.namedNib(), forCellWithReuseIdentifier: InfoListCell.reuseIdentifier)
+        MoviePosterInfoCell.register(withCollectionView: collectionView)
+        CreditCell.register(withCollectionView: collectionView)
+        InfoListCell.register(withCollectionView: collectionView)
 
         collectionView.collectionViewLayout = createLayout()
     }
@@ -151,7 +146,7 @@ class MovieDetailViewController: UIViewController {
             self?.reloadSections()
         }
         
-        dataProvider.detailsDidUpdate = updateCollectionView
+        dataProvider.didUpdate = updateCollectionView
         dataProvider.refresh()
     }
     
@@ -222,14 +217,14 @@ extension MovieDetailViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //TODO: Show Credit Movie List or Credit Detail when tapping
-        let section = Section(rawValue: indexPath.section)!
-        switch section {
+        let sectionType = self.sections[indexPath.section]
+        switch sectionType {
         case .Header:
             break
         case .Cast:
-            print("Tap")
+            break
         case .Crew:
-            print("Tap")
+            break
         case .RecommendedMovies:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)

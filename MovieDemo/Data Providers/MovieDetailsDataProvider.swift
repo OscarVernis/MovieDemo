@@ -15,7 +15,7 @@ class MoviesDetailsDataProvider {
     
     var isFetching = false
     
-    var detailsDidUpdate: (() -> Void)?    
+    var didUpdate: (() -> Void)?    
     
     init(movieViewModel: MovieViewModel) {
         self.movieViewModel = movieViewModel
@@ -35,7 +35,7 @@ class MoviesDetailsDataProvider {
             
             if let movie = movie {
                 self.movieViewModel.updateMovie(movie)
-                self.detailsDidUpdate?()
+                self.didUpdate?()
             }
         }
     }
