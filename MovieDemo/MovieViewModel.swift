@@ -68,7 +68,7 @@ struct MovieViewModel {
     }
     
     var runtime: String? {
-        guard let runtime = movie.runtime else { return nil }
+        guard let runtime = movie.runtime, runtime > 0 else { return nil }
         
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute]

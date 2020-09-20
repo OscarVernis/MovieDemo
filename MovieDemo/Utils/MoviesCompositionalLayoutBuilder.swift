@@ -9,6 +9,7 @@
 import UIKit
  
 struct MoviesCompositionalLayoutBuilder {
+    //Creates the title header for sections
     func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .absolute(48))
@@ -20,14 +21,14 @@ struct MoviesCompositionalLayoutBuilder {
         return sectionHeader
     }
     
-    //This section is used to show a Header without any items
-    func createEmptySection() ->  NSCollectionLayoutSection {
+    //This section is used to show a Header without any items and the loading cell
+    func createEmptySection(withHeight height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(1.0))
+                                               heightDimension: .absolute(height))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -35,6 +36,8 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    
+    //Horizontal scroll, shows only one complete item and a peek at the next
     func createBannerSection() ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -52,6 +55,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    //Horizontal scroll with no paging, several items at a time
     func createHorizontalPosterSection() ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
@@ -69,6 +73,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    //List with background decorator
     func createDecoratedListSection() ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -90,6 +95,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    //Regular list
     func createInfoListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -105,6 +111,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    //Two column list Eg. Crew credits on detail
     func createTwoColumListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
@@ -122,6 +129,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    //The Header section for MovieDetailViewController
     func createMovieDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: .estimated(500))
@@ -132,6 +140,7 @@ struct MoviesCompositionalLayoutBuilder {
         return sectionHeader
     }
     
+    //Similar to Poster section with a different size
     func createHorizontalCreditSection() ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
