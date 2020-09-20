@@ -14,6 +14,8 @@ open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellCon
     
     private let reuseIdentifier: String
     
+    var showLoadingIndicator = false
+    
     init(reuseIdentifier: String, configurator: Configurator) {
         self.reuseIdentifier = reuseIdentifier
         self.cellConfigurator = configurator
@@ -24,7 +26,7 @@ open class ListViewDataSource<Provider: ArrayDataProvider, Configurator: CellCon
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !dataProvider.isLastPage {
+        if !dataProvider.isLastPage || showLoadingIndicator {
             return dataProvider.models.count + 1
         } else {
             return dataProvider.models.count

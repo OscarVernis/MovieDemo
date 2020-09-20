@@ -22,7 +22,7 @@ class MovieDetailViewController: UIViewController {
         case RecommendedMovies
         case Info
         
-        func title() -> String {
+        var title: String {
             switch self {
             case .Header:
                 return ""
@@ -142,8 +142,16 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataProvider()  {
-        let updateCollectionView:() -> () = { [weak self] in
-            self?.reloadSections()
+        let updateCollectionView:(Error?) -> () = { [weak self] error in
+            guard let self = self else { return }
+            
+            if error != nil {
+                AlertManager.showRefreshErrorAlert(sender: self) {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+            
+            self.reloadSections()
         }
         
         dataProvider.didUpdate = updateCollectionView
@@ -323,25 +331,25 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showCastCreditList(title: sectionType.title(), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
+                    self.mainCoordinator.showCastCreditList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.movie.cast))
                 }
             case .Crew:
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showCrewCreditList(title: sectionType.title(), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
+                    self.mainCoordinator.showCrewCreditList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.movie.crew))
                 }
             case .RecommendedMovies:
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showMovieList(title: sectionType.title(), dataProvider: RecommendedMoviesDataProvider(movieId: self.movie.id!))
+                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id!)))
                 }
             case .Info:
                 break
             }
             
-            MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: sectionType.title(), tapHandler: tapHandler)
+            MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: sectionType.title, tapHandler: tapHandler)
             
             return headerView
         }

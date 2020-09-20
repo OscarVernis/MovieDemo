@@ -20,13 +20,14 @@ class StaticArrayDataProvider<T>: ArrayDataProvider {
     var currentPage = 1
     var totalPages = 1
     var isLastPage = true
+    var isFetching: Bool = false
     
-    var didUpdate: (() -> Void)?
+    var didUpdate: ((Error?) -> Void)?
     
     func fetchNextPage() {}
     
     func refresh() {
-        didUpdate?()
+        didUpdate?(nil)
     }
     
 }

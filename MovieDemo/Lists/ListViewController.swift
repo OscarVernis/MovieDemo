@@ -21,13 +21,13 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
     var didSelectedItem: ((Int, Provider.Model) -> ())?
        
     weak var mainCoordinator: MainCoordinator!
-    
+        
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         setup()
     }
-    
+        
     fileprivate func setup() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.delegate = self
@@ -44,13 +44,22 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
         collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
         
+        dataSource?.showLoadingIndicator = true
         collectionView.dataSource = dataSource
         dataSource?.dataProvider = dataProvider
         
-        dataProvider.didUpdate = { [weak self] in
-            self?.reload()
+        dataProvider.didUpdate = { [weak self] error in
+            guard let self = self else { return }
+            
+            if error != nil {
+                AlertManager.showRefreshErrorAlert(sender: self)
+            }
+            
+            self.dataSource?.showLoadingIndicator = false
+            self.collectionView.refreshControl?.endRefreshing()
+            self.reload()
         }
-                
+        
         dataProvider.refresh()
     }
     

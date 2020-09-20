@@ -59,7 +59,7 @@ class HomeSection {
             self.dataProvider = MovieListDataProvider(.Upcoming)
         }
         
-        self.dataProvider.didUpdate = { [weak self] in
+        self.dataProvider.didUpdate = { [weak self] error in
             self?.didUpdate?(index)
         }
         

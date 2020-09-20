@@ -17,6 +17,7 @@ class MovieListDataProvider: ArrayDataProvider {
         case TopRated
         case Upcoming
         case Search(query: String)
+        case Recommended(movieId: Int)
     }
     
     init(_ service: Service = .NowPlaying) {
@@ -36,27 +37,26 @@ class MovieListDataProvider: ArrayDataProvider {
         }
     }
     
-    private var isFetching = false
-    var currentPage = 1
+    var isFetching = false
+    var currentPage = 0
     var totalPages = 1
     
     var isLastPage: Bool {
-        currentPage == totalPages
+        currentPage == totalPages || currentPage == 0
     }
     
-    var didUpdate: (() -> Void)?
+    var didUpdate: ((Error?) -> Void)?
     
     func fetchNextPage() {
-        if(currentPage >= totalPages) {
+        if isLastPage {
             return
         }
         
-        currentPage += 1
         fetchMovies()
     }
     
     func refresh() {
-        currentPage = 1
+        currentPage = 0
         totalPages = 1
         fetchMovies()
     }
@@ -74,9 +74,11 @@ class MovieListDataProvider: ArrayDataProvider {
             self.isFetching = false
             
             if let error = error {
-                print(error)
+                self.didUpdate?(error)
                 return
             }
+            
+            self.currentPage += 1
             
             if self.currentPage == 1 {
                 self.models.removeAll()
@@ -95,20 +97,23 @@ class MovieListDataProvider: ArrayDataProvider {
                 self.models.append(contentsOf: movies)
             }
             
-            self.didUpdate?()
+            self.didUpdate?(nil)
         }
         
+        let page = currentPage + 1
         switch currentService {
         case .NowPlaying:
-            movieService.fetchNowPlaying(page: currentPage, completion: fetchHandler)
+            movieService.fetchNowPlaying(page: page, completion: fetchHandler)
         case .Popular:
-            movieService.fetchPopular(page: currentPage, completion: fetchHandler)
+            movieService.fetchPopular(page: page, completion: fetchHandler)
         case .TopRated:
-            movieService.fetchTopRated(page: currentPage, completion: fetchHandler)
+            movieService.fetchTopRated(page: page, completion: fetchHandler)
         case .Upcoming:
-            movieService.fetchUpcoming(page: currentPage, completion: fetchHandler)
-        case .Search(let query):
-            movieService.search(query: query, page: currentPage, completion: fetchHandler)
+            movieService.fetchUpcoming(page: page, completion: fetchHandler)
+        case .Search(query: let query):
+            movieService.search(query: query, page: page, completion: fetchHandler)
+        case .Recommended(movieId: let movieId):
+            movieService.fetchRecommendMovies(movieId: movieId, page: page, completion: fetchHandler)
         }
         
     }

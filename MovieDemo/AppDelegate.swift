@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow()
         self.window = window
         
+        Alamofire.Session.default.session.configuration.timeoutIntervalForRequest = 1
+        Alamofire.Session.default.session.configuration.timeoutIntervalForResource = 1
+
         appCoordinator = MainCoordinator(window: window)
         appCoordinator?.start()
         

@@ -15,7 +15,7 @@ class MoviesDetailsDataProvider {
     
     var isFetching = false
     
-    var didUpdate: (() -> Void)?    
+    var didUpdate: ((Error?) -> Void)?
     
     init(movieViewModel: MovieViewModel) {
         self.movieViewModel = movieViewModel
@@ -30,12 +30,12 @@ class MoviesDetailsDataProvider {
             guard let self = self else { return }
             
             if error != nil {
-                print(error!)
+                self.didUpdate?(error)
             }
             
             if let movie = movie {
                 self.movieViewModel.updateMovie(movie)
-                self.didUpdate?()
+                self.didUpdate?(nil)
             }
         }
     }

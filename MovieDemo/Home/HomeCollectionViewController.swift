@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HomeCollectionViewController: UIViewController {    
     weak var mainCoordinator: MainCoordinator!
@@ -15,11 +16,20 @@ class HomeCollectionViewController: UIViewController {
     var searchDataProvider = MovieListDataProvider()
     
     var collectionView: UICollectionView!
+    var sections: [HomeSection]!
+    
+    let manager = NetworkReachabilityManager(host: "www.apple.com")
     
     override func viewDidLoad() {
         super.viewDidLoad()
                 
         self.title = "Movies"
+        
+        manager?.startListening { status in
+            if status == .notReachable || status == .unknown {
+                AlertManager.showNetworkConnectionAlert(sender: self)
+            }
+        }
                 
         setupSearch()
         setupCollectionView()
@@ -28,10 +38,11 @@ class HomeCollectionViewController: UIViewController {
     
     fileprivate func setupDataSource() {
         let didUpdate: (Int) -> Void = { [weak self] section in
-            self?.collectionView.reloadSections(IndexSet(integer: section))
+            self?.collectionView.refreshControl?.endRefreshing()
+            self?.collectionView.reloadData()
         }
         
-        let sections = [
+        sections = [
             HomeSection(.NowPlaying, index: 0, didUpdate: didUpdate),
             HomeSection(.Upcoming, index: 1, didUpdate: didUpdate),
             HomeSection(.Popular, index: 2, didUpdate: didUpdate),
@@ -69,6 +80,9 @@ class HomeCollectionViewController: UIViewController {
         collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
         view.addSubview(collectionView)
         
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
         MoviePosterInfoCell.register(withCollectionView: collectionView)
         MovieBannerCell.register(withCollectionView: collectionView)
         MovieRatingListCell.register(withCollectionView: collectionView)
@@ -77,6 +91,10 @@ class HomeCollectionViewController: UIViewController {
     }
     
 //MARK: - Actions
+    @objc func refresh() {
+        sections.forEach { $0.dataProvider.refresh() }
+    }
+    
     func showMovieList(section: HomeSection) {
         let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
         mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)

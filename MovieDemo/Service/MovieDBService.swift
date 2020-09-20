@@ -11,6 +11,10 @@ import Alamofire
 import ObjectMapper
 
 struct MovieDBService {
+    enum ServiceError: Error {
+        case jsonError
+    }
+    
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     
     let baseURL = "https://api.themoviedb.org/3"
@@ -68,7 +72,7 @@ extension MovieDBService {
     }
 }
 
-//MARK: - Fetch lists of movies
+//MARK: - Movie Lists
 extension MovieDBService {
     private func fetchMovies(endpoint path: String, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
         let url = endpoint(forPath: path)
@@ -81,18 +85,13 @@ extension MovieDBService {
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
-                guard let json = jsonData as? [String: Any] else {
-                    completion([], page, response.error)
-                    return
-                }
-                
-                if let moviesData = json["results"] as? [[String: Any]] {
+                if let json = jsonData as? [String: Any], let moviesData = json["results"] as? [[String: Any]] {
                     let movies = Array<Movie>.init(JSONArray: moviesData)
                     let totalPages = json["total_pages"] as? Int ?? page
                     
                     completion(movies, totalPages, nil)
                 } else {
-                    completion([], page, nil)
+                    completion([], page, ServiceError.jsonError)
                 }
             case .failure(let error):
                 completion([], page, error)
@@ -137,9 +136,10 @@ extension MovieDBService {
             switch response.result {
             case .success(let jsonData):
                 guard let json = jsonData as? [String: Any] else {
-                    completion(nil, response.error)
+                    completion(nil, ServiceError.jsonError)
                     return
                 }
+                
                 let movie = Movie(JSON: json)
                 completion(movie, nil)
             case .failure(let error):
