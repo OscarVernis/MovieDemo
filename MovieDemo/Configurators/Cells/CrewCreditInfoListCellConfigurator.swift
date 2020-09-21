@@ -16,4 +16,10 @@ struct CrewCreditInfoListCellConfigurator {
         cell.separator.isHidden = true
     }
     
+    func configure(cell: InfoListCell, with model: CrewCreditViewModel) {
+        
+        cell.titleLabel.text = model.name
+        cell.infoLabel.text = model.jobs
+    }
+    
 }

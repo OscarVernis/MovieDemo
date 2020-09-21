@@ -113,14 +113,14 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //Self sizing (AutoLayout) List Eg. Crew credits on detail
-    func createSelfSizingListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
+    func createTwoColumnListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(height))
+                                              heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 12)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(height))
+                                               heightDimension: .absolute(height))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
         
         let section = NSCollectionLayoutSection(group: group)

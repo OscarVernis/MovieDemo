@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 class MovieViewModel {
     private var movie: Movie
     
@@ -24,7 +22,8 @@ class MovieViewModel {
     var topCast = [CastCreditViewModel]()
     
     //Stores only the credits with jobs inclueded in the topCrewJobs array
-    var topCrew = [[String : String]]()
+//    var topCrew = [[String : String]]()
+    var topCrew = [CrewCreditViewModel]()
     
     init(movie: Movie) {
         self.movie = movie
@@ -219,55 +218,11 @@ extension MovieViewModel {
         
         topCast = Array(cast.prefix(8)).compactMap { CastCreditViewModel(castCredit: $0) }
     }
-}
-
-extension MovieViewModel {
-    //Used to filter the top crew jobs to show on the detail
-    enum TopCrewJob: String, CaseIterable {
-        case Director
-        case Writer
-        case Story
-        case Screenplay
-        case DOP = "Director of Photography"
-        case Composer = "Original Music Composer"
-        case Editor = "Editor"
-        
-        var creditTitle: String {
-            switch self {
-            case .Director:
-                return "Director"
-            case .Writer:
-                return "Writer"
-            case .Story:
-                return "Story"
-            case .Screenplay:
-                return "Screenplay"
-            case .DOP:
-                return "Cinematography"
-            case .Composer:
-                return "Music"
-            case .Editor:
-                return "Editor"
-            }
-        }
-    }
     
     private func updateTopCrew() {
         guard let crew = movie.crew else { return }
-        var crewJobs = [[String : String]]()
-        
-        for job in TopCrewJob.allCases.map(\.rawValue) {
-            let crewNames = crew.filter { $0.job == job }.compactMap(\.name)
-            
-            if crewNames.count > 0 {
-                let namesString = crewNames.joined(separator: "\n")
-                let crewJob = [TopCrewJob(rawValue: job)!.creditTitle : namesString]
-                crewJobs.append(crewJob)
-            }
-        }
-        
-        topCrew = crewJobs
+
+        topCrew = CrewCreditViewModel.crewWithTopJobs(credits: crew)
     }
-    
 }
 
