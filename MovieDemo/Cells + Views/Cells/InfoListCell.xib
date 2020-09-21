@@ -12,26 +12,26 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="InfoListCell" id="sMv-Fr-8B2" customClass="InfoListCell" customModule="MovieDemo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="457" height="44"/>
+            <rect key="frame" x="0.0" y="0.0" width="457" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="VPh-Pf-Khg">
-                <rect key="frame" x="0.0" y="0.0" width="457" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="457" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqW-Wk-pDi">
-                        <rect key="frame" x="0.0" y="6" width="457" height="16"/>
-                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dqW-Wk-pDi">
+                        <rect key="frame" x="0.0" y="6" width="457" height="23.5"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Job" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.90000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="21F-nh-6YN">
-                        <rect key="frame" x="0.0" y="22" width="457" height="16"/>
-                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Job" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21F-nh-6YN">
+                        <rect key="frame" x="0.0" y="29.5" width="457" height="44.5"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="15"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9X-hg-d3R">
-                        <rect key="frame" x="0.0" y="43.5" width="457" height="0.5"/>
+                        <rect key="frame" x="0.0" y="79.5" width="457" height="0.5"/>
                         <color key="backgroundColor" systemColor="separatorColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="G6f-El-fYk"/>
@@ -47,17 +47,16 @@
                     <constraint firstItem="C9X-hg-d3R" firstAttribute="leading" secondItem="VPh-Pf-Khg" secondAttribute="leading" id="RqR-dh-WXm"/>
                     <constraint firstAttribute="trailing" secondItem="21F-nh-6YN" secondAttribute="trailing" id="SNy-qg-ZtW"/>
                     <constraint firstItem="21F-nh-6YN" firstAttribute="top" secondItem="dqW-Wk-pDi" secondAttribute="bottom" id="c9N-Lv-8AZ"/>
-                    <constraint firstItem="21F-nh-6YN" firstAttribute="height" secondItem="dqW-Wk-pDi" secondAttribute="height" id="gdj-tx-p1A"/>
                     <constraint firstAttribute="trailing" secondItem="dqW-Wk-pDi" secondAttribute="trailing" id="ge4-Vm-Uvg"/>
                     <constraint firstAttribute="bottom" secondItem="21F-nh-6YN" secondAttribute="bottom" constant="6" id="jwg-1c-4B2"/>
                 </constraints>
             </collectionViewCellContentView>
-            <size key="customSize" width="457" height="44"/>
+            <size key="customSize" width="457" height="80"/>
             <connections>
                 <outlet property="infoLabel" destination="21F-nh-6YN" id="WSm-N2-46n"/>
                 <outlet property="titleLabel" destination="dqW-Wk-pDi" id="l1z-jP-CLe"/>
             </connections>
-            <point key="canvasLocation" x="244.20289855072465" y="45.535714285714285"/>
+            <point key="canvasLocation" x="244.20289855072465" y="57.589285714285708"/>
         </collectionViewCell>
     </objects>
     <resources>

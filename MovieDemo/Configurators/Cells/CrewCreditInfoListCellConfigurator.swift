@@ -10,10 +10,9 @@ import UIKit
 import AlamofireImage
 
 struct CrewCreditInfoListCellConfigurator {
-    func configure(cell: InfoListCell, with model: CrewCreditViewModel) {
-        
-        cell.titleLabel.text = model.name
-        cell.infoLabel.text = model.jobs
+    func configure(cell: InfoListCell, with model: [String: String]) {
+        cell.titleLabel.text = model.first?.key
+        cell.infoLabel.text = model.first?.value
     }
     
 }

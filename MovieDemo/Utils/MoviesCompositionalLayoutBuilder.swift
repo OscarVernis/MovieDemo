@@ -41,7 +41,7 @@ struct MoviesCompositionalLayoutBuilder {
     //Horizontal scroll, shows only one complete item and a peek at the next
     func createBannerSection() ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
+                                              heightDimension: .estimated(230))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
@@ -112,16 +112,16 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
-    //Two column list Eg. Crew credits on detail
-    func createTwoColumListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
+    //Self sizing (AutoLayout) List Eg. Crew credits on detail
+    func createSelfSizingListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
+                                              heightDimension: .estimated(height))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 12)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+                                               heightDimension: .estimated(height))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
 
         
         let section = NSCollectionLayoutSection(group: group)
