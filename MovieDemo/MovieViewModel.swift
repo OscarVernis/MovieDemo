@@ -19,10 +19,10 @@ class MovieViewModel {
     var infoArray = [[String : String]]()
     
     //Stores only the first 8 credits from the cast
-    var topCast = [CastCredit]()
+    var topCast = [CastCreditViewModel]()
     
     //Stores only the credits with jobs inclueded in the topCrewJobs array
-    var topCrew = [CrewCredit]()
+    var topCrew = [CrewCreditViewModel]()
     
     init(movie: Movie) {
         self.movie = movie
@@ -169,12 +169,13 @@ extension MovieViewModel {
         return currencyFormatter.string(from: NSNumber(value: revenue))
     }
     
-    var cast: [CastCredit] {
-        return movie.cast ?? [CastCredit]()
+    var cast: [CastCreditViewModel] {
+        return movie.cast?.compactMap { CastCreditViewModel(castCredit: $0) } ?? [CastCreditViewModel]()
+
     }
     
-    var crew: [CrewCredit] {
-        return movie.crew ?? [CrewCredit]()
+    var crew: [CrewCreditViewModel] {
+        return movie.crew?.compactMap { CrewCreditViewModel(crewCredit: $0) } ?? [CrewCreditViewModel]()
     }
     
     var recommendedMovies: [Movie] {
@@ -214,50 +215,13 @@ extension MovieViewModel {
     private func updateTopCast() {
         guard let cast = movie.cast else { return }
         
-        topCast = Array(cast.prefix(8))
-    }
-    
-    //Used to filter the top crew jobs to show on the detail
-    private func topCrewJobs() -> [String] {
-        return [
-            "Director",
-            "Writer",
-            "Story",
-            "Screenplay",
-            "Editor",
-            "Director of Photography",
-            "Original Music Composer"
-        ]
+        topCast = Array(cast.prefix(8)).compactMap { CastCreditViewModel(castCredit: $0) }
     }
     
     private func updateTopCrew() {
-        let crewJobs = topCrewJobs()
-        
         guard let crew = movie.crew else { return }
         
-        var filteredCrew = [CrewCredit]()
-        for job in crewJobs {
-            let crewWithJob = crew.filter { crewCredit in
-                crewCredit.job == job && !filteredCrew.contains { filteredCrewCredit in
-                    filteredCrewCredit.id == crewCredit.id
-                }
-            }
-            
-            filteredCrew.append(contentsOf: crewWithJob)
-        }
-        
-        topCrew = filteredCrew
-    }
-    
-    //Returns a job string including all of the job credits by the same person
-    func crewCreditJobString(crewCreditId: Int) -> String {
-        let jobs = crew.compactMap { crew in
-            crew.id == crewCreditId ? crew.job : nil
-        }
-        
-        let jobsString = jobs.joined(separator: ", ")
-        
-        return jobsString
+        topCrew = CrewCreditViewModel.crewWithTopJobs(credits: crew)
     }
     
 }

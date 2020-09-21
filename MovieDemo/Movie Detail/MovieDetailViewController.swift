@@ -282,7 +282,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
             
             let crew = movie.topCrew[indexPath.row]
-            CrewCreditInfoListCellConfigurator().configure(cell: cell, with: crew, jobString: movie.crewCreditJobString(crewCreditId: crew.id!))
+            CrewCreditInfoListCellConfigurator().configure(cell: cell, with: crew)
                         
             return cell
         case .RecommendedMovies:

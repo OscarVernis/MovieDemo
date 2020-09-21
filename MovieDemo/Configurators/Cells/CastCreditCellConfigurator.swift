@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 
 struct CastCreditCellConfigurator: CellConfigurator {
-    typealias Model = CastCredit
+    typealias Model = CastCreditViewModel
     typealias Cell = CreditPhotoListCell
     
     func configure(cell: Cell, with model: Model) {
@@ -19,9 +19,7 @@ struct CastCreditCellConfigurator: CellConfigurator {
         cell.nameLabel.text = model.name
         cell.roleLabel.text = model.character
         
-        if let pathString = model.profilePath {
-            let url = MovieDBService.profileImageURL(forPath: pathString, size: .h632)
-            cell.creditImageView.contentMode = .scaleAspectFill
+        if let url = model.profileImageURL {
             cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }

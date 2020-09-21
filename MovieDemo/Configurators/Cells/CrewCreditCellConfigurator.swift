@@ -10,7 +10,7 @@ import UIKit
 import AlamofireImage
 
 struct CrewCreditCellConfigurator: CellConfigurator {
-    typealias Model = CrewCredit
+    typealias Model = CrewCreditViewModel
     typealias Cell = CreditPhotoListCell
     
     func configure(cell: Cell, with model: Model) {
@@ -19,8 +19,7 @@ struct CrewCreditCellConfigurator: CellConfigurator {
         cell.nameLabel.text = model.name
         cell.roleLabel.text = model.job
         
-        if let pathString = model.profilePath {
-            let url = MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+        if let url = model.profileImageURL {
             cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }

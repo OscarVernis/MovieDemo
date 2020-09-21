@@ -20,31 +20,27 @@ class CreditCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        
         creditImageView.image = UIImage(named: "PersonPlaceholder")
-
     }
     
-    func configure(castCredit: CastCredit) {
+    func configure(castCredit: CastCreditViewModel) {
         creditImageView.af.cancelImageRequest()
 
         nameLabel.text = castCredit.name
         roleLabel.text = castCredit.character
         
-        if let pathString = castCredit.profilePath {
-            let url = MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+        if let url = castCredit.profileImageURL {
             creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }
     
-    func configure(crewCredit: CrewCredit) {
+    func configure(crewCredit: CrewCreditViewModel) {
         creditImageView.af.cancelImageRequest()
         
         nameLabel.text = crewCredit.name
         roleLabel.text = crewCredit.job
         
-        if let pathString = crewCredit.profilePath {
-            let url = MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+        if let url = crewCredit.profileImageURL {
             creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }
