@@ -20,22 +20,5 @@ class MovieBannerCell: UICollectionViewCell {
         
         bannerImageView.layer.masksToBounds = true
         bannerImageView.layer.cornerRadius = 12
-    }
-    
-    func configure(withMovie movie: MovieViewModel) {
-        bannerImageView.af.cancelImageRequest()
-        bannerImageView.image = UIImage(named: "BackdropPlaceholder")
-        
-        titleLabel.text = movie.title
-        
-        infoLabel.text = movie.genres()
-        
-        ratingsView.rating = movie.percentRating
-        ratingsView.isRatingAvailable = movie.isRatingAvailable
-        
-        if let url = movie.backdropImageURL(size: .w780) {
-            bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
-        }
-    }
-    
+    }    
 }

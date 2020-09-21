@@ -11,4 +11,6 @@ import UIKit
 class InfoListCell: UICollectionViewCell {    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var separator: UIView!
+
 }

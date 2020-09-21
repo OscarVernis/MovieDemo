@@ -235,9 +235,9 @@ extension MovieViewModel {
         var creditTitle: String {
             switch self {
             case .Director:
-                return "Directed by"
+                return "Director"
             case .Writer:
-                return "Written by"
+                return "Writer"
             case .Story:
                 return "Story"
             case .Screenplay:
@@ -245,9 +245,9 @@ extension MovieViewModel {
             case .DOP:
                 return "Cinematography"
             case .Composer:
-                return "Music by"
+                return "Music"
             case .Editor:
-                return "Edited by"
+                return "Editor"
             }
         }
     }

@@ -13,16 +13,4 @@ class MovieRatingListCell: UICollectionViewCell {
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var ratingsLabel: UILabel!
-    
-    func configure(withMovie movie: MovieViewModel, showSeparator: Bool = true) {
-        titleLabel.text = movie.title
-        
-        ratingsLabel.text = movie.ratingString
-        
-        ratingsView.isRatingAvailable = movie.isRatingAvailable
-        ratingsView.rating = movie.percentRating
-        
-        separator.isHidden = !showSeparator
-    }
-
 }

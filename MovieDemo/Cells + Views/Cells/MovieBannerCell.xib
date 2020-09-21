@@ -12,29 +12,26 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieBannerCell" id="gTV-IL-0wX" customClass="MovieBannerCell" customModule="MovieDemo" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="430" height="295"/>
+            <rect key="frame" x="0.0" y="0.0" width="430" height="296"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="430" height="295"/>
+                <rect key="frame" x="0.0" y="0.0" width="430" height="296"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="751" image="BackdropPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="b5T-qQ-WYX">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="242"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="b5T-qQ-WYX" secondAttribute="height" multiplier="780:439" id="99q-Kp-Vlv"/>
+                            <constraint firstAttribute="width" secondItem="b5T-qQ-WYX" secondAttribute="height" multiplier="780:439" id="MH7-mW-TUM"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-9F-1Im">
-                        <rect key="frame" x="5" y="249" width="381" height="24"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="MKk-XI-MPZ"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-9F-1Im">
+                        <rect key="frame" x="5" y="250" width="381" height="24"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SpN-K0-2qk" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="394" y="250.5" width="36" height="36"/>
+                        <rect key="frame" x="394" y="251.5" width="36" height="36"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="y7N-4B-utu"/>
@@ -51,9 +48,9 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imh-t8-Ffx">
-                        <rect key="frame" x="5" y="275" width="381" height="20"/>
-                        <color key="backgroundColor" red="0.27810922430000001" green="0.060046777170000003" blue="0.27785996870000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imh-t8-Ffx">
+                        <rect key="frame" x="5" y="276" width="381" height="20"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
@@ -61,15 +58,15 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="b5T-qQ-WYX" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="06o-Xz-kUT"/>
                 <constraint firstItem="SpN-K0-2qk" firstAttribute="leading" secondItem="imh-t8-Ffx" secondAttribute="trailing" constant="8" id="1P8-kx-h8y"/>
                 <constraint firstItem="SpN-K0-2qk" firstAttribute="leading" secondItem="ihj-9F-1Im" secondAttribute="trailing" constant="8" id="9iR-m3-rke"/>
                 <constraint firstItem="ihj-9F-1Im" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Fcm-2C-ZPh"/>
-                <constraint firstItem="ihj-9F-1Im" firstAttribute="top" secondItem="b5T-qQ-WYX" secondAttribute="bottom" constant="7" id="Kzv-eK-CX3"/>
                 <constraint firstAttribute="bottom" secondItem="SpN-K0-2qk" secondAttribute="bottom" constant="8.5" id="UBk-AI-oCU"/>
                 <constraint firstItem="imh-t8-Ffx" firstAttribute="top" secondItem="ihj-9F-1Im" secondAttribute="bottom" constant="2" id="UeB-LJ-Gfx"/>
+                <constraint firstItem="ihj-9F-1Im" firstAttribute="top" secondItem="b5T-qQ-WYX" secondAttribute="bottom" priority="999" constant="8" id="W67-YC-hMz"/>
                 <constraint firstAttribute="bottom" secondItem="imh-t8-Ffx" secondAttribute="bottom" id="cnk-BJ-MH5"/>
                 <constraint firstItem="imh-t8-Ffx" firstAttribute="leading" secondItem="ihj-9F-1Im" secondAttribute="leading" id="ePE-tT-zd1"/>
                 <constraint firstItem="SpN-K0-2qk" firstAttribute="width" secondItem="SpN-K0-2qk" secondAttribute="height" multiplier="1:1" id="iDA-zg-4JL"/>
@@ -84,16 +81,18 @@
                 <outlet property="ratingsView" destination="SpN-K0-2qk" id="PnB-fU-X5g"/>
                 <outlet property="titleLabel" destination="ihj-9F-1Im" id="lt7-lr-VGu"/>
             </connections>
-            <point key="canvasLocation" x="-83.333333333333343" y="-24.107142857142858"/>
+            <point key="canvasLocation" x="307" y="-15"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="SpN-K0-2qk">
+            <size key="intrinsicContentSize" width="36" height="36"/>
+        </designable>
+    </designables>
     <resources>
         <image name="BackdropPlaceholder" width="422" height="240"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

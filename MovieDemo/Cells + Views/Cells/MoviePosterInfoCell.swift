@@ -50,10 +50,9 @@ class MoviePosterInfoCell: UICollectionViewCell {
             titleLabel.font = UIFont(name: "Avenir-Medium", size: 17)
             titleLabel.textColor = .label
             titleLabel.numberOfLines = 1
-            
+                        
             titleLabel.text = title
             stackView.addArrangedSubview(titleLabel)
-//            stackView.setCustomSpacing(1, after: titleLabel)
         }
         
         if let rating = rating {
@@ -76,7 +75,6 @@ class MoviePosterInfoCell: UICollectionViewCell {
             
             secondaryLabel.text = secondaryInfo
             stackView.addArrangedSubview(secondaryLabel)
-            stackView.setCustomSpacing(3, after: secondaryLabel)
         }
         
     }

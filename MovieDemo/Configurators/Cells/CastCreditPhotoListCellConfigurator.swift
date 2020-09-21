@@ -1,5 +1,5 @@
 //
-//  CrewCreditCellConfigurator.swift
+//  CastCreditPhotoListCellConfigurator.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 17/09/20.
@@ -9,15 +9,15 @@
 import UIKit
 import AlamofireImage
 
-struct CrewCreditCellConfigurator: CellConfigurator {
-    typealias Model = CrewCreditViewModel
+struct CastCreditPhotoListCellConfigurator: CellConfigurator {
+    typealias Model = CastCreditViewModel
     typealias Cell = CreditPhotoListCell
     
     func configure(cell: Cell, with model: Model) {
         cell.creditImageView.af.cancelImageRequest()
         
         cell.nameLabel.text = model.name
-        cell.roleLabel.text = model.job
+        cell.roleLabel.text = model.character
         
         if let url = model.profileImageURL {
             cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))

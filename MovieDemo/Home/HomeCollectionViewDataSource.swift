@@ -11,6 +11,7 @@ import UIKit
 //MARK: - CollectionView DataSource
 class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     let sections: [HomeSection]
+    let maxTopRated = 10
     
     var sectionHeaderButtonHandler: ((HomeSection) -> Void)?
     
@@ -23,8 +24,6 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let maxTopRated = 10
-        
         let s = sections[section]
         if s.sectionType == .TopRated, s.movies.count >= maxTopRated {
             return maxTopRated
@@ -55,7 +54,7 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         case .NowPlaying:
             guard let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieBannerCell.reuseIdentifier, for: indexPath) as? MovieBannerCell else { fatalError() }
             
-            bannerCell.configure(withMovie: MovieViewModel(movie: movie))
+            MovieBannerCellConfigurator().configure(cell: bannerCell, withMovie: MovieViewModel(movie: movie))
             cell = bannerCell
         case .Upcoming:
             guard let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as? MoviePosterInfoCell else { fatalError() }
@@ -65,8 +64,9 @@ class HomeCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         case .TopRated:
             guard let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieRatingListCell.reuseIdentifier, for: indexPath) as? MovieRatingListCell else { fatalError() }
             
-            let isLastCell = indexPath.row == 9 //dataProvider.movies.count - 1
-            listCell.configure(withMovie: MovieViewModel(movie: movie), showSeparator: !isLastCell)
+            let topRatedCount = maxTopRated <= section.movies.count ? maxTopRated : section.movies.count
+            let isLastCell = indexPath.row == (topRatedCount - 1) //dataProvider.movies.count - 1
+            MovieRatingListCellConfigurator().configure(cell: listCell, withMovie: MovieViewModel(movie: movie), showSeparator: !isLastCell)
             cell = listCell
         case .Popular:
             guard let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as? MovieInfoListCell else { fatalError() }

@@ -23,26 +23,4 @@ class CreditCell: UICollectionViewCell {
         creditImageView.image = UIImage(named: "PersonPlaceholder")
     }
     
-    func configure(castCredit: CastCreditViewModel) {
-        creditImageView.af.cancelImageRequest()
-
-        nameLabel.text = castCredit.name
-        roleLabel.text = castCredit.character
-        
-        if let url = castCredit.profileImageURL {
-            creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
-        }
-    }
-    
-    func configure(crewCredit: CrewCreditViewModel) {
-        creditImageView.af.cancelImageRequest()
-        
-        nameLabel.text = crewCredit.name
-        roleLabel.text = crewCredit.job
-        
-        if let url = crewCredit.profileImageURL {
-            creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
-        }
-    }
-    
 }

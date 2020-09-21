@@ -67,7 +67,7 @@ class MovieDetailViewController: UIViewController {
         sections = [
             .Header,
         ]
-                
+        
         setupCollectionView()
         setupDataProvider()
     }
@@ -275,7 +275,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
             
             let cast = movie.topCast[indexPath.row]
-            cell.configure(castCredit: cast)
+            CastCreditCellConfigurator().configure(cell: cell, with: cast)
             
             return cell
         case .Crew:

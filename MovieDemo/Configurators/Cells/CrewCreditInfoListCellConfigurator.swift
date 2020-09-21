@@ -13,6 +13,7 @@ struct CrewCreditInfoListCellConfigurator {
     func configure(cell: InfoListCell, with model: [String: String]) {
         cell.titleLabel.text = model.first?.key
         cell.infoLabel.text = model.first?.value
+        cell.separator.isHidden = true
     }
     
 }

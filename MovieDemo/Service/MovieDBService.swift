@@ -80,7 +80,7 @@ extension MovieDBService {
         var params = defaultParameters()
         params.merge(parameters) { _, new in new }
         params["page"] = page
-        params["region"] = "US"
+//        params["region"] = "US"
         
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {

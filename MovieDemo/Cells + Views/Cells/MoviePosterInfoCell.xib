@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +23,7 @@
                             <constraint firstAttribute="width" secondItem="cWA-gu-tFe" secondAttribute="height" multiplier="2:3" placeholder="YES" id="XZ3-DP-2jP"/>
                         </constraints>
                     </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pRz-I2-y3r">
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="252" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pRz-I2-y3r">
                         <rect key="frame" x="5" y="215" width="130" height="32"/>
                     </stackView>
                 </subviews>
@@ -38,7 +37,7 @@
                     <constraint firstItem="cWA-gu-tFe" firstAttribute="leading" secondItem="aWX-c4-sGV" secondAttribute="leading" id="pA4-jZ-qLg"/>
                 </constraints>
             </collectionViewCellContentView>
-            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="140" height="247"/>
             <connections>
                 <outlet property="posterImageView" destination="cWA-gu-tFe" id="ZQz-pb-Rh2"/>
@@ -49,8 +48,5 @@
     </objects>
     <resources>
         <image name="PosterPlaceholder" width="240" height="360"/>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

@@ -62,20 +62,20 @@ final class MainCoordinator {
     }
     
     func showCrewCreditList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
-        let mdvc = ListViewController<Provider, CrewCreditCellConfigurator>()
+        let mdvc = ListViewController<Provider, CrewCreditPhotoListCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CrewCreditCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CrewCreditPhotoListCellConfigurator())
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }
     
     func showCastCreditList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
-        let mdvc = ListViewController<Provider, CastCreditCellConfigurator>()
+        let mdvc = ListViewController<Provider, CastCreditPhotoListCellConfigurator>()
         mdvc.title = title
         mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CastCreditCellConfigurator())
+        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CastCreditPhotoListCellConfigurator())
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
