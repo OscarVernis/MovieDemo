@@ -9,8 +9,11 @@
 import UIKit
 
 final class MainCoordinator {
-    var window: UIWindow
-    var rootNavigationViewController: UINavigationController?
+    private var window: UIWindow
+    private var rootNavigationViewController: UINavigationController?
+    
+    //If set to true, it will force you to login before showing Home
+    private let isLoginRequired = false
     
     init(window: UIWindow) {
         self.window = window
@@ -30,7 +33,49 @@ final class MainCoordinator {
         window.rootViewController = rootNavigationViewController
         window.makeKeyAndVisible()
         
+        if isLoginRequired && SessionManager.shared.isLoggedIn == false {
+            showLogin(animated: false)
+        }
+        
         showHome()
+        
+    }
+    
+    func showLogin(animated: Bool = true) {
+        let lvc = LoginViewController.instantiateFromStoryboard(UIStoryboard(name: "LoginViewController", bundle: .main))
+        lvc.showsCloseButton = !isLoginRequired
+        if isLoginRequired {
+            lvc.modalPresentationStyle = .overFullScreen
+        }
+        
+        lvc.didFinishLoginProcess = { [weak self] success in
+            self?.rootNavigationViewController?.dismiss(animated: true)
+        }
+        
+        rootNavigationViewController?.present(lvc, animated: animated)
+    }
+    
+    func logout() {
+        SessionManager.shared.logout()
+        
+        if isLoginRequired {
+            showLogin(animated: true)
+        }
+    }
+    
+    func showUserProfile() {
+        if !SessionManager.shared.isLoggedIn {
+            showLogin()
+        } else {
+            let username = SessionManager.shared.username
+            
+            let ac = UIAlertController(title: username, message: nil, preferredStyle: .actionSheet)
+            ac.addAction(UIAlertAction(title: "Logout", style: .default) { [weak self] _ in
+                self?.logout()
+            })
+            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            rootNavigationViewController?.present(ac, animated: true)
+        }
     }
     
     func showHome() {

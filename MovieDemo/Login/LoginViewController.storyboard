@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4A6-8b-Kox">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="D8g-b4-jOE">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="4A6-8b-Kox" customClass="LoginViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WPg-IA-f4L">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UTd-bV-d0w">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fc3-32-PfT">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A9L-uh-zwd">
+                                            <rect key="frame" x="40" y="581" width="334" height="20.5"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
+                                            <color key="textColor" systemColor="systemRedColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <gestureRecognizers/>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="H5b-AB-ztN" appends="YES" id="iZB-aG-lvZ"/>
+                                    </connections>
+                                </view>
+                                <blurEffect style="systemChromeMaterial"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p8W-d6-tVk">
+                                <rect key="frame" x="366" y="52" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="4Pi-0R-qSz"/>
+                                    <constraint firstAttribute="width" constant="40" id="Ffp-FL-J5u"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="placeholderTextColor"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeTapped:" destination="4A6-8b-Kox" eventType="touchUpInside" id="BVJ-93-YUo"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qnC-c6-032">
+                                <rect key="frame" x="40" y="482" width="334" height="40"/>
+                                <color key="backgroundColor" name="TextfieldBgColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Qax-PA-cC5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" textContentType="username"/>
+                                <connections>
+                                    <action selector="textFieldUpdated:" destination="4A6-8b-Kox" eventType="valueChanged" id="2E8-Pn-dTU"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5mS-Yw-rHI">
+                                <rect key="frame" x="40" y="538" width="334" height="40"/>
+                                <color key="backgroundColor" name="TextfieldBgColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="eyc-jb-FhR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                <connections>
+                                    <action selector="textFieldUpdated:" destination="4A6-8b-Kox" eventType="valueChanged" id="8gt-T2-u0N"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rs6-uH-ovk">
+                                <rect key="frame" x="40" y="618" width="334" height="44"/>
+                                <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ita-Tb-5On"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="18"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="4A6-8b-Kox" eventType="touchUpInside" id="kZm-Hz-clw"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Wlo-u4-8s5">
+                                <rect key="frame" x="100.5" y="200" width="213" height="182"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Wlo-u4-8s5" secondAttribute="height" multiplier="213:182" id="LSd-CG-kgE"/>
+                                    <constraint firstAttribute="height" constant="182" id="kLn-62-Db2"/>
+                                </constraints>
+                            </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="1a7-cs-dS6">
+                                <rect key="frame" x="188.5" y="621.5" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PKf-5g-rlB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UTd-bV-d0w" firstAttribute="top" secondItem="WPg-IA-f4L" secondAttribute="top" id="0Ai-Qp-1S3"/>
+                            <constraint firstItem="UTd-bV-d0w" firstAttribute="leading" secondItem="WPg-IA-f4L" secondAttribute="leading" id="0Ak-uf-aiN"/>
+                            <constraint firstItem="PKf-5g-rlB" firstAttribute="trailing" secondItem="UTd-bV-d0w" secondAttribute="trailing" id="0ca-Fq-N4b"/>
+                            <constraint firstItem="p8W-d6-tVk" firstAttribute="top" secondItem="PKf-5g-rlB" secondAttribute="top" constant="8" id="1wS-PO-LIE"/>
+                            <constraint firstItem="Wlo-u4-8s5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PKf-5g-rlB" secondAttribute="top" constant="20" id="3Ao-O8-xzu"/>
+                            <constraint firstItem="1a7-cs-dS6" firstAttribute="centerX" secondItem="Rs6-uH-ovk" secondAttribute="centerX" id="3g8-da-CzH"/>
+                            <constraint firstItem="PKf-5g-rlB" firstAttribute="trailing" secondItem="p8W-d6-tVk" secondAttribute="trailing" constant="8" id="6Ma-f9-C2P"/>
+                            <constraint firstAttribute="bottom" secondItem="UTd-bV-d0w" secondAttribute="bottom" id="AXF-xp-VME"/>
+                            <constraint firstItem="1a7-cs-dS6" firstAttribute="centerY" secondItem="Rs6-uH-ovk" secondAttribute="centerY" id="DZF-PF-INT"/>
+                            <constraint firstItem="PKf-5g-rlB" firstAttribute="bottom" secondItem="Rs6-uH-ovk" secondAttribute="bottom" constant="200" id="FwK-ya-NzL"/>
+                            <constraint firstItem="Rs6-uH-ovk" firstAttribute="leading" secondItem="PKf-5g-rlB" secondAttribute="leading" constant="40" id="Gzj-4L-wGu"/>
+                            <constraint firstItem="Rs6-uH-ovk" firstAttribute="top" secondItem="5mS-Yw-rHI" secondAttribute="bottom" constant="40" id="JRa-tU-4BL"/>
+                            <constraint firstItem="A9L-uh-zwd" firstAttribute="top" secondItem="5mS-Yw-rHI" secondAttribute="bottom" constant="3" id="MwN-l7-CkX"/>
+                            <constraint firstItem="A9L-uh-zwd" firstAttribute="leading" secondItem="5mS-Yw-rHI" secondAttribute="leading" id="Rh0-fX-nsP"/>
+                            <constraint firstItem="Wlo-u4-8s5" firstAttribute="centerX" secondItem="WPg-IA-f4L" secondAttribute="centerX" id="Uc4-8Z-7r6"/>
+                            <constraint firstItem="qnC-c6-032" firstAttribute="top" secondItem="Wlo-u4-8s5" secondAttribute="bottom" priority="999" constant="100" id="YPp-m6-wz5"/>
+                            <constraint firstItem="A9L-uh-zwd" firstAttribute="trailing" secondItem="5mS-Yw-rHI" secondAttribute="trailing" id="eel-mf-QjU"/>
+                            <constraint firstItem="PKf-5g-rlB" firstAttribute="trailing" secondItem="Rs6-uH-ovk" secondAttribute="trailing" constant="40" id="gbu-9S-yjU"/>
+                            <constraint firstItem="qnC-c6-032" firstAttribute="leading" secondItem="PKf-5g-rlB" secondAttribute="leading" constant="40" id="hrj-HY-7eM"/>
+                            <constraint firstItem="5mS-Yw-rHI" firstAttribute="leading" secondItem="PKf-5g-rlB" secondAttribute="leading" constant="40" id="lnT-9C-sdi"/>
+                            <constraint firstItem="PKf-5g-rlB" firstAttribute="trailing" secondItem="qnC-c6-032" secondAttribute="trailing" constant="40" id="lu2-g6-rDG"/>
+                            <constraint firstItem="PKf-5g-rlB" firstAttribute="trailing" secondItem="5mS-Yw-rHI" secondAttribute="trailing" constant="40" id="t17-T1-v2e"/>
+                            <constraint firstItem="5mS-Yw-rHI" firstAttribute="top" secondItem="qnC-c6-032" secondAttribute="bottom" constant="16" id="wwV-P3-fiG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="1a7-cs-dS6" id="9ih-mE-Y1I"/>
+                        <outlet property="bottomConstraint" destination="FwK-ya-NzL" id="yH9-U7-rqd"/>
+                        <outlet property="closeButton" destination="p8W-d6-tVk" id="pH3-ZS-r13"/>
+                        <outlet property="errorLabel" destination="A9L-uh-zwd" id="cyU-Vj-efA"/>
+                        <outlet property="loginButton" destination="Rs6-uH-ovk" id="kbK-YB-Mo2"/>
+                        <outlet property="passwordTextField" destination="5mS-Yw-rHI" id="gKM-as-7QZ"/>
+                        <outlet property="userTextField" destination="qnC-c6-032" id="vyx-8m-Szq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eHy-Us-Zft" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="H5b-AB-ztN">
+                    <connections>
+                        <action selector="hideKeyboard:" destination="4A6-8b-Kox" id="9Gl-jI-DeO"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-291.304347826087" y="6.6964285714285712"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="LoginIcon" width="273" height="216"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
+        <namedColor name="TextfieldBgColor">
+            <color white="0.0" alpha="0.059999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPurpleColor">
+            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

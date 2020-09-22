@@ -30,6 +30,8 @@ class HomeCollectionViewController: UIViewController {
                 AlertManager.showNetworkConnectionAlert(sender: self)
             }
         }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(showUser))
                 
         setupSearch()
         setupCollectionView()
@@ -90,7 +92,11 @@ class HomeCollectionViewController: UIViewController {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
-//MARK: - Actions
+    //MARK: - Actions
+    @objc func showUser() {
+        mainCoordinator.showUserProfile()
+    }
+    
     @objc func refresh() {
         sections.forEach { $0.dataProvider.refresh() }
     }

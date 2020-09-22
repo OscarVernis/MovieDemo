@@ -17,9 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow()
         self.window = window
-        
-        Alamofire.Session.default.session.configuration.timeoutIntervalForRequest = 1
-        Alamofire.Session.default.session.configuration.timeoutIntervalForResource = 1
 
         appCoordinator = MainCoordinator(window: window)
         appCoordinator?.start()

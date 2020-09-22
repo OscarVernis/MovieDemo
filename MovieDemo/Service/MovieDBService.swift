@@ -13,6 +13,7 @@ import ObjectMapper
 struct MovieDBService {
     enum ServiceError: Error {
         case jsonError
+        case incorrectCredentials
     }
     
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
@@ -78,7 +79,7 @@ extension MovieDBService {
         let url = endpoint(forPath: "/authentication/token/new")
         let params = defaultParameters()
         
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+        AF.request(url, parameters: params, encoding: URLEncoding.default).responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let token = json["request_token"] as? String {
@@ -105,11 +106,15 @@ extension MovieDBService {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let success = json["success"] as? Bool {
-                    completion(success, nil)
+                    var error: Error? = nil
+                    if response.response?.statusCode == 401 {
+                        error = ServiceError.incorrectCredentials
+                    }
+                    completion(success, error)
                 } else {
                     completion(false, ServiceError.jsonError)
                 }
@@ -128,7 +133,7 @@ extension MovieDBService {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let sessionId = json["session_id"] as? String {
@@ -151,7 +156,7 @@ extension MovieDBService {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
-        AF.request(urlRequest.url!, method: .delete, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+        AF.request(urlRequest.url!, method: .delete, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let success = json["success"] as? Bool {
@@ -175,7 +180,7 @@ extension MovieDBService {
         var params = defaultParameters()
         params.merge(parameters) { _, new in new }
         params["page"] = page
-//        params["region"] = "US"
+        params["region"] = "US"
         
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
