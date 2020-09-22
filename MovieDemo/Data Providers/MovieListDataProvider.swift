@@ -117,9 +117,9 @@ class MovieListDataProvider: ArrayDataProvider {
         case .Recommended(movieId: let movieId):
             movieService.fetchRecommendMovies(movieId: movieId, page: page, completion: fetchHandler)
         case .DiscoverWithCast(castId: let castId):
-            movieService.fetchMovieWithCast(castId: castId, page: page, completion: fetchHandler)
+            movieService.discover(params: [.withCast: castId], page: page, completion: fetchHandler)
         case .DiscoverWithCrew(crewId: let crewId):
-            movieService.fetchMovieWithCrew(crewId: crewId, page: page, completion: fetchHandler)
+            movieService.discover(params: [.withCrew: crewId], page: page, completion: fetchHandler)
         }
         
     }

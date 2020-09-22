@@ -124,26 +124,19 @@ extension MovieDBService {
     }
 }
 
-//MARK: - Discover
 extension MovieDBService {
-    func fetchMovieWithCast(castId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        let params: [String: Any] = [
-            "sort_by" : "popularity.desc",
-            "with_cast" : castId
-        ]
-        
-        fetchMovies(endpoint: "/discover/movie", parameters: params, page: page, completion: completion)
+    //MARK: - Discover
+    enum DiscoverOptions: String {
+        case withCast = "with_cast"
+        case withCrew = "with_crew"
     }
     
-    func fetchMovieWithCrew(crewId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        let params: [String: Any] = [
-            "sort_by" : "popularity.desc",
-            "with_crew" : crewId
-        ]
+    func discover(params: [DiscoverOptions: Any], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        //Convert the enum key to its string raw value
+        let editedParams = Dictionary(uniqueKeysWithValues: params.map { ($0.rawValue, $1)})
         
-        fetchMovies(endpoint: "/discover/movie", parameters: params, page: page, completion: completion)
+        fetchMovies(endpoint: "/discover/movie", parameters: editedParams, page: page, completion: completion)
     }
-
 }
 
 //MARK: - Movie Details
