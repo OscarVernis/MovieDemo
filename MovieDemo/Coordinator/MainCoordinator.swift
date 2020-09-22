@@ -40,6 +40,13 @@ final class MainCoordinator {
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
+    func showMovieDetail(movie: Movie) {
+        let mdvc = MovieDetailViewController(viewModel: MovieViewModel(movie: movie))
+        mdvc.mainCoordinator = self
+        
+        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+    }
+    
     func showMovieList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
         let mdvc = ListViewController<Provider, MovieInfoCellConfigurator>()
         mdvc.title = title
@@ -50,13 +57,6 @@ final class MainCoordinator {
         mdvc.didSelectedItem = { [weak self] index, movie in
             self?.showMovieDetail(movie: movie as! Movie)
         }
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
-    }
-    
-    func showMovieDetail(movie: Movie) {
-        let mdvc = MovieDetailViewController(viewModel: MovieViewModel(movie: movie))
-        mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }
