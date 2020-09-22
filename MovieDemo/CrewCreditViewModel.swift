@@ -39,6 +39,10 @@ class CrewCreditViewModel {
 }
 
 extension CrewCreditViewModel {
+    var id: Int {
+        crewCredit.id
+    }
+    
     var name: String {
         crewCredit.name
     }
@@ -96,10 +100,10 @@ extension CrewCreditViewModel {
         for topJob in topJobs {
             let creditsWithJob = credits.filter { $0.job == topJob }
             for credit in creditsWithJob {
-                if !uniqueIds.contains(credit.id!) {
-                    uniqueIds.insert(credit.id!)
+                if !uniqueIds.contains(credit.id) {
+                    uniqueIds.insert(credit.id)
                     
-                    let allCredits = credits.filter { $0.id == credit.id! }
+                    let allCredits = credits.filter { $0.id == credit.id }
                     if let viewModel = CrewCreditViewModel(credits: allCredits) {
                         filteredCredits.append(viewModel)
                     }

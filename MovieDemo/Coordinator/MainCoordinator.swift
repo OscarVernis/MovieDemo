@@ -68,6 +68,14 @@ final class MainCoordinator {
         mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CrewCreditPhotoListCellConfigurator())
         mdvc.mainCoordinator = self
         
+        mdvc.didSelectedItem = { [weak self] index, crewCredit in
+            guard let crewCredit = crewCredit as? CrewCreditViewModel, let self = self else { return }
+            
+            let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
+            let title = "Movies by: \(crewCredit.name)"
+            self.showMovieList(title: title, dataProvider: dataProvider)
+        }
+        
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }
     
@@ -77,6 +85,14 @@ final class MainCoordinator {
         mdvc.dataProvider = dataProvider
         mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CastCreditPhotoListCellConfigurator())
         mdvc.mainCoordinator = self
+        
+        mdvc.didSelectedItem = { [weak self] index, castCredit in
+            guard let castCredit = castCredit as? CastCreditViewModel, let self = self else { return }
+            
+            let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
+            let title = "Movies with: \(castCredit.name)"
+            self.showMovieList(title: title, dataProvider: dataProvider)
+        }
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }

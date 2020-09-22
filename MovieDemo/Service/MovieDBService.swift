@@ -122,6 +122,27 @@ extension MovieDBService {
     func fetchTrending(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
         fetchMovies(endpoint: "/trending/movie/week", page: page, completion: completion)
     }
+}
+
+//MARK: - Discover
+extension MovieDBService {
+    func fetchMovieWithCast(castId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        let params: [String: Any] = [
+            "sort_by" : "popularity.desc",
+            "with_cast" : castId
+        ]
+        
+        fetchMovies(endpoint: "/discover/movie", parameters: params, page: page, completion: completion)
+    }
+    
+    func fetchMovieWithCrew(crewId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        let params: [String: Any] = [
+            "sort_by" : "popularity.desc",
+            "with_crew" : crewId
+        ]
+        
+        fetchMovies(endpoint: "/discover/movie", parameters: params, page: page, completion: completion)
+    }
 
 }
 

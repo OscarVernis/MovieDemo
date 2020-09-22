@@ -220,14 +220,21 @@ extension MovieDetailViewController {
 extension MovieDetailViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: Show Credit Movie List or Credit Detail when tapping
         let sectionType = self.sections[indexPath.section]
         switch sectionType {
         case .Header:
             break
         case .Cast:
+            let castCredit = movie.cast[indexPath.row]
+            let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
+            let title = "Movies with: \(castCredit.name)"
+            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
             break
         case .Crew:
+            let crewCredit = movie.topCrew[indexPath.row]
+            let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
+            let title = "Movies by: \(crewCredit.name)"
+            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
             break
         case .RecommendedMovies:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]

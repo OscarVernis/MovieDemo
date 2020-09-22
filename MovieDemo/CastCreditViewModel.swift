@@ -18,6 +18,10 @@ class CastCreditViewModel {
 }
 
 extension CastCreditViewModel {
+    var id: Int {
+        castCredit.id
+    }
+    
     var name: String {
         castCredit.name
     }

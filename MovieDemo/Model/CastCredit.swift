@@ -15,12 +15,16 @@ class CastCredit: Mappable {
     var character: String?
     var creditId: Int?
     var gender: Int?
-    var id: Int?
+    var id: Int!
     var order: Int?
     var profilePath: String?
     
     //MARK: - ObjectMapper
     required init?(map: Map) {
+        if map.JSON["id"] == nil {
+            return nil
+        }
+        
         if map.JSON["name"] == nil {
             return nil
         }
