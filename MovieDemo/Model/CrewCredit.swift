@@ -10,18 +10,20 @@
 import ObjectMapper
 
 class CrewCredit: Mappable {
+    var name: String!
     var creditId: Int?
     var department: String?
     var gender: Int?
     var id: Int?
     var job: String?
-    var name: String?
     var profilePath: String?
     
     //MARK: - ObjectMapper
     
     required init?(map: Map) {
-        
+        if map.JSON["name"] == nil {
+            return nil
+        }
     }
 
     func mapping(map: Map) {

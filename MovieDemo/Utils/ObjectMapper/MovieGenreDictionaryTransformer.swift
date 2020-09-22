@@ -13,6 +13,7 @@ class MovieGenreDictionaryTransformer: TransformType {
     typealias Object = MovieGenre
     typealias JSON = [String: Any]
     
+    //Movie details returns as this: "genres": [{" id": 18, "name": "Drama" }]
     func transformFromJSON(_ value: Any?) -> MovieGenre? {
         if let genre = value as? [String: Any], let genreId = genre["id"] as? Int {
             return MovieGenre(rawValue: genreId)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 struct MoviePosterTitleRatingCellConfigurator {
     func configure(cell: MoviePosterInfoCell, with model: MovieViewModel) {

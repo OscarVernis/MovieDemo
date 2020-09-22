@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 struct MovieInfoCellConfigurator: CellConfigurator {
     typealias Model = Movie

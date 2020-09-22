@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 struct MoviePosterTitleDateCellConfigurator {
     func configure(cell: MoviePosterInfoCell, with model: MovieViewModel) {

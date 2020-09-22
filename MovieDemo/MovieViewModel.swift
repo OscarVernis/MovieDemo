@@ -63,12 +63,12 @@ extension MovieViewModel {
 
 //MARK:- Properties
 extension MovieViewModel {
-    var id: Int? {
+    var id: Int {
         return movie.id
     }
     
     var title: String {
-        return movie.title ?? ""
+        return movie.title
     }
     
     var overview: String {

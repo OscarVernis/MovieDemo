@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 struct CrewCreditInfoListCellConfigurator {
     func configure(cell: InfoListCell, with model: [String: String]) {

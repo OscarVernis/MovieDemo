@@ -11,13 +11,13 @@ import Foundation
 import ObjectMapper
 
 class Movie: Mappable {
-    var backdropPath: String?
-    var id: Int?
+    var id: Int!
+    var title: String!
     var overview: String?
     var posterPath: String?
+    var backdropPath: String?
     var releaseDate: Date?
     var runtime: Int?
-    var title: String?
     var voteAverage: Float?
     var voteCount: Int?
     var cast: [CastCredit]?
@@ -32,6 +32,13 @@ class Movie: Mappable {
     
 //MARK: - ObjectMapper
     public required init?(map: Map) {
+        if map.JSON["id"] == nil {
+            return nil
+        }
+        
+        if map.JSON["title"] == nil {
+            return nil
+        }
     }
     
     public func mapping(map: Map) {

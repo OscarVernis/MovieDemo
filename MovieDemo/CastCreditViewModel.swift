@@ -19,7 +19,7 @@ class CastCreditViewModel {
 
 extension CastCreditViewModel {
     var name: String {
-        castCredit.name ?? ""
+        castCredit.name
     }
     
     var character: String {

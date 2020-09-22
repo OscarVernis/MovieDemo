@@ -13,6 +13,7 @@ class MovieGenreTransformer: TransformType {
     typealias Object = MovieGenre
     typealias JSON = Int
     
+    //Movie lists return genres as this: "genre_ids": [14, 28, 80]
     func transformFromJSON(_ value: Any?) -> MovieGenre? {
         if let genreId = value as? Int {
             return MovieGenre(rawValue: genreId)

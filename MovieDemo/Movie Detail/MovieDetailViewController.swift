@@ -339,7 +339,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id!)))
+                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id)))
                 }
             case .Info:
                 break

@@ -32,10 +32,26 @@ class CrewCreditViewModel {
                 jobsArray.append(job.creditTitle)
             }
         }
-        
+
         jobs = jobsArray.joined(separator: ", ")
+
+    }
+}
+
+extension CrewCreditViewModel {
+    var name: String {
+        crewCredit.name
     }
     
+    var job: String {
+        crewCredit.job ?? ""
+    }
+    
+    var profileImageURL: URL? {
+        guard let pathString = crewCredit.profilePath else { return nil }
+        
+        return MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+    }
 }
 
 extension CrewCreditViewModel {
@@ -92,21 +108,5 @@ extension CrewCreditViewModel {
         }
         
         return filteredCredits
-    }
-}
-
-extension CrewCreditViewModel {
-    var name: String {
-        crewCredit.name ?? ""
-    }
-    
-    var job: String {
-        crewCredit.job ?? ""
-    }
-    
-    var profileImageURL: URL? {
-        guard let pathString = crewCredit.profilePath else { return nil }
-        
-        return MovieDBService.profileImageURL(forPath: pathString, size: .h632)
     }
 }

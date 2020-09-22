@@ -10,18 +10,20 @@
 import ObjectMapper
 
 class CastCredit: Mappable {
+    var name: String!
     var castId: Int?
     var character: String?
     var creditId: Int?
     var gender: Int?
     var id: Int?
-    var name: String?
     var order: Int?
     var profilePath: String?
     
     //MARK: - ObjectMapper
     required init?(map: Map) {
-        
+        if map.JSON["name"] == nil {
+            return nil
+        }
     }
     
     func mapping(map: Map) {
