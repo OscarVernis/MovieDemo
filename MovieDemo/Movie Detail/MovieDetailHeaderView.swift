@@ -16,14 +16,21 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
-    
-    @IBOutlet weak var likeButton: UIButton!
-    
+        
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
+    
+    var imageTapHandler: (()->Void)? = nil
+
     override func awakeFromNib() {
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 12
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        posterImageView.addGestureRecognizer(tapRecognizer)
+    }
+        
+    @objc func imageTapped(_ sender: Any) {
+        imageTapHandler?()
     }
     
     func configure(movie: MovieViewModel) {

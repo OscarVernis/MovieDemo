@@ -36,6 +36,8 @@
 		55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E0F251317AC00A2B821 /* UIView+Nib.swift */; };
 		5560466C251BB4000037D08B /* MovieRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560466B251BB4000037D08B /* MovieRatingViewController.swift */; };
 		5560466F251BB4140037D08B /* MovieRatingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5560466E251BB4140037D08B /* MovieRatingViewController.storyboard */; };
+		55604678251BC01A0037D08B /* Lightbox in Frameworks */ = {isa = PBXBuildFile; productRef = 55604677251BC01A0037D08B /* Lightbox */; };
+		5560467C251BC4ED0037D08B /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560467B251BC4ED0037D08B /* ActivityIndicator.swift */; };
 		55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */; };
 		556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */; };
 		556AB1942514680A0023D278 /* DotRatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AB1932514680A0023D278 /* DotRatingsView.swift */; };
@@ -119,6 +121,7 @@
 		55596E0F251317AC00A2B821 /* UIView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Nib.swift"; sourceTree = "<group>"; };
 		5560466B251BB4000037D08B /* MovieRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRatingViewController.swift; sourceTree = "<group>"; };
 		5560466E251BB4140037D08B /* MovieRatingViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MovieRatingViewController.storyboard; sourceTree = "<group>"; };
+		5560467B251BC4ED0037D08B /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Register.swift"; sourceTree = "<group>"; };
 		556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Register.swift"; sourceTree = "<group>"; };
 		556AB1932514680A0023D278 /* DotRatingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotRatingsView.swift; sourceTree = "<group>"; };
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				558A5A93251054F600E5FB40 /* Alamofire in Frameworks */,
+				55604678251BC01A0037D08B /* Lightbox in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
 				55A73A04251AAE410024C907 /* AlamofireImage in Frameworks */,
 				558A5A90251054C700E5FB40 /* ObjectMapper in Frameworks */,
@@ -389,6 +393,7 @@
 				552E7059251547C4009CC4CD /* ObjectMapper */,
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
+				5560467B251BC4ED0037D08B /* ActivityIndicator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -457,6 +462,7 @@
 				55D35E1B2517DE0D00114602 /* Loaf */,
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55A73A03251AAE410024C907 /* AlamofireImage */,
+				55604677251BC01A0037D08B /* Lightbox */,
 			);
 			productName = MovieDemo;
 			productReference = 559D131D22D98E4800C96FC8 /* MovieDemo.app */;
@@ -492,6 +498,7 @@
 				55D35E1A2517DE0D00114602 /* XCRemoteSwiftPackageReference "Loaf" */,
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55A73A02251AAE410024C907 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				55604676251BC01A0037D08B /* XCRemoteSwiftPackageReference "Lightbox" */,
 			);
 			productRefGroup = 559D131E22D98E4800C96FC8 /* Products */;
 			projectDirPath = "";
@@ -548,6 +555,7 @@
 				553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */,
 				55EDD34F2513E161004F8117 /* ListViewController.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
+				5560467C251BC4ED0037D08B /* ActivityIndicator.swift in Sources */,
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
@@ -788,6 +796,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		55604676251BC01A0037D08B /* XCRemoteSwiftPackageReference "Lightbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hyperoslo/Lightbox";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
@@ -831,6 +847,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		55604677251BC01A0037D08B /* Lightbox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55604676251BC01A0037D08B /* XCRemoteSwiftPackageReference "Lightbox" */;
+			productName = Lightbox;
+		};
 		557FFA8E251A65B700D79F68 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */;

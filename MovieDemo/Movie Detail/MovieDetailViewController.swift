@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import Lightbox
 
 class MovieDetailViewController: UIViewController {    
     weak var mainCoordinator: MainCoordinator!
@@ -63,87 +64,19 @@ class MovieDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK:- Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupBarButtonItems()
-        
+                
         // Only show the header and the loading cell while loading
         sections = [
             .Header,
         ]
         
+        setupBarButtonItems()
         setupCollectionView()
         setupDataProvider()
     }
-    
-    fileprivate func setupBarButtonItems() {
-        if !SessionManager.shared.isLoggedIn {
-            return
-        }
-        
-        favoriteButton = UIBarButtonItem.init(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(markAsFavorite))
-        favoriteButton?.tintColor = .systemPink
-        
-        watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(addToWatchlist))
-        watchListButton?.tintColor = .systemYellow
-        
-        navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!]
-    }
-    
-    fileprivate func updateBarButtonItems() {
-        favoriteButton?.isEnabled = true
-        watchListButton?.isEnabled = true
-
-        if movie.favorite {
-            favoriteButton?.image = UIImage(systemName: "heart.fill")
-        } else {
-            favoriteButton?.image = UIImage(systemName: "heart")
-        }
-        
-        if movie.watchlist {
-            watchListButton?.image = UIImage(systemName: "bookmark.fill")
-        } else {
-            watchListButton?.image = UIImage(systemName: "bookmark")
-        }
-    }
-    
-    @objc fileprivate func markAsFavorite() {
-        if !SessionManager.shared.isLoggedIn {
-            return
-        }
-        
-        favoriteButton?.isEnabled = false
-        
-        movie.markAsFavorite(!movie.favorite) { success in
-            if success {
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
-
-                let message = self.movie.favorite ? "Added to Favorites" : "Removed from Favorites"
-                AlertManager.showFavoriteAlert(text: message, sender: self)
-                self.updateBarButtonItems()
-            }
-        }
-    }
-    
-    @objc fileprivate func addToWatchlist() {
-        if !SessionManager.shared.isLoggedIn {
-            return
-        }
-        
-        watchListButton?.isEnabled = false
-        
-        movie.addToWatchlist(!movie.watchlist) { success in
-            if success {
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
-
-                let message = self.movie.watchlist ? "Added to Watchlist" : "Removed from Watchlist"
-                AlertManager.showWatchlistAlert(text: message, sender: self)
-                self.updateBarButtonItems()
-            }
-        }
-    }
-    
     
     fileprivate func reloadSections() {
         updateBarButtonItems()
@@ -200,6 +133,7 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
+        //Register Cells and Headers
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
 
@@ -227,6 +161,89 @@ class MovieDetailViewController: UIViewController {
         
         movie.didUpdate = updateCollectionView
         movie.refresh()
+    }
+    
+    fileprivate func setupBarButtonItems() {
+        if !SessionManager.shared.isLoggedIn {
+            return
+        }
+        
+        favoriteButton = UIBarButtonItem.init(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(markAsFavorite))
+        favoriteButton?.tintColor = .systemPink
+        
+        watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(addToWatchlist))
+        watchListButton?.tintColor = .systemYellow
+        
+        favoriteButton?.isEnabled = false
+        watchListButton?.isEnabled = false
+        
+        navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!]
+    }
+    
+    fileprivate func updateBarButtonItems() {
+        favoriteButton?.isEnabled = true
+        watchListButton?.isEnabled = true
+
+        if movie.favorite {
+            favoriteButton?.image = UIImage(systemName: "heart.fill")
+        } else {
+            favoriteButton?.image = UIImage(systemName: "heart")
+        }
+        
+        if movie.watchlist {
+            watchListButton?.image = UIImage(systemName: "bookmark.fill")
+        } else {
+            watchListButton?.image = UIImage(systemName: "bookmark")
+        }
+    }
+    
+    //MARK:- Actions
+    @objc fileprivate func markAsFavorite() {
+        if !SessionManager.shared.isLoggedIn {
+            return
+        }
+        
+        favoriteButton?.isEnabled = false
+        
+        movie.markAsFavorite(!movie.favorite) { success in
+            if success {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+
+                let message = self.movie.favorite ? "Added to Favorites" : "Removed from Favorites"
+                AlertManager.showFavoriteAlert(text: message, sender: self)
+                self.updateBarButtonItems()
+            }
+        }
+    }
+    
+    @objc fileprivate func addToWatchlist() {
+        if !SessionManager.shared.isLoggedIn {
+            return
+        }
+        
+        watchListButton?.isEnabled = false
+        
+        movie.addToWatchlist(!movie.watchlist) { success in
+            if success {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+
+                let message = self.movie.watchlist ? "Added to Watchlist" : "Removed from Watchlist"
+                AlertManager.showWatchlistAlert(text: message, sender: self)
+                self.updateBarButtonItems()
+            }
+        }
+    }
+    
+    fileprivate func showImage() {
+        LightboxConfig.PageIndicator.enabled = false
+        LightboxConfig.makeLoadingIndicator = {
+            ActivityIndicator()
+        }
+
+        let images = [LightboxImage(imageURL: self.movie.posterImageURL(size: .original)!)]
+        let controller = LightboxController(images: images)
+        controller.dynamicBackground = true
+        self.present(controller, animated: true, completion: nil)
     }
     
 }
@@ -393,6 +410,11 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             
             //Adjust the top of the Poster Image so it doesn't go unde the bar
             headerView.topConstraint.constant = topInset + 55
+            headerView.imageTapHandler = { [weak self] in
+                guard let self = self else { return }
+                    
+                self.showImage()
+            }
             
             headerView.configure(movie: movie)
             self.movieHeader = headerView
