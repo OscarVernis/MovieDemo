@@ -38,12 +38,12 @@ class MovieRatingViewController: UIViewController {
             deleteRatingButton.isHidden = true
             
             ratingsView.isRatingAvailable = false
-            ratingLabel.text = "NR"
+            ratingLabel.text = movie.userRatingString
             slider.value = 0
         } else {
-            ratingsView.rating = movie.userRating
-            ratingLabel.text = "\(movie.userRating)"
-            slider.value = Float(movie.userRating)
+            ratingsView.rating = movie.percentUserRating
+            ratingLabel.text = movie.userRatingString
+            slider.value = Float(movie.percentUserRating)
         }
         
     }
@@ -63,16 +63,19 @@ class MovieRatingViewController: UIViewController {
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
+        let rating = (slider.value / 5).rounded(.down) * 5
+        
         ratingsView.isRatingAvailable = true
-        ratingsView.rating = UInt(sender.value)
-        ratingLabel.text = "\(ratingsView.rating)"
+        ratingsView.rating = UInt(rating)
+        ratingLabel.text = "\(Int(rating))"
         ratingButton.isEnabled = true
     }
     
     @IBAction func rateButtonTapped(_ sender: Any) {
         isLoading = true
-        
-        movie.rate(Int(slider.value)) { [weak self] success in
+        let rating = (slider.value / 5).rounded(.down) * 5
+
+        movie.rate(Int(rating)) { [weak self] success in
             guard let self = self else { return }
             
             self.isLoading = false

@@ -201,7 +201,19 @@ extension MovieViewModel {
     }
     
     var userRating: UInt {
+        return UInt(movie.userRating)
+    }
+
+    var percentUserRating: UInt {
         return UInt(movie.userRating * 10)
+    }
+    
+    var userRatingString: String {
+        if rated {
+            return "\(percentUserRating)"
+        } else {
+            return "NR"
+        }
     }
     
     var watchlist: Bool {
