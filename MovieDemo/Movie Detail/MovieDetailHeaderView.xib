@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -92,13 +93,47 @@
                         <constraint firstAttribute="bottom" secondItem="BZj-H7-VF3" secondAttribute="bottom" id="tGH-9l-3nl"/>
                     </constraints>
                 </view>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aGS-0T-bO7">
+                    <rect key="frame" x="349" y="12" width="45" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="Dyc-1V-q3z"/>
+                        <constraint firstAttribute="width" constant="45" id="ZXH-JN-c0O"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="systemPinkColor"/>
+                    <state key="normal">
+                        <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
+                    </state>
+                    <state key="selected">
+                        <imageReference key="image" image="heart.fill" catalog="system" symbolScale="large"/>
+                    </state>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1na-31-mg8">
+                    <rect key="frame" x="349" y="61" width="45" height="45"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="GKO-8i-hug"/>
+                        <constraint firstAttribute="height" constant="45" id="Inq-O8-6iB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                    <color key="tintColor" systemColor="systemOrangeColor"/>
+                    <state key="normal">
+                        <color key="titleColor" systemColor="systemPinkColor"/>
+                        <imageReference key="image" image="bookmark" catalog="system" symbolScale="large"/>
+                    </state>
+                    <state key="selected">
+                        <imageReference key="image" image="bookmark.fill" catalog="system" symbolScale="large"/>
+                    </state>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="DNB-Gv-WPX"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="aGS-0T-bO7" secondAttribute="trailing" constant="20" id="2BG-KY-X1t"/>
                 <constraint firstItem="vNd-sO-Ne0" firstAttribute="top" secondItem="IiY-az-QcY" secondAttribute="bottom" constant="6" id="5hT-HR-y2L"/>
                 <constraint firstItem="IiY-az-QcY" firstAttribute="top" secondItem="F2n-nN-wJU" secondAttribute="bottom" constant="14" id="Frb-IY-FIz"/>
+                <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="1na-31-mg8" secondAttribute="trailing" constant="20" id="JYY-EB-PTg"/>
                 <constraint firstItem="Em8-ZA-zQ9" firstAttribute="top" secondItem="jnN-nM-tlo" secondAttribute="bottom" constant="18" id="Jwh-oo-iHh"/>
+                <constraint firstItem="1na-31-mg8" firstAttribute="top" secondItem="aGS-0T-bO7" secondAttribute="bottom" constant="4" id="Kui-3T-FzV"/>
                 <constraint firstItem="0pa-iL-dUc" firstAttribute="top" secondItem="vNd-sO-Ne0" secondAttribute="bottom" constant="12" id="L90-x8-6cA"/>
                 <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="IiY-az-QcY" secondAttribute="trailing" constant="20" id="NLi-31-syQ"/>
                 <constraint firstItem="jnN-nM-tlo" firstAttribute="top" secondItem="qol-Ef-Vfl" secondAttribute="top" constant="12" id="Nck-N4-opi"/>
@@ -110,6 +145,7 @@
                 <constraint firstItem="vNd-sO-Ne0" firstAttribute="leading" secondItem="DNB-Gv-WPX" secondAttribute="leading" constant="20" id="cFh-pO-uSh"/>
                 <constraint firstItem="Vii-H4-uJz" firstAttribute="leading" secondItem="DNB-Gv-WPX" secondAttribute="leading" constant="20" id="cPd-FS-50o"/>
                 <constraint firstItem="Vii-H4-uJz" firstAttribute="top" secondItem="0pa-iL-dUc" secondAttribute="bottom" constant="6" id="dcM-iG-wOa"/>
+                <constraint firstItem="aGS-0T-bO7" firstAttribute="top" secondItem="jnN-nM-tlo" secondAttribute="top" id="in9-s4-RCX"/>
                 <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="0pa-iL-dUc" secondAttribute="trailing" constant="20" id="mK5-Fx-etv"/>
                 <constraint firstItem="jnN-nM-tlo" firstAttribute="centerX" secondItem="qol-Ef-Vfl" secondAttribute="centerX" id="nO7-e5-iZu"/>
                 <constraint firstItem="DNB-Gv-WPX" firstAttribute="trailing" secondItem="Vii-H4-uJz" secondAttribute="trailing" constant="20" id="prO-Ut-3M6"/>
@@ -119,6 +155,7 @@
             </constraints>
             <connections>
                 <outlet property="genresLabel" destination="IiY-az-QcY" id="T2j-nq-kei"/>
+                <outlet property="likeButton" destination="aGS-0T-bO7" id="IYm-aN-gH7"/>
                 <outlet property="overviewLabel" destination="Vii-H4-uJz" id="qcZ-w2-VjJ"/>
                 <outlet property="posterImageView" destination="jnN-nM-tlo" id="c24-aV-izZ"/>
                 <outlet property="ratingsLabel" destination="nCS-mw-kg6" id="aM1-P9-4Hk"/>
@@ -137,11 +174,21 @@
     </designables>
     <resources>
         <image name="PosterPlaceholder" width="240" height="360"/>
+        <image name="bookmark" catalog="system" width="112" height="128"/>
+        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <namedColor name="PosterPlaceholderColor">
             <color red="0.46299999952316284" green="0.46299999952316284" blue="0.50199997425079346" alpha="0.11999999731779099" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

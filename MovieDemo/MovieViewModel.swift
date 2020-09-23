@@ -185,6 +185,21 @@ extension MovieViewModel {
     
 }
 
+//MARK:- User States
+extension MovieViewModel {
+    var favorite: Bool {
+        return movie.favorite
+    }
+    
+    var rated: Bool {
+    return movie.rated
+    }
+    
+    var watchlist: Bool {
+        return movie.watchlist
+    }
+}
+
 //MARK:- Generated data
 extension MovieViewModel {
     private func updateInfoArray() {

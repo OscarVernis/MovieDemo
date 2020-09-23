@@ -47,6 +47,9 @@ class MovieDetailViewController: UIViewController {
     private weak var movieHeader: MovieDetailHeaderView?
     private var collectionView: UICollectionView!
     
+    private var favoriteButton: UIBarButtonItem? = nil
+    private var watchListButton: UIBarButtonItem? = nil
+    
     required init(viewModel: MovieViewModel) {
         self.movie = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -63,6 +66,8 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupBarButtonItems()
+        
         // Only show the header and the loading cell while loading
         sections = [
             .Header,
@@ -72,7 +77,38 @@ class MovieDetailViewController: UIViewController {
         setupDataProvider()
     }
     
+    fileprivate func setupBarButtonItems() {
+        if !SessionManager.shared.isLoggedIn {
+            return
+        }
+        
+        favoriteButton = UIBarButtonItem.init(image: UIImage(systemName: "heart"), style: .plain, target: nil, action: nil)
+        favoriteButton?.tintColor = .systemPink
+        
+        watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: nil, action: nil)
+        watchListButton?.tintColor = .systemYellow
+        
+        navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!]
+    }
+    
+    fileprivate func updateBarButtonItems() {
+        if movie.favorite {
+            favoriteButton?.image = UIImage(systemName: "heart.fill")
+        } else {
+            favoriteButton?.image = UIImage(systemName: "heart")
+        }
+        
+        if movie.watchlist {
+            watchListButton?.image = UIImage(systemName: "bookmark.fill")
+        } else {
+            watchListButton?.image = UIImage(systemName: "bookmark")
+        }
+    }
+    
+    
     fileprivate func reloadSections() {
+        updateBarButtonItems()
+        
         sections.removeAll()
         sections.append(.Header)
 

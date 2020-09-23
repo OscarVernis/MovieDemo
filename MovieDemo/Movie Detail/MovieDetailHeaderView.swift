@@ -17,10 +17,13 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     
+    @IBOutlet weak var likeButton: UIButton!
+    
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     override func awakeFromNib() {
         posterImageView.layer.masksToBounds = true
         posterImageView.layer.cornerRadius = 12
+        
     }
     
     func configure(movie: MovieViewModel) {

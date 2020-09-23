@@ -19,7 +19,6 @@ class CrewCredit: Mappable {
     var profilePath: String?
     
     //MARK: - ObjectMapper
-    
     required init?(map: Map) {
         if map.JSON["id"] == nil {
             return nil

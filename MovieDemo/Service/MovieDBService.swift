@@ -17,8 +17,9 @@ struct MovieDBService {
     }
     
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
-    
     let baseURL = "https://api.themoviedb.org/3"
+    
+    static var shared = MovieDBService()
     
     func defaultParameters(includeAuth: Bool = false) -> [String: Any] {
         let language = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
@@ -77,7 +78,7 @@ extension MovieDBService {
     }
 }
 
-//MARK: - User Login
+//MARK: - Login
 extension MovieDBService {
     func requestToken(completion: @escaping (String?, Error?) -> ()) {
         let url = endpoint(forPath: "/authentication/token/new")
@@ -166,6 +167,31 @@ extension MovieDBService {
                 }
             case .failure(let error):
                 completion(false, error)
+            }
+        }
+    }
+    
+}
+
+//MARK: - User Actions
+extension MovieDBService {
+    func fetchUserDetails(completion: @escaping (User?, Error?) -> ()) {
+        let url = endpoint(forPath: "/account")
+        
+        let params = defaultParameters(includeAuth: true)
+
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any] else {
+                    completion(nil, ServiceError.jsonError)
+                    return
+                }
+                
+                let user = User(JSON: json)
+                completion(user, nil)
+            case .failure(let error):
+                completion(nil, error)
             }
         }
     }

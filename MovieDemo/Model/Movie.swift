@@ -29,6 +29,10 @@ class Movie: Mappable {
     var budget: Int?
     var revenue: Int?
     
+    var favorite: Bool = false
+    var rated: Bool = false
+    var watchlist: Bool = false
+    
     
 //MARK: - ObjectMapper
     public required init?(map: Map) {
@@ -60,6 +64,10 @@ class Movie: Mappable {
         originalLanguage <- map["original_language"]
         budget <- map["budget"]
         revenue <- map["revenue"]
+        
+        favorite <- map["account_states.favorite"]
+        rated <- map["account_states.rated"]
+        watchlist <- map["account_states.watchlist"]
     }
     
 }
