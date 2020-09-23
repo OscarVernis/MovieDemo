@@ -32,6 +32,10 @@ struct AlertManager {
         Loaf(text, state: .custom(.init(backgroundColor: .systemPink, icon: UIImage(systemName: "heart.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
     }
     
+    static func showWatchlistAlert(text: String, sender: UIViewController, completion: (() -> Void)? = nil) {
+        Loaf(text, state: .custom(.init(backgroundColor: .systemYellow, icon: UIImage(systemName: "bookmark.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
+    }
+    
 }
 
   

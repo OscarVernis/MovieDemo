@@ -85,14 +85,15 @@ class MovieDetailViewController: UIViewController {
         favoriteButton = UIBarButtonItem.init(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(markAsFavorite))
         favoriteButton?.tintColor = .systemPink
         
-        watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: nil, action: nil)
-        watchListButton?.tintColor = .systemOrange
+        watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(addToWatchlist))
+        watchListButton?.tintColor = .systemYellow
         
         navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!]
     }
     
     fileprivate func updateBarButtonItems() {
         favoriteButton?.isEnabled = true
+        watchListButton?.isEnabled = true
 
         if movie.favorite {
             favoriteButton?.image = UIImage(systemName: "heart.fill")
@@ -120,6 +121,24 @@ class MovieDetailViewController: UIViewController {
 
                 let message = self.movie.favorite ? "Added to Favorites" : "Removed from Favorites"
                 AlertManager.showFavoriteAlert(text: message, sender: self)
+                self.updateBarButtonItems()
+            }
+        }
+    }
+    
+    @objc fileprivate func addToWatchlist() {
+        if !SessionManager.shared.isLoggedIn {
+            return
+        }
+        
+        watchListButton?.isEnabled = false
+        
+        movie.addToWatchlist(!movie.watchlist) { success in
+            if success {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+
+                let message = self.movie.watchlist ? "Added to Watchlist" : "Removed from Watchlist"
+                AlertManager.showWatchlistAlert(text: message, sender: self)
                 self.updateBarButtonItems()
             }
         }

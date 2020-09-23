@@ -219,6 +219,23 @@ extension MovieViewModel {
             }
         }
     }
+    
+    func addToWatchlist(_ watchlist: Bool, completion: @escaping (Bool) -> Void) {
+        guard let sessionId = SessionManager.shared.sessionId else {
+            completion(false)
+            return
+        }
+        
+        movieService.addToWatchlist(watchlist, movieId: id, sessionId: sessionId) { [weak self] success, error in
+            if success && error == nil {
+                self?.movie.watchlist = watchlist
+                completion(success)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
 }
 
 //MARK:- Generated data

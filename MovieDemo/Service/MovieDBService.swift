@@ -179,6 +179,12 @@ extension MovieDBService {
         var favorite: Bool
     }
     
+    private struct WatchlistRequestBody: Encodable {
+        var media_type: String = "movie"
+        var media_id: Int
+        var watchlist: Bool
+    }
+    
     func fetchUserDetails(sessionId: String, completion: @escaping (User?, Error?) -> ()) {
         let url = endpoint(forPath: "/account")
         let params = defaultParameters(withSessionId: sessionId)
@@ -204,6 +210,30 @@ extension MovieDBService {
         let params = defaultParameters(withSessionId: sessionId)
         
         let body = FavoriteRequestBody(media_id: movieId, favorite: favorite)
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+
+        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
+                    completion(false, ServiceError.jsonError)
+                    return
+                }
+                
+                completion(success, nil)
+            case .failure(let error):
+                completion(false, error)
+            }
+        }
+    }
+    
+    func addToWatchlist(_ watchlist: Bool, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+        let url = endpoint(forPath: "/account/id/watchlist")
+        let params = defaultParameters(withSessionId: sessionId)
+        
+        let body = WatchlistRequestBody(media_id: movieId, watchlist: watchlist)
         
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
