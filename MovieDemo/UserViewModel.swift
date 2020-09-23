@@ -10,6 +10,8 @@ import Foundation
 
 struct UserViewModel {
     var user: User
+    let sessionId: String
+    private let service = MovieDBService()
     
     var id: Int {
         return user.id
@@ -19,4 +21,5 @@ struct UserViewModel {
         return user.username
     }
 }
+
     

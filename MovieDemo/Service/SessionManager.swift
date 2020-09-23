@@ -83,8 +83,8 @@ extension SessionManager {
         guard let sessionId = sessionId else { return }
         
         service.fetchUserDetails(sessionId: sessionId) { [weak self] user, error in
-            if let user = user, error != nil {
-                self?.loggedUser = UserViewModel(user: user)
+            if let user = user, error == nil {
+                self?.loggedUser = UserViewModel(user: user, sessionId: sessionId)
             }
         }
     }

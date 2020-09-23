@@ -203,6 +203,22 @@ extension MovieViewModel {
     var watchlist: Bool {
         return movie.watchlist
     }
+    
+    func markAsFavorite(_ favorite: Bool, completion: @escaping (Bool) -> Void) {
+        guard let sessionId = SessionManager.shared.sessionId else {
+            completion(false)
+            return
+        }
+        
+        movieService.markAsFavorite(favorite, movieId: id, sessionId: sessionId) { [weak self] success, error in
+            if success && error == nil {
+                self?.movie.favorite = favorite
+                completion(success)
+            } else {
+                completion(false)
+            }
+        }
+    }
 }
 
 //MARK:- Generated data
