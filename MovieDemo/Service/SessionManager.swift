@@ -15,7 +15,7 @@ fileprivate enum LocalKeys: String {
 }
 
 class SessionManager {
-    static var shared = SessionManager()
+    static let shared = SessionManager()
     private var service = MovieDBService()
     
     var isLoggedIn: Bool = false
@@ -80,9 +80,11 @@ extension SessionManager {
     }
     
     private func updateUser() {
-        service.fetchUserDetails { user, error in
+        guard let sessionId = sessionId else { return }
+        
+        service.fetchUserDetails(sessionId: sessionId) { [weak self] user, error in
             if let user = user, error != nil {
-                self.loggedUser = UserViewModel(user: user)
+                self?.loggedUser = UserViewModel(user: user)
             }
         }
     }

@@ -18,14 +18,12 @@ struct MovieDBService {
     
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     let baseURL = "https://api.themoviedb.org/3"
-    
-    static var shared = MovieDBService()
-    
-    func defaultParameters(includeAuth: Bool = false) -> [String: Any] {
+        
+    func defaultParameters(withSessionId sessionId: String? = nil) -> [String: Any] {
         let language = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
         var params = ["language": language, "api_key": apiKey]
         
-        if includeAuth, let sessionId = SessionManager.shared.sessionId {
+        if let sessionId = sessionId {
             params["session_id"] = sessionId
         }
         
@@ -175,10 +173,10 @@ extension MovieDBService {
 
 //MARK: - User Actions
 extension MovieDBService {
-    func fetchUserDetails(completion: @escaping (User?, Error?) -> ()) {
+    func fetchUserDetails(sessionId: String, completion: @escaping (User?, Error?) -> ()) {
         let url = endpoint(forPath: "/account")
         
-        let params = defaultParameters(includeAuth: true)
+        let params = defaultParameters(withSessionId: sessionId)
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
@@ -267,12 +265,10 @@ extension MovieDBService {
 
 //MARK: - Movie Details
 extension MovieDBService {
-    func fetchMovieDetails(movieId: Int, completion: @escaping (Movie?, Error?) -> ()) {
+    func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping (Movie?, Error?) -> ()) {
         let url = endpoint(forPath: "/movie/\(movieId)")
         
-        //Add sessionId is user is Logged In
-        let loggedIn = SessionManager.shared.isLoggedIn
-        var params = defaultParameters(includeAuth: loggedIn)
+        var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "credits,recommendations,account_states"
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in

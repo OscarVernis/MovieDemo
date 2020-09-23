@@ -45,7 +45,12 @@ extension MovieViewModel {
     }
     
     private func fetchMovieDetails() {
-        movieService.fetchMovieDetails(movieId: movie.id!) { [weak self] movie, error in
+        var sessionId: String? = nil
+        if SessionManager.shared.isLoggedIn {
+            sessionId = SessionManager.shared.sessionId
+        }
+        
+        movieService.fetchMovieDetails(movieId: movie.id!, sessionId: sessionId) { [weak self] movie, error in
             guard let self = self else { return }
             
             if error != nil {
