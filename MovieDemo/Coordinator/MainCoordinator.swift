@@ -35,9 +35,9 @@ final class MainCoordinator {
         
         if isLoginRequired && SessionManager.shared.isLoggedIn == false {
             showLogin(animated: false)
+        } else {
+            showHome()
         }
-        
-        showHome()
         
     }
     
@@ -52,7 +52,13 @@ final class MainCoordinator {
             self?.rootNavigationViewController?.dismiss(animated: true)
         }
         
-        rootNavigationViewController?.present(lvc, animated: animated)
+        rootNavigationViewController?.present(lvc, animated: animated, completion: { [weak self] in
+            guard let self = self else { return }
+            
+            if self.isLoginRequired && self.rootNavigationViewController!.viewControllers.isEmpty {
+                self.showHome()
+            }
+        })
     }
     
     func logout() {

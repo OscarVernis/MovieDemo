@@ -20,9 +20,13 @@ struct MovieDBService {
     
     let baseURL = "https://api.themoviedb.org/3"
     
-    func defaultParameters() -> [String: Any] {
+    func defaultParameters(includeAuth: Bool = false) -> [String: Any] {
         let language = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
-        let params = ["language": language, "api_key": apiKey]
+        var params = ["language": language, "api_key": apiKey]
+        
+        if includeAuth, let sessionId = SessionManager.shared.sessionId {
+            params["session_id"] = sessionId
+        }
         
         return params
     }
@@ -79,7 +83,7 @@ extension MovieDBService {
         let url = endpoint(forPath: "/authentication/token/new")
         let params = defaultParameters()
         
-        AF.request(url, parameters: params, encoding: URLEncoding.default).responseJSON { response in
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let token = json["request_token"] as? String {
@@ -106,15 +110,11 @@ extension MovieDBService {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
+        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let success = json["success"] as? Bool {
-                    var error: Error? = nil
-                    if response.response?.statusCode == 401 {
-                        error = ServiceError.incorrectCredentials
-                    }
-                    completion(success, error)
+                    completion(success, nil)
                 } else {
                     completion(false, ServiceError.jsonError)
                 }
@@ -133,7 +133,7 @@ extension MovieDBService {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
+        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let sessionId = json["session_id"] as? String {
@@ -243,8 +243,11 @@ extension MovieDBService {
 extension MovieDBService {
     func fetchMovieDetails(movieId: Int, completion: @escaping (Movie?, Error?) -> ()) {
         let url = endpoint(forPath: "/movie/\(movieId)")
-        var params = defaultParameters()
-        params["append_to_response"] = "credits,recommendations"
+        
+        //Add sessionId is user is Logged In
+        let loggedIn = SessionManager.shared.isLoggedIn
+        var params = defaultParameters(includeAuth: loggedIn)
+        params["append_to_response"] = "credits,recommendations,account_states"
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {

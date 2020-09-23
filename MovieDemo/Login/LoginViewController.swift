@@ -21,20 +21,76 @@ class LoginViewController: UIViewController {
 
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: ((Bool) -> Void)? = nil
-        
+    
+    var isLoading = false {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    //MARK:- Setup
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    fileprivate func setup() {
         closeButton.isHidden = !showsCloseButton
-
-
+        
         loginButton.layer.masksToBounds = true
         loginButton.layer.cornerRadius = 8
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    fileprivate func updateUI() {
+        if isLoading {
+            loginButton.isEnabled = false
+            loginButton.titleLabel?.alpha = 0
+            activityIndicator.isHidden = false
+        } else {
+            self.loginButton.titleLabel?.alpha = 1
+            self.activityIndicator.isHidden = true
+        }
+    }
+    
+    fileprivate func handlelogin() {
+        isLoading = true
+        
+        SessionManager.shared.login(withUsername: userTextField.text!, password: passwordTextField.text!) { [weak self] error  in
+            guard let self = self else { return }
+            
+            self.isLoading = false
 
+            if error == nil {
+                self.didFinishLoginProcess?(true)
+            } else {
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+                
+                self.userTextField.text = ""
+                self.passwordTextField.text = ""
 
+                self.errorLabel.isHidden = false
+                if let error = error?.asAFError, error.responseCode == 401 {
+                    self.errorLabel.text = "Invalid username and/or password."
+                } else {
+                    self.errorLabel.text = "Login error. Please try again."
+                }
+            }
+        }
+        
+    }
+
+    //MARK:- Actions
+    
+    @IBAction func loginButtonTapped(_ sender: UIButton) {
+        handlelogin()
     }
     
     @IBAction func textFieldUpdated(_ sender: Any) {
@@ -52,6 +108,7 @@ class LoginViewController: UIViewController {
         passwordTextField.resignFirstResponder()
     }
     
+    //MARK:- Keyboard animation
     @objc func keyboardWillShow(notification: NSNotification) {
         animateWithKeyboard(notification: notification) { keyboardSize in
             self.bottomConstraint.constant = keyboardSize.height + 12
@@ -62,36 +119,6 @@ class LoginViewController: UIViewController {
         animateWithKeyboard(notification: notification) { keyboardSize in
             self.bottomConstraint.constant = self.bottomConstraintDefault
         }
-    }
-
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        loginButton.isEnabled = false
-        loginButton.titleLabel?.isHidden = true
-        activityIndicator.isHidden = false
-        
-        SessionManager.shared.login(withUsername: userTextField.text!, password: passwordTextField.text!) { [weak self] error  in
-            guard let self = self else { return }
-            
-            if error == nil {
-                self.didFinishLoginProcess?(true)
-            } else {
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                
-                self.loginButton.titleLabel?.isHidden = false
-                self.activityIndicator.isHidden = true
-                
-                self.userTextField.text = ""
-                self.passwordTextField.text = ""
-
-                self.errorLabel.isHidden = false
-                if let error = error, case MovieDBService.ServiceError.incorrectCredentials = error {
-                    self.errorLabel.text = "Invalid username and/or password."
-                } else {
-                    self.errorLabel.text = "Login error. Please try again."
-                }
-            }
-        }
-        
     }
     
     func animateWithKeyboard(notification: NSNotification, animations: ((_ keyboardFrame: CGRect) -> Void)?) {
