@@ -197,7 +197,11 @@ extension MovieViewModel {
     }
     
     var rated: Bool {
-    return movie.rated
+        return movie.rated
+    }
+    
+    var userRating: UInt {
+        return UInt(movie.userRating * 10)
     }
     
     var watchlist: Bool {
@@ -235,6 +239,51 @@ extension MovieViewModel {
             }
         }
     }
+    
+    func rate(_ rating: Int, completion: @escaping (Bool) -> Void) {
+        guard let sessionId = SessionManager.shared.sessionId else {
+            completion(false)
+            return
+        }
+        
+        //ViewModel receives rating as 0 to 100, but service receives 0.5 to 10 in multiples of 0.5
+        var adjustedRating:Float = Float(rating) / 10
+        adjustedRating = (adjustedRating / 0.5).rounded(.down) * 0.5
+        
+        if adjustedRating > 10 {
+            adjustedRating = 10
+        }
+        if adjustedRating < 0.5 {
+            adjustedRating = 0.5
+        }
+                
+        movieService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] success, error in
+            if success && error == nil {
+                self?.movie.userRating = adjustedRating
+                self?.movie.rated = true
+                completion(success)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    func deleteRate(completion: @escaping (Bool) -> Void) {
+        guard let sessionId = SessionManager.shared.sessionId else {
+            completion(false)
+            return
+        }
+        
+        movieService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] success, error in
+            if success && error == nil {
+                self?.movie.rated = false
+                completion(success)
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
     
 }
 

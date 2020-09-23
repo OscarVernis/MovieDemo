@@ -31,6 +31,7 @@ class Movie: Mappable {
     
     var favorite: Bool = false
     var rated: Bool = false
+    var userRating: Float = 0
     var watchlist: Bool = false
     
     
@@ -55,8 +56,8 @@ class Movie: Mappable {
         voteAverage <- map["vote_average"]
         voteCount <- map["vote_count"]
         runtime <- map["runtime"]
-        genres <- (map["genre_ids"], MovieGenreTransformer()) //Movie lists return genres as this: "genre_ids": [14, 28, 80]
-        genres <- (map["genres"], MovieGenreDictionaryTransformer()) //Movie details returns as this: "genres": [{" id": 18, "name": "Drama" }]
+        genres <- (map["genre_ids"], MovieGenreTransformer()) //Movie list services return genres as this: "genre_ids": [14, 28, 80]
+        genres <- (map["genres"], MovieGenreDictionaryTransformer()) //Movie details service returns as this: "genres": [{" id": 18, "name": "Drama" }]
         cast <- map["credits.cast"]
         crew <- map["credits.crew"]
         recommendedMovies <- map["recommendations.results"]
@@ -66,7 +67,8 @@ class Movie: Mappable {
         revenue <- map["revenue"]
         
         favorite <- map["account_states.favorite"]
-        rated <- map["account_states.rated"]
+        rated <- (map["account_states.rated"], MovieUserRatedTransform()) //Service returns false if not rated, and the value of the rating if rated.
+        userRating <- map["account_states.rated.value"]
         watchlist <- map["account_states.watchlist"]
     }
     

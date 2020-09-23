@@ -9,6 +9,7 @@
 import UIKit
 import AlamofireImage
 import Lightbox
+import SPStorkController
 
 class MovieDetailViewController: UIViewController {    
     weak var mainCoordinator: MainCoordinator!
@@ -174,10 +175,13 @@ class MovieDetailViewController: UIViewController {
         watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(addToWatchlist))
         watchListButton?.tintColor = .systemYellow
         
+        let rateButton = UIBarButtonItem.init(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addRating))
+        rateButton.tintColor = .systemGreen
+        
         favoriteButton?.isEnabled = false
         watchListButton?.isEnabled = false
         
-        navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!]
+        navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!, rateButton]
     }
     
     fileprivate func updateBarButtonItems() {
@@ -234,6 +238,21 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    @objc fileprivate func addRating() {
+        let controller = MovieRatingViewController.instantiateFromStoryboard()
+        controller.movie = movie
+        
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        controller.transitioningDelegate = transitionDelegate
+        controller.modalPresentationStyle = .custom
+        controller.modalPresentationCapturesStatusBarAppearance = true
+        transitionDelegate.customHeight = 350
+        transitionDelegate.showCloseButton = true
+        transitionDelegate.showIndicator = false
+
+        self.present(controller, animated: true, completion: nil)
+    }
+
     fileprivate func showImage() {
         LightboxConfig.PageIndicator.enabled = false
         LightboxConfig.makeLoadingIndicator = {
@@ -407,7 +426,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
 
         if sectionType == .Header {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
-            
+                        
             //Adjust the top of the Poster Image so it doesn't go unde the bar
             headerView.topConstraint.constant = topInset + 55
             headerView.imageTapHandler = { [weak self] in

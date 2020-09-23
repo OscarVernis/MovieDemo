@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,6 +17,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30A-3f-l1c">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="smL-a5-Hxs">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="500"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBo-ow-rvb" userLabel="Ratings Container">
                                 <rect key="frame" x="152.5" y="40" width="70" height="70"/>
                                 <subviews>
@@ -34,9 +41,9 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ejy-1F-T51">
-                                        <rect key="frame" x="10" y="12" width="50" height="48"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="35"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9.9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ejy-1F-T51">
+                                        <rect key="frame" x="10" y="15" width="50" height="42.5"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="31"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -53,49 +60,76 @@
                                     <constraint firstItem="nH3-Od-3FQ" firstAttribute="leading" secondItem="kBo-ow-rvb" secondAttribute="leading" id="fkI-oE-dwB"/>
                                 </constraints>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oHk-2k-cnD">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="oHk-2k-cnD">
                                 <rect key="frame" x="38" y="150" width="299" height="31"/>
                                 <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="maximumTrackTintColor" systemColor="systemGray4Color"/>
                                 <color key="thumbTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="8aH-ZE-FcD" eventType="valueChanged" id="y0k-yq-JQT"/>
+                                </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgT-CS-iDb">
-                                <rect key="frame" x="40" y="215" width="295" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgT-CS-iDb">
+                                <rect key="frame" x="40" y="215" width="295" height="44"/>
                                 <color key="backgroundColor" red="0.1573615968" green="0.81607025860000004" blue="0.43189656729999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="qSU-JE-PlJ"/>
+                                    <constraint firstAttribute="height" constant="44" id="qSU-JE-PlJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="18"/>
                                 <state key="normal" title="Rate">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="rateButtonTapped:" destination="8aH-ZE-FcD" eventType="touchUpInside" id="zbl-cg-CoZ"/>
+                                </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="2Do-rc-OhB">
+                                <rect key="frame" x="177.5" y="227" width="20" height="20"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dOq-hG-a13">
-                                <rect key="frame" x="141" y="263" width="93" height="33"/>
+                                <rect key="frame" x="141" y="267" width="93" height="33"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                 <state key="normal" title="Delete Rating">
                                     <color key="titleColor" systemColor="secondaryLabelColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="deleteButtonTapped:" destination="8aH-ZE-FcD" eventType="touchUpInside" id="p0c-wn-zOP"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gfP-rU-l6M"/>
-                        <color key="backgroundColor" name="AppBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kBo-ow-rvb" firstAttribute="top" secondItem="gfP-rU-l6M" secondAttribute="top" constant="40" id="3LB-Nj-R5g"/>
                             <constraint firstItem="oHk-2k-cnD" firstAttribute="leading" secondItem="gfP-rU-l6M" secondAttribute="leading" constant="40" id="4cb-ie-aEq"/>
+                            <constraint firstItem="2Do-rc-OhB" firstAttribute="centerX" secondItem="vgT-CS-iDb" secondAttribute="centerX" id="6am-Wz-9uH"/>
                             <constraint firstItem="kBo-ow-rvb" firstAttribute="width" secondItem="kBo-ow-rvb" secondAttribute="height" multiplier="1:1" id="9h5-fB-2mU"/>
                             <constraint firstItem="oHk-2k-cnD" firstAttribute="top" secondItem="kBo-ow-rvb" secondAttribute="bottom" constant="40" id="COr-7c-jro"/>
+                            <constraint firstItem="30A-3f-l1c" firstAttribute="leading" secondItem="2eQ-PU-eDU" secondAttribute="leading" id="InB-pg-yQt"/>
+                            <constraint firstItem="30A-3f-l1c" firstAttribute="top" secondItem="2eQ-PU-eDU" secondAttribute="top" id="KE4-Uu-yG2"/>
+                            <constraint firstAttribute="bottom" secondItem="30A-3f-l1c" secondAttribute="bottom" id="OeE-Ja-eQZ"/>
                             <constraint firstItem="gfP-rU-l6M" firstAttribute="trailing" secondItem="oHk-2k-cnD" secondAttribute="trailing" constant="40" id="UF1-Xb-uDX"/>
+                            <constraint firstItem="2Do-rc-OhB" firstAttribute="centerY" secondItem="vgT-CS-iDb" secondAttribute="centerY" id="muO-4x-Thj"/>
                             <constraint firstItem="kBo-ow-rvb" firstAttribute="centerX" secondItem="2eQ-PU-eDU" secondAttribute="centerX" id="pI6-fM-eWU"/>
                             <constraint firstItem="dOq-hG-a13" firstAttribute="top" secondItem="vgT-CS-iDb" secondAttribute="bottom" constant="8" id="szP-7k-lAK"/>
                             <constraint firstItem="vgT-CS-iDb" firstAttribute="leading" secondItem="gfP-rU-l6M" secondAttribute="leading" constant="40" id="uG0-Af-Gpi"/>
                             <constraint firstItem="dOq-hG-a13" firstAttribute="centerX" secondItem="2eQ-PU-eDU" secondAttribute="centerX" id="uk9-y3-uz0"/>
                             <constraint firstItem="gfP-rU-l6M" firstAttribute="trailing" secondItem="vgT-CS-iDb" secondAttribute="trailing" constant="40" id="vYQ-cH-And"/>
+                            <constraint firstAttribute="trailing" secondItem="30A-3f-l1c" secondAttribute="trailing" id="xCk-7K-cq8"/>
                             <constraint firstItem="vgT-CS-iDb" firstAttribute="top" secondItem="oHk-2k-cnD" secondAttribute="bottom" constant="35" id="xXQ-TW-4bn"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="500"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="2Do-rc-OhB" id="QfH-YW-TKH"/>
+                        <outlet property="deleteRatingButton" destination="dOq-hG-a13" id="YOB-UE-HNm"/>
+                        <outlet property="ratingButton" destination="vgT-CS-iDb" id="Bwh-6k-Bgx"/>
+                        <outlet property="ratingLabel" destination="ejy-1F-T51" id="6cS-QD-2Gz"/>
+                        <outlet property="ratingsView" destination="nH3-Od-3FQ" id="mZ3-uZ-uB4"/>
+                        <outlet property="slider" destination="oHk-2k-cnD" id="2Gp-ha-6Mw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xj7-RI-3iN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,9 +142,6 @@
         </designable>
     </designables>
     <resources>
-        <namedColor name="AppBackgroundColor">
-            <color red="0.94900000095367432" green="0.94900000095367432" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -36,6 +36,11 @@ struct AlertManager {
         Loaf(text, state: .custom(.init(backgroundColor: .systemYellow, icon: UIImage(systemName: "bookmark.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
     }
     
+    
+    static func showRatingAlert(text: String, sender: UIViewController, completion: (() -> Void)? = nil) {
+        Loaf(text, state: .custom(.init(backgroundColor: .systemGreen, icon: UIImage(systemName: "star.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
+    }
+    
 }
 
   

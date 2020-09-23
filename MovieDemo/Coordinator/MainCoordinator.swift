@@ -42,7 +42,7 @@ final class MainCoordinator {
     }
     
     func showLogin(animated: Bool = true) {
-        let lvc = LoginViewController.instantiateFromStoryboard(UIStoryboard(name: "LoginViewController", bundle: .main))
+        let lvc = LoginViewController.instantiateFromStoryboard()
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
             lvc.modalPresentationStyle = .overFullScreen

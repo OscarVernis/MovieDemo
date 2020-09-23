@@ -253,6 +253,49 @@ extension MovieDBService {
         }
     }
     
+    func rateMovie(_ rating: Float, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+        let url = endpoint(forPath: "/movie/\(movieId)/rating")
+        let params = defaultParameters(withSessionId: sessionId)
+        
+        let body = ["value": rating]
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+
+        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
+                    completion(false, ServiceError.jsonError)
+                    return
+                }
+                
+                completion(success, nil)
+            case .failure(let error):
+                completion(false, error)
+            }
+        }
+    }
+    
+    func deleteRate(movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+        let url = endpoint(forPath: "/movie/\(movieId)/rating")
+        let params = defaultParameters(withSessionId: sessionId)
+                
+        AF.request(url, method: .delete, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
+                    completion(false, ServiceError.jsonError)
+                    return
+                }
+                
+                completion(success, nil)
+            case .failure(let error):
+                completion(false, error)
+            }
+        }
+    }
+    
 }
 
 //MARK: - Movie Lists
