@@ -108,6 +108,11 @@ class LoginViewController: UIViewController {
         passwordTextField.resignFirstResponder()
     }
     
+    @IBAction func createAccountTapped(_ sender: Any) {
+        let url = URL(string: "https://www.themoviedb.org/signup")!
+        UIApplication.shared.open(url)
+    }
+    
     //MARK:- Keyboard animation
     @objc func keyboardWillShow(notification: NSNotification) {
         animateWithKeyboard(notification: notification) { keyboardSize in
