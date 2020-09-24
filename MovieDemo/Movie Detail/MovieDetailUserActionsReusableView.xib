@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieDetailUserActionsReusableView" id="U6b-Vx-4bR" customClass="MovieDetailUserActionsReusableView" customModule="MovieDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1m-fP-vbe">
+                    <rect key="frame" x="16" y="21" width="105" height="44"/>
+                    <color key="backgroundColor" red="1" green="0.27058823529411763" blue="0.22745098039215686" alpha="0.094425516917293228" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="f1L-vU-54V"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                    <color key="tintColor" systemColor="systemPinkColor"/>
+                    <state key="normal" title=" Favorite" image="heart.fill" catalog="system">
+                        <color key="titleColor" red="1" green="0.10312563334711466" blue="0.31239631889945463" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-FC-q9G">
+                    <rect key="frame" x="135" y="21" width="105" height="44"/>
+                    <color key="backgroundColor" red="1" green="0.83921568627450982" blue="0.039215686274509803" alpha="0.097230380639097738" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="W1d-y3-hGR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                    <color key="tintColor" systemColor="systemOrangeColor"/>
+                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="Watchlist" image="bookmark.fill" catalog="system">
+                        <color key="titleColor" systemColor="systemOrangeColor"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTS-4j-s9v">
+                    <rect key="frame" x="254" y="21" width="105" height="44"/>
+                    <color key="backgroundColor" red="0.19607843137254902" green="0.84313725490196079" blue="0.29411764705882354" alpha="0.10132753759398497" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="oCZ-eO-qdZ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                    <color key="tintColor" systemColor="systemGreenColor"/>
+                    <inset key="imageEdgeInsets" minX="-6" minY="-2" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="Rate" image="star.fill" catalog="system">
+                        <color key="titleColor" systemColor="systemGreenColor"/>
+                    </state>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="aTS-4j-s9v" secondAttribute="bottom" id="5TK-u2-MeM"/>
+                <constraint firstItem="aTS-4j-s9v" firstAttribute="leading" secondItem="asZ-FC-q9G" secondAttribute="trailing" constant="14" id="If5-zt-b22"/>
+                <constraint firstItem="aTS-4j-s9v" firstAttribute="width" secondItem="N1m-fP-vbe" secondAttribute="width" id="OQf-9M-BcR"/>
+                <constraint firstAttribute="bottom" secondItem="N1m-fP-vbe" secondAttribute="bottom" id="UbH-SM-eqH"/>
+                <constraint firstItem="N1m-fP-vbe" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" constant="16" id="YeZ-Wk-nDO"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="aTS-4j-s9v" secondAttribute="trailing" constant="16" id="YuK-vH-CLP"/>
+                <constraint firstItem="asZ-FC-q9G" firstAttribute="leading" secondItem="N1m-fP-vbe" secondAttribute="trailing" constant="14" id="cfX-yW-VNE"/>
+                <constraint firstAttribute="bottom" secondItem="asZ-FC-q9G" secondAttribute="bottom" id="dQ7-9m-Czc"/>
+                <constraint firstItem="asZ-FC-q9G" firstAttribute="width" secondItem="N1m-fP-vbe" secondAttribute="width" id="hkZ-5W-J8G"/>
+            </constraints>
+            <connections>
+                <outlet property="favoriteButton" destination="N1m-fP-vbe" id="M48-sv-ODX"/>
+                <outlet property="rateButton" destination="aTS-4j-s9v" id="A4G-qe-Vdn"/>
+                <outlet property="watchlistButton" destination="asZ-FC-q9G" id="7bH-Nd-vmR"/>
+            </connections>
+            <point key="canvasLocation" x="107.97101449275362" y="81.026785714285708"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

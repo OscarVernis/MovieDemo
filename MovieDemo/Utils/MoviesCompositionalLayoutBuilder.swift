@@ -140,6 +140,17 @@ struct MoviesCompositionalLayoutBuilder {
         return sectionHeader
     }
     
+    //The User Actions section for MovieDetailViewController
+    func createMovieDetailUserActionsSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(65))
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        return sectionHeader
+    }
+    
     //Similar to Poster section with a different size
     func createHorizontalCreditSection() ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),

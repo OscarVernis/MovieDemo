@@ -19,6 +19,7 @@ class MovieDetailViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
         case Header
+        case UserActions
         case Cast
         case Crew
         case RecommendedMovies
@@ -36,6 +37,8 @@ class MovieDetailViewController: UIViewController {
                 return "Recommended Movies"
             case .Info:
                 return "Info"
+            case .UserActions:
+                return ""
             }
         }
         
@@ -46,11 +49,8 @@ class MovieDetailViewController: UIViewController {
     
     private var movie: MovieViewModel!
         
-    private weak var movieHeader: MovieDetailHeaderView?
+    private weak var actionsHeader: MovieDetailUserActionsReusableView?
     private var collectionView: UICollectionView!
-    
-    private var favoriteButton: UIBarButtonItem? = nil
-    private var watchListButton: UIBarButtonItem? = nil
     
     required init(viewModel: MovieViewModel) {
         self.movie = viewModel
@@ -74,16 +74,17 @@ class MovieDetailViewController: UIViewController {
             .Header,
         ]
         
-        setupBarButtonItems()
         setupCollectionView()
         setupDataProvider()
     }
     
     fileprivate func reloadSections() {
-        updateBarButtonItems()
-        
         sections.removeAll()
         sections.append(.Header)
+        
+        if SessionManager.shared.isLoggedIn {
+            sections.append(.UserActions)
+        }
 
         if movie.cast.count > 0 {
             sections.append(.Cast)
@@ -137,6 +138,7 @@ class MovieDetailViewController: UIViewController {
         //Register Cells and Headers
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
+        MovieDetailUserActionsReusableView.registerHeader(withCollectionView: collectionView)
 
         LoadingCell.register(withCollectionView: collectionView)
         
@@ -164,41 +166,16 @@ class MovieDetailViewController: UIViewController {
         movie.refresh()
     }
     
-    fileprivate func setupBarButtonItems() {
-        if !SessionManager.shared.isLoggedIn {
-            return
-        }
+    fileprivate func updateActionButtons() {
+        guard let actionsHeader = actionsHeader else { return }
         
-        favoriteButton = UIBarButtonItem.init(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(markAsFavorite))
-        favoriteButton?.tintColor = .systemPink
-        
-        watchListButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark"), style: .plain, target: self, action: #selector(addToWatchlist))
-        watchListButton?.tintColor = .systemYellow
-        
-        let rateButton = UIBarButtonItem.init(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addRating))
-        rateButton.tintColor = .systemGreen
-        
-        favoriteButton?.isEnabled = false
-        watchListButton?.isEnabled = false
-        
-        navigationItem.rightBarButtonItems = [favoriteButton!, watchListButton!, rateButton]
-    }
-    
-    fileprivate func updateBarButtonItems() {
-        favoriteButton?.isEnabled = true
-        watchListButton?.isEnabled = true
+        actionsHeader.favoriteButton.isEnabled = true
+        actionsHeader.watchlistButton.isEnabled = true
+        actionsHeader.rateButton.isEnabled = true
 
-        if movie.favorite {
-            favoriteButton?.image = UIImage(systemName: "heart.fill")
-        } else {
-            favoriteButton?.image = UIImage(systemName: "heart")
-        }
-        
-        if movie.watchlist {
-            watchListButton?.image = UIImage(systemName: "bookmark.fill")
-        } else {
-            watchListButton?.image = UIImage(systemName: "bookmark")
-        }
+        actionsHeader.favoriteSelected = movie.favorite
+        actionsHeader.watchlistSelected = movie.watchlist
+        actionsHeader.ratedSelected = movie.rated
     }
     
     //MARK:- Actions
@@ -207,15 +184,15 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
-        favoriteButton?.isEnabled = false
+        actionsHeader?.favoriteButton.isEnabled = false
         
         movie.markAsFavorite(!movie.favorite) { success in
             if success {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
 
                 let message = self.movie.favorite ? "Added to Favorites" : "Removed from Favorites"
-                AlertManager.showFavoriteAlert(text: message, sender: self)
-                self.updateBarButtonItems()
+//                AlertManager.showFavoriteAlert(text: message, sender: self)
+                self.updateActionButtons()
             }
         }
     }
@@ -225,15 +202,15 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
-        watchListButton?.isEnabled = false
-        
+        actionsHeader?.watchlistButton.isEnabled = false
+
         movie.addToWatchlist(!movie.watchlist) { success in
             if success {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
 
                 let message = self.movie.watchlist ? "Added to Watchlist" : "Removed from Watchlist"
-                AlertManager.showWatchlistAlert(text: message, sender: self)
-                self.updateBarButtonItems()
+//                AlertManager.showWatchlistAlert(text: message, sender: self)
+                self.updateActionButtons()
             }
         }
     }
@@ -250,7 +227,7 @@ class MovieDetailViewController: UIViewController {
         transitionDelegate.showCloseButton = true
         transitionDelegate.showIndicator = false
 
-        self.present(controller, animated: true, completion: nil)
+        self.present(controller, animated: true)
     }
 
     fileprivate func showImage() {
@@ -283,6 +260,11 @@ extension MovieDetailViewController {
                 section = sectionBuilder.createEmptySection(withHeight: 150)
                 
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
+                section?.boundarySupplementaryItems = [sectionHeader]
+            case .UserActions: //This is a dummy section used to contain the Actions Header
+                section = sectionBuilder.createEmptySection(withHeight: 1)
+                
+                let sectionHeader = sectionBuilder.createMovieDetailUserActionsSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Cast:
                 section = sectionBuilder.createHorizontalCreditSection()
@@ -335,6 +317,8 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         switch sectionType {
         case .Header:
             break
+        case .UserActions:
+            break
         case .Cast:
             let castCredit = movie.cast[indexPath.row]
             let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
@@ -367,6 +351,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         switch sectionType {
         case .Header:
             return isLoading ? 1 : 0 //Dummy section to show Header, if loading shows LoadingCell
+        case .UserActions:
+            return 0 //Dummy section to show User Actions
         case .Cast:
             return movie.topCast.count
         case .Crew:
@@ -389,6 +375,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             } else {
                 fatalError("Should be empty!")
             }
+        case .UserActions:
+                fatalError("Should be empty!")
         case .Cast:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
             
@@ -436,15 +424,27 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             }
             
             headerView.configure(movie: movie)
-            self.movieHeader = headerView
             
             return headerView
+        } else if sectionType == .UserActions {
+            let actionsView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailUserActionsReusableView.reuseIdentifier, for: indexPath) as! MovieDetailUserActionsReusableView
+            
+            actionsView.favoriteButton.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
+            actionsView.watchlistButton.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
+            actionsView.rateButton.addTarget(self, action: #selector(addRating), for: .touchUpInside)
+
+            updateActionButtons()
+
+            actionsHeader = actionsView
+            return actionsView
         } else {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
             
             var tapHandler: (() -> ())?
             switch sectionType {
             case .Header:
+                break
+            case .UserActions:
                 break
             case .Cast:
                 tapHandler = { [weak self] in
