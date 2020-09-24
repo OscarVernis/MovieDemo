@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1m-fP-vbe">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1m-fP-vbe" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
                     <rect key="frame" x="16" y="21" width="105" height="44"/>
                     <color key="backgroundColor" red="1" green="0.27058823529411763" blue="0.22745098039215686" alpha="0.094425516917293228" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -23,11 +23,12 @@
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                     <color key="tintColor" systemColor="systemPinkColor"/>
-                    <state key="normal" title=" Favorite" image="heart.fill" catalog="system">
+                    <state key="normal" title=" Favorite" image="heart" catalog="system">
                         <color key="titleColor" red="1" green="0.10312563334711466" blue="0.31239631889945463" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <state key="selected" image="heart.fill" catalog="system"/>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-FC-q9G">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-FC-q9G" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
                     <rect key="frame" x="135" y="21" width="105" height="44"/>
                     <color key="backgroundColor" red="1" green="0.83921568627450982" blue="0.039215686274509803" alpha="0.097230380639097738" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -36,11 +37,11 @@
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                     <color key="tintColor" systemColor="systemOrangeColor"/>
                     <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="Watchlist" image="bookmark.fill" catalog="system">
+                    <state key="normal" title="Watchlist" image="bookmark" catalog="system">
                         <color key="titleColor" systemColor="systemOrangeColor"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTS-4j-s9v">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTS-4j-s9v" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
                     <rect key="frame" x="254" y="21" width="105" height="44"/>
                     <color key="backgroundColor" red="0.19607843137254902" green="0.84313725490196079" blue="0.29411764705882354" alpha="0.10132753759398497" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
@@ -49,8 +50,9 @@
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                     <color key="tintColor" systemColor="systemGreenColor"/>
                     <inset key="imageEdgeInsets" minX="-6" minY="-2" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="Rate" image="star.fill" catalog="system">
+                    <state key="normal" title="Rate" image="star" catalog="system">
                         <color key="titleColor" systemColor="systemGreenColor"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                     </state>
                 </button>
             </subviews>
@@ -75,9 +77,10 @@
         </collectionReusableView>
     </objects>
     <resources>
-        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
+        <image name="bookmark" catalog="system" width="112" height="128"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
-        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

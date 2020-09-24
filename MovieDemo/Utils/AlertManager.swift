@@ -29,16 +29,16 @@ struct AlertManager {
     }
     
     static func showFavoriteAlert(text: String, sender: UIViewController, completion: (() -> Void)? = nil) {
-        Loaf(text, state: .custom(.init(backgroundColor: .systemPink, icon: UIImage(systemName: "heart.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
+        Loaf(text, state: .custom(.init(backgroundColor: .systemPink, icon: UIImage(systemName: "heart.fill"), textAlignment: .natural, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
     }
     
     static func showWatchlistAlert(text: String, sender: UIViewController, completion: (() -> Void)? = nil) {
-        Loaf(text, state: .custom(.init(backgroundColor: .systemYellow, icon: UIImage(systemName: "bookmark.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
+        Loaf(text, state: .custom(.init(backgroundColor: .systemOrange, icon: UIImage(systemName: "bookmark.fill"), textAlignment: .natural, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
     }
     
     
     static func showRatingAlert(text: String, sender: UIViewController, completion: (() -> Void)? = nil) {
-        Loaf(text, state: .custom(.init(backgroundColor: .systemGreen, icon: UIImage(systemName: "star.fill"), textAlignment: .center, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
+        Loaf(text, state: .custom(.init(backgroundColor: .systemGreen, icon: UIImage(systemName: "star.fill"), textAlignment: .natural, width: .screenPercentage(0.7))), location: .bottom,  sender: sender).show(.short)
     }
     
 }

@@ -24,6 +24,8 @@ class MovieRatingViewController: UIViewController {
     
     var movie: MovieViewModel!
     
+    var didUpdateRating: (() -> Void)? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -81,6 +83,8 @@ class MovieRatingViewController: UIViewController {
             self.isLoading = false
             
             if success {
+                self.didUpdateRating?()
+                
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 self.presentingViewController?.dismiss(animated: true)
             } else {
@@ -100,6 +104,8 @@ class MovieRatingViewController: UIViewController {
             self.isLoading = false
             
             if success {
+                self.didUpdateRating?()
+                
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 self.presentingViewController?.dismiss(animated: true)
             } else {

@@ -168,14 +168,10 @@ class MovieDetailViewController: UIViewController {
     
     fileprivate func updateActionButtons() {
         guard let actionsHeader = actionsHeader else { return }
-        
-        actionsHeader.favoriteButton.isEnabled = true
-        actionsHeader.watchlistButton.isEnabled = true
-        actionsHeader.rateButton.isEnabled = true
 
-        actionsHeader.favoriteSelected = movie.favorite
-        actionsHeader.watchlistSelected = movie.watchlist
-        actionsHeader.ratedSelected = movie.rated
+        actionsHeader.favoriteButton.setIsSelected(movie.favorite, animated: false)
+        actionsHeader.watchlistButton.setIsSelected(movie.watchlist, animated: false)
+        actionsHeader.rateButton.setIsSelected(movie.rated, animated: false)
     }
     
     //MARK:- Actions
@@ -184,15 +180,20 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
-        actionsHeader?.favoriteButton.isEnabled = false
+        actionsHeader?.favoriteButton.setIsSelected(!movie.favorite, animated: true)
+        actionsHeader?.favoriteButton.isUserInteractionEnabled = false
         
-        movie.markAsFavorite(!movie.favorite) { success in
+        movie.markAsFavorite(!movie.favorite) { [weak self] success in
+            guard let self = self else { return }
+            
+            self.actionsHeader?.favoriteButton.isUserInteractionEnabled = true
+
             if success {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-
-                let message = self.movie.favorite ? "Added to Favorites" : "Removed from Favorites"
-//                AlertManager.showFavoriteAlert(text: message, sender: self)
-                self.updateActionButtons()
+            } else {
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+                self.actionsHeader?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
+                AlertManager.showFavoriteAlert(text: "Couldn't set favorite! Please try again.", sender: self)
             }
         }
     }
@@ -202,41 +203,52 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
-        actionsHeader?.watchlistButton.isEnabled = false
+        actionsHeader?.watchlistButton.setIsSelected(!movie.watchlist, animated: true)
+        actionsHeader?.watchlistButton.isUserInteractionEnabled = false
 
-        movie.addToWatchlist(!movie.watchlist) { success in
+        movie.addToWatchlist(!movie.watchlist) { [weak self] success in
+            guard let self = self else { return }
+
+            self.actionsHeader?.watchlistButton.isUserInteractionEnabled = true
+
             if success {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-
-                let message = self.movie.watchlist ? "Added to Watchlist" : "Removed from Watchlist"
-//                AlertManager.showWatchlistAlert(text: message, sender: self)
-                self.updateActionButtons()
+            } else {
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+                self.actionsHeader?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+                AlertManager.showWatchlistAlert(text: "Couldn't add to watchlist! Please try again.", sender: self)
             }
         }
     }
     
     @objc fileprivate func addRating() {
-        let controller = MovieRatingViewController.instantiateFromStoryboard()
-        controller.movie = movie
+        let mrvc = MovieRatingViewController.instantiateFromStoryboard()
+        mrvc.movie = movie
         
         let transitionDelegate = SPStorkTransitioningDelegate()
-        controller.transitioningDelegate = transitionDelegate
-        controller.modalPresentationStyle = .custom
-        controller.modalPresentationCapturesStatusBarAppearance = true
+        mrvc.transitioningDelegate = transitionDelegate
+        mrvc.modalPresentationStyle = .custom
+        mrvc.modalPresentationCapturesStatusBarAppearance = true
         transitionDelegate.customHeight = 350
         transitionDelegate.showCloseButton = true
         transitionDelegate.showIndicator = false
-
-        self.present(controller, animated: true)
+        
+        mrvc.didUpdateRating = {
+            self.actionsHeader?.rateButton.setIsSelected(self.movie.rated, animated: false)
+        }
+        
+        self.present(mrvc, animated: true)
     }
 
     fileprivate func showImage() {
+        guard let url = self.movie.posterImageURL(size: .original) else { return }
+        
         LightboxConfig.PageIndicator.enabled = false
         LightboxConfig.makeLoadingIndicator = {
             ActivityIndicator()
         }
 
-        let images = [LightboxImage(imageURL: self.movie.posterImageURL(size: .original)!)]
+        let images = [LightboxImage(imageURL: url)]
         let controller = LightboxController(images: images)
         controller.dynamicBackground = true
         self.present(controller, animated: true, completion: nil)
@@ -433,9 +445,9 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             actionsView.watchlistButton.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
             actionsView.rateButton.addTarget(self, action: #selector(addRating), for: .touchUpInside)
 
+            actionsHeader = actionsView
             updateActionButtons()
 
-            actionsHeader = actionsView
             return actionsView
         } else {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
