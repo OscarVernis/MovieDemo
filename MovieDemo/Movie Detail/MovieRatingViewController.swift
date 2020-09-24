@@ -13,7 +13,6 @@ class MovieRatingViewController: UIViewController {
     @IBOutlet weak var deleteRatingButton: UIButton!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!
-    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var isLoading = false {
@@ -32,20 +31,24 @@ class MovieRatingViewController: UIViewController {
         setup()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+//        ratingsView.setRating(rating: movie.percentUserRating, animated: true)
+    }
+    
     fileprivate func setup() {
         ratingButton.layer.masksToBounds = true
         ratingButton.layer.cornerRadius = 8
+        
+        ratingsView.addTarget(self, action: #selector(ratingsViewValueChanged), for: .valueChanged)
         
         if !movie.rated {
             deleteRatingButton.isHidden = true
             
             ratingsView.isRatingAvailable = false
             ratingLabel.text = movie.userRatingString
-            slider.value = 0
         } else {
-            ratingsView.rating = movie.percentUserRating
+            ratingsView.rating = Float(movie.percentUserRating)
             ratingLabel.text = movie.userRatingString
-            slider.value = Float(movie.percentUserRating)
         }
         
     }
@@ -64,18 +67,20 @@ class MovieRatingViewController: UIViewController {
         }
     }
     
-    @IBAction func sliderValueChanged(_ sender: UISlider) {
-        let rating = (slider.value / 5).rounded(.down) * 5
-        
+    @objc func ratingsViewValueChanged() {
+        var rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
+        if rating < 5 {
+            rating = 5
+        }
+
         ratingsView.isRatingAvailable = true
-        ratingsView.rating = UInt(rating)
         ratingLabel.text = "\(Int(rating))"
         ratingButton.isEnabled = true
     }
-    
+
     @IBAction func rateButtonTapped(_ sender: Any) {
         isLoading = true
-        let rating = (slider.value / 5).rounded(.down) * 5
+        let rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
 
         movie.rate(Int(rating)) { [weak self] success in
             guard let self = self else { return }
@@ -85,7 +90,7 @@ class MovieRatingViewController: UIViewController {
             if success {
                 self.didUpdateRating?()
                 
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                UISelectionFeedbackGenerator().selectionChanged()
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
@@ -106,7 +111,7 @@ class MovieRatingViewController: UIViewController {
             if success {
                 self.didUpdateRating?()
                 
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                UISelectionFeedbackGenerator().selectionChanged()
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)

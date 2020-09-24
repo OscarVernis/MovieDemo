@@ -27,19 +27,19 @@
                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="2020" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNd-sO-Ne0">
-                    <rect key="frame" x="20" y="408.5" width="374" height="22"/>
+                    <rect key="frame" x="20" y="403.5" width="374" height="22"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                     <color key="textColor" systemColor="secondaryLabelColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="752" text="Sci Fi" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IiY-az-QcY">
-                    <rect key="frame" x="20" y="380.5" width="374" height="22"/>
+                    <rect key="frame" x="20" y="375.5" width="374" height="22"/>
                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                     <color key="textColor" systemColor="secondaryLabelColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pa-iL-dUc">
-                    <rect key="frame" x="20" y="442.5" width="374" height="27.5"/>
+                    <rect key="frame" x="20" y="437.5" width="374" height="27.5"/>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -51,17 +51,17 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vii-H4-uJz">
-                    <rect key="frame" x="20" y="476" width="374" height="115"/>
+                    <rect key="frame" x="20" y="471" width="374" height="120"/>
                     <string key="text">As the gang return to Jumanji to rescue one of their own, they discover that nothing is as they expect. The players will have to brave parts unknown and unexplored in order to escape the world’s most dangerous game.</string>
                     <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="15"/>
                     <color key="textColor" systemColor="secondaryLabelColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F2n-nN-wJU" userLabel="Ratings Container">
-                    <rect key="frame" x="182" y="316.5" width="50" height="50"/>
+                    <rect key="frame" x="184.5" y="316.5" width="45" height="45"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BZj-H7-VF3" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -74,7 +74,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nCS-mw-kg6">
-                            <rect key="frame" x="10" y="12.5" width="30" height="27.5"/>
+                            <rect key="frame" x="5" y="10" width="35" height="27.5"/>
                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="20"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -83,11 +83,11 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="BZj-H7-VF3" firstAttribute="top" secondItem="F2n-nN-wJU" secondAttribute="top" id="8e8-i0-isI"/>
-                        <constraint firstItem="nCS-mw-kg6" firstAttribute="leading" secondItem="F2n-nN-wJU" secondAttribute="leading" constant="10" id="DUm-dj-fhR"/>
+                        <constraint firstItem="nCS-mw-kg6" firstAttribute="leading" secondItem="F2n-nN-wJU" secondAttribute="leading" constant="5" id="DUm-dj-fhR"/>
                         <constraint firstItem="nCS-mw-kg6" firstAttribute="centerY" secondItem="F2n-nN-wJU" secondAttribute="centerY" constant="1" id="K4Q-ai-PxY"/>
-                        <constraint firstAttribute="trailing" secondItem="nCS-mw-kg6" secondAttribute="trailing" constant="10" id="QKp-CL-O91"/>
+                        <constraint firstAttribute="trailing" secondItem="nCS-mw-kg6" secondAttribute="trailing" constant="5" id="QKp-CL-O91"/>
                         <constraint firstItem="BZj-H7-VF3" firstAttribute="leading" secondItem="F2n-nN-wJU" secondAttribute="leading" id="bNa-ae-Lgo"/>
-                        <constraint firstAttribute="height" constant="50" id="kBw-tO-pMc"/>
+                        <constraint firstAttribute="height" constant="45" id="kBw-tO-pMc"/>
                         <constraint firstAttribute="width" secondItem="F2n-nN-wJU" secondAttribute="height" multiplier="1:1" id="pOV-QX-WRT"/>
                         <constraint firstAttribute="trailing" secondItem="BZj-H7-VF3" secondAttribute="trailing" id="srO-6K-TUa"/>
                         <constraint firstAttribute="bottom" secondItem="BZj-H7-VF3" secondAttribute="bottom" id="tGH-9l-3nl"/>
@@ -133,7 +133,7 @@
     </objects>
     <designables>
         <designable name="BZj-H7-VF3">
-            <size key="intrinsicContentSize" width="50" height="50"/>
+            <size key="intrinsicContentSize" width="45" height="45"/>
         </designable>
     </designables>
     <resources>

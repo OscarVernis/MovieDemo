@@ -272,6 +272,7 @@ extension MovieViewModel {
         movieService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] success, error in
             if success && error == nil {
                 self?.movie.userRating = adjustedRating
+                self?.movie.watchlist = false //Server removes movie from watchlist when rating
                 self?.movie.rated = true
                 completion(success)
             } else {

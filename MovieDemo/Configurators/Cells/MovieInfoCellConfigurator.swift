@@ -24,7 +24,7 @@ struct MovieInfoCellConfigurator: CellConfigurator {
         }
         
         cell.titleLabel.text = model.title
-        cell.ratingsView.rating = viewModel.percentRating
+        cell.ratingsView.rating = Float(viewModel.percentRating)
         cell.ratingsView.isRatingAvailable = viewModel.isRatingAvailable
         cell.overviewLabel.text = viewModel.overview
         cell.genresLabel.text = viewModel.genres()

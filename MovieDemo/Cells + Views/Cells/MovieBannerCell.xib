@@ -25,16 +25,16 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-9F-1Im">
-                        <rect key="frame" x="5" y="250" width="381" height="24"/>
+                        <rect key="frame" x="5" y="250" width="387" height="24"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SpN-K0-2qk" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="394" y="251.5" width="36" height="36"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SpN-K0-2qk" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
+                        <rect key="frame" x="400" y="256.5" width="25" height="25"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="y7N-4B-utu"/>
+                            <constraint firstAttribute="width" constant="25" id="y7N-4B-utu"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -43,13 +43,10 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
                                 <real key="value" value="3"/>
                             </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
-                                <real key="value" value="7"/>
-                            </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imh-t8-Ffx">
-                        <rect key="frame" x="5" y="276" width="381" height="20"/>
+                        <rect key="frame" x="5" y="276" width="387" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -64,13 +61,13 @@
                 <constraint firstItem="SpN-K0-2qk" firstAttribute="leading" secondItem="imh-t8-Ffx" secondAttribute="trailing" constant="8" id="1P8-kx-h8y"/>
                 <constraint firstItem="SpN-K0-2qk" firstAttribute="leading" secondItem="ihj-9F-1Im" secondAttribute="trailing" constant="8" id="9iR-m3-rke"/>
                 <constraint firstItem="ihj-9F-1Im" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Fcm-2C-ZPh"/>
-                <constraint firstAttribute="bottom" secondItem="SpN-K0-2qk" secondAttribute="bottom" constant="8.5" id="UBk-AI-oCU"/>
+                <constraint firstAttribute="bottom" secondItem="SpN-K0-2qk" secondAttribute="bottom" constant="14.5" id="UBk-AI-oCU"/>
                 <constraint firstItem="imh-t8-Ffx" firstAttribute="top" secondItem="ihj-9F-1Im" secondAttribute="bottom" constant="2" id="UeB-LJ-Gfx"/>
                 <constraint firstItem="ihj-9F-1Im" firstAttribute="top" secondItem="b5T-qQ-WYX" secondAttribute="bottom" priority="999" constant="8" id="W67-YC-hMz"/>
                 <constraint firstAttribute="bottom" secondItem="imh-t8-Ffx" secondAttribute="bottom" id="cnk-BJ-MH5"/>
                 <constraint firstItem="imh-t8-Ffx" firstAttribute="leading" secondItem="ihj-9F-1Im" secondAttribute="leading" id="ePE-tT-zd1"/>
                 <constraint firstItem="SpN-K0-2qk" firstAttribute="width" secondItem="SpN-K0-2qk" secondAttribute="height" multiplier="1:1" id="iDA-zg-4JL"/>
-                <constraint firstAttribute="trailing" secondItem="SpN-K0-2qk" secondAttribute="trailing" id="oBg-mb-V3m"/>
+                <constraint firstAttribute="trailing" secondItem="SpN-K0-2qk" secondAttribute="trailing" constant="5" id="oBg-mb-V3m"/>
                 <constraint firstAttribute="trailing" secondItem="b5T-qQ-WYX" secondAttribute="trailing" id="rho-Pa-Xit"/>
                 <constraint firstItem="b5T-qQ-WYX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="rr5-KA-Cgs"/>
             </constraints>
@@ -86,7 +83,7 @@
     </objects>
     <designables>
         <designable name="SpN-K0-2qk">
-            <size key="intrinsicContentSize" width="36" height="36"/>
+            <size key="intrinsicContentSize" width="25" height="25"/>
         </designable>
     </designables>
     <resources>

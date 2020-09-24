@@ -9,7 +9,7 @@ import UIKit
 
 
 @IBDesignable
-class RatingsView: UIView {
+class RatingsView: UIControl {
     enum Style: Int {
         case circle
         case line
@@ -30,15 +30,17 @@ class RatingsView: UIView {
     }
         
     @IBInspectable
-    var rating: UInt = 0 {
+    var rating: Float = 0 {
         didSet {
             if rating > 100 {
                 rating = 100
             }
-            
-            setNeedsDisplay()
+                    
+            updateView()
         }
     }
+    
+    private (set) var value: Float = 0
     
     @IBInspectable
     var isRatingAvailable: Bool = true {
@@ -47,20 +49,23 @@ class RatingsView: UIView {
                 rating = 0
             }
             
-            setNeedsDisplay()
+            updateView()
         }
     }
     
     @IBInspectable
     var lineWidth: CGFloat = 3 {
-        didSet { setNeedsDisplay() }
+        didSet { updateView() }
     }
     
-    @IBInspectable
-    var lineSpacing: CGFloat = 5 {
-        didSet { setNeedsDisplay() }
-    }
+    @IBInspectable var isInteractive: Bool = false
     
+    private var padding: CGFloat = 0
+    private var thumbSize: CGFloat = 30
+    
+    private var thumbRect: CGRect = .zero
+    private var paning = false
+        
     private let greenRatingColor = #colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4784313725, alpha: 1)
     private let greenTrackColor = #colorLiteral(red: 0.06365625043, green: 0.4012272754, blue: 0.2353352288, alpha: 0.5)
     private let yellowRatingColor = #colorLiteral(red: 1, green: 0.8392156863, blue: 0.03921568627, alpha: 1)
@@ -68,11 +73,120 @@ class RatingsView: UIView {
     private let redRatingColor = #colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1)
     private let redTrackColor = #colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.5)
     private let grayTrackColor = UIColor.systemGray4
+    
+    private var trackLayer = CAShapeLayer()
+    private var ratingLayer = CAShapeLayer()
+    private var thumbLayer = CAShapeLayer()
+            
+    //MARK:- Setup
+    override func awakeFromNib() {
+        setupView()
+    }
+    
+    fileprivate func setupView() {
+        layer.addSublayer(trackLayer)
+        layer.addSublayer(ratingLayer)
+        layer.addSublayer(thumbLayer)
         
-    override func draw(_ rect: CGRect) {
+        trackLayer.fillColor = UIColor.clear.cgColor
+        ratingLayer.fillColor = UIColor.clear.cgColor
+        thumbLayer.fillColor = UIColor.clear.cgColor
+        
+        if isInteractive {
+            let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panHandler(_:)))
+            addGestureRecognizer(panGestureRecognizer)
+        }
+    }
+    
+    override func layoutSubviews() {
+        trackLayer.frame = bounds
+        ratingLayer.frame = bounds
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        if style == .circle {
+            return CGSize(width: bounds.height, height: bounds.height)
+        }
+        else {
+            return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
+        }
+    }
+    
+    func setRating(rating: Float, animated: Bool) {
+        if animated {
+            self.rating = 0
+
+            let animation = CABasicAnimation(keyPath: "strokeEnd")
+            animation.fromValue = 0
+            animation.toValue = 1
+            animation.duration = 0.3
+            animation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+            
+            ratingLayer.add(animation, forKey: "line")
+        }
+        
+        self.rating = rating
+    }
+    
+    //MARK:- Interaction
+    @objc fileprivate func panHandler(_ gestureRecognizer: UIPanGestureRecognizer) {
+        let touchLocation = gestureRecognizer.location(in: self)
+        let touchRect = thumbRect.insetBy(dx: -10, dy: -10)
+                                
+        switch gestureRecognizer.state {
+        case .possible:
+            break
+        case .began:
+            if touchRect.contains(touchLocation) {
+                paning = true
+                updateRatingWithPoint(touchLocation)
+                sendActions(for: .valueChanged)
+            }
+            break
+        case.changed:
+            if paning {
+                updateRatingWithPoint(touchLocation)
+                sendActions(for: .valueChanged)
+            }
+        case .ended, .cancelled, .failed:
+            paning = false
+            break
+        @unknown default:
+            break
+        }
+    }
+        
+    fileprivate func updateRatingWithPoint(_ point: CGPoint) {
+        let angle = angleForPoint(point)
+        
+        var newRating = Float(angle / 3.6)
+        if newRating - rating > 50 {
+            newRating = 0
+        } else if newRating - rating < -50 {
+            newRating = 100
+        }
+        
+        rating = newRating
+
+    }
+
+    
+    fileprivate func angleForPoint(_ point: CGPoint) -> Double {
+        let centerOffset = CGPoint(x: point.x - bounds.midX, y: point.y -  bounds.midY)
+        var angle = Double(atan2(centerOffset.y, centerOffset.x)).toDegrees()
+        
+        angle = 360.0 - angle
+        angle = (90.0 - angle).truncatingRemainder(dividingBy: 360.0)
+        while angle < 0.0 { angle += 360.0 }
+        
+        return angle
+    }
+
+    //MARK:- Drawing
+    fileprivate func updateView() {
         var trackColor: UIColor!
         var ratingColor: UIColor!
-        
+                
         switch rating {
         case 0...40:
             trackColor = redTrackColor
@@ -98,32 +212,33 @@ class RatingsView: UIView {
         case .line:
             drawLineRating(trackColor: trackColor, ratingColor: ratingColor)
         }
-        
        
     }
     
-    private func drawLineRating(trackColor: UIColor, ratingColor: UIColor) {
+    fileprivate func drawLineRating(trackColor: UIColor, ratingColor: UIColor) {
         //Round linecap is drawn outside the line, so we calculate the padding
-        let padding = bounds.height / 2
+        let linePadding = bounds.height / 2
         let lineWidth = bounds.height
 
-        let startPoint = CGPoint(x: padding, y: bounds.midY)
-        let endPoint = CGPoint(x: (bounds.maxX - padding), y: bounds.midY)
+        let startPoint = CGPoint(x: linePadding, y: bounds.midY)
+        let endPoint = CGPoint(x: (bounds.maxX - linePadding), y: bounds.midY)
         
-        let ratingX = (bounds.maxX - (padding * 2)) * (CGFloat(rating) / 100) + padding
+        let ratingX = (bounds.maxX - (linePadding * 2)) * (CGFloat(rating) / 100) + linePadding
         let ratingEndPoint = CGPoint(x: ratingX, y: bounds.midY)
         
         //Draw track
         let trackPath = UIBezierPath()
         trackPath.move(to: startPoint)
         trackPath.addLine(to: endPoint)
-        trackPath.lineWidth = lineWidth
-        trackPath.lineCapStyle = .round
-        trackColor.set()
-        trackPath.stroke()
+        
+        trackLayer.lineCap = .round
+        trackLayer.lineWidth = lineWidth
+        trackLayer.strokeColor = trackColor.cgColor
+        trackLayer.path = trackPath.cgPath
         
         //Don't draw rating if there isn't one or is 0
         if isRatingAvailable == false || rating == 0 {
+            ratingLayer.strokeColor = UIColor.clear.cgColor
             return
         }
         
@@ -131,50 +246,62 @@ class RatingsView: UIView {
         let ratingPath = UIBezierPath()
         ratingPath.move(to: startPoint)
         ratingPath.addLine(to: ratingEndPoint)
-        ratingPath.lineWidth = lineWidth
-        ratingPath.lineCapStyle = .round
-        ratingColor.set()
-        ratingPath.stroke()
+        
+        ratingLayer.lineCap = .round
+        ratingLayer.lineWidth = lineWidth
+        ratingLayer.strokeColor = ratingColor.cgColor
+        ratingLayer.path = ratingPath.cgPath
     }
     
-    private func drawCircleRating(trackColor: UIColor, ratingColor: UIColor) {
+    fileprivate func drawCircleRating(trackColor: UIColor, ratingColor: UIColor) {
+        if isInteractive {
+            padding = CGFloat(thumbSize) / 2
+        } else {
+            padding = lineWidth / 2
+        }
+        
         let size = bounds.height
-        let radius = size / 2
+        let radius = (size / 2) - padding
         let rect = CGRect(x: 0, y: 0, width: size, height: size)
         let ratingDegree = 3.6 * Double(rating)
-        let startAngle = deg2rad(270)
-        let endAngle = deg2rad(ratingDegree+270)
+        
+        let startAngle = Double(270).toRadians()
+        let endAngle = (ratingDegree + 270).toRadians()
         
         //Draw track circle
-        let trackPath = UIBezierPath(ovalIn: rect.inset(by: UIEdgeInsets(top: lineSpacing, left: lineSpacing, bottom: lineSpacing, right: lineSpacing)))
-        trackPath.lineWidth = lineWidth
-        trackColor.set()
-        trackPath.stroke()
+        let trackPath = UIBezierPath(ovalIn: rect.inset(by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)))
+        
+        trackLayer.lineWidth = lineWidth
+        trackLayer.strokeColor = trackColor.cgColor
+        trackLayer.path = trackPath.cgPath
         
         //Don't draw rating if there isn't one or is 0
         if !isRatingAvailable || rating == 0 {
-            return
+            ratingLayer.strokeColor = UIColor.clear.cgColor
         }
                 
         //Draw rating arc
-        let ratingPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: (radius - lineSpacing), startAngle: startAngle, endAngle:endAngle, clockwise: true)
-        ratingPath.lineWidth = lineWidth
-        ratingPath.lineCapStyle = .round
-        ratingColor.set()
-        ratingPath.stroke()
-    }
-    
-    private func deg2rad(_ number: Double) -> CGFloat {
-        return CGFloat(number * .pi / 180)
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        if style == .circle {
-            return CGSize(width: bounds.height, height: bounds.height)
+        let ratingPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: radius, startAngle: CGFloat(startAngle), endAngle:CGFloat(endAngle), clockwise: true)
+        
+        ratingLayer.lineCap = .round
+        ratingLayer.lineWidth = lineWidth
+        ratingLayer.strokeColor = ratingColor.cgColor
+        ratingLayer.path = ratingPath.cgPath
+        
+        //Draw Thumb
+        if !isInteractive {
+            thumbLayer.fillColor = UIColor.clear.cgColor
+            return
         }
-        else {
-            return CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
-        }
+                         
+        let x: CGFloat = rect.midX + (radius * CGFloat(cos(endAngle)))
+        let y: CGFloat = rect.midY + (radius * CGFloat(sin(endAngle)))
+        
+        thumbRect = CGRect(x: x, y: y, width: thumbSize, height: thumbSize).offsetBy(dx: (-thumbSize / 2), dy: (-thumbSize / 2))
+        let thumbPath = UIBezierPath(ovalIn: thumbRect)
+        
+        thumbLayer.fillColor = #colorLiteral(red: 0.917293489, green: 0.917293489, blue: 0.917293489, alpha: 1)
+        thumbLayer.path = thumbPath.cgPath
     }
     
 }

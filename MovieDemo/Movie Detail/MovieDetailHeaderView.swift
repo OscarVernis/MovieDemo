@@ -40,7 +40,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         }
         
         titleLabel.text = movie.title
-        ratingsView.rating = movie.percentRating
+        ratingsView.rating = Float(movie.percentRating)
         ratingsView.isRatingAvailable = movie.isRatingAvailable
         ratingsLabel.text = movie.ratingString
         genresLabel.text = movie.genres(separatedBy: ", ")

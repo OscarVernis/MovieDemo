@@ -182,6 +182,7 @@ class MovieDetailViewController: UIViewController {
         
         actionsHeader?.favoriteButton.setIsSelected(!movie.favorite, animated: true)
         actionsHeader?.favoriteButton.isUserInteractionEnabled = false
+        UISelectionFeedbackGenerator().selectionChanged()
         
         movie.markAsFavorite(!movie.favorite) { [weak self] success in
             guard let self = self else { return }
@@ -189,7 +190,7 @@ class MovieDetailViewController: UIViewController {
             self.actionsHeader?.favoriteButton.isUserInteractionEnabled = true
 
             if success {
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+//                UISelectionFeedbackGenerator().selectionChanged()
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsHeader?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
@@ -205,6 +206,7 @@ class MovieDetailViewController: UIViewController {
         
         actionsHeader?.watchlistButton.setIsSelected(!movie.watchlist, animated: true)
         actionsHeader?.watchlistButton.isUserInteractionEnabled = false
+        UISelectionFeedbackGenerator().selectionChanged()
 
         movie.addToWatchlist(!movie.watchlist) { [weak self] success in
             guard let self = self else { return }
@@ -212,7 +214,6 @@ class MovieDetailViewController: UIViewController {
             self.actionsHeader?.watchlistButton.isUserInteractionEnabled = true
 
             if success {
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsHeader?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
@@ -229,12 +230,13 @@ class MovieDetailViewController: UIViewController {
         mrvc.transitioningDelegate = transitionDelegate
         mrvc.modalPresentationStyle = .custom
         mrvc.modalPresentationCapturesStatusBarAppearance = true
-        transitionDelegate.customHeight = 350
+        transitionDelegate.customHeight = 400
         transitionDelegate.showCloseButton = true
         transitionDelegate.showIndicator = false
         
         mrvc.didUpdateRating = {
             self.actionsHeader?.rateButton.setIsSelected(self.movie.rated, animated: false)
+            self.actionsHeader?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
         }
         
         self.present(mrvc, animated: true)
@@ -305,7 +307,7 @@ extension MovieDetailViewController {
                 section = sectionBuilder.createInfoListSection(withHeight: 50)
                 
                 section?.contentInsets.top = 5
-                section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 10
+                section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 30
 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
@@ -487,3 +489,4 @@ extension MovieDetailViewController: UICollectionViewDataSource {
     }
     
 }
+

@@ -18,7 +18,7 @@ struct MovieBannerCellConfigurator {
         
         cell.infoLabel.text = movie.genres()
         
-        cell.ratingsView.rating = movie.percentRating
+        cell.ratingsView.rating = Float(movie.percentRating)
         cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
         
         if let url = movie.backdropImageURL(size: .w780) {

@@ -15,7 +15,7 @@ struct MovieRatingListCellConfigurator {
         cell.ratingsLabel.text = movie.ratingString
         
         cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
-        cell.ratingsView.rating = movie.percentRating
+        cell.ratingsView.rating = Float(movie.percentRating)
         
         cell.separator.isHidden = !showSeparator
     }

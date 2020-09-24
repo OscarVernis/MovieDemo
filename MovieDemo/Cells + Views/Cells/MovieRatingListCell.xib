@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-Jn-hzN">
-                        <rect key="frame" x="20" y="11" width="244" height="28"/>
+                        <rect key="frame" x="20" y="11" width="247" height="28"/>
                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -32,10 +32,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mT3-5v-qeN" userLabel="Ratings Container">
-                        <rect key="frame" x="276" y="7.5" width="35" height="35"/>
+                        <rect key="frame" x="279" y="9" width="32" height="32"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97c-wR-ulK" customClass="RatingsView" customModule="MovieDemo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rating">
@@ -45,16 +45,13 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="lineWidth">
                                         <real key="value" value="3"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="lineSpacing">
-                                        <real key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="styleInt">
                                         <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H4K-3t-eZ3">
-                                <rect key="frame" x="6" y="8.5" width="23" height="20.5"/>
+                                <rect key="frame" x="4" y="7" width="24" height="20.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -66,9 +63,9 @@
                             <constraint firstAttribute="bottom" secondItem="97c-wR-ulK" secondAttribute="bottom" id="3oh-rw-lvG"/>
                             <constraint firstItem="97c-wR-ulK" firstAttribute="top" secondItem="mT3-5v-qeN" secondAttribute="top" id="Nzh-RF-Y5X"/>
                             <constraint firstItem="H4K-3t-eZ3" firstAttribute="centerY" secondItem="mT3-5v-qeN" secondAttribute="centerY" constant="1" id="Rvy-cW-hhf"/>
-                            <constraint firstItem="H4K-3t-eZ3" firstAttribute="leading" secondItem="mT3-5v-qeN" secondAttribute="leading" constant="6" id="TqM-Mo-gqH"/>
-                            <constraint firstAttribute="height" constant="35" id="VRI-zS-deS"/>
-                            <constraint firstAttribute="trailing" secondItem="H4K-3t-eZ3" secondAttribute="trailing" constant="6" id="ePD-zL-vF4"/>
+                            <constraint firstItem="H4K-3t-eZ3" firstAttribute="leading" secondItem="mT3-5v-qeN" secondAttribute="leading" constant="4" id="TqM-Mo-gqH"/>
+                            <constraint firstAttribute="height" constant="32" id="VRI-zS-deS"/>
+                            <constraint firstAttribute="trailing" secondItem="H4K-3t-eZ3" secondAttribute="trailing" constant="4" id="ePD-zL-vF4"/>
                             <constraint firstAttribute="trailing" secondItem="97c-wR-ulK" secondAttribute="trailing" id="fFy-VW-ZSw"/>
                             <constraint firstItem="97c-wR-ulK" firstAttribute="leading" secondItem="mT3-5v-qeN" secondAttribute="leading" id="zAo-QD-5sH"/>
                         </constraints>
@@ -97,6 +94,11 @@
             <point key="canvasLocation" x="-563.04347826086962" y="32.8125"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="97c-wR-ulK">
+            <size key="intrinsicContentSize" width="32" height="32"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
