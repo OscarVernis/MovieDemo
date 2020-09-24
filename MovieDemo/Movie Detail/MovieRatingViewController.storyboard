@@ -71,7 +71,7 @@
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgT-CS-iDb">
                                 <rect key="frame" x="40" y="215" width="295" height="44"/>
-                                <color key="backgroundColor" red="0.1573615968" green="0.81607025860000004" blue="0.43189656729999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.12941176470588234" green="0.81568627450980391" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="qSU-JE-PlJ"/>
                                 </constraints>
@@ -136,11 +136,6 @@
             <point key="canvasLocation" x="-82.400000000000006" y="90.854572713643179"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="nH3-Od-3FQ">
-            <size key="intrinsicContentSize" width="70" height="70"/>
-        </designable>
-    </designables>
     <resources>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

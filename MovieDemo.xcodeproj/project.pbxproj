@@ -248,6 +248,7 @@
 				55915775251438450085DB69 /* BlurBackgroundView.xib */,
 				556AB1932514680A0023D278 /* DotRatingsView.swift */,
 				55B5D7502515D8B700E1076D /* RatingsView.swift */,
+				5502F500251C2D38003EEC0A /* CustomButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -407,7 +408,6 @@
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
 				5560467B251BC4ED0037D08B /* ActivityIndicator.swift */,
-				5502F500251C2D38003EEC0A /* CustomButton.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

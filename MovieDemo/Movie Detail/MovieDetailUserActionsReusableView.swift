@@ -18,7 +18,7 @@ class MovieDetailUserActionsReusableView: UICollectionReusableView {
         
         favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
-        favoriteButton.baseColor = .systemPink
+        favoriteButton.baseColor = #colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1)
         
         watchlistButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
         watchlistButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
@@ -26,7 +26,7 @@ class MovieDetailUserActionsReusableView: UICollectionReusableView {
 
         rateButton.setImage(UIImage(systemName: "star"), for: .normal)
         rateButton.setImage(UIImage(systemName: "star.fill"), for: .selected)
-        rateButton.baseColor = .systemGreen
+        rateButton.baseColor = #colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4823529412, alpha: 1)
     }
     
 }
