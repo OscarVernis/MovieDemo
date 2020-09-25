@@ -73,14 +73,10 @@ final class MainCoordinator {
         if !SessionManager.shared.isLoggedIn {
             showLogin()
         } else {
-            let username = SessionManager.shared.username
+            let upvc = UserProfileViewController()
+            upvc.mainCoordinator = self
             
-            let ac = UIAlertController(title: username, message: nil, preferredStyle: .actionSheet)
-            ac.addAction(UIAlertAction(title: "Logout", style: .default) { [weak self] _ in
-                self?.logout()
-            })
-            ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            rootNavigationViewController?.present(ac, animated: true)
+            rootNavigationViewController?.pushViewController(upvc, animated: true)
         }
     }
     

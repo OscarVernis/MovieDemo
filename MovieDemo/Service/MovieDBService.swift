@@ -283,10 +283,10 @@ extension MovieDBService {
     }
     
     func fetchUserDetails(sessionId: String, completion: @escaping (User?, Error?) -> ()) {
-        let url = endpoint(forPath: "/account")
+        let url = endpoint(forPath: "/account/id")
         var params = defaultParameters(withSessionId: sessionId)
-        params["append_to_response"] = "favorite/movies,watchlist/movies,rated/movies"
-
+        params["append_to_response"] = "favorite/movies,rated/movies,watchlist/movies"
+        
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
