@@ -53,6 +53,7 @@ extension MovieDBService {
     }
     
     static let baseImageURL = "https://image.tmdb.org/t/p/"
+    static let avatarImageURL = "https://www.gravatar.com/avatar/"
     
     static func backdropImageURL(forPath path: String, size: BackdropSize = .original) -> URL {
         var url = URL(string: baseImageURL)!
@@ -73,6 +74,13 @@ extension MovieDBService {
         url.appendPathComponent(size.rawValue)
         
         return url.appendingPathComponent(path)
+    }
+    
+    static func userImageURL(forHash hash: String) -> URL {
+        var url = URL(string: avatarImageURL)!
+        url.appendPathComponent(hash)
+        
+        return url
     }
 }
 

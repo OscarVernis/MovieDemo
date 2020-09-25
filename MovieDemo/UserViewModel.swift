@@ -32,6 +32,14 @@ class UserViewModel {
         return user?.rated ?? [Movie]()
     }
     
+    var avatarURL: URL? {
+        if let avatarHash = user?.avatar {
+            return MovieDBService.userImageURL(forHash: avatarHash)
+        }
+        
+        return nil
+    }
+    
     func updateUser() {
         if isFetching { return }
         isFetching = true

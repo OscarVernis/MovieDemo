@@ -54,6 +54,11 @@ class UserProfileViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        user.updateUser()
+    }
+    
     fileprivate func reloadSections() {
         sections.removeAll()
         sections.append(.Header)
@@ -93,16 +98,6 @@ class UserProfileViewController: UIViewController {
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
         
-        //Load Background Blur View
-//        if let imageURL = movie.posterImageURL(size: .w342) {
-//            collectionView.backgroundColor = .clear
-//
-//            let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
-//
-//            bgView.imageView.af.setImage(withURL: imageURL)
-//            collectionView.backgroundView = bgView
-//        }
-        
         //Register Cells and Headers
         UserProfileHeaderView.registerHeader(withCollectionView: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
@@ -115,6 +110,16 @@ class UserProfileViewController: UIViewController {
     fileprivate func setupDataProvider()  {
         let updateCollectionView:(Error?) -> () = { [weak self] error in
             guard let self = self else { return }
+            
+            //Load Blur Background
+            if let imageURL = self.user.avatarURL {
+                self.collectionView.backgroundColor = .clear
+
+                let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
+
+                bgView.imageView.af.setImage(withURL: imageURL)
+                self.collectionView.backgroundView = bgView
+            }
             
             if error != nil {
                 AlertManager.showRefreshErrorAlert(sender: self) {
@@ -269,12 +274,7 @@ extension UserProfileViewController: UICollectionViewDataSource {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
             
             //Adjust the top of the Poster Image so it doesn't go unde the bar
-//            headerView.topConstraint.constant = topInset + 55
-//            headerView.imageTapHandler = { [weak self] in
-//                guard let self = self else { return }
-//
-//                self.showImage()
-//            }
+            headerView.topConstraint.constant = topInset + 55
             
             headerView.configure(user: user)
             

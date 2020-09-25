@@ -9,6 +9,7 @@
 import UIKit
 
 class CustomButton: UIButton {
+    @IBInspectable
     var baseColor: UIColor = .systemPink
 
     override var isSelected: Bool {
