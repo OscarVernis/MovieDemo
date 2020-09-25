@@ -59,7 +59,7 @@ class MoviePosterInfoCell: UICollectionViewCell {
             let ratingsView = RatingsView()
             ratingsView.backgroundColor = .clear
             ratingsView.style = .line
-            ratingsView.rating = Float(rating)
+            ratingsView.rating = CGFloat(rating)
             
             ratingsView.heightAnchor.constraint(equalToConstant: 6).isActive = true
             

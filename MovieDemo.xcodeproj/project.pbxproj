@@ -46,6 +46,7 @@
 		556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */; };
 		556AB1942514680A0023D278 /* DotRatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AB1932514680A0023D278 /* DotRatingsView.swift */; };
 		55741CE2251CFCAC00A6281B /* Double+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55741CE1251CFCAC00A6281B /* Double+Math.swift */; };
+		55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55741D06251D7B9300A6281B /* ProgressLayer.swift */; };
 		557BDC8625191636006025D0 /* CastCreditCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557BDC8525191636006025D0 /* CastCreditCellConfigurator.swift */; };
 		557FFA8B251A625900D79F68 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557FFA8A251A625900D79F68 /* SessionManager.swift */; };
 		557FFA8F251A65B700D79F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 557FFA8E251A65B700D79F68 /* KeychainAccess */; };
@@ -136,6 +137,7 @@
 		556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Register.swift"; sourceTree = "<group>"; };
 		556AB1932514680A0023D278 /* DotRatingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotRatingsView.swift; sourceTree = "<group>"; };
 		55741CE1251CFCAC00A6281B /* Double+Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Math.swift"; sourceTree = "<group>"; };
+		55741D06251D7B9300A6281B /* ProgressLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressLayer.swift; sourceTree = "<group>"; };
 		557BDC8525191636006025D0 /* CastCreditCellConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCreditCellConfigurator.swift; sourceTree = "<group>"; };
 		557FFA8A251A625900D79F68 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		557FFA96251A6D7100D79F68 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				55915775251438450085DB69 /* BlurBackgroundView.xib */,
 				556AB1932514680A0023D278 /* DotRatingsView.swift */,
 				55B5D7502515D8B700E1076D /* RatingsView.swift */,
+				55741D06251D7B9300A6281B /* ProgressLayer.swift */,
 				5502F500251C2D38003EEC0A /* CustomButton.swift */,
 			);
 			name = Views;
@@ -574,6 +577,7 @@
 				55D05CBF251AE48100FD5F8C /* User.swift in Sources */,
 				558A5A9825106C1400E5FB40 /* SectionBackgroundDecorationView.swift in Sources */,
 				5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */,
+				55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */,
 				5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */,
 				5506BAB12512E2B10052B0F2 /* HomeCollectionViewDataSource.swift in Sources */,
 				55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */,

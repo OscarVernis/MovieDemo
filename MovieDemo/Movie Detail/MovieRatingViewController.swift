@@ -32,9 +32,7 @@ class MovieRatingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if movie.rated {
-            ratingsView.setRating(rating: Float(movie.percentUserRating), animated: true)
-        } else {
+        if !movie.rated  {
             ratingsView.showTutorialAnimation()
         }
     }
@@ -50,7 +48,7 @@ class MovieRatingViewController: UIViewController {
             ratingsView.isRatingAvailable = false
             ratingLabel.text = movie.userRatingString
         } else {
-            ratingsView.rating = 0
+            ratingsView.rating = CGFloat(movie.percentUserRating)
             ratingLabel.text = movie.userRatingString
         }
         
