@@ -31,12 +31,6 @@ class MovieRatingViewController: UIViewController {
         setup()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if !movie.rated  {
-            ratingsView.showTutorialAnimation()
-        }
-    }
-    
     fileprivate func setup() {
         ratingButton.layer.masksToBounds = true
         ratingButton.layer.cornerRadius = 8
@@ -91,7 +85,7 @@ class MovieRatingViewController: UIViewController {
             if success {
                 self.didUpdateRating?()
                 
-                UISelectionFeedbackGenerator().selectionChanged()
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)

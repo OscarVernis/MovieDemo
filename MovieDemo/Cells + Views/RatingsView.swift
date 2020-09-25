@@ -120,7 +120,7 @@ class RatingsView: UIControl {
     func showTutorialAnimation() {
         rating = 0
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 40, options: [.curveEaseIn, .autoreverse]) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 30, options: [.curveEaseIn, .autoreverse]) {
             self.rating = 5
         } completion: { finished in
             if finished {

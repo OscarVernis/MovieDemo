@@ -182,16 +182,19 @@ class MovieDetailViewController: UIViewController {
         
         actionsHeader?.favoriteButton.setIsSelected(!movie.favorite, animated: true)
         actionsHeader?.favoriteButton.isUserInteractionEnabled = false
-        UISelectionFeedbackGenerator().selectionChanged()
+        
+        if movie.favorite {
+            UISelectionFeedbackGenerator().selectionChanged()
+        } else {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
         
         movie.markAsFavorite(!movie.favorite) { [weak self] success in
             guard let self = self else { return }
             
             self.actionsHeader?.favoriteButton.isUserInteractionEnabled = true
 
-            if success {
-//                UISelectionFeedbackGenerator().selectionChanged()
-            } else {
+            if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsHeader?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
                 AlertManager.showFavoriteAlert(text: "Couldn't set favorite! Please try again.", sender: self)
@@ -206,15 +209,19 @@ class MovieDetailViewController: UIViewController {
         
         actionsHeader?.watchlistButton.setIsSelected(!movie.watchlist, animated: true)
         actionsHeader?.watchlistButton.isUserInteractionEnabled = false
-        UISelectionFeedbackGenerator().selectionChanged()
-
+        
+        if movie.watchlist {
+            UISelectionFeedbackGenerator().selectionChanged()
+        } else {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
+        
         movie.addToWatchlist(!movie.watchlist) { [weak self] success in
             guard let self = self else { return }
 
             self.actionsHeader?.watchlistButton.isUserInteractionEnabled = true
 
-            if success {
-            } else {
+            if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsHeader?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
                 AlertManager.showWatchlistAlert(text: "Couldn't add to watchlist! Please try again.", sender: self)
@@ -230,7 +237,7 @@ class MovieDetailViewController: UIViewController {
         mrvc.transitioningDelegate = transitionDelegate
         mrvc.modalPresentationStyle = .custom
         mrvc.modalPresentationCapturesStatusBarAppearance = true
-        transitionDelegate.customHeight = 440
+        transitionDelegate.customHeight = 450
         transitionDelegate.showCloseButton = true
         transitionDelegate.showIndicator = false
         
