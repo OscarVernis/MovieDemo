@@ -230,7 +230,7 @@ class MovieDetailViewController: UIViewController {
         mrvc.transitioningDelegate = transitionDelegate
         mrvc.modalPresentationStyle = .custom
         mrvc.modalPresentationCapturesStatusBarAppearance = true
-        transitionDelegate.customHeight = 400
+        transitionDelegate.customHeight = 440
         transitionDelegate.showCloseButton = true
         transitionDelegate.showIndicator = false
         

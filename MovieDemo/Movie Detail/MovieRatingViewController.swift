@@ -32,7 +32,11 @@ class MovieRatingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        ratingsView.setRating(rating: movie.percentUserRating, animated: true)
+        if movie.rated {
+            ratingsView.setRating(rating: Float(movie.percentUserRating), animated: true)
+        } else {
+            ratingsView.showTutorialAnimation()
+        }
     }
     
     fileprivate func setup() {
@@ -43,11 +47,10 @@ class MovieRatingViewController: UIViewController {
         
         if !movie.rated {
             deleteRatingButton.isHidden = true
-            
             ratingsView.isRatingAvailable = false
             ratingLabel.text = movie.userRatingString
         } else {
-            ratingsView.rating = Float(movie.percentUserRating)
+            ratingsView.rating = 0
             ratingLabel.text = movie.userRatingString
         }
         
