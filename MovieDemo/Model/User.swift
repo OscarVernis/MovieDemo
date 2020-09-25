@@ -14,6 +14,11 @@ class User: Mappable {
     var id: Int!
     var username: String!
     
+    var favorites = [Movie]()
+    var watchlist = [Movie]()
+    var rated = [Movie]()
+
+    
     //MARK: - ObjectMapper
     required init?(map: Map) {
         if map.JSON["id"] == nil {
@@ -29,5 +34,9 @@ class User: Mappable {
         avatar <- map["avatar.gravatar.hash"]
         id <- map["id"]
         username <- map["username"]
+        
+        favorites <- map["favorite/movies.results"]
+        watchlist <- map["watchlist/movies.results"]
+        rated <- map["rated/movies.results"]
     }
 }

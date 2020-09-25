@@ -56,7 +56,7 @@ class RatingsView: UIControl {
     @IBInspectable
     var lineWidth: CGFloat = 3 {
         didSet {
-            thumbSize = lineWidth - 6
+//            thumbSize = lineWidth - 6
             setNeedsDisplay()
         }
     }
@@ -261,7 +261,11 @@ class RatingsView: UIControl {
     fileprivate func drawCircleRating(trackColor: UIColor, ratingColor: UIColor) {
         let layerRating = progressLayer.presentation() != nil ? progressLayer.presentation()!.rating : rating
         
-        padding = lineWidth / 2
+        if isInteractive {
+            padding = CGFloat(thumbSize) / 2 + 5
+        } else {
+            padding = lineWidth / 2
+        }
         
         let size = bounds.height
         let radius = (size / 2) - padding
@@ -297,6 +301,9 @@ class RatingsView: UIControl {
         thumbRect = CGRect(x: x, y: y, width: thumbSize, height: thumbSize).offsetBy(dx: (-thumbSize / 2), dy: (-thumbSize / 2))
         let thumbPath = UIBezierPath(ovalIn: thumbRect)
         
+        let context = UIGraphicsGetCurrentContext()
+        context!.setShadow(offset: CGSize(width: 0, height: 0), blur: 4, color: UIColor.black.withAlphaComponent(0.3).cgColor)
+
         UIColor.white.set()
         thumbPath.fill()
     }

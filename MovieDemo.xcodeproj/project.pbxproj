@@ -250,12 +250,11 @@
 		552E705F251547F5009CC4CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5588A0BC251DBC10004B3C6A /* RatingsView */,
 				55915772251438390085DB69 /* BlurBackgroundView.swift */,
 				55915775251438450085DB69 /* BlurBackgroundView.xib */,
-				556AB1932514680A0023D278 /* DotRatingsView.swift */,
-				55B5D7502515D8B700E1076D /* RatingsView.swift */,
-				55741D06251D7B9300A6281B /* ProgressLayer.swift */,
 				5502F500251C2D38003EEC0A /* CustomButton.swift */,
+				556AB1932514680A0023D278 /* DotRatingsView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -355,6 +354,15 @@
 				552E705F251547F5009CC4CD /* Views */,
 			);
 			path = "Cells + Views";
+			sourceTree = "<group>";
+		};
+		5588A0BC251DBC10004B3C6A /* RatingsView */ = {
+			isa = PBXGroup;
+			children = (
+				55B5D7502515D8B700E1076D /* RatingsView.swift */,
+				55741D06251D7B9300A6281B /* ProgressLayer.swift */,
+			);
+			name = RatingsView;
 			sourceTree = "<group>";
 		};
 		55893B6A2513F4EA00233677 /* CollectionView Reusable */ = {

@@ -21,7 +21,6 @@ class SessionManager {
     var isLoggedIn: Bool = false
     var username: String?
     var sessionId: String?
-    var loggedUser: UserViewModel?
     
     private var loginCompletionHandler: ((Error?) -> Void)? = nil
     
@@ -43,8 +42,6 @@ extension SessionManager {
             isLoggedIn = loggedIn
             username = user
         }
-        
-        updateUser()
     }
     
     fileprivate func save(username: String, sessionId: String) {
@@ -78,17 +75,6 @@ extension SessionManager {
         self.isLoggedIn = false
         self.username = nil
     }
-    
-    private func updateUser() {
-        guard let sessionId = sessionId else { return }
-        
-        service.fetchUserDetails(sessionId: sessionId) { [weak self] user, error in
-            if let user = user, error == nil {
-                self?.loggedUser = UserViewModel(user: user, sessionId: sessionId)
-            }
-        }
-    }
-    
 }
 
 //MARK:- Session creation
@@ -118,7 +104,6 @@ extension SessionManager {
         service.createSession(requestToken: token) { [weak self] (sessionId, error) in
             if error == nil {
                 self?.save(username: username, sessionId: sessionId!)
-                self?.updateUser()
                 self?.loginCompletionHandler?(nil)
             } else {
                 self?.loginCompletionHandler?(error)

@@ -174,6 +174,14 @@ class MovieDetailViewController: UIViewController {
         actionsHeader.rateButton.setIsSelected(movie.rated, animated: false)
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            SPStorkController.updatePresentingController(parent: self)
+        }
+    }
+    
     //MARK:- Actions
     @objc fileprivate func markAsFavorite() {
         if !SessionManager.shared.isLoggedIn {

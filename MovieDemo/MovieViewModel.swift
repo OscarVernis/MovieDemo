@@ -22,7 +22,6 @@ class MovieViewModel {
     var topCast = [CastCreditViewModel]()
     
     //Stores only the credits with jobs inclueded in the topCrewJobs array
-//    var topCrew = [[String : String]]()
     var topCrew = [CrewCreditViewModel]()
     
     init(movie: Movie) {

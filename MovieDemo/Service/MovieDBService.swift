@@ -76,6 +76,103 @@ extension MovieDBService {
     }
 }
 
+//MARK: - Movie Lists
+extension MovieDBService {
+    private func fetchMovies(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        let url = endpoint(forPath: path)
+        
+        var params = defaultParameters(withSessionId: sessionId)
+        params.merge(parameters) { _, new in new }
+        params["page"] = page
+        params["region"] = "US"
+        
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                if let json = jsonData as? [String: Any], let moviesData = json["results"] as? [[String: Any]] {
+                    let movies = Array<Movie>.init(JSONArray: moviesData)
+                    let totalPages = json["total_pages"] as? Int ?? page
+                    
+                    completion(movies, totalPages, nil)
+                } else {
+                    completion([], page, ServiceError.jsonError)
+                }
+            case .failure(let error):
+                completion([], page, error)
+            }
+        }
+    }
+    
+    func fetchNowPlaying(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/movie/now_playing", page: page, completion: completion)
+    }
+    
+    func fetchPopular(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/movie/popular", page: page, completion: completion)
+    }
+    
+    func fetchTopRated(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/movie/top_rated", page: page, completion: completion)
+    }
+    
+    func fetchUpcoming(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/movie/upcoming", page: page, completion: completion)
+    }
+    
+    func search(query: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/search/movie", parameters: ["query" : query], page: page, completion: completion)
+    }
+    
+    func fetchTrending(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/trending/movie/week", page: page, completion: completion)
+    }
+}
+
+extension MovieDBService {
+    //MARK: - Discover
+    enum DiscoverOptions: String {
+        case withCast = "with_cast"
+        case withCrew = "with_crew"
+    }
+    
+    func discover(params: [DiscoverOptions: Any], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        //Convert the enum key to its string raw value
+        let editedParams = Dictionary(uniqueKeysWithValues: params.map { ($0.rawValue, $1)})
+        
+        fetchMovies(endpoint: "/discover/movie", parameters: editedParams, page: page, completion: completion)
+    }
+}
+
+//MARK: - Movie Details
+extension MovieDBService {
+    func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping (Movie?, Error?) -> ()) {
+        let url = endpoint(forPath: "/movie/\(movieId)")
+        
+        var params = defaultParameters(withSessionId: sessionId)
+        params["append_to_response"] = "credits,recommendations,account_states"
+
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any] else {
+                    completion(nil, ServiceError.jsonError)
+                    return
+                }
+                
+                let movie = Movie(JSON: json)
+                completion(movie, nil)
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/movie/\(movieId)/recommendations", page: page, completion: completion)
+    }
+    
+}
+
 //MARK: - Login
 extension MovieDBService {
     func requestToken(completion: @escaping (String?, Error?) -> ()) {
@@ -187,7 +284,8 @@ extension MovieDBService {
     
     func fetchUserDetails(sessionId: String, completion: @escaping (User?, Error?) -> ()) {
         let url = endpoint(forPath: "/account")
-        let params = defaultParameters(withSessionId: sessionId)
+        var params = defaultParameters(withSessionId: sessionId)
+        params["append_to_response"] = "favorite/movies,watchlist/movies,rated/movies"
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
@@ -203,6 +301,18 @@ extension MovieDBService {
                 completion(nil, error)
             }
         }
+    }
+    
+    func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
+    }
+    
+    func fetchUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
+    }
+    
+    func fetchUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        fetchMovies(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
     func markAsFavorite(_ favorite: Bool, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
@@ -294,103 +404,6 @@ extension MovieDBService {
                 completion(false, error)
             }
         }
-    }
-    
-}
-
-//MARK: - Movie Lists
-extension MovieDBService {
-    private func fetchMovies(endpoint path: String, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        let url = endpoint(forPath: path)
-        
-        var params = defaultParameters()
-        params.merge(parameters) { _, new in new }
-        params["page"] = page
-        params["region"] = "US"
-        
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let moviesData = json["results"] as? [[String: Any]] {
-                    let movies = Array<Movie>.init(JSONArray: moviesData)
-                    let totalPages = json["total_pages"] as? Int ?? page
-                    
-                    completion(movies, totalPages, nil)
-                } else {
-                    completion([], page, ServiceError.jsonError)
-                }
-            case .failure(let error):
-                completion([], page, error)
-            }
-        }
-    }
-    
-    func fetchNowPlaying(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/now_playing", page: page, completion: completion)
-    }
-    
-    func fetchPopular(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/popular", page: page, completion: completion)
-    }
-    
-    func fetchTopRated(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/top_rated", page: page, completion: completion)
-    }
-    
-    func fetchUpcoming(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/upcoming", page: page, completion: completion)
-    }
-    
-    func search(query: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/search/movie", parameters: ["query" : query], page: page, completion: completion)
-    }
-    
-    func fetchTrending(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/trending/movie/week", page: page, completion: completion)
-    }
-}
-
-extension MovieDBService {
-    //MARK: - Discover
-    enum DiscoverOptions: String {
-        case withCast = "with_cast"
-        case withCrew = "with_crew"
-    }
-    
-    func discover(params: [DiscoverOptions: Any], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        //Convert the enum key to its string raw value
-        let editedParams = Dictionary(uniqueKeysWithValues: params.map { ($0.rawValue, $1)})
-        
-        fetchMovies(endpoint: "/discover/movie", parameters: editedParams, page: page, completion: completion)
-    }
-}
-
-//MARK: - Movie Details
-extension MovieDBService {
-    func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping (Movie?, Error?) -> ()) {
-        let url = endpoint(forPath: "/movie/\(movieId)")
-        
-        var params = defaultParameters(withSessionId: sessionId)
-        params["append_to_response"] = "credits,recommendations,account_states"
-
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any] else {
-                    completion(nil, ServiceError.jsonError)
-                    return
-                }
-                
-                let movie = Movie(JSON: json)
-                completion(movie, nil)
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
-    }
-    
-    func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/\(movieId)/recommendations", page: page, completion: completion)
     }
     
 }

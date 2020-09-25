@@ -25,6 +25,7 @@ class MovieRatingViewController: UIViewController {
     
     var didUpdateRating: (() -> Void)? = nil
     
+    //MARK:- Setup
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,6 +63,7 @@ class MovieRatingViewController: UIViewController {
         }
     }
     
+    //MARK:- Actions
     @objc func ratingsViewValueChanged() {
         var rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
         if rating < 5 {
