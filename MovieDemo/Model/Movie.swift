@@ -28,6 +28,8 @@ class Movie: Mappable {
     var originalLanguage: String?
     var budget: Int?
     var revenue: Int?
+    var originalTitle: String?
+    var productionCountries: [String]?
     
     var videos: [MovieVideo]?
     
@@ -67,7 +69,9 @@ class Movie: Mappable {
         originalLanguage <- map["original_language"]
         budget <- map["budget"]
         revenue <- map["revenue"]
-        
+        originalTitle <- map["original_title"]
+        productionCountries <- (map["production_countries"], CountryArrayTransformer())
+
         videos <- map["videos.results"]
         
         favorite <- map["account_states.favorite"]

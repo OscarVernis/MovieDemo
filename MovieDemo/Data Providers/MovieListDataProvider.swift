@@ -20,6 +20,9 @@ class MovieListDataProvider: ArrayDataProvider {
         case Recommended(movieId: Int)
         case DiscoverWithCast(castId: Int)
         case DiscoverWithCrew(crewId: Int)
+        case UserFavorites
+        case UserWatchList
+        case UserRated
     }
     
     init(_ service: Service = .NowPlaying) {
@@ -120,6 +123,18 @@ class MovieListDataProvider: ArrayDataProvider {
             movieService.discover(params: [.withCast: castId], page: page, completion: fetchHandler)
         case .DiscoverWithCrew(crewId: let crewId):
             movieService.discover(params: [.withCrew: crewId], page: page, completion: fetchHandler)
+        case .UserFavorites:
+            if let sessionId = SessionManager.shared.sessionId {
+                movieService.fetchUserFavorites(sessionId: sessionId, page: page, completion: fetchHandler)
+            }
+        case .UserWatchList:
+            if let sessionId = SessionManager.shared.sessionId {
+                movieService.fetchUserWatchlist(sessionId: sessionId, page: page, completion: fetchHandler)
+            }
+        case .UserRated:
+            if let sessionId = SessionManager.shared.sessionId {
+                movieService.fetchUserRatedMovies(sessionId: sessionId, page: page, completion: fetchHandler)
+            }
         }
         
     }

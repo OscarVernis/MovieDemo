@@ -371,7 +371,7 @@ extension UserProfileViewController: UICollectionViewDataSource {
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.user.favorites))
+                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.UserFavorites))
                 }
             case .Watchlist:
                 if user.watchlist.count == 0 { break }
@@ -379,7 +379,7 @@ extension UserProfileViewController: UICollectionViewDataSource {
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.user.watchlist))
+                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.UserWatchList))
 
                 }
             case .Rated:
@@ -388,7 +388,7 @@ extension UserProfileViewController: UICollectionViewDataSource {
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
-                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.user.rated))
+                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.UserRated))
                 }
             }
             

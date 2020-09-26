@@ -172,6 +172,12 @@ extension MovieViewModel {
         return Locale.current.localizedString(forLanguageCode: languageCode)?.capitalized
     }
     
+    var productionCountries: String? {
+        guard let countries = movie.productionCountries?.compactMap({ Locale.current.localizedString(forRegionCode: $0) }) else { return nil }
+        
+        return countries.joined(separator: ", ")
+    }
+    
     var budget: String? {
         guard let budget = movie.budget, budget > 0 else { return nil }
         
@@ -194,6 +200,10 @@ extension MovieViewModel {
         currencyFormatter.locale = Locale(identifier: "en_US")
         
         return currencyFormatter.string(from: NSNumber(value: revenue))
+    }
+    
+    var originalTitle: String? {
+        return movie.originalTitle
     }
     
     var cast: [CastCreditViewModel] {
@@ -325,6 +335,9 @@ extension MovieViewModel {
 extension MovieViewModel {
     private func updateInfoArray() {
         var info = [[String : String]]()
+        if let originalTitle = originalTitle, originalTitle != title {
+            info.append([NSLocalizedString("Original Title", comment: ""): originalTitle])
+        }
         
         if let releaseDate = releaseDate {
             info.append([NSLocalizedString("Release Date", comment: ""): releaseDate])
@@ -332,6 +345,10 @@ extension MovieViewModel {
         
         if let status = status {
             info.append([NSLocalizedString("Status", comment: ""): status])
+        }
+        
+        if let coutries = productionCountries {
+            info.append([NSLocalizedString("Country", comment: ""): coutries])
         }
         
         if let originalLanguage = originalLanguage {
