@@ -32,9 +32,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIQ-Qf-1tu" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                    <rect key="frame" x="125" y="220" width="125" height="40"/>
+                    <rect key="frame" x="107.5" y="220" width="160" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="125" id="Evf-XB-h60"/>
+                        <constraint firstAttribute="width" constant="160" id="Evf-XB-h60"/>
                         <constraint firstAttribute="height" constant="40" id="m7x-M5-LYB"/>
                     </constraints>
                     <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>

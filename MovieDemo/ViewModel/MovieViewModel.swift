@@ -88,7 +88,7 @@ extension MovieViewModel {
         if isRatingAvailable {
             return "\(percentRating)"
         } else {
-            return "NR"
+            return NSLocalizedString("NR", comment: "")
         }
     }
     
@@ -117,18 +117,23 @@ extension MovieViewModel {
     }
     
     var releaseDate: String? {
-        let dateFormatter = DateFormatter(withFormat: "MMMM dd, yyyy", locale: "en_US")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateStyle = .long
+
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : nil
     }
     
     var releaseYear: String {
-        let dateFormatter = DateFormatter(withFormat: "yyyy", locale: "en_US")
+        let dateFormatter = DateFormatter(withFormat: "yyyy", locale: Locale.current.identifier)
+        
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : ""
     }
     
     var releaseDateWithoutYear: String {
-        let dateFormatter = DateFormatter(withFormat: "MMM dd", locale: "en_US")
-        return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : ""
+        let dateFormatter = DateFormatter(withFormat: "MMM dd", locale: Locale.current.identifier)
+        
+        return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!).capitalized : ""
     }
     
     func backdropImageURL(size: MovieDBService.BackdropSize = .w300) -> URL? {
@@ -160,7 +165,7 @@ extension MovieViewModel {
     var originalLanguage: String? {
         guard let languageCode = movie.originalLanguage else { return nil }
         
-        return Locale.current.localizedString(forLanguageCode: languageCode)
+        return Locale.current.localizedString(forLanguageCode: languageCode)?.capitalized
     }
     
     var budget: String? {
@@ -224,7 +229,7 @@ extension MovieViewModel {
         if rated {
             return "\(percentUserRating)"
         } else {
-            return "NR"
+            return NSLocalizedString("NR", comment: "")
         }
     }
     
@@ -318,23 +323,23 @@ extension MovieViewModel {
         var info = [[String : String]]()
         
         if let releaseDate = releaseDate {
-            info.append(["Release Date": releaseDate])
+            info.append([NSLocalizedString("Release Date", comment: ""): releaseDate])
         }
         
         if let status = status {
-            info.append(["Status": status])
+            info.append([NSLocalizedString("Status", comment: ""): status])
         }
         
         if let originalLanguage = originalLanguage {
-            info.append(["Original Language": originalLanguage])
+            info.append([NSLocalizedString("Original Language", comment: ""): originalLanguage])
         }
 
         if let budget = budget {
-            info.append(["Budget": budget])
+            info.append([NSLocalizedString("Budget", comment: ""): budget])
         }
         
         if let revenue = revenue {
-            info.append(["Revenue": revenue])
+            info.append([NSLocalizedString("Revenue", comment: ""): revenue])
         }
         
         infoArray = info

@@ -1,0 +1,9 @@
+
+/* Class = "UILabel"; text = "Your Rating"; ObjectID = "ZnH-9A-uNp"; */
+"ZnH-9A-uNp.text" = "Tu Calificación";
+
+/* Class = "UIButton"; normalTitle = "Delete Rating"; ObjectID = "dOq-hG-a13"; */
+"dOq-hG-a13.normalTitle" = "Eliminar Calificación";
+
+/* Class = "UIButton"; normalTitle = "Rate"; ObjectID = "vgT-CS-iDb"; */
+"vgT-CS-iDb.normalTitle" = "Calificar";

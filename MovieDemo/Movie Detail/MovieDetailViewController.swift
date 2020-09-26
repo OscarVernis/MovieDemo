@@ -86,7 +86,9 @@ class MovieDetailViewController: UIViewController {
             sections.append(.UserActions)
         }
         
-        sections.append(.Overview)
+        if !movie.overview.isEmpty {
+            sections.append(.Overview)
+        }
         
         if isLoading {
             sections.append(.Loading)
@@ -218,7 +220,7 @@ class MovieDetailViewController: UIViewController {
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsCell?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
-                AlertManager.showFavoriteAlert(text: "Couldn't set favorite! Please try again.", sender: self)
+                AlertManager.showFavoriteAlert(text: NSLocalizedString("Couldn't set favorite! Please try again.", comment: ""), sender: self)
             }
         }
     }
@@ -245,7 +247,7 @@ class MovieDetailViewController: UIViewController {
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsCell?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
-                AlertManager.showWatchlistAlert(text: "Couldn't add to watchlist! Please try again.", sender: self)
+                AlertManager.showWatchlistAlert(text: NSLocalizedString("Couldn't add to watchlist! Please try again.", comment: ""), sender: self)
             }
         }
     }
@@ -370,13 +372,13 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case .Cast:
             let castCredit = movie.cast[indexPath.row]
             let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
-            let title = "Movies with: \(castCredit.name)"
+            let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
             mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
             break
         case .Crew:
             let crewCredit = movie.topCrew[indexPath.row]
             let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
-            let title = "Movies by: \(crewCredit.name)"
+            let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
             mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
             break
         case .RecommendedMovies:

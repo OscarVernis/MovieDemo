@@ -20,7 +20,7 @@ struct MovieDBService {
     let baseURL = "https://api.themoviedb.org/3"
         
     func defaultParameters(withSessionId sessionId: String? = nil) -> [String: Any] {
-        let language = Locale.current.identifier.replacingOccurrences(of: "_", with: "-")
+        let language = NSLocalizedString("service-locale", comment: "")
         var params = ["language": language, "api_key": apiKey]
         
         if let sessionId = sessionId {
@@ -168,7 +168,7 @@ extension MovieDBService {
         
         var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "credits,recommendations,account_states,videos"
-
+        
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):

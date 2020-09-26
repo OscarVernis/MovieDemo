@@ -123,7 +123,7 @@ final class MainCoordinator {
             guard let crewCredit = crewCredit as? CrewCreditViewModel, let self = self else { return }
             
             let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
-            let title = "Movies by: \(crewCredit.name)"
+            let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
             self.showMovieList(title: title, dataProvider: dataProvider)
         }
         
@@ -141,7 +141,7 @@ final class MainCoordinator {
             guard let castCredit = castCredit as? CastCreditViewModel, let self = self else { return }
             
             let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
-            let title = "Movies with: \(castCredit.name)"
+            let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
             self.showMovieList(title: title, dataProvider: dataProvider)
         }
         

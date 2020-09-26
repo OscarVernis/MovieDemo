@@ -14,15 +14,12 @@ struct AlertManager {
         Loaf(title, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short)
     }
     
-    static func showLoginErrorAlert(sender: UIViewController) {
-        Loaf("Login Error", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short)
-    }
-    
     static func showNetworkConnectionAlert(sender: UIViewController) {
-        Loaf("Check your network connection.", state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short)
+        Loaf(NSLocalizedString("Check your network connection.", comment: ""), state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short)
+        
     }
     
-    static func showRefreshErrorAlert(text: String = "Couldn't refresh content.", sender: UIViewController, completion: (() -> Void)? = nil) {
+    static func showRefreshErrorAlert(text: String = NSLocalizedString("Couldn't refresh content.", comment: ""), sender: UIViewController, completion: (() -> Void)? = nil) {
         Loaf(text, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short) { _ in
             completion?()
         }

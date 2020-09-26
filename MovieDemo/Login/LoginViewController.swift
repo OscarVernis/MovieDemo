@@ -78,9 +78,9 @@ class LoginViewController: UIViewController {
 
                 self.errorLabel.isHidden = false
                 if let error = error?.asAFError, error.responseCode == 401 {
-                    self.errorLabel.text = "Invalid username and/or password."
+                    self.errorLabel.text = NSLocalizedString("Invalid username and/or password.", comment: "")
                 } else {
-                    self.errorLabel.text = "Login error. Please try again."
+                    self.errorLabel.text = NSLocalizedString("Login error. Please try again.", comment: "")
                 }
             }
         }

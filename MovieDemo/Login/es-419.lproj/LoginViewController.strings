@@ -1,0 +1,12 @@
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "5mS-Yw-rHI"; */
+"5mS-Yw-rHI.placeholder" = "Contraseña";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "Rs6-uH-ovk"; */
+"Rs6-uH-ovk.normalTitle" = "Iniciar Sesión";
+
+/* Class = "UIButton"; normalTitle = "Create Account"; ObjectID = "VCw-qg-KND"; */
+"VCw-qg-KND.normalTitle" = "Crear Cuenta";
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "qnC-c6-032"; */
+"qnC-c6-032.placeholder" = "Usuario";
