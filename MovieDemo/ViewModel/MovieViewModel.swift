@@ -151,8 +151,17 @@ extension MovieViewModel {
     }
     
     var trailerURL: URL? {
-        guard let trailer = movie.videos?.last(where: { $0.type == "Trailer" }) else { return nil }        
-        let videoViewModel = MovieVideoViewModel(video: trailer)
+        let videoViewModel: MovieVideoViewModel
+        if let trailer = movie.videos?.last(where: { $0.type == "Trailer" }) {
+            videoViewModel = MovieVideoViewModel(video: trailer)
+        } else {
+            if let teaser = movie.videos?.last(where: { $0.type == "Teaser" }) {
+                videoViewModel = MovieVideoViewModel(video: teaser)
+            } else {
+                return nil
+            }
+        }
+        
         return videoViewModel.youtubeURL
     }
     

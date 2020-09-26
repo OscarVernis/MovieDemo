@@ -282,7 +282,7 @@ class MovieDetailViewController: UIViewController {
 
     fileprivate func showImage() {
         guard let url = self.movie.posterImageURL(size: .original) else { return }
-        
+
         LightboxConfig.PageIndicator.enabled = false
         LightboxConfig.makeLoadingIndicator = {
             ActivityIndicator()

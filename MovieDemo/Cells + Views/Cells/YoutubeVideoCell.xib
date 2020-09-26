@@ -50,10 +50,10 @@
                         </connections>
                     </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Oqw-x7-044">
-                        <rect key="frame" x="123" y="45.5" width="129" height="107.5"/>
+                        <rect key="frame" x="129" y="50.5" width="117" height="97.5"/>
                         <color key="tintColor" white="1" alpha="0.9037682095864662" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="110" id="qBv-0J-0Cz"/>
+                            <constraint firstAttribute="height" constant="100" id="qBv-0J-0Cz"/>
                             <constraint firstAttribute="width" secondItem="Oqw-x7-044" secondAttribute="height" multiplier="41:35" id="uhi-ge-Eby"/>
                         </constraints>
                     </imageView>
