@@ -22,8 +22,23 @@ struct MoviesCompositionalLayoutBuilder {
         return sectionHeader
     }
     
-    //This section is used to show a Header without any items and the loading cell
-    func createEmptySection(withHeight height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
+    //Section with items that are screen wide, usually for showing just one item
+    func createWideSection(withHeight height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(height))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+                        
+        return section
+    }
+    
+    //Regular list
+    func createInfoListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -33,9 +48,11 @@ struct MoviesCompositionalLayoutBuilder {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 30, trailing: 20)
                         
         return section
     }
+    
     
     
     //Horizontal scroll, shows only one complete item and a peek at the next
@@ -93,22 +110,6 @@ struct MoviesCompositionalLayoutBuilder {
         sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
         section.decorationItems = [sectionBackgroundDecoration]
                 
-        return section
-    }
-    
-    //Regular list
-    func createInfoListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 30, trailing: 20)
-                        
         return section
     }
     

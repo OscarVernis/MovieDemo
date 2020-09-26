@@ -141,11 +141,16 @@ extension MovieViewModel {
         return url
     }
     
-    func urlForTrailer() -> URL? {
-        movie.videos?.removeAll()
+    var trailerURL: URL? {
         guard let trailer = movie.videos?.last else { return nil }
         
         return MovieDBService.trailerURL(forKey: trailer.key)
+    }
+    
+    var youtubeKey: String? {
+        guard let trailer = movie.videos?.last else { return nil }
+
+        return trailer.key
     }
     
     var status: String? {

@@ -20,6 +20,7 @@ class MovieDetailViewController: UIViewController {
     enum Section: Int, CaseIterable {
         case Header
         case UserActions
+        case Trailer
         case Cast
         case Crew
         case RecommendedMovies
@@ -39,6 +40,8 @@ class MovieDetailViewController: UIViewController {
                 return "Info"
             case .UserActions:
                 return ""
+            case .Trailer:
+                return "Trailer"
             }
         }
         
@@ -85,7 +88,11 @@ class MovieDetailViewController: UIViewController {
         if SessionManager.shared.isLoggedIn {
             sections.append(.UserActions)
         }
-
+        
+//        if movie.trailerURL != nil {
+//            sections.append(.Trailer)
+//        }
+        
         if movie.cast.count > 0 {
             sections.append(.Cast)
         }
@@ -93,7 +100,7 @@ class MovieDetailViewController: UIViewController {
         if movie.crew.count > 0 {
             sections.append(.Crew)
         }
-
+        
         if movie.recommendedMovies.count > 0 {
             sections.append(.RecommendedMovies)
         }
@@ -142,6 +149,7 @@ class MovieDetailViewController: UIViewController {
 
         LoadingCell.register(withCollectionView: collectionView)
         
+        TrailerCell.register(withCollectionView: collectionView)
         MoviePosterInfoCell.register(withCollectionView: collectionView)
         CreditCell.register(withCollectionView: collectionView)
         InfoListCell.register(withCollectionView: collectionView)
@@ -286,15 +294,18 @@ extension MovieDetailViewController {
 
             switch sectionType {
             case .Header: //This is a dummy section used to contain the main header, it will not display any items
-                section = sectionBuilder.createEmptySection(withHeight: 150)
+                section = sectionBuilder.createWideSection(withHeight: 150)
                 
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .UserActions: //This is a dummy section used to contain the Actions Header
-                section = sectionBuilder.createEmptySection(withHeight: 1)
+                section = sectionBuilder.createWideSection(withHeight: 1)
                 
                 let sectionHeader = sectionBuilder.createMovieDetailUserActionsSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
+            case .Trailer:
+                section = sectionBuilder.createInfoListSection(withHeight: 65)
+                section?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
             case .Cast:
                 section = sectionBuilder.createHorizontalCreditSection()
                 
@@ -348,6 +359,8 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             break
         case .UserActions:
             break
+        case .Trailer:
+            break
         case .Cast:
             let castCredit = movie.cast[indexPath.row]
             let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
@@ -390,6 +403,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             return movie.recommendedMovies.count
         case .Info:
             return movie.infoArray.count
+        case .Trailer:
+            return movie.youtubeKey != nil ? 1 : 0
         }
     }
 
@@ -434,6 +449,12 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             let info = movie.infoArray[indexPath.row]
             MovieDetailsInfoCellConfigurator().configure(cell: cell, info: info)
                                     
+            return cell
+        case .Trailer:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrailerCell.reuseIdentifier, for: indexPath) as! TrailerCell
+            
+            cell.youtubeURL = movie.trailerURL
+            
             return cell
         }
     }
@@ -494,6 +515,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                     self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id)))
                 }
             case .Info:
+                break
+            case .Trailer:
                 break
             }
             
