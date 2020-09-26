@@ -292,6 +292,17 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		554DE184251F0C23000286D2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
+				558A63AE2512AD5D0064438D /* MovieViewModel.swift */,
+				55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */,
+				55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		5550409A251E707900D919FF /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,17 +378,6 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		5562461B25156121005E63AB /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
-				558A63AE2512AD5D0064438D /* MovieViewModel.swift */,
-				55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */,
-				55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */,
-			);
-			name = ViewModel;
-			sourceTree = "<group>";
-		};
 		557FFA95251A6D5400D79F68 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,7 +441,7 @@
 				556246192515610F005E63AB /* Coordinator */,
 				5562461A2515611A005E63AB /* Service */,
 				55E07D7A22D9983C00AF0144 /* Model */,
-				5562461B25156121005E63AB /* ViewModel */,
+				554DE184251F0C23000286D2 /* ViewModel */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
 				5587114C25108082005A0975 /* Cells + Views */,
 				55596E022513071400A2B821 /* Configurators */,

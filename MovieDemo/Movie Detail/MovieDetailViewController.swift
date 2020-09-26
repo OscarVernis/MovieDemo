@@ -30,20 +30,18 @@ class MovieDetailViewController: UIViewController {
         
         var title: String {
             switch self {
-            case .Header, .UserActions, .Loading:
+            case .Header, .UserActions, .Loading, .Trailer:
                 return ""
             case .Overview:
-                return "Overview"
-            case .Trailer:
-                return "Trailer"
+                return NSLocalizedString("Overview", comment: "")
             case .Cast:
-                return "Cast"
+                return NSLocalizedString("Cast", comment: "")
             case .Crew:
-                return "Crew"
+                return NSLocalizedString("Crew", comment: "")
             case .RecommendedMovies:
-                return "Recommended Movies"
+                return NSLocalizedString("Recommended Movies", comment: "")
             case .Info:
-                return "Info"
+                return NSLocalizedString("Info", comment: "")
             }
         }
         

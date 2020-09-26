@@ -25,11 +25,11 @@ class UserProfileViewController: UIViewController {
             case .Header:
                 return ""
             case .Favorites:
-                return "Favorites"
+                return NSLocalizedString("Favorites", comment: "")
             case .Watchlist:
-                return "Watchlist"
+                return NSLocalizedString("Watchlist", comment: "")
             case .Rated:
-                return "Rated"
+                return NSLocalizedString("Rated", comment: "")
             }
         }
         
@@ -244,26 +244,26 @@ extension UserProfileViewController {
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(.favoriteColor)
 
-            let fullString = NSMutableAttributedString(string: "Movies you mark as Favorite ")
+            let fullString = NSMutableAttributedString(string: NSLocalizedString("Movies you mark as Favorite ", comment: ""))
             fullString.append(NSAttributedString(attachment: imageAttachment))
-            fullString.append(NSAttributedString(string: " will appear here."))
+            fullString.append(NSAttributedString(string: NSLocalizedString(" will appear here.", comment: "")))
             messageString = fullString
         case .Watchlist:
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.watchlistColor)
-
-            let fullString = NSMutableAttributedString(string: "Movies you add to your Watchlist ")
+            let fullString = NSMutableAttributedString(string: NSLocalizedString("Movies you add to your Watchlist ", comment: ""))
             fullString.append(NSAttributedString(attachment: imageAttachment))
-            fullString.append(NSAttributedString(string: " will appear here."))
+            fullString.append(NSAttributedString(string: NSLocalizedString(" will appear here.", comment: "")))
+
             messageString = fullString
             break
         case .Rated:
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.ratingColor)
 
-            let fullString = NSMutableAttributedString(string: "Movies you rate ")
+            let fullString = NSMutableAttributedString(string: NSLocalizedString("Movies you rate ", comment: ""))
             fullString.append(NSAttributedString(attachment: imageAttachment))
-            fullString.append(NSAttributedString(string: " will appear here."))
+            fullString.append(NSAttributedString(string: NSLocalizedString(" will appear here.", comment: "")))
             messageString = fullString
             break
         }

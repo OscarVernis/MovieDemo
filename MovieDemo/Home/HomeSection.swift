@@ -18,13 +18,13 @@ class HomeSection {
         func title() -> String {
             switch self {
             case .NowPlaying:
-                return "Now Playing"
+                return NSLocalizedString("Now Playing", comment: "")
             case .Popular:
-                return "Popular"
+                return NSLocalizedString("Popular", comment: "")
             case .TopRated:
-                return "Top Rated"
+                return NSLocalizedString("Top Rated", comment: "")
             case .Upcoming:
-                return "Upcoming"
+                return NSLocalizedString("Upcoming", comment: "")
             }
         }
     }

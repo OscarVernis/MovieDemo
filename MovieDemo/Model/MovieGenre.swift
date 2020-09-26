@@ -32,43 +32,43 @@ enum MovieGenre: Int {
     func string() -> String {
         switch self {
         case .Action:
-            return "Action"
+            return NSLocalizedString("Action", comment: "")
         case .Adventure:
-            return "Adventure"
+            return NSLocalizedString("Adventure", comment: "")
         case .Animation:
-            return "Animation"
+            return NSLocalizedString("Animation", comment: "")
         case .Comedy:
-            return "Comedy"
+            return NSLocalizedString("Comedy", comment: "")
         case .Crime:
-            return "Crime"
+            return NSLocalizedString("Crime", comment: "")
         case .Documentary:
-            return "Documentary"
+            return NSLocalizedString("Documentary", comment: "")
         case .Drama:
-            return "Drama"
+            return NSLocalizedString("Drama", comment: "")
         case .Family:
-            return "Family"
+            return NSLocalizedString("Family", comment: "")
         case .Fantasy:
-            return "Fantasy"
+            return NSLocalizedString("Fantasy", comment: "")
         case .History:
-            return "History"
+            return NSLocalizedString("History", comment: "")
         case .Horror:
-            return "Horror"
+            return NSLocalizedString("Horror", comment: "")
         case .Music:
-            return "Music"
+            return NSLocalizedString("Music", comment: "")
         case .Mystery:
-            return "Mystery"
+            return NSLocalizedString("Mystery", comment: "")
         case .Romance:
-            return "Romance"
+            return NSLocalizedString("Romance", comment: "")
         case .ScienceFiction:
-            return "Science Fiction"
+            return NSLocalizedString("Science Fiction", comment: "")
         case .TVMovie:
-            return "TV Movie"
+            return NSLocalizedString("TV Movie", comment: "")
         case .Thriller:
-            return "Thriller"
+            return NSLocalizedString("Thriller", comment: "")
         case .War:
-            return "War"
+            return NSLocalizedString("War", comment: "")
         case .Western:
-            return "Western"
+            return NSLocalizedString("Western", comment: "")
         }
     }
     
