@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,38 +23,57 @@
                         <constraint firstAttribute="height" constant="44" id="f1L-vU-54V"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                    <color key="tintColor" systemColor="systemPinkColor"/>
-                    <state key="normal" title=" Favorite" image="heart" catalog="system">
-                        <color key="titleColor" red="1" green="0.10312563334711466" blue="0.31239631889945463" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
+                    <state key="normal" title=" Favorite" image="heart" catalog="system"/>
                     <state key="selected" image="heart.fill" catalog="system"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                            <color key="value" name="FavoriteColor"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorder" value="NO"/>
+                    </userDefinedRuntimeAttributes>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-FC-q9G" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
                     <rect key="frame" x="135" y="21" width="105" height="44"/>
-                    <color key="backgroundColor" red="1" green="0.83921568627450982" blue="0.039215686274509803" alpha="0.097230380639097738" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="W1d-y3-hGR"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                    <color key="tintColor" systemColor="systemOrangeColor"/>
                     <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="Watchlist" image="bookmark" catalog="system">
-                        <color key="titleColor" systemColor="systemOrangeColor"/>
-                    </state>
+                    <state key="normal" title="Watchlist" image="bookmark" catalog="system"/>
+                    <state key="selected" image="bookmark.fill" catalog="system"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                            <color key="value" name="WatchlistColor"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTS-4j-s9v" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
                     <rect key="frame" x="254" y="21" width="105" height="44"/>
-                    <color key="backgroundColor" red="0.19607843137254902" green="0.84313725490196079" blue="0.29411764705882354" alpha="0.10132753759398497" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="oCZ-eO-qdZ"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                    <color key="tintColor" systemColor="systemGreenColor"/>
                     <inset key="imageEdgeInsets" minX="-6" minY="-2" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="Rate" image="star" catalog="system">
                         <color key="titleColor" systemColor="systemGreenColor"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                     </state>
+                    <state key="selected" image="star.fill" catalog="system"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                            <color key="value" name="RatingColor"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="12"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorder" value="NO"/>
+                    </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
@@ -76,19 +96,35 @@
             <point key="canvasLocation" x="107.97101449275362" y="81.026785714285708"/>
         </collectionReusableView>
     </objects>
+    <designables>
+        <designable name="N1m-fP-vbe">
+            <size key="intrinsicContentSize" width="80.5" height="21"/>
+        </designable>
+        <designable name="aTS-4j-s9v">
+            <size key="intrinsicContentSize" width="53" height="22.5"/>
+        </designable>
+        <designable name="asZ-FC-q9G">
+            <size key="intrinsicContentSize" width="80.5" height="22"/>
+        </designable>
+    </designables>
     <resources>
         <image name="bookmark" catalog="system" width="112" height="128"/>
+        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <namedColor name="FavoriteColor">
+            <color red="0.85882352941176465" green="0.13725490196078433" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="RatingColor">
+            <color red="0.12941176470588234" green="0.81568627450980391" blue="0.47843137254901957" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="WatchlistColor">
+            <color red="1" green="0.58399999141693115" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

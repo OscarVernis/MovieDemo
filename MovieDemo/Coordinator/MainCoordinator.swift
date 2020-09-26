@@ -22,7 +22,7 @@ final class MainCoordinator {
     func start() {
         rootNavigationViewController = UINavigationController()
         rootNavigationViewController?.navigationBar.prefersLargeTitles = true
-        rootNavigationViewController?.navigationBar.tintColor = .systemPurple
+        rootNavigationViewController?.navigationBar.tintColor = .appTintColor
         rootNavigationViewController?.navigationBar.standardAppearance.titleTextAttributes = [
             .font: UIFont(name: "AvenirNextCondensed-DemiBold", size: 22)!
         ]

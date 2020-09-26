@@ -32,7 +32,7 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.delegate = self
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
+        collectionView.backgroundColor = .appBackgroundColor
         view.addSubview(collectionView)
         
         collectionView.refreshControl = UIRefreshControl()

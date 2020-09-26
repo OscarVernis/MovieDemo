@@ -23,7 +23,7 @@ class SectionBackgroundDecorationView: UICollectionReusableView {
 
 extension SectionBackgroundDecorationView {
     func configure() {
-        backgroundColor = UIColor(named: "SectionBackgroundColor")
+        backgroundColor = .sectionBackgroundColor
         layer.cornerRadius = 12
     }
 }

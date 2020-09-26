@@ -109,7 +109,7 @@ class MovieDetailViewController: UIViewController {
     fileprivate func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
+        collectionView.backgroundColor = .appBackgroundColor
         view.addSubview(collectionView)
         
         collectionView.delegate = self

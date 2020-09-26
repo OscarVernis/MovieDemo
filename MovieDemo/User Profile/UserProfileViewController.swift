@@ -74,7 +74,7 @@ class UserProfileViewController: UIViewController {
     fileprivate func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = UIColor(named: "AppBackgroundColor")
+        collectionView.backgroundColor = .appBackgroundColor
         view.addSubview(collectionView)
         
         collectionView.delegate = self
@@ -242,7 +242,7 @@ extension UserProfileViewController {
             break
         case .Favorites:
             let imageAttachment = NSTextAttachment()
-            imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(#colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1))
+            imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(.favoriteColor)
 
             let fullString = NSMutableAttributedString(string: "Movies you mark as Favorite ")
             fullString.append(NSAttributedString(attachment: imageAttachment))
@@ -250,7 +250,7 @@ extension UserProfileViewController {
             messageString = fullString
         case .Watchlist:
             let imageAttachment = NSTextAttachment()
-            imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.systemOrange)
+            imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.watchlistColor)
 
             let fullString = NSMutableAttributedString(string: "Movies you add to your Watchlist ")
             fullString.append(NSAttributedString(attachment: imageAttachment))
@@ -259,7 +259,7 @@ extension UserProfileViewController {
             break
         case .Rated:
             let imageAttachment = NSTextAttachment()
-            imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(#colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4823529412, alpha: 1))
+            imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.ratingColor)
 
             let fullString = NSMutableAttributedString(string: "Movies you rate ")
             fullString.append(NSAttributedString(attachment: imageAttachment))

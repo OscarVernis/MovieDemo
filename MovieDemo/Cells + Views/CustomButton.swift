@@ -8,9 +8,32 @@
 
 import UIKit
 
+@IBDesignable
 class CustomButton: UIButton {
     @IBInspectable
-    var baseColor: UIColor = .systemPink
+    var baseColor: UIColor = .systemPink {
+        didSet {
+            updateView()
+        }
+    }
+    
+    @IBInspectable
+    var cornerRadius: CGFloat {
+        get {
+            layer.cornerRadius
+        }
+        set(cornerRadius) {
+            layer.cornerRadius = cornerRadius
+            updateView()
+        }
+    }
+    
+    @IBInspectable
+    var showsBorder: Bool = false {
+        didSet {
+            updateView()
+        }
+    }
 
     override var isSelected: Bool {
         didSet {
@@ -37,15 +60,16 @@ class CustomButton: UIButton {
     }
         
     override func awakeFromNib() {
-        setupView()
-    }
-    
-    fileprivate func setupView() {
-        layer.masksToBounds = true
         layer.cornerRadius = 12
+        updateView()
     }
     
     fileprivate func updateView() {
+        layer.masksToBounds = true
+        layer.borderColor = baseColor.cgColor
+        
+        layer.borderWidth = showsBorder ? 1 : 0
+        
         if isSelected {
             backgroundColor = baseColor
             setTitleColor(.white, for: .normal)
