@@ -94,6 +94,8 @@
 		55EDD3602513F2E0004F8117 /* MovieInfoCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */; };
 		55EE519D251E8CF800915AB3 /* UserProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE519B251E8CF800915AB3 /* UserProfileHeaderView.swift */; };
 		55EE519E251E8CF800915AB3 /* UserProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55EE519C251E8CF800915AB3 /* UserProfileHeaderView.xib */; };
+		55EE51A2251E99B100915AB3 /* EmptyMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE51A0251E99B100915AB3 /* EmptyMovieCell.swift */; };
+		55EE51A3251E99B100915AB3 /* EmptyMovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55EE51A1251E99B100915AB3 /* EmptyMovieCell.xib */; };
 		55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */; };
 		55EECCE525119A1A0041EAE7 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */; };
 		55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */; };
@@ -185,6 +187,8 @@
 		55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCellConfigurator.swift; sourceTree = "<group>"; };
 		55EE519B251E8CF800915AB3 /* UserProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeaderView.swift; sourceTree = "<group>"; };
 		55EE519C251E8CF800915AB3 /* UserProfileHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserProfileHeaderView.xib; sourceTree = "<group>"; };
+		55EE51A0251E99B100915AB3 /* EmptyMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMovieCell.swift; sourceTree = "<group>"; };
+		55EE51A1251E99B100915AB3 /* EmptyMovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMovieCell.xib; sourceTree = "<group>"; };
 		55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboard.swift"; sourceTree = "<group>"; };
 		55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 				55164AFA25154A6500D219BC /* MoviePosterInfoCell.xib */,
 				558A5A9925106F8900E5FB40 /* MovieRatingListCell.swift */,
 				558A5A9A25106F8900E5FB40 /* MovieRatingListCell.xib */,
+				55EE51A0251E99B100915AB3 /* EmptyMovieCell.swift */,
+				55EE51A1251E99B100915AB3 /* EmptyMovieCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -574,6 +580,7 @@
 				559D132822D98E4B00C96FC8 /* Assets.xcassets in Resources */,
 				557FFA9B251A6D8300D79F68 /* LoginViewController.storyboard in Resources */,
 				558A5A8D251053C600E5FB40 /* MovieBannerCell.xib in Resources */,
+				55EE51A3251E99B100915AB3 /* EmptyMovieCell.xib in Resources */,
 				5502F4FE251C158C003EEC0A /* MovieDetailUserActionsReusableView.xib in Resources */,
 				55EDD3542513E346004F8117 /* LoadingCell.xib in Resources */,
 				551E79282513CBD700EE2FCA /* InfoListCell.xib in Resources */,
@@ -642,6 +649,7 @@
 				5535CE6B251406E700260617 /* CellConfigurator.swift in Sources */,
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */,
+				55EE51A2251E99B100915AB3 /* EmptyMovieCell.swift in Sources */,
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,
 				552E70572515464C009CC4CD /* MovieGenreDictionaryTransformer.swift in Sources */,
 				55EDD3572513F0C0004F8117 /* ListViewDataSource.swift in Sources */,

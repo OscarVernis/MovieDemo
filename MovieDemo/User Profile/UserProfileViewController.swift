@@ -60,20 +60,12 @@ class UserProfileViewController: UIViewController {
     }
     
     fileprivate func reloadSections() {
-        sections.removeAll()
-        sections.append(.Header)
-        
-        if user.favorites.count > 0 {
-            sections.append(.Favorites)
-        }
-        
-        if user.watchlist.count > 0 {
-            sections.append(.Watchlist)
-        }
-        
-        if user.rated.count > 0 {
-            sections.append(.Rated)
-        }
+        sections = [
+            .Header,
+            .Favorites,
+            .Watchlist,
+            .Rated
+        ]
         
         isLoading = false
         collectionView.reloadData()
@@ -103,6 +95,7 @@ class UserProfileViewController: UIViewController {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         LoadingCell.register(withCollectionView: collectionView)
         MoviePosterInfoCell.register(withCollectionView: collectionView)
+        EmptyMovieCell.register(withCollectionView: collectionView)
         
         collectionView.collectionViewLayout = createLayout()
     }
@@ -136,16 +129,25 @@ class UserProfileViewController: UIViewController {
     
 }
 
+//MARK: - Actions
+extension UserProfileViewController {
+    fileprivate func logout() {
+        mainCoordinator.logout()
+    }
+}
+
 //MARK: - CollectionView CompositionalLayout
 extension UserProfileViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int,
                                                                         layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
+            guard let self = self else { return nil }
+            
             var section: NSCollectionLayoutSection?
             let sectionBuilder = MoviesCompositionalLayoutBuilder()
             
-            let sectionType = self?.sections[sectionIndex]
+            let sectionType = self.sections[sectionIndex]
             
             switch sectionType {
             case .Header: //This is a dummy section used to contain the main header, it will not display any items
@@ -154,28 +156,42 @@ extension UserProfileViewController {
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Favorites:
-                section = sectionBuilder.createHorizontalPosterSection()
+                if self.user.favorites.count > 0 {
+                    section = sectionBuilder.createHorizontalPosterSection()
+                } else {
+                    section = sectionBuilder.createEmptySection(withHeight: 260)
+                    section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
+                }
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.contentInsets.top = 12
                 section?.contentInsets.bottom = 10
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Watchlist:
-                section = sectionBuilder.createHorizontalPosterSection()
+                if self.user.watchlist.count > 0 {
+                    section = sectionBuilder.createHorizontalPosterSection()
+                } else {
+                    section = sectionBuilder.createEmptySection(withHeight: 260)
+                    section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
+                }
+                
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.contentInsets.top = 12
                 section?.contentInsets.bottom = 10
                 section?.boundarySupplementaryItems = [sectionHeader]
                 
             case .Rated:
-                section = sectionBuilder.createHorizontalPosterSection()
+                if self.user.rated.count > 0 {
+                    section = sectionBuilder.createHorizontalPosterSection()
+                } else {
+                    section = sectionBuilder.createEmptySection(withHeight: 260)
+                    section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
+                }
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.contentInsets.top = 12
                 section?.contentInsets.bottom = 10
                 section?.boundarySupplementaryItems = [sectionHeader]
-            case .none:
-                break
             }
             return section
         }
@@ -209,6 +225,54 @@ extension UserProfileViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: Utils
+extension UserProfileViewController {
+    fileprivate func emptyCell(forSection section: Section, indexPath: IndexPath) -> EmptyMovieCell {
+        let emptyCell = collectionView.dequeueReusableCell(withReuseIdentifier: EmptyMovieCell.reuseIdentifier, for: indexPath) as! EmptyMovieCell
+        
+        emptyCell.configure(message: emptyMessageForSection(section: section))
+        
+        return emptyCell
+    }
+    
+    fileprivate func emptyMessageForSection(section: Section) -> NSAttributedString {
+        var messageString = NSAttributedString()
+        switch section {
+        case .Header:
+            break
+        case .Favorites:
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(#colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1))
+
+            let fullString = NSMutableAttributedString(string: "Movies you mark as Favorite ")
+            fullString.append(NSAttributedString(attachment: imageAttachment))
+            fullString.append(NSAttributedString(string: " will appear here."))
+            messageString = fullString
+        case .Watchlist:
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.systemOrange)
+
+            let fullString = NSMutableAttributedString(string: "Movies you add to your Watchlist ")
+            fullString.append(NSAttributedString(attachment: imageAttachment))
+            fullString.append(NSAttributedString(string: " will appear here."))
+            messageString = fullString
+            break
+        case .Rated:
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(#colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4823529412, alpha: 1))
+
+            let fullString = NSMutableAttributedString(string: "Movies you rate ")
+            fullString.append(NSAttributedString(attachment: imageAttachment))
+            fullString.append(NSAttributedString(string: " will appear here."))
+            messageString = fullString
+            break
+        }
+        
+        return messageString
+    }
+    
+}
+
 // MARK: UICollectionViewDataSource
 extension UserProfileViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -221,11 +285,11 @@ extension UserProfileViewController: UICollectionViewDataSource {
         case .Header:
             return isLoading ? 1 : 0 //Dummy section to show Header, if loading shows LoadingCell
         case .Favorites:
-            return user.favorites.count
+            return user.favorites.count > 0 ? user.favorites.count : 1
         case .Watchlist:
-            return user.watchlist.count
+            return user.watchlist.count > 0 ? user.watchlist.count : 1
         case .Rated:
-            return user.rated.count
+            return user.rated.count > 0 ? user.rated.count : 1
         }
     }
     
@@ -241,29 +305,41 @@ extension UserProfileViewController: UICollectionViewDataSource {
                 fatalError("Should be empty!")
             }
         case .Favorites:
-            let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-            
-            let movie = user.favorites[indexPath.row]
-            
-            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
-            
-            return posterCell
+            if user.favorites.count > 0 {
+                let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
+                
+                let movie = user.favorites[indexPath.row]
+                
+                MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
+                
+                return posterCell
+            } else {
+                return emptyCell(forSection: .Favorites, indexPath: indexPath)
+            }
         case .Watchlist:
-            let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-            
-            let movie = user.watchlist[indexPath.row]
-            
-            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
-            
-            return posterCell
+            if user.watchlist.count > 0 {
+                let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
+                
+                let movie = user.watchlist[indexPath.row]
+                
+                MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
+                
+                return posterCell
+            } else {
+                return emptyCell(forSection: .Watchlist, indexPath: indexPath)
+            }
         case .Rated:
-            let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-            
-            let movie = user.rated[indexPath.row]
-            
-            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
-            
-            return posterCell
+            if user.rated.count > 0 {
+                let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
+                
+                let movie = user.rated[indexPath.row]
+                
+                MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
+                
+                return posterCell
+            } else {
+                return emptyCell(forSection: .Rated, indexPath: indexPath)
+            }
         }
     }
     
@@ -275,6 +351,9 @@ extension UserProfileViewController: UICollectionViewDataSource {
             
             //Adjust the top of the Poster Image so it doesn't go unde the bar
             headerView.topConstraint.constant = topInset + 55
+            headerView.logoutButtonHandler = { [weak self] in
+                self?.logout()
+            }
             
             headerView.configure(user: user)
             
@@ -287,12 +366,16 @@ extension UserProfileViewController: UICollectionViewDataSource {
             case .Header:
                 break
             case .Favorites:
+                if user.favorites.count == 0 { break }
+                
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
                     self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.user.favorites))
                 }
             case .Watchlist:
+                if user.watchlist.count == 0 { break }
+
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     
@@ -300,6 +383,8 @@ extension UserProfileViewController: UICollectionViewDataSource {
 
                 }
             case .Rated:
+                if user.rated.count == 0 { break }
+                
                 tapHandler = { [weak self] in
                     guard let self = self else { return }
                     

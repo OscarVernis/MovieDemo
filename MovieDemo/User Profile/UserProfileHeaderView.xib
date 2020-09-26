@@ -45,6 +45,9 @@
                             <color key="value" systemColor="systemPurpleColor"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="logoutButtonTapped:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="1X6-4K-cSX"/>
+                    </connections>
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>

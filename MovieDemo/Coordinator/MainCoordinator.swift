@@ -13,7 +13,7 @@ final class MainCoordinator {
     private var rootNavigationViewController: UINavigationController?
     
     //If set to true, it will force you to login before showing Home
-    private let isLoginRequired = false
+    private let isLoginRequired = true
     
     init(window: UIWindow) {
         self.window = window
@@ -67,6 +67,10 @@ final class MainCoordinator {
         if isLoginRequired {
             showLogin(animated: true)
         }
+        
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        
+        rootNavigationViewController?.popToRootViewController(animated: true)
     }
     
     func showUserProfile() {
