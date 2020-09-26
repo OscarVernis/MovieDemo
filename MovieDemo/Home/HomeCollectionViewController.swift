@@ -23,7 +23,7 @@ class HomeCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        self.title = "Movies"
+        self.title = NSLocalizedString("Movies", comment: "")
         
         manager?.startListening { status in
             if status == .notReachable || status == .unknown {
