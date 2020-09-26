@@ -24,6 +24,9 @@ class MovieViewModel {
     //Stores only the credits with jobs inclueded in the topCrewJobs array
     var topCrew = [CrewCreditViewModel]()
     
+    //Store the movie videos
+    var videos = [MovieVideoViewModel]()
+    
     init(movie: Movie) {
         self.movie = movie
     }
@@ -33,6 +36,7 @@ class MovieViewModel {
         updateTopCrew()
         updateTopCast()
         updateInfoArray()
+        updateVideos()
     }
     
 }
@@ -147,9 +151,9 @@ extension MovieViewModel {
     }
     
     var trailerURL: URL? {
-        guard let trailer = movie.videos?.last else { return nil }
-        
-        return MovieDBService.trailerURL(forKey: trailer.key)
+        guard let trailer = movie.videos?.last(where: { $0.type == "Trailer" }) else { return nil }        
+        let videoViewModel = MovieVideoViewModel(video: trailer)
+        return videoViewModel.youtubeURL
     }
     
     var youtubeKey: String? {
@@ -356,5 +360,12 @@ extension MovieViewModel {
 
         topCrew = CrewCreditViewModel.crewWithTopJobs(credits: crew)
     }
+    
+    private func updateVideos() {
+        guard let videos = movie.videos, videos.count > 1 else { return }
+        
+        self.videos = videos.map { MovieVideoViewModel(video: $0) }
+    }
+    
 }
 

@@ -13,6 +13,7 @@ class TrailerCell: UICollectionViewCell {
 
     @IBAction func openVideo(_ sender: Any) {
         if let url = youtubeURL {
+            print(url)
             UIApplication.shared.open(url)
         }
     }

@@ -25,6 +25,7 @@ class MovieDetailViewController: UIViewController {
         case Trailer
         case Cast
         case Crew
+        case Videos
         case RecommendedMovies
         case Info
         
@@ -42,6 +43,8 @@ class MovieDetailViewController: UIViewController {
                 return NSLocalizedString("Recommended Movies", comment: "")
             case .Info:
                 return NSLocalizedString("Info", comment: "")
+            case .Videos:
+                return NSLocalizedString("Videos", comment: "")
             }
         }
         
@@ -99,19 +102,23 @@ class MovieDetailViewController: UIViewController {
             sections.append(.Trailer)
         }
         
-        if movie.cast.count > 0 {
+        if !movie.cast.isEmpty {
             sections.append(.Cast)
         }
 
-        if movie.crew.count > 0 {
+        if !movie.crew.isEmpty {
             sections.append(.Crew)
         }
         
-        if movie.recommendedMovies.count > 0 {
+        if !movie.videos.isEmpty {
+            sections.append(.Videos)
+        }
+        
+        if !movie.recommendedMovies.isEmpty {
             sections.append(.RecommendedMovies)
         }
         
-        if movie.infoArray.count > 0 {
+        if !movie.infoArray.isEmpty {
             sections.append(.Info)
         }
 
@@ -156,6 +163,7 @@ class MovieDetailViewController: UIViewController {
         UserActionsCell.register(withCollectionView: collectionView)
         OverviewCell.register(withCollectionView: collectionView)
         TrailerCell.register(withCollectionView: collectionView)
+        YoutubeVideoCell.register(withCollectionView: collectionView)
         MoviePosterInfoCell.register(withCollectionView: collectionView)
         CreditCell.register(withCollectionView: collectionView)
         InfoListCell.register(withCollectionView: collectionView)
@@ -314,7 +322,7 @@ extension MovieDetailViewController {
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Loading:
-                section = sectionBuilder.createWideSection(withHeight: 150)
+                section = sectionBuilder.createEstimatedSection(withHeight: 150)
             case .Trailer:
                 section = sectionBuilder.createInfoListSection(withHeight: 65)
                 section?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
@@ -333,6 +341,13 @@ extension MovieDetailViewController {
                 section?.contentInsets.bottom = 10
 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
+                section?.boundarySupplementaryItems = [sectionHeader]
+            case .Videos:
+                section = sectionBuilder.createBannerSection()
+                
+                let sectionHeader = sectionBuilder.createTitleSectionHeader()
+                section?.orthogonalScrollingBehavior = .continuous
+                section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .RecommendedMovies:
                 section = sectionBuilder.createHorizontalPosterSection()
@@ -367,7 +382,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sectionType = self.sections[indexPath.section]
         switch sectionType {
-        case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info:
+        case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info, .Videos:
             break
         case .Cast:
             let castCredit = movie.cast[indexPath.row]
@@ -413,6 +428,8 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             return movie.youtubeKey != nil ? 1 : 0
         case .Overview:
             return 1
+        case .Videos:
+            return movie.videos.count
         case .Loading:
             return isLoading ? 1 : 0
         }
@@ -469,6 +486,13 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             cell.youtubeURL = movie.trailerURL
             
             return cell
+        case .Videos:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeVideoCell.reuseIdentifier, for: indexPath) as! YoutubeVideoCell
+            
+            let movieVideo = movie.videos[indexPath.row]
+            cell.configure(video: movieVideo)
+            
+            return cell
         case .Overview:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
             
@@ -508,7 +532,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             
             var tapHandler: (() -> ())?
             switch sectionType {
-            case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info:
+            case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info, .Videos:
                 break
             case .Cast:
                 tapHandler = { [weak self] in

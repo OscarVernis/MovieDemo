@@ -11,6 +11,7 @@ import ObjectMapper
 class MovieVideo: Mappable  {
     var key: String!
     var name: String?
+    var type: String?
     
     //MARK: - ObjectMapper
     required init?(map: Map) {
@@ -22,13 +23,11 @@ class MovieVideo: Mappable  {
             return nil
         }
         
-        if map.JSON["type"] as? String != "Trailer" {
-            return nil
-        }
     }
 
     func mapping(map: Map) {
         key <- map["key"]
         name <- map["name"]
+        type <- map["type"]
     }
 }
