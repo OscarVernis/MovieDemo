@@ -13,7 +13,7 @@ final class MainCoordinator {
     private var rootNavigationViewController: UINavigationController?
     
     //If set to true, it will force you to login before showing Home
-    private let isLoginRequired = true
+    private let isLoginRequired = false
     
     init(window: UIWindow) {
         self.window = window

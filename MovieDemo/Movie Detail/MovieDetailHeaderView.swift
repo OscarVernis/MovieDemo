@@ -15,7 +15,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var ratingsLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
-    @IBOutlet weak var overviewLabel: UILabel!
         
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
@@ -41,7 +40,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
         ratingsView.isRatingAvailable = movie.isRatingAvailable
         ratingsLabel.text = movie.ratingString
         genresLabel.text = movie.genres(separatedBy: ", ")
-        overviewLabel.text = movie.overview
         
         if let runtime = movie.runtime {
             releaseDateLabel.text = "\(movie.releaseYear)  •  \(runtime)"

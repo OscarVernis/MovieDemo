@@ -37,6 +37,21 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    //Section with items that are screen wide, usually for showing just one item
+    func createEstimatedSection(withHeight height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .estimated(height))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(height))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+                        
+        return section
+    }
+    
     //Regular list
     func createInfoListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),

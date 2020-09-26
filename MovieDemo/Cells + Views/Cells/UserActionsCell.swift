@@ -1,14 +1,14 @@
 //
-//  MovieDetailUserActionsReusableView.swift
+//  UserActionsCell.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 23/09/20.
+//  Created by Oscar Vernis on 25/09/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-class MovieDetailUserActionsReusableView: UICollectionReusableView {
+class UserActionsCell: UICollectionViewCell {
     @IBOutlet weak var favoriteButton: CustomButton!
     @IBOutlet weak var watchlistButton: CustomButton!
     @IBOutlet weak var rateButton: CustomButton!

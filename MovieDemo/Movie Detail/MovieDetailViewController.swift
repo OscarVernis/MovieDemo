@@ -20,6 +20,8 @@ class MovieDetailViewController: UIViewController {
     enum Section: Int, CaseIterable {
         case Header
         case UserActions
+        case Overview
+        case Loading
         case Trailer
         case Cast
         case Crew
@@ -28,8 +30,12 @@ class MovieDetailViewController: UIViewController {
         
         var title: String {
             switch self {
-            case .Header:
+            case .Header, .UserActions, .Loading:
                 return ""
+            case .Overview:
+                return "Overview"
+            case .Trailer:
+                return "Trailer"
             case .Cast:
                 return "Cast"
             case .Crew:
@@ -38,21 +44,17 @@ class MovieDetailViewController: UIViewController {
                 return "Recommended Movies"
             case .Info:
                 return "Info"
-            case .UserActions:
-                return ""
-            case .Trailer:
-                return "Trailer"
             }
         }
         
     }
     
-    private var sections: [Section]!
+    private var sections = [Section]()
     private var isLoading = true
     
     private var movie: MovieViewModel!
         
-    private weak var actionsHeader: MovieDetailUserActionsReusableView?
+    private weak var actionsCell: UserActionsCell?
     private var collectionView: UICollectionView!
     
     required init(viewModel: MovieViewModel) {
@@ -71,11 +73,8 @@ class MovieDetailViewController: UIViewController {
     //MARK:- Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        // Only show the header and the loading cell while loading
-        sections = [
-            .Header,
-        ]
+
+        reloadSections()
         
         setupCollectionView()
         setupDataProvider()
@@ -89,9 +88,16 @@ class MovieDetailViewController: UIViewController {
             sections.append(.UserActions)
         }
         
-//        if movie.trailerURL != nil {
-//            sections.append(.Trailer)
-//        }
+        sections.append(.Overview)
+        
+        if isLoading {
+            sections.append(.Loading)
+            return
+        }
+        
+        if movie.trailerURL != nil {
+            sections.append(.Trailer)
+        }
         
         if movie.cast.count > 0 {
             sections.append(.Cast)
@@ -109,7 +115,6 @@ class MovieDetailViewController: UIViewController {
             sections.append(.Info)
         }
 
-        isLoading = false
         collectionView.reloadData()
     }
     
@@ -145,10 +150,11 @@ class MovieDetailViewController: UIViewController {
         //Register Cells and Headers
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
-        MovieDetailUserActionsReusableView.registerHeader(withCollectionView: collectionView)
 
         LoadingCell.register(withCollectionView: collectionView)
         
+        UserActionsCell.register(withCollectionView: collectionView)
+        OverviewCell.register(withCollectionView: collectionView)
         TrailerCell.register(withCollectionView: collectionView)
         MoviePosterInfoCell.register(withCollectionView: collectionView)
         CreditCell.register(withCollectionView: collectionView)
@@ -167,6 +173,7 @@ class MovieDetailViewController: UIViewController {
                 }
             }
             
+            self.isLoading = false
             self.reloadSections()
         }
         
@@ -175,11 +182,11 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func updateActionButtons() {
-        guard let actionsHeader = actionsHeader else { return }
+        guard let actionsCell = actionsCell else { return }
 
-        actionsHeader.favoriteButton.setIsSelected(movie.favorite, animated: false)
-        actionsHeader.watchlistButton.setIsSelected(movie.watchlist, animated: false)
-        actionsHeader.rateButton.setIsSelected(movie.rated, animated: false)
+        actionsCell.favoriteButton.setIsSelected(movie.favorite, animated: false)
+        actionsCell.watchlistButton.setIsSelected(movie.watchlist, animated: false)
+        actionsCell.rateButton.setIsSelected(movie.rated, animated: false)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -196,8 +203,8 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
-        actionsHeader?.favoriteButton.setIsSelected(!movie.favorite, animated: true)
-        actionsHeader?.favoriteButton.isUserInteractionEnabled = false
+        actionsCell?.favoriteButton.setIsSelected(!movie.favorite, animated: true)
+        actionsCell?.favoriteButton.isUserInteractionEnabled = false
         
         if movie.favorite {
             UISelectionFeedbackGenerator().selectionChanged()
@@ -208,11 +215,11 @@ class MovieDetailViewController: UIViewController {
         movie.markAsFavorite(!movie.favorite) { [weak self] success in
             guard let self = self else { return }
             
-            self.actionsHeader?.favoriteButton.isUserInteractionEnabled = true
+            self.actionsCell?.favoriteButton.isUserInteractionEnabled = true
 
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                self.actionsHeader?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
+                self.actionsCell?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
                 AlertManager.showFavoriteAlert(text: "Couldn't set favorite! Please try again.", sender: self)
             }
         }
@@ -223,8 +230,8 @@ class MovieDetailViewController: UIViewController {
             return
         }
         
-        actionsHeader?.watchlistButton.setIsSelected(!movie.watchlist, animated: true)
-        actionsHeader?.watchlistButton.isUserInteractionEnabled = false
+        actionsCell?.watchlistButton.setIsSelected(!movie.watchlist, animated: true)
+        actionsCell?.watchlistButton.isUserInteractionEnabled = false
         
         if movie.watchlist {
             UISelectionFeedbackGenerator().selectionChanged()
@@ -235,11 +242,11 @@ class MovieDetailViewController: UIViewController {
         movie.addToWatchlist(!movie.watchlist) { [weak self] success in
             guard let self = self else { return }
 
-            self.actionsHeader?.watchlistButton.isUserInteractionEnabled = true
+            self.actionsCell?.watchlistButton.isUserInteractionEnabled = true
 
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                self.actionsHeader?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+                self.actionsCell?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
                 AlertManager.showWatchlistAlert(text: "Couldn't add to watchlist! Please try again.", sender: self)
             }
         }
@@ -258,8 +265,8 @@ class MovieDetailViewController: UIViewController {
         transitionDelegate.showIndicator = false
         
         mrvc.didUpdateRating = {
-            self.actionsHeader?.rateButton.setIsSelected(self.movie.rated, animated: false)
-            self.actionsHeader?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+            self.actionsCell?.rateButton.setIsSelected(self.movie.rated, animated: false)
+            self.actionsCell?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
         }
         
         self.present(mrvc, animated: true)
@@ -294,15 +301,20 @@ extension MovieDetailViewController {
 
             switch sectionType {
             case .Header: //This is a dummy section used to contain the main header, it will not display any items
-                section = sectionBuilder.createWideSection(withHeight: 150)
+                section = sectionBuilder.createWideSection(withHeight: 1)
                 
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .UserActions: //This is a dummy section used to contain the Actions Header
-                section = sectionBuilder.createWideSection(withHeight: 1)
-                
-                let sectionHeader = sectionBuilder.createMovieDetailUserActionsSectionHeader()
+                section = sectionBuilder.createWideSection(withHeight: 80)
+            case .Overview:
+                section = sectionBuilder.createEstimatedSection(withHeight: 50)
+                section?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+
+                let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
+            case .Loading:
+                section = sectionBuilder.createWideSection(withHeight: 150)
             case .Trailer:
                 section = sectionBuilder.createInfoListSection(withHeight: 65)
                 section?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
@@ -355,11 +367,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sectionType = self.sections[indexPath.section]
         switch sectionType {
-        case .Header:
-            break
-        case .UserActions:
-            break
-        case .Trailer:
+        case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info:
             break
         case .Cast:
             let castCredit = movie.cast[indexPath.row]
@@ -376,8 +384,6 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case .RecommendedMovies:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
-        case .Info:
-            break
         }
     }
 }
@@ -392,9 +398,9 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         let sectionType = self.sections[section]
         switch sectionType {
         case .Header:
-            return isLoading ? 1 : 0 //Dummy section to show Header, if loading shows LoadingCell
+            return 0 //Dummy section to show Header, if loading shows LoadingCell
         case .UserActions:
-            return 0 //Dummy section to show User Actions
+            return 1
         case .Cast:
             return movie.topCast.count
         case .Crew:
@@ -405,6 +411,10 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             return movie.infoArray.count
         case .Trailer:
             return movie.youtubeKey != nil ? 1 : 0
+        case .Overview:
+            return 1
+        case .Loading:
+            return isLoading ? 1 : 0
         }
     }
 
@@ -412,15 +422,18 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         let sectionType = self.sections[indexPath.section]
         switch sectionType {
         case .Header:
-            if isLoading {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath) as! LoadingCell
-                
-                return cell
-            } else {
-                fatalError("Should be empty!")
-            }
+            fatalError("Should be empty!")
         case .UserActions:
-                fatalError("Should be empty!")
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserActionsCell.reuseIdentifier, for: indexPath) as! UserActionsCell
+            
+            cell.favoriteButton.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
+            cell.watchlistButton.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
+            cell.rateButton.addTarget(self, action: #selector(addRating), for: .touchUpInside)
+
+            actionsCell = cell
+            updateActionButtons()
+            
+            return cell
         case .Cast:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
             
@@ -456,6 +469,20 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             cell.youtubeURL = movie.trailerURL
             
             return cell
+        case .Overview:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
+            
+            cell.textLabel.text = movie.overview
+            
+            return cell
+        case .Loading:
+            if isLoading {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath) as! LoadingCell
+                
+                return cell
+            } else {
+                fatalError("Should be empty!")
+            }
         }
     }
     
@@ -476,25 +503,12 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             headerView.configure(movie: movie)
             
             return headerView
-        } else if sectionType == .UserActions {
-            let actionsView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailUserActionsReusableView.reuseIdentifier, for: indexPath) as! MovieDetailUserActionsReusableView
-            
-            actionsView.favoriteButton.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
-            actionsView.watchlistButton.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
-            actionsView.rateButton.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-
-            actionsHeader = actionsView
-            updateActionButtons()
-
-            return actionsView
         } else {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
             
             var tapHandler: (() -> ())?
             switch sectionType {
-            case .Header:
-                break
-            case .UserActions:
+            case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info:
                 break
             case .Cast:
                 tapHandler = { [weak self] in
@@ -514,10 +528,6 @@ extension MovieDetailViewController: UICollectionViewDataSource {
                     
                     self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id)))
                 }
-            case .Info:
-                break
-            case .Trailer:
-                break
             }
             
             MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: sectionType.title, tapHandler: tapHandler)
