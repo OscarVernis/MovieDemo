@@ -21,10 +21,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     
     var imageTapHandler: (()->Void)? = nil
 
-    override func awakeFromNib() {
-        posterImageView.layer.masksToBounds = true
-        posterImageView.layer.cornerRadius = 12
-        
+    override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         posterImageView.addGestureRecognizer(tapRecognizer)
     }

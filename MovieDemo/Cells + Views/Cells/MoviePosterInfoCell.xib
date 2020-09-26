@@ -17,11 +17,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="140" height="247"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" image="PosterPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="cWA-gu-tFe">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" image="PosterPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="cWA-gu-tFe" customClass="RoundImageView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="140" height="210"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="cWA-gu-tFe" secondAttribute="height" multiplier="2:3" placeholder="YES" id="XZ3-DP-2jP"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="252" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pRz-I2-y3r">
                         <rect key="frame" x="5" y="215" width="130" height="32"/>
@@ -46,6 +51,11 @@
             <point key="canvasLocation" x="-521.73913043478262" y="8.3705357142857135"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="cWA-gu-tFe">
+            <size key="intrinsicContentSize" width="240" height="360"/>
+        </designable>
+    </designables>
     <resources>
         <image name="PosterPlaceholder" width="240" height="360"/>
     </resources>

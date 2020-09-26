@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
@@ -44,11 +44,16 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PosterPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="wFs-O6-OUM">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PosterPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="wFs-O6-OUM" customClass="RoundImageView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="11" width="86" height="129"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="wFs-O6-OUM" secondAttribute="height" multiplier="2:3" id="bhI-SK-7j5"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tin-rp-HcE" userLabel="Separator">
                         <rect key="frame" x="0.0" y="150.5" width="379" height="0.5"/>
@@ -79,7 +84,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="wFs-O6-OUM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="2CD-CT-XNY"/>
                 <constraint firstItem="Shc-PW-Ypm" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="3SR-yb-CUQ"/>
@@ -114,6 +119,11 @@
             <point key="canvasLocation" x="-105.07246376811595" y="-0.33482142857142855"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="wFs-O6-OUM">
+            <size key="intrinsicContentSize" width="240" height="360"/>
+        </designable>
+    </designables>
     <resources>
         <image name="PosterPlaceholder" width="240" height="360"/>
         <systemColor name="secondaryLabelColor">

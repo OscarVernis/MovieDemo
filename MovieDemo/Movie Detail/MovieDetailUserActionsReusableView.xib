@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -61,7 +60,6 @@
                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
                     <inset key="imageEdgeInsets" minX="-6" minY="-2" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="Rate" image="star" catalog="system">
-                        <color key="titleColor" systemColor="systemGreenColor"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                     </state>
                     <state key="selected" image="star.fill" catalog="system"/>
@@ -93,7 +91,7 @@
                 <outlet property="rateButton" destination="aTS-4j-s9v" id="A4G-qe-Vdn"/>
                 <outlet property="watchlistButton" destination="asZ-FC-q9G" id="7bH-Nd-vmR"/>
             </connections>
-            <point key="canvasLocation" x="107.97101449275362" y="81.026785714285708"/>
+            <point key="canvasLocation" x="41" y="-64"/>
         </collectionReusableView>
     </objects>
     <designables>
@@ -115,16 +113,13 @@
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="FavoriteColor">
-            <color red="0.85882352941176465" green="0.13725490196078433" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.85900002717971802" green="0.13699999451637268" blue="0.37599998712539673" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="RatingColor">
-            <color red="0.12941176470588234" green="0.81568627450980391" blue="0.47843137254901957" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1289999932050705" green="0.81599998474121094" blue="0.4779999852180481" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="WatchlistColor">
             <color red="1" green="0.58399999141693115" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

@@ -20,9 +20,6 @@ class MoviePosterInfoCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         stackView.spacing = 0
-
-        posterImageView.layer.masksToBounds = true
-        posterImageView.layer.cornerRadius = 12
     }
     
     func setPosterRatio(_ ratio: CGFloat) {

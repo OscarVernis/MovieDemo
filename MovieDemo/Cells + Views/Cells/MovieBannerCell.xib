@@ -18,11 +18,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="430" height="296"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="751" image="BackdropPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="b5T-qQ-WYX">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="751" image="BackdropPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="b5T-qQ-WYX" customClass="RoundImageView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="242"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="b5T-qQ-WYX" secondAttribute="height" multiplier="780:439" id="MH7-mW-TUM"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Tenet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihj-9F-1Im">
                         <rect key="frame" x="5" y="250" width="387" height="24"/>
@@ -84,6 +89,9 @@
     <designables>
         <designable name="SpN-K0-2qk">
             <size key="intrinsicContentSize" width="25" height="25"/>
+        </designable>
+        <designable name="b5T-qQ-WYX">
+            <size key="intrinsicContentSize" width="422" height="240"/>
         </designable>
     </designables>
     <resources>

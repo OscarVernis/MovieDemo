@@ -18,11 +18,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="308" height="151"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="cBu-Vq-bGs">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="cBu-Vq-bGs" customClass="RoundImageView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="12" width="84.5" height="127"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="cBu-Vq-bGs" secondAttribute="height" multiplier="422/633" id="V87-9v-1jm"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isCircle" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hab-s9-IB2">
                         <rect key="frame" x="96.5" y="51" width="211.5" height="49.5"/>
@@ -71,6 +77,11 @@
             <point key="canvasLocation" x="-113" y="30"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="cBu-Vq-bGs">
+            <size key="intrinsicContentSize" width="240" height="360"/>
+        </designable>
+    </designables>
     <resources>
         <image name="PersonPlaceholder" width="240" height="360"/>
         <systemColor name="secondaryLabelColor">

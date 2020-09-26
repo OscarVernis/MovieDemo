@@ -16,13 +16,4 @@ class MovieInfoListCell: UICollectionViewCell {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        backgroundColor = .clear
-        
-        posterImageView.layer.masksToBounds = true
-        posterImageView.layer.cornerRadius = 8
-    }
-    
 }

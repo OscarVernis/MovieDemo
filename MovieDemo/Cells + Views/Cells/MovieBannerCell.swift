@@ -14,11 +14,5 @@ class MovieBannerCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var infoLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        bannerImageView.layer.masksToBounds = true
-        bannerImageView.layer.cornerRadius = 12
-    }    
+
 }

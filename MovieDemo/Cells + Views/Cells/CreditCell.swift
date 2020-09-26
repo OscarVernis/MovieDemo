@@ -14,11 +14,6 @@ class CreditCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!
     
-    override func awakeFromNib() {
-        creditImageView.layer.masksToBounds = true
-        creditImageView.layer.cornerRadius = 12
-    }
-    
     override func prepareForReuse() {
         creditImageView.image = UIImage(named: "PersonPlaceholder")
     }

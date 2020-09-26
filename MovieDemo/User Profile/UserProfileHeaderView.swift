@@ -16,12 +16,6 @@ class UserProfileHeaderView: UICollectionReusableView {
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     var logoutButtonHandler: (()->Void)? = nil
-        
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        userImageView.layer.masksToBounds = true
-        userImageView.layer.cornerRadius = userImageView.bounds.height / 2
-    }
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
         logoutButtonHandler?()

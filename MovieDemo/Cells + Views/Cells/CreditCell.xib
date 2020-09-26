@@ -18,11 +18,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="115" height="221"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="kb2-HR-vPm">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="kb2-HR-vPm" customClass="RoundImageView" customModule="MovieDemo" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="115" height="172.5"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="kb2-HR-vPm" secondAttribute="height" multiplier="422/633" id="3Zd-3X-K7E"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Actor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sa2-2d-WGd">
                         <rect key="frame" x="0.0" y="178.5" width="115" height="20.5"/>
@@ -59,6 +64,11 @@
             <point key="canvasLocation" x="-591" y="16"/>
         </collectionViewCell>
     </objects>
+    <designables>
+        <designable name="kb2-HR-vPm">
+            <size key="intrinsicContentSize" width="240" height="360"/>
+        </designable>
+    </designables>
     <resources>
         <image name="PersonPlaceholder" width="240" height="360"/>
         <systemColor name="secondaryLabelColor">

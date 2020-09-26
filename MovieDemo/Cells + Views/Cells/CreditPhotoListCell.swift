@@ -16,12 +16,5 @@ class CreditPhotoListCell: UICollectionViewCell {
     override func prepareForReuse() {
         creditImageView.image = UIImage(named: "PersonPlaceholder")
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        creditImageView.layer.masksToBounds = true
-        creditImageView.layer.cornerRadius = 8
-    }
 
 }
