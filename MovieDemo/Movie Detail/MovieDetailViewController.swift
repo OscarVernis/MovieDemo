@@ -152,7 +152,7 @@ class MovieDetailViewController: UIViewController {
     fileprivate func setupDataProvider()  {
         let updateCollectionView:(Error?) -> () = { [weak self] error in
             guard let self = self else { return }
-            
+                        
             if error != nil {
                 AlertManager.showRefreshErrorAlert(sender: self) {
                     self.navigationController?.popViewController(animated: true)

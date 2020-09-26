@@ -29,6 +29,8 @@ class Movie: Mappable {
     var budget: Int?
     var revenue: Int?
     
+    var videos: [MovieVideo]?
+    
     var favorite: Bool = false
     var rated: Bool = false
     var userRating: Float = 0
@@ -65,6 +67,8 @@ class Movie: Mappable {
         originalLanguage <- map["original_language"]
         budget <- map["budget"]
         revenue <- map["revenue"]
+        
+        videos <- map["videos.results"]
         
         favorite <- map["account_states.favorite"]
         rated <- (map["account_states.rated"], MovieUserRatedTransform()) //Service returns false if not rated, and the value of the rating if rated.

@@ -54,6 +54,7 @@ extension MovieViewModel {
             
             if error != nil {
                 self.didUpdate?(error)
+                return
             }
             
             if let movie = movie {
@@ -138,6 +139,13 @@ extension MovieViewModel {
     func posterImageURL(size: MovieDBService.MoviePosterSize = .original) -> URL? {
         let url = (movie.posterPath != nil) ? MovieDBService.posterImageURL(forPath:movie.posterPath!, size: size) : nil
         return url
+    }
+    
+    func urlForTrailer() -> URL? {
+        movie.videos?.removeAll()
+        guard let trailer = movie.videos?.last else { return nil }
+        
+        return MovieDBService.trailerURL(forKey: trailer.key)
     }
     
     var status: String? {

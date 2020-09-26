@@ -38,6 +38,16 @@ struct MovieDBService {
     
 }
 
+//MARK: - Trailer Utils
+extension MovieDBService {
+    static let baseTrailerURL = "https://www.youtube.com/watch?v="
+    
+    static func trailerURL(forKey key: String) -> URL {
+        return URL(string: baseTrailerURL.appending(key))!
+    }
+
+}
+
 //MARK: - Image Utils
 extension MovieDBService {
     enum MoviePosterSize: String {
@@ -157,7 +167,7 @@ extension MovieDBService {
         let url = endpoint(forPath: "/movie/\(movieId)")
         
         var params = defaultParameters(withSessionId: sessionId)
-        params["append_to_response"] = "credits,recommendations,account_states"
+        params["append_to_response"] = "credits,recommendations,account_states,videos"
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
