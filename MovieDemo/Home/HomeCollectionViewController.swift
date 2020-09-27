@@ -122,10 +122,15 @@ extension HomeCollectionViewController {
             switch sectionIndex {
             case 0:
                 section = sectionBuilder.createBannerSection()
+                section?.contentInsets.top = 10
+                section?.contentInsets.bottom = 10
             case 1:
                 section = sectionBuilder.createHorizontalPosterSection()
+                section?.contentInsets.top = 10
+                section?.contentInsets.bottom = 20
             case 2:
-                section = sectionBuilder.createInfoListSection()
+                section = sectionBuilder.createListSection()
+                section?.contentInsets.bottom = 30
             case 3:
                 section = sectionBuilder.createDecoratedListSection()
                 sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)

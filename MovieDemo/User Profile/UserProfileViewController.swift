@@ -151,7 +151,7 @@ extension UserProfileViewController {
             
             switch sectionType {
             case .Header: //This is a dummy section used to contain the main header, it will not display any items
-                section = sectionBuilder.createWideSection(withHeight: 150)
+                section = sectionBuilder.createSection(groupHeight: .estimated(150))
                 
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
@@ -159,8 +159,9 @@ extension UserProfileViewController {
                 if self.user.favorites.count > 0 {
                     section = sectionBuilder.createHorizontalPosterSection()
                 } else {
-                    section = sectionBuilder.createWideSection(withHeight: 260)
-                    section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
+                    section = sectionBuilder.createSection(groupHeight: .estimated(260))
+                    section?.contentInsets.top = 10
+                    section?.contentInsets.bottom = 20
                 }
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -171,8 +172,9 @@ extension UserProfileViewController {
                 if self.user.watchlist.count > 0 {
                     section = sectionBuilder.createHorizontalPosterSection()
                 } else {
-                    section = sectionBuilder.createWideSection(withHeight: 260)
-                    section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
+                    section = sectionBuilder.createSection(groupHeight: .estimated(260))
+                    section?.contentInsets.top = 10
+                    section?.contentInsets.bottom = 20
                 }
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -184,8 +186,9 @@ extension UserProfileViewController {
                 if self.user.rated.count > 0 {
                     section = sectionBuilder.createHorizontalPosterSection()
                 } else {
-                    section = sectionBuilder.createWideSection(withHeight: 260)
-                    section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
+                    section = sectionBuilder.createSection(groupHeight: .estimated(260))
+                    section?.contentInsets.top = 10
+                    section?.contentInsets.bottom = 20
                 }
                 
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()

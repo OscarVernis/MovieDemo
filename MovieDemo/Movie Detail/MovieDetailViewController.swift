@@ -19,7 +19,6 @@ class MovieDetailViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
         case Header
-        case UserActions
         case Overview
         case Loading
         case Trailer
@@ -31,7 +30,7 @@ class MovieDetailViewController: UIViewController {
         
         var title: String {
             switch self {
-            case .Header, .UserActions, .Loading, .Trailer:
+            case .Header, .Loading, .Trailer:
                 return ""
             case .Overview:
                 return NSLocalizedString("Overview", comment: "")
@@ -85,9 +84,6 @@ class MovieDetailViewController: UIViewController {
         sections.removeAll()
         sections.append(.Header)
         
-        if SessionManager.shared.isLoggedIn {
-            sections.append(.UserActions)
-        }
         
         if !movie.overview.isEmpty {
             sections.append(.Overview)
@@ -308,24 +304,22 @@ extension MovieDetailViewController {
             let sectionType = self?.sections[sectionIndex]
 
             switch sectionType {
-            case .Header: //This is a dummy section used to contain the main header, it will not display any items
-                section = sectionBuilder.createWideSection(withHeight: 1)
+            case .Header: //Main Header section, displays User Action Buttons if logged in.
+                section = sectionBuilder.createSection(groupHeight: .absolute(44))
                 
                 let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
-            case .UserActions: //This is a dummy section used to contain the Actions Header
-                section = sectionBuilder.createWideSection(withHeight: 80)
             case .Overview:
-                section = sectionBuilder.createEstimatedSection(withHeight: 50)
-                section?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-
-                let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
+                section = sectionBuilder.createEstimatedSection(height: 50)
+                
+                let sectionHeader = sectionBuilder.createTitleSectionHeader()
+                sectionHeader.contentInsets.top = 6
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Loading:
-                section = sectionBuilder.createEstimatedSection(withHeight: 150)
+                section = sectionBuilder.createEstimatedSection(height: 150)
             case .Trailer:
-                section = sectionBuilder.createInfoListSection(withHeight: 65)
-                section?.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+                section = sectionBuilder.createListSection(height: 65)
+                section?.contentInsets.bottom = 0
             case .Cast:
                 section = sectionBuilder.createHorizontalCreditSection()
                 
@@ -335,7 +329,7 @@ extension MovieDetailViewController {
                 let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Crew:
-                section = sectionBuilder.createTwoColumnListSection(withHeight: 50)
+                section = sectionBuilder.createListSection(height: 50, columns: 2)
                 
                 section?.contentInsets.top = 5
                 section?.contentInsets.bottom = 10
@@ -345,9 +339,11 @@ extension MovieDetailViewController {
             case .Videos:
                 section = sectionBuilder.createBannerSection()
                 
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.orthogonalScrollingBehavior = .continuous
-                section?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
+                section?.contentInsets.top = 10
+                section?.contentInsets.bottom = 0
+                
+                let sectionHeader = sectionBuilder.createTitleSectionHeader()
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .RecommendedMovies:
                 section = sectionBuilder.createHorizontalPosterSection()
@@ -357,7 +353,7 @@ extension MovieDetailViewController {
                 section?.contentInsets.bottom = 10
                 section?.boundarySupplementaryItems = [sectionHeader]
             case .Info:
-                section = sectionBuilder.createInfoListSection(withHeight: 50)
+                section = sectionBuilder.createListSection(height: 50)
                 
                 section?.contentInsets.top = 5
                 section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 30
@@ -382,7 +378,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sectionType = self.sections[indexPath.section]
         switch sectionType {
-        case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info, .Videos:
+        case .Header, .Overview, .Trailer, .Loading, .Info, .Videos:
             break
         case .Cast:
             let castCredit = movie.cast[indexPath.row]
@@ -413,9 +409,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         let sectionType = self.sections[section]
         switch sectionType {
         case .Header:
-            return 0 //Dummy section to show Header, if loading shows LoadingCell
-        case .UserActions:
-            return 1
+            return SessionManager.shared.isLoggedIn ? 1 : 0
         case .Cast:
             return movie.topCast.count
         case .Crew:
@@ -439,8 +433,6 @@ extension MovieDetailViewController: UICollectionViewDataSource {
         let sectionType = self.sections[indexPath.section]
         switch sectionType {
         case .Header:
-            fatalError("Should be empty!")
-        case .UserActions:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserActionsCell.reuseIdentifier, for: indexPath) as! UserActionsCell
             
             cell.favoriteButton.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
@@ -532,7 +524,7 @@ extension MovieDetailViewController: UICollectionViewDataSource {
             
             var tapHandler: (() -> ())?
             switch sectionType {
-            case .Header, .UserActions, .Overview, .Trailer, .Loading, .Info, .Videos:
+            case .Header, .Overview, .Trailer, .Loading, .Info, .Videos:
                 break
             case .Cast:
                 tapHandler = { [weak self] in

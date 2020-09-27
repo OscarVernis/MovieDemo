@@ -361,7 +361,6 @@
 				55164AFE25154AD200D219BC /* ExampleImages.xcassets */,
 				551A290F251F16F7003746EE /* Localizable.strings */,
 				559D132922D98E4B00C96FC8 /* LaunchScreen.storyboard */,
-				559D132C22D98E4B00C96FC8 /* Info.plist */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -483,6 +482,7 @@
 				55518D4A251151B300DAEB7F /* Movie Detail */,
 				55AA47102506B13A00E25C59 /* Lists */,
 				55614008252008D100F1AA5B /* Assets */,
+				559D132C22D98E4B00C96FC8 /* Info.plist */,
 			);
 			path = MovieDemo;
 			sourceTree = "<group>";

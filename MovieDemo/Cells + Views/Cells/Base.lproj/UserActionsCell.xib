@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J4d-90-61x" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="16" y="18" width="105" height="44"/>
+                        <rect key="frame" x="0.0" y="18" width="115.5" height="44"/>
                         <color key="backgroundColor" red="1" green="0.27058823529999998" blue="0.2274509804" alpha="0.094425516919999994" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="76Y-Zz-w3M"/>
@@ -38,7 +38,7 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LmO-Gz-NPb" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="254" y="18" width="105" height="44"/>
+                        <rect key="frame" x="259.5" y="18" width="115.5" height="44"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="pqF-zT-kil"/>
                         </constraints>
@@ -59,7 +59,7 @@
                         </userDefinedRuntimeAttributes>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gSL-tN-Dtu" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                        <rect key="frame" x="135" y="18" width="105" height="44"/>
+                        <rect key="frame" x="129.5" y="18" width="116" height="44"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="p3J-Jb-ZYh"/>
                         </constraints>
@@ -80,11 +80,11 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="J4d-90-61x" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="5Ck-nH-OGM"/>
+                <constraint firstAttribute="trailing" secondItem="LmO-Gz-NPb" secondAttribute="trailing" id="24x-JW-8xR"/>
                 <constraint firstItem="LmO-Gz-NPb" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="6NH-fa-J23"/>
                 <constraint firstItem="gSL-tN-Dtu" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="OBi-IC-zNv"/>
                 <constraint firstItem="J4d-90-61x" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="PG5-gz-Gn5"/>
-                <constraint firstAttribute="trailing" secondItem="LmO-Gz-NPb" secondAttribute="trailing" constant="16" id="i7k-LS-Zkw"/>
+                <constraint firstItem="J4d-90-61x" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="q2k-gr-dAC"/>
                 <constraint firstItem="LmO-Gz-NPb" firstAttribute="width" secondItem="J4d-90-61x" secondAttribute="width" id="sa3-Ix-w66"/>
                 <constraint firstItem="LmO-Gz-NPb" firstAttribute="leading" secondItem="gSL-tN-Dtu" secondAttribute="trailing" constant="14" id="wri-Qn-W4l"/>
                 <constraint firstItem="gSL-tN-Dtu" firstAttribute="width" secondItem="J4d-90-61x" secondAttribute="width" id="xoe-gT-jEH"/>

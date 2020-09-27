@@ -9,179 +9,112 @@
 import UIKit
  
 struct MoviesCompositionalLayoutBuilder {
-    //Creates the title header for sections
-    func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    var spacing: CGFloat = 20
+    
+    init() {
+        if let screenWidth = UIApplication.shared.windows.first(where: \.isKeyWindow)?.bounds.width, screenWidth > 500 {
+            spacing = 50
+        }
+    }
+    
+    //MARK:- General
+    func createHeader(height: NSCollectionLayoutDimension) -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .absolute(48))
+                                                heightDimension: height)
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top)
-        sectionHeader.pinToVisibleBounds = false
         
         return sectionHeader
     }
     
-    //Section with items that are screen wide, usually for showing just one item
-    func createWideSection(withHeight height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
+    func createSection(itemWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
+                       itemHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
+                       groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
+                       groupHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
+                       columns: Int = 1
+    ) ->  NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: itemWidth, heightDimension: itemHeight)
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let groupSize = NSCollectionLayoutSize(widthDimension: groupWidth, heightDimension: groupHeight)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
         
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
                         
         return section
     }
     
-    //Section with items that are screen wide, usually for showing just one item
-    func createEstimatedSection(withHeight height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(height))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-                        
-        return section
+    //MARK:- Headers
+    func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        return createHeader(height: .absolute(48))
     }
     
-    //Regular list
-    func createInfoListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 30, trailing: 20)
-                        
-        return section
+    //The Header section for MovieDetailViewController
+    func createMovieDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        return createHeader(height: .estimated(500))
     }
     
+    //MARK:- Lists
     
-    
-    //Horizontal scroll, shows only one complete item and a peek at the next
-    func createBannerSection() ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85),
-                                               heightDimension: .estimated(500))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        section.interGroupSpacing = 20
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+    //Regular List
+    func createListSection(height: CGFloat = 150, columns: Int = 1) ->  NSCollectionLayoutSection {
+        let section = createSection(groupHeight: .absolute(height))
                         
-        return section
-    }
-    
-    //Horizontal scroll with no paging, several items at a time
-    func createHorizontalPosterSection() ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(140),
-                                               heightDimension: .absolute(260))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 20, trailing: 20)
-        section.interGroupSpacing = 20
-        
         return section
     }
     
     //List with background decorator
-    func createDecoratedListSection() ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(50))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
+    func createDecoratedListSection(height: CGFloat = 50) ->  NSCollectionLayoutSection {
+        let section = createListSection(height: height)
         section.interGroupSpacing = 5
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: spacing, bottom: 20, trailing: spacing)
         
-        let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(
-            elementKind: SectionBackgroundDecorationView.elementKind)
-        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 20, bottom: 0, trailing: 20)
+        let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKind)
+        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 15, trailing: spacing)
         section.decorationItems = [sectionBackgroundDecoration]
                 
         return section
     }
     
-    //Self sizing (AutoLayout) List Eg. Crew credits on detail
-    func createTwoColumnListSection(withHeight height: CGFloat = 150) ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 12)
+    //MARK:- Other
+    
+    //Horizontal scroll with no paging, several items at a time
+    func createHorizontalPosterSection() ->  NSCollectionLayoutSection {
+        let section = createSection(groupWidth: .estimated(140), groupHeight: .absolute(260))
+
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 20
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(height))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 30, trailing: 20)
-                        
         return section
-    }
-    
-    //The Header section for MovieDetailViewController
-    func createMovieDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .estimated(500))
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        
-        return sectionHeader
-    }
-    
-    //The User Actions section for MovieDetailViewController
-    func createMovieDetailUserActionsSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                heightDimension: .absolute(65))
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
-        
-        return sectionHeader
     }
     
     //Similar to Poster section with a different size
     func createHorizontalCreditSection() ->  NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                              heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(115),
-                                               heightDimension: .estimated(220))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
+        let section = createSection(groupWidth: .absolute(115), groupHeight: .estimated(220))
+
         section.orthogonalScrollingBehavior = .continuous
         section.interGroupSpacing = 20
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20)
 
+        return section
+    }
+    
+    //Section with items that are screen wide, usually for showing just one item
+    func createEstimatedSection(height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
+        let section = createSection(itemHeight: .estimated(height), groupHeight: .estimated(height))
+                                
+        return section
+    }
+    
+    //Horizontal scroll, shows only one complete item and a peek at the next
+    func createBannerSection() ->  NSCollectionLayoutSection {
+        let section = createSection(itemHeight: .estimated(1.0), groupWidth: .fractionalWidth(0.85), groupHeight: .estimated(500))
+        
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.interGroupSpacing = 20
+                        
         return section
     }
     

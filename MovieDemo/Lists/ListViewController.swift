@@ -97,14 +97,18 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
 //MARK: - CollectionView CompositionalLayout
 extension ListViewController {
     func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int,
                                                             layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil }
             
             var section: NSCollectionLayoutSection?
             let sectionBuilder = MoviesCompositionalLayoutBuilder()
             
             if sectionIndex == 0 {
-                section = sectionBuilder.createInfoListSection()
+                let columns = self.view.frame.width > 500 ? 2 : 1
+                
+                section = sectionBuilder.createListSection(columns: columns)
+                section?.contentInsets.bottom = 30
             }
 
             return section
