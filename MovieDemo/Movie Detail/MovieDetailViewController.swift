@@ -98,11 +98,11 @@ class MovieDetailViewController: UIViewController {
             sections.append(.Trailer)
         }
         
-        if !movie.cast.isEmpty {
+        if !movie.topCast.isEmpty {
             sections.append(.Cast)
         }
 
-        if !movie.crew.isEmpty {
+        if !movie.topCrew.isEmpty {
             sections.append(.Crew)
         }
         
