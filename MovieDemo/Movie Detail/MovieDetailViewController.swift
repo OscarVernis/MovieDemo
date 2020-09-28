@@ -553,4 +553,3 @@ extension MovieDetailViewController: UICollectionViewDataSource {
     }
     
 }
-

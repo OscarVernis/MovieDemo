@@ -33,6 +33,7 @@ struct MoviesCompositionalLayoutBuilder {
                        itemHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
                        groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
                        groupHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
+                       interItemSpacing: NSCollectionLayoutSpacing? = nil,
                        columns: Int = 1
     ) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidth, heightDimension: itemHeight)
@@ -40,6 +41,7 @@ struct MoviesCompositionalLayoutBuilder {
         
         let groupSize = NSCollectionLayoutSize(widthDimension: groupWidth, heightDimension: groupHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+        group.interItemSpacing = interItemSpacing
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
@@ -61,7 +63,7 @@ struct MoviesCompositionalLayoutBuilder {
     
     //Regular List
     func createListSection(height: CGFloat = 150, columns: Int = 1) ->  NSCollectionLayoutSection {
-        let section = createSection(groupHeight: .absolute(height))
+        let section = createSection(groupHeight: .absolute(height), interItemSpacing: .fixed(8), columns: columns)
                         
         return section
     }
