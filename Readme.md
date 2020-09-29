@@ -1,9 +1,8 @@
 # MovieDemo
 
-<center>
-![](images/videodemo.gif)
-</center>
-
+<p align="center">
+  <img src="images/videodemo.gif">
+</p>
 
 [Full Video](https://dl.dropboxusercontent.com/s/oz6onb19ov46u4f/video_screen.MP4?dl=0)
 
