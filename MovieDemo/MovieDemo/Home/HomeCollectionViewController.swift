@@ -103,7 +103,8 @@ class HomeCollectionViewController: UIViewController {
     
     func showMovieList(section: HomeSection) {
         let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
-        mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
+        mainCoordinator.showMovieList2(title: section.title, dataProvider: dataProvider)
+//        mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
     }
 
 }
