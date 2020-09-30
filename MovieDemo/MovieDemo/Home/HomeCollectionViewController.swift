@@ -9,9 +9,9 @@
 import UIKit
 import Alamofire
 
-class HomeCollectionViewController: UIViewController, GenericCollection {
+class HomeCollectionViewController: UIViewController, GenericCollection {    
     var collectionView: UICollectionView!
-    var dataSource: GenericCollectionDataSource
+    var dataSource: GenericCollectionDataSource!
     var searchDataProvider = MovieListDataProvider()
     
     weak var mainCoordinator: MainCoordinator!
@@ -28,15 +28,12 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     }
     
     required init() {
-        self.dataSource = GenericCollectionDataSource(sections: sections)
         super.init(nibName: nil, bundle: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = NSLocalizedString("Movies", comment: "")
-        
+                
         createCollectionView()
         setup()
         setupSearch()
@@ -44,12 +41,17 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func setup() {
+        self.title = NSLocalizedString("Movies", comment: "")
+        
+        //CollectionView setup
         collectionView.backgroundColor = .appBackgroundColor
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
+        //User Profile NavBar Button
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(showUser))
         
+        //Network connection manager
         manager?.startListening { status in
             if status == .notReachable || status == .unknown {
                 AlertManager.showNetworkConnectionAlert(sender: self)
@@ -90,10 +92,8 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
             self?.collectionView.reloadData()
         }
         
-        dataSource.sections = sections
-        dataSource.collectionView = collectionView
+        self.dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
         dataSource.didUpdate = dataSourceDidUpdate
-        collectionView.dataSource = dataSource
         
         refresh()
     }
@@ -101,14 +101,6 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     //MARK:- Actions
     @objc func showUser() {
         mainCoordinator.showUserProfile()
-    }
-    
-    func reload() {
-        if self.collectionView.refreshControl?.isRefreshing ?? false {
-            self.collectionView.refreshControl?.endRefreshing()
-        }
-
-        self.collectionView.reloadData()
     }
     
     @objc func refresh() {

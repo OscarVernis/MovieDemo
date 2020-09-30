@@ -9,23 +9,28 @@
 import UIKit
 
 class GenericCollectionDataSource: NSObject, UICollectionViewDataSource {
-    var sections: [ConfigurableSection]
-    
-    unowned var collectionView: UICollectionView! {
+    var sections: [ConfigurableSection] {
         didSet {
             setup()
-
+            refresh()
         }
     }
     
+    unowned var collectionView: UICollectionView!
+    
     var didUpdate: ((Int) -> Void)?
     
-    required public init(sections: [ConfigurableSection]) {
+    required public init(collectionView: UICollectionView, sections: [ConfigurableSection]) {
+        self.collectionView = collectionView
         self.sections = sections
         super.init()
+        
+        setup()
     }
     
     fileprivate func setup() {
+        collectionView.dataSource = self
+        
         for (index, section) in sections.enumerated() {
             section.registerReusableViews(withCollectionView: collectionView)
             
