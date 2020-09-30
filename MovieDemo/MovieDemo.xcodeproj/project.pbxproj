@@ -382,6 +382,8 @@
 		555A14422523D97B0024AFAA /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				55893B6D2513F56D00233677 /* ArrayDataProvider.swift */,
+				5535CE6A251406E700260617 /* CellConfigurator.swift */,
 				555A14432523D97B0024AFAA /* GenericCollection.swift */,
 				555A14462523D97B0024AFAA /* GenericCollectionDataSource.swift */,
 				555A14472523D97B0024AFAA /* ConfigurableSection.swift */,
@@ -412,7 +414,6 @@
 		5562461425156091005E63AB /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5535CE6A251406E700260617 /* CellConfigurator.swift */,
 				55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */,
 				55219B21251413B100D49F4F /* CrewCreditPhotoListCellConfigurator.swift */,
 				55219B262514187900D49F4F /* CastCreditPhotoListCellConfigurator.swift */,
@@ -532,6 +533,7 @@
 				55A6A9902511A70E00305C29 /* Utils */,
 				55EECCDB2511905A0041EAE7 /* Extensions */,
 				556246192515610F005E63AB /* Coordinator */,
+				555A14422523D97B0024AFAA /* Protocols */,
 				5562461A2515611A005E63AB /* Service */,
 				55E07D7A22D9983C00AF0144 /* Model */,
 				554DE184251F0C23000286D2 /* ViewModel */,
@@ -539,7 +541,6 @@
 				5587114C25108082005A0975 /* Cells + Views */,
 				55596E022513071400A2B821 /* Configurators */,
 				557FFA95251A6D5400D79F68 /* Login */,
-				555A14422523D97B0024AFAA /* Protocols */,
 				5550409A251E707900D919FF /* User Profile */,
 				5506BAA92512E2B10052B0F2 /* Home */,
 				55518D4A251151B300DAEB7F /* Movie Detail */,
@@ -586,7 +587,6 @@
 		55EECCD825117C3B0041EAE7 /* Data Providers */ = {
 			isa = PBXGroup;
 			children = (
-				55893B6D2513F56D00233677 /* ArrayDataProvider.swift */,
 				55893B7A2513FEEE00233677 /* StaticArrayDataProvider.swift */,
 				55AA47112506B1B900E25C59 /* MovieListDataProvider.swift */,
 			);
