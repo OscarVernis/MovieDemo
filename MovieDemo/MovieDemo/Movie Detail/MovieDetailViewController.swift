@@ -10,6 +10,8 @@ import UIKit
 import AlamofireImage
 import Lightbox
 import SPStorkController
+import YoutubeDirectLinkExtractor
+import AVKit
 
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
@@ -268,7 +270,27 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     @objc fileprivate func playYoutubeTrailer() {
-        if let url = movie.trailerURL {
+        guard let youtubeURL = movie.trailerURL else { return }
+        
+        playYoutubeVideo(url: youtubeURL)
+    }
+    
+    @objc fileprivate func playYoutubeVideo(url: URL) {
+        let youtubeLinkExtractor = YoutubeDirectLinkExtractor()
+        youtubeLinkExtractor.extractInfo(for: .url(url), success: { info in
+            DispatchQueue.main.async {
+                try? AVAudioSession.sharedInstance().setCategory(.playback)
+                try? AVAudioSession.sharedInstance().setActive(true)
+                
+                let player = AVPlayer(url: URL(string: info.highestQualityPlayableLink!)!)
+                let playerViewController = AVPlayerViewController()
+                playerViewController.player = player
+                
+                self.present(playerViewController, animated: true) {
+                    playerViewController.player!.play()
+                }
+            }
+        }) { error in
             UIApplication.shared.open(url)
         }
     }
@@ -309,6 +331,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case _ as MovieDetailRecommendedSection:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
+        case _ as MovieDetailVideoSection:
+            let video = movie.videos[indexPath.row]
+            playYoutubeVideo(url: video.youtubeURL)
+            
         default:
             break
         }

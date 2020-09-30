@@ -81,6 +81,15 @@
           "revision": "9774a91994d44c81607c949f0b2e5c41ef01c265",
           "version": "1.8.2"
         }
+      },
+      {
+        "package": "YoutubeDirectLinkExtractor",
+        "repositoryURL": "https://github.com/devandsev/YoutubeDirectLinkExtractor",
+        "state": {
+          "branch": null,
+          "revision": "5017009f15ac6d659d26678556c80e5a74868aa2",
+          "version": "0.3.1"
+        }
       }
     ]
   },

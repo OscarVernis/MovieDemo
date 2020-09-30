@@ -30,28 +30,19 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jao-Io-5KB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="199"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.20112781954887218" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HoW-mx-bFu">
                         <rect key="frame" x="5" y="207" width="370" height="24"/>
                         <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3RL-Xp-OBd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="199"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25229088345864664" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="12"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                        <connections>
-                            <action selector="buttonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="Bh3-7d-nvV"/>
-                        </connections>
-                    </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Oqw-x7-044">
                         <rect key="frame" x="129" y="50.5" width="117" height="97.5"/>
-                        <color key="tintColor" white="1" alpha="0.9037682095864662" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="1" alpha="0.69829358552631582" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="100" id="qBv-0J-0Cz"/>
                             <constraint firstAttribute="width" secondItem="Oqw-x7-044" secondAttribute="height" multiplier="41:35" id="uhi-ge-Eby"/>
@@ -61,16 +52,16 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="3RL-Xp-OBd" firstAttribute="leading" secondItem="fVN-Pm-UcC" secondAttribute="leading" id="0Ad-Li-yn3"/>
                 <constraint firstItem="HoW-mx-bFu" firstAttribute="top" secondItem="fVN-Pm-UcC" secondAttribute="bottom" constant="8" id="5sg-gt-aHN"/>
+                <constraint firstItem="Jao-Io-5KB" firstAttribute="leading" secondItem="fVN-Pm-UcC" secondAttribute="leading" id="67Z-FZ-i84"/>
                 <constraint firstAttribute="trailing" secondItem="HoW-mx-bFu" secondAttribute="trailing" id="6nT-fU-q6f"/>
-                <constraint firstItem="3RL-Xp-OBd" firstAttribute="bottom" secondItem="fVN-Pm-UcC" secondAttribute="bottom" id="Isd-13-TLq"/>
+                <constraint firstItem="Jao-Io-5KB" firstAttribute="trailing" secondItem="fVN-Pm-UcC" secondAttribute="trailing" id="9VI-je-C5E"/>
                 <constraint firstItem="fVN-Pm-UcC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Jol-KO-ZVa"/>
-                <constraint firstItem="3RL-Xp-OBd" firstAttribute="top" secondItem="fVN-Pm-UcC" secondAttribute="top" id="OxV-kA-RvZ"/>
                 <constraint firstItem="HoW-mx-bFu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="RfU-93-111"/>
+                <constraint firstItem="Jao-Io-5KB" firstAttribute="top" secondItem="fVN-Pm-UcC" secondAttribute="top" id="Ro2-7A-qxQ"/>
+                <constraint firstItem="Jao-Io-5KB" firstAttribute="bottom" secondItem="fVN-Pm-UcC" secondAttribute="bottom" id="Vyf-pT-dqH"/>
                 <constraint firstItem="fVN-Pm-UcC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ia3-Cw-Jjx"/>
                 <constraint firstItem="Oqw-x7-044" firstAttribute="centerY" secondItem="fVN-Pm-UcC" secondAttribute="centerY" id="kaU-jb-JQK"/>
-                <constraint firstItem="3RL-Xp-OBd" firstAttribute="trailing" secondItem="fVN-Pm-UcC" secondAttribute="trailing" id="r73-2S-n93"/>
                 <constraint firstItem="Oqw-x7-044" firstAttribute="centerX" secondItem="fVN-Pm-UcC" secondAttribute="centerX" id="uG7-lK-JUj"/>
                 <constraint firstAttribute="trailing" secondItem="fVN-Pm-UcC" secondAttribute="trailing" id="xR2-FU-eu3"/>
                 <constraint firstAttribute="bottom" secondItem="HoW-mx-bFu" secondAttribute="bottom" id="y5R-HU-U4C"/>
