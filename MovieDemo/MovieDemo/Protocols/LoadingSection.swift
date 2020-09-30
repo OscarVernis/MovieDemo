@@ -21,7 +21,7 @@ class LoadingSection: ConfigurableSection {
     
     func sectionLayout() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        return sectionBuilder.createListSection(height: 44)
+        return sectionBuilder.createListSection(height: 100)
     }
     
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {

@@ -11,51 +11,20 @@ import AlamofireImage
 import Lightbox
 import SPStorkController
 
-class MovieDetailViewController: UIViewController {    
+class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
+    var dataSource: GenericCollectionDataSource!
     
     private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
     
-    enum Section: Int, CaseIterable {
-        case Header
-        case Overview
-        case Loading
-        case Trailer
-        case Cast
-        case Crew
-        case Videos
-        case RecommendedMovies
-        case Info
-        
-        var title: String {
-            switch self {
-            case .Header, .Loading, .Trailer:
-                return ""
-            case .Overview:
-                return NSLocalizedString("Overview", comment: "")
-            case .Cast:
-                return NSLocalizedString("Cast", comment: "")
-            case .Crew:
-                return NSLocalizedString("Crew", comment: "")
-            case .RecommendedMovies:
-                return NSLocalizedString("Recommended Movies", comment: "")
-            case .Info:
-                return NSLocalizedString("Info", comment: "")
-            case .Videos:
-                return NSLocalizedString("Videos", comment: "")
-            }
-        }
-        
-    }
-    
-    private var sections = [Section]()
+    private var sections: [ConfigurableSection]!
     private var isLoading = true
     
     private var movie: MovieViewModel!
         
     private weak var actionsCell: UserActionsCell?
-    private var collectionView: UICollectionView!
+    var collectionView: UICollectionView!
     
     required init(viewModel: MovieViewModel) {
         self.movie = viewModel
@@ -75,61 +44,12 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
 
         reloadSections()
-        
+        createCollectionView()
         setupCollectionView()
         setupDataProvider()
     }
-    
-    fileprivate func reloadSections() {
-        sections.removeAll()
-        sections.append(.Header)
         
-        
-        if !movie.overview.isEmpty {
-            sections.append(.Overview)
-        }
-        
-        if isLoading {
-            sections.append(.Loading)
-            return
-        }
-        
-        if movie.trailerURL != nil {
-            sections.append(.Trailer)
-        }
-        
-        if !movie.topCast.isEmpty {
-            sections.append(.Cast)
-        }
-
-        if !movie.topCrew.isEmpty {
-            sections.append(.Crew)
-        }
-        
-        if !movie.videos.isEmpty {
-            sections.append(.Videos)
-        }
-        
-        if !movie.recommendedMovies.isEmpty {
-            sections.append(.RecommendedMovies)
-        }
-        
-        if !movie.infoArray.isEmpty {
-            sections.append(.Info)
-        }
-
-        collectionView.reloadData()
-    }
-    
     fileprivate func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .appBackgroundColor
-        view.addSubview(collectionView)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
         //Set NavigationBar/ScrollView settings for design
         self.navigationItem.largeTitleDisplayMode = .always
 
@@ -139,7 +59,6 @@ class MovieDetailViewController: UIViewController {
         //Set so the scrollIndicator stops before the status bar
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
-
         //Load Background Blur View
         if let imageURL = movie.posterImageURL(size: .w342) {
             collectionView.backgroundColor = .clear
@@ -150,27 +69,13 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
-        //Register Cells and Headers
-        SectionTitleView.registerHeader(withCollectionView: collectionView)
-        MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
-
-        LoadingCell.register(withCollectionView: collectionView)
-        
-        UserActionsCell.register(withCollectionView: collectionView)
-        OverviewCell.register(withCollectionView: collectionView)
-        TrailerCell.register(withCollectionView: collectionView)
-        YoutubeVideoCell.register(withCollectionView: collectionView)
-        MoviePosterInfoCell.register(withCollectionView: collectionView)
-        CreditCell.register(withCollectionView: collectionView)
-        InfoListCell.register(withCollectionView: collectionView)
-
-        collectionView.collectionViewLayout = createLayout()
+        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
     }
     
     fileprivate func setupDataProvider()  {
-        let updateCollectionView:(Error?) -> () = { [weak self] error in
+        movie.didUpdate = { [weak self] error in
             guard let self = self else { return }
-                        
+            
             if error != nil {
                 AlertManager.showRefreshErrorAlert(sender: self) {
                     self.navigationController?.popViewController(animated: true)
@@ -181,7 +86,6 @@ class MovieDetailViewController: UIViewController {
             self.reloadSections()
         }
         
-        movie.didUpdate = updateCollectionView
         movie.refresh()
     }
     
@@ -201,6 +105,79 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    //MARK:- Sections
+    fileprivate func reloadSections() {
+        sections = [ConfigurableSection]()
+        
+        //Header
+        let headerSection = MovieDetailHeaderSection(movie: movie)
+        headerSection.imageTapHandler = { [weak self] in
+            self?.showImage()
+        }
+                
+        sections.append(headerSection)
+        
+        if !movie.overview.isEmpty {
+            let overviewSection = MovieDetailOverviewSection(overview: movie.overview)
+            sections.append(overviewSection)
+        }
+        
+        if isLoading {
+            sections.append(LoadingSection())
+            return
+        }
+        
+        if movie.trailerURL != nil {
+            sections.append(MovieDetailTrailerSection())
+        }
+        
+        if !movie.topCast.isEmpty {
+            let castSection = MovieDetailCastSection(cast: movie.topCast)
+            castSection.titleHeaderButtonHandler = { [weak self] in
+                guard let self = self else {return }
+                
+                self.mainCoordinator.showCastCreditList(title: castSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.cast))
+            }
+            
+            sections.append(castSection)
+        }
+
+        if !movie.topCrew.isEmpty {
+            let crewSection = MovieDetailCrewSection(crew: movie.topCrew)
+            crewSection.titleHeaderButtonHandler = { [weak self] in
+                guard let self = self else {return }
+                
+                self.mainCoordinator.showCrewCreditList(title: crewSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.crew))
+            }
+            
+            sections.append(crewSection)
+        }
+        
+        if !movie.videos.isEmpty {
+            let movieSection = MovieDetailVideoSection(videos: movie.videos)
+            sections.append(movieSection)
+        }
+        
+        if !movie.recommendedMovies.isEmpty {
+            let recommendedSection = MovieDetailRecommendedSection(movies: movie.recommendedMovies)
+            recommendedSection.titleHeaderButtonHandler = { [weak self] in
+                guard let self = self else {return }
+                
+                self.mainCoordinator.showMovieList(title: recommendedSection.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id)))
+            }
+            
+            sections.append(recommendedSection)
+        }
+        
+        if !movie.infoArray.isEmpty {
+            let infoSection = MovieDetailInfoSection(info: movie.infoArray)
+            sections.append(infoSection)
+        }
+
+        dataSource.sections = sections
+        collectionView.reloadData()
+    }
+
     //MARK:- Actions
     @objc fileprivate func markAsFavorite() {
         if !SessionManager.shared.isLoggedIn {
@@ -290,266 +267,52 @@ class MovieDetailViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
     
-}
-
-//MARK: - CollectionView CompositionalLayout
-extension MovieDetailViewController {
-    func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int,
-            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-
-            var section: NSCollectionLayoutSection?
-            let sectionBuilder = MoviesCompositionalLayoutBuilder()
-            
-            let sectionType = self?.sections[sectionIndex]
-
-            switch sectionType {
-            case .Header: //Main Header section, displays User Action Buttons if logged in.
-                section = sectionBuilder.createSection(groupHeight: .absolute(44))
-                
-                let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .Overview:
-                section = sectionBuilder.createEstimatedSection(height: 50)
-                
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                sectionHeader.contentInsets.top = 6
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .Loading:
-                section = sectionBuilder.createEstimatedSection(height: 150)
-            case .Trailer:
-                section = sectionBuilder.createListSection(height: 65)
-                section?.contentInsets.bottom = 0
-            case .Cast:
-                section = sectionBuilder.createHorizontalCreditSection()
-                
-                section?.contentInsets.top = 8
-                section?.contentInsets.bottom = 0
-                
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .Crew:
-                section = sectionBuilder.createListSection(height: 50, columns: 2)
-                
-                section?.contentInsets.top = 5
-                section?.contentInsets.bottom = 10
-
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .Videos:
-                section = sectionBuilder.createBannerSection()
-                
-                section?.orthogonalScrollingBehavior = .continuous
-                section?.contentInsets.top = 10
-                section?.contentInsets.bottom = 0
-                
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .RecommendedMovies:
-                section = sectionBuilder.createHorizontalPosterSection()
-                
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                section?.contentInsets.top = 12
-                section?.contentInsets.bottom = 10
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .Info:
-                section = sectionBuilder.createListSection(height: 50)
-                
-                section?.contentInsets.top = 5
-                section?.contentInsets.bottom = (self?.bottomInset ?? 0) + 30
-
-                let sectionHeader = sectionBuilder.createTitleSectionHeader()
-                section?.boundarySupplementaryItems = [sectionHeader]
-            case .none:
-                break
-            }
-            
-            return section
+    @objc fileprivate func playYoutubeTrailer() {
+        if let url = movie.trailerURL {
+            UIApplication.shared.open(url)
         }
-                
-        return layout
     }
-
+    
 }
 
-// MARK: UICollectionViewDelegate
+// MARK:- UICollectionViewDelegate
 extension MovieDetailViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let sectionType = self.sections[indexPath.section]
-        switch sectionType {
-        case .Header, .Overview, .Trailer, .Loading, .Info, .Videos:
-            break
-        case .Cast:
-            let castCredit = movie.cast[indexPath.row]
-            let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
-            let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
-            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
-            break
-        case .Crew:
-            let crewCredit = movie.topCrew[indexPath.row]
-            let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
-            let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
-            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
-            break
-        case .RecommendedMovies:
-            let recommendedMovie = movie.recommendedMovies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: recommendedMovie)
-        }
-    }
-}
-
-// MARK: UICollectionViewDataSource
-extension MovieDetailViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let sectionType = self.sections[section]
-        switch sectionType {
-        case .Header:
-            return SessionManager.shared.isLoggedIn ? 1 : 0
-        case .Cast:
-            return movie.topCast.count
-        case .Crew:
-            return movie.topCrew.count
-        case .RecommendedMovies:
-            return movie.recommendedMovies.count
-        case .Info:
-            return movie.infoArray.count
-        case .Trailer:
-            return movie.youtubeKey != nil ? 1 : 0
-        case .Overview:
-            return 1
-        case .Videos:
-            return movie.videos.count
-        case .Loading:
-            return isLoading ? 1 : 0
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let sectionType = self.sections[indexPath.section]
-        switch sectionType {
-        case .Header:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserActionsCell.reuseIdentifier, for: indexPath) as! UserActionsCell
-            
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        switch cell {
+        case let cell as UserActionsCell:
             cell.favoriteButton.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
             cell.watchlistButton.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
             cell.rateButton.addTarget(self, action: #selector(addRating), for: .touchUpInside)
 
             actionsCell = cell
             updateActionButtons()
-            
-            return cell
-        case .Cast:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
-            
-            let cast = movie.topCast[indexPath.row]
-            CastCreditCellConfigurator().configure(cell: cell, with: cast)
-            
-            return cell
-        case .Crew:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
-            
-            let crew = movie.topCrew[indexPath.row]
-            CrewCreditInfoListCellConfigurator().configure(cell: cell, with: crew)
-                        
-            return cell
-        case .RecommendedMovies:
-            let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-            
+        case let cell as TrailerCell:
+            cell.trailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+        default:
+            break
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        switch(section) {
+        case _ as MovieDetailCastSection:
+            let castCredit = movie.cast[indexPath.row]
+            let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
+            let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
+            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
+        case _ as MovieDetailCrewSection:
+            let crewCredit = movie.topCrew[indexPath.row]
+            let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
+            let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
+            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
+        case _ as MovieDetailRecommendedSection:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
-            
-            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
-            
-            return posterCell
-        case .Info:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
-            
-            let info = movie.infoArray[indexPath.row]
-            MovieDetailsInfoCellConfigurator().configure(cell: cell, info: info)
-                                    
-            return cell
-        case .Trailer:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrailerCell.reuseIdentifier, for: indexPath) as! TrailerCell
-            
-            cell.youtubeURL = movie.trailerURL
-            
-            return cell
-        case .Videos:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeVideoCell.reuseIdentifier, for: indexPath) as! YoutubeVideoCell
-            
-            let movieVideo = movie.videos[indexPath.row]
-            cell.configure(video: movieVideo)
-            
-            return cell
-        case .Overview:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
-            
-            cell.textLabel.text = movie.overview
-            
-            return cell
-        case .Loading:
-            if isLoading {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath) as! LoadingCell
-                
-                return cell
-            } else {
-                fatalError("Should be empty!")
-            }
+            mainCoordinator.showMovieDetail(movie: recommendedMovie)
+        default:
+            break
         }
+        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let sectionType = self.sections[indexPath.section]
 
-        if sectionType == .Header {
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
-                        
-            //Adjust the top of the Poster Image so it doesn't go unde the bar
-            headerView.topConstraint.constant = topInset + 55
-            headerView.imageTapHandler = { [weak self] in
-                guard let self = self else { return }
-                    
-                self.showImage()
-            }
-            
-            headerView.configure(movie: movie)
-            
-            return headerView
-        } else {
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
-            
-            var tapHandler: (() -> ())?
-            switch sectionType {
-            case .Header, .Overview, .Trailer, .Loading, .Info, .Videos:
-                break
-            case .Cast:
-                tapHandler = { [weak self] in
-                    guard let self = self else { return }
-                    
-                    self.mainCoordinator.showCastCreditList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.movie.cast))
-                }
-            case .Crew:
-                tapHandler = { [weak self] in
-                    guard let self = self else { return }
-                    
-                    self.mainCoordinator.showCrewCreditList(title: sectionType.title, dataProvider: StaticArrayDataProvider(models: self.movie.crew))
-                }
-            case .RecommendedMovies:
-                tapHandler = { [weak self] in
-                    guard let self = self else { return }
-                    
-                    self.mainCoordinator.showMovieList(title: sectionType.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id)))
-                }
-            }
-            
-            MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: sectionType.title, tapHandler: tapHandler)
-            
-            return headerView
-        }
-    }
-    
 }

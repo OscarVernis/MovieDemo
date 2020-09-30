@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,9 +32,6 @@
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorder" value="NO"/>
                         </userDefinedRuntimeAttributes>
-                        <connections>
-                            <action selector="openVideo:" destination="gTV-IL-0wX" eventType="touchUpInside" id="d9l-to-Ae8"/>
-                        </connections>
                     </button>
                 </subviews>
             </view>
@@ -45,6 +43,9 @@
                 <constraint firstAttribute="bottom" secondItem="FXa-Ie-Ktb" secondAttribute="bottom" id="jdx-Uv-BEY"/>
             </constraints>
             <size key="customSize" width="650" height="76"/>
+            <connections>
+                <outlet property="trailerButton" destination="FXa-Ie-Ktb" id="0NT-jH-6i7"/>
+            </connections>
             <point key="canvasLocation" x="-7.9710144927536239" y="-16.071428571428569"/>
         </collectionViewCell>
     </objects>

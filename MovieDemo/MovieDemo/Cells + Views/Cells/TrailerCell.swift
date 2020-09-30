@@ -9,13 +9,6 @@
 import UIKit
 
 class TrailerCell: UICollectionViewCell {
-    var youtubeURL: URL? = nil
-
-    @IBAction func openVideo(_ sender: Any) {
-        if let url = youtubeURL {
-            print(url)
-            UIApplication.shared.open(url)
-        }
-    }
-
+    @IBOutlet weak var trailerButton: CustomButton!
+    
 }
