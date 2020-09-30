@@ -1,62 +1,60 @@
 //
-//  HomeViewControllerCollectionViewController.swift
+//  HomeCollectionViewController.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 06/09/20.
+//  Created by Oscar Vernis on 27/09/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 import Alamofire
 
-class HomeCollectionViewController: UIViewController {    
-    weak var mainCoordinator: MainCoordinator!
-    
-    var dataSource: HomeCollectionViewDataSource!
+class HomeCollectionViewController: UIViewController, GenericCollection {
+    var collectionView: UICollectionView!
+    var dataSource: GenericCollectionDataSource
     var searchDataProvider = MovieListDataProvider()
     
-    var collectionView: UICollectionView!
-    var sections: [HomeSection]!
+    weak var mainCoordinator: MainCoordinator!
     
+    var didSelectItem: ((Movie) -> ())?
+    
+    var sections = [ConfigurableSection]()
+
     let manager = NetworkReachabilityManager(host: "www.apple.com")
+    
+    //MARK:- Setup
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    required init() {
+        self.dataSource = GenericCollectionDataSource(sections: sections)
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         self.title = NSLocalizedString("Movies", comment: "")
+        
+        createCollectionView()
+        setup()
+        setupSearch()
+        setupDataSource()
+    }
+    
+    fileprivate func setup() {
+        collectionView.backgroundColor = .appBackgroundColor
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(showUser))
         
         manager?.startListening { status in
             if status == .notReachable || status == .unknown {
                 AlertManager.showNetworkConnectionAlert(sender: self)
             }
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(showUser))
-                
-        setupSearch()
-        setupCollectionView()
-        setupDataSource()
-    }
-    
-    fileprivate func setupDataSource() {
-        let didUpdate: (Int) -> Void = { [weak self] section in
-            self?.collectionView.refreshControl?.endRefreshing()
-            self?.collectionView.reloadData()
-        }
-        
-        sections = [
-            HomeSection(.NowPlaying, index: 0, didUpdate: didUpdate),
-            HomeSection(.Upcoming, index: 1, didUpdate: didUpdate),
-            HomeSection(.Popular, index: 2, didUpdate: didUpdate),
-            HomeSection(.TopRated, index: 3, didUpdate: didUpdate)
-        ]
-        
-        dataSource = HomeCollectionViewDataSource(sections: sections)
-        dataSource.sectionHeaderButtonHandler = { [weak self] section in
-            self?.showMovieList(section: section)
-        }
-        
-        collectionView.dataSource = dataSource
     }
     
     fileprivate func setupSearch() {
@@ -75,38 +73,62 @@ class HomeCollectionViewController: UIViewController {
         navigationItem.searchController = search
     }
     
-    fileprivate func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-        collectionView.delegate = self
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .appBackgroundColor
-        view.addSubview(collectionView)
+    fileprivate func setupDataSource() {
+        let sectionHeaderHandler: (HomeMovieListSection) -> Void = { [weak self] section in
+            self?.showMovieList(section: section)
+        }
         
-        collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        sections = [
+            HomeMovieListSection(.NowPlaying, sectionHeaderButtonHandler: sectionHeaderHandler),
+            HomeMovieListSection(.Upcoming, sectionHeaderButtonHandler: sectionHeaderHandler),
+            HomeMovieListSection(.Popular, sectionHeaderButtonHandler: sectionHeaderHandler),
+            HomeMovieListSection(.TopRated, sectionHeaderButtonHandler: sectionHeaderHandler)
+        ]
         
-        MoviePosterInfoCell.register(withCollectionView: collectionView)
-        MovieBannerCell.register(withCollectionView: collectionView)
-        MovieRatingListCell.register(withCollectionView: collectionView)
-        MovieInfoListCell.register(withCollectionView: collectionView)
-        SectionTitleView.registerHeader(withCollectionView: collectionView)
+        let dataSourceDidUpdate: (Int) -> Void = { [weak self] section in
+            self?.collectionView.refreshControl?.endRefreshing()
+            self?.collectionView.reloadData()
+        }
+        
+        dataSource.sections = sections
+        dataSource.collectionView = collectionView
+        dataSource.didUpdate = dataSourceDidUpdate
+        collectionView.dataSource = dataSource
+        
+        refresh()
     }
     
-    //MARK: - Actions
+    //MARK:- Actions
     @objc func showUser() {
         mainCoordinator.showUserProfile()
     }
     
-    @objc func refresh() {
-        sections.forEach { $0.dataProvider.refresh() }
+    func reload() {
+        if self.collectionView.refreshControl?.isRefreshing ?? false {
+            self.collectionView.refreshControl?.endRefreshing()
+        }
+
+        self.collectionView.reloadData()
     }
     
-    func showMovieList(section: HomeSection) {
-        let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
-        mainCoordinator.showMovieList2(title: section.title, dataProvider: dataProvider)
-//        mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
+    @objc func refresh() {
+        dataSource.refresh()
     }
-
+    
+    func showMovieList(section: HomeMovieListSection) {
+        let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
+        mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
+    }
+    
+    //MARK: - CollectionView Delegate
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let section = sections[indexPath.section] as? HomeMovieListSection {
+            let movie = section.dataProvider.movies[indexPath.row]
+            
+            mainCoordinator.showMovieDetail(movie: movie)
+        }
+    }
+    
 }
 
 //MARK: - CollectionView CompositionalLayout
@@ -115,33 +137,8 @@ extension HomeCollectionViewController {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
             layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 
-            var section: NSCollectionLayoutSection?
-            let sectionBuilder = MoviesCompositionalLayoutBuilder()
-            
-            let sectionHeader = sectionBuilder.createTitleSectionHeader()
-            
-            switch sectionIndex {
-            case 0:
-                section = sectionBuilder.createBannerSection()
-                section?.contentInsets.top = 10
-                section?.contentInsets.bottom = 10
-            case 1:
-                section = sectionBuilder.createHorizontalPosterSection()
-                section?.contentInsets.top = 10
-                section?.contentInsets.bottom = 20
-            case 2:
-                section = sectionBuilder.createListSection()
-                section?.contentInsets.bottom = 30
-            case 3:
-                section = sectionBuilder.createDecoratedListSection()
-                sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-            default:
-                section = nil
-            }
-            
-            section?.boundarySupplementaryItems = [sectionHeader]
-
-            return section
+            let section = self.dataSource.sections[sectionIndex]
+            return section.sectionLayout()
         }
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
@@ -149,17 +146,6 @@ extension HomeCollectionViewController {
         return layout
     }
 
-}
-
-// MARK: - CollectionView Delegate
-extension HomeCollectionViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = dataSource.sections[indexPath.section]
-        let movie = section.movies[indexPath.row]
-                
-        mainCoordinator.showMovieDetail(movie: movie)
-    }
-    
 }
 
 // MARK: - Searching
@@ -170,4 +156,3 @@ extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControl
         }
     }
 }
-

@@ -112,18 +112,6 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }
     
-    func showMovieList2(title: String, dataProvider: MovieListDataProvider) {
-        let section = MovieListSection(dataProvider: dataProvider)
-        let mdvc = GenericListCollectionViewController(title: title, section: section)
-        mdvc.mainCoordinator = self
-
-        mdvc.didSelectItem = { [weak self] movie in
-            self?.showMovieDetail(movie: movie)
-        }
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
-    }
-    
     func showCrewCreditList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
         let mdvc = ListViewController<Provider, CrewCreditPhotoListCellConfigurator>()
         mdvc.title = title
