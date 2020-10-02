@@ -51,8 +51,8 @@ class CustomButton: UIButton {
         self.isSelected = selected
         
         if animated && selected {
-            imageView?.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) { [weak self] in
+            imageView?.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.55, initialSpringVelocity: 20, options: []) { [weak self] in
                 self?.imageView?.transform = CGAffineTransform.identity
             }
 
