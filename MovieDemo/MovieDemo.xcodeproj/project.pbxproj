@@ -54,7 +54,6 @@
 		555A144C2523D97B0024AFAA /* GenericCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A14462523D97B0024AFAA /* GenericCollectionDataSource.swift */; };
 		555A144D2523D97B0024AFAA /* ConfigurableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A14472523D97B0024AFAA /* ConfigurableSection.swift */; };
 		5560466C251BB4000037D08B /* MovieRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560466B251BB4000037D08B /* MovieRatingViewController.swift */; };
-		55604678251BC01A0037D08B /* Lightbox in Frameworks */ = {isa = PBXBuildFile; productRef = 55604677251BC01A0037D08B /* Lightbox */; };
 		5560467C251BC4ED0037D08B /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560467B251BC4ED0037D08B /* ActivityIndicator.swift */; };
 		55604684251BCC320037D08B /* SPStorkController in Frameworks */ = {isa = PBXBuildFile; productRef = 55604683251BCC320037D08B /* SPStorkController */; };
 		55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */; };
@@ -90,6 +89,13 @@
 		559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D132022D98E4800C96FC8 /* AppDelegate.swift */; };
 		559D132822D98E4B00C96FC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559D132722D98E4B00C96FC8 /* Assets.xcassets */; };
 		559D132B22D98E4B00C96FC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 559D132922D98E4B00C96FC8 /* LaunchScreen.storyboard */; };
+		55A60DD62527AAB30082810C /* MediaViewerTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD02527AAB30082810C /* MediaViewerTransitionDelegate.swift */; };
+		55A60DD72527AAB30082810C /* MediaViewerPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD12527AAB30082810C /* MediaViewerPlayerView.swift */; };
+		55A60DD82527AAB30082810C /* MediaViewerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD22527AAB30082810C /* MediaViewerAnimator.swift */; };
+		55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55A60DD32527AAB30082810C /* MediaViewerPlayerControls.xib */; };
+		55A60DDA2527AAB30082810C /* MediaViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD42527AAB30082810C /* MediaViewerViewController.swift */; };
+		55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */; };
+		55A60DE12527B32F0082810C /* UINavigationController+Orietation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DE02527B32F0082810C /* UINavigationController+Orietation.swift */; };
 		55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6A98E2511A6C400305C29 /* MovieGenre.swift */; };
 		55A6A9922511A72800305C29 /* MovieGenreTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6A9912511A72800305C29 /* MovieGenreTransformer.swift */; };
 		55A73A04251AAE410024C907 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 55A73A03251AAE410024C907 /* AlamofireImage */; };
@@ -216,6 +222,13 @@
 		559D132722D98E4B00C96FC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		559D132A22D98E4B00C96FC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		559D132C22D98E4B00C96FC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55A60DD02527AAB30082810C /* MediaViewerTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerTransitionDelegate.swift; sourceTree = "<group>"; };
+		55A60DD12527AAB30082810C /* MediaViewerPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerPlayerView.swift; sourceTree = "<group>"; };
+		55A60DD22527AAB30082810C /* MediaViewerAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerAnimator.swift; sourceTree = "<group>"; };
+		55A60DD32527AAB30082810C /* MediaViewerPlayerControls.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaViewerPlayerControls.xib; sourceTree = "<group>"; };
+		55A60DD42527AAB30082810C /* MediaViewerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerViewController.swift; sourceTree = "<group>"; };
+		55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerPlayerControls.swift; sourceTree = "<group>"; };
+		55A60DE02527B32F0082810C /* UINavigationController+Orietation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Orietation.swift"; sourceTree = "<group>"; };
 		55A6A98E2511A6C400305C29 /* MovieGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenre.swift; sourceTree = "<group>"; };
 		55A6A9912511A72800305C29 /* MovieGenreTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreTransformer.swift; sourceTree = "<group>"; };
 		55AA47112506B1B900E25C59 /* MovieListDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDataProvider.swift; sourceTree = "<group>"; };
@@ -259,7 +272,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				558A5A93251054F600E5FB40 /* Alamofire in Frameworks */,
-				55604678251BC01A0037D08B /* Lightbox in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
 				55604684251BCC320037D08B /* SPStorkController in Frameworks */,
 				5535975125250BD3002D032B /* YoutubeDirectLinkExtractor in Frameworks */,
@@ -329,6 +341,7 @@
 			isa = PBXGroup;
 			children = (
 				5588A0BC251DBC10004B3C6A /* RatingsView */,
+				55A60DCF2527AAB30082810C /* MediaViewer */,
 				55915772251438390085DB69 /* BlurBackgroundView.swift */,
 				55915775251438450085DB69 /* BlurBackgroundView.xib */,
 				5502F500251C2D38003EEC0A /* CustomButton.swift */,
@@ -553,6 +566,19 @@
 			path = MovieDemo;
 			sourceTree = "<group>";
 		};
+		55A60DCF2527AAB30082810C /* MediaViewer */ = {
+			isa = PBXGroup;
+			children = (
+				55A60DD42527AAB30082810C /* MediaViewerViewController.swift */,
+				55A60DD02527AAB30082810C /* MediaViewerTransitionDelegate.swift */,
+				55A60DD12527AAB30082810C /* MediaViewerPlayerView.swift */,
+				55A60DD22527AAB30082810C /* MediaViewerAnimator.swift */,
+				55A60DD32527AAB30082810C /* MediaViewerPlayerControls.xib */,
+				55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */,
+			);
+			path = MediaViewer;
+			sourceTree = "<group>";
+		};
 		55A6A9902511A70E00305C29 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,6 +630,7 @@
 				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
 				55741CE1251CFCAC00A6281B /* Double+Math.swift */,
 				55EE51A6251EC5DE00915AB3 /* UIColor+AppColors.swift */,
+				55A60DE02527B32F0082810C /* UINavigationController+Orietation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -630,7 +657,6 @@
 				55D35E1B2517DE0D00114602 /* Loaf */,
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55A73A03251AAE410024C907 /* AlamofireImage */,
-				55604677251BC01A0037D08B /* Lightbox */,
 				55604683251BCC320037D08B /* SPStorkController */,
 				5535975025250BD3002D032B /* YoutubeDirectLinkExtractor */,
 			);
@@ -670,7 +696,6 @@
 				55D35E1A2517DE0D00114602 /* XCRemoteSwiftPackageReference "Loaf" */,
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55A73A02251AAE410024C907 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
-				55604676251BC01A0037D08B /* XCRemoteSwiftPackageReference "Lightbox" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
 				5535974F25250BD3002D032B /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */,
 			);
@@ -692,6 +717,7 @@
 				558A5A9C25106F8900E5FB40 /* MovieRatingListCell.xib in Resources */,
 				5506BAB52512E64A0052B0F2 /* MovieDetailHeaderView.xib in Resources */,
 				55FEF45125141A40009363F8 /* CreditPhotoListCell.xib in Resources */,
+				55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */,
 				551A2936251F1B3C003746EE /* UserActionsCell.xib in Resources */,
 				559D132B22D98E4B00C96FC8 /* LaunchScreen.storyboard in Resources */,
 				551A2930251F194F003746EE /* UserProfileHeaderView.xib in Resources */,
@@ -722,6 +748,7 @@
 			files = (
 				55164B0625154E5B00D219BC /* MoviePosterTitleRatingCellConfigurator.swift in Sources */,
 				55596E062513076E00A2B821 /* HomeTitleSectionConfigurator.swift in Sources */,
+				55A60DD62527AAB30082810C /* MediaViewerTransitionDelegate.swift in Sources */,
 				55915773251438390085DB69 /* BlurBackgroundView.swift in Sources */,
 				55219B22251413B100D49F4F /* CrewCreditPhotoListCellConfigurator.swift in Sources */,
 				555A144A2523D97B0024AFAA /* HomeMovieListSection.swift in Sources */,
@@ -756,10 +783,12 @@
 				55893B7B2513FEEE00233677 /* StaticArrayDataProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
 				55EDD3602513F2E0004F8117 /* MovieInfoCellConfigurator.swift in Sources */,
+				55A60DD82527AAB30082810C /* MediaViewerAnimator.swift in Sources */,
 				55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */,
 				55A6A9922511A72800305C29 /* MovieGenreTransformer.swift in Sources */,
 				5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */,
 				55E3E50B2516ED1500D6FAA9 /* MovieDetailsInfoCellConfigurator.swift in Sources */,
+				55A60DD72527AAB30082810C /* MediaViewerPlayerView.swift in Sources */,
 				5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */,
 				55596E00251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift in Sources */,
 				558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */,
@@ -776,6 +805,7 @@
 				5599B2A625242E5B0075473C /* UserProfileMovieListSection.swift in Sources */,
 				5532CF972525059200663844 /* MovieDetailInfoSection.swift in Sources */,
 				55893B6E2513F56D00233677 /* ArrayDataProvider.swift in Sources */,
+				55A60DE12527B32F0082810C /* UINavigationController+Orietation.swift in Sources */,
 				5532CF8E2525013700663844 /* MovieDetailCrewSection.swift in Sources */,
 				55219B272514187900D49F4F /* CastCreditPhotoListCellConfigurator.swift in Sources */,
 				5532CF94252503FE00663844 /* MovieDetailRecommendedSection.swift in Sources */,
@@ -793,10 +823,12 @@
 				552E70572515464C009CC4CD /* MovieGenreDictionaryTransformer.swift in Sources */,
 				55EDD3572513F0C0004F8117 /* ListViewDataSource.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
+				55A60DDA2527AAB30082810C /* MediaViewerViewController.swift in Sources */,
 				5532CF8A2524FE0900663844 /* MovieDetailCastSection.swift in Sources */,
 				5545203822D99CB0004B7924 /* Movie.swift in Sources */,
 				556B78672524F6DD00F212D1 /* LoadingSection.swift in Sources */,
 				558A63AF2512AD5E0064438D /* MovieViewModel.swift in Sources */,
+				55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */,
 				55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */,
 				55E3E5082516EA6300D6FAA9 /* CrewCreditInfoListCellConfigurator.swift in Sources */,
 				55DD1B97251FC5FB00EC8C55 /* CountryArrayTransformer.swift in Sources */,
@@ -1083,14 +1115,6 @@
 				minimumVersion = 0.3.1;
 			};
 		};
-		55604676251BC01A0037D08B /* XCRemoteSwiftPackageReference "Lightbox" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hyperoslo/Lightbox";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ivanvorobei/SPStorkController";
@@ -1146,11 +1170,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5535974F25250BD3002D032B /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */;
 			productName = YoutubeDirectLinkExtractor;
-		};
-		55604677251BC01A0037D08B /* Lightbox */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 55604676251BC01A0037D08B /* XCRemoteSwiftPackageReference "Lightbox" */;
-			productName = Lightbox;
 		};
 		55604683251BCC320037D08B /* SPStorkController */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -39,7 +39,12 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     fileprivate func setup() {
+        navigationController?.delegate = self
         closeButton.isHidden = !showsCloseButton
         
         loginButton.layer.masksToBounds = true

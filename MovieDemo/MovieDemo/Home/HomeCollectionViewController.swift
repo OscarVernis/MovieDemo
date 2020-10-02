@@ -40,9 +40,14 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
         setupDataSource()
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     fileprivate func setup() {
         self.title = NSLocalizedString("Movies", comment: "")
-        
+        navigationController?.delegate = self
+
         //CollectionView setup
         collectionView.backgroundColor = .appBackgroundColor
         collectionView.refreshControl = UIRefreshControl()

@@ -20,39 +20,12 @@
         }
       },
       {
-        "package": "Cache",
-        "repositoryURL": "https://github.com/hyperoslo/Cache",
-        "state": {
-          "branch": "master",
-          "revision": "f70b03a4eff4c9ee4d38c06fda9c9ce476eb5c1b",
-          "version": null
-        }
-      },
-      {
-        "package": "Imaginary",
-        "repositoryURL": "https://github.com/hyperoslo/Imaginary",
-        "state": {
-          "branch": "master",
-          "revision": "bc3e2f925f374b10ec61979ae9e20531d5d72677",
-          "version": null
-        }
-      },
-      {
         "package": "KeychainAccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {
           "branch": null,
           "revision": "654d52d30f3dd4592e944c3e0bccb53178c992f6",
           "version": "4.2.1"
-        }
-      },
-      {
-        "package": "Lightbox",
-        "repositoryURL": "https://github.com/hyperoslo/Lightbox",
-        "state": {
-          "branch": "master",
-          "revision": "6f0ead5af5ee221f79f8344a09f8bc76c5a67c49",
-          "version": null
         }
       },
       {

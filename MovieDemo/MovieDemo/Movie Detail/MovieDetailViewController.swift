@@ -8,10 +8,8 @@
 
 import UIKit
 import AlamofireImage
-import Lightbox
 import SPStorkController
 import YoutubeDirectLinkExtractor
-import AVKit
 
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
@@ -25,6 +23,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     
     private var movie: MovieViewModel!
         
+    private weak var headerView: MovieDetailHeaderView?
     private weak var actionsCell: UserActionsCell?
     var collectionView: UICollectionView!
     
@@ -44,11 +43,16 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     //MARK:- Setup
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.delegate = self
 
         reloadSections()
         createCollectionView()
         setupCollectionView()
         setupDataProvider()
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
         
     fileprivate func setupCollectionView() {
@@ -256,17 +260,12 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
 
     fileprivate func showImage() {
-        guard let url = self.movie.posterImageURL(size: .original) else { return }
-
-        LightboxConfig.PageIndicator.enabled = false
-        LightboxConfig.makeLoadingIndicator = {
-            ActivityIndicator()
-        }
-
-        let images = [LightboxImage(imageURL: url)]
-        let controller = LightboxController(images: images)
-        controller.dynamicBackground = true
-        self.present(controller, animated: true, completion: nil)
+        guard let url = self.movie.posterImageURL(size: .original), let headerView = headerView else { return }
+        let mvvc = MediaViewerViewController(imageURL: url,
+                                             image: headerView.posterImageView.image,
+                                             presentFromView: headerView.posterImageView
+        )
+        present(mvvc, animated: true)
     }
     
     @objc fileprivate func playYoutubeTrailer() {
@@ -275,20 +274,15 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         playYoutubeVideo(url: youtubeURL)
     }
     
-    @objc fileprivate func playYoutubeVideo(url: URL) {
+    @objc fileprivate func playYoutubeVideo(url: URL, fromImageView imageView: UIImageView? = nil) {
         let youtubeLinkExtractor = YoutubeDirectLinkExtractor()
         youtubeLinkExtractor.extractInfo(for: .url(url), success: { info in
             DispatchQueue.main.async {
-                try? AVAudioSession.sharedInstance().setCategory(.playback)
-                try? AVAudioSession.sharedInstance().setActive(true)
-                
-                let player = AVPlayer(url: URL(string: info.highestQualityPlayableLink!)!)
-                let playerViewController = AVPlayerViewController()
-                playerViewController.player = player
-                
-                self.present(playerViewController, animated: true) {
-                    playerViewController.player!.play()
-                }
+                let mvvc = MediaViewerViewController(videoURL: URL(string: info.highestQualityPlayableLink!)!,
+                                                     image: imageView?.image,
+                                                     presentFromView: imageView
+                )
+                self.present(mvvc, animated: true)
             }
         }) { error in
             UIApplication.shared.open(url)
@@ -299,6 +293,12 @@ class MovieDetailViewController: UIViewController, GenericCollection {
 
 // MARK:- UICollectionViewDelegate
 extension MovieDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        guard let reusableView = view as? MovieDetailHeaderView else { return }
+        
+        headerView = reusableView
+    }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         switch cell {
         case let cell as UserActionsCell:
@@ -332,8 +332,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
         case _ as MovieDetailVideoSection:
+            let cell = collectionView.cellForItem(at: indexPath) as? YoutubeVideoCell
+            
             let video = movie.videos[indexPath.row]
-            playYoutubeVideo(url: video.youtubeURL)
+            playYoutubeVideo(url: video.youtubeURL, fromImageView: cell?.videoImageView)
             
         default:
             break

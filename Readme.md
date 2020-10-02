@@ -15,15 +15,15 @@ Demo application built as a showcase for potential clients and employers. Comple
 
 ## Features
 - Built natively with Swift.
-- Custom Interface.
 - MVC, MVVM and Coordinator patterns.
 - Compositional Layout for CollectionViews.
 - Custom Rating control that can be used to display or set a rating.
+- Custom Media Viewer that supports both local and remote Images and Videos.
 - Generic CollectionViewController to show lists of Movies, Cast, Crew members, etc.
 - Haptic Feedback for user actions.
 - Login to your TheMovieDB account, which can be set as optional or required.
-- Session management using the device Keychain and UserDefaults.
 - User Profile where you can see the movies you have Favorited, added to your Watchlist or Rated.
+- Session management using the device Keychain and UserDefaults.
 - Internalization in both English and Spanish.
 - Swift Package Manager for dependency management.
 
@@ -33,8 +33,6 @@ Demo application built as a showcase for potential clients and employers. Comple
 - ObjectMapper
 - KeychainAccess
 - Loaf
-- Etc...
-
 
 ## About Me
 Software developer with 10 years of experience, specialized on the iOS platform. I have experience in the development and long term maintenance of apps, including the full cycle, from conception to submission to the App Store. Self-taught, pragmatic and obsessed with the details.

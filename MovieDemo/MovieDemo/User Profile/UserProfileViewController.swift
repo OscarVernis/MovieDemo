@@ -42,10 +42,14 @@ class UserProfileViewController: UIViewController, GenericCollection {
         user.updateUser()
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
     fileprivate func setupCollectionView() {
         //Set NavigationBar/ScrollView settings for design
-        self.navigationItem.largeTitleDisplayMode = .always
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.delegate = self
         
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false

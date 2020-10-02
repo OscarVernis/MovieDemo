@@ -27,8 +27,14 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
         
         setup()
     }
+    
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
         
     fileprivate func setup() {
+        navigationController?.delegate = self
+        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.delegate = self
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
