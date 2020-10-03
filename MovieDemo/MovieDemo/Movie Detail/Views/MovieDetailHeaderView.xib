@@ -117,9 +117,6 @@
         </collectionReusableView>
     </objects>
     <designables>
-        <designable name="BZj-H7-VF3">
-            <size key="intrinsicContentSize" width="45" height="45"/>
-        </designable>
         <designable name="jnN-nM-tlo">
             <size key="intrinsicContentSize" width="240" height="360"/>
         </designable>

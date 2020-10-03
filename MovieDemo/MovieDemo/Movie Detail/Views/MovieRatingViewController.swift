@@ -64,6 +64,10 @@ class MovieRatingViewController: UIViewController {
     }
     
     //MARK:- Actions
+    @IBAction func close(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     @objc func ratingsViewValueChanged() {
         var rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
         if rating < 5 {

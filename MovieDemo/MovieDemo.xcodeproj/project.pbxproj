@@ -94,7 +94,7 @@
 		55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55A60DD32527AAB30082810C /* MediaViewerPlayerControls.xib */; };
 		55A60DDA2527AAB30082810C /* MediaViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD42527AAB30082810C /* MediaViewerViewController.swift */; };
 		55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */; };
-		55A60DE12527B32F0082810C /* UINavigationController+Orietation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DE02527B32F0082810C /* UINavigationController+Orietation.swift */; };
+		55A60DE12527B32F0082810C /* UINavigationController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */; };
 		55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6A98E2511A6C400305C29 /* MovieGenre.swift */; };
 		55A6A9922511A72800305C29 /* MovieGenreTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6A9912511A72800305C29 /* MovieGenreTransformer.swift */; };
 		55A73A04251AAE410024C907 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 55A73A03251AAE410024C907 /* AlamofireImage */; };
@@ -226,7 +226,7 @@
 		55A60DD32527AAB30082810C /* MediaViewerPlayerControls.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaViewerPlayerControls.xib; sourceTree = "<group>"; };
 		55A60DD42527AAB30082810C /* MediaViewerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerViewController.swift; sourceTree = "<group>"; };
 		55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerPlayerControls.swift; sourceTree = "<group>"; };
-		55A60DE02527B32F0082810C /* UINavigationController+Orietation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Orietation.swift"; sourceTree = "<group>"; };
+		55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Orientation.swift"; sourceTree = "<group>"; };
 		55A6A98E2511A6C400305C29 /* MovieGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenre.swift; sourceTree = "<group>"; };
 		55A6A9912511A72800305C29 /* MovieGenreTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreTransformer.swift; sourceTree = "<group>"; };
 		55AA47112506B1B900E25C59 /* MovieListDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListDataProvider.swift; sourceTree = "<group>"; };
@@ -627,7 +627,7 @@
 				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
 				55741CE1251CFCAC00A6281B /* Double+Math.swift */,
 				55EE51A6251EC5DE00915AB3 /* UIColor+AppColors.swift */,
-				55A60DE02527B32F0082810C /* UINavigationController+Orietation.swift */,
+				55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -801,7 +801,7 @@
 				5599B2A625242E5B0075473C /* UserProfileMovieListSection.swift in Sources */,
 				5532CF972525059200663844 /* MovieDetailInfoSection.swift in Sources */,
 				55893B6E2513F56D00233677 /* ArrayDataProvider.swift in Sources */,
-				55A60DE12527B32F0082810C /* UINavigationController+Orietation.swift in Sources */,
+				55A60DE12527B32F0082810C /* UINavigationController+Orientation.swift in Sources */,
 				5532CF8E2525013700663844 /* MovieDetailCrewSection.swift in Sources */,
 				55219B272514187900D49F4F /* CastCreditPhotoListCellConfigurator.swift in Sources */,
 				5532CF94252503FE00663844 /* MovieDetailRecommendedSection.swift in Sources */,

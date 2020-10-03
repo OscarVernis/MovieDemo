@@ -75,7 +75,7 @@ class RatingsView: UIControl {
     private let yellowTrackColor = #colorLiteral(red: 0.4769007564, green: 0.3958523571, blue: 0.01167693827, alpha: 0.5)
     private let redRatingColor = #colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1)
     private let redTrackColor = #colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.5)
-    private let grayTrackColor = UIColor.systemGray4
+    private let grayTrackColor = UIColor.systemGray3
                 
     //MARK:- Setup
     override func awakeFromNib() {

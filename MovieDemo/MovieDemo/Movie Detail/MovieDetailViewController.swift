@@ -253,7 +253,6 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         mrvc.modalPresentationStyle = .custom
         mrvc.modalPresentationCapturesStatusBarAppearance = true
         transitionDelegate.customHeight = 450
-        transitionDelegate.showCloseButton = true
         transitionDelegate.showIndicator = false
         
         mrvc.didUpdateRating = {

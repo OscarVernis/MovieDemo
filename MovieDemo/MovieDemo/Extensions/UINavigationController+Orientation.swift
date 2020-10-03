@@ -1,5 +1,5 @@
 //
-//  UINavigationController+Orietation.swift
+//  UINavigationController+Orientation.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 02/10/20.
@@ -10,12 +10,11 @@ import UIKit
 
 extension UIViewController: UINavigationControllerDelegate {
     public func navigationControllerSupportedInterfaceOrientations(_ navigationController: UINavigationController) -> UIInterfaceOrientationMask {
-        return navigationController.topViewController?.supportedInterfaceOrientations ?? .all
+        return navigationController.topViewController?.supportedInterfaceOrientations ?? .portrait
     }
     
     public func navigationControllerPreferredInterfaceOrientationForPresentation(_ navigationController: UINavigationController) -> UIInterfaceOrientation {
-        return .portrait
+        return navigationController.topViewController?.preferredInterfaceOrientationForPresentation ?? .portrait
     }
-    
-    
+
 }
