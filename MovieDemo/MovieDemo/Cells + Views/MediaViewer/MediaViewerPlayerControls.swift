@@ -56,13 +56,15 @@ class MediaViewerPlayerControls: UIView {
     }
     
     fileprivate func updateControls(time: CMTime) {        
-        guard let duration = player?.currentItem?.duration, !transportSlider.isTracking else { return }
-      
+        guard let duration = player?.currentItem?.duration else { return }
+
         //Set labels
         let remaining = duration - time
         self.timeProgressLabel.text = time.formattedString
         self.remainingTimeLabel.text = "-" + remaining.formattedString
         
+        guard !transportSlider.isTracking else { return }
+
         //Set Slider
         let progress = time.seconds / duration.seconds
         transportSlider.value = Float(progress)
@@ -86,6 +88,7 @@ class MediaViewerPlayerControls: UIView {
         
         let seconds = currentItem.duration.seconds * Double(transportSlider.value)
         let time = CMTime(seconds: seconds, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        updateControls(time: time)
         player?.seek(to: time)
     }
     

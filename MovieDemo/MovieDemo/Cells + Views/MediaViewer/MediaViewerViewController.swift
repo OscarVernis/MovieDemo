@@ -234,7 +234,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
         if contentView == videoPlayerView {
             let contentSize = videoPlayerView.playerLayer.videoRect.size
             contentViewFrame = AVMakeRect(aspectRatio: contentSize, insideRect: viewFrame)
-            maxZoom = max(contentSize.width / viewFrame.width, 2.0)
+            maxZoom = zoomScaleForVideo(size: contentSize)
         } else {
             guard contentView == imageView, let newImage = imageView.image else { return }
             
@@ -249,6 +249,16 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
         zoomScrollView.maximumZoomScale = maxZoom
         zoomScrollView.zoomScale = zoomScrollView.minimumZoomScale
         
+    }
+    
+    func zoomScaleForVideo(size: CGSize) -> CGFloat {
+        let aspectRatio = AVMakeRect(aspectRatio: size, insideRect: view.frame)
+        let horizontalRatio = view.frame.width / aspectRatio.width;
+        let verticalRatio = view.frame.height / aspectRatio.height;
+        
+        let scale = max(horizontalRatio, verticalRatio)
+        
+        return scale
     }
     
     //MARK:- Video Handling
@@ -306,6 +316,11 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
     
     //MARK:- Actions
     @objc fileprivate func close(sender: UIButton) {
+        if zoomScrollView.zoomScale > zoomScrollView.minimumZoomScale {
+            zoomScrollView.setZoomScale(zoomScrollView.minimumZoomScale, animated: false)
+        }
+        
+        setVisibleControls(false)
         dismiss(animated: true)
     }
         
@@ -371,7 +386,13 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
     
     @objc fileprivate func handleDoubleTap(sender: UITapGestureRecognizer) {
         if zoomScrollView.zoomScale == zoomScrollView.minimumZoomScale {
-            zoomScrollView.zoom(to: zoomRectForScale(scale: zoomScrollView.maximumZoomScale, center: sender.location(in: contentView)), animated: true)
+            if contentView == videoPlayerView {
+                zoomScrollView.setZoomScale(zoomScrollView.maximumZoomScale, animated: true)
+            } else {
+                let scale = zoomScrollView.maximumZoomScale
+                let location = sender.location(in: contentView)
+                zoomScrollView.zoom(to: zoomRectForScale(scale: scale, center: location), animated: true)
+            }
         } else {
             zoomScrollView.setZoomScale(zoomScrollView.minimumZoomScale, animated: true)
         }

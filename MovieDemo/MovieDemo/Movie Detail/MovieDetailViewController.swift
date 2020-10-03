@@ -40,7 +40,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK:- Setup
+    //MARK:- ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
@@ -51,10 +51,23 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         setupDataProvider()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            SPStorkController.updatePresentingController(parent: self)
+        }
+    }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-        
+    
+    //MARK:- Setup
     fileprivate func setupCollectionView() {
         //Set NavigationBar/ScrollView settings for design
         self.navigationItem.largeTitleDisplayMode = .always
@@ -101,14 +114,6 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         actionsCell.favoriteButton.setIsSelected(movie.favorite, animated: false)
         actionsCell.watchlistButton.setIsSelected(movie.watchlist, animated: false)
         actionsCell.rateButton.setIsSelected(movie.rated, animated: false)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            SPStorkController.updatePresentingController(parent: self)
-        }
     }
     
     //MARK:- Sections

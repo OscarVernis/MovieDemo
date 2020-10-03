@@ -13,4 +13,9 @@ extension UIViewController: UINavigationControllerDelegate {
         return navigationController.topViewController?.supportedInterfaceOrientations ?? .all
     }
     
+    public func navigationControllerPreferredInterfaceOrientationForPresentation(_ navigationController: UINavigationController) -> UIInterfaceOrientation {
+        return .portrait
+    }
+    
+    
 }
