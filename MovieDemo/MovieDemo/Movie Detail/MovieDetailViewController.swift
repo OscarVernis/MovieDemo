@@ -282,7 +282,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         let youtubeLinkExtractor = YoutubeDirectLinkExtractor()
         youtubeLinkExtractor.extractInfo(for: .url(url), success: { info in
             DispatchQueue.main.async {
-                let mvvc = MediaViewerViewController(videoURL: URL(string: info.highestQualityPlayableLink!)!,
+                let mvvc = MediaViewerViewController(videoURL: URL(string: info.lowestQualityPlayableLink!)!,
                                                      image: imageView?.image,
                                                      presentFromView: imageView
                 )
