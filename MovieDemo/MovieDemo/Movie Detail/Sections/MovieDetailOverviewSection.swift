@@ -21,7 +21,6 @@ class MovieDetailOverviewSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        SectionTitleView.registerHeader(withCollectionView: collectionView)
         OverviewCell.register(withCollectionView: collectionView)
     }
     

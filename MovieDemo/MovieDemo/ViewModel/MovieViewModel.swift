@@ -182,7 +182,9 @@ extension MovieViewModel {
     }
     
     var productionCountries: String? {
-        guard let countries = movie.productionCountries?.compactMap({ Locale.current.localizedString(forRegionCode: $0) }) else { return nil }
+        guard let countries = movie.productionCountries?.compactMap({ Locale.current.localizedString(forRegionCode: $0) }),
+            countries.count > 0
+        else { return nil }
         
         return countries.joined(separator: ", ")
     }

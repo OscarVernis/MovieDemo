@@ -23,6 +23,7 @@ class MovieDetailInfoSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
+        InfoListCell.register(withCollectionView: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {
