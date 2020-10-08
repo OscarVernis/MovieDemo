@@ -25,6 +25,7 @@ Demo application built as a showcase for potential clients and employers. Comple
 - User Profile where you can see the movies you have Favorited, added to your Watchlist or Rated.
 - Session management using the device Keychain and UserDefaults.
 - Internalization in both English and Spanish.
+- Support for both Light and Dark modes.
 - Swift Package Manager for dependency management.
 
 ### Libraries used:
