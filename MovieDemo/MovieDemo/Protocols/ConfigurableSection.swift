@@ -17,19 +17,17 @@ protocol ConfigurableSection {
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell
 }
 
-protocol FectchableSection: ConfigurableSection {
-    var isLastPage: Bool { get }
-    var didUpdate:(() -> Void)? { get set }
-
-    func refresh()
-    func fetchNextPage()
-}
-
-extension ConfigurableSection {    
+extension ConfigurableSection {
     func reusableView(withCollectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
         fatalError("Custom reusableView() implementation needed.")
     }
     
 }
 
+protocol FetchableSection: ConfigurableSection {
+    var isLastPage: Bool { get }
+    var didUpdate:((Error?) -> Void)? { get set }
 
+    func refresh()
+    func fetchNextPage()
+}

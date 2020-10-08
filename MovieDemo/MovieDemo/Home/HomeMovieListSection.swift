@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeMovieListSection: FectchableSection {
+class HomeMovieListSection: FetchableSection {
     enum SectionType: Int, CaseIterable {
         case NowPlaying
         case Popular
@@ -38,7 +38,7 @@ class HomeMovieListSection: FectchableSection {
     
     var sectionType: SectionType = .NowPlaying
     
-    var didUpdate: (() -> Void)?
+    var didUpdate: ((Error?) -> Void)?
     
     let maxTopRated = 10
     
@@ -60,9 +60,7 @@ class HomeMovieListSection: FectchableSection {
         }
         
         self.dataProvider.didUpdate = { error in
-            if error == nil {
-                self.didUpdate?()
-            }
+            self.didUpdate?(error)
         }
         
     }

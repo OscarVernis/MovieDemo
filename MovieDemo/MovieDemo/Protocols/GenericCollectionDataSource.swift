@@ -34,9 +34,11 @@ class GenericCollectionDataSource: NSObject, UICollectionViewDataSource {
         for (index, section) in sections.enumerated() {
             section.registerReusableViews(withCollectionView: collectionView)
             
-            if var section = section as? FectchableSection {
-                section.didUpdate = {
-                    self.didUpdate(sectionIndex: index)
+            if var section = section as? FetchableSection {
+                section.didUpdate = { error in
+                    if error == nil {
+                        self.didUpdate(sectionIndex: index)
+                    }
                 }
             }
         }
@@ -50,7 +52,7 @@ class GenericCollectionDataSource: NSObject, UICollectionViewDataSource {
     
     func refresh() {
         sections.forEach { section in
-            if let section = section as? FectchableSection {
+            if let section = section as? FetchableSection {
                 section.refresh()
             }
         }

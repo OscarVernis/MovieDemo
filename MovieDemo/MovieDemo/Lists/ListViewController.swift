@@ -2,29 +2,39 @@
 //  ListViewController.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 17/09/20.
+//  Created by Oscar Vernis on 07/10/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-public class ListViewController<Provider: ArrayDataProvider, Configurator: CellConfigurator> : UIViewController, UICollectionViewDelegate {
+public class ListViewController: UIViewController, GenericCollection {
     enum Section: Int, CaseIterable {
         case Main
     }
     
     var collectionView: UICollectionView!
-    
-    var dataProvider: Provider!
-    var dataSource: ListViewDataSource<Provider, Configurator>?
-    
-    var didSelectedItem: ((Int, Provider.Model) -> ())?
+    var dataSource: GenericCollectionDataSource!
+
+    var didSelectedItem: ((Int) -> ())?
        
-    weak var mainCoordinator: MainCoordinator!
-        
+    var mainSection: FetchableSection
+    var loadingSection = LoadingSection()
+    
+    init(section: FetchableSection) {
+        self.mainSection = section
+                
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        createCollectionView()
         setup()
     }
     
@@ -35,38 +45,27 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
     fileprivate func setup() {
         navigationController?.delegate = self
         
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-        collectionView.delegate = self
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .appBackgroundColor
-        view.addSubview(collectionView)
-        
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         collectionView.keyboardDismissMode = .onDrag
         
-        collectionView.register(CreditPhotoListCell.namedNib(), forCellWithReuseIdentifier: CreditPhotoListCell.reuseIdentifier)
-        collectionView.register(MovieInfoListCell.namedNib(), forCellWithReuseIdentifier: MovieInfoListCell.reuseIdentifier)
-        collectionView.register(LoadingCell.namedNib(), forCellWithReuseIdentifier: LoadingCell.reuseIdentifier)
+        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: [mainSection, loadingSection])
         
-        dataSource?.showLoadingIndicator = true
-        collectionView.dataSource = dataSource
-        dataSource?.dataProvider = dataProvider
-        
-        dataProvider.didUpdate = { [weak self] error in
+        mainSection.didUpdate = { [weak self] error in
             guard let self = self else { return }
             
             if error != nil {
                 AlertManager.showRefreshErrorAlert(sender: self)
             }
             
-            self.dataSource?.showLoadingIndicator = false
+            self.loadingSection.isLoading = !self.mainSection.isLastPage
+            
             self.collectionView.refreshControl?.endRefreshing()
             self.reload()
         }
         
-        dataProvider.refresh()
+        mainSection.refresh()
     }
     
     func reload() {
@@ -78,50 +77,25 @@ public class ListViewController<Provider: ArrayDataProvider, Configurator: CellC
     }
     
     @objc func refresh() {
-        dataProvider.refresh()
+        mainSection.refresh()
     }
     
-    
+}
+
     //MARK: - CollectionView Delegate
+extension ListViewController:UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row >= dataProvider.models.count { //Loads next page when Loading Cell is showing
-            dataProvider.fetchNextPage()
+        if indexPath.section == 1 { //Loads next page when Loading Cell is showing
+            mainSection.fetchNextPage()
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row >= dataProvider.models.count {
+        if indexPath.section > 0 {
             return
         }
-        
-        let model = dataProvider.models[indexPath.row]
-        
-        didSelectedItem?(indexPath.row, model)
-    }
-}
 
-//MARK: - CollectionView CompositionalLayout
-extension ListViewController {
-    func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int,
-                                                            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let self = self else { return nil }
-            
-            var section: NSCollectionLayoutSection?
-            let sectionBuilder = MoviesCompositionalLayoutBuilder()
-            
-            if sectionIndex == 0 {
-                let columns = self.view.frame.width > 500 ? 2 : 1
-                
-                section = sectionBuilder.createListSection(columns: columns)
-                section?.contentInsets.bottom = 30
-            }
-
-            return section
-        }
-        
-        return layout
+        didSelectedItem?(indexPath.row)
     }
     
 }
-

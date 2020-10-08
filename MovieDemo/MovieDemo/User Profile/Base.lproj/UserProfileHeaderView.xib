@@ -32,11 +32,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIQ-Qf-1tu" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                    <rect key="frame" x="107.5" y="220" width="160" height="40"/>
+                    <rect key="frame" x="128.5" y="220" width="118" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="160" id="Evf-XB-h60"/>
                         <constraint firstAttribute="height" constant="40" id="m7x-M5-LYB"/>
                     </constraints>
+                    <inset key="contentEdgeInsets" minX="20" minY="0.0" maxX="14" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="Log Out" image="person.crop.circle" catalog="system"/>
                     <userDefinedRuntimeAttributes>
@@ -72,7 +72,7 @@
     </objects>
     <designables>
         <designable name="lIQ-Qf-1tu">
-            <size key="intrinsicContentSize" width="84" height="22"/>
+            <size key="intrinsicContentSize" width="118" height="22"/>
         </designable>
     </designables>
     <resources>

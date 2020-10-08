@@ -309,3 +309,28 @@ class RatingsView: UIControl {
     }
     
 }
+
+extension RatingsView {
+    static func ratingImage(rating: UInt, size: CGSize) -> UIImage {
+        let lineWidth: CGFloat = 3
+        let radius = (size.height / 2) - (lineWidth / 2)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        
+        let ratingDegree = 3.6 * Double(rating)
+        let startAngle = Double(270).toRadians()
+        let endAngle = (ratingDegree + 270).toRadians()
+        
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let img = renderer.image { ctx in
+            let ratingPath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: radius, startAngle: CGFloat(startAngle), endAngle:CGFloat(endAngle), clockwise: true)
+
+            ratingPath.lineCapStyle = .round
+            ratingPath.lineWidth = lineWidth
+            UIColor.black.set()
+            ratingPath.stroke()
+        }
+        
+        return img
+    }
+    
+}

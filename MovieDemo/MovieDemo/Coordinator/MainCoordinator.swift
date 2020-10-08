@@ -98,54 +98,56 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
     }
     
-    func showMovieList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
-        let mdvc = ListViewController<Provider, MovieInfoCellConfigurator>()
-        mdvc.title = title
-        mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
-        mdvc.mainCoordinator = self
+    func showMovieList(title: String, dataProvider: MovieListDataProvider) {
+        let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: MovieInfoCellConfigurator())
+        let lvc = ListViewController(section: section)
+        lvc.title = title
         
-        mdvc.didSelectedItem = { [weak self] index, movie in
-            self?.showMovieDetail(movie: movie as! Movie)
+        rootNavigationViewController?.pushViewController(lvc, animated: true)
+        
+        lvc.didSelectedItem = { [weak self] index in
+            if index >= dataProvider.models.count { return }
+            let movie = dataProvider.movies[index]
+
+            self?.showMovieDetail(movie: movie)
         }
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+
     }
     
-    func showCrewCreditList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
-        let mdvc = ListViewController<Provider, CrewCreditPhotoListCellConfigurator>()
-        mdvc.title = title
-        mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CrewCreditPhotoListCellConfigurator())
-        mdvc.mainCoordinator = self
+    func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>) {
+        let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CrewCreditPhotoListCellConfigurator())
+        let lvc = ListViewController(section: section)
+        lvc.title = title
         
-        mdvc.didSelectedItem = { [weak self] index, crewCredit in
-            guard let crewCredit = crewCredit as? CrewCreditViewModel, let self = self else { return }
+        lvc.didSelectedItem = { index in
+            if index >= dataProvider.models.count { return }
+            
+            let crewCredit = dataProvider.models[index]
             
             let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
             let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
             self.showMovieList(title: title, dataProvider: dataProvider)
         }
         
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+        rootNavigationViewController?.pushViewController(lvc, animated: true)
     }
     
-    func showCastCreditList<Provider: ArrayDataProvider>(title: String, dataProvider: Provider) {
-        let mdvc = ListViewController<Provider, CastCreditPhotoListCellConfigurator>()
-        mdvc.title = title
-        mdvc.dataProvider = dataProvider
-        mdvc.dataSource = ListViewDataSource(reuseIdentifier: CreditPhotoListCell.reuseIdentifier, configurator: CastCreditPhotoListCellConfigurator())
-        mdvc.mainCoordinator = self
+    func showCastCreditList(title: String, dataProvider: StaticArrayDataProvider<CastCreditViewModel>) {
+        let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CastCreditPhotoListCellConfigurator())
+        let lvc = ListViewController(section: section)
+        lvc.title = title
         
-        mdvc.didSelectedItem = { [weak self] index, castCredit in
-            guard let castCredit = castCredit as? CastCreditViewModel, let self = self else { return }
+        lvc.didSelectedItem = { index in
+            if index >= dataProvider.models.count { return }
+            
+            let castCredit = dataProvider.models[index]
             
             let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
             let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
             self.showMovieList(title: title, dataProvider: dataProvider)
         }
         
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+        rootNavigationViewController?.pushViewController(lvc, animated: true)
     }
     
 }

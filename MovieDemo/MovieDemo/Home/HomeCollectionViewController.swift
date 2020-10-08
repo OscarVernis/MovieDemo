@@ -65,13 +65,16 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func setupSearch() {
-        let movieListController = ListViewController<MovieListDataProvider, MovieInfoCellConfigurator>()
-        movieListController.dataProvider = searchDataProvider
-        movieListController.dataSource = ListViewDataSource(reuseIdentifier: MovieInfoListCell.reuseIdentifier, configurator: MovieInfoCellConfigurator())
-        movieListController.mainCoordinator = mainCoordinator
+        let searchSection = DataProviderSection(dataProvider: searchDataProvider, cellConfigurator: MovieInfoCellConfigurator())
+        let movieListController = ListViewController(section: searchSection)
 
-        movieListController.didSelectedItem = { [weak self] index, movie in
-            self?.mainCoordinator.showMovieDetail(movie: movie)
+        movieListController.didSelectedItem = { [weak self] index in
+            guard let self = self else { return }
+            
+            if index > self.searchDataProvider.movies.count { return }
+            let movie = self.searchDataProvider.movies[index]
+            
+            self.mainCoordinator.showMovieDetail(movie: movie)
         }
 
         let search = UISearchController(searchResultsController: movieListController)
