@@ -35,6 +35,93 @@ struct MovieDBService {
         
         return url.appendingPathComponent(path)
     }
+}
+
+//MARK: - Generic Functions
+extension MovieDBService {
+    private func fetchMovies(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+        let url = endpoint(forPath: path)
+        
+        var params = defaultParameters(withSessionId: sessionId)
+        params.merge(parameters) { _, new in new }
+        params["page"] = page
+        params["region"] = "US"
+        
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                if let json = jsonData as? [String: Any], let moviesData = json["results"] as? [[String: Any]] {
+                    let movies = Array<Movie>.init(JSONArray: moviesData)
+                    let totalPages = json["total_pages"] as? Int ?? page
+                    
+                    completion(movies, totalPages, nil)
+                } else {
+                    completion([], page, ServiceError.jsonError)
+                }
+            case .failure(let error):
+                completion([], page, error)
+            }
+        }
+    }
+    
+    func fetchModel<T: Mappable>(_ modelType: T.Type, url: URL, params: [String: Any], completion: @escaping (T?, Error?) -> ()) {
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any] else {
+                    completion(nil, ServiceError.jsonError)
+                    return
+                }
+                
+                let model = T(JSON: json)
+                completion(model, nil)
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+    }
+    
+    func fetchString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post, completion: @escaping (String?, Error?) -> ()) {
+        var urlRequest = URLRequest(url: url)
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+        
+        AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                if let json = jsonData as? [String: Any], let resultString = json[path] as? String {
+                    completion(resultString, nil)
+                } else {
+                    completion(nil, ServiceError.jsonError)
+                }
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+
+    }
+    
+    func successAction<T: Encodable>(url: URL, params: [String: Any], body: T? = (Optional<String>.none as! T), method: HTTPMethod = .get, completion: @escaping (Bool, Error?) -> ()) {
+        var urlRequest = URLRequest(url: url)
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+        
+        AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
+                    completion(false, ServiceError.jsonError)
+                    return
+                }
+                
+                completion(success, nil)
+            case .failure(let error):
+                completion(false, error)
+            }
+        }
+    }
+    
+    func successAction(url: URL, params: [String: Any], method: HTTPMethod = .get, completion: @escaping (Bool, Error?) -> ()) {
+        successAction(url: url, params: params, body: Optional<String>.none, method: method, completion: completion)
+    }
     
 }
 
@@ -86,31 +173,6 @@ extension MovieDBService {
 
 //MARK: - Movie Lists
 extension MovieDBService {
-    private func fetchMovies(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        let url = endpoint(forPath: path)
-        
-        var params = defaultParameters(withSessionId: sessionId)
-        params.merge(parameters) { _, new in new }
-        params["page"] = page
-        params["region"] = "US"
-        
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let moviesData = json["results"] as? [[String: Any]] {
-                    let movies = Array<Movie>.init(JSONArray: moviesData)
-                    let totalPages = json["total_pages"] as? Int ?? page
-                    
-                    completion(movies, totalPages, nil)
-                } else {
-                    completion([], page, ServiceError.jsonError)
-                }
-            case .failure(let error):
-                completion([], page, error)
-            }
-        }
-    }
-    
     func fetchNowPlaying(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
         fetchMovies(endpoint: "/movie/now_playing", page: page, completion: completion)
     }
@@ -159,20 +221,7 @@ extension MovieDBService {
         var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "credits,recommendations,account_states,videos"
         
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any] else {
-                    completion(nil, ServiceError.jsonError)
-                    return
-                }
-                
-                let movie = Movie(JSON: json)
-                completion(movie, nil)
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
+        fetchModel(Movie.self, url: url, params: params, completion: completion)
     }
     
     func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
@@ -181,24 +230,25 @@ extension MovieDBService {
     
 }
 
+//MARK: - Person Details
+extension MovieDBService {
+    func fetchPersonDetails(personId: Int, completion: @escaping (Person?, Error?) -> ()) {
+        let url = endpoint(forPath: "/person/\(personId)")
+        
+        var params = defaultParameters()
+        params["append_to_response"] = "movie_credits"
+        
+        fetchModel(Person.self, url: url, params: params, completion: completion)
+    }
+}
+
 //MARK: - Login
 extension MovieDBService {
     func requestToken(completion: @escaping (String?, Error?) -> ()) {
         let url = endpoint(forPath: "/authentication/token/new")
         let params = defaultParameters()
         
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let token = json["request_token"] as? String {
-                    completion(token, nil)
-                } else {
-                    completion(nil, ServiceError.jsonError)
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
+        fetchString(path: "request_token", url: url, params: params, method: .get, completion: completion)
     }
     
     func validateToken(username: String, password: String, requestToken: String, completion: @escaping (Bool, Error?) -> ()) {
@@ -211,21 +261,7 @@ extension MovieDBService {
             "request_token": requestToken
         ]
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
-        
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let success = json["success"] as? Bool {
-                    completion(success, nil)
-                } else {
-                    completion(false, ServiceError.jsonError)
-                }
-            case .failure(let error):
-                completion(false, error)
-            }
-        }
+        successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
     func createSession(requestToken: String, completion: @escaping (String?, Error?) -> ()) {
@@ -234,21 +270,7 @@ extension MovieDBService {
 
         let body = ["request_token": requestToken]
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
-        
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let sessionId = json["session_id"] as? String {
-                    completion(sessionId, nil)
-                } else {
-                    completion(nil, ServiceError.jsonError)
-                }
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
+        fetchString(path: "session_id", url: url, params: params, body: body, completion: completion)
     }
     
     func deleteSession(sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
@@ -257,21 +279,7 @@ extension MovieDBService {
 
         let body = ["session_id": sessionId]
         
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
-        
-        AF.request(urlRequest.url!, method: .delete, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let success = json["success"] as? Bool {
-                    completion(success, nil)
-                } else {
-                    completion(false, ServiceError.jsonError)
-                }
-            case .failure(let error):
-                completion(false, error)
-            }
-        }
+        successAction(url: url, params: params, body: body, method: .delete, completion: completion)
     }
     
 }
@@ -295,20 +303,7 @@ extension MovieDBService {
         var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "favorite/movies,rated/movies,watchlist/movies"
         
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any] else {
-                    completion(nil, ServiceError.jsonError)
-                    return
-                }
-                
-                let user = User(JSON: json)
-                completion(user, nil)
-            case .failure(let error):
-                completion(nil, error)
-            }
-        }
+        fetchModel(User.self, url: url, params: params, completion: completion)
     }
     
     func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
@@ -328,23 +323,8 @@ extension MovieDBService {
         let params = defaultParameters(withSessionId: sessionId)
         
         let body = FavoriteRequestBody(media_id: movieId, favorite: favorite)
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
 
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
-                    completion(false, ServiceError.jsonError)
-                    return
-                }
-                
-                completion(success, nil)
-            case .failure(let error):
-                completion(false, error)
-            }
-        }
+        successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
     func addToWatchlist(_ watchlist: Bool, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
@@ -352,23 +332,8 @@ extension MovieDBService {
         let params = defaultParameters(withSessionId: sessionId)
         
         let body = WatchlistRequestBody(media_id: movieId, watchlist: watchlist)
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
 
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
-                    completion(false, ServiceError.jsonError)
-                    return
-                }
-                
-                completion(success, nil)
-            case .failure(let error):
-                completion(false, error)
-            }
-        }
+        successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
     func rateMovie(_ rating: Float, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
@@ -376,42 +341,15 @@ extension MovieDBService {
         let params = defaultParameters(withSessionId: sessionId)
         
         let body = ["value": rating]
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
 
-        AF.request(urlRequest.url!, method: .post, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
-                    completion(false, ServiceError.jsonError)
-                    return
-                }
-                
-                completion(success, nil)
-            case .failure(let error):
-                completion(false, error)
-            }
-        }
+        successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
     func deleteRate(movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
         let url = endpoint(forPath: "/movie/\(movieId)/rating")
         let params = defaultParameters(withSessionId: sessionId)
-                
-        AF.request(url, method: .delete, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
-                    completion(false, ServiceError.jsonError)
-                    return
-                }
-                
-                completion(success, nil)
-            case .failure(let error):
-                completion(false, error)
-            }
-        }
+            
+        successAction(url: url, params: params, method: .delete, completion: completion)
     }
     
 }
