@@ -8,7 +8,6 @@
 
 import ObjectMapper
 
-// MARK: - User
 class User: Mappable {
     var avatar: String?
     var id: Int!

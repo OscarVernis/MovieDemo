@@ -150,4 +150,11 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: true)
     }
     
+    func showPersonProfile(_ viewModel: PersonViewModel) {
+        let pvc = PersonDetailViewController.instantiateFromStoryboard()
+        pvc.person = viewModel
+        
+        rootNavigationViewController?.pushViewController(pvc, animated: true)
+    }
+    
 }

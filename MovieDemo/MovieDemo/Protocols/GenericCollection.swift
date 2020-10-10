@@ -13,9 +13,6 @@ protocol GenericCollection: UIViewController, UICollectionViewDelegate {
     var dataSource: GenericCollectionDataSource! { get set }
     
     func createLayout() -> UICollectionViewLayout
-    
-//    var didSelectedItem: ((Int, Section.Provider.Model) -> ())? { get set }
-
 }
 
 extension GenericCollection {

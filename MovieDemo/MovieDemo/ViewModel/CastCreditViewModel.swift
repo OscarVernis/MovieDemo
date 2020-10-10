@@ -15,6 +15,14 @@ class CastCreditViewModel {
         self.castCredit = castCredit
     }
     
+    func person() -> PersonViewModel {
+        let person = Person()
+        person.id = id
+        person.name = name
+        person.profilePath = castCredit.profilePath
+        
+        return PersonViewModel(person: person)
+    }
 }
 
 extension CastCreditViewModel {
@@ -35,4 +43,5 @@ extension CastCreditViewModel {
         
         return MovieDBService.profileImageURL(forPath: pathString, size: .h632)
     }
+    
 }

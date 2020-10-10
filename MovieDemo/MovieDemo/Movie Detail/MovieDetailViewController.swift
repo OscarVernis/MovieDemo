@@ -324,9 +324,8 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         switch(section) {
         case _ as MovieDetailCastSection:
             let castCredit = movie.cast[indexPath.row]
-            let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
-            let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
-            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
+            let person = castCredit.person()
+            mainCoordinator.showPersonProfile(person)
         case _ as MovieDetailCrewSection:
             let crewCredit = movie.topCrew[indexPath.row]
             let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
