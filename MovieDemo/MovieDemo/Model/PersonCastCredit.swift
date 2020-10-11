@@ -10,11 +10,12 @@ import Foundation
 import ObjectMapper
 
 class PersonCastCredit: Movie {
-    var character: String!
+    var character: String?
     
     override func mapping(map: Map) {
         super.mapping(map: map)
         
         character <- map["character"]
     }
+    
 }

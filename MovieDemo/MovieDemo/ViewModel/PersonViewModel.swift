@@ -92,7 +92,15 @@ extension PersonViewModel {
     }
         
     fileprivate func updateCastCredits() {
-        guard let credits = person.castCredits else { return }
+        guard var credits = person.castCredits else { return }
+        
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.year = 100
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+        credits.sort { (person1, person2) -> Bool in
+            person1.releaseDate ?? futureDate > person2.releaseDate ?? futureDate
+        }
         
         castCredits = credits.compactMap { PersonCastCreditViewModel(personCastCredit: $0) }
     }

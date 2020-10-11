@@ -143,13 +143,18 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         sections = [ConfigurableSection]()
         
         if let bio = person.biography, !bio.isEmpty {
-            let overviewSection = MovieDetailOverviewSection(overview: bio)
-            sections.append(overviewSection)
+            let bioSection = MovieDetailOverviewSection(overview: bio)
+            sections.append(bioSection)
         }
         
         if !person.popularMovies.isEmpty {
-            let recommendedSection = MovieDetailRecommendedSection(title: NSLocalizedString("Known For", comment: ""), movies: person.popularMovies)
-            sections.append(recommendedSection)
+            let popularSection = MovieDetailRecommendedSection(title: NSLocalizedString("Known For", comment: ""), movies: person.popularMovies)
+            sections.append(popularSection)
+        }
+        
+        if !person.castCredits.isEmpty {
+            let castCreditsSection = PersonCastCreditsSection(title: NSLocalizedString("Acting", comment: ""), credits: person.castCredits)
+            sections.append(castCreditsSection)
         }
         
         dataSource.sections = sections
@@ -160,6 +165,23 @@ class PersonDetailViewController: UIViewController, GenericCollection {
 
 //MARK:- CollectionView Delegate
 extension PersonDetailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        
+        switch section {
+        case _ as MovieDetailRecommendedSection:
+            let movie = person.popularMovies[indexPath.row]
+            mainCoordinator.showMovieDetail(movie: movie)
+        case _ as PersonCastCreditsSection:
+            break
+//            let movie = person.castCredits[indexPath.row]
+//            mainCoordinator.showMovieDetail(movie: movie)
+        default:
+            break
+        }
+        
+}
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
         let height = width * 1.5

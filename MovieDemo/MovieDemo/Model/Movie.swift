@@ -78,6 +78,7 @@ class Movie: Mappable {
         rated <- (map["account_states.rated"], MovieUserRatedTransform()) //Service returns false if not rated, and the value of the rating if rated.
         userRating <- map["account_states.rated.value"]
         watchlist <- map["account_states.watchlist"]
+        
     }
     
 }
