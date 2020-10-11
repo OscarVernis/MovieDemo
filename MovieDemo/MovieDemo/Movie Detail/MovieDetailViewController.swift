@@ -129,7 +129,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         sections.append(headerSection)
         
         if !movie.overview.isEmpty {
-            let overviewSection = MovieDetailOverviewSection(overview: movie.overview)
+            let overviewSection = MovieDetailOverviewSection(title: NSLocalizedString("Overview", comment: ""), overview: movie.overview)
             sections.append(overviewSection)
         }
         
@@ -170,7 +170,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         }
         
         if !movie.recommendedMovies.isEmpty {
-            let recommendedSection = MovieDetailRecommendedSection(movies: movie.recommendedMovies)
+            let recommendedSection = MovieDetailRecommendedSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies)
             recommendedSection.titleHeaderButtonHandler = { [weak self] in
                 guard let self = self else {return }
                 

@@ -9,10 +9,11 @@
 import UIKit
 
 class MovieDetailOverviewSection: ConfigurableSection {
-    var title = NSLocalizedString("Overview", comment: "")
+    var title: String?
     var overview: String
     
-    init(overview: String) {
+    init(title: String? = nil, overview: String) {
+        self.title = title
         self.overview = overview
     }
     
@@ -22,15 +23,18 @@ class MovieDetailOverviewSection: ConfigurableSection {
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         OverviewCell.register(withCollectionView: collectionView)
+        SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let section = sectionBuilder.createEstimatedSection(height: 50)
         
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        sectionHeader.contentInsets.top = 6
-        section.boundarySupplementaryItems = [sectionHeader]
+        if title != nil {
+            let sectionHeader = sectionBuilder.createTitleSectionHeader()
+            sectionHeader.contentInsets.top = 6
+            section.boundarySupplementaryItems = [sectionHeader]
+        }
         
         return section
     }
@@ -38,7 +42,7 @@ class MovieDetailOverviewSection: ConfigurableSection {
     func reusableView(withCollectionView collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
         
-        MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: title)
+        MovieDetailTitleSectionConfigurator().configure(headerView: headerView, title: title!)
         
         return headerView
     }

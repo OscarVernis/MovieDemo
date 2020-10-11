@@ -9,12 +9,13 @@
 import UIKit
 
 class MovieDetailRecommendedSection: ConfigurableSection {
-    var title = NSLocalizedString("Recommended Movies", comment: "")
+    var title: String
     var movies: [Movie]
     
     var titleHeaderButtonHandler: (()->Void)?
     
-    init(movies: [Movie]) {
+    init(title: String, movies: [Movie]) {
+        self.title = title
         self.movies = movies
     }
     
@@ -24,6 +25,7 @@ class MovieDetailRecommendedSection: ConfigurableSection {
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         MoviePosterInfoCell.register(withCollectionView: collectionView)
+        SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

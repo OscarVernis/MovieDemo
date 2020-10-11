@@ -16,6 +16,7 @@ class PersonViewModel {
     var didUpdate: ((Error?) -> Void)?
     
     var castCredits = [PersonCastCreditViewModel]()
+    var popularMovies = [Movie]()
     
     init(person: Person) {
         self.person = person
@@ -24,6 +25,7 @@ class PersonViewModel {
     func updatePerson(_ person: Person) {
         self.person = person
         updateCastCredits()
+        updatePopularMovies()
     }
     
 }
@@ -93,6 +95,13 @@ extension PersonViewModel {
         guard let credits = person.castCredits else { return }
         
         castCredits = credits.compactMap { PersonCastCreditViewModel(personCastCredit: $0) }
+    }
+    
+    fileprivate func updatePopularMovies() {
+        guard var credits = person.castCredits else { return }
+        credits = Array(credits.prefix(8))
+        
+        popularMovies = credits
     }
     
 }
