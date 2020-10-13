@@ -10,11 +10,11 @@ import UIKit
 
 class MovieDetailRecommendedSection: ConfigurableSection {
     var title: String
-    var movies: [Movie]
+    var movies: [MovieViewModel]
     
     var titleHeaderButtonHandler: (()->Void)?
     
-    init(title: String, movies: [Movie]) {
+    init(title: String, movies: [MovieViewModel]) {
         self.title = title
         self.movies = movies
     }
@@ -52,7 +52,7 @@ class MovieDetailRecommendedSection: ConfigurableSection {
         let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
         
         let recommendedMovie = movies[indexPath.row]
-        MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: recommendedMovie))
+        MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: recommendedMovie)
         
         return posterCell
     }

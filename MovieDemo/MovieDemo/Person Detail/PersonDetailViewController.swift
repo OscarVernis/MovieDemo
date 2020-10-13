@@ -23,11 +23,15 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     @IBOutlet weak var titleNameLabel: UILabel!
     @IBOutlet weak var blurView: UIVisualEffectView!
     
+    var creditsHeaderView: UICollectionReusableView?
+    
     private var sections: [ConfigurableSection]!
     var person: PersonViewModel!
     
-    private var blurAnimator: UIViewPropertyAnimator!
     private var gradient: CAGradientLayer!
+    private var blurAnimator: UIViewPropertyAnimator!
+    private var titleAnimator: UIViewPropertyAnimator?
+    private var isHeaderViewCompact = false
     
     //MARK:- View Controller
     override func viewDidLoad() {
@@ -35,12 +39,9 @@ class PersonDetailViewController: UIViewController, GenericCollection {
 
         sections = []
         
+        setupAnimations()
         setup()
         setupDataProvider()
-    }
-    
-    deinit {
-        blurAnimator.stopAnimation(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,33 +56,19 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         return .portrait
     }
     
+    deinit {
+        blurAnimator.stopAnimation(true)
+        titleAnimator?.stopAnimation(true)
+    }
+    
     //MARK:- Setup
     @IBAction func close(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
     
-    
     fileprivate func setup() {
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
-        blurView.effect = nil
-        self.titleNameLabel.transform = self.titleNameLabel.transform.translatedBy(x: -10, y: 50)
-        self.titleNameLabel.transform = self.titleNameLabel.transform.scaledBy(x: 1.1, y: 1.1)
-        blurAnimator = UIViewPropertyAnimator(duration: 1, curve: .easeIn) {
-            UIView.animateKeyframes(withDuration: 1, delay: 0) {
-                self.blurView.effect = UIBlurEffect(style: .light)
-
-                UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.2) {
-                    self.nameLabel.alpha = 0
-                }
-
-                UIView.addKeyframe(withRelativeStartTime: 0.85, relativeDuration: 0.15) {
-                    self.titleNameLabel.alpha = 1
-                    self.titleNameLabel.transform = .identity
-                }
-            }
-        }
-        
+                
         //Gradient
         gradient = CAGradientLayer()
         gradient.frame = personImageView.bounds
@@ -160,6 +147,112 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         dataSource.sections = sections
         collectionView.reloadData()
     }
+    
+}
+    
+    //MARK:- Header Animations
+extension PersonDetailViewController {
+    fileprivate func setupAnimations() {
+        blurView.effect = nil
+        blurAnimator = UIViewPropertyAnimator(duration: 1, curve: .easeIn) {
+            self.blurView.effect = UIBlurEffect(style: .light)
+        }
+        
+        blurAnimator.pausesOnCompletion = true
+    }
+    
+    fileprivate func setIsHeaderViewCompact(_ isHeaderViewCompact: Bool, animated: Bool) {
+        self.isHeaderViewCompact = isHeaderViewCompact
+        titleAnimator?.stopAnimation(true)
+        
+        let titleHeight:CGFloat = 60
+        let navBarHeight = view.safeAreaInsets.top + 44 + (isHeaderViewCompact ? 0 : titleHeight)
+        
+        let animationDuration = animated ? 0.3 : 0
+        if isHeaderViewCompact {
+            self.titleNameLabel.transform = self.titleNameLabel.transform.translatedBy(x: 0, y: 0)
+            self.titleNameLabel.transform = self.titleNameLabel.transform.scaledBy(x: 1.1, y: 1.1)
+            self.headerHeightConstraint.constant = navBarHeight
+            titleAnimator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeIn) {
+                UIView.animateKeyframes(withDuration: animationDuration, delay: 0) {
+                    self.personImageView.superview?.layoutIfNeeded()
+
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                        self.nameLabel.alpha = 0
+                        self.nameLabel.transform = self.nameLabel.transform.scaledBy(x: 0.4, y: 0.4)
+                    }
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6) {
+                        self.titleNameLabel.alpha = 1
+                        self.titleNameLabel.transform = .identity
+                    }
+                }
+            }
+        } else {
+            titleAnimator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
+                self.headerHeightConstraint.constant = navBarHeight
+                UIView.animateKeyframes(withDuration: animationDuration, delay: 0) {
+                    self.personImageView.superview?.layoutIfNeeded()
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                        self.titleNameLabel.alpha = 0
+                        self.titleNameLabel.transform = self.titleNameLabel.transform.translatedBy(x: 0, y: 15)
+                        self.titleNameLabel.transform = self.titleNameLabel.transform.scaledBy(x: 1.1, y: 1.1)
+                    }
+                    
+                    UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6) {
+                        self.nameLabel.alpha = 1
+                        self.nameLabel.transform = .identity
+                    }
+                }
+            }
+        }
+        
+        titleAnimator?.pausesOnCompletion = true
+        titleAnimator?.startAnimation()
+        
+    }
+    
+    fileprivate func updateHeader() {
+        let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
+        let height = width * 1.5
+        let titleHeight:CGFloat = 60
+        let navBarHeight = view.safeAreaInsets.top + 44 + titleHeight
+        
+        var headerHeight = height
+        if collectionView.contentOffset.y <= 0 {
+            headerHeight = max(abs(collectionView.contentOffset.y), navBarHeight)
+        } else {
+            headerHeight = navBarHeight
+        }
+        
+        if creditsHeaderView != nil {
+            let creditsSectionPos = creditsHeaderView!.frame.origin.y - collectionView.contentOffset.y - navBarHeight
+            if creditsSectionPos < 0 {
+                if !isHeaderViewCompact {
+                    setIsHeaderViewCompact(true, animated: true)
+                }
+            } else {
+                if isHeaderViewCompact {
+                    setIsHeaderViewCompact(false, animated: true)
+                }
+            }
+        }
+        
+        let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.7)
+        blurAnimator.fractionComplete = ratio
+        
+        if collectionView.contentOffset.y < -navBarHeight {
+            headerHeightConstraint.constant = headerHeight
+            
+            var gradientFrame = personImageView.bounds
+            gradientFrame.size.height = headerHeight
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            gradient.frame = gradientFrame
+            CATransaction.commit()
+        }
+    }
 
 }
 
@@ -173,38 +266,27 @@ extension PersonDetailViewController: UICollectionViewDelegate {
             let movie = person.popularMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: movie)
         case _ as PersonCastCreditsSection:
-            break
-//            let movie = person.castCredits[indexPath.row]
-//            mainCoordinator.showMovieDetail(movie: movie)
+            let movie = person.castCredits[indexPath.row]
+            mainCoordinator.showMovieDetail(movie: movie)
         default:
             break
         }
         
-}
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        
+        switch section {
+        case _ as PersonCastCreditsSection:
+            creditsHeaderView = view
+        default:
+            break
+        }
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
-        let height = width * 1.5
-        let navBarHeight = view.safeAreaInsets.top + 44
-        
-        var headerHeight = height
-        if scrollView.contentOffset.y <= 0 {
-            headerHeight = max(abs(scrollView.contentOffset.y), navBarHeight)
-        } else {
-            headerHeight = navBarHeight
-        }
-        
-        let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.7)
-        blurAnimator.fractionComplete = ratio
-        
-        headerHeightConstraint.constant = headerHeight
-        
-        var gradientFrame = personImageView.bounds
-        gradientFrame.size.height = headerHeight
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        gradient.frame = gradientFrame
-        CATransaction.commit()
+        updateHeader()
     }
     
 }

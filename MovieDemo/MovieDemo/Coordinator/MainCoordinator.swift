@@ -91,8 +91,8 @@ final class MainCoordinator {
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
-    func showMovieDetail(movie: Movie) {
-        let mdvc = MovieDetailViewController(viewModel: MovieViewModel(movie: movie))
+    func showMovieDetail(movie: MovieViewModel) {
+        let mdvc = MovieDetailViewController(viewModel: movie)
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
@@ -109,7 +109,7 @@ final class MainCoordinator {
             if index >= dataProvider.models.count { return }
             let movie = dataProvider.movies[index]
 
-            self?.showMovieDetail(movie: movie)
+            self?.showMovieDetail(movie: MovieViewModel(movie: movie))
         }
 
     }

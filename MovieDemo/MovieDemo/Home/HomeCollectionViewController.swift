@@ -74,7 +74,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
             if index > self.searchDataProvider.movies.count { return }
             let movie = self.searchDataProvider.movies[index]
             
-            self.mainCoordinator.showMovieDetail(movie: movie)
+            self.mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
         }
 
         let search = UISearchController(searchResultsController: movieListController)
@@ -125,7 +125,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
         if let section = sections[indexPath.section] as? HomeMovieListSection {
             let movie = section.dataProvider.movies[indexPath.row]
             
-            mainCoordinator.showMovieDetail(movie: movie)
+            mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
         }
     }
     

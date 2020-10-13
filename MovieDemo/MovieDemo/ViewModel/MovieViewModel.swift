@@ -226,8 +226,8 @@ extension MovieViewModel {
         return movie.crew?.compactMap { CrewCreditViewModel(crewCredit: $0) } ?? [CrewCreditViewModel]()
     }
     
-    var recommendedMovies: [Movie] {
-        return movie.recommendedMovies ?? [Movie]()
+    var recommendedMovies: [MovieViewModel] {
+        return movie.recommendedMovies?.compactMap { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
 }

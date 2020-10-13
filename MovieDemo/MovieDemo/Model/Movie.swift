@@ -25,6 +25,7 @@ class Movie: Mappable {
     var recommendedMovies: [Movie]?
     var genres: [MovieGenre]?
     var status: String?
+    var popularity: Float?
     var originalLanguage: String?
     var budget: Int?
     var revenue: Int?
@@ -66,6 +67,7 @@ class Movie: Mappable {
         crew <- map["credits.crew"]
         recommendedMovies <- map["recommendations.results"]
         status <- map["status"]
+        popularity <- map["popularity"]
         originalLanguage <- map["original_language"]
         budget <- map["budget"]
         revenue <- map["revenue"]
