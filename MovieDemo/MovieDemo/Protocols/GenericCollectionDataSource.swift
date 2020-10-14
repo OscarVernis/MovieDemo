@@ -51,10 +51,8 @@ class GenericCollectionDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func refresh() {
-        sections.forEach { section in
-            if let section = section as? FetchableSection {
-                section.refresh()
-            }
+        for section in sections where section is FetchableSection {
+            (section as! FetchableSection).refresh()
         }
         
     }
