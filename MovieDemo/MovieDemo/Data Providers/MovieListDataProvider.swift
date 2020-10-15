@@ -73,36 +73,37 @@ class MovieListDataProvider: ArrayDataProvider {
         
         isFetching = true
         
-        let fetchHandler: ([Movie], Int, Error?) -> () = { [weak self] movies, totalPages, error in
+        let fetchHandler: MovieDBService.MovieListCompletion = { [weak self] result in
             guard let self = self else { return }
             
             self.isFetching = false
             
-            if let error = error {
+            switch result {
+            case .success((let movies, let totalPages)):
+                self.currentPage += 1
+                
+                if self.currentPage == 1 {
+                    self.models.removeAll()
+                }
+                
+                self.totalPages = totalPages
+                
+                if self.currentService == .Upcoming { //If is upcoming sort by Release Date
+                    self.models.append(contentsOf: movies.sorted {
+                        guard let releaseDate1 = $0.releaseDate else { return false }
+                        guard let releaseDate2 = $1.releaseDate else { return false }
+                        
+                        return releaseDate1 < releaseDate2
+                    })
+                } else {
+                    self.models.append(contentsOf: movies)
+                }
+                
+                self.didUpdate?(nil)
+            case .failure(let error):
                 self.didUpdate?(error)
-                return
             }
             
-            self.currentPage += 1
-            
-            if self.currentPage == 1 {
-                self.models.removeAll()
-            }
-            
-            self.totalPages = totalPages
-            
-            if self.currentService == .Upcoming { //If is upcoming sort by Release Date
-                self.models.append(contentsOf: movies.sorted {
-                    guard let releaseDate1 = $0.releaseDate else { return false }
-                    guard let releaseDate2 = $1.releaseDate else { return false }
-
-                    return releaseDate1 < releaseDate2
-                })
-            } else {
-                self.models.append(contentsOf: movies)
-            }
-            
-            self.didUpdate?(nil)
         }
         
         let page = currentPage + 1

@@ -47,12 +47,14 @@ class UserViewModel {
         guard SessionManager.shared.isLoggedIn, let sessionId = SessionManager.shared.sessionId else { return }
         isFetching = false
 
-        service.fetchUserDetails(sessionId: sessionId) { [weak self] user, error in
-            if let user = user, error == nil {
+        service.fetchUserDetails(sessionId: sessionId) { [weak self] result in
+            switch result {
+            case .success(let user):
                 self?.user = user
                 self?.didUpdate?(nil)
-            } else {
+            case .failure(let error):
                 self?.didUpdate?(error)
+                
             }
         }
     }

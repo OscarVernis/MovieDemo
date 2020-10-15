@@ -14,6 +14,7 @@ struct MovieDBService {
     enum ServiceError: Error {
         case jsonError
         case incorrectCredentials
+        case noSuccess
     }
     
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
@@ -39,7 +40,10 @@ struct MovieDBService {
 
 //MARK: - Generic Functions
 extension MovieDBService {
-    private func fetchMovies(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+    typealias SuccessActionCompletion = (Result<Void, Error>) -> Void
+    typealias FetchStringCompletion = (Result<String, Error>) -> Void
+    
+    private func fetchModels<T: Mappable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
         let url = endpoint(forPath: path)
         
         var params = defaultParameters(withSessionId: sessionId)
@@ -50,38 +54,39 @@ extension MovieDBService {
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let moviesData = json["results"] as? [[String: Any]] {
-                    let movies = Array<Movie>.init(JSONArray: moviesData)
+                if let json = jsonData as? [String: Any], let modelsData = json["results"] as? [[String: Any]] {
+                    let models = Array<T>.init(JSONArray: modelsData)
                     let totalPages = json["total_pages"] as? Int ?? page
                     
-                    completion(movies, totalPages, nil)
+                    completion(.success((models, totalPages)))
                 } else {
-                    completion([], page, ServiceError.jsonError)
+                    completion(.failure(ServiceError.jsonError))
                 }
             case .failure(let error):
-                completion([], page, error)
+                completion(.failure(error))
+
             }
         }
     }
     
-    func fetchModel<T: Mappable>(url: URL, params: [String: Any], completion: @escaping (T?, Error?) -> ()) {
+    func fetchModel<T: Mappable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
                 guard let json = jsonData as? [String: Any] else {
-                    completion(nil, ServiceError.jsonError)
+                    completion(.failure(ServiceError.jsonError))
                     return
                 }
                 
-                let model = T(JSON: json)
-                completion(model, nil)
+                let model = T(JSON: json)!
+                completion(.success(model))
             case .failure(let error):
-                completion(nil, error)
+                completion(.failure(error))
             }
         }
     }
     
-    func fetchString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post, completion: @escaping (String?, Error?) -> ()) {
+    func fetchString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post, completion: @escaping FetchStringCompletion) {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
@@ -89,18 +94,18 @@ extension MovieDBService {
             switch response.result {
             case .success(let jsonData):
                 if let json = jsonData as? [String: Any], let resultString = json[path] as? String {
-                    completion(resultString, nil)
+                    completion(.success(resultString))
                 } else {
-                    completion(nil, ServiceError.jsonError)
+                    completion(.failure(ServiceError.jsonError))
                 }
             case .failure(let error):
-                completion(nil, error)
+                completion(.failure(error))
             }
         }
 
     }
     
-    func successAction<T: Encodable>(url: URL, params: [String: Any], body: T? = (Optional<String>.none as! T), method: HTTPMethod = .get, completion: @escaping (Bool, Error?) -> ()) {
+    func successAction<T: Encodable>(url: URL, params: [String: Any], body: T? = (Optional<String>.none as! T), method: HTTPMethod = .get, completion: @escaping SuccessActionCompletion) {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
@@ -108,18 +113,23 @@ extension MovieDBService {
             switch response.result {
             case .success(let jsonData):
                 guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
-                    completion(false, ServiceError.jsonError)
+                    completion(.failure(ServiceError.jsonError))
                     return
                 }
                 
-                completion(success, nil)
+                if success {
+                    completion(.success(()))
+                } else {
+                    completion(.failure(ServiceError.noSuccess))
+                }
+                
             case .failure(let error):
-                completion(false, error)
+                completion(.failure(error))
             }
         }
     }
     
-    func successAction(url: URL, params: [String: Any], method: HTTPMethod = .get, completion: @escaping (Bool, Error?) -> ()) {
+    func successAction(url: URL, params: [String: Any], method: HTTPMethod = .get, completion: @escaping SuccessActionCompletion) {
         successAction(url: url, params: params, body: Optional<String>.none, method: method, completion: completion)
     }
     
@@ -173,28 +183,30 @@ extension MovieDBService {
 
 //MARK: - Movie Lists
 extension MovieDBService {
-    func fetchNowPlaying(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/now_playing", page: page, completion: completion)
+    typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
+    
+    func fetchNowPlaying(page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/movie/now_playing", page: page, completion: completion)
     }
     
-    func fetchPopular(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/popular", page: page, completion: completion)
+    func fetchPopular(page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/movie/popular", page: page, completion: completion)
     }
     
-    func fetchTopRated(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/top_rated", page: page, completion: completion)
+    func fetchTopRated(page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/movie/top_rated", page: page, completion: completion)
     }
     
-    func fetchUpcoming(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/upcoming", page: page, completion: completion)
+    func fetchUpcoming(page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/movie/upcoming", page: page, completion: completion)
     }
     
-    func search(query: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/search/movie", parameters: ["query" : query], page: page, completion: completion)
+    func search(query: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/search/movie", parameters: ["query" : query], page: page, completion: completion)
     }
     
-    func fetchTrending(page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/trending/movie/week", page: page, completion: completion)
+    func fetchTrending(page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/trending/movie/week", page: page, completion: completion)
     }
 }
 
@@ -205,17 +217,17 @@ extension MovieDBService {
         case withCrew = "with_crew"
     }
     
-    func discover(params: [DiscoverOptions: Any], page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
+    func discover(params: [DiscoverOptions: Any], page: Int = 1, completion: @escaping MovieListCompletion) {
         //Convert the enum key to its string raw value
         let editedParams = Dictionary(uniqueKeysWithValues: params.map { ($0.rawValue, $1)})
         
-        fetchMovies(endpoint: "/discover/movie", parameters: editedParams, page: page, completion: completion)
+        fetchModels(endpoint: "/discover/movie", parameters: editedParams, page: page, completion: completion)
     }
 }
 
 //MARK: - Movie Details
 extension MovieDBService {
-    func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping (Movie?, Error?) -> ()) {
+    func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping ((Result<Movie, Error>)) -> ()) {
         let url = endpoint(forPath: "/movie/\(movieId)")
         
         var params = defaultParameters(withSessionId: sessionId)
@@ -224,15 +236,15 @@ extension MovieDBService {
         fetchModel(url: url, params: params, completion: completion)
     }
     
-    func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/movie/\(movieId)/recommendations", page: page, completion: completion)
+    func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/movie/\(movieId)/recommendations", page: page, completion: completion)
     }
     
 }
 
 //MARK: - Person Details
 extension MovieDBService {
-    func fetchPersonDetails(personId: Int, completion: @escaping (Person?, Error?) -> ()) {
+    func fetchPersonDetails(personId: Int, completion: @escaping ((Result<Person, Error>)) -> ()) {
         let url = endpoint(forPath: "/person/\(personId)")
         
         var params = defaultParameters()
@@ -244,14 +256,14 @@ extension MovieDBService {
 
 //MARK: - Login
 extension MovieDBService {
-    func requestToken(completion: @escaping (String?, Error?) -> ()) {
+    func requestToken(completion: @escaping FetchStringCompletion) {
         let url = endpoint(forPath: "/authentication/token/new")
         let params = defaultParameters()
         
         fetchString(path: "request_token", url: url, params: params, method: .get, completion: completion)
     }
     
-    func validateToken(username: String, password: String, requestToken: String, completion: @escaping (Bool, Error?) -> ()) {
+    func validateToken(username: String, password: String, requestToken: String, completion: @escaping SuccessActionCompletion) {
         let url = endpoint(forPath: "/authentication/token/validate_with_login")
         let params = defaultParameters()
 
@@ -264,7 +276,7 @@ extension MovieDBService {
         successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
-    func createSession(requestToken: String, completion: @escaping (String?, Error?) -> ()) {
+    func createSession(requestToken: String, completion: @escaping FetchStringCompletion) {
         let url = endpoint(forPath: "/authentication/session/new")
         let params = defaultParameters()
 
@@ -273,7 +285,7 @@ extension MovieDBService {
         fetchString(path: "session_id", url: url, params: params, body: body, completion: completion)
     }
     
-    func deleteSession(sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+    func deleteSession(sessionId: String, completion: @escaping SuccessActionCompletion) {
         let url = endpoint(forPath: "/authentication/session")
         let params = defaultParameters()
 
@@ -298,7 +310,7 @@ extension MovieDBService {
         var watchlist: Bool
     }
     
-    func fetchUserDetails(sessionId: String, completion: @escaping (User?, Error?) -> ()) {
+    func fetchUserDetails(sessionId: String, completion: @escaping (Result<User, Error>) -> ()) {
         let url = endpoint(forPath: "/account/id")
         var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "favorite/movies,rated/movies,watchlist/movies"
@@ -306,19 +318,19 @@ extension MovieDBService {
         fetchModel(url: url, params: params, completion: completion)
     }
     
-    func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
+    func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func fetchUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
+    func fetchUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func fetchUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
-        fetchMovies(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
+    func fetchUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func markAsFavorite(_ favorite: Bool, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+    func markAsFavorite(_ favorite: Bool, movieId: Int, sessionId: String, completion: @escaping SuccessActionCompletion) {
         let url = endpoint(forPath: "/account/id/favorite")
         let params = defaultParameters(withSessionId: sessionId)
         
@@ -327,7 +339,7 @@ extension MovieDBService {
         successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
-    func addToWatchlist(_ watchlist: Bool, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+    func addToWatchlist(_ watchlist: Bool, movieId: Int, sessionId: String, completion: @escaping SuccessActionCompletion) {
         let url = endpoint(forPath: "/account/id/watchlist")
         let params = defaultParameters(withSessionId: sessionId)
         
@@ -336,7 +348,7 @@ extension MovieDBService {
         successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
-    func rateMovie(_ rating: Float, movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+    func rateMovie(_ rating: Float, movieId: Int, sessionId: String, completion: @escaping SuccessActionCompletion) {
         let url = endpoint(forPath: "/movie/\(movieId)/rating")
         let params = defaultParameters(withSessionId: sessionId)
         
@@ -345,7 +357,7 @@ extension MovieDBService {
         successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
-    func deleteRate(movieId: Int, sessionId: String, completion: @escaping (Bool, Error?) -> ()) {
+    func deleteRate(movieId: Int, sessionId: String, completion: @escaping SuccessActionCompletion) {
         let url = endpoint(forPath: "/movie/\(movieId)/rating")
         let params = defaultParameters(withSessionId: sessionId)
             

@@ -53,17 +53,15 @@ extension MovieViewModel {
             sessionId = SessionManager.shared.sessionId
         }
         
-        movieService.fetchMovieDetails(movieId: movie.id!, sessionId: sessionId) { [weak self] movie, error in
+        movieService.fetchMovieDetails(movieId: movie.id!, sessionId: sessionId) { [weak self] result in
             guard let self = self else { return }
             
-            if error != nil {
-                self.didUpdate?(error)
-                return
-            }
-            
-            if let movie = movie {
+            switch result {
+            case .success(let movie):
                 self.updateMovie(movie)
                 self.didUpdate?(nil)
+            case .failure(let error):
+                self.didUpdate?(error)
             }
         }
     }
@@ -268,14 +266,16 @@ extension MovieViewModel {
             return
         }
         
-        movieService.markAsFavorite(favorite, movieId: id, sessionId: sessionId) { [weak self] success, error in
-            if success && error == nil {
+        movieService.markAsFavorite(favorite, movieId: id, sessionId: sessionId) { [weak self] result in
+            switch result {
+            case .success():
                 self?.movie.favorite = favorite
-                completion(success)
-            } else {
+                completion(true)
+            case .failure(_):
                 completion(false)
             }
         }
+        
     }
     
     func addToWatchlist(_ watchlist: Bool, completion: @escaping (Bool) -> Void) {
@@ -284,11 +284,12 @@ extension MovieViewModel {
             return
         }
         
-        movieService.addToWatchlist(watchlist, movieId: id, sessionId: sessionId) { [weak self] success, error in
-            if success && error == nil {
+        movieService.addToWatchlist(watchlist, movieId: id, sessionId: sessionId) { [weak self] result in
+            switch result {
+            case .success:
                 self?.movie.watchlist = watchlist
-                completion(success)
-            } else {
+                completion(true)
+            case .failure(_):
                 completion(false)
             }
         }
@@ -311,16 +312,18 @@ extension MovieViewModel {
             adjustedRating = 0.5
         }
                 
-        movieService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] success, error in
-            if success && error == nil {
+        movieService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] result in
+            switch result {
+            case .success:
                 self?.movie.userRating = adjustedRating
                 self?.movie.watchlist = false //Server removes movie from watchlist when rating
                 self?.movie.rated = true
-                completion(success)
-            } else {
+                completion(true)
+            case .failure(_):
                 completion(false)
             }
         }
+        
     }
     
     func deleteRate(completion: @escaping (Bool) -> Void) {
@@ -329,11 +332,12 @@ extension MovieViewModel {
             return
         }
         
-        movieService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] success, error in
-            if success && error == nil {
+        movieService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] result in
+            switch result {
+            case .success:
                 self?.movie.rated = false
-                completion(success)
-            } else {
+                completion(true)
+            case .failure(_):
                 completion(false)
             }
         }

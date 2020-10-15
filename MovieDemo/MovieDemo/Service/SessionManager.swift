@@ -60,7 +60,7 @@ extension SessionManager {
     
     func logout() {
         if let sessionId = sessionId {
-            service.deleteSession(sessionId: sessionId) { success, error in
+            service.deleteSession(sessionId: sessionId) { result in
             }
         }
                 
@@ -80,34 +80,38 @@ extension SessionManager {
 //MARK:- Session creation
 extension SessionManager {
     func login(withUsername username: String, password: String, completion: @escaping (Error?) -> Void) {
-        service.requestToken { [weak self] requestToken, error in
-            if error == nil {
+        service.requestToken { [weak self] result in
+            switch result {
+            case .success(let requestToken):
                 self?.loginCompletionHandler = completion
-                self?.validateToken(requestToken!, username: username, password: password)
-            } else {
+                self?.validateToken(requestToken, username: username, password: password)
+            case .failure(let error):
                 self?.loginCompletionHandler?(error)
             }
         }
+        
     }
     
     fileprivate func validateToken(_ token: String, username: String, password: String)  {
-        service.validateToken(username: username, password: password, requestToken: token) { [weak self] success, error in
-            if success && error == nil {
+        service.validateToken(username: username, password: password, requestToken: token) { [weak self] result in
+            switch result {
+            case .success:
                 self?.createSession(token: token, username: username)
-            } else {
+            case .failure(let error):
                 self?.loginCompletionHandler?(error)
             }
         }
     }
     
     fileprivate func createSession(token: String, username: String) {
-        service.createSession(requestToken: token) { [weak self] (sessionId, error) in
-            if error == nil {
-                self?.save(username: username, sessionId: sessionId!)
+        service.createSession(requestToken: token) { [weak self] result in
+            switch result {
+            case .success(let sessionId):
+                self?.save(username: username, sessionId: sessionId)
                 self?.loginCompletionHandler?(nil)
-            } else {
+            case .failure(let error):
                 self?.loginCompletionHandler?(error)
-             }
+            }
         }
     }
     

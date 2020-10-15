@@ -40,20 +40,17 @@ extension PersonViewModel {
     }
     
     private func fetchPersonDetails() {
-        movieService.fetchPersonDetails(personId: person.id) { [weak self] person, error in
+        movieService.fetchPersonDetails(personId: person.id) { [weak self] result in
             guard let self = self else { return }
-
-            if error != nil {
-                self.didUpdate?(error)
-                return
-            }
             
-            if let person = person {
+            switch result {
+            case .success(let person):
                 self.updatePerson(person)
                 self.didUpdate?(nil)
+            case .failure(let error):
+                self.didUpdate?(error)
             }
         }
-        
     }
     
 }
