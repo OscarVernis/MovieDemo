@@ -64,7 +64,7 @@ extension MovieDBService {
         }
     }
     
-    func fetchModel<T: Mappable>(_ modelType: T.Type, url: URL, params: [String: Any], completion: @escaping (T?, Error?) -> ()) {
+    func fetchModel<T: Mappable>(url: URL, params: [String: Any], completion: @escaping (T?, Error?) -> ()) {
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
@@ -221,7 +221,7 @@ extension MovieDBService {
         var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "credits,recommendations,account_states,videos"
         
-        fetchModel(Movie.self, url: url, params: params, completion: completion)
+        fetchModel(url: url, params: params, completion: completion)
     }
     
     func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
@@ -238,7 +238,7 @@ extension MovieDBService {
         var params = defaultParameters()
         params["append_to_response"] = "movie_credits"
         
-        fetchModel(Person.self, url: url, params: params, completion: completion)
+        fetchModel(url: url, params: params, completion: completion)
     }
 }
 
@@ -303,7 +303,7 @@ extension MovieDBService {
         var params = defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "favorite/movies,rated/movies,watchlist/movies"
         
-        fetchModel(User.self, url: url, params: params, completion: completion)
+        fetchModel(url: url, params: params, completion: completion)
     }
     
     func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping ([Movie], Int, Error?) -> ()) {
