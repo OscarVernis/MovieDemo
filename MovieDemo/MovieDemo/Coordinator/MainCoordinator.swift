@@ -142,9 +142,8 @@ final class MainCoordinator {
             
             let castCredit = dataProvider.models[index]
             
-            let dataProvider = MovieListDataProvider(.DiscoverWithCast(castId: castCredit.id))
-            let title = String(format: NSLocalizedString("Movies with: %@", comment: ""), castCredit.name)
-            self.showMovieList(title: title, dataProvider: dataProvider)
+            let person = castCredit.person()
+            self.showPersonProfile(person)
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: true)

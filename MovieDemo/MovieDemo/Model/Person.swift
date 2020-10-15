@@ -21,6 +21,8 @@ class Person: Mappable {
     var profilePath: String?
     
     var castCredits: [PersonCastCredit]?
+    var crewCredits: [PersonCrewCredit]?
+
 
     //MARK: - ObjectMapper
     required init?(map: Map) {
@@ -48,6 +50,7 @@ class Person: Mappable {
         profilePath <- map["profile_path"]
 
         castCredits <- map["movie_credits.cast"]
+        crewCredits <- map["movie_credits.crew"]
     }
     
 }

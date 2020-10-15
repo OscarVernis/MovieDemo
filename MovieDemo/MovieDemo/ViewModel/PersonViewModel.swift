@@ -16,6 +16,8 @@ class PersonViewModel {
     var didUpdate: ((Error?) -> Void)?
     
     var castCredits = [PersonCastCreditViewModel]()
+    var crewCredits = [PersonCrewCreditViewModel]()
+
     var popularMovies = [MovieViewModel]()
     
     init(person: Person) {
@@ -25,6 +27,7 @@ class PersonViewModel {
     func updatePerson(_ person: Person) {
         self.person = person
         updateCastCredits()
+        updateCrewCredits()
         updatePopularMovies()
     }
     
@@ -103,6 +106,20 @@ extension PersonViewModel {
         }
         
         castCredits = credits.compactMap { PersonCastCreditViewModel(personCastCredit: $0) }
+    }
+    
+    fileprivate func updateCrewCredits() {
+        guard var credits = person.crewCredits else { return }
+        
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.year = 100
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+        credits.sort { (person1, person2) -> Bool in
+            person1.releaseDate ?? futureDate > person2.releaseDate ?? futureDate
+        }
+        
+        crewCredits = credits.compactMap { PersonCrewCreditViewModel(personCrewCredit: $0) }
     }
     
     fileprivate func updatePopularMovies() {

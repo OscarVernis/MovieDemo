@@ -47,7 +47,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
 
         reloadSections()
         createCollectionView()
-        setupCollectionView()
+        setup()
         setupDataProvider()
     }
     
@@ -68,9 +68,12 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     //MARK:- Setup
-    fileprivate func setupCollectionView() {
+    fileprivate func setup() {
+        view.backgroundColor = .appBackgroundColor
+        collectionView.backgroundColor = .clear
+        
         //Set NavigationBar/ScrollView settings for design
-        self.navigationItem.largeTitleDisplayMode = .always
+        navigationItem.largeTitleDisplayMode = .always
 
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false

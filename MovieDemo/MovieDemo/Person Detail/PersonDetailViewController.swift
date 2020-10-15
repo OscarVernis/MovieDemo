@@ -73,9 +73,8 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         gradient = CAGradientLayer()
         gradient.frame = personImageView.bounds
         gradient.colors = [UIColor.black.cgColor,
-                           UIColor.black.withAlphaComponent(0.5).cgColor,
                            UIColor.clear.cgColor]
-        gradient.locations = [0.86, 0.93, 1]
+        gradient.locations = [0.85, 1]
         personImageView.layer.mask = gradient
         
         //Setup CollectionView
@@ -99,7 +98,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         titleNameLabel.text = person.name
         
         if let imageURL = self.person.profileImageURL {
-            personImageView.af.setImage(withURL: imageURL)
+            personImageView.af.setImage(withURL: imageURL, imageTransition: .crossDissolve(0.3))
         }
         
         let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
@@ -226,18 +225,18 @@ extension PersonDetailViewController {
             headerHeight = navBarHeight
         }
         
-        if creditsHeaderView != nil {
-            let creditsSectionPos = creditsHeaderView!.frame.origin.y - collectionView.contentOffset.y - navBarHeight
-            if creditsSectionPos < 0 {
-                if !isHeaderViewCompact {
-                    setIsHeaderViewCompact(true, animated: true)
-                }
-            } else {
-                if isHeaderViewCompact {
-                    setIsHeaderViewCompact(false, animated: true)
-                }
-            }
-        }
+//        if creditsHeaderView != nil {
+//            let creditsSectionPos = creditsHeaderView!.frame.origin.y - collectionView.contentOffset.y - navBarHeight
+//            if creditsSectionPos < 0 {
+//                if !isHeaderViewCompact {
+//                    setIsHeaderViewCompact(true, animated: true)
+//                }
+//            } else {
+//                if isHeaderViewCompact {
+//                    setIsHeaderViewCompact(false, animated: true)
+//                }
+//            }
+//        }
         
         let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.7)
         blurAnimator.fractionComplete = ratio

@@ -10,7 +10,7 @@ import UIKit
 
 class BlurButton: UIButton {
     var blurView = UIVisualEffectView(effect: nil) 
-    let blurStyle: UIBlurEffect.Style = .light
+    let blurStyle: UIBlurEffect.Style = .dark
     
     override func awakeFromNib() {
         layer.masksToBounds = true
