@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Person: Mappable {
+class Person: MediaItem {
     var id: Int!
     var name: String!
     var knownForDepartment: String?
@@ -25,7 +25,7 @@ class Person: Mappable {
 
 
     //MARK: - ObjectMapper
-    required init?(map: Map) {
+    override class func objectForMapping(map: Map) -> BaseMappable? {
         if map.JSON["id"] == nil {
             return nil
         }
@@ -33,12 +33,11 @@ class Person: Mappable {
         if map.JSON["name"] == nil {
             return nil
         }
-    }
-    
-    init() {
+        
+        return Person()
     }
 
-    func mapping(map: Map) {
+    override func mapping(map: Map) {
         id <- map["id"]
         name <- map["name"]
         knownForDepartment <- map["known_for_department"]

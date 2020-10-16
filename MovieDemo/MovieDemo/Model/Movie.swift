@@ -10,7 +10,7 @@
 import Foundation
 import ObjectMapper
 
-class Movie: Mappable {
+class Movie: MediaItem {
     var id: Int!
     var title: String!
     var overview: String?
@@ -41,7 +41,7 @@ class Movie: Mappable {
     
     
 //MARK: - ObjectMapper
-    public required init?(map: Map) {
+    override class func objectForMapping(map: Map) -> BaseMappable? {
         if map.JSON["id"] == nil {
             return nil
         }
@@ -49,9 +49,11 @@ class Movie: Mappable {
         if map.JSON["title"] == nil {
             return nil
         }
+        
+        return Movie()
     }
     
-    public func mapping(map: Map) {
+    public override func mapping(map: Map) {
         backdropPath <- map["backdrop_path"]
         id <- map["id"]
         overview <- map["overview"]
@@ -83,17 +85,4 @@ class Movie: Mappable {
         
     }
     
-}
-
-extension Movie: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(title)
-    }
-}
-
-extension Movie: Equatable {
-    static func == (lhs: Movie, rhs: Movie) -> Bool {
-        return lhs.id == rhs.id
-    }
 }

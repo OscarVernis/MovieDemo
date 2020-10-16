@@ -117,7 +117,7 @@ class MovieListDataProvider: ArrayDataProvider {
         case .Upcoming:
             movieService.fetchUpcoming(page: page, completion: fetchHandler)
         case .Search(query: let query):
-            movieService.search(query: query, page: page, completion: fetchHandler)
+            movieService.movieSearch(query: query, page: page, completion: fetchHandler)
         case .Recommended(movieId: let movieId):
             movieService.fetchRecommendMovies(movieId: movieId, page: page, completion: fetchHandler)
         case .DiscoverWithCast(castId: let castId):
