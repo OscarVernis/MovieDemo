@@ -19,6 +19,7 @@ class Person: MediaItem {
     var biography: String?
     var placeOfBirth: String?
     var profilePath: String?
+    var knownForMovies: [Movie]?
     
     var castCredits: [PersonCastCredit]?
     var crewCredits: [PersonCrewCredit]?
@@ -47,6 +48,8 @@ class Person: MediaItem {
         biography <- map["biography"]
         placeOfBirth <- map["place_of_birth"]
         profilePath <- map["profile_path"]
+
+        knownForMovies <- map["known_for"]
 
         castCredits <- map["movie_credits.cast"]
         crewCredits <- map["movie_credits.crew"]

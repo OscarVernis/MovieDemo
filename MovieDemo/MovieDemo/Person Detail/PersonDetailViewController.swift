@@ -35,7 +35,6 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     //MARK:- View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
-
         sections = []
         
         setupAnimations()
@@ -145,11 +144,12 @@ class PersonDetailViewController: UIViewController, GenericCollection {
             sections.append(castCreditsSection)
         }
         
-        if !person.crewCredits.isEmpty {
-            let crewCreditsSection = PersonCrewCreditsSection(title: NSLocalizedString("Production", comment: ""), credits: person.crewCredits)
+        let crewGrouping = Dictionary(grouping: person.crewCredits, by: \.job)
+        for (key, credits) in crewGrouping {
+            let crewCreditsSection = PersonCrewCreditsSection(title: key!, credits: credits)
             sections.append(crewCreditsSection)
         }
-        
+
         dataSource.sections = sections
         collectionView.reloadData()
     }
@@ -274,8 +274,8 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         case _ as PersonCastCreditsSection:
             let movie = person.castCredits[indexPath.row]
             mainCoordinator.showMovieDetail(movie: movie)
-        case _ as PersonCrewCreditsSection:
-            let movie = person.crewCredits[indexPath.row]
+        case let section as PersonCrewCreditsSection:
+            let movie = section.credits[indexPath.row]
             mainCoordinator.showMovieDetail(movie: movie)
         default:
             break
