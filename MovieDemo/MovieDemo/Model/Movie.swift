@@ -86,3 +86,26 @@ class Movie: MediaItem {
     }
     
 }
+
+//MARK: - Utils
+extension Movie: Equatable {
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+        return
+            lhs.id == rhs.id
+    }
+}
+
+extension Movie {
+    static func sortByPopularity(lhs: Movie, rhs: Movie) -> Bool {
+        lhs.voteCount ?? 0 > lhs.voteCount ?? 0
+    }
+    
+    static func sortByRelease(lhs: Movie, rhs: Movie) -> Bool {
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.year = 100
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+        
+        return lhs.releaseDate ?? futureDate > rhs.releaseDate ?? futureDate
+    }
+}

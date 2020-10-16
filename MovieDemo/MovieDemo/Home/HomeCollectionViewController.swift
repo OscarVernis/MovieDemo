@@ -12,7 +12,7 @@ import Alamofire
 class HomeCollectionViewController: UIViewController, GenericCollection {    
     var collectionView: UICollectionView!
     var dataSource: GenericCollectionDataSource!
-    var searchDataProvider = MovieListDataProvider()
+    var searchSection: SearchSection!
     
     weak var mainCoordinator: MainCoordinator!
     
@@ -33,21 +33,24 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+                        
+        definesPresentationContext = true
+        extendedLayoutIncludesOpaqueBars = true
         createCollectionView()
         setup()
         setupSearch()
         setupDataSource()
     }
     
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
     
     fileprivate func setup() {
-        self.title = NSLocalizedString("Movies", comment: "")
+        title = NSLocalizedString("Movies", comment: "")
         navigationController?.delegate = self
-
+        
         //CollectionView setup
         collectionView.backgroundColor = .appBackgroundColor
         collectionView.refreshControl = UIRefreshControl()
@@ -64,23 +67,40 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        //Restore search bar behavior after Person Detail is closed
+        navigationItem.searchController?.hidesNavigationBarDuringPresentation = true
+    }
+    
     fileprivate func setupSearch() {
-        let searchSection = DataProviderSection(dataProvider: searchDataProvider, cellConfigurator: MovieInfoCellConfigurator())
+        searchSection = SearchSection()
         let movieListController = ListViewController(section: searchSection)
 
         movieListController.didSelectedItem = { [weak self] index in
             guard let self = self else { return }
             
-            if index > self.searchDataProvider.movies.count { return }
-            let movie = self.searchDataProvider.movies[index]
-            
-            self.mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
-        }
+            //Avoid the navigation bar showing after the Person Detail is shown
+            self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
 
+            if index > self.searchSection.dataProvider.models.count { return }
+            let item = self.searchSection.dataProvider.models[index]
+            
+            switch item {
+            case let movie as Movie:
+                self.mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
+            case let person as Person:
+                self.mainCoordinator.showPersonProfile(PersonViewModel(person: person))
+            default:
+                break
+            }
+
+        }
+        
         let search = UISearchController(searchResultsController: movieListController)
         search.searchResultsUpdater = self
         search.delegate = self
         navigationItem.searchController = search
+
     }
     
     fileprivate func setupDataSource() {
@@ -150,9 +170,25 @@ extension HomeCollectionViewController {
 
 // MARK: - Searching
 extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControllerDelegate {
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchQuery = searchController.searchBar.text, !searchQuery.isEmpty {
-            searchDataProvider.currentService = .Search(query: searchQuery)
+    func scrollListViewControllerToTop() {
+        //Scroll results list to top everytime is shown.
+        if let listController = navigationItem.searchController?.searchResultsController as? ListViewController {
+            if listController.collectionView.indexPathsForVisibleItems.count > 0 {
+                listController.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+            }
         }
     }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+       scrollListViewControllerToTop()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchQuery = searchController.searchBar.text, !searchQuery.isEmpty {
+            searchSection.dataProvider.query = searchQuery
+        } else {
+            scrollListViewControllerToTop()
+        }
+    }
+    
 }

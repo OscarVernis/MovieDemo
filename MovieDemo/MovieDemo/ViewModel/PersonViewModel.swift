@@ -90,33 +90,30 @@ extension PersonViewModel {
         
         return MovieDBService.profileImageURL(forPath: pathString, size: .original)
     }
+    
+    var knownForMovies: String? {
+        let movies = person.knownForMovies?
+            .sorted(by: Movie.sortByPopularity)
+            .prefix(3)
+            .compactMap(\.title)
+        
+        return movies?.joined(separator: ", ")
+    }
         
     fileprivate func updateCastCredits() {
-        guard var credits = person.castCredits else { return }
+        guard let credits = person.castCredits else { return }
         
-        let currentDate = Date()
-        var dateComponent = DateComponents()
-        dateComponent.year = 100
-        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
-        credits.sort { (person1, person2) -> Bool in
-            person1.releaseDate ?? futureDate > person2.releaseDate ?? futureDate
-        }
-        
-        castCredits = credits.compactMap { PersonCastCreditViewModel(personCastCredit: $0) }
+        castCredits = credits
+            .sorted(by: PersonCastCredit.sortByRelease)
+            .compactMap { PersonCastCreditViewModel(personCastCredit: $0) }
     }
     
     fileprivate func updateCrewCredits() {
-        guard var credits = person.crewCredits else { return }
+        guard let credits = person.crewCredits else { return }
         
-        let currentDate = Date()
-        var dateComponent = DateComponents()
-        dateComponent.year = 100
-        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
-        credits.sort { (person1, person2) -> Bool in
-            person1.releaseDate ?? futureDate > person2.releaseDate ?? futureDate
-        }
-        
-        crewCredits = credits.compactMap { PersonCrewCreditViewModel(personCrewCredit: $0) }
+        crewCredits = credits
+            .sorted(by: PersonCrewCredit.sortByRelease)
+            .compactMap { PersonCrewCreditViewModel(personCrewCredit: $0) }
     }
     
     fileprivate func updatePopularMovies() {
@@ -131,18 +128,15 @@ extension PersonViewModel {
         }
         
         var filteredMovies = [Movie]()
-        for movie in credits {
-            if !filteredMovies.contains(where: { $0.id == movie.id }) {
-                filteredMovies.append(movie)
-            }
+        for movie in credits where !filteredMovies.contains(movie)  {
+            filteredMovies.append(movie)
         }
         
-        filteredMovies.sort {
-            $0.voteCount ?? 0 > $1.voteCount ?? 0
-        }
-        let viewModels = filteredMovies.prefix(8).compactMap { MovieViewModel(movie: $0) }
+        popularMovies = filteredMovies
+            .sorted(by: Movie.sortByPopularity)
+            .prefix(8)
+            .compactMap { MovieViewModel(movie: $0) }
         
-        popularMovies = viewModels
     }
     
 }
