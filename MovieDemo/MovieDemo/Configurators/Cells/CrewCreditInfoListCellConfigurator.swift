@@ -9,16 +9,16 @@
 import UIKit
 
 struct CrewCreditInfoListCellConfigurator {
-    func configure(cell: InfoListCell, with model: [String: String]) {
-        cell.titleLabel.text = model.first?.key
-        cell.infoLabel.text = model.first?.value
+    func configure(cell: InfoListCell, with infoDict: [String: String]) {
+        cell.titleLabel.text = infoDict.first?.key
+        cell.infoLabel.text = infoDict.first?.value
         cell.separator.isHidden = true
     }
     
-    func configure(cell: InfoListCell, with model: CrewCreditViewModel) {
+    func configure(cell: InfoListCell, with crewCredit: CrewCreditViewModel) {
         
-        cell.titleLabel.text = model.name
-        cell.infoLabel.text = model.jobs
+        cell.titleLabel.text = crewCredit.name
+        cell.infoLabel.text = crewCredit.jobs
     }
     
 }

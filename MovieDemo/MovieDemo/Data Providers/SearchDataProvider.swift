@@ -17,7 +17,18 @@ class SearchDataProvider: ArrayDataProvider {
         }
     }
     
-    var models =  [MediaItem]()
+    private var items =  [MediaItem]()
+    
+    var itemCount: Int {
+        return items.count
+    }
+    
+    func item(atIndex index: Int) -> MediaItem {
+        let item = items[index]
+        
+        return item
+    }
+    
     let movieService = MovieDBService()
 
     private var isFetching = false
@@ -62,12 +73,12 @@ class SearchDataProvider: ArrayDataProvider {
                 self.currentPage += 1
                 
                 if self.currentPage == 1 {
-                    self.models.removeAll()
+                    self.items.removeAll()
                 }
                 
                 self.totalPages = totalPages
                 
-                self.models.append(contentsOf: items)
+                self.items.append(contentsOf: items)
                 
                 self.didUpdate?(nil)
             case .failure(let error):

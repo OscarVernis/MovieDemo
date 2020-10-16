@@ -92,7 +92,7 @@ final class MainCoordinator {
     }
     
     func showMovieDetail(movie: MovieViewModel) {
-        let mdvc = MovieDetailViewController(viewModel: movie)
+        let mdvc = MovieDetailViewController(movie: movie)
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: true)
@@ -106,10 +106,9 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: true)
         
         lvc.didSelectedItem = { [weak self] index in
-            if index >= dataProvider.models.count { return }
-            let movie = dataProvider.movies[index]
+            let movie = dataProvider.item(atIndex: index)
 
-            self?.showMovieDetail(movie: MovieViewModel(movie: movie))
+            self?.showMovieDetail(movie: movie)
         }
 
     }
@@ -128,9 +127,9 @@ final class MainCoordinator {
         lvc.title = title
         
         lvc.didSelectedItem = { index in
-            if index >= dataProvider.models.count { return }
+            if index >= dataProvider.itemCount { return }
             
-            let crewCredit = dataProvider.models[index]
+            let crewCredit = dataProvider.item(atIndex: index)
             
             let person = crewCredit.person()
             self.showPersonProfile(person)
@@ -145,9 +144,9 @@ final class MainCoordinator {
         lvc.title = title
         
         lvc.didSelectedItem = { index in
-            if index >= dataProvider.models.count { return }
+            if index >= dataProvider.itemCount { return }
             
-            let castCredit = dataProvider.models[index]
+            let castCredit = dataProvider.item(atIndex: index)
             
             let person = castCredit.person()
             self.showPersonProfile(person)

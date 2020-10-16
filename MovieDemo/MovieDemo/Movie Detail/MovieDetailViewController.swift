@@ -27,8 +27,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     private weak var actionsCell: UserActionsCell?
     var collectionView: UICollectionView!
     
-    required init(viewModel: MovieViewModel) {
-        self.movie = viewModel
+    required init(movie: MovieViewModel) {
+        self.movie = movie
         super.init(nibName: nil, bundle: nil)
     }
     

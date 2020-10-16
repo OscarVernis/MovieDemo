@@ -87,11 +87,7 @@ extension MovieViewModel {
     }
     
     var ratingString: String {
-        if isRatingAvailable {
-            return "\(percentRating)"
-        } else {
-            return NSLocalizedString("NR", comment: "")
-        }
+        return isRatingAvailable ? "\(percentRating)" : NSLocalizedString("NR", comment: "")
     }
     
     var percentRating: UInt {
@@ -249,11 +245,7 @@ extension MovieViewModel {
     }
     
     var userRatingString: String {
-        if rated {
-            return "\(percentUserRating)"
-        } else {
-            return NSLocalizedString("NR", comment: "")
-        }
+        return rated ? "\(percentUserRating)" : NSLocalizedString("NR", comment: "")
     }
     
     var watchlist: Bool {
@@ -384,7 +376,9 @@ extension MovieViewModel {
     private func updateTopCast() {
         guard let cast = movie.cast else { return }
         
-        topCast = Array(cast.prefix(8)).compactMap { CastCreditViewModel(castCredit: $0) }
+        topCast = cast
+            .prefix(8)
+            .compactMap { CastCreditViewModel(castCredit: $0) }
     }
     
     private func updateTopCrew() {
@@ -400,4 +394,3 @@ extension MovieViewModel {
     }
     
 }
-

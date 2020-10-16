@@ -10,18 +10,18 @@ import UIKit
 import AlamofireImage
 
 struct MoviePosterTitleRatingCellConfigurator {
-    func configure(cell: MoviePosterInfoCell, with model: MovieViewModel) {
+    func configure(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
         cell.posterImageView.af.cancelImageRequest()
         cell.posterImageView.image = UIImage(named: "PosterPlaceholder")
         
-        if let url = model.posterImageURL(size: .w342) {
+        if let url = movie.posterImageURL(size: .w342) {
             cell.posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
         
         cell.setPosterRatio((3/2))
         
-        cell.title = model.title
-        cell.rating = model.percentRating
+        cell.title = movie.title
+        cell.rating = movie.percentRating
         
         cell.loadViews()
     }

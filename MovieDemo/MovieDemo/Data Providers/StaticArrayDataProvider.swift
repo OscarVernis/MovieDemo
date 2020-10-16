@@ -11,11 +11,19 @@ import Foundation
 class StaticArrayDataProvider<T>: ArrayDataProvider {
     typealias Model = T
     
+    private var items: [T]
+    
     init(models: [T]) {
-        self.models = models
+        self.items = models
     }
-
-    var models: [T]
+    
+    var itemCount: Int {
+        return items.count
+    }
+    
+    func item(atIndex index: Int) -> T {
+        return items[index]
+    }
     
     var currentPage = 1
     var totalPages = 1

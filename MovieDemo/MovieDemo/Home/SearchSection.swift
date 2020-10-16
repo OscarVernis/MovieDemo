@@ -32,7 +32,7 @@ class SearchSection: FetchableSection {
     }
     
     var itemCount: Int {
-        dataProvider.models.count
+        dataProvider.itemCount
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
@@ -50,17 +50,17 @@ class SearchSection: FetchableSection {
     }
     
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        let item = dataProvider.models[indexPath.row]
+        let item = dataProvider.item(atIndex: indexPath.row)
         let cell: UICollectionViewCell
         
         switch item {
         case let movie as Movie:
             let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as! MovieInfoListCell
-            MovieInfoCellConfigurator().configure(cell: movieCell, with: movie)
+            MovieInfoCellConfigurator().configure(cell: movieCell, with: MovieViewModel(movie: movie))
             cell = movieCell
         case let person as Person:
             let personCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditPhotoListCell.reuseIdentifier, for: indexPath) as! CreditPhotoListCell
-            PersonCreditPhotoListConfigurator().configure(cell: personCell, person: person)
+            PersonCreditPhotoListConfigurator().configure(cell: personCell, person: PersonViewModel(person: person))
             cell = personCell
         default:
             fatalError()

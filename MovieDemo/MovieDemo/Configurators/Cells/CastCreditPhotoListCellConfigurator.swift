@@ -13,13 +13,13 @@ struct CastCreditPhotoListCellConfigurator: CellConfigurator {
     typealias Model = CastCreditViewModel
     typealias Cell = CreditPhotoListCell
     
-    func configure(cell: Cell, with model: Model) {
+    func configure(cell: Cell, with castCredit: Model) {
         cell.creditImageView.af.cancelImageRequest()
         
-        cell.nameLabel.text = model.name
-        cell.roleLabel.text = model.character
+        cell.nameLabel.text = castCredit.name
+        cell.roleLabel.text = castCredit.character
         
-        if let url = model.profileImageURL {
+        if let url = castCredit.profileImageURL {
             cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }

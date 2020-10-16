@@ -122,7 +122,7 @@ extension UserProfileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let section = sections[indexPath.section] as? UserProfileMovieListSection, section.movies.count > 0 {
             let movie = section.movies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
+            mainCoordinator.showMovieDetail(movie: movie)
         }
     }
 

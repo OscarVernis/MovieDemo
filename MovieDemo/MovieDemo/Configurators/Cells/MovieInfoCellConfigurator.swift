@@ -10,25 +10,23 @@ import UIKit
 import AlamofireImage
 
 struct MovieInfoCellConfigurator: CellConfigurator {
-    typealias Model = Movie
+    typealias Model = MovieViewModel
     typealias Cell = MovieInfoListCell
     
-    func configure(cell: MovieInfoListCell, with model: Model) {        
-        let viewModel = MovieViewModel(movie: model)
-        
+    func configure(cell: MovieInfoListCell, with movie: Model) {        
         cell.posterImageView.af.cancelImageRequest()
         cell.posterImageView.image = UIImage(named: "PosterPlaceholder")
         
-        if let url = viewModel.posterImageURL(size: .w342) {
+        if let url = movie.posterImageURL(size: .w342) {
             cell.posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
         
-        cell.titleLabel.text = model.title
-        cell.ratingsView.rating = CGFloat(viewModel.percentRating)
-        cell.ratingsView.isRatingAvailable = viewModel.isRatingAvailable
-        cell.overviewLabel.text = viewModel.overview
-        cell.genresLabel.text = viewModel.genres()
-        cell.releaseDateLabel.text = viewModel.releaseYear
+        cell.titleLabel.text = movie.title
+        cell.ratingsView.rating = CGFloat(movie.percentRating)
+        cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
+        cell.overviewLabel.text = movie.overview
+        cell.genresLabel.text = movie.genres()
+        cell.releaseDateLabel.text = movie.releaseYear
     }
     
 }
