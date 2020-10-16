@@ -11,7 +11,6 @@ import AlamofireImage
 
 class PersonDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
-    private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
 
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
@@ -85,12 +84,15 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.delegate = self
-        
+
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
+        let bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+
         
         //setup Person
         self.title = person.name
@@ -104,7 +106,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
         let height = width * 1.5
         headerHeightConstraint.constant = height
-        collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
     }
     
     fileprivate func setupDataProvider()  {
@@ -141,6 +143,11 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         if !person.castCredits.isEmpty {
             let castCreditsSection = PersonCastCreditsSection(title: NSLocalizedString("Acting", comment: ""), credits: person.castCredits)
             sections.append(castCreditsSection)
+        }
+        
+        if !person.crewCredits.isEmpty {
+            let crewCreditsSection = PersonCrewCreditsSection(title: NSLocalizedString("Production", comment: ""), credits: person.crewCredits)
+            sections.append(crewCreditsSection)
         }
         
         dataSource.sections = sections
@@ -266,6 +273,9 @@ extension PersonDetailViewController: UICollectionViewDelegate {
             mainCoordinator.showMovieDetail(movie: movie)
         case _ as PersonCastCreditsSection:
             let movie = person.castCredits[indexPath.row]
+            mainCoordinator.showMovieDetail(movie: movie)
+        case _ as PersonCrewCreditsSection:
+            let movie = person.crewCredits[indexPath.row]
             mainCoordinator.showMovieDetail(movie: movie)
         default:
             break

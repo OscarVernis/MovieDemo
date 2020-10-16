@@ -326,14 +326,13 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         let section = sections[indexPath.section]
         switch(section) {
         case _ as MovieDetailCastSection:
-            let castCredit = movie.cast[indexPath.row]
+            let castCredit = movie.topCast[indexPath.row]
             let person = castCredit.person()
             mainCoordinator.showPersonProfile(person)
         case _ as MovieDetailCrewSection:
             let crewCredit = movie.topCrew[indexPath.row]
-            let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
-            let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
-            mainCoordinator.showMovieList(title: title, dataProvider: dataProvider)
+            let person = crewCredit.person()
+            mainCoordinator.showPersonProfile(person)
         case _ as MovieDetailRecommendedSection:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
