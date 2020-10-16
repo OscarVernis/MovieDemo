@@ -16,4 +16,11 @@ struct PersonCreditConfigurator {
         cell.creditLabel.text = castCredit.character
         cell.creditLabel.isHidden = castCredit.character == nil
     }
-}
+    
+    func configure(cell: PersonCreditCell, crewCredit: PersonCrewCreditViewModel) {
+        cell.yearLabel.text = crewCredit.year
+        cell.titleLabel.text = crewCredit.title
+        
+        cell.creditLabel.text = crewCredit.job
+        cell.creditLabel.isHidden = crewCredit.job == nil
+    }}

@@ -114,6 +114,14 @@ final class MainCoordinator {
 
     }
     
+    func showPersonProfile(_ viewModel: PersonViewModel) {
+        let pvc = PersonDetailViewController.instantiateFromStoryboard()
+        pvc.person = viewModel
+        pvc.mainCoordinator = self
+        
+        rootNavigationViewController?.pushViewController(pvc, animated: true)
+    }
+    
     func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>) {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CrewCreditPhotoListCellConfigurator())
         let lvc = ListViewController(section: section)
@@ -124,9 +132,8 @@ final class MainCoordinator {
             
             let crewCredit = dataProvider.models[index]
             
-            let dataProvider = MovieListDataProvider(.DiscoverWithCrew(crewId: crewCredit.id))
-            let title = String(format: NSLocalizedString("Movies by: %@", comment: ""), crewCredit.name)
-            self.showMovieList(title: title, dataProvider: dataProvider)
+            let person = crewCredit.person()
+            self.showPersonProfile(person)
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: true)
@@ -147,14 +154,6 @@ final class MainCoordinator {
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: true)
-    }
-    
-    func showPersonProfile(_ viewModel: PersonViewModel) {
-        let pvc = PersonDetailViewController.instantiateFromStoryboard()
-        pvc.person = viewModel
-        pvc.mainCoordinator = self
-        
-        rootNavigationViewController?.pushViewController(pvc, animated: true)
     }
     
 }

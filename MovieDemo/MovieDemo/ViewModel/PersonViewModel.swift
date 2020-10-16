@@ -120,11 +120,27 @@ extension PersonViewModel {
     }
     
     fileprivate func updatePopularMovies() {
-        guard var credits = person.castCredits else { return }
-        credits.sort {
+        var credits = [Movie]()
+        
+        if let castCredits = person.castCredits {
+            credits.append(contentsOf: castCredits)
+        }
+        
+        if let crewCredits = person.crewCredits {
+            credits.append(contentsOf: crewCredits)
+        }
+        
+        var filteredMovies = [Movie]()
+        for movie in credits {
+            if !filteredMovies.contains(where: { $0.id == movie.id }) {
+                filteredMovies.append(movie)
+            }
+        }
+        
+        filteredMovies.sort {
             $0.voteCount ?? 0 > $1.voteCount ?? 0
         }
-        let viewModels = credits.prefix(8).compactMap { MovieViewModel(movie: $0) }
+        let viewModels = filteredMovies.prefix(8).compactMap { MovieViewModel(movie: $0) }
         
         popularMovies = viewModels
     }

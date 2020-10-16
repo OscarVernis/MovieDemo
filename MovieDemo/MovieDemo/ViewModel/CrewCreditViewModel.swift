@@ -36,6 +36,15 @@ class CrewCreditViewModel {
         jobs = jobsArray.joined(separator: ", ")
 
     }
+    
+    func person() -> PersonViewModel {
+        let person = Person()
+        person.id = id
+        person.name = name
+        person.profilePath = crewCredit.profilePath
+        
+        return PersonViewModel(person: person)
+    }
 }
 
 extension CrewCreditViewModel {

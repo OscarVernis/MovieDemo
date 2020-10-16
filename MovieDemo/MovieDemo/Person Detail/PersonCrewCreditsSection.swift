@@ -1,18 +1,18 @@
 //
-//  PersonCastCreditsSection.swift
+//  PersonCrewCreditsSection.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 10/10/20.
+//  Created by Oscar Vernis on 15/10/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-class PersonCastCreditsSection: ConfigurableSection {
+class PersonCrewCreditsSection: ConfigurableSection {
     let title: String
-    let credits: [PersonCastCreditViewModel]
+    let credits: [PersonCrewCreditViewModel]
     
-    init(title: String, credits: [PersonCastCreditViewModel]) {
+    init(title: String, credits: [PersonCrewCreditViewModel]) {
         self.title = title
         self.credits = credits
     }
@@ -50,7 +50,7 @@ class PersonCastCreditsSection: ConfigurableSection {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
 
         let credit = credits[indexPath.row]
-        PersonCreditConfigurator().configure(cell: cell, castCredit: credit)
+        PersonCreditConfigurator().configure(cell: cell, crewCredit: credit)
 
         return cell
     }
