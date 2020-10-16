@@ -12,6 +12,10 @@ import ObjectMapper
 class PersonCastCredit: Movie {
     var character: String?
     
+    override class func objectForMapping(map: Map) -> BaseMappable? {
+        return PersonCastCredit()
+    }
+    
     override func mapping(map: Map) {
         super.mapping(map: map)
         

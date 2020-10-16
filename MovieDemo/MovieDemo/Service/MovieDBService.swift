@@ -43,7 +43,7 @@ extension MovieDBService {
     typealias SuccessActionCompletion = (Result<Void, Error>) -> Void
     typealias FetchStringCompletion = (Result<String, Error>) -> Void
     
-    private func fetchModels<T: Mappable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
+    private func fetchModels<T: BaseMappable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
         let url = endpoint(forPath: path)
         
         var params = defaultParameters(withSessionId: sessionId)
@@ -69,7 +69,7 @@ extension MovieDBService {
         }
     }
     
-    func fetchModel<T: Mappable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
+    func fetchModel<T: BaseMappable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let jsonData):
@@ -78,7 +78,7 @@ extension MovieDBService {
                     return
                 }
                 
-                let model = T(JSON: json)!
+                let model = Mapper<T>().map(JSON: json)!
                 completion(.success(model))
             case .failure(let error):
                 completion(.failure(error))
@@ -181,6 +181,13 @@ extension MovieDBService {
     }
 }
 
+//MARK: - Search
+extension MovieDBService {
+    func search(query: String, page: Int = 1, completion: @escaping (Result<([MediaItem], Int), Error>) -> Void) {
+        fetchModels(endpoint: "/search/multi", parameters: ["query" : query], page: page, completion: completion)
+    }
+}
+
 //MARK: - Movie Lists
 extension MovieDBService {
     typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
@@ -201,7 +208,7 @@ extension MovieDBService {
         fetchModels(endpoint: "/movie/upcoming", page: page, completion: completion)
     }
     
-    func search(query: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+    func movieSearch(query: String, page: Int = 1, completion: @escaping MovieListCompletion) {
         fetchModels(endpoint: "/search/movie", parameters: ["query" : query], page: page, completion: completion)
     }
     
