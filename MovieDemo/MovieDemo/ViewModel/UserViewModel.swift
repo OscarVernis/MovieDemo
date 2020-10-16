@@ -20,16 +20,16 @@ class UserViewModel {
         return user?.username
     }
     
-    var favorites: [Movie] {
-        return user?.favorites ?? [Movie]()
+    var favorites: [MovieViewModel] {
+        return user?.favorites.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
-    var watchlist: [Movie] {
-        return user?.watchlist ?? [Movie]()
+    var watchlist: [MovieViewModel] {
+        return user?.watchlist.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
-    var rated: [Movie] {
-        return user?.rated ?? [Movie]()
+    var rated: [MovieViewModel] {
+        return user?.rated.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
     var avatarURL: URL? {

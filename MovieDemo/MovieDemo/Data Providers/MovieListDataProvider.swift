@@ -9,7 +9,7 @@
 import Foundation
 
 class MovieListDataProvider: ArrayDataProvider {
-    typealias Model = Movie
+    typealias Model = MovieViewModel
         
     enum Service: Equatable {
         case NowPlaying
@@ -31,9 +31,16 @@ class MovieListDataProvider: ArrayDataProvider {
     
     let movieService = MovieDBService()
     
-    var models = [Movie]()
-    var movies: [Movie] {
-        models
+    private var movies = [Movie]()
+    
+    var itemCount: Int {
+        return movies.count
+    }
+    
+    func item(atIndex index: Int) -> MovieViewModel {
+        let movie = movies[index]
+        
+        return MovieViewModel(movie: movie)
     }
     
     var currentService: Service = .NowPlaying {
@@ -83,20 +90,20 @@ class MovieListDataProvider: ArrayDataProvider {
                 self.currentPage += 1
                 
                 if self.currentPage == 1 {
-                    self.models.removeAll()
+                    self.movies.removeAll()
                 }
                 
                 self.totalPages = totalPages
                 
                 if self.currentService == .Upcoming { //If is upcoming sort by Release Date
-                    self.models.append(contentsOf: movies.sorted {
+                    self.movies.append(contentsOf: movies.sorted {
                         guard let releaseDate1 = $0.releaseDate else { return false }
                         guard let releaseDate2 = $1.releaseDate else { return false }
                         
                         return releaseDate1 < releaseDate2
                     })
                 } else {
-                    self.models.append(contentsOf: movies)
+                    self.movies.append(contentsOf: movies)
                 }
                 
                 self.didUpdate?(nil)

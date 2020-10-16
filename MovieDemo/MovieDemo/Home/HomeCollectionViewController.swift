@@ -82,8 +82,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
             //Avoid the navigation bar showing after the Person Detail is shown
             self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
 
-            if index > self.searchSection.dataProvider.models.count { return }
-            let item = self.searchSection.dataProvider.models[index]
+            let item = self.searchSection.dataProvider.item(atIndex: index)
             
             switch item {
             case let movie as Movie:
@@ -143,9 +142,9 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     //MARK: - CollectionView Delegate
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let section = sections[indexPath.section] as? HomeMovieListSection {
-            let movie = section.dataProvider.movies[indexPath.row]
+            let movie = section.dataProvider.item(atIndex: indexPath.row)
             
-            mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
+            mainCoordinator.showMovieDetail(movie: movie)
         }
     }
     

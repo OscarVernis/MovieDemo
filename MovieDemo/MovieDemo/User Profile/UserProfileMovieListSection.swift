@@ -30,9 +30,9 @@ class UserProfileMovieListSection: ConfigurableSection {
     weak var mainCoordinator: MainCoordinator!
     
     var sectionType: Section = .Favorites
-    var movies: [Movie]
+    var movies: [MovieViewModel]
     
-    init(_ section: Section, movies: [Movie], coordinator: MainCoordinator) {
+    init(_ section: Section, movies: [MovieViewModel], coordinator: MainCoordinator) {
         self.sectionType = section
         self.movies = movies
         self.mainCoordinator = coordinator
@@ -102,7 +102,7 @@ class UserProfileMovieListSection: ConfigurableSection {
             let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
 
             let movie = movies[indexPath.row]
-            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: MovieViewModel(movie: movie))
+            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: movie)
 
             return posterCell
         } else {

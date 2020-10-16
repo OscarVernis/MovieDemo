@@ -36,7 +36,7 @@ class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigu
     }
     
     var itemCount: Int {
-        return dataProvider.models.count
+        return dataProvider.itemCount
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
@@ -54,7 +54,7 @@ class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigu
     
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Configurator.Cell.reuseIdentifier, for: indexPath) as! Configurator.Cell
-        let model = dataProvider.models[indexPath.row] as! Configurator.Model
+        let model = dataProvider.item(atIndex: indexPath.row) as! Configurator.Model
         
         cellConfigurator.configure(cell: cell, with: model)
         

@@ -13,13 +13,13 @@ struct CrewCreditPhotoListCellConfigurator: CellConfigurator {
     typealias Model = CrewCreditViewModel
     typealias Cell = CreditPhotoListCell
     
-    func configure(cell: Cell, with model: Model) {
+    func configure(cell: Cell, with crewCredit: Model) {
         cell.creditImageView.af.cancelImageRequest()
         
-        cell.nameLabel.text = model.name
-        cell.roleLabel.text = model.job
+        cell.nameLabel.text = crewCredit.name
+        cell.roleLabel.text = crewCredit.job
         
-        if let url = model.profileImageURL {
+        if let url = crewCredit.profileImageURL {
             cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
         }
     }

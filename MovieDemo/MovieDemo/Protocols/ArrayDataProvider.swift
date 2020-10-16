@@ -11,11 +11,13 @@ import Foundation
 public protocol ArrayDataProvider: AnyObject {
     associatedtype Model
     
-    var models: [Model] { get }
     var currentPage: Int { get }
     var totalPages: Int { get }
     var isLastPage: Bool { get }
     var didUpdate: ((Error?) -> Void)? { get set }
+    
+    var itemCount: Int { get }
+    func item(atIndex: Int) -> Model
 
     func fetchNextPage()
     func refresh()
