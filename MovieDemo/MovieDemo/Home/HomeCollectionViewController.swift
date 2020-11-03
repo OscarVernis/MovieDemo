@@ -34,14 +34,11 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     override func viewDidLoad() {
         super.viewDidLoad()
                         
-        definesPresentationContext = true
-        extendedLayoutIncludesOpaqueBars = true
         createCollectionView()
         setup()
         setupSearch()
         setupDataSource()
     }
-    
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
@@ -113,14 +110,12 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
             HomeMovieListSection(.Popular, sectionHeaderButtonHandler: sectionHeaderHandler),
             HomeMovieListSection(.TopRated, sectionHeaderButtonHandler: sectionHeaderHandler)
         ]
-        
-        let dataSourceDidUpdate: (Int) -> Void = { [weak self] section in
+                
+        self.dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
+        dataSource.didUpdate = { [weak self] section in
             self?.collectionView.refreshControl?.endRefreshing()
             self?.collectionView.reloadData()
         }
-        
-        self.dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
-        dataSource.didUpdate = dataSourceDidUpdate
         
         refresh()
     }
@@ -153,12 +148,12 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
 //MARK: - CollectionView CompositionalLayout
 extension HomeCollectionViewController {
     func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
+        let layout = (UICollectionViewCompositionalLayout { (sectionIndex: Int,
             layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 
             let section = self.dataSource.sections[sectionIndex]
             return section.sectionLayout()
-        }
+        })
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
         
@@ -171,11 +166,11 @@ extension HomeCollectionViewController {
 extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControllerDelegate {
     func scrollListViewControllerToTop() {
         //Scroll results list to top everytime is shown.
-        if let listController = navigationItem.searchController?.searchResultsController as? ListViewController {
-            if listController.collectionView.indexPathsForVisibleItems.count > 0 {
-                listController.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
-            }
+        if let listController = navigationItem.searchController?.searchResultsController as? ListViewController,
+           listController.collectionView.indexPathsForVisibleItems.count > 0 {
+            listController.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
         }
+        
     }
     
     func willPresentSearchController(_ searchController: UISearchController) {

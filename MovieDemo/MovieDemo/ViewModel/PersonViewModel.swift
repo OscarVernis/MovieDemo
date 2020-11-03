@@ -92,14 +92,13 @@ extension PersonViewModel {
     }
     
     var knownForMovies: String? {
-        let movies = person.knownForMovies?
+        return person.knownForMovies?
             .sorted(by: Movie.sortByPopularity)
             .prefix(3)
             .compactMap(\.title)
-        
-        return movies?.joined(separator: ", ")
+            .joined(separator: ", ")
     }
-        
+    
     fileprivate func updateCastCredits() {
         guard let credits = person.castCredits else { return }
         
@@ -136,6 +135,8 @@ extension PersonViewModel {
             .sorted(by: Movie.sortByPopularity)
             .prefix(8)
             .compactMap { MovieViewModel(movie: $0) }
+        
+        print("ok")
         
     }
     

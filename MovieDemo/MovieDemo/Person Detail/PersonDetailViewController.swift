@@ -21,6 +21,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var titleNameLabel: UILabel!
     @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBOutlet weak var backButton: BlurButton!
     
     var creditsHeaderView: UICollectionReusableView?
     
@@ -245,7 +246,7 @@ extension PersonDetailViewController {
 //            }
 //        }
         
-        let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.7)
+        let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.6)
         blurAnimator.fractionComplete = ratio
         
         if collectionView.contentOffset.y < -navBarHeight {
