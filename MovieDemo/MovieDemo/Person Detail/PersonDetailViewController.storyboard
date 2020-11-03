@@ -115,6 +115,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="os0-6T-BKI" id="meE-YD-WKc"/>
                         <outlet property="blurView" destination="ZRM-5W-GbK" id="Kde-FW-6RW"/>
                         <outlet property="collectionView" destination="oIV-9j-g1f" id="wlL-uh-6fi"/>
                         <outlet property="headerHeightConstraint" destination="gIN-5G-NyQ" id="U8H-fI-lxu"/>

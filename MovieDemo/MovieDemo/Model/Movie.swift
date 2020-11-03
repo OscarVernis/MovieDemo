@@ -97,7 +97,7 @@ extension Movie: Equatable {
 
 extension Movie {
     static func sortByPopularity(lhs: Movie, rhs: Movie) -> Bool {
-        lhs.voteCount ?? 0 > lhs.voteCount ?? 0
+        return lhs.voteCount ?? 0 > rhs.voteCount ?? 0
     }
     
     static func sortByRelease(lhs: Movie, rhs: Movie) -> Bool {
