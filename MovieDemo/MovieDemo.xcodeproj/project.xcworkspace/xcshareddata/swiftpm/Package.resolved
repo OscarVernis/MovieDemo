@@ -57,11 +57,11 @@
       },
       {
         "package": "YoutubeDirectLinkExtractor",
-        "repositoryURL": "https://github.com/devandsev/YoutubeDirectLinkExtractor",
+        "repositoryURL": "https://github.com/OscarVernis/YoutubeDirectLinkExtractor.git",
         "state": {
-          "branch": null,
+          "branch": "develop",
           "revision": "5017009f15ac6d659d26678556c80e5a74868aa2",
-          "version": "0.3.1"
+          "version": null
         }
       }
     ]
