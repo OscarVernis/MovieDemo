@@ -42,7 +42,6 @@
 		5532CF972525059200663844 /* MovieDetailInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532CF962525059200663844 /* MovieDetailInfoSection.swift */; };
 		5532F53725355B2A0058C654 /* PersonDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532F53525355B2A0058C654 /* PersonDetailHeader.swift */; };
 		5532F53825355B2A0058C654 /* PersonDetailHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5532F53625355B2A0058C654 /* PersonDetailHeader.xib */; };
-		5535975125250BD3002D032B /* YoutubeDirectLinkExtractor in Frameworks */ = {isa = PBXBuildFile; productRef = 5535975025250BD3002D032B /* YoutubeDirectLinkExtractor */; };
 		5535CE6B251406E700260617 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5535CE6A251406E700260617 /* CellConfigurator.swift */; };
 		553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553660F922DAFC0B00BE03BB /* CastCredit.swift */; };
 		5536610722DB037500BE03BB /* CrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5536610522DB037500BE03BB /* CrewCredit.swift */; };
@@ -53,6 +52,7 @@
 		554DE17C251EFC07000286D2 /* UserActionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DE17A251EFC07000286D2 /* UserActionsCell.swift */; };
 		5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5550409B251E70A400D919FF /* UserProfileViewController.swift */; };
 		55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55518D422511292E00DAEB7F /* SectionTitleView.swift */; };
+		5555C3882551E5A300CC4F5F /* YoutubeDirectLinkExtractor in Frameworks */ = {isa = PBXBuildFile; productRef = 5555C3872551E5A300CC4F5F /* YoutubeDirectLinkExtractor */; };
 		555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */; };
 		555725AB2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */; };
 		55596E00251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596DFF251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift */; };
@@ -312,9 +312,9 @@
 				558A5A93251054F600E5FB40 /* Alamofire in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
 				55604684251BCC320037D08B /* SPStorkController in Frameworks */,
-				5535975125250BD3002D032B /* YoutubeDirectLinkExtractor in Frameworks */,
 				55A73A04251AAE410024C907 /* AlamofireImage in Frameworks */,
 				558A5A90251054C700E5FB40 /* ObjectMapper in Frameworks */,
+				5555C3882551E5A300CC4F5F /* YoutubeDirectLinkExtractor in Frameworks */,
 				557FFA8F251A65B700D79F68 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,7 +723,7 @@
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55A73A03251AAE410024C907 /* AlamofireImage */,
 				55604683251BCC320037D08B /* SPStorkController */,
-				5535975025250BD3002D032B /* YoutubeDirectLinkExtractor */,
+				5555C3872551E5A300CC4F5F /* YoutubeDirectLinkExtractor */,
 			);
 			productName = MovieDemo;
 			productReference = 559D131D22D98E4800C96FC8 /* MovieDemo.app */;
@@ -762,7 +762,7 @@
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55A73A02251AAE410024C907 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
-				5535974F25250BD3002D032B /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */,
+				5555C3862551E5A300CC4F5F /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */,
 			);
 			productRefGroup = 559D131E22D98E4800C96FC8 /* Products */;
 			projectDirPath = "";
@@ -1191,12 +1191,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5535974F25250BD3002D032B /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */ = {
+		5555C3862551E5A300CC4F5F /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devandsev/YoutubeDirectLinkExtractor";
+			repositoryURL = "https://github.com/OscarVernis/YoutubeDirectLinkExtractor.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.1;
+				branch = develop;
+				kind = branch;
 			};
 		};
 		55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */ = {
@@ -1250,9 +1250,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5535975025250BD3002D032B /* YoutubeDirectLinkExtractor */ = {
+		5555C3872551E5A300CC4F5F /* YoutubeDirectLinkExtractor */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5535974F25250BD3002D032B /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */;
+			package = 5555C3862551E5A300CC4F5F /* XCRemoteSwiftPackageReference "YoutubeDirectLinkExtractor" */;
 			productName = YoutubeDirectLinkExtractor;
 		};
 		55604683251BCC320037D08B /* SPStorkController */ = {
