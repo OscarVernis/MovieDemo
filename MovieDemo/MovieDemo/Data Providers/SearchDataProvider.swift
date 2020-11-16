@@ -63,7 +63,8 @@ class SearchDataProvider: ArrayDataProvider {
         isFetching = true
         let page = currentPage + 1
 
-        movieService.search(query: query, page: page) { [weak self] result in
+        let searchQuery = query
+        movieService.search(query: searchQuery, page: page) { [weak self] result in
             guard let self = self else { return }
             
             self.isFetching = false
@@ -81,6 +82,10 @@ class SearchDataProvider: ArrayDataProvider {
                 self.items.append(contentsOf: items)
                 
                 self.didUpdate?(nil)
+                
+                if self.query != searchQuery {
+                    self.refresh()
+                }
             case .failure(let error):
                 self.didUpdate?(error)
             }
