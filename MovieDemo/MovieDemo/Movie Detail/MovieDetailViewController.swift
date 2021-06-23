@@ -9,7 +9,6 @@
 import UIKit
 import AlamofireImage
 import SPStorkController
-import YoutubeDirectLinkExtractor
 
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
@@ -278,22 +277,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     @objc fileprivate func playYoutubeTrailer() {
         guard let youtubeURL = movie.trailerURL else { return }
         
-        playYoutubeVideo(url: youtubeURL)
-    }
-    
-    @objc fileprivate func playYoutubeVideo(url: URL, fromImageView imageView: UIImageView? = nil) {
-        let youtubeLinkExtractor = YoutubeDirectLinkExtractor()
-        youtubeLinkExtractor.extractInfo(for: .url(url), success: { info in
-            DispatchQueue.main.async {
-                let mvvc = MediaViewerViewController(videoURL: URL(string: info.lowestQualityPlayableLink!)!,
-                                                     image: imageView?.image,
-                                                     presentFromView: imageView
-                )
-                self.present(mvvc, animated: true)
-            }
-        }) { error in
-            UIApplication.shared.open(url)
-        }
+        UIApplication.shared.open(youtubeURL)
     }
     
 }
@@ -337,11 +321,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
         case _ as MovieDetailVideoSection:
-            let cell = collectionView.cellForItem(at: indexPath) as? YoutubeVideoCell
-            
             let video = movie.videos[indexPath.row]
-            playYoutubeVideo(url: video.youtubeURL, fromImageView: cell?.videoImageView)
+            UIApplication.shared.open(video.youtubeURL)
             
+                        
         default:
             break
         }
