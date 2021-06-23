@@ -16,7 +16,6 @@ class MovieListDataProvider: ArrayDataProvider {
         case Popular
         case TopRated
         case Upcoming
-        case Search(query: String)
         case Recommended(movieId: Int)
         case DiscoverWithCast(castId: Int)
         case DiscoverWithCrew(crewId: Int)
@@ -123,8 +122,6 @@ class MovieListDataProvider: ArrayDataProvider {
             movieService.fetchTopRated(page: page, completion: fetchHandler)
         case .Upcoming:
             movieService.fetchUpcoming(page: page, completion: fetchHandler)
-        case .Search(query: let query):
-            movieService.movieSearch(query: query, page: page, completion: fetchHandler)
         case .Recommended(movieId: let movieId):
             movieService.fetchRecommendMovies(movieId: movieId, page: page, completion: fetchHandler)
         case .DiscoverWithCast(castId: let castId):
