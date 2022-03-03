@@ -10,25 +10,13 @@ import Foundation
 
 class MovieListDataProvider: ArrayDataProvider {
     typealias Model = MovieViewModel
-        
-    enum Service: Equatable {
-        case NowPlaying
-        case Popular
-        case TopRated
-        case Upcoming
-        case Recommended(movieId: Int)
-        case DiscoverWithCast(castId: Int)
-        case DiscoverWithCrew(crewId: Int)
-        case UserFavorites
-        case UserWatchList
-        case UserRated
-    }
     
-    init(_ service: Service = .NowPlaying) {
+    init(_ service: MovieDBService.MovieList = .NowPlaying) {
         self.currentService = service
     }
     
-    let movieService = MovieDBService()
+    let movieService = MovieDBService(sessionId: SessionManager.shared.sessionId)
+    
     
     private var movies = [Movie]()
     
@@ -42,7 +30,7 @@ class MovieListDataProvider: ArrayDataProvider {
         return MovieViewModel(movie: movie)
     }
     
-    var currentService: Service = .NowPlaying {
+    var currentService: MovieDBService.MovieList = .NowPlaying {
         didSet {
            refresh()
         }
@@ -113,35 +101,8 @@ class MovieListDataProvider: ArrayDataProvider {
         }
         
         let page = currentPage + 1
-        switch currentService {
-        case .NowPlaying:
-            movieService.fetchNowPlaying(page: page, completion: fetchHandler)
-        case .Popular:
-            movieService.fetchPopular(page: page, completion: fetchHandler)
-        case .TopRated:
-            movieService.fetchTopRated(page: page, completion: fetchHandler)
-        case .Upcoming:
-            movieService.fetchUpcoming(page: page, completion: fetchHandler)
-        case .Recommended(movieId: let movieId):
-            movieService.fetchRecommendMovies(movieId: movieId, page: page, completion: fetchHandler)
-        case .DiscoverWithCast(castId: let castId):
-            movieService.discover(params: [.withCast: castId], page: page, completion: fetchHandler)
-        case .DiscoverWithCrew(crewId: let crewId):
-            movieService.discover(params: [.withCrew: crewId], page: page, completion: fetchHandler)
-        case .UserFavorites:
-            if let sessionId = SessionManager.shared.sessionId {
-                movieService.fetchUserFavorites(sessionId: sessionId, page: page, completion: fetchHandler)
-            }
-        case .UserWatchList:
-            if let sessionId = SessionManager.shared.sessionId {
-                movieService.fetchUserWatchlist(sessionId: sessionId, page: page, completion: fetchHandler)
-            }
-        case .UserRated:
-            if let sessionId = SessionManager.shared.sessionId {
-                movieService.fetchUserRatedMovies(sessionId: sessionId, page: page, completion: fetchHandler)
-            }
-        }
         
+        movieService.fetchMovies(movieList: currentService, page: page, completion: fetchHandler)
     }
     
 }

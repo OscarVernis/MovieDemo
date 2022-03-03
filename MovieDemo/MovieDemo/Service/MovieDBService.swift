@@ -17,8 +17,13 @@ struct MovieDBService {
         case noSuccess
     }
     
+    init(sessionId: String? = nil) {
+        self.sessionId = sessionId
+    }
+    
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     let baseURL = "https://api.themoviedb.org/3"
+    let sessionId: String?
         
     func defaultParameters(withSessionId sessionId: String? = nil) -> [String: Any] {
         let language = NSLocalizedString("service-locale", comment: "")
@@ -192,44 +197,75 @@ extension MovieDBService {
 extension MovieDBService {
     typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
     
-    func fetchNowPlaying(page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/movie/now_playing", page: page, completion: completion)
-    }
-    
-    func fetchPopular(page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/movie/popular", page: page, completion: completion)
-    }
-    
-    func fetchTopRated(page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/movie/top_rated", page: page, completion: completion)
-    }
-    
-    func fetchUpcoming(page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/movie/upcoming", page: page, completion: completion)
-    }
-    
-    func movieSearch(query: String, page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/search/movie", parameters: ["query" : query], page: page, completion: completion)
-    }
-    
-    func fetchTrending(page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/trending/movie/week", page: page, completion: completion)
-    }
-}
-
-extension MovieDBService {
-    //MARK: - Discover
-    enum DiscoverOptions: String {
-        case withCast = "with_cast"
-        case withCrew = "with_crew"
-    }
-    
-    func discover(params: [DiscoverOptions: Any], page: Int = 1, completion: @escaping MovieListCompletion) {
-        //Convert the enum key to its string raw value
-        let editedParams = Dictionary(uniqueKeysWithValues: params.map { ($0.rawValue, $1)})
+    enum MovieList: Equatable {
+        case NowPlaying
+        case Popular
+        case TopRated
+        case Upcoming
+        case Search(query: String)
+        case Trending
+        case Recommended(movieId: Int)
+        case DiscoverWithCast(castId: Int)
+        case DiscoverWithCrew(crewId: Int)
+        case UserFavorites
+        case UserWatchList
+        case UserRated
         
-        fetchModels(endpoint: "/discover/movie", parameters: editedParams, page: page, completion: completion)
+        var endpoint: String {
+            switch self {
+    
+            case .NowPlaying:
+                return "/movie/now_playing"
+            case .Popular:
+                return "/movie/popular"
+            case .TopRated:
+                return "/movie/top_rated"
+            case .Upcoming:
+                return "/movie/upcoming"
+            case .Search(query: _):
+                return "/search/movie"
+            case .Trending:
+                return "/movie/week"
+            case .Recommended(movieId: let movieId):
+                return "/movie/\(movieId)/recommendations"
+            case .DiscoverWithCast(castId: _), .DiscoverWithCrew(crewId: _):
+                return "/discover/movie"
+            case .UserFavorites:
+                return "/account/id/favorite/movies"
+            case .UserWatchList:
+                return "/account/id/watchlist/movies"
+            case .UserRated:
+                return "/account/id/rated/movies"
+            }
+        }
+        
+        var parameters: [String: Any] {
+            switch self {
+            case .Search(query: let query):
+                return ["query" : query]
+            case .DiscoverWithCast(castId: let castId):
+                return ["with_cast": castId]
+            case .DiscoverWithCrew(crewId: let crewId):
+                return ["with_crew": crewId]
+            default:
+                return [:]
+            }
+        }
+        
+        var sessionId: String? {
+            switch self {
+            case .UserFavorites, .UserWatchList, .UserRated:
+                return self.sessionId
+            default:
+                return nil
+            }
+        }
     }
+    
+    func fetchMovies(movieList: MovieList, page: Int = 1, completion: @escaping MovieListCompletion) {
+        fetchModels(endpoint: movieList.endpoint, sessionId: movieList.sessionId, parameters: movieList.parameters, page: page, completion: completion)
+    }
+
 }
 
 //MARK: - Movie Details
@@ -241,10 +277,6 @@ extension MovieDBService {
         params["append_to_response"] = "credits,recommendations,account_states,videos"
         
         fetchModel(url: url, params: params, completion: completion)
-    }
-    
-    func fetchRecommendMovies(movieId: Int, page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: "/movie/\(movieId)/recommendations", page: page, completion: completion)
     }
     
 }
