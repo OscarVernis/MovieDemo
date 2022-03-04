@@ -11,11 +11,12 @@ import Foundation
 class MovieListDataProvider: ArrayDataProvider {
     typealias Model = MovieViewModel
     
-    init(_ service: MovieDBService.MovieList = .NowPlaying) {
+    init(_ service: MovieList = .NowPlaying, movieLoader: MovieLoader = RemoteMovieLoader(sessionId: SessionManager.shared.sessionId)) {
         self.currentService = service
+        self.movieLoader = movieLoader
     }
     
-    let movieService = MovieDBService(sessionId: SessionManager.shared.sessionId)
+    let movieLoader: MovieLoader
     
     
     private var movies = [Movie]()
@@ -30,7 +31,7 @@ class MovieListDataProvider: ArrayDataProvider {
         return MovieViewModel(movie: movie)
     }
     
-    var currentService: MovieDBService.MovieList = .NowPlaying {
+    var currentService: MovieList = .NowPlaying {
         didSet {
            refresh()
         }
@@ -102,7 +103,7 @@ class MovieListDataProvider: ArrayDataProvider {
         
         let page = currentPage + 1
         
-        movieService.fetchMovies(movieList: currentService, page: page, completion: fetchHandler)
+        movieLoader.getMovies(movieList: currentService, page: page, completion: fetchHandler)
     }
     
 }

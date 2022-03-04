@@ -48,7 +48,7 @@ extension MovieDBService {
     typealias SuccessActionCompletion = (Result<Void, Error>) -> Void
     typealias FetchStringCompletion = (Result<String, Error>) -> Void
     
-    private func fetchModels<T: BaseMappable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
+    func fetchModels<T: BaseMappable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
         let url = endpoint(forPath: path)
         
         var params = defaultParameters(withSessionId: sessionId)
@@ -213,7 +213,6 @@ extension MovieDBService {
         
         var endpoint: String {
             switch self {
-    
             case .NowPlaying:
                 return "/movie/now_playing"
             case .Popular:
