@@ -211,48 +211,6 @@ extension MovieDBService {
     }
 }
 
-//MARK: - Login
-extension MovieDBService {
-    func requestToken(completion: @escaping FetchStringCompletion) {
-        let url = endpoint(forPath: "/authentication/token/new")
-        let params = defaultParameters()
-        
-        fetchString(path: "request_token", url: url, params: params, method: .get, completion: completion)
-    }
-    
-    func validateToken(username: String, password: String, requestToken: String, completion: @escaping SuccessActionCompletion) {
-        let url = endpoint(forPath: "/authentication/token/validate_with_login")
-        let params = defaultParameters()
-
-        let body = [
-            "username": username,
-            "password": password,
-            "request_token": requestToken
-        ]
-        
-        successAction(url: url, params: params, body: body, method: .post, completion: completion)
-    }
-    
-    func createSession(requestToken: String, completion: @escaping FetchStringCompletion) {
-        let url = endpoint(forPath: "/authentication/session/new")
-        let params = defaultParameters()
-
-        let body = ["request_token": requestToken]
-        
-        fetchString(path: "session_id", url: url, params: params, body: body, completion: completion)
-    }
-    
-    func deleteSession(sessionId: String, completion: @escaping SuccessActionCompletion) {
-        let url = endpoint(forPath: "/authentication/session")
-        let params = defaultParameters()
-
-        let body = ["session_id": sessionId]
-        
-        successAction(url: url, params: params, body: body, method: .delete, completion: completion)
-    }
-    
-}
-
 //MARK: - User Actions
 extension MovieDBService {
     private struct FavoriteRequestBody: Encodable {
