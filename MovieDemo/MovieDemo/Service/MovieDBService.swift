@@ -185,28 +185,3 @@ extension MovieDBService {
         return url
     }
 }
-
-//MARK: - Movie Details
-extension MovieDBService {
-    func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping ((Result<Movie, Error>)) -> ()) {
-        let url = endpoint(forPath: "/movie/\(movieId)")
-        
-        var params = defaultParameters(withSessionId: sessionId)
-        params["append_to_response"] = "credits,recommendations,account_states,videos"
-        
-        fetchModel(url: url, params: params, completion: completion)
-    }
-    
-}
-
-//MARK: - Person Details
-extension MovieDBService {
-    func fetchPersonDetails(personId: Int, completion: @escaping ((Result<Person, Error>)) -> ()) {
-        let url = endpoint(forPath: "/person/\(personId)")
-        
-        var params = defaultParameters()
-        params["append_to_response"] = "movie_credits"
-        
-        fetchModel(url: url, params: params, completion: completion)
-    }
-}

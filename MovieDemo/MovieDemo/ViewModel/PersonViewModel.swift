@@ -11,7 +11,7 @@ import Foundation
 class PersonViewModel {
     private var person: Person
         
-    private let movieService = MovieDBService()
+    private let personService = RemotePersonInfoLoader()
     private var isFetching = false
     var didUpdate: ((Error?) -> Void)?
     
@@ -40,7 +40,7 @@ extension PersonViewModel {
     }
     
     private func fetchPersonDetails() {
-        movieService.fetchPersonDetails(personId: person.id) { [weak self] result in
+        personService.fetchPersonDetails(personId: person.id) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

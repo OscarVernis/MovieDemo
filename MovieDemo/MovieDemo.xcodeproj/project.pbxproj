@@ -142,6 +142,8 @@
 		55EA4A7B25394CD600306DA0 /* SearchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA4A7A25394CD600306DA0 /* SearchSection.swift */; };
 		55EB72A327D19EC800B98342 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* LoginManager.swift */; };
 		55EB72A627D19FD100B98342 /* RemoteUserActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserActionManager.swift */; };
+		55EB72A927D1A13F00B98342 /* RemoteMovieInfoLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieInfoLoader.swift */; };
+		55EB72AC27D1A19B00B98342 /* RemotePersonInfoLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonInfoLoader.swift */; };
 		55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3512513E346004F8117 /* LoadingCell.swift */; };
 		55EDD3542513E346004F8117 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55EDD3522513E346004F8117 /* LoadingCell.xib */; };
 		55EDD3602513F2E0004F8117 /* MovieInfoCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */; };
@@ -298,6 +300,8 @@
 		55EA4A7A25394CD600306DA0 /* SearchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSection.swift; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		55EB72A527D19FD100B98342 /* RemoteUserActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserActionManager.swift; sourceTree = "<group>"; };
+		55EB72A827D1A13F00B98342 /* RemoteMovieInfoLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieInfoLoader.swift; sourceTree = "<group>"; };
+		55EB72AB27D1A19B00B98342 /* RemotePersonInfoLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonInfoLoader.swift; sourceTree = "<group>"; };
 		55EDD3512513E346004F8117 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		55EDD3522513E346004F8117 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCellConfigurator.swift; sourceTree = "<group>"; };
@@ -519,6 +523,8 @@
 			isa = PBXGroup;
 			children = (
 				5545203A22D99D8F004B7924 /* MovieDBService.swift */,
+				55EB72A827D1A13F00B98342 /* RemoteMovieInfoLoader.swift */,
+				55EB72AB27D1A19B00B98342 /* RemotePersonInfoLoader.swift */,
 				55EB72A527D19FD100B98342 /* RemoteUserActionManager.swift */,
 				55EB72A227D19EC800B98342 /* LoginManager.swift */,
 				5523970727D19B6700E4C18F /* RemoteMovieLoader.swift */,
@@ -888,6 +894,7 @@
 				5523970327D17F6100E4C18F /* MovieLoader.swift in Sources */,
 				55A60DD72527AAB30082810C /* MediaViewerPlayerView.swift in Sources */,
 				5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */,
+				55EB72AC27D1A19B00B98342 /* RemotePersonInfoLoader.swift in Sources */,
 				55596E00251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift in Sources */,
 				5523970D27D19C2C00E4C18F /* RemoteSearch.swift in Sources */,
 				558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */,
@@ -914,6 +921,7 @@
 				556B786B2524F76800F212D1 /* MovieDetailOverviewSection.swift in Sources */,
 				555A144B2523D97B0024AFAA /* HomeCollectionViewController.swift in Sources */,
 				5570356E251ED37A0083089C /* MovieVideo.swift in Sources */,
+				55EB72A927D1A13F00B98342 /* RemoteMovieInfoLoader.swift in Sources */,
 				55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */,
 				5535CE6B251406E700260617 /* CellConfigurator.swift in Sources */,
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
