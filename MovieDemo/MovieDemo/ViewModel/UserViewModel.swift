@@ -10,7 +10,7 @@ import Foundation
 
 class UserViewModel {
     var user: User?
-    private let service = MovieDBService()
+    private let service = RemoteUserActionManager()
     private var isFetching = false
     
     var didUpdate: ((Error?) -> Void)?

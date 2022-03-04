@@ -12,6 +12,8 @@ class MovieViewModel {
     private var movie: Movie
     
     private let movieService = MovieDBService()
+    private let userService = RemoteUserActionManager()
+
     private var isFetching = false
     var didUpdate: ((Error?) -> Void)?
     
@@ -258,7 +260,7 @@ extension MovieViewModel {
             return
         }
         
-        movieService.markAsFavorite(favorite, movieId: id, sessionId: sessionId) { [weak self] result in
+        userService.markAsFavorite(favorite, movieId: id, sessionId: sessionId) { [weak self] result in
             switch result {
             case .success():
                 self?.movie.favorite = favorite
@@ -276,7 +278,7 @@ extension MovieViewModel {
             return
         }
         
-        movieService.addToWatchlist(watchlist, movieId: id, sessionId: sessionId) { [weak self] result in
+        userService.addToWatchlist(watchlist, movieId: id, sessionId: sessionId) { [weak self] result in
             switch result {
             case .success:
                 self?.movie.watchlist = watchlist
@@ -304,7 +306,7 @@ extension MovieViewModel {
             adjustedRating = 0.5
         }
                 
-        movieService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] result in
+        userService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] result in
             switch result {
             case .success:
                 self?.movie.userRating = adjustedRating
@@ -324,7 +326,7 @@ extension MovieViewModel {
             return
         }
         
-        movieService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] result in
+        userService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] result in
             switch result {
             case .success:
                 self?.movie.rated = false
