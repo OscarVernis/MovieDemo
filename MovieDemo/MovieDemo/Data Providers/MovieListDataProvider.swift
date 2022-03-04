@@ -68,7 +68,7 @@ class MovieListDataProvider: ArrayDataProvider {
         
         isFetching = true
         
-        let fetchHandler: MovieDBService.MovieListCompletion = { [weak self] result in
+        let fetchHandler: MovieLoader.MovieListCompletion = { [weak self] result in
             guard let self = self else { return }
             
             self.isFetching = false

@@ -34,7 +34,7 @@ class HomeMovieListSection: FetchableSection {
     }
     
     var dataProvider: MovieListDataProvider
-    var movieService: MovieDBService.MovieList = .NowPlaying
+    var movieService: MovieList = .NowPlaying
     
     var sectionType: SectionType = .NowPlaying
     

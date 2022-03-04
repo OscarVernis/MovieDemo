@@ -186,87 +186,6 @@ extension MovieDBService {
     }
 }
 
-//MARK: - Search
-extension MovieDBService {
-    func search(query: String, page: Int = 1, completion: @escaping (Result<([MediaItem], Int), Error>) -> Void) {
-        fetchModels(endpoint: "/search/multi", parameters: ["query" : query], page: page, completion: completion)
-    }
-}
-
-//MARK: - Movie Lists
-extension MovieDBService {
-    typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
-    
-    enum MovieList: Equatable {
-        case NowPlaying
-        case Popular
-        case TopRated
-        case Upcoming
-        case Search(query: String)
-        case Trending
-        case Recommended(movieId: Int)
-        case DiscoverWithCast(castId: Int)
-        case DiscoverWithCrew(crewId: Int)
-        case UserFavorites
-        case UserWatchList
-        case UserRated
-        
-        var endpoint: String {
-            switch self {
-            case .NowPlaying:
-                return "/movie/now_playing"
-            case .Popular:
-                return "/movie/popular"
-            case .TopRated:
-                return "/movie/top_rated"
-            case .Upcoming:
-                return "/movie/upcoming"
-            case .Search(query: _):
-                return "/search/movie"
-            case .Trending:
-                return "/movie/week"
-            case .Recommended(movieId: let movieId):
-                return "/movie/\(movieId)/recommendations"
-            case .DiscoverWithCast(castId: _), .DiscoverWithCrew(crewId: _):
-                return "/discover/movie"
-            case .UserFavorites:
-                return "/account/id/favorite/movies"
-            case .UserWatchList:
-                return "/account/id/watchlist/movies"
-            case .UserRated:
-                return "/account/id/rated/movies"
-            }
-        }
-        
-        var parameters: [String: Any] {
-            switch self {
-            case .Search(query: let query):
-                return ["query" : query]
-            case .DiscoverWithCast(castId: let castId):
-                return ["with_cast": castId]
-            case .DiscoverWithCrew(crewId: let crewId):
-                return ["with_crew": crewId]
-            default:
-                return [:]
-            }
-        }
-        
-        var sessionId: String? {
-            switch self {
-            case .UserFavorites, .UserWatchList, .UserRated:
-                return self.sessionId
-            default:
-                return nil
-            }
-        }
-    }
-    
-    func fetchMovies(movieList: MovieList, page: Int = 1, completion: @escaping MovieListCompletion) {
-        fetchModels(endpoint: movieList.endpoint, sessionId: movieList.sessionId, parameters: movieList.parameters, page: page, completion: completion)
-    }
-
-}
-
 //MARK: - Movie Details
 extension MovieDBService {
     func fetchMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping ((Result<Movie, Error>)) -> ()) {
@@ -356,15 +275,15 @@ extension MovieDBService {
         fetchModel(url: url, params: params, completion: completion)
     }
     
-    func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+    func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
         fetchModels(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func fetchUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+    func fetchUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
         fetchModels(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func fetchUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping MovieListCompletion) {
+    func fetchUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
         fetchModels(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
     }
     

@@ -29,7 +29,7 @@ class SearchDataProvider: ArrayDataProvider {
         return item
     }
     
-    let movieService = MovieDBService()
+    let searchService = RemoteSearch()
 
     private var isFetching = false
 
@@ -64,7 +64,7 @@ class SearchDataProvider: ArrayDataProvider {
         let page = currentPage + 1
 
         let searchQuery = query
-        movieService.search(query: searchQuery, page: page) { [weak self] result in
+        searchService.search(query: searchQuery, page: page) { [weak self] result in
             guard let self = self else { return }
             
             self.isFetching = false
