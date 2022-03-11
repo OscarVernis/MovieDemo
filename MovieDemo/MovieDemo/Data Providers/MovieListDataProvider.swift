@@ -18,7 +18,6 @@ class MovieListDataProvider: ArrayDataProvider {
     
     let movieLoader: MovieLoader
     
-    
     private var movies = [Movie]()
     
     var itemCount: Int {
@@ -82,17 +81,8 @@ class MovieListDataProvider: ArrayDataProvider {
                 }
                 
                 self.totalPages = totalPages
-                
-                if self.currentService == .Upcoming { //If is upcoming sort by Release Date
-                    self.movies.append(contentsOf: movies.sorted {
-                        guard let releaseDate1 = $0.releaseDate else { return false }
-                        guard let releaseDate2 = $1.releaseDate else { return false }
-                        
-                        return releaseDate1 < releaseDate2
-                    })
-                } else {
-                    self.movies.append(contentsOf: movies)
-                }
+                self.movies.append(contentsOf: movies)
+
                 
                 self.didUpdate?(nil)
             case .failure(let error):
