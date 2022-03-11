@@ -9,7 +9,6 @@
 import Foundation
 
 import UIKit
-import AlamofireImage
 
 struct CastCreditCellConfigurator {
     func configure(cell: CreditCell, with castCredit: CastCreditViewModel) {
@@ -19,7 +18,7 @@ struct CastCreditCellConfigurator {
         cell.roleLabel.text = castCredit.character
         
         if let url = castCredit.profileImageURL {
-            cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.creditImageView.setRemoteImage(withURL: url)
         }
     }
     

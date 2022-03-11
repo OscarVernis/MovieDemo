@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class YoutubeVideoCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -16,7 +15,7 @@ class YoutubeVideoCell: UICollectionViewCell {
 
     func configure(video: MovieVideoViewModel) {
         titleLabel.text = video.type
-        videoImageView.af.setImage(withURL: video.thumbnailURLForYoutubeVideo, imageTransition: .crossDissolve(0.3))
+        videoImageView.setRemoteImage(withURL: video.thumbnailURLForYoutubeVideo)
     }
 
 }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class CreditCell: UICollectionViewCell {
     @IBOutlet weak var creditImageView: UIImageView!

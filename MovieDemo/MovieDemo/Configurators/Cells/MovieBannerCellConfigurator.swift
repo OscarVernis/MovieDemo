@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 struct MovieBannerCellConfigurator {
     func configure(cell: MovieBannerCell, withMovie movie: MovieViewModel) {
@@ -22,7 +21,7 @@ struct MovieBannerCellConfigurator {
         cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
         
         if let url = movie.backdropImageURL(size: .w780) {
-            cell.bannerImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.bannerImageView.setRemoteImage(withURL: url)
         }
     }
     

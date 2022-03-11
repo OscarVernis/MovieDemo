@@ -16,7 +16,7 @@ struct PersonCreditPhotoListConfigurator {
         cell.roleLabel.text = person.knownForMovies
         
         if let url = person.profileImageURL {
-            cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.creditImageView.setRemoteImage(withURL: url)
         }
     }
 }

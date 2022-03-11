@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 struct CrewCreditPhotoListCellConfigurator: CellConfigurator {
     typealias Model = CrewCreditViewModel
@@ -20,7 +19,7 @@ struct CrewCreditPhotoListCellConfigurator: CellConfigurator {
         cell.roleLabel.text = crewCredit.job
         
         if let url = crewCredit.profileImageURL {
-            cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.creditImageView.setRemoteImage(withURL: url)
         }
     }
     

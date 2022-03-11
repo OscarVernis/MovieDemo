@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class MovieBannerCell: UICollectionViewCell {    
     @IBOutlet weak var bannerImageView: UIImageView!

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 struct MovieInfoCellConfigurator: CellConfigurator {
     typealias Model = MovieViewModel
@@ -18,7 +17,7 @@ struct MovieInfoCellConfigurator: CellConfigurator {
         cell.posterImageView.image = UIImage(named: "PosterPlaceholder")
         
         if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.posterImageView.setRemoteImage(withURL: url)
         }
         
         cell.titleLabel.text = movie.title

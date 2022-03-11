@@ -23,7 +23,7 @@ class UserProfileHeaderView: UICollectionReusableView {
     
     func configure(user: UserViewModel) {
         if let url = user.avatarURL {
-            userImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            userImageView.setRemoteImage(withURL: url)
         }
         
         usernameLabel.text = user.username

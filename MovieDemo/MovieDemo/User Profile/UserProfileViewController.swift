@@ -68,7 +68,7 @@ class UserProfileViewController: UIViewController, GenericCollection {
 
                 let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
 
-                bgView.imageView.af.setImage(withURL: imageURL)
+                bgView.imageView.setRemoteImage(withURL: imageURL)
                 self.collectionView.backgroundView = bgView
             }
             

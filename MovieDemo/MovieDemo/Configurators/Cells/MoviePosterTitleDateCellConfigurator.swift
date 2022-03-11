@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 struct MoviePosterTitleDateCellConfigurator {
     func configure(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
@@ -15,7 +14,7 @@ struct MoviePosterTitleDateCellConfigurator {
         cell.posterImageView.image = UIImage(named: "PosterPlaceholder")
         
         if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.posterImageView.setRemoteImage(withURL: url)
         }
         
         cell.setPosterRatio((3/2))

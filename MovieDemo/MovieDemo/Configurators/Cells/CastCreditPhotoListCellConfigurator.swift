@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 struct CastCreditPhotoListCellConfigurator: CellConfigurator {
     typealias Model = CastCreditViewModel
@@ -20,7 +19,7 @@ struct CastCreditPhotoListCellConfigurator: CellConfigurator {
         cell.roleLabel.text = castCredit.character
         
         if let url = castCredit.profileImageURL {
-            cell.creditImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            cell.creditImageView.setRemoteImage(withURL: url)
         }
     }
     

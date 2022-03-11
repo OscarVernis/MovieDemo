@@ -7,7 +7,6 @@
 
 import UIKit
 import AVKit
-import AlamofireImage
 
 final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     var contentView: UIView?
@@ -182,11 +181,12 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
                 isLoading = true
             }
             
-            imageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3), completion: { [weak self] response in
+            imageView.setRemoteImage(withURL: url) { [weak self] in
                 self?.isLoading = false
                 self?.contentView = self?.imageView
                 self?.resetContentView()
-            })
+            }
+
         }
         
         //Extra setup

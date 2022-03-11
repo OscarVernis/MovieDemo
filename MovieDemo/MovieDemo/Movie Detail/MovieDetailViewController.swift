@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 import SPStorkController
 
 class MovieDetailViewController: UIViewController, GenericCollection {
@@ -86,7 +85,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
 
             let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
 
-            bgView.imageView.af.setImage(withURL: imageURL)
+            bgView.imageView.setRemoteImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
         

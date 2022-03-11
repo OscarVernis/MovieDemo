@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AlamofireImage
 
 class PersonDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
@@ -100,7 +99,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         titleNameLabel.text = person.name
         
         if let imageURL = self.person.profileImageURL {
-            personImageView.af.setImage(withURL: imageURL, imageTransition: .crossDissolve(0.3))
+            personImageView.setRemoteImage(withURL: imageURL)
         }
         
         let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width

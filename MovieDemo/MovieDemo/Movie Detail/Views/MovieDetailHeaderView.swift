@@ -32,7 +32,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     func configure(movie: MovieViewModel) {
         if let url = movie.posterImageURL(size: .w342) {
             posterImageView.contentMode = .scaleAspectFill
-            posterImageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.3))
+            posterImageView.setRemoteImage(withURL: url)
         }
         
         titleLabel.text = movie.title
