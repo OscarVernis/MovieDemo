@@ -8,9 +8,9 @@
 //
 
 import Foundation
-import ObjectMapper
+import KeyedCodable
 
-class Movie: MediaItem {
+class Movie: Codable {
     var id: Int!
     var title: String!
     var overview: String?
@@ -39,52 +39,33 @@ class Movie: MediaItem {
     var userRating: Float = 0
     var watchlist: Bool = false
     
-    
-//MARK: - ObjectMapper
-    override class func objectForMapping(map: Map) -> BaseMappable? {
-        if map.JSON["id"] == nil {
-            return nil
+    enum CodingKeys: String, KeyedKey {
+        case id
+        case title
+        case overview
+        case posterPath = "poster_path"
+        case backdropPath = "backdrop_path"
+        case releaseDate = "release_date"
+        case runtime
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+        case cast = "credits.cast"
+        case crew = "credits.crew"
+        case recommendedMovies = "recommendations.results"
+        case genres = "genres"
+        case status = "status"
+        case popularity = "popularity"
+        case originalLanguage = "original_language"
+        case budget = "budget"
+        case revenue = "revenue"
+        case originalTitle = "original_title"
+        case productionCountries = "production_countries"
+        case videos = "videos.results"
+//        case favorite = "account_states.favorite"
+//        case rated = "account_states.rated"
+//        case userRating = "account_states.rated.value"
+//        case watchlist = "account_states.watchlist"
         }
-        
-        if map.JSON["title"] == nil {
-            return nil
-        }
-        
-        return Movie()
-    }
-    
-    public override func mapping(map: Map) {
-        backdropPath <- map["backdrop_path"]
-        id <- map["id"]
-        overview <- map["overview"]
-        posterPath <- map["poster_path"]
-        releaseDate <- (map["release_date"], CustomDateFormatTransform(formatString: "yyyy-MM-dd"))
-        title <- map["title"]
-        voteAverage <- map["vote_average"]
-        voteCount <- map["vote_count"]
-        runtime <- map["runtime"]
-        genres <- (map["genre_ids"], MovieGenreTransformer()) //Movie list services return genres as this: "genre_ids": [14, 28, 80]
-        genres <- (map["genres"], MovieGenreDictionaryTransformer()) //Movie details service returns as this: "genres": [{" id": 18, "name": "Drama" }]
-        cast <- map["credits.cast"]
-        crew <- map["credits.crew"]
-        recommendedMovies <- map["recommendations.results"]
-        status <- map["status"]
-        popularity <- map["popularity"]
-        originalLanguage <- map["original_language"]
-        budget <- map["budget"]
-        revenue <- map["revenue"]
-        originalTitle <- map["original_title"]
-        productionCountries <- (map["production_countries"], CountryArrayTransformer())
-
-        videos <- map["videos.results"]
-        
-        favorite <- map["account_states.favorite"]
-        rated <- (map["account_states.rated"], MovieUserRatedTransform()) //Service returns false if not rated, and the value of the rating if rated.
-        userRating <- map["account_states.rated.value"]
-        watchlist <- map["account_states.watchlist"]
-        
-    }
-    
 }
 
 //MARK: - Utils

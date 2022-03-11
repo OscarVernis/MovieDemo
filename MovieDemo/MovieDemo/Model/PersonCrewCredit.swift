@@ -7,19 +7,7 @@
 //
 
 import Foundation
-import ObjectMapper
 
 class PersonCrewCredit: Movie {
     var job: String?
-    
-    override class func objectForMapping(map: Map) -> BaseMappable? {
-        return PersonCrewCredit()
-    }
-    
-    override func mapping(map: Map) {
-        super.mapping(map: map)
-        
-        job <- map["job"]
-    }
-    
 }

@@ -7,9 +7,9 @@
 //
 //
 
-import ObjectMapper
+import Foundation
 
-class CrewCredit: Mappable {
+class CrewCredit: Codable {
     var id: Int!
     var name: String!
     var creditId: Int?
@@ -17,28 +17,6 @@ class CrewCredit: Mappable {
     var gender: Int?
     var job: String?
     var profilePath: String?
-    
-    //MARK: - ObjectMapper
-    required init?(map: Map) {
-        if map.JSON["id"] == nil {
-            return nil
-        }
-        
-        if map.JSON["name"] == nil {
-            return nil
-        }
-    }
-
-    func mapping(map: Map) {
-        creditId <- map["credit_id"]
-        department <- map["department"]
-        gender <- map["gender"]
-        id <- map["id"]
-        job <- map["job"]
-        name <- map["name"]
-        profilePath <- map["profile_path"]
-    }
-    
 }
 
 extension CrewCredit: Hashable {

@@ -54,17 +54,14 @@ class SearchSection: FetchableSection {
         let cell: UICollectionViewCell
         
         switch item {
-        case let movie as Movie:
+        case .movie(let movie):
             let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as! MovieInfoListCell
             MovieInfoCellConfigurator().configure(cell: movieCell, with: MovieViewModel(movie: movie))
             cell = movieCell
-        case let person as Person:
+        case .person(let person):
             let personCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditPhotoListCell.reuseIdentifier, for: indexPath) as! CreditPhotoListCell
             PersonCreditPhotoListConfigurator().configure(cell: personCell, person: PersonViewModel(person: person))
             cell = personCell
-        default:
-            fatalError()
-            
         }
         
         return cell

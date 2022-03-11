@@ -82,12 +82,10 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
             let item = self.searchSection.dataProvider.item(atIndex: index)
             
             switch item {
-            case let movie as Movie:
+            case .movie(let movie):
                 self.mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
-            case let person as Person:
+            case .person(let person):
                 self.mainCoordinator.showPersonProfile(PersonViewModel(person: person))
-            default:
-                break
             }
 
         }

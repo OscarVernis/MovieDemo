@@ -6,9 +6,9 @@
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
-import ObjectMapper
+import Foundation
 
-class User: Mappable {
+class User: Codable {
     var avatar: String?
     var id: Int!
     var username: String!
@@ -16,26 +16,4 @@ class User: Mappable {
     var favorites = [Movie]()
     var watchlist = [Movie]()
     var rated = [Movie]()
-
-    
-    //MARK: - ObjectMapper
-    required init?(map: Map) {
-        if map.JSON["id"] == nil {
-            return nil
-        }
-        
-        if map.JSON["username"] == nil {
-            return nil
-        }
-    }
-
-    func mapping(map: Map) {
-        avatar <- map["avatar.gravatar.hash"]
-        id <- map["id"]
-        username <- map["username"]
-        
-        favorites <- map["favorite/movies.results"]
-        watchlist <- map["watchlist/movies.results"]
-        rated <- map["rated/movies.results"]
-    }
 }

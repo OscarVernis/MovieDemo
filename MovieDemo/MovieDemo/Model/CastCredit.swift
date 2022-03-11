@@ -7,9 +7,9 @@
 //
 //
 
-import ObjectMapper
+import Foundation
 
-class CastCredit: Mappable {
+class CastCredit: Codable {
     var name: String!
     var castId: Int?
     var character: String?
@@ -18,29 +18,6 @@ class CastCredit: Mappable {
     var id: Int!
     var order: Int?
     var profilePath: String?
-    
-    //MARK: - ObjectMapper
-    required init?(map: Map) {
-        if map.JSON["id"] == nil {
-            return nil
-        }
-        
-        if map.JSON["name"] == nil {
-            return nil
-        }
-    }
-    
-    func mapping(map: Map) {
-        castId <- map["cast_id"]
-        creditId <- map["credit_id"]
-        gender <- map["gender"]
-        id <- map["id"]
-        order <- map["order"]
-        character <- map["character"]
-        name <- map["name"]
-        profilePath <- map["profile_path"]
-    }
-    
 }
 
 extension CastCredit: Hashable {

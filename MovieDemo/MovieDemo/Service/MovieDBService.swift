@@ -8,7 +8,7 @@
 
 import Foundation
 import Alamofire
-import ObjectMapper
+import KeyedCodable
 
 struct MovieDBService {
     enum ServiceError: Error {
@@ -48,7 +48,7 @@ extension MovieDBService {
     typealias SuccessActionCompletion = (Result<Void, Error>) -> Void
     typealias FetchStringCompletion = (Result<String, Error>) -> Void
     
-    func fetchModels<T: BaseMappable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
+    func fetchModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
         let url = endpoint(forPath: path)
         
         var params = defaultParameters(withSessionId: sessionId)
@@ -56,35 +56,37 @@ extension MovieDBService {
         params["page"] = page
         params["region"] = "US"
         
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
             switch response.result {
             case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let modelsData = json["results"] as? [[String: Any]] {
-                    let models = Array<T>.init(JSONArray: modelsData)
-                    let totalPages = json["total_pages"] as? Int ?? page
+                do {
+                    let results = try ServiceModelsResult<T>.keyed.fromJSON(jsonData)
+                    let models = results.results
+                    let totalPages = results.totalPages
+                    
+                    print(results)
+                    print(totalPages)
                     
                     completion(.success((models, totalPages)))
-                } else {
+                } catch {
+                    print(error)
                     completion(.failure(ServiceError.jsonError))
                 }
             case .failure(let error):
                 completion(.failure(error))
-
             }
         }
     }
     
-    func fetchModel<T: BaseMappable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseJSON { response in
+    func fetchModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self) { response in
             switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any] else {
+            case .success(_):
+                if let model = response.value {
+                    completion(.success((model)))
+                } else {
                     completion(.failure(ServiceError.jsonError))
-                    return
                 }
-                
-                let model = Mapper<T>().map(JSON: json)!
-                completion(.success(model))
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -7,28 +7,31 @@
 //
 
 import Foundation
-import ObjectMapper
 
-class MediaItem: StaticMappable {
-    init() {
+enum MediaItem: Codable {
+    case person(Person)
+    case movie(Movie)
+    
+    enum CodingKeys: CodingKey, CaseIterable {
+        case person
+        case movie
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let value = try container.decodeIfPresent(Person.self, forKey: .person) {
+            self = MediaItem.person(value)
+            return
+        }
         
+        if let value = try container.decodeIfPresent(Movie.self, forKey: .movie) {
+            self = MediaItem.movie(value)
+            return
+        }
+        
+        throw DecodingError.valueNotFound(Self.self, DecodingError.Context(codingPath: CodingKeys.allCases, debugDescription: "person/movie not found"))
     }
     
-    class func objectForMapping(map: Map) -> BaseMappable? {
-        if let type: String = map["media_type"].value() {
-                    switch type {
-                        case "movie":
-                            return Movie()
-                        case "person":
-                            return Person()
-                        default:
-                            return nil
-                    }
-                }
-                return nil
+    public func encode(to encoder: Encoder) throws {
     }
-    
-    func mapping(map: Map) {
-    }
-    
 }

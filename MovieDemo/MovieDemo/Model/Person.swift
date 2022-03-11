@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import ObjectMapper
 
-class Person: MediaItem {
+class Person: Codable {
     var id: Int!
     var name: String!
     var knownForDepartment: String?
@@ -23,36 +22,4 @@ class Person: MediaItem {
     
     var castCredits: [PersonCastCredit]?
     var crewCredits: [PersonCrewCredit]?
-
-
-    //MARK: - ObjectMapper
-    override class func objectForMapping(map: Map) -> BaseMappable? {
-        if map.JSON["id"] == nil {
-            return nil
-        }
-        
-        if map.JSON["name"] == nil {
-            return nil
-        }
-        
-        return Person()
-    }
-
-    override func mapping(map: Map) {
-        id <- map["id"]
-        name <- map["name"]
-        knownForDepartment <- map["known_for_department"]
-        birthday <- (map["birthday"], CustomDateFormatTransform(formatString: "yyyy-MM-dd"))
-        deathday <- (map["deathday"], CustomDateFormatTransform(formatString: "yyyy-MM-dd"))
-        gender <- map["gender"]
-        biography <- map["biography"]
-        placeOfBirth <- map["place_of_birth"]
-        profilePath <- map["profile_path"]
-
-        knownForMovies <- map["known_for"]
-
-        castCredits <- map["movie_credits.cast"]
-        crewCredits <- map["movie_credits.crew"]
-    }
-    
 }
