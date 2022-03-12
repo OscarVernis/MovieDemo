@@ -7,13 +7,12 @@
 //
 
 import Foundation
-import KeyedCodable
 
 struct ServiceModelsResult<T: Codable>: Codable {
     var results: [T]
     var totalPages: Int
     
-    enum CodingKeys: String, KeyedKey {
+    enum CodingKeys: String, CodingKey {
         case results
         case totalPages = "total_pages"
     }

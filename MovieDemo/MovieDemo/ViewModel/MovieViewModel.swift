@@ -235,15 +235,15 @@ extension MovieViewModel {
     }
     
     var rated: Bool {
-        return movie.rated
+        return movie.userRating != nil
     }
     
     var userRating: UInt {
-        return UInt(movie.userRating)
+        return UInt(movie.userRating ?? 0)
     }
 
     var percentUserRating: UInt {
-        return UInt(movie.userRating * 10)
+        return UInt((movie.userRating ?? 0) * 10)
     }
     
     var userRatingString: String {
@@ -311,7 +311,6 @@ extension MovieViewModel {
             case .success:
                 self?.movie.userRating = adjustedRating
                 self?.movie.watchlist = false //Server removes movie from watchlist when rating
-                self?.movie.rated = true
                 completion(true)
             case .failure(_):
                 completion(false)
@@ -329,7 +328,7 @@ extension MovieViewModel {
         userService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] result in
             switch result {
             case .success:
-                self?.movie.rated = false
+                self?.movie.userRating = nil
                 completion(true)
             case .failure(_):
                 completion(false)

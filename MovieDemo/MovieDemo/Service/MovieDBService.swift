@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import KeyedCodable
 
 struct MovieDBService {
     enum ServiceError: Error {
@@ -56,11 +55,15 @@ extension MovieDBService {
         params["page"] = page
         params["region"] = "US"
         
+        let decoder = JSONDecoder()
+        let locale = NSLocalizedString("service-locale", comment: "")
+        decoder.dateDecodingStrategy = .formatted(DateFormatter(withFormat: "yyyy-MM-dd", locale: locale))
+
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
             switch response.result {
             case .success(let jsonData):
                 do {
-                    let results = try ServiceModelsResult<T>.keyed.fromJSON(jsonData)
+                    let results = try decoder.decode(ServiceModelsResult<T>.self, from: jsonData)
                     let models = results.results
                     let totalPages = results.totalPages
                     
@@ -79,7 +82,11 @@ extension MovieDBService {
     }
     
     func fetchModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self) { response in
+        let decoder = JSONDecoder()
+        let locale = NSLocalizedString("service-locale", comment: "")
+        decoder.dateDecodingStrategy = .formatted(DateFormatter(withFormat: "yyyy-MM-dd", locale: locale))
+        
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: decoder) { response in
             switch response.result {
             case .success(_):
                 if let model = response.value {
