@@ -17,6 +17,16 @@ class CrewCredit: Codable {
     var gender: Int?
     var job: String?
     var profilePath: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case creditId = "credit_id"
+        case department
+        case gender
+        case job
+        case profilePath = "profile_path"
+    }
 }
 
 extension CrewCredit: Hashable {
