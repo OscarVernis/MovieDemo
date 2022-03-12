@@ -9,7 +9,7 @@
 
 import Foundation
 
-class CrewCredit: Codable {
+struct CrewCredit: Codable {
     var id: Int!
     var name: String!
     var creditId: Int?

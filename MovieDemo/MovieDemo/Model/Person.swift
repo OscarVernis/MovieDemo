@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Person: Codable {
+struct Person {
     var id: Int!
     var name: String!
     var knownForDepartment: String?
@@ -22,7 +22,9 @@ class Person: Codable {
     
     var castCredits: [PersonCastCredit]?
     var crewCredits: [PersonCrewCredit]?
-    
+}
+
+extension Person: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -41,12 +43,9 @@ class Person: Codable {
     enum NestedKeys: String, CodingKey {
         case movieCredits = "movie_credits"
     }
+
     
-    required init() {
-        
-    }
-    
-    required init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         id = try container.decode(Int.self, forKey: .id)

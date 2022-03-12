@@ -119,11 +119,11 @@ extension PersonViewModel {
         var credits = [Movie]()
         
         if let castCredits = person.castCredits {
-            credits.append(contentsOf: castCredits)
+            credits.append(contentsOf: castCredits.compactMap { $0.movie } )
         }
         
         if let crewCredits = person.crewCredits {
-            credits.append(contentsOf: crewCredits)
+            credits.append(contentsOf: crewCredits.compactMap { $0.movie } )
         }
         
         var filteredMovies = [Movie]()
@@ -135,9 +135,6 @@ extension PersonViewModel {
             .sorted(by: Movie.sortByPopularity)
             .prefix(8)
             .compactMap { MovieViewModel(movie: $0) }
-        
-        print("ok")
-        
     }
     
 }

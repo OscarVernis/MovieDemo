@@ -8,20 +8,33 @@
 
 import UIKit
 
-class PersonCastCreditViewModel: MovieViewModel {
-    private weak var castCredit: PersonCastCredit!
+class PersonCastCreditViewModel {
+    private var castCredit: PersonCastCredit!
 
     init(personCastCredit: PersonCastCredit) {
         self.castCredit = personCastCredit
-        super.init(movie: personCastCredit)
     }
     
     var character: String? {
         return castCredit.character
     }
     
+    var movie: MovieViewModel? {
+        guard let movie = castCredit.movie else { return nil }
+        
+        return MovieViewModel(movie: movie)
+    }
+    
+    var title: String {
+        guard let movie = movie else  { return "" }
+        
+        return movie.title
+    }
+    
     var year: String {
-        return releaseYear.isEmpty == false ? releaseYear : "-"
+        guard let movie = movie, movie.releaseYear.isEmpty == false else { return "-" }
+        
+        return movie.releaseYear
     }
     
 }

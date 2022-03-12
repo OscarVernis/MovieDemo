@@ -67,12 +67,8 @@ extension MovieDBService {
                     let models = results.results
                     let totalPages = results.totalPages
                     
-                    print(results)
-                    print(totalPages)
-                    
                     completion(.success((models, totalPages)))
                 } catch {
-                    print(error)
                     completion(.failure(ServiceError.jsonError))
                 }
             case .failure(let error):

@@ -9,7 +9,7 @@
 
 import Foundation
 
-class CastCredit: Codable {
+struct CastCredit: Codable {
     var name: String!
     var castId: Int?
     var character: String?
@@ -19,16 +19,16 @@ class CastCredit: Codable {
     var order: Int?
     var profilePath: String?
     
-    enum CodingKeys: String, CodingKey {
-        case name
-        case castId = "cast_id"
-        case character
-        case creditId = "credit_id"
-        case gender
-        case id
-        case order
-        case profilePath = "profile_path"
-    }
+//    enum CodingKeys: String, CodingKey {
+//        case name
+//        case castId = "cast_id"
+//        case character
+//        case creditId = "credit_id"
+//        case gender
+//        case id
+//        case order
+//        case profilePath = "profile_path"
+//    }
 }
 
 extension CastCredit: Hashable {

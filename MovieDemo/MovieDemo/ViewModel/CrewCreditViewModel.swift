@@ -38,7 +38,7 @@ class CrewCreditViewModel {
     }
     
     func person() -> PersonViewModel {
-        let person = Person()
+        var person = Person()
         person.id = id
         person.name = name
         person.profilePath = crewCredit.profilePath

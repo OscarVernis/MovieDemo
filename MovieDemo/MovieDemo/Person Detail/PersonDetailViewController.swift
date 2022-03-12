@@ -272,11 +272,15 @@ extension PersonDetailViewController: UICollectionViewDelegate {
             let movie = person.popularMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: movie)
         case _ as PersonCastCreditsSection:
-            let movie = person.castCredits[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: movie)
+            let castCredit = person.castCredits[indexPath.row]
+            if let movie = castCredit.movie {
+                mainCoordinator.showMovieDetail(movie: movie)
+            }
         case let section as PersonCrewCreditsSection:
-            let movie = section.credits[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: movie)
+            let crewCredit = section.credits[indexPath.row]
+            if let movie = crewCredit.movie {
+                mainCoordinator.showMovieDetail(movie: movie)
+            }
         default:
             break
         }

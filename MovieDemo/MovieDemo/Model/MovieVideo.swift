@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MovieVideo: Codable  {
+struct MovieVideo: Codable  {
     var key: String!
     var name: String?
     var type: String?

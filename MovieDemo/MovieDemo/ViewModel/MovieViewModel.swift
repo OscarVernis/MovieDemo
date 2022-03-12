@@ -231,7 +231,7 @@ extension MovieViewModel {
 //MARK:- User States
 extension MovieViewModel {
     var favorite: Bool {
-        return movie.favorite
+        return movie.favorite ?? false
     }
     
     var rated: Bool {
@@ -251,7 +251,7 @@ extension MovieViewModel {
     }
     
     var watchlist: Bool {
-        return movie.watchlist
+        return movie.watchlist ?? false
     }
     
     func markAsFavorite(_ favorite: Bool, completion: @escaping (Bool) -> Void) {
