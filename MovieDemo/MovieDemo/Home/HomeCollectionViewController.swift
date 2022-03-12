@@ -86,6 +86,8 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
                 self.mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
             case .person(let person):
                 self.mainCoordinator.showPersonProfile(PersonViewModel(person: person))
+            default:
+                break
             }
 
         }

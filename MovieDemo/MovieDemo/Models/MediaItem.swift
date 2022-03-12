@@ -8,30 +8,34 @@
 
 import Foundation
 
-enum MediaItem: Codable {
+enum MediaItem {
     case person(Person)
     case movie(Movie)
+    case unknown
+}
     
-    enum CodingKeys: CodingKey, CaseIterable {
-        case person
-        case movie
+extension MediaItem: Codable, Equatable {
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case mediaType = "media_type"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let value = try container.decodeIfPresent(Person.self, forKey: .person) {
-            self = MediaItem.person(value)
+        let type = try container.decodeIfPresent(String.self, forKey: .mediaType)
+                
+        if type == "person", let person = try? Person(from: decoder) {
+            self = MediaItem.person(person)
             return
         }
-        
-        if let value = try container.decodeIfPresent(Movie.self, forKey: .movie) {
-            self = MediaItem.movie(value)
+
+        if type == "movie", let movie = try? Movie(from: decoder) {
+            self = MediaItem.movie(movie)
             return
         }
-        
-        throw DecodingError.valueNotFound(Self.self, DecodingError.Context(codingPath: CodingKeys.allCases, debugDescription: "person/movie not found"))
+
+        self = .unknown
     }
     
-    public func encode(to encoder: Encoder) throws {
-    }
+    func encode(to encoder: Encoder) throws {  }
+
 }

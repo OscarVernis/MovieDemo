@@ -62,6 +62,8 @@ class SearchSection: FetchableSection {
             let personCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditPhotoListCell.reuseIdentifier, for: indexPath) as! CreditPhotoListCell
             PersonCreditPhotoListConfigurator().configure(cell: personCell, person: PersonViewModel(person: person))
             cell = personCell
+        default:
+            fatalError("Unknown Media Type")
         }
         
         return cell

@@ -79,7 +79,8 @@ class SearchDataProvider: ArrayDataProvider {
                 
                 self.totalPages = totalPages
                 
-                self.items.append(contentsOf: items)
+                let filteredItems = items.filter { $0 != .unknown }
+                self.items.append(contentsOf: filteredItems)
                 
                 self.didUpdate?(nil)
                 

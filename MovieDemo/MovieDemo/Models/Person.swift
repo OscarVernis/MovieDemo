@@ -65,3 +65,10 @@ extension Person: Codable {
         castCredits = try? creditsContainer?.decodeIfPresent([PersonCastCredit].self, forKey: .castCredits)
     }
 }
+
+extension Person: Equatable {
+    static func == (lhs: Person, rhs: Person) -> Bool {
+        return
+            lhs.id == rhs.id
+    }
+}
