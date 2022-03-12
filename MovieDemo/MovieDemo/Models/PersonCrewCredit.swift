@@ -1,36 +1,32 @@
 //
-//  PersonCastCredit.swift
+//  PersonCrewCredit.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 09/10/20.
+//  Created by Oscar Vernis on 15/10/20.
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
 import Foundation
 
-struct PersonCastCredit: Codable {
-    var character: String?
+struct PersonCrewCredit: Codable {
+    var job: String?
     var movie: Movie?
-    
+
     enum CodingKeys: String, CodingKey {
-        case character
+        case job
     }
     
     init(from decoder: Decoder) throws {
-        do {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        character = try container.decode(String.self, forKey: .character)
+        job = try container.decodeIfPresent(String.self, forKey: .job)
         
-        movie = try Movie(from: decoder)
-        } catch {
-            print(error)
-        }
+        movie = try? Movie(from: decoder)
     }
     
 }
 
-extension PersonCastCredit {
-    static func sortByRelease(lhs: PersonCastCredit, rhs: PersonCastCredit) -> Bool {
+extension PersonCrewCredit {
+    static func sortByRelease(lhs: PersonCrewCredit, rhs: PersonCrewCredit) -> Bool {
         let currentDate = Date()
         var dateComponent = DateComponents()
         dateComponent.year = 100

@@ -27,6 +27,18 @@ struct CrewCredit: Codable {
         case job
         case profilePath = "profile_path"
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(Int.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        creditId = try container.decodeIfPresent(Int.self, forKey: .creditId)
+        department = try container.decodeIfPresent(String.self, forKey: .department)
+        gender = try container.decodeIfPresent(Int.self, forKey: .gender)
+        job = try container.decodeIfPresent(String.self, forKey: .job)
+        profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
+    }
 }
 
 extension CrewCredit: Hashable {

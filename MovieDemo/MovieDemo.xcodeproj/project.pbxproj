@@ -643,7 +643,7 @@
 				555A14422523D97B0024AFAA /* Protocols */,
 				5523970627D19B3B00E4C18F /* Session */,
 				5562461A2515611A005E63AB /* Service */,
-				55E07D7A22D9983C00AF0144 /* Model */,
+				55E07D7A22D9983C00AF0144 /* Models */,
 				554DE184251F0C23000286D2 /* ViewModel */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
 				5587114C25108082005A0975 /* Cells + Views */,
@@ -693,7 +693,7 @@
 			path = Lists;
 			sourceTree = "<group>";
 		};
-		55E07D7A22D9983C00AF0144 /* Model */ = {
+		55E07D7A22D9983C00AF0144 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
@@ -709,7 +709,7 @@
 				5560523A2531246A00023BD9 /* PersonCastCredit.swift */,
 				555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		55EECCD825117C3B0041EAE7 /* Data Providers */ = {

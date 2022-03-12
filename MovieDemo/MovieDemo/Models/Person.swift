@@ -58,12 +58,10 @@ extension Person: Codable {
         profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
         knownForMovies = try container.decodeIfPresent([Movie].self, forKey: .knownForMovies)
         
-        do {
-            let nestedContainer = try decoder.container(keyedBy: NestedKeys.self)
-            
-            let creditsContainer = try nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .movieCredits)
-            crewCredits = try creditsContainer.decodeIfPresent([PersonCrewCredit].self, forKey: .crewCredits)
-            castCredits = try creditsContainer.decodeIfPresent([PersonCastCredit].self, forKey: .castCredits)
-        } catch { }
+        let nestedContainer = try decoder.container(keyedBy: NestedKeys.self)
+        
+        let creditsContainer = try? nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .movieCredits)
+        crewCredits = try? creditsContainer?.decodeIfPresent([PersonCrewCredit].self, forKey: .crewCredits)
+        castCredits = try? creditsContainer?.decodeIfPresent([PersonCastCredit].self, forKey: .castCredits)
     }
 }
