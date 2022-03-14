@@ -100,6 +100,10 @@ extension Movie: Codable {
         
         let nestedContainer = try decoder.container(keyedBy: NestedKeys.self)
         
+        let countriesContainer = try? decoder.container(keyedBy: CodingKeys.self)
+        let countries = try? countriesContainer?.decodeIfPresent([[String: String]].self, forKey: .productionCountries)
+        productionCountries = countries?.compactMap { $0["iso_3166_1"] }
+        
         //Movie details service returns as this: "genres": [{" id": 18, "name": "Drama" }]
         let genresContainer = try? decoder.container(keyedBy: SpecialKeys.self)
         let tempGenres  = try? genresContainer?.decodeIfPresent([ServiceGenre].self, forKey: .genres)
