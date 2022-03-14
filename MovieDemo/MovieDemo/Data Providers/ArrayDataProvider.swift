@@ -19,7 +19,7 @@ public protocol ArrayDataProvider: AnyObject {
     var itemCount: Int { get }
     func item(atIndex: Int) -> Model
 
-    func fetchNextPage()
+    func loadMore()
     func refresh()
 
 }

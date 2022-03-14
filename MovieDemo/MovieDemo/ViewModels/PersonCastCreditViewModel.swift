@@ -6,7 +6,7 @@
 //  Copyright © 2020 Oscar Vernis. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class PersonCastCreditViewModel {
     private var castCredit: PersonCastCredit!

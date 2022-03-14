@@ -1,5 +1,5 @@
 //
-//  Movie+CoreDataClass.swift
+//  Movie.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 7/12/19.

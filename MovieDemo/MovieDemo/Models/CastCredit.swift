@@ -1,5 +1,5 @@
 //
-//  Credit+CoreDataClass.swift
+//  CastCredit.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 7/14/19.

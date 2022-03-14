@@ -32,7 +32,7 @@ class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigu
     }
     
     func fetchNextPage() {
-        dataProvider.fetchNextPage()
+        dataProvider.loadMore()
     }
     
     var itemCount: Int {

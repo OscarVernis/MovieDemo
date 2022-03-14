@@ -79,7 +79,7 @@ class HomeMovieListSection: FetchableSection {
     }
     
     func fetchNextPage() {
-        dataProvider.fetchNextPage()
+        dataProvider.loadMore()
     }
     
     func refresh() {

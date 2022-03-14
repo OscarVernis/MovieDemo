@@ -31,7 +31,7 @@ class SearchDataProvider: ArrayDataProvider {
     
     let searchService = RemoteSearch()
 
-    private var isFetching = false
+    private var isLoading = false
 
     var currentPage = 0
     var totalPages = 1
@@ -41,33 +41,33 @@ class SearchDataProvider: ArrayDataProvider {
     }
     var didUpdate: ((Error?) -> Void)?
     
-    func fetchNextPage() {
+    func loadMore() {
         if isLastPage {
             return
         }
         
-        fetchItems()
+        getItems()
     }
     
     func refresh() {
         currentPage = 0
         totalPages = 1
-        fetchItems()
+        getItems()
     }
     
-    private func fetchItems() {
-        if isFetching || query.isEmpty {
+    private func getItems() {
+        if isLoading || query.isEmpty {
             return
         }
         
-        isFetching = true
+        isLoading = true
         let page = currentPage + 1
 
         let searchQuery = query
         searchService.search(query: searchQuery, page: page) { [weak self] result in
             guard let self = self else { return }
             
-            self.isFetching = false
+            self.isLoading = false
             
             switch result {
             case .success((let items, let totalPages)):

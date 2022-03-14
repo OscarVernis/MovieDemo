@@ -16,7 +16,7 @@ fileprivate enum LocalKeys: String {
 
 class SessionManager {
     static let shared = SessionManager()
-    private var service = LoginManager()
+    private var service = RemoteLoginManager()
     
     var isLoggedIn: Bool = false
     var username: String?

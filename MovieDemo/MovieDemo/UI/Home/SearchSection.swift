@@ -28,7 +28,7 @@ class SearchSection: FetchableSection {
     }
     
     func fetchNextPage() {
-        dataProvider.fetchNextPage()
+        dataProvider.loadMore()
     }
     
     var itemCount: Int {

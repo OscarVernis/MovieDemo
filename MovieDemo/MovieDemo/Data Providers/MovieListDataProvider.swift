@@ -36,7 +36,7 @@ class MovieListDataProvider: ArrayDataProvider {
         }
     }
     
-    private var isFetching = false
+    private var isLoading = false
     var currentPage = 0
     var totalPages = 1
     
@@ -46,31 +46,31 @@ class MovieListDataProvider: ArrayDataProvider {
     
     var didUpdate: ((Error?) -> Void)?
     
-    func fetchNextPage() {
+    func loadMore() {
         if isLastPage {
             return
         }
         
-        fetchMovies()
+        getMovies()
     }
     
     func refresh() {
         currentPage = 0
         totalPages = 1
-        fetchMovies()
+        getMovies()
     }
     
-    private func fetchMovies() {
-        if isFetching {
+    private func getMovies() {
+        if isLoading {
             return
         }
         
-        isFetching = true
+        isLoading = true
         
         let fetchHandler: MovieLoader.MovieListCompletion = { [weak self] result in
             guard let self = self else { return }
             
-            self.isFetching = false
+            self.isLoading = false
             
             switch result {
             case .success((let movies, let totalPages)):

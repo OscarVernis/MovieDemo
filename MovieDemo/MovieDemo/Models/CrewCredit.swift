@@ -1,5 +1,5 @@
 //
-//  CrewCredit+CoreDataClass.swift
+//  CrewCredit.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 7/14/19.

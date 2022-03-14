@@ -31,7 +31,7 @@ class StaticArrayDataProvider<T>: ArrayDataProvider {
     
     var didUpdate: ((Error?) -> Void)?
     
-    func fetchNextPage() {}
+    func loadMore() {}
     
     func refresh() {
         didUpdate?(nil)

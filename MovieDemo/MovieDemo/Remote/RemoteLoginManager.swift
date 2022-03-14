@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct LoginManager {
+struct RemoteLoginManager {
     let service = MovieDBService()
     
     func requestToken(completion: @escaping MovieDBService.FetchStringCompletion) {
