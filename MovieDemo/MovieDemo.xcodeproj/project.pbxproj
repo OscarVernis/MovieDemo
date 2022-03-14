@@ -507,6 +507,7 @@
 		5562461A2515611A005E63AB /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				55A21C8A27DFBD9C00A7E538 /* Models */,
 				5545203A22D99D8F004B7924 /* MovieDBService.swift */,
 				55EB72A827D1A13F00B98342 /* RemoteMovieInfoLoader.swift */,
 				55EB72AB27D1A19B00B98342 /* RemotePersonInfoLoader.swift */,
@@ -621,8 +622,8 @@
 				556246192515610F005E63AB /* Coordinator */,
 				555A14422523D97B0024AFAA /* Protocols */,
 				5523970627D19B3B00E4C18F /* Session */,
-				5562461A2515611A005E63AB /* Service */,
 				55E07D7A22D9983C00AF0144 /* Models */,
+				5562461A2515611A005E63AB /* Service */,
 				554DE184251F0C23000286D2 /* ViewModel */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
 				5587114C25108082005A0975 /* Cells + Views */,
@@ -637,6 +638,16 @@
 				559D132C22D98E4B00C96FC8 /* Info.plist */,
 			);
 			path = MovieDemo;
+			sourceTree = "<group>";
+		};
+		55A21C8A27DFBD9C00A7E538 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
+				555EAF6427DC465D000B6525 /* ServiceGenre.swift */,
+				5562D7402539291900E4FD42 /* MediaItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		55A60DCF2527AAB30082810C /* MediaViewer */ = {
@@ -674,9 +685,6 @@
 		55E07D7A22D9983C00AF0144 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
-				555EAF6427DC465D000B6525 /* ServiceGenre.swift */,
-				5562D7402539291900E4FD42 /* MediaItem.swift */,
 				5545203622D99CB0004B7924 /* Movie.swift */,
 				55A6A98E2511A6C400305C29 /* MovieGenre.swift */,
 				553660F922DAFC0B00BE03BB /* CastCredit.swift */,

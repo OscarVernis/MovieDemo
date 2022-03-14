@@ -100,33 +100,33 @@ extension Movie: Codable {
         
         let nestedContainer = try decoder.container(keyedBy: NestedKeys.self)
         
-        let countriesContainer = try decoder.container(keyedBy: CodingKeys.self)
-        let countries = try countriesContainer.decodeIfPresent([[String: String]].self, forKey: .productionCountries)
+        let countriesContainer = try? decoder.container(keyedBy: CodingKeys.self)
+        let countries = try? countriesContainer?.decodeIfPresent([[String: String]].self, forKey: .productionCountries)
         productionCountries = countries?.compactMap { $0["iso_3166_1"] }
         
         //Movie details service returns as this: "genres": [{" id": 18, "name": "Drama" }]
-        let genresContainer = try decoder.container(keyedBy: SpecialKeys.self)
-        let tempGenres  = try genresContainer.decodeIfPresent([ServiceGenre].self, forKey: .genres)
+        let genresContainer = try? decoder.container(keyedBy: SpecialKeys.self)
+        let tempGenres  = try? genresContainer?.decodeIfPresent([ServiceGenre].self, forKey: .genres)
         if tempGenres != nil {
             genres = tempGenres?.compactMap { MovieGenre(rawValue: $0.id) }
         }
         
-        let videoContainer = try nestedContainer.nestedContainer(keyedBy: SpecialKeys.self, forKey: .videos)
-        videos = try videoContainer.decodeIfPresent([MovieVideo].self, forKey: .results)
+        let videoContainer = try? nestedContainer.nestedContainer(keyedBy: SpecialKeys.self, forKey: .videos)
+        videos = try? videoContainer?.decodeIfPresent([MovieVideo].self, forKey: .results)
         
-        let recommendationsContainer = try nestedContainer.nestedContainer(keyedBy: SpecialKeys.self, forKey: .recommendations)
-        recommendedMovies = try recommendationsContainer.decodeIfPresent([Movie].self, forKey: .results)
+        let recommendationsContainer = try? nestedContainer.nestedContainer(keyedBy: SpecialKeys.self, forKey: .recommendations)
+        recommendedMovies = try? recommendationsContainer?.decodeIfPresent([Movie].self, forKey: .results)
         
-        let creditsContainer = try nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .credits)
-        cast = try creditsContainer.decodeIfPresent([CastCredit].self, forKey: .cast)
-        crew = try creditsContainer.decodeIfPresent([CrewCredit].self, forKey: .crew)
+        let creditsContainer = try? nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .credits)
+        cast = try? creditsContainer?.decodeIfPresent([CastCredit].self, forKey: .cast)
+        crew = try? creditsContainer?.decodeIfPresent([CrewCredit].self, forKey: .crew)
         
-        let accountStatesContainer = try nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .accountStates)
-        favorite = try accountStatesContainer.decodeIfPresent(Bool.self, forKey: .favorite)
-        watchlist = try accountStatesContainer.decodeIfPresent(Bool.self, forKey: .watchlist)
+        let accountStatesContainer = try? nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .accountStates)
+        favorite = try? accountStatesContainer?.decodeIfPresent(Bool.self, forKey: .favorite)
+        watchlist = try? accountStatesContainer?.decodeIfPresent(Bool.self, forKey: .watchlist)
         
-        let ratingContainer = try accountStatesContainer.nestedContainer(keyedBy: SpecialKeys.self, forKey: .userRating)
-        userRating = try ratingContainer.decodeIfPresent(Float.self, forKey: .value)
+        let ratingContainer = try? accountStatesContainer?.nestedContainer(keyedBy: SpecialKeys.self, forKey: .userRating)
+        userRating = try? ratingContainer?.decodeIfPresent(Float.self, forKey: .value)
     }
 
 }

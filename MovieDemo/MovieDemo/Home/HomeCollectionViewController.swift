@@ -20,7 +20,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     
     var sections = [ConfigurableSection]()
 
-    let manager = NetworkReachabilityManager(host: "www.apple.com")
+    let manager = NetworkReachabilityManager(host: "www.google.com")
     
     //MARK:- Setup
     required init?(coder: NSCoder) {
