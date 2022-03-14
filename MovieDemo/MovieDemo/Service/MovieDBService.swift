@@ -58,8 +58,7 @@ extension MovieDBService {
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.locale = Locale.current
-        decoder.dateDecodingStrategy = .formatted(DateFormatter())
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
             switch response.result {
@@ -83,8 +82,7 @@ extension MovieDBService {
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.locale = Locale.current
-        decoder.dateDecodingStrategy = .formatted(DateFormatter())
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
         
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: decoder) { response in
             switch response.result {
