@@ -45,9 +45,9 @@ struct MovieDBService {
 //MARK: - Generic Functions
 extension MovieDBService {
     typealias SuccessActionCompletion = (Result<Void, Error>) -> Void
-    typealias FetchStringCompletion = (Result<String, Error>) -> Void
+    typealias StringCompletion = (Result<String, Error>) -> Void
     
-    func fetchModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
+    func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
         let url = endpoint(forPath: path)
         
         var params = defaultParameters(withSessionId: sessionId)
@@ -78,7 +78,7 @@ extension MovieDBService {
         }
     }
     
-    func fetchModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
+    func getModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -98,7 +98,7 @@ extension MovieDBService {
         }
     }
     
-    func fetchString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post, completion: @escaping FetchStringCompletion) {
+    func getString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post, completion: @escaping StringCompletion) {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         

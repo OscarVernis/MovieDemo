@@ -11,11 +11,11 @@ import Foundation
 struct RemoteLoginManager {
     let service = MovieDBService()
     
-    func requestToken(completion: @escaping MovieDBService.FetchStringCompletion) {
+    func requestToken(completion: @escaping MovieDBService.StringCompletion) {
         let url = service.endpoint(forPath: "/authentication/token/new")
         let params = service.defaultParameters()
         
-        service.fetchString(path: "request_token", url: url, params: params, method: .get, completion: completion)
+        service.getString(path: "request_token", url: url, params: params, method: .get, completion: completion)
     }
     
     func validateToken(username: String, password: String, requestToken: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
@@ -31,13 +31,13 @@ struct RemoteLoginManager {
         service.successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
-    func createSession(requestToken: String, completion: @escaping MovieDBService.FetchStringCompletion) {
+    func createSession(requestToken: String, completion: @escaping MovieDBService.StringCompletion) {
         let url = service.endpoint(forPath: "/authentication/session/new")
         let params = service.defaultParameters()
 
         let body = ["request_token": requestToken]
         
-        service.fetchString(path: "session_id", url: url, params: params, body: body, completion: completion)
+        service.getString(path: "session_id", url: url, params: params, body: body, completion: completion)
     }
     
     func deleteSession(sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {

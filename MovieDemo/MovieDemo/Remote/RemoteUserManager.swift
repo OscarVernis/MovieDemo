@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RemoteUserActionManager {
+struct RemoteUserManager {
     let service = MovieDBService()
     
     private struct FavoriteRequestBody: Encodable {
@@ -23,24 +23,24 @@ struct RemoteUserActionManager {
         var watchlist: Bool
     }
     
-    func fetchUserDetails(sessionId: String, completion: @escaping (Result<User, Error>) -> ()) {
+    func getUserDetails(sessionId: String, completion: @escaping (Result<User, Error>) -> ()) {
         let url = service.endpoint(forPath: "/account/id")
         var params = service.defaultParameters(withSessionId: sessionId)
         params["append_to_response"] = "favorite/movies,rated/movies,watchlist/movies"
         
-        service.fetchModel(url: url, params: params, completion: completion)
+        service.getModel(url: url, params: params, completion: completion)
     }
     
-    func fetchUserFavorites(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
-        service.fetchModels(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
+    func getUserFavorites(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
+        service.getModels(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func fetchUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
-        service.fetchModels(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
+    func getUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
+        service.getModels(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
-    func fetchUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
-        service.fetchModels(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
+    func getUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
+        service.getModels(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
     }
     
     func markAsFavorite(_ favorite: Bool, movieId: Int, sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {

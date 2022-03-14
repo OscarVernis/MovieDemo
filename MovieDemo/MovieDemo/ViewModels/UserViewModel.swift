@@ -10,8 +10,8 @@ import Foundation
 
 class UserViewModel {
     var user: User?
-    private let service = RemoteUserActionManager()
-    private var isFetching = false
+    private let service = RemoteUserManager()
+    private var isLoading = false
     
     var didUpdate: ((Error?) -> Void)?
     
@@ -41,13 +41,13 @@ class UserViewModel {
     }
     
     func updateUser() {
-        if isFetching { return }
-        isFetching = true
+        if isLoading { return }
+        isLoading = true
         
         guard SessionManager.shared.isLoggedIn, let sessionId = SessionManager.shared.sessionId else { return }
-        isFetching = false
+        isLoading = false
 
-        service.fetchUserDetails(sessionId: sessionId) { [weak self] result in
+        service.getUserDetails(sessionId: sessionId) { [weak self] result in
             switch result {
             case .success(let user):
                 self?.user = user

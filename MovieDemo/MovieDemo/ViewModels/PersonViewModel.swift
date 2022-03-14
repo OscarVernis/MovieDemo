@@ -12,7 +12,7 @@ class PersonViewModel {
     private var person: Person
         
     private let personService = RemotePersonDetailsLoader()
-    private var isFetching = false
+    private var isLoading = false
     var didUpdate: ((Error?) -> Void)?
     
     var castCredits = [PersonCastCreditViewModel]()
@@ -33,14 +33,14 @@ class PersonViewModel {
     
 }
 
-//MARK:- Fetch Person Details
+//MARK:- Load Person Details
 extension PersonViewModel {
     func refresh() {
-        fetchPersonDetails()
+        loadPersonDetails()
     }
     
-    private func fetchPersonDetails() {
-        personService.fetchPersonDetails(personId: person.id) { [weak self] result in
+    private func loadPersonDetails() {
+        personService.getPersonDetails(personId: person.id) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

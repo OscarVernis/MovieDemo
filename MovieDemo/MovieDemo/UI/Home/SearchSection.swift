@@ -27,7 +27,7 @@ class SearchSection: FetchableSection {
         dataProvider.refresh()
     }
     
-    func fetchNextPage() {
+    func loadMore() {
         dataProvider.loadMore()
     }
     

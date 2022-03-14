@@ -87,7 +87,7 @@ public class ListViewController: UIViewController, GenericCollection {
 extension ListViewController:UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.section == 1 { //Loads next page when Loading Cell is showing
-            mainSection.fetchNextPage()
+            mainSection.loadMore()
         }
     }
     

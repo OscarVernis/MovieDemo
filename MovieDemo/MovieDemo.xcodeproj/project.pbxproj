@@ -138,7 +138,7 @@
 		55EA4A7825394A7E00306DA0 /* SearchDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA4A7725394A7E00306DA0 /* SearchDataProvider.swift */; };
 		55EA4A7B25394CD600306DA0 /* SearchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA4A7A25394CD600306DA0 /* SearchSection.swift */; };
 		55EB72A327D19EC800B98342 /* RemoteLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteLoginManager.swift */; };
-		55EB72A627D19FD100B98342 /* RemoteUserActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserActionManager.swift */; };
+		55EB72A627D19FD100B98342 /* RemoteUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserManager.swift */; };
 		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
 		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */; };
 		55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3512513E346004F8117 /* LoadingCell.swift */; };
@@ -295,7 +295,7 @@
 		55EA4A7725394A7E00306DA0 /* SearchDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataProvider.swift; sourceTree = "<group>"; };
 		55EA4A7A25394CD600306DA0 /* SearchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSection.swift; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* RemoteLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoginManager.swift; sourceTree = "<group>"; };
-		55EB72A527D19FD100B98342 /* RemoteUserActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserActionManager.swift; sourceTree = "<group>"; };
+		55EB72A527D19FD100B98342 /* RemoteUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserManager.swift; sourceTree = "<group>"; };
 		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
 		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsLoader.swift; sourceTree = "<group>"; };
 		55EDD3512513E346004F8117 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
@@ -527,7 +527,7 @@
 				55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */,
 				5523970C27D19C2C00E4C18F /* RemoteSearch.swift */,
 				55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */,
-				55EB72A527D19FD100B98342 /* RemoteUserActionManager.swift */,
+				55EB72A527D19FD100B98342 /* RemoteUserManager.swift */,
 				55EB72A227D19EC800B98342 /* RemoteLoginManager.swift */,
 			);
 			path = Remote;
@@ -873,7 +873,7 @@
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
-				55EB72A627D19FD100B98342 /* RemoteUserActionManager.swift in Sources */,
+				55EB72A627D19FD100B98342 /* RemoteUserManager.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
 				55DD1B92251FB59500EC8C55 /* YoutubeVideoCell.swift in Sources */,
 				556807CC2530EB0600F8DF16 /* Person.swift in Sources */,

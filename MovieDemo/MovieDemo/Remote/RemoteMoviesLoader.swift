@@ -18,7 +18,7 @@ struct RemoteMoviesLoader: MovieLoader {
     }
     
     func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
-        service.fetchModels(endpoint: endpoint(movieList: movieList), sessionId: self.sessionId, parameters: parameters(movieList: movieList), page: page, completion: completion)
+        service.getModels(endpoint: endpoint(movieList: movieList), sessionId: self.sessionId, parameters: parameters(movieList: movieList), page: page, completion: completion)
     }
     
     func endpoint(movieList: MovieList) -> String {

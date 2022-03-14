@@ -29,5 +29,5 @@ protocol FetchableSection: ConfigurableSection {
     var didUpdate:((Error?) -> Void)? { get set }
 
     func refresh()
-    func fetchNextPage()
+    func loadMore()
 }

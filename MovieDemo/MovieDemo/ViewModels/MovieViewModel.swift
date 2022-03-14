@@ -12,9 +12,9 @@ class MovieViewModel {
     private var movie: Movie
     
     private let movieService = RemoteMovieDetailsLoader()
-    private let userService = RemoteUserActionManager()
+    private let userService = RemoteUserManager()
 
-    private var isFetching = false
+    private var isLoading = false
     var didUpdate: ((Error?) -> Void)?
     
     //Stores basic info about the movie
@@ -43,19 +43,19 @@ class MovieViewModel {
     
 }
 
-//MARK:- Fetch Movie Details
+//MARK:- Load Movie Details
 extension MovieViewModel {
     func refresh() {
-        fetchMovieDetails()
+        getMovieDetails()
     }
     
-    private func fetchMovieDetails() {
+    private func getMovieDetails() {
         var sessionId: String? = nil
         if SessionManager.shared.isLoggedIn {
             sessionId = SessionManager.shared.sessionId
         }
         
-        movieService.fetchMovieDetails(movieId: movie.id!, sessionId: sessionId) { [weak self] result in
+        movieService.getMovieDetails(movieId: movie.id!, sessionId: sessionId) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

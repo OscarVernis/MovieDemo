@@ -78,7 +78,7 @@ class HomeMovieListSection: FetchableSection {
         return dataProvider.isLastPage
     }
     
-    func fetchNextPage() {
+    func loadMore() {
         dataProvider.loadMore()
     }
     

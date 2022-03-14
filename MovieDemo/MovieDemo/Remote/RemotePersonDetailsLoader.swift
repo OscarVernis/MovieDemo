@@ -11,12 +11,12 @@ import Foundation
 struct RemotePersonDetailsLoader {
     let service = MovieDBService()
     
-    func fetchPersonDetails(personId: Int, completion: @escaping ((Result<Person, Error>)) -> ()) {
+    func getPersonDetails(personId: Int, completion: @escaping ((Result<Person, Error>)) -> ()) {
         let url = service.endpoint(forPath: "/person/\(personId)")
         
         var params = service.defaultParameters()
         params["append_to_response"] = "movie_credits"
         
-        service.fetchModel(url: url, params: params, completion: completion)
+        service.getModel(url: url, params: params, completion: completion)
     }
 }

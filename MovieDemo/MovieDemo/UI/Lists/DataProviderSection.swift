@@ -31,7 +31,7 @@ class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigu
         dataProvider.refresh()
     }
     
-    func fetchNextPage() {
+    func loadMore() {
         dataProvider.loadMore()
     }
     

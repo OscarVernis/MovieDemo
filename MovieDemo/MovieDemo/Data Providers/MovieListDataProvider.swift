@@ -67,7 +67,7 @@ class MovieListDataProvider: ArrayDataProvider {
         
         isLoading = true
         
-        let fetchHandler: MovieLoader.MovieListCompletion = { [weak self] result in
+        let completionHandler: MovieLoader.MovieListCompletion = { [weak self] result in
             guard let self = self else { return }
             
             self.isLoading = false
@@ -93,7 +93,7 @@ class MovieListDataProvider: ArrayDataProvider {
         
         let page = currentPage + 1
         
-        movieLoader.getMovies(movieList: currentService, page: page, completion: fetchHandler)
+        movieLoader.getMovies(movieList: currentService, page: page, completion: completionHandler)
     }
     
 }
