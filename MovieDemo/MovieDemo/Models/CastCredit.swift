@@ -9,38 +9,41 @@
 
 import Foundation
 
-struct CastCredit: Codable {
+struct CastCredit {
     var name: String!
     var castId: Int?
     var character: String?
-    var creditId: Int?
     var gender: Int?
     var id: Int!
     var order: Int?
     var profilePath: String?
     
-//    enum CodingKeys: String, CodingKey {
-//        case name
-//        case castId = "cast_id"
-//        case character
-//        case creditId = "credit_id"
-//        case gender
-//        case id
-//        case order
-//        case profilePath = "profile_path"
-//    }
 }
 
+//MARK: - Codable
+extension CastCredit: Codable {
+    enum CodingKeys: String, CodingKey {
+        case name
+        case castId = "cast_id"
+        case character
+        case gender
+        case id
+        case order
+        case profilePath = "profile_path"
+    }
+}
+
+//MARK: - Utils
 extension CastCredit: Hashable {
    func hash(into hasher: inout Hasher) {
-        hasher.combine(creditId)
+        hasher.combine(id)
         hasher.combine(order)
     }
 }
 
 extension CastCredit: Equatable {
     static func == (lhs: CastCredit, rhs: CastCredit) -> Bool {
-        return lhs.creditId == lhs.creditId
+        return lhs.id == lhs.id
     }
     
 }

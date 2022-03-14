@@ -8,10 +8,13 @@
 
 import Foundation
 
-struct PersonCrewCredit: Codable {
+struct PersonCrewCredit {
     var job: String?
     var movie: Movie?
-
+}
+    
+//MARK: - Codable
+extension PersonCrewCredit: Codable {
     enum CodingKeys: String, CodingKey {
         case job
     }
@@ -25,6 +28,7 @@ struct PersonCrewCredit: Codable {
     
 }
 
+//MARK: - Utils
 extension PersonCrewCredit {
     static func sortByRelease(lhs: PersonCrewCredit, rhs: PersonCrewCredit) -> Bool {
         let currentDate = Date()

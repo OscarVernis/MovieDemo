@@ -9,48 +9,39 @@
 
 import Foundation
 
-struct CrewCredit: Codable {
+struct CrewCredit {
     var id: Int!
     var name: String!
-    var creditId: Int?
     var department: String?
     var gender: Int?
     var job: String?
     var profilePath: String?
-    
+}
+
+//MARK: - Codable
+extension CrewCredit: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case creditId = "credit_id"
         case department
         case gender
         case job
         case profilePath = "profile_path"
     }
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        id = try container.decode(Int.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
-        creditId = try container.decodeIfPresent(Int.self, forKey: .creditId)
-        department = try container.decodeIfPresent(String.self, forKey: .department)
-        gender = try container.decodeIfPresent(Int.self, forKey: .gender)
-        job = try container.decodeIfPresent(String.self, forKey: .job)
-        profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
-    }
 }
 
+//MARK: - Utils
 extension CrewCredit: Hashable {
    func hash(into hasher: inout Hasher) {
         hasher.combine(job)
-        hasher.combine(creditId)
+        hasher.combine(id)
     }
 }
 
 extension CrewCredit: Equatable {
     static func == (lhs: CrewCredit, rhs: CrewCredit) -> Bool {
-        return lhs.creditId == lhs.creditId
+        return lhs.id == lhs.id
     }
     
 }

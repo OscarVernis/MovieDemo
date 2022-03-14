@@ -24,6 +24,7 @@ struct Person {
     var crewCredits: [PersonCrewCredit]?
 }
 
+//MARK: - Codable
 extension Person: Codable {
     enum CodingKeys: String, CodingKey {
         case id
@@ -43,7 +44,6 @@ extension Person: Codable {
     enum NestedKeys: String, CodingKey {
         case movieCredits = "movie_credits"
     }
-
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -66,6 +66,7 @@ extension Person: Codable {
     }
 }
 
+//MARK: - Utils
 extension Person: Equatable {
     static func == (lhs: Person, rhs: Person) -> Bool {
         return

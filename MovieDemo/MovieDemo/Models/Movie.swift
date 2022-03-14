@@ -38,6 +38,7 @@ struct Movie {
     var watchlist: Bool? = false
 }
 
+//MARK: - Codable
 extension Movie: Codable {
     enum CodingKeys: String, CodingKey {
         case id
