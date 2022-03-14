@@ -56,8 +56,10 @@ extension MovieDBService {
         params["region"] = "US"
         
         let decoder = JSONDecoder()
-        let locale = NSLocalizedString("service-locale", comment: "")
-        decoder.dateDecodingStrategy = .formatted(DateFormatter(withFormat: "yyyy-MM-dd", locale: locale))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale.current
+        decoder.dateDecodingStrategy = .formatted(DateFormatter())
 
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
             switch response.result {
@@ -79,8 +81,10 @@ extension MovieDBService {
     
     func fetchModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
         let decoder = JSONDecoder()
-        let locale = NSLocalizedString("service-locale", comment: "")
-        decoder.dateDecodingStrategy = .formatted(DateFormatter(withFormat: "yyyy-MM-dd", locale: locale))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale.current
+        decoder.dateDecodingStrategy = .formatted(DateFormatter())
         
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: decoder) { response in
             switch response.result {

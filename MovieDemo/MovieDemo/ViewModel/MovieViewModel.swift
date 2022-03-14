@@ -125,13 +125,17 @@ extension MovieViewModel {
     }
     
     var releaseYear: String {
-        let dateFormatter = DateFormatter(withFormat: "yyyy", locale: Locale.current.identifier)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy"
+        dateFormatter.locale = Locale.current
         
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!) : ""
     }
     
     var releaseDateWithoutYear: String {
-        let dateFormatter = DateFormatter(withFormat: "MMM dd", locale: Locale.current.identifier)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.locale = Locale.current
         
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!).capitalized : ""
     }
