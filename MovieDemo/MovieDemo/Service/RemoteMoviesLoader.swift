@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RemoteMovieLoader: MovieLoader {
+struct RemoteMoviesLoader: MovieLoader {
     let sessionId: String?
     let service: MovieDBService
     

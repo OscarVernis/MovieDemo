@@ -11,7 +11,7 @@ import Foundation
 class MovieViewModel {
     private var movie: Movie
     
-    private let movieService = RemoteMovieInfoLoader()
+    private let movieService = RemoteMovieDetailsLoader()
     private let userService = RemoteUserActionManager()
 
     private var isFetching = false

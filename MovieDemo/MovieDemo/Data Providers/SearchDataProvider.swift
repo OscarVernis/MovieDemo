@@ -9,7 +9,7 @@
 import Foundation
 
 class SearchDataProvider: ArrayDataProvider {
-    typealias Model = MediaItem
+    typealias Model = Any
 
     var query: String = "" {
         didSet {
@@ -17,13 +17,13 @@ class SearchDataProvider: ArrayDataProvider {
         }
     }
     
-    private var items =  [MediaItem]()
+    private var items =  [Any]()
     
     var itemCount: Int {
         return items.count
     }
     
-    func item(atIndex index: Int) -> MediaItem {
+    func item(atIndex index: Int) -> Any {
         let item = items[index]
         
         return item
@@ -79,8 +79,7 @@ class SearchDataProvider: ArrayDataProvider {
                 
                 self.totalPages = totalPages
                 
-                let filteredItems = items.filter { $0 != .unknown }
-                self.items.append(contentsOf: filteredItems)
+                self.items.append(contentsOf: items)
                 
                 self.didUpdate?(nil)
                 

@@ -11,7 +11,7 @@ import Foundation
 class PersonViewModel {
     private var person: Person
         
-    private let personService = RemotePersonInfoLoader()
+    private let personService = RemotePersonDetailsLoader()
     private var isFetching = false
     var didUpdate: ((Error?) -> Void)?
     

@@ -11,7 +11,26 @@ import Foundation
 struct RemoteSearch {
     let service = MovieDBService()
     
-    func search(query: String, page: Int = 1, completion: @escaping (Result<([MediaItem], Int), Error>) -> Void) {
-        service.fetchModels(endpoint: "/search/multi", parameters: ["query" : query], page: page, completion: completion)
+    func search(query: String, page: Int = 1, completion: @escaping (Result<([Any], Int), Error>) -> Void) {
+        service.fetchModels(endpoint: "/search/multi", parameters: ["query" : query], page: page) { (result: Result<([MediaItem], Int), Error>) in
+            switch result {
+            case .success((let serviceResults, let totalPages)):
+                let results: [Any] = serviceResults.compactMap { Item in
+                    switch Item {
+                    case .person(let person):
+                        return person
+                    case .movie(let movie):
+                        return movie
+                    case .unknown:
+                        return nil
+                    }
+                }
+                
+                completion(.success((results, totalPages)))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
+    
 }

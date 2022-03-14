@@ -11,7 +11,7 @@ import Foundation
 class MovieListDataProvider: ArrayDataProvider {
     typealias Model = MovieViewModel
     
-    init(_ service: MovieList = .NowPlaying, movieLoader: MovieLoader = RemoteMovieLoader(sessionId: SessionManager.shared.sessionId)) {
+    init(_ service: MovieList = .NowPlaying, movieLoader: MovieLoader = RemoteMoviesLoader(sessionId: SessionManager.shared.sessionId)) {
         self.currentService = service
         self.movieLoader = movieLoader
     }

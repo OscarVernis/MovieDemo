@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RemotePersonInfoLoader {
+struct RemotePersonDetailsLoader {
     let service = MovieDBService()
     
     func fetchPersonDetails(personId: Int, completion: @escaping ((Result<Person, Error>)) -> ()) {
