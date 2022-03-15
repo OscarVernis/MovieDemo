@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreStore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appCoordinator = MainCoordinator(window: window)
         appCoordinator?.start()
         
+        try? CoreStoreDefaults.dataStack.addStorageAndWait()
+
         return true
     }
 
