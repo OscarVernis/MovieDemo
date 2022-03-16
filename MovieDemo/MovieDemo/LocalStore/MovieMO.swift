@@ -29,6 +29,7 @@ public class MovieMO: NSManagedObject {
         self.posterPath = movie.posterPath
         self.releaseDate = movie.releaseDate
         self.voteAverage = movie.voteAverage ?? 0
+        self.voteCount = Int64(movie.voteCount ?? 0)
         
         if let genres = movie.genres?.compactMap({ MovieGenreMO(withMovieGenre: $0, context: context) }) {
             self.addToGenres(NSOrderedSet(array: genres))
@@ -47,6 +48,7 @@ public class MovieMO: NSManagedObject {
         movie.posterPath = posterPath
         movie.releaseDate = releaseDate
         movie.voteAverage = voteAverage
+        movie.voteCount = Int(voteCount)
 
         if let movieGenres = genres?.array as? [MovieGenreMO] {
             movie.genres = movieGenres.compactMap { $0.toMovieGenre() }
