@@ -12,11 +12,16 @@ import CoreData
 
 @objc(MovieMO)
 public class MovieMO: NSManagedObject {
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     init(withMovie movie: Movie, context: NSManagedObjectContext) {
         super.init(entity: Self.entity(), insertInto: context)
         
         self.id = Int64(movie.id)
-        self.title = movie.title
+        self.title = "CD_" + movie.title
         self.backdropPath = movie.backdropPath
         self.originalTitle = movie.originalTitle
         self.overview = movie.overview

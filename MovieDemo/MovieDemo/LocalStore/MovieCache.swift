@@ -57,13 +57,13 @@ extension MovieCache: MovieLoader {
         
         switch movieList {
         case .NowPlaying:
-            let managedMovies = store.fetchAll(entity: Movie_NowPlayingMO.self)
+            let managedMovies = store.fetchAll(entity: Movie_UpcomingMO.self)
             movies = managedMovies.compactMap { $0.toMovie() }
         case .Popular:
             let managedMovies = store.fetchAll(entity: Movie_PopularMO.self)
             movies = managedMovies.compactMap { $0.toMovie() }
         case .TopRated:
-            let managedMovies = store.fetchAll(entity: Movie_TopRatedMO.self)
+            let managedMovies = store.fetchAll(entity: Movie_UpcomingMO.self)
             movies = managedMovies.compactMap { $0.toMovie() }
         case .Upcoming:
             let managedMovies = store.fetchAll(entity: Movie_UpcomingMO.self)

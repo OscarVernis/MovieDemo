@@ -20,8 +20,8 @@ struct RemoteMoviesLoaderWithCache: MovieLoader {
         
         //Load movies from service
         remoteMoviesLoader.getMovies(movieList: movieList, page: page) { result in
+            //delete cache if loading the first page
             if page == 0 {
-                //delete cache if loading the first page
                 movieCache.delete(movieList: movieList)
             }
             

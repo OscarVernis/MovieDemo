@@ -12,6 +12,11 @@ import CoreData
 
 @objc(MovieGenreMO)
 public class MovieGenreMO: NSManagedObject {
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     init(withMovieGenre movieGenre: MovieGenre, context: NSManagedObjectContext) {
         super.init(entity: Self.entity(), insertInto: context)
         

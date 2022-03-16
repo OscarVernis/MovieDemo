@@ -30,7 +30,7 @@ struct CoreDataStore {
     
     
     func fetchAll<T: NSManagedObject>(entity: T.Type) -> [T] {
-        let fetchRequest = NSFetchRequest<T>()
+        let fetchRequest = NSFetchRequest<T>(entityName: NSStringFromClass(entity))
         
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)
