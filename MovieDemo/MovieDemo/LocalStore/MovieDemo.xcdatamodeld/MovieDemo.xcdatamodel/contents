@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Movie_NowPlayingMO" representedClassName="Movie_NowPlayingMO" parentEntity="MovieMO" syncable="YES" codeGenerationType="class"/>
-    <entity name="Movie_PopularMO" representedClassName="Movie_PopularMO" parentEntity="MovieMO" syncable="YES" codeGenerationType="class"/>
-    <entity name="Movie_TopRatedMO" representedClassName="Movie_TopRatedMO" parentEntity="MovieMO" syncable="YES" codeGenerationType="class"/>
-    <entity name="Movie_UpcomingMO" representedClassName="Movie_UpcomingMO" parentEntity="MovieMO" syncable="YES" codeGenerationType="class"/>
+    <entity name="ManagedCache" representedClassName="ManagedCache" syncable="YES" codeGenerationType="category">
+        <relationship name="nowPlaying" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieMO" inverseName="nowPlayingCache" inverseEntity="MovieMO"/>
+        <relationship name="popular" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieMO" inverseName="popularCache" inverseEntity="MovieMO"/>
+        <relationship name="topRated" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieMO" inverseName="topRatedCache" inverseEntity="MovieMO"/>
+        <relationship name="upcoming" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieMO" inverseName="upcomingCache" inverseEntity="MovieMO"/>
+    </entity>
     <entity name="MovieGenreMO" representedClassName="MovieGenreMO" syncable="YES" codeGenerationType="category">
         <attribute name="id" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="movie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MovieMO" inverseName="genres" inverseEntity="MovieMO"/>
     </entity>
-    <entity name="MovieMO" representedClassName="MovieMO" isAbstract="YES" syncable="YES" codeGenerationType="category">
+    <entity name="MovieMO" representedClassName="MovieMO" syncable="YES" codeGenerationType="category">
         <attribute name="backdropPath" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="originalTitle" optional="YES" attributeType="String"/>
@@ -20,13 +22,14 @@
         <attribute name="voteAverage" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="voteCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieGenreMO" inverseName="movie" inverseEntity="MovieGenreMO"/>
+        <relationship name="nowPlayingCache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="nowPlaying" inverseEntity="ManagedCache"/>
+        <relationship name="popularCache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="popular" inverseEntity="ManagedCache"/>
+        <relationship name="topRatedCache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="topRated" inverseEntity="ManagedCache"/>
+        <relationship name="upcomingCache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="upcoming" inverseEntity="ManagedCache"/>
     </entity>
     <elements>
-        <element name="Movie_NowPlayingMO" positionX="-36" positionY="81" width="128" height="43"/>
-        <element name="Movie_PopularMO" positionX="-18" positionY="99" width="128" height="43"/>
-        <element name="Movie_TopRatedMO" positionX="0" positionY="108" width="128" height="43"/>
-        <element name="Movie_UpcomingMO" positionX="-27" positionY="90" width="128" height="43"/>
         <element name="MovieGenreMO" positionX="-54" positionY="9" width="128" height="73"/>
-        <element name="MovieMO" positionX="-63" positionY="-18" width="128" height="208"/>
+        <element name="MovieMO" positionX="-63" positionY="-18" width="128" height="268"/>
+        <element name="ManagedCache" positionX="-36" positionY="72" width="128" height="103"/>
     </elements>
 </model>
