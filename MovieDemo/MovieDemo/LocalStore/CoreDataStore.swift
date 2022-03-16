@@ -13,6 +13,12 @@ struct CoreDataStore {
     static let shared = CoreDataStore()
     let persistentContainer: NSPersistentContainer
     
+    var context: NSManagedObjectContext {
+        get {
+            return persistentContainer.viewContext
+        }
+    }
+    
     private init() {
         persistentContainer = NSPersistentContainer(name: "MovieDemo")
         persistentContainer.loadPersistentStores { description, error in
@@ -21,6 +27,7 @@ struct CoreDataStore {
             }
         }
     }
+    
     
     func fetchAll<T: NSManagedObject>(entity: T.Type) -> [T] {
         let fetchRequest = NSFetchRequest<T>()
@@ -32,9 +39,15 @@ struct CoreDataStore {
         }
     }
     
-//    func deleteAll<T: NSManagedObject>(entity: T.type) -> [T] {
-//
-//    }
+    func deleteAll<T: NSManagedObject>(entity: T.Type) {
+        let entities = fetchAll(entity: entity)
+        
+        for entity in entities {
+            context.delete(entity)
+        }
+        
+        save()
+    }
     
     func save() {
         do {

@@ -10,21 +10,24 @@ import Foundation
 
 struct RemoteMoviesLoaderWithCache: MovieLoader {
     let remoteMoviesLoader = RemoteMoviesLoader(sessionId: SessionManager.shared.sessionId)
-    let localMoviesLoader = LocalMovieLoader()
+    let movieCache = MovieCache()
     
     func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
         //Only load from cache if loading the first page
         if page == 0 {
-            localMoviesLoader.getMovies(movieList: movieList, page: page, completion: completion)
+            movieCache.getMovies(movieList: movieList, page: page, completion: completion)
         }
         
+        //Load movies from service
         remoteMoviesLoader.getMovies(movieList: movieList, page: page) { result in
             if page == 0 {
                 //delete cache if loading the first page
+                movieCache.delete(movieList: movieList)
             }
             
             //Save movies to cache
-            if case .success((_, _)) = result {
+            if case .success((let movies, _)) = result {
+                movieCache.save(movies: movies, movieList: movieList)
             }
             
             completion(result)

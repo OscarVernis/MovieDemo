@@ -120,7 +120,7 @@
 		55B6CBB427E02248007DB4C2 /* MovieDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */; };
 		55B6CBBA27E024A6007DB4C2 /* MovieMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB827E024A6007DB4C2 /* MovieMO.swift */; };
 		55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */; };
-		55B6CBC827E02E49007DB4C2 /* LocalMovieLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBC727E02E49007DB4C2 /* LocalMovieLoader.swift */; };
+		55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBC727E02E49007DB4C2 /* MovieCache.swift */; };
 		55B6CBCD27E0315B007DB4C2 /* RemoteMoviesLoaderWithCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBCC27E0315B007DB4C2 /* RemoteMoviesLoaderWithCache.swift */; };
 		55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */; };
 		55BB863E251FA1CB00F17D7F /* MovieRatingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */; };
@@ -283,7 +283,7 @@
 		55B6CBB327E02248007DB4C2 /* MovieDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieDemo.xcdatamodel; sourceTree = "<group>"; };
 		55B6CBB827E024A6007DB4C2 /* MovieMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieMO.swift; sourceTree = "<group>"; };
 		55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreMO.swift; sourceTree = "<group>"; };
-		55B6CBC727E02E49007DB4C2 /* LocalMovieLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMovieLoader.swift; sourceTree = "<group>"; };
+		55B6CBC727E02E49007DB4C2 /* MovieCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCache.swift; sourceTree = "<group>"; };
 		55B6CBCC27E0315B007DB4C2 /* RemoteMoviesLoaderWithCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMoviesLoaderWithCache.swift; sourceTree = "<group>"; };
 		55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		55BB863F251FA1CB00F17D7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieRatingViewController.storyboard; sourceTree = "<group>"; };
@@ -706,9 +706,9 @@
 			isa = PBXGroup;
 			children = (
 				55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */,
-				55B6CBC727E02E49007DB4C2 /* LocalMovieLoader.swift */,
 				55B6CBB827E024A6007DB4C2 /* MovieMO.swift */,
 				55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */,
+				55B6CBC727E02E49007DB4C2 /* MovieCache.swift */,
 				55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */,
 			);
 			path = LocalStore;
@@ -983,7 +983,7 @@
 				558A63AF2512AD5E0064438D /* MovieViewModel.swift in Sources */,
 				55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */,
 				55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */,
-				55B6CBC827E02E49007DB4C2 /* LocalMovieLoader.swift in Sources */,
+				55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */,
 				55E3E5082516EA6300D6FAA9 /* CrewCreditInfoListCellConfigurator.swift in Sources */,
 				555725AB2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift in Sources */,
 				5545203B22D99D8F004B7924 /* MovieDBService.swift in Sources */,
