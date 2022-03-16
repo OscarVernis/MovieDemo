@@ -24,7 +24,7 @@ class SessionManager {
     
     private var loginCompletionHandler: ((Error?) -> Void)? = nil
     
-    init() {
+    private init() {
         load()
     }
 }

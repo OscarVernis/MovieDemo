@@ -7,25 +7,24 @@
 //
 
 import Foundation
-import CoreStore
 
-struct LocalMovieLoader: MovieLoader {
+struct LocalMovieLoader: MovieLoader {    
     func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
         var movies = [Movie]()
         
         switch movieList {
         case .NowPlaying:
-            let managedMovies = try? CoreStoreDefaults.dataStack.fetchAll(From<Movie_NowPlayingMO>())
-            movies = managedMovies?.compactMap { $0.toMovie() } ?? [Movie]()
+            let managedMovies = CoreDataStore.shared.fetchAll(entity: Movie_NowPlayingMO.self)
+            movies = managedMovies.compactMap { $0.toMovie() }
         case .Popular:
-            let managedMovies = try? CoreStoreDefaults.dataStack.fetchAll(From<Movie_PopularMO>())
-            movies = managedMovies?.compactMap { $0.toMovie() } ?? [Movie]()
+            let managedMovies = CoreDataStore.shared.fetchAll(entity: Movie_PopularMO.self)
+            movies = managedMovies.compactMap { $0.toMovie() }
         case .TopRated:
-            let managedMovies = try? CoreStoreDefaults.dataStack.fetchAll(From<Movie_TopRatedMO>())
-            movies = managedMovies?.compactMap { $0.toMovie() } ?? [Movie]()
+            let managedMovies = CoreDataStore.shared.fetchAll(entity: Movie_TopRatedMO.self)
+            movies = managedMovies.compactMap { $0.toMovie() }
         case .Upcoming:
-            let managedMovies = try? CoreStoreDefaults.dataStack.fetchAll(From<Movie_UpcomingMO>())
-            movies = managedMovies?.compactMap { $0.toMovie() } ?? [Movie]()
+            let managedMovies = CoreDataStore.shared.fetchAll(entity: Movie_UpcomingMO.self)
+            movies = managedMovies.compactMap { $0.toMovie() }
         default:
             break
         }

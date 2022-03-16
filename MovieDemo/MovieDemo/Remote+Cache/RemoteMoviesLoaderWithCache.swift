@@ -23,8 +23,8 @@ struct RemoteMoviesLoaderWithCache: MovieLoader {
                 //delete cache if loading the first page
             }
             
+            //Save movies to cache
             if case .success((_, _)) = result {
-            //add movies to cache
             }
             
             completion(result)

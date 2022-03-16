@@ -12,7 +12,9 @@ import CoreData
 
 @objc(MovieMO)
 public class MovieMO: NSManagedObject {
-    func from(movie: Movie) {
+    init(withMovie movie: Movie, context: NSManagedObjectContext) {
+        super.init(entity: Self.entity(), insertInto: context)
+        
         self.id = Int64(movie.id)
         self.title = movie.title
         self.backdropPath = movie.backdropPath
@@ -23,7 +25,7 @@ public class MovieMO: NSManagedObject {
         self.releaseDate = movie.releaseDate
         self.voteAverage = movie.voteAverage ?? 0
         
-        if let genres = movie.genres?.compactMap({ MovieGenreMO.from(movieGenre: $0) }) {
+        if let genres = movie.genres?.compactMap({ MovieGenreMO(withMovieGenre: $0, context: context) }) {
             self.addToGenres(NSSet(array: genres))
         }
     }

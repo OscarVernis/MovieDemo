@@ -12,11 +12,10 @@ import CoreData
 
 @objc(MovieGenreMO)
 public class MovieGenreMO: NSManagedObject {
-    class func from(movieGenre: MovieGenre) -> MovieGenreMO {
-        let movieGenreMO = MovieGenreMO()
-        movieGenreMO.id = Int16(movieGenre.rawValue)
+    init(withMovieGenre movieGenre: MovieGenre, context: NSManagedObjectContext) {
+        super.init(entity: Self.entity(), insertInto: context)
         
-        return movieGenreMO
+        self.id = Int16(movieGenre.rawValue)
     }
     
     func toMovieGenre() -> MovieGenre? {
