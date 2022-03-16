@@ -21,11 +21,11 @@
         <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MovieGenreMO" inverseName="movie" inverseEntity="MovieGenreMO"/>
     </entity>
     <elements>
-        <element name="MovieMO" positionX="-63" positionY="-18" width="128" height="193"/>
-        <element name="MovieGenreMO" positionX="-54" positionY="9" width="128" height="28"/>
         <element name="Movie_NowPlayingMO" positionX="-36" positionY="81" width="128" height="43"/>
-        <element name="Movie_UpcomingMO" positionX="-27" positionY="90" width="128" height="43"/>
         <element name="Movie_PopularMO" positionX="-18" positionY="99" width="128" height="43"/>
         <element name="Movie_TopRatedMO" positionX="0" positionY="108" width="128" height="43"/>
+        <element name="Movie_UpcomingMO" positionX="-27" positionY="90" width="128" height="43"/>
+        <element name="MovieGenreMO" positionX="-54" positionY="9" width="128" height="28"/>
+        <element name="MovieMO" positionX="-63" positionY="-18" width="128" height="193"/>
     </elements>
 </model>

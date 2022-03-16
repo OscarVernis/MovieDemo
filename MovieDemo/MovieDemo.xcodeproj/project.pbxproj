@@ -706,9 +706,9 @@
 			isa = PBXGroup;
 			children = (
 				55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */,
+				55B6CBC727E02E49007DB4C2 /* MovieCache.swift */,
 				55B6CBB827E024A6007DB4C2 /* MovieMO.swift */,
 				55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */,
-				55B6CBC727E02E49007DB4C2 /* MovieCache.swift */,
 				55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */,
 			);
 			path = LocalStore;

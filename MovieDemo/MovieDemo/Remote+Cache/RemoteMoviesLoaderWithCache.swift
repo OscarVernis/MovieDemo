@@ -14,19 +14,19 @@ struct RemoteMoviesLoaderWithCache: MovieLoader {
     
     func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
         //Only load from cache if loading the first page
-        if page == 0 {
-            movieCache.getMovies(movieList: movieList, page: page, completion: completion)
+        if page == 1 {
+            movieCache.getMovies(movieList: movieList, page: page, completion: { result in })
         }
         
         //Load movies from service
         remoteMoviesLoader.getMovies(movieList: movieList, page: page) { result in
-            //delete cache if loading the first page
-            if page == 0 {
-                movieCache.delete(movieList: movieList)
-            }
-            
-            //Save movies to cache
             if case .success((let movies, _)) = result {
+                //delete cache if loading the first page
+                if page == 1 {
+                    movieCache.delete(movieList: movieList)
+                }
+                
+                //Save movies to cache
                 movieCache.save(movies: movies, movieList: movieList)
             }
             
