@@ -31,7 +31,7 @@ public class MovieMO: NSManagedObject {
         self.voteAverage = movie.voteAverage ?? 0
         
         if let genres = movie.genres?.compactMap({ MovieGenreMO(withMovieGenre: $0, context: context) }) {
-            self.addToGenres(NSSet(array: genres))
+            self.addToGenres(NSOrderedSet(array: genres))
         }
     }
     
@@ -48,7 +48,7 @@ public class MovieMO: NSManagedObject {
         movie.releaseDate = releaseDate
         movie.voteAverage = voteAverage
 
-        if let movieGenres = genres?.allObjects as? [MovieGenreMO] {
+        if let movieGenres = genres?.array as? [MovieGenreMO] {
             movie.genres = movieGenres.compactMap { $0.toMovieGenre() }
         }
         

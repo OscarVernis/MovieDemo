@@ -20,8 +20,8 @@ struct MovieDBService {
         self.sessionId = sessionId
     }
     
-    let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
-    let baseURL = "https://api.themoviedb.org/3"
+    private let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
+    private let baseURL = "https://api.themoviedb.org/3"
     let sessionId: String?
         
     func defaultParameters(withSessionId sessionId: String? = nil) -> [String: Any] {
@@ -40,6 +40,12 @@ struct MovieDBService {
         
         return url.appendingPathComponent(path)
     }
+    
+    private let sessionManager: Session = {
+        let configuration = URLSessionConfiguration.af.default
+        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+        return Session(configuration: configuration)
+    }()
 }
 
 //MARK: - Generic Functions
@@ -60,7 +66,7 @@ extension MovieDBService {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
+        sessionManager.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
             switch response.result {
             case .success(let jsonData):
                 do {

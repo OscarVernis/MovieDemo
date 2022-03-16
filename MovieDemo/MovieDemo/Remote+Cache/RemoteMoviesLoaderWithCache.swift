@@ -13,11 +13,6 @@ struct RemoteMoviesLoaderWithCache: MovieLoader {
     let movieCache = MovieCache()
     
     func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
-        //Only load from cache if loading the first page
-        if page == 1 {
-            movieCache.getMovies(movieList: movieList, page: page, completion: { result in })
-        }
-        
         //Load movies from service
         remoteMoviesLoader.getMovies(movieList: movieList, page: page) { result in
             if case .success((let movies, _)) = result {
@@ -28,9 +23,15 @@ struct RemoteMoviesLoaderWithCache: MovieLoader {
                 
                 //Save movies to cache
                 movieCache.save(movies: movies, movieList: movieList)
+                completion(result)
+            } else {
+                //Only load from cache if loading the first page
+                if page == 1 {
+                    movieCache.getMovies(movieList: movieList, page: page, completion: completion)
+                } else {
+                    completion(result)
+                }
             }
-            
-            completion(result)
         }
         
     }
