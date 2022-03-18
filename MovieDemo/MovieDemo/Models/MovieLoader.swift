@@ -13,11 +13,8 @@ enum MovieList: Equatable {
     case Popular
     case TopRated
     case Upcoming
-    case Search(query: String)
     case Trending
     case Recommended(movieId: Int)
-    case DiscoverWithCast(castId: Int)
-    case DiscoverWithCrew(crewId: Int)
     case UserFavorites
     case UserWatchList
     case UserRated
