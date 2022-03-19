@@ -16,10 +16,12 @@ struct RemoteLoginManager {
         let url = service.endpoint(forPath: "/authentication/token/new")
         let params = service.defaultParameters()
         
-        return service.getString(path: "request_token", url: url, params: params, method: .get)
+        return service.successAction(url: url, params: params)
+            .compactMap { $0.requestToken }
+            .eraseToAnyPublisher()
     }
     
-    func validateToken(username: String, password: String, requestToken: String) -> AnyPublisher<Void, Error> {
+    func validateToken(username: String, password: String, requestToken: String) -> AnyPublisher<Bool, Error> {
         let url = service.endpoint(forPath: "/authentication/token/validate_with_login")
         let params = service.defaultParameters()
         
@@ -30,6 +32,8 @@ struct RemoteLoginManager {
         ]
         
         return service.successAction(url: url, params: params, body: body, method: .post)
+            .compactMap { $0.success }
+            .eraseToAnyPublisher()
     }
     
     func createSession(requestToken: String) -> AnyPublisher<String, Error>  {
@@ -38,15 +42,19 @@ struct RemoteLoginManager {
         
         let body = ["request_token": requestToken]
         
-        return service.getString(path: "session_id", url: url, params: params, body: body)
+        return service.successAction(url: url, params: params, body: body, method: .post)
+            .compactMap { $0.sessionId }
+            .eraseToAnyPublisher()
     }
     
-    func deleteSession(sessionId: String) -> AnyPublisher<Void, Error> {
+    func deleteSession(sessionId: String) -> AnyPublisher<Bool, Error> {
         let url = service.endpoint(forPath: "/authentication/session")
         let params = service.defaultParameters()
 
         let body = ["session_id": sessionId]
         
         return service.successAction(url: url, params: params, body: body, method: .delete)
+            .compactMap { $0.success }
+            .eraseToAnyPublisher()
     }
 }

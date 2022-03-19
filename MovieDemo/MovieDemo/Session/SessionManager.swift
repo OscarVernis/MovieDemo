@@ -37,13 +37,13 @@ extension SessionManager {
         var token = ""
         
         let validatePubliser = tokenPublisher
-            .flatMap { resultToken -> AnyPublisher<Void, Error> in
+            .flatMap { resultToken -> AnyPublisher<Bool, Error> in
                 token = resultToken
                 return self.service.validateToken(username: username, password: password, requestToken: token)
             }
                 
         let sessionPubliser = validatePubliser
-            .flatMap {
+            .flatMap { _ in
                 self.service.createSession(requestToken: token)
             }
         
@@ -52,6 +52,7 @@ extension SessionManager {
             case .finished:
                 completionHandler(nil)
             case .failure(let error):
+                print(error)
                 completionHandler(error)
             }
         } receiveValue: { sessionId in
@@ -105,9 +106,8 @@ extension SessionManager {
                 case .failure(_):
                     break
                 }
-            } receiveValue: {}
+            } receiveValue: { _ in }
             .store(in: &cancellables)
-        
     }
     
     func deleteUserInfo() {
