@@ -7,37 +7,53 @@
 //
 
 import Foundation
+import Combine
 
 struct RemoteLoginManager {
     let service = MovieDBService()
     
-    func requestToken(completion: @escaping MovieDBService.StringCompletion) {
+    func requestToken() -> AnyPublisher<String, Error> {
         let url = service.endpoint(forPath: "/authentication/token/new")
         let params = service.defaultParameters()
         
-        service.getString(path: "request_token", url: url, params: params, method: .get, completion: completion)
+        return Future { promise in
+            service.getString(path: "request_token", url: url, params: params, method: .get, completion: promise)
+        }.eraseToAnyPublisher()
     }
     
-    func validateToken(username: String, password: String, requestToken: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
+    func validateToken(username: String, password: String, requestToken: String) -> AnyPublisher<String, Error> {
         let url = service.endpoint(forPath: "/authentication/token/validate_with_login")
         let params = service.defaultParameters()
-
+        
         let body = [
             "username": username,
             "password": password,
             "request_token": requestToken
         ]
+                
+        return Future { promise in
+            service.successAction(url: url, params: params, body: body, method: .post) { result in
+                switch result {
+                case .success():
+                    promise(.success(requestToken))
+                case .failure(let error):
+                    promise(.failure(error))
+                }
+            }
+        }.eraseToAnyPublisher()
         
-        service.successAction(url: url, params: params, body: body, method: .post, completion: completion)
     }
     
-    func createSession(requestToken: String, completion: @escaping MovieDBService.StringCompletion) {
+    func createSession(requestToken: String) -> AnyPublisher<String, Error>  {
         let url = service.endpoint(forPath: "/authentication/session/new")
         let params = service.defaultParameters()
-
+        
         let body = ["request_token": requestToken]
         
-        service.getString(path: "session_id", url: url, params: params, body: body, completion: completion)
+        return Future { promise in
+            service.getString(path: "session_id", url: url, params: params, body: body, completion: promise)
+        }
+        .eraseToAnyPublisher()
     }
     
     func deleteSession(sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {

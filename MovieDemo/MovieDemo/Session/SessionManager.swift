@@ -8,6 +8,7 @@
 
 import Foundation
 import KeychainAccess
+import Combine
 
 fileprivate enum LocalKeys: String {
     case loggedIn
@@ -22,11 +23,40 @@ class SessionManager {
     var username: String?
     var sessionId: String?
     
-    private var loginCompletionHandler: ((Error?) -> Void)? = nil
+    private var cancellables = Set<AnyCancellable>()
     
     private init() {
         load()
     }
+}
+
+//MARK:- Login
+extension SessionManager {
+    func login(withUsername username: String, password: String, completionHandler: @escaping (Error?) -> Void) {
+        let tokenPublisher = service.requestToken()
+    
+        let validatePubliser = tokenPublisher
+            .flatMap { token in
+                self.service.validateToken(username: username, password: password, requestToken: token)
+            }
+                
+        let sessionPubliser = validatePubliser
+            .flatMap { token in
+                self.service.createSession(requestToken: token)
+            }
+        
+        sessionPubliser.sink { completion in
+            switch completion {
+            case .finished:
+                completionHandler(nil)
+            case .failure(let error):
+                completionHandler(error)
+            }
+        } receiveValue: { sessionId in
+            self.save(username: username, sessionId: sessionId)
+        }.store(in: &cancellables)
+    }
+    
 }
 
 //MARK:- Save and retrieve session
@@ -75,44 +105,4 @@ extension SessionManager {
         self.isLoggedIn = false
         self.username = nil
     }
-}
-
-//MARK:- Session creation
-extension SessionManager {
-    func login(withUsername username: String, password: String, completion: @escaping (Error?) -> Void) {
-        service.requestToken { [weak self] result in
-            switch result {
-            case .success(let requestToken):
-                self?.loginCompletionHandler = completion
-                self?.validateToken(requestToken, username: username, password: password)
-            case .failure(let error):
-                self?.loginCompletionHandler?(error)
-            }
-        }
-        
-    }
-    
-    fileprivate func validateToken(_ token: String, username: String, password: String)  {
-        service.validateToken(username: username, password: password, requestToken: token) { [weak self] result in
-            switch result {
-            case .success:
-                self?.createSession(token: token, username: username)
-            case .failure(let error):
-                self?.loginCompletionHandler?(error)
-            }
-        }
-    }
-    
-    fileprivate func createSession(token: String, username: String) {
-        service.createSession(requestToken: token) { [weak self] result in
-            switch result {
-            case .success(let sessionId):
-                self?.save(username: username, sessionId: sessionId)
-                self?.loginCompletionHandler?(nil)
-            case .failure(let error):
-                self?.loginCompletionHandler?(error)
-            }
-        }
-    }
-    
 }
