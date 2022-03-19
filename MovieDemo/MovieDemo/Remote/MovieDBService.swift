@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Combine
 
 struct MovieDBService {
     enum ServiceError: Error {
@@ -46,6 +47,59 @@ struct MovieDBService {
         configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
         return Session(configuration: configuration)
     }()
+}
+
+//MARK: - Combine
+extension MovieDBService {
+    func getString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post) -> AnyPublisher<String, Error> {
+        var urlRequest = URLRequest(url: url)
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+        let stringPublisher = PassthroughSubject<String, Error>()
+                
+        AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                if let json = jsonData as? [String: Any], let resultString = json[path] as? String {
+                    stringPublisher.send(resultString)
+                    stringPublisher.send(completion: .finished)
+                } else {
+                    stringPublisher.send(completion:.failure(ServiceError.jsonError))
+                }
+            case .failure(let error):
+                stringPublisher.send(completion:.failure(error))
+            }
+        }
+
+        return stringPublisher.eraseToAnyPublisher()
+    }
+    
+    func successAction<T: Encodable>(url: URL, params: [String: Any], body: T? = (Optional<String>.none as! T), method: HTTPMethod = .get) -> AnyPublisher<Void, Error>  {
+        var urlRequest = URLRequest(url: url)
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+        let successPublisher = PassthroughSubject<Void, Error>()
+        
+        AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let jsonData):
+                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
+                    successPublisher.send(completion: .failure(ServiceError.jsonError))
+                    return
+                }
+                
+                if success {
+                    successPublisher.send(completion: .finished)
+                } else {
+                    successPublisher.send(completion: .failure(ServiceError.noSuccess))
+                }
+                
+            case .failure(let error):
+                successPublisher.send(completion: .failure(error))
+            }
+        }
+        
+        return successPublisher.eraseToAnyPublisher()
+    }
+    
 }
 
 //MARK: - Generic Functions

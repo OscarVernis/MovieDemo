@@ -34,14 +34,16 @@ class SessionManager {
 extension SessionManager {
     func login(withUsername username: String, password: String, completionHandler: @escaping (Error?) -> Void) {
         let tokenPublisher = service.requestToken()
-    
+        var token = ""
+        
         let validatePubliser = tokenPublisher
-            .flatMap { token in
-                self.service.validateToken(username: username, password: password, requestToken: token)
+            .flatMap { resultToken -> AnyPublisher<Void, Error> in
+                token = resultToken
+                return self.service.validateToken(username: username, password: password, requestToken: token)
             }
                 
         let sessionPubliser = validatePubliser
-            .flatMap { token in
+            .flatMap {
                 self.service.createSession(requestToken: token)
             }
         
@@ -87,13 +89,28 @@ extension SessionManager {
         let keychain = Keychain(service: "oscarvernis.MovieDemo")
         keychain[username] = sessionId
     }
-    
+}
+
+//MARK:- Logout
+extension SessionManager {
+    //TODO: Handle Logout service error
     func logout() {
-        if let sessionId = sessionId {
-            service.deleteSession(sessionId: sessionId) { result in
-            }
-        }
-                
+        guard let sessionId = sessionId else { return }
+        
+        service.deleteSession(sessionId: sessionId)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.deleteUserInfo()
+                case .failure(_):
+                    break
+                }
+            } receiveValue: {}
+            .store(in: &cancellables)
+        
+    }
+    
+    func deleteUserInfo() {
         //Save state to user defaults
         UserDefaults.standard.setValue(nil, forKey: LocalKeys.username.rawValue)
         UserDefaults.standard.setValue(false, forKey: LocalKeys.loggedIn.rawValue)
@@ -105,4 +122,5 @@ extension SessionManager {
         self.isLoggedIn = false
         self.username = nil
     }
+    
 }

@@ -16,12 +16,10 @@ struct RemoteLoginManager {
         let url = service.endpoint(forPath: "/authentication/token/new")
         let params = service.defaultParameters()
         
-        return Future { promise in
-            service.getString(path: "request_token", url: url, params: params, method: .get, completion: promise)
-        }.eraseToAnyPublisher()
+        return service.getString(path: "request_token", url: url, params: params, method: .get)
     }
     
-    func validateToken(username: String, password: String, requestToken: String) -> AnyPublisher<String, Error> {
+    func validateToken(username: String, password: String, requestToken: String) -> AnyPublisher<Void, Error> {
         let url = service.endpoint(forPath: "/authentication/token/validate_with_login")
         let params = service.defaultParameters()
         
@@ -30,18 +28,8 @@ struct RemoteLoginManager {
             "password": password,
             "request_token": requestToken
         ]
-                
-        return Future { promise in
-            service.successAction(url: url, params: params, body: body, method: .post) { result in
-                switch result {
-                case .success():
-                    promise(.success(requestToken))
-                case .failure(let error):
-                    promise(.failure(error))
-                }
-            }
-        }.eraseToAnyPublisher()
         
+        return service.successAction(url: url, params: params, body: body, method: .post)
     }
     
     func createSession(requestToken: String) -> AnyPublisher<String, Error>  {
@@ -50,18 +38,15 @@ struct RemoteLoginManager {
         
         let body = ["request_token": requestToken]
         
-        return Future { promise in
-            service.getString(path: "session_id", url: url, params: params, body: body, completion: promise)
-        }
-        .eraseToAnyPublisher()
+        return service.getString(path: "session_id", url: url, params: params, body: body)
     }
     
-    func deleteSession(sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
+    func deleteSession(sessionId: String) -> AnyPublisher<Void, Error> {
         let url = service.endpoint(forPath: "/authentication/session")
         let params = service.defaultParameters()
 
         let body = ["session_id": sessionId]
         
-        service.successAction(url: url, params: params, body: body, method: .delete, completion: completion)
+        return service.successAction(url: url, params: params, body: body, method: .delete)
     }
 }
