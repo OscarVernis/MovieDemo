@@ -7,9 +7,16 @@
 //
 
 import Foundation
+import Combine
 
 struct RemotePersonDetailsLoader {
     let service = MovieDBService()
+    
+    func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
+        let params = ["append_to_response": "movie_credits"]
+        
+        return service.getModel(path: "/person/\(personId)", parameters: params)
+    }
     
     func getPersonDetails(personId: Int, completion: @escaping ((Result<Person, Error>)) -> ()) {
         let url = service.endpoint(forPath: "/person/\(personId)")

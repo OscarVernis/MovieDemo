@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class PersonViewModel {
     private var person: Person
@@ -19,6 +20,8 @@ class PersonViewModel {
     var crewCredits = [PersonCrewCreditViewModel]()
 
     var popularMovies = [MovieViewModel]()
+    
+    var cancellables = Set<AnyCancellable>()
     
     init(person: Person) {
         self.person = person
@@ -40,17 +43,18 @@ extension PersonViewModel {
     }
     
     private func loadPersonDetails() {
-        personService.getPersonDetails(personId: person.id) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let person):
+        personService.getPersonDetails(personId: person.id)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.didUpdate?(nil)
+                case .failure(let error):
+                    self.didUpdate?(error)
+                }
+            } receiveValue: { person in
                 self.updatePerson(person)
-                self.didUpdate?(nil)
-            case .failure(let error):
-                self.didUpdate?(error)
             }
-        }
+            .store(in: &cancellables)
     }
     
 }
