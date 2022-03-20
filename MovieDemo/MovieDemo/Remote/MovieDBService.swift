@@ -25,14 +25,18 @@ struct MovieDBService {
     private let baseURL = "https://api.themoviedb.org/3"
     let sessionId: String?
         
-    func defaultParameters(withSessionId sessionId: String? = nil) -> [String: Any] {
+    func defaultParameters(withSessionId sessionId: String? = nil, additionalParameters: [String: Any]? = nil) -> [String: Any] {
         let language = NSLocalizedString("service-locale", comment: "")
-        var params = ["language": language, "api_key": apiKey]
+        var params: [String: Any] = ["language": language, "api_key": apiKey]
         
         if let sessionId = sessionId {
             params["session_id"] = sessionId
         }
         
+        if let additionalParameters = additionalParameters {
+            params.merge(additionalParameters) { _, new in new }
+        }
+            
         return params
     }
     
@@ -63,14 +67,11 @@ struct MovieDBService {
 //MARK: - Combine
 extension MovieDBService {
     func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
-        let url = endpoint(forPath: path)
-        
-        var params = defaultParameters(withSessionId: sessionId)
-        params.merge(parameters) { _, new in new }
+        var params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
         params["page"] = page
         params["region"] = "US"
         
-        return sessionManager.request(url, parameters: params, encoding: URLEncoding.default)
+        return sessionManager.request(endpoint(forPath: path), parameters: params, encoding: URLEncoding.default)
             .validate()
             .publishDecodable(type: ServiceModelsResult<T>.self, decoder: jsonDecoder())
             .value()
@@ -79,8 +80,8 @@ extension MovieDBService {
             .eraseToAnyPublisher()
     }
     
-    func getModel<T: Codable>(url: URL, params: [String: Any]) -> AnyPublisher<T, Error> {
-        return AF.request(url, parameters: params, encoding: URLEncoding.default)
+    func getModel<T: Codable>(path: String, params: [String: Any]?) -> AnyPublisher<T, Error> {        
+        return AF.request(endpoint(forPath: path), parameters: params, encoding: URLEncoding.default)
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder())
             .value()
@@ -88,9 +89,10 @@ extension MovieDBService {
             .eraseToAnyPublisher()
     }
     
-    func successAction(url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
+    func successAction(path: String, body: [String: String]? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
+        
+        var urlRequest = URLRequest(url: endpoint(forPath: path))
+        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: defaultParameters())
         
         return AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default)
             .validate()
@@ -114,8 +116,7 @@ extension MovieDBService {
     func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
         let url = endpoint(forPath: path)
         
-        var params = defaultParameters(withSessionId: sessionId)
-        params.merge(parameters) { _, new in new }
+        var params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
         params["page"] = page
         params["region"] = "US"
 

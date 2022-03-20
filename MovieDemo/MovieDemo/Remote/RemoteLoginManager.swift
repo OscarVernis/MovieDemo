@@ -13,10 +13,7 @@ struct RemoteLoginManager {
     let service = MovieDBService()
     
     func requestToken() -> AnyPublisher<String, Error> {
-        let url = service.endpoint(forPath: "/authentication/token/new")
-        let params = service.defaultParameters()
-        
-        return service.successAction(url: url, params: params)
+        return service.successAction(path: "/authentication/token/new")
             .tryMap { guard let requestToken = $0.requestToken else { throw MovieDBService.ServiceError.jsonError }
                 return requestToken
             }
@@ -24,27 +21,21 @@ struct RemoteLoginManager {
     }
     
     func validateToken(username: String, password: String, requestToken: String) -> AnyPublisher<Bool, Error> {
-        let url = service.endpoint(forPath: "/authentication/token/validate_with_login")
-        let params = service.defaultParameters()
-        
         let body = [
             "username": username,
             "password": password,
             "request_token": requestToken
         ]
         
-        return service.successAction(url: url, params: params, body: body, method: .post)
+        return service.successAction(path: "/authentication/token/validate_with_login", body: body, method: .post)
             .compactMap { $0.success }
             .eraseToAnyPublisher()
     }
     
     func createSession(requestToken: String) -> AnyPublisher<String, Error>  {
-        let url = service.endpoint(forPath: "/authentication/session/new")
-        let params = service.defaultParameters()
-        
         let body = ["request_token": requestToken]
         
-        return service.successAction(url: url, params: params, body: body, method: .post)
+        return service.successAction(path: "/authentication/session/new", body: body, method: .post)
             .tryMap { guard let sessionId =  $0.sessionId else { throw MovieDBService.ServiceError.jsonError }
                 return sessionId
             }
@@ -52,12 +43,9 @@ struct RemoteLoginManager {
     }
     
     func deleteSession(sessionId: String) -> AnyPublisher<Bool, Error> {
-        let url = service.endpoint(forPath: "/authentication/session")
-        let params = service.defaultParameters()
-
         let body = ["session_id": sessionId]
         
-        return service.successAction(url: url, params: params, body: body, method: .delete)
+        return service.successAction(path: "/authentication/session", body: body, method: .delete)
             .compactMap { $0.success }
             .eraseToAnyPublisher()
     }
