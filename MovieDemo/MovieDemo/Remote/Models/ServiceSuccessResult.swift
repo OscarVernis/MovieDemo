@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ServiceSuccess: Codable {
+struct ServiceSuccessResult: Codable {
     var success: Bool?
     var sessionId: String?
     var requestToken: String?

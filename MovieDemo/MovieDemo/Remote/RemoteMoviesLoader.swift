@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 struct RemoteMoviesLoader: MovieLoader {
     let sessionId: String?
@@ -15,6 +16,10 @@ struct RemoteMoviesLoader: MovieLoader {
     init(sessionId: String? = nil) {
         self.sessionId = sessionId
         self.service = MovieDBService(sessionId: sessionId)
+    }
+    
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
+        return service.getModels(endpoint: endpoint(movieList: movieList), sessionId: self.sessionId, page: page)
     }
     
     func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {

@@ -66,9 +66,9 @@ extension MovieDBService {
         
         return sessionManager.request(url, parameters: params, encoding: URLEncoding.default)
             .validate()
-            .publishData()
-            .compactMap { $0.data }
-            .decode(type: ServiceModelsResult<T>.self, decoder: decoder)
+            .publishDecodable(type: ServiceModelsResult<T>.self, decoder: decoder)
+            .value()
+            .mapError { _ in ServiceError.jsonError }
             .map { ($0.results, $0.totalPages) }
             .eraseToAnyPublisher()
     }
@@ -87,13 +87,13 @@ extension MovieDBService {
             .eraseToAnyPublisher()
     }
     
-    func successAction(url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccess, Error>  {
+    func successAction(url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
         var urlRequest = URLRequest(url: url)
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
         
         return AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default)
             .validate()
-            .publishDecodable(type: ServiceSuccess.self)
+            .publishDecodable(type: ServiceSuccessResult.self)
             .value()
             .tryMap { result in
                 if let success = result.success, success == false {
@@ -124,19 +124,14 @@ extension MovieDBService {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
-
-        sessionManager.request(url, parameters: params, encoding: URLEncoding.default).validate().responseData { response in
+        
+        sessionManager.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: ServiceModelsResult<T>.self, decoder: decoder) { response in
             switch response.result {
-            case .success(let jsonData):
-                do {
-                    let results = try decoder.decode(ServiceModelsResult<T>.self, from: jsonData)
-                    let models = results.results
-                    let totalPages = results.totalPages
-                    
-                    completion(.success((models, totalPages)))
-                } catch {
-                    completion(.failure(ServiceError.jsonError))
-                }
+            case .success(let results):
+                let models = results.results
+                let totalPages = results.totalPages
+                
+                completion(.success((models, totalPages)))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -151,12 +146,8 @@ extension MovieDBService {
         
         AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: decoder) { response in
             switch response.result {
-            case .success(_):
-                if let model = response.value {
-                    completion(.success((model)))
-                } else {
-                    completion(.failure(ServiceError.jsonError))
-                }
+            case .success(let model):
+                completion(.success((model)))
             case .failure(let error):
                 completion(.failure(error))
             }

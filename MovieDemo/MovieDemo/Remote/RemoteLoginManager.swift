@@ -17,7 +17,9 @@ struct RemoteLoginManager {
         let params = service.defaultParameters()
         
         return service.successAction(url: url, params: params)
-            .compactMap { $0.requestToken }
+            .tryMap { guard let requestToken = $0.requestToken else { throw MovieDBService.ServiceError.jsonError }
+                return requestToken
+            }
             .eraseToAnyPublisher()
     }
     
@@ -43,7 +45,9 @@ struct RemoteLoginManager {
         let body = ["request_token": requestToken]
         
         return service.successAction(url: url, params: params, body: body, method: .post)
-            .compactMap { $0.sessionId }
+            .tryMap { guard let sessionId =  $0.sessionId else { throw MovieDBService.ServiceError.jsonError }
+                return sessionId
+            }
             .eraseToAnyPublisher()
     }
     
