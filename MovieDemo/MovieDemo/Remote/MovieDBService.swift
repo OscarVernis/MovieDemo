@@ -31,6 +31,8 @@ struct MovieDBService {
         
         if let sessionId = sessionId {
             params["session_id"] = sessionId
+        } else if let sessionId = self.sessionId {
+            params["session_id"] = sessionId
         }
         
         if let additionalParameters = additionalParameters {
@@ -80,7 +82,9 @@ extension MovieDBService {
             .eraseToAnyPublisher()
     }
     
-    func getModel<T: Codable>(path: String, params: [String: Any]?) -> AnyPublisher<T, Error> {        
+    func getModel<T: Codable>(path: String, parameters: [String: Any]?) -> AnyPublisher<T, Error> {
+        let params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
+
         return AF.request(endpoint(forPath: path), parameters: params, encoding: URLEncoding.default)
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder())

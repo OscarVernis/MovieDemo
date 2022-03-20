@@ -7,16 +7,22 @@
 //
 
 import Foundation
+import Combine
 
 struct RemoteMovieDetailsLoader {
-    let service = MovieDBService()
+    let sessionId: String?
+    let service: MovieDBService
     
-    func getMovieDetails(movieId: Int, sessionId: String? = nil, completion: @escaping ((Result<Movie, Error>)) -> ()) {
-        let url = service.endpoint(forPath: "/movie/\(movieId)")
-        
-        var params = service.defaultParameters(withSessionId: sessionId)
+    init(sessionId: String? = nil) {
+        self.sessionId = sessionId
+        self.service = MovieDBService(sessionId: sessionId)
+    }
+    
+    func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
+        var params = service.defaultParameters()
         params["append_to_response"] = "credits,recommendations,account_states,videos"
         
-        service.getModel(url: url, params: params, completion: completion)
+        return service.getModel(path: "/movie/\(movieId)", parameters: params)
     }
+    
 }
