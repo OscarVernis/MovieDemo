@@ -42,6 +42,17 @@ struct MovieDBService {
         return url.appendingPathComponent(path)
     }
     
+    func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = keyDecodingStrategy
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        
+        return decoder
+    }
+    
     private let sessionManager: Session = {
         let configuration = URLSessionConfiguration.af.default
         configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
@@ -59,14 +70,9 @@ extension MovieDBService {
         params["page"] = page
         params["region"] = "US"
         
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
         return sessionManager.request(url, parameters: params, encoding: URLEncoding.default)
             .validate()
-            .publishDecodable(type: ServiceModelsResult<T>.self, decoder: decoder)
+            .publishDecodable(type: ServiceModelsResult<T>.self, decoder: jsonDecoder())
             .value()
             .mapError { _ in ServiceError.jsonError }
             .map { ($0.results, $0.totalPages) }
@@ -74,14 +80,9 @@ extension MovieDBService {
     }
     
     func getModel<T: Codable>(url: URL, params: [String: Any]) -> AnyPublisher<T, Error> {
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        return AF.request(url, parameters: params, encoding: URLEncoding.default).validate()
+        return AF.request(url, parameters: params, encoding: URLEncoding.default)
             .validate()
-            .publishDecodable(type: T.self)
+            .publishDecodable(type: T.self, decoder: jsonDecoder())
             .value()
             .mapError { _ in ServiceError.jsonError }
             .eraseToAnyPublisher()
@@ -93,12 +94,10 @@ extension MovieDBService {
         
         return AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default)
             .validate()
-            .publishDecodable(type: ServiceSuccessResult.self)
+            .publishDecodable(type: ServiceSuccessResult.self, decoder: jsonDecoder(keyDecodingStrategy: .convertFromSnakeCase))
             .value()
             .tryMap { result in
-                if let success = result.success, success == false {
-                    throw ServiceError.noSuccess
-                }
+                guard let success = result.success, success == true else { throw ServiceError.noSuccess }
                 
                 return result
             }
@@ -119,13 +118,8 @@ extension MovieDBService {
         params.merge(parameters) { _, new in new }
         params["page"] = page
         params["region"] = "US"
-        
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        sessionManager.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: ServiceModelsResult<T>.self, decoder: decoder) { response in
+
+        sessionManager.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: ServiceModelsResult<T>.self, decoder: jsonDecoder()) { response in
             switch response.result {
             case .success(let results):
                 let models = results.results
@@ -139,12 +133,7 @@ extension MovieDBService {
     }
     
     func getModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: decoder) { response in
+        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: jsonDecoder()) { response in
             switch response.result {
             case .success(let model):
                 completion(.success((model)))
@@ -152,25 +141,6 @@ extension MovieDBService {
                 completion(.failure(error))
             }
         }
-    }
-    
-    func getString(path: String, url: URL, params: [String: Any], body: [String: String]? = nil, method: HTTPMethod = .post, completion: @escaping StringCompletion) {
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
-        
-        AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                if let json = jsonData as? [String: Any], let resultString = json[path] as? String {
-                    completion(.success(resultString))
-                } else {
-                    completion(.failure(ServiceError.jsonError))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-
     }
     
     func successAction<T: Encodable>(url: URL, params: [String: Any], body: T? = (Optional<String>.none as! T), method: HTTPMethod = .get, completion: @escaping SuccessActionCompletion) {
