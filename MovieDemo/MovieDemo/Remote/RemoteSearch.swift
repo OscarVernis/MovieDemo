@@ -7,16 +7,18 @@
 //
 
 import Foundation
+import Combine
 
 struct RemoteSearch {
     let service = MovieDBService()
     
-    func search(query: String, page: Int = 1, completion: @escaping (Result<([Any], Int), Error>) -> Void) {
-        service.getModels(endpoint: "/search/multi", parameters: ["query" : query], page: page) { (result: Result<([MediaItem], Int), Error>) in
-            switch result {
-            case .success((let serviceResults, let totalPages)):
-                let results: [Any] = serviceResults.compactMap { Item in
-                    switch Item {
+    func search(query: String, page: Int = 1) -> AnyPublisher<([Any], Int), Error>  {
+        let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: "/search/multi", parameters: ["query" : query], page: page)
+        
+        return publisher
+            .compactMap { (items, totalPages) in
+                let searchResults: [Any] = items.compactMap { item in
+                    switch item {
                     case .person(let person):
                         return person
                     case .movie(let movie):
@@ -26,11 +28,9 @@ struct RemoteSearch {
                     }
                 }
                 
-                completion(.success((results, totalPages)))
-            case .failure(let error):
-                completion(.failure(error))
+                return (searchResults, totalPages)
             }
-        }
+            .eraseToAnyPublisher()
     }
     
 }

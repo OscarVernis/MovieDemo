@@ -7,20 +7,36 @@
 //
 
 import Foundation
+import Combine
 
 class SearchDataProvider: ArrayDataProvider {
     typealias Model = Any
 
-    var query: String = "" {
-        didSet {
-            refresh()
-        }
-    }
+    @Published var query: String = ""
     
     private var items =  [Any]()
     
     var itemCount: Int {
         return items.count
+    }
+    
+    init() {
+        $query
+            .debounce(for: 0.5, scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .compactMap { query -> String? in
+                if query.count < 1 {
+                    return nil
+                }
+                
+                return query
+            }
+            .sink { _ in
+                
+            } receiveValue: { _ in
+                self.refresh()
+            }
+            .store(in: &cancellables)
     }
     
     func item(atIndex index: Int) -> Any {
@@ -40,6 +56,8 @@ class SearchDataProvider: ArrayDataProvider {
         currentPage == totalPages || currentPage == 0
     }
     var didUpdate: ((Error?) -> Void)?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     func loadMore() {
         if isLastPage {
@@ -62,15 +80,19 @@ class SearchDataProvider: ArrayDataProvider {
         
         isLoading = true
         let page = currentPage + 1
-
+        
         let searchQuery = query
-        searchService.search(query: searchQuery, page: page) { [weak self] result in
-            guard let self = self else { return }
-            
-            self.isLoading = false
-            
-            switch result {
-            case .success((let items, let totalPages)):
+        searchService.search(query: searchQuery, page: page)
+            .sink { completion in
+                self.isLoading = false
+                
+                switch completion {
+                case .finished:
+                    self.didUpdate?(nil)
+                case .failure(let error):
+                    self.didUpdate?(error)
+                }
+            } receiveValue: { (items, totalPages) in
                 self.currentPage += 1
                 
                 if self.currentPage == 1 {
@@ -80,18 +102,8 @@ class SearchDataProvider: ArrayDataProvider {
                 self.totalPages = totalPages
                 
                 self.items.append(contentsOf: items)
-                
-                self.didUpdate?(nil)
-                
-                if self.query != searchQuery {
-                    self.refresh()
-                }
-            case .failure(let error):
-                self.didUpdate?(error)
             }
-        }
-        
+            .store(in: &cancellables)
     }
-    
     
 }
