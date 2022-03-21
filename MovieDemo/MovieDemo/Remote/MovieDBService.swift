@@ -66,7 +66,7 @@ struct MovieDBService {
     }()
 }
 
-//MARK: - Combine
+//MARK: - Combine Generic Functions
 extension MovieDBService {
     func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
         var params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
@@ -93,8 +93,7 @@ extension MovieDBService {
             .eraseToAnyPublisher()
     }
     
-    func successAction(path: String, body: [String: String]? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
-        
+    func successAction<T: Encodable>(path: String, body: T?, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
         var urlRequest = URLRequest(url: endpoint(forPath: path))
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: defaultParameters())
         
@@ -108,6 +107,10 @@ extension MovieDBService {
                 return result
             }
             .eraseToAnyPublisher()
+    }
+    
+    func successAction(path: String, method: HTTPMethod = .get)  -> AnyPublisher<ServiceSuccessResult, Error> {
+        return successAction(path: path, body: Optional<String>.none, method: method)
     }
     
 }
@@ -135,45 +138,6 @@ extension MovieDBService {
                 completion(.failure(error))
             }
         }
-    }
-    
-    func getModel<T: Codable>(url: URL, params: [String: Any], completion: @escaping (Result<T, Error>) -> ()) {
-        AF.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: T.self, decoder: jsonDecoder()) { response in
-            switch response.result {
-            case .success(let model):
-                completion(.success((model)))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func successAction<T: Encodable>(url: URL, params: [String: Any], body: T? = (Optional<String>.none as! T), method: HTTPMethod = .get, completion: @escaping SuccessActionCompletion) {
-        var urlRequest = URLRequest(url: url)
-        urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: params)
-        
-        AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let jsonData):
-                guard let json = jsonData as? [String: Any], let success = json["success"] as? Bool else {
-                    completion(.failure(ServiceError.jsonError))
-                    return
-                }
-                
-                if success {
-                    completion(.success(()))
-                } else {
-                    completion(.failure(ServiceError.noSuccess))
-                }
-                
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func successAction(url: URL, params: [String: Any], method: HTTPMethod = .get, completion: @escaping SuccessActionCompletion) {
-        successAction(url: url, params: params, body: Optional<String>.none, method: method, completion: completion)
     }
     
 }

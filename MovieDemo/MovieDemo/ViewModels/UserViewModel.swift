@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import Combine
 
 class UserViewModel {
     var user: User?
-    private let service = RemoteUserManager()
+    private let service = RemoteUserManager(sessionId: SessionManager.shared.sessionId)
     private var isLoading = false
     
-    var didUpdate: ((Error?) -> Void)?
+    private var cancellables = Set<AnyCancellable>()
     
+    var didUpdate: ((Error?) -> Void)?
     
     var username: String? {
         return user?.username
@@ -44,21 +46,21 @@ class UserViewModel {
         if isLoading { return }
         isLoading = true
         
-        guard SessionManager.shared.isLoggedIn, let sessionId = SessionManager.shared.sessionId else { return }
+        guard SessionManager.shared.isLoggedIn else { return }
         isLoading = false
-
-        service.getUserDetails(sessionId: sessionId) { [weak self] result in
-            switch result {
-            case .success(let user):
-                self?.user = user
-                self?.didUpdate?(nil)
-            case .failure(let error):
-                self?.didUpdate?(error)
-                
+        
+        service.getUserDetails()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.didUpdate?(nil)
+                case .failure(let error):
+                    self.didUpdate?(error)
+                }
+            } receiveValue: { user in
+                self.user = user
             }
-        }
+            .store(in: &cancellables)
     }
-    
 }
 
-    

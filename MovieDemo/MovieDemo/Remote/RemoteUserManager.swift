@@ -7,9 +7,16 @@
 //
 
 import Foundation
+import Combine
 
 struct RemoteUserManager {
-    let service = MovieDBService()
+    let sessionId: String?
+    let service: MovieDBService
+    
+    init(sessionId: String? = nil) {
+        self.sessionId = sessionId
+        self.service = MovieDBService(sessionId: sessionId)
+    }
     
     private struct FavoriteRequestBody: Encodable {
         var media_type: String = "movie"
@@ -23,57 +30,40 @@ struct RemoteUserManager {
         var watchlist: Bool
     }
     
-    func getUserDetails(sessionId: String, completion: @escaping (Result<User, Error>) -> ()) {
-        let url = service.endpoint(forPath: "/account/id")
-        var params = service.defaultParameters(withSessionId: sessionId)
-        params["append_to_response"] = "favorite/movies,rated/movies,watchlist/movies"
+    func getUserDetails() -> AnyPublisher<User, Error> {
+        let params = ["append_to_response": "favorite/movies,rated/movies,watchlist/movies"]
         
-        service.getModel(url: url, params: params, completion: completion)
+        return service.getModel(path: "/account/id", parameters: params)
     }
     
-    func getUserFavorites(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
-        service.getModels(endpoint: "/account/id/favorite/movies", sessionId: sessionId, page: page, completion: completion)
-    }
-    
-    func getUserWatchlist(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
-        service.getModels(endpoint: "/account/id/watchlist/movies", sessionId: sessionId, page: page, completion: completion)
-    }
-    
-    func getUserRatedMovies(sessionId: String, page: Int = 1, completion: @escaping MovieLoader.MovieListCompletion) {
-        service.getModels(endpoint: "/account/id/rated/movies", sessionId: sessionId, page: page, completion: completion)
-    }
-    
-    func markAsFavorite(_ favorite: Bool, movieId: Int, sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
-        let url = service.endpoint(forPath: "/account/id/favorite")
-        let params = service.defaultParameters(withSessionId: sessionId)
-        
+    func markAsFavorite(_ favorite: Bool, movieId: Int) -> AnyPublisher<Never, Error> {
         let body = FavoriteRequestBody(media_id: movieId, favorite: favorite)
 
-        service.successAction(url: url, params: params, body: body, method: .post, completion: completion)
+        return service.successAction(path: "/account/id/favorite", body: body, method: .post)
+            .ignoreOutput()
+            .eraseToAnyPublisher()
     }
     
-    func addToWatchlist(_ watchlist: Bool, movieId: Int, sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
-        let url = service.endpoint(forPath: "/account/id/watchlist")
-        let params = service.defaultParameters(withSessionId: sessionId)
-        
+    func addToWatchlist(_ watchlist: Bool, movieId: Int) -> AnyPublisher<Never, Error> {
         let body = WatchlistRequestBody(media_id: movieId, watchlist: watchlist)
 
-        service.successAction(url: url, params: params, body: body, method: .post, completion: completion)
+        return service.successAction(path: "/account/id/watchlist", body: body, method: .post)
+            .ignoreOutput()
+            .eraseToAnyPublisher()
     }
     
-    func rateMovie(_ rating: Float, movieId: Int, sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
-        let url = service.endpoint(forPath: "/movie/\(movieId)/rating")
-        let params = service.defaultParameters(withSessionId: sessionId)
-        
+    func rateMovie(_ rating: Float, movieId: Int) -> AnyPublisher<Never, Error> {
         let body = ["value": rating]
-
-        service.successAction(url: url, params: params, body: body, method: .post, completion: completion)
+        
+        return service.successAction(path: "/movie/\(movieId)/rating", body: body, method: .post)
+            .ignoreOutput()
+            .eraseToAnyPublisher()
     }
     
-    func deleteRate(movieId: Int, sessionId: String, completion: @escaping MovieDBService.SuccessActionCompletion) {
-        let url = service.endpoint(forPath: "/movie/\(movieId)/rating")
-        let params = service.defaultParameters(withSessionId: sessionId)
-            
-        service.successAction(url: url, params: params, method: .delete, completion: completion)
+    func deleteRate(movieId: Int) -> AnyPublisher<Never, Error> {
+        return service.successAction(path: "/movie/\(movieId)/rating", method: .delete)
+            .ignoreOutput()
+            .eraseToAnyPublisher()
     }
+    
 }

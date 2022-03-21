@@ -13,7 +13,7 @@ class MovieViewModel {
     private var movie: Movie
     
     private let movieService = RemoteMovieDetailsLoader(sessionId: SessionManager.shared.sessionId)
-    private let userService = RemoteUserManager()
+    private let userService = RemoteUserManager(sessionId: SessionManager.shared.sessionId)
 
     private var isLoading = false
     var didUpdate: ((Error?) -> Void)?
@@ -257,44 +257,48 @@ extension MovieViewModel {
         return movie.watchlist ?? false
     }
     
-    func markAsFavorite(_ favorite: Bool, completion: @escaping (Bool) -> Void) {
-        guard let sessionId = SessionManager.shared.sessionId else {
-            completion(false)
+    func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
+        guard SessionManager.shared.isLoggedIn else {
+            completionHandler(false)
             return
         }
         
-        userService.markAsFavorite(favorite, movieId: id, sessionId: sessionId) { [weak self] result in
-            switch result {
-            case .success():
-                self?.movie.favorite = favorite
-                completion(true)
-            case .failure(_):
-                completion(false)
-            }
-        }
+        userService.markAsFavorite(favorite, movieId: id)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.movie.favorite = favorite
+                    completionHandler(true)
+                case .failure(_):
+                    completionHandler(false)
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
         
     }
     
-    func addToWatchlist(_ watchlist: Bool, completion: @escaping (Bool) -> Void) {
-        guard let sessionId = SessionManager.shared.sessionId else {
-            completion(false)
+    func addToWatchlist(_ watchlist: Bool, completionHandler: @escaping (Bool) -> Void) {
+        guard SessionManager.shared.isLoggedIn else {
+            completionHandler(false)
             return
         }
         
-        userService.addToWatchlist(watchlist, movieId: id, sessionId: sessionId) { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.watchlist = watchlist
-                completion(true)
-            case .failure(_):
-                completion(false)
-            }
-        }
+        userService.addToWatchlist(watchlist, movieId: id)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.movie.watchlist = watchlist
+                    completionHandler(true)
+                case .failure(_):
+                    completionHandler(false)
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
     }
     
-    func rate(_ rating: Int, completion: @escaping (Bool) -> Void) {
-        guard let sessionId = SessionManager.shared.sessionId else {
-            completion(false)
+    func rate(_ rating: Int, completionHandler: @escaping (Bool) -> Void) {
+        guard SessionManager.shared.isLoggedIn else {
+            completionHandler(false)
             return
         }
         
@@ -308,37 +312,42 @@ extension MovieViewModel {
         if adjustedRating < 0.5 {
             adjustedRating = 0.5
         }
-                
-        userService.rateMovie(adjustedRating, movieId: id, sessionId: sessionId) { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.userRating = adjustedRating
-                self?.movie.watchlist = false //Server removes movie from watchlist when rating
-                completion(true)
-            case .failure(_):
-                completion(false)
-            }
-        }
+        
+        userService.rateMovie(adjustedRating, movieId: id)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.movie.userRating = adjustedRating
+                    self.movie.watchlist = false //Server removes movie from watchlist when rating
+                    completionHandler(true)
+                case .failure(_):
+                    completionHandler(false)
+
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
         
     }
     
-    func deleteRate(completion: @escaping (Bool) -> Void) {
-        guard let sessionId = SessionManager.shared.sessionId else {
-            completion(false)
+    func deleteRate(completionHandler: @escaping (Bool) -> Void) {
+        guard SessionManager.shared.isLoggedIn else {
+            completionHandler(false)
             return
         }
         
-        userService.deleteRate(movieId: movie.id, sessionId: sessionId) { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.userRating = nil
-                completion(true)
-            case .failure(_):
-                completion(false)
-            }
-        }
+        userService.deleteRate(movieId: movie.id)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    self.movie.userRating = nil
+                    completionHandler(true)
+                case .failure(_):
+                    completionHandler(false)
+
+                }
+            } receiveValue: { _ in }
+            .store(in: &cancellables)
     }
-    
     
 }
 
