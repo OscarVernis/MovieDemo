@@ -22,10 +22,6 @@ struct RemoteMoviesLoader: MovieLoader {
         return service.getModels(endpoint: endpoint(movieList: movieList), sessionId: self.sessionId, page: page)
     }
     
-    func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
-        service.getModels(endpoint: endpoint(movieList: movieList), sessionId: self.sessionId, page: page, completion: completion)
-    }
-    
     func endpoint(movieList: MovieList) -> String {
         switch movieList {
         case .NowPlaying:

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Combine
+import CoreData
 
 struct MovieCache {
     private var store = CoreDataStore.shared
@@ -14,8 +16,7 @@ struct MovieCache {
     func save(movies: [Movie], movieList: MovieList) {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         let managedMovies = NSOrderedSet(array: movies.compactMap { MovieMO(withMovie: $0, context: store.context) })
-        
-        
+                
         switch movieList {
         case .NowPlaying:
             cache.addToNowPlaying(managedMovies)
@@ -58,8 +59,7 @@ struct MovieCache {
 }
 
 extension MovieCache: MovieLoader {
-    func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) {
-        let totalPages = 1
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         var managedMovies: [MovieMO]?
         
@@ -75,13 +75,19 @@ extension MovieCache: MovieLoader {
         default:
             break
         }
-        
+                
         var movies = [Movie]()
         if let managedMovies = managedMovies {
-        movies = managedMovies.compactMap { $0.toMovie() }
+            movies = managedMovies.compactMap { $0.toMovie() }
         }
-                
-        completion(.success((movies, totalPages)))
+             
+        let totalPages = 1
+        let publisher = PassthroughSubject<([Movie], Int), Error>()
+        publisher.send((movies, totalPages))
+        publisher.send(completion: .finished)
+        
+        return publisher
+            .eraseToAnyPublisher()
     }
     
 }

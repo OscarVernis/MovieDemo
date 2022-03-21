@@ -61,12 +61,14 @@ struct MovieDBService {
     
     private let sessionManager: Session = {
         let configuration = URLSessionConfiguration.af.default
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+//        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+//        configuration.timeoutIntervalForRequest = 5
+//        configuration.timeoutIntervalForResource = 5
         return Session(configuration: configuration)
     }()
 }
 
-//MARK: - Combine Generic Functions
+//MARK: - Generic Functions
 extension MovieDBService {
     func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
         var params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
@@ -77,8 +79,8 @@ extension MovieDBService {
             .validate()
             .publishDecodable(type: ServiceModelsResult<T>.self, decoder: jsonDecoder())
             .value()
-            .mapError { _ in ServiceError.jsonError }
             .map { ($0.results, $0.totalPages) }
+            .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
     
@@ -89,7 +91,7 @@ extension MovieDBService {
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder())
             .value()
-            .mapError { _ in ServiceError.jsonError }
+            .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
     
@@ -111,33 +113,6 @@ extension MovieDBService {
     
     func successAction(path: String, method: HTTPMethod = .get)  -> AnyPublisher<ServiceSuccessResult, Error> {
         return successAction(path: path, body: Optional<String>.none, method: method)
-    }
-    
-}
-
-//MARK: - Generic Functions
-extension MovieDBService {
-    typealias SuccessActionCompletion = (Result<Void, Error>) -> Void
-    typealias StringCompletion = (Result<String, Error>) -> Void
-    
-    func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1, completion: @escaping ((Result<([T], Int), Error>) -> Void)) {
-        let url = endpoint(forPath: path)
-        
-        var params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
-        params["page"] = page
-        params["region"] = "US"
-
-        sessionManager.request(url, parameters: params, encoding: URLEncoding.default).validate().responseDecodable(of: ServiceModelsResult<T>.self, decoder: jsonDecoder()) { response in
-            switch response.result {
-            case .success(let results):
-                let models = results.results
-                let totalPages = results.totalPages
-                
-                completion(.success((models, totalPages)))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
     }
     
 }

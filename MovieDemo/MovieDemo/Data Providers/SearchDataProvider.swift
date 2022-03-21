@@ -32,8 +32,6 @@ class SearchDataProvider: ArrayDataProvider {
                 return query
             }
             .sink { _ in
-                
-            } receiveValue: { _ in
                 self.refresh()
             }
             .store(in: &cancellables)

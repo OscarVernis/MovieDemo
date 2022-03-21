@@ -7,11 +7,14 @@
 //
 
 import Foundation
+import Combine
 
 class MovieListDataProvider: ArrayDataProvider {
     typealias Model = MovieViewModel
     
-    init(_ service: MovieList = .NowPlaying, movieLoader: MovieLoader = RemoteMoviesLoader(sessionId: SessionManager.shared.sessionId)) {
+    var cancellables = Set<AnyCancellable>()
+    
+    init(_ service: MovieList = .NowPlaying, movieLoader: MovieLoader = RemoteMoviesLoaderWithCache()) {
         self.currentService = service
         self.movieLoader = movieLoader
     }
@@ -83,7 +86,6 @@ class MovieListDataProvider: ArrayDataProvider {
                 self.totalPages = totalPages
                 self.movies.append(contentsOf: movies)
 
-                
                 self.didUpdate?(nil)
             case .failure(let error):
                 self.didUpdate?(error)
@@ -93,7 +95,19 @@ class MovieListDataProvider: ArrayDataProvider {
         
         let page = currentPage + 1
         
-        movieLoader.getMovies(movieList: currentService, page: page, completion: completionHandler)
+        movieLoader.getMovies(movieList: currentService, page: page)
+            .sink { completion in
+                print("Finished ", completion)
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+            } receiveValue: { movies, totalPages in
+                completionHandler(.success((movies, totalPages)))
+            }
+            .store(in: &cancellables)
     }
     
 }

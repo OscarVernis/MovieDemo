@@ -15,7 +15,6 @@ public class ManagedCache: NSManagedObject {
     
     static func uniqueInstance(in context: NSManagedObjectContext) -> ManagedCache {
         let request = NSFetchRequest<ManagedCache>(entityName: entity().name!)
-        request.returnsObjectsAsFaults = false
         
         let managedCache =  try? context.fetch(request).first
         if let managedCache = managedCache {

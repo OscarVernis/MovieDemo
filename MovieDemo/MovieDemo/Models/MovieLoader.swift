@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 enum MovieList: Equatable {
     case NowPlaying
@@ -23,5 +24,7 @@ enum MovieList: Equatable {
 protocol MovieLoader {
     typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
     
-    func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion) 
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error>
+
+//    func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion)
 }
