@@ -33,54 +33,69 @@ extension MovieService {
         case DeleteSession
     }
     
-    private func url(forPath path: String) -> URL {
-        let url = URL(string: baseURL)!
+    func urlforEndpoint(_ endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
+        let path = pathforEndpoint(endpoint)
         
-        return url.appendingPathComponent(path)
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = baseURL
+        components.path = "/3" + path
+        
+        let params = defaultParameters(additionalParameters: parameters)
+        components.queryItems = params.compactMap{ URLQueryItem(name: $0.0, value: $0.1) }
+        
+        guard let url = components.url else {
+            preconditionFailure(
+                "Invalid URL components: \(components)"
+            )
+        }
+        
+        print(url)
+        return url
     }
     
-    func url(forEndpoint endpoint: Endpoint) -> URL {
+    private func pathforEndpoint(_ endpoint: Endpoint) -> String {
         switch endpoint {
         case .NowPlaying:
-            return url(forPath: "/movie/now_playing")
+            return "/movie/now_playing"
         case .Popular:
-            return url(forPath: "/movie/popular")
+            return "/movie/popular"
         case .TopRated:
-            return url(forPath: "/movie/top_rated")
+            return "/movie/top_rated"
         case .Upcoming:
-            return url(forPath: "/movie/upcoming")
+            return "/movie/upcoming"
         case .Recommended(movieId: let movieId):
-            return url(forPath: "/movie/\(movieId)/recommendations")
+            return "/movie/\(movieId)/recommendations"
         case .UserFavorites:
-            return url(forPath: "/account/id/favorite/movies")
+            return "/account/id/favorite/movies"
         case .UserWatchList:
-            return url(forPath: "/account/id/watchlist/movies")
+            return "/account/id/watchlist/movies"
         case .UserRated:
-            return url(forPath: "/account/id/rated/movies")
+            return "/account/id/rated/movies"
         case .MovieDetails(movieId: let movieId):
-            return url(forPath: "/movie/\(movieId)")
+            return "/movie/\(movieId)"
         case .Search:
-            return url(forPath: "/search/multi")
+            return "/search/multi"
         case .PersonDetails(personId: let personId):
-            return url(forPath: "/person/\(personId)")
+            return "/person/\(personId)"
         case .UserDetails:
-            return url(forPath: "/account/id")
+            return "/account/id"
         case .MarkAsFavorite:
-            return url(forPath: "/account/id/favorite")
+            return "/account/id/favorite"
         case .AddToWatchlist:
-            return url(forPath: "/account/id/watchlist")
+            return "/account/id/watchlist"
         case .RateMovie(movieId: let movieId):
-            return url(forPath: "/movie/\(movieId)/rating")
+            return "/movie/\(movieId)/rating"
         case .DeleteRate(movieId: let movieId):
-            return url(forPath: "/movie/\(movieId)/rating")
+            return "/movie/\(movieId)/rating"
         case .RequestToken:
-            return url(forPath: "/authentication/token/new")
+            return "/authentication/token/new"
         case .ValidateToken:
-            return url(forPath: "/authentication/token/validate_with_login")
+            return "/authentication/token/validate_with_login"
         case .CreateSession:
-            return url(forPath: "/authentication/session/new")
+            return "/authentication/session/new"
         case .DeleteSession:
-            return url(forPath: "/authentication/session")
+            return "/authentication/session"
         }
     }
     
