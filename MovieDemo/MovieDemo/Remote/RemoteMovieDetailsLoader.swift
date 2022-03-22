@@ -22,7 +22,7 @@ struct RemoteMovieDetailsLoader {
         var params = service.defaultParameters()
         params["append_to_response"] = "credits,recommendations,account_states,videos"
         
-        return service.getModel(path: "/movie/\(movieId)", parameters: params)
+        return service.getModel(endpoint: .MovieDetails(movieId: movieId), parameters: params)
     }
     
 }

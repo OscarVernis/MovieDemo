@@ -22,26 +22,24 @@ struct RemoteMoviesLoader: MovieLoader {
         return service.getModels(endpoint: endpoint(movieList: movieList), page: page)
     }
     
-    func endpoint(movieList: MovieList) -> String {
+    func endpoint(movieList: MovieList) -> MovieService.Endpoint {
         switch movieList {
         case .NowPlaying:
-            return "/movie/now_playing"
+            return .NowPlaying
         case .Popular:
-            return "/movie/popular"
+            return .Popular
         case .TopRated:
-            return "/movie/top_rated"
+            return .TopRated
         case .Upcoming:
-            return "/movie/upcoming"
-        case .Trending:
-            return "/movie/week"
+            return .Upcoming
         case .Recommended(movieId: let movieId):
-            return "/movie/\(movieId)/recommendations"
+            return .Recommended(movieId: movieId)
         case .UserFavorites:
-            return "/account/id/favorite/movies"
+            return .UserFavorites
         case .UserWatchList:
-            return "/account/id/watchlist/movies"
+            return .UserWatchList
         case .UserRated:
-            return "/account/id/rated/movies"
+            return .UserRated
         }
     }
     

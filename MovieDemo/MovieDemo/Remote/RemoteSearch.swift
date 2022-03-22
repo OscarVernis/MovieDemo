@@ -13,7 +13,7 @@ struct RemoteSearch {
     let service = MovieService()
     
     func search(query: String, page: Int = 1) -> AnyPublisher<([Any], Int), Error>  {
-        let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: "/search/multi", parameters: ["query" : query], page: page)
+        let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: .Search, parameters: ["query" : query], page: page)
         
         return publisher
             .compactMap { (items, totalPages) in

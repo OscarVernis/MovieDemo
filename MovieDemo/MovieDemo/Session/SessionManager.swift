@@ -52,7 +52,6 @@ extension SessionManager {
             case .finished:
                 completionHandler(nil)
             case .failure(let error):
-                print(error)
                 completionHandler(error)
             }
         } receiveValue: { sessionId in

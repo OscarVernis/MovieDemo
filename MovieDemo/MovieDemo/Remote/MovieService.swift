@@ -17,8 +17,8 @@ struct MovieService {
         case noSuccess
     }
     
-    private let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
-    private let baseURL = "https://api.themoviedb.org/3"
+    let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
+    let baseURL = "https://api.themoviedb.org/3"
     
     private let sessionManager: Session
     let sessionId: String?
@@ -36,7 +36,10 @@ struct MovieService {
             self.sessionManager =  Session(configuration: configuration)
         }
     }
-    
+}
+
+//MARK: - Helpers
+extension MovieService {
     func defaultParameters(withSessionId sessionId: String? = nil, additionalParameters: [String: Any]? = nil) -> [String: Any] {
         let language = NSLocalizedString("service-locale", comment: "")
         var params: [String: Any] = ["language": language, "api_key": apiKey]
@@ -54,12 +57,6 @@ struct MovieService {
         return params
     }
     
-    func endpoint(forPath path: String) -> URL {
-        let url = URL(string: baseURL)!
-        
-        return url.appendingPathComponent(path)
-    }
-    
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = keyDecodingStrategy
@@ -75,10 +72,10 @@ struct MovieService {
 
 //MARK: - Generic Functions
 extension MovieService {
-    func getModel<T: Codable>(model: T.Type? = nil, path: String, parameters: [String: Any]? = nil) -> AnyPublisher<T, Error> {
+    func getModel<T: Codable>(model: T.Type? = nil, endpoint: Endpoint, parameters: [String: Any]? = nil) -> AnyPublisher<T, Error> {
         let params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
         
-        return AF.request(endpoint(forPath: path), parameters: params, encoding: URLEncoding.default)
+        return AF.request(url(forEndpoint: endpoint), parameters: params, encoding: URLEncoding.default)
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder())
             .value()
@@ -86,18 +83,18 @@ extension MovieService {
             .eraseToAnyPublisher()
     }
     
-    func getModels<T: Codable>(endpoint path: String, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
+    func getModels<T: Codable>(endpoint: Endpoint, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
         var params = parameters
         params["page"] = page
         params["region"] = "US"
         
-        return getModel(model: ServiceModelsResult<T>.self, path: path, parameters: params)
+        return getModel(model: ServiceModelsResult<T>.self, endpoint: endpoint, parameters: params)
             .map { ($0.results, $0.totalPages) }
             .eraseToAnyPublisher()
     }
     
-    func successAction<T: Encodable>(path: String, body: T?, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
-        var urlRequest = URLRequest(url: endpoint(forPath: path))
+    func successAction<T: Encodable>(endpoint: Endpoint, body: T?, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
+        var urlRequest = URLRequest(url: url(forEndpoint: endpoint))
         urlRequest = try! Alamofire.URLEncoding.default.encode(urlRequest, with: defaultParameters())
         
         return AF.request(urlRequest.url!, method: method, parameters: body, encoder: JSONParameterEncoder.default)
@@ -112,8 +109,8 @@ extension MovieService {
             .eraseToAnyPublisher()
     }
     
-    func successAction(path: String, method: HTTPMethod = .get)  -> AnyPublisher<ServiceSuccessResult, Error> {
-        return successAction(path: path, body: Optional<String>.none, method: method)
+    func successAction(endpoint: Endpoint, method: HTTPMethod = .get)  -> AnyPublisher<ServiceSuccessResult, Error> {
+        return successAction(endpoint: endpoint, body: Optional<String>.none, method: method)
     }
     
 }

@@ -15,7 +15,7 @@ struct RemotePersonDetailsLoader {
     func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
         let params = ["append_to_response": "movie_credits"]
         
-        return service.getModel(path: "/person/\(personId)", parameters: params)
+        return service.getModel(endpoint: .PersonDetails(personId: personId), parameters: params)
     }
     
 }

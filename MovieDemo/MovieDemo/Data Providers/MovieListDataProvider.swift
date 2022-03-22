@@ -97,7 +97,6 @@ class MovieListDataProvider: ArrayDataProvider {
         
         movieLoader.getMovies(movieList: currentService, page: page)
             .sink { completion in
-                print("Finished ", completion)
                 switch completion {
                 case .finished:
                     break

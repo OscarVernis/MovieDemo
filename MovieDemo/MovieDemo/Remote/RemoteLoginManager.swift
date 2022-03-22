@@ -13,7 +13,7 @@ struct RemoteLoginManager {
     let service = MovieService()
     
     func requestToken() -> AnyPublisher<String, Error> {
-        return service.successAction(path: "/authentication/token/new")
+        return service.successAction(endpoint: .RequestToken)
             .tryMap { guard let requestToken = $0.requestToken else { throw MovieService.ServiceError.jsonError }
                 return requestToken
             }
@@ -27,7 +27,7 @@ struct RemoteLoginManager {
             "request_token": requestToken
         ]
         
-        return service.successAction(path: "/authentication/token/validate_with_login", body: body, method: .post)
+        return service.successAction(endpoint: .ValidateToken, body: body, method: .post)
             .compactMap { $0.success }
             .eraseToAnyPublisher()
     }
@@ -35,7 +35,7 @@ struct RemoteLoginManager {
     func createSession(requestToken: String) -> AnyPublisher<String, Error>  {
         let body = ["request_token": requestToken]
         
-        return service.successAction(path: "/authentication/session/new", body: body, method: .post)
+        return service.successAction(endpoint: .CreateSession, body: body, method: .post)
             .tryMap { guard let sessionId =  $0.sessionId else { throw MovieService.ServiceError.jsonError }
                 return sessionId
             }
@@ -45,7 +45,7 @@ struct RemoteLoginManager {
     func deleteSession(sessionId: String) -> AnyPublisher<Bool, Error> {
         let body = ["session_id": sessionId]
         
-        return service.successAction(path: "/authentication/session", body: body, method: .delete)
+        return service.successAction(endpoint: .DeleteSession, body: body, method: .delete)
             .compactMap { $0.success }
             .eraseToAnyPublisher()
     }

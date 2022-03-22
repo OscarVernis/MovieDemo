@@ -14,7 +14,6 @@ enum MovieList: Equatable {
     case Popular
     case TopRated
     case Upcoming
-    case Trending
     case Recommended(movieId: Int)
     case UserFavorites
     case UserWatchList
