@@ -75,7 +75,7 @@ extension MovieService {
     func getModel<T: Codable>(model: T.Type? = nil, endpoint: Endpoint, parameters: [String: Any]? = nil) -> AnyPublisher<T, Error> {
         let params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
         
-        return AF.request(url(forEndpoint: endpoint), parameters: params, encoding: URLEncoding.default)
+        return sessionManager.request(url(forEndpoint: endpoint), parameters: params, encoding: URLEncoding.default)
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder())
             .value()
@@ -83,7 +83,7 @@ extension MovieService {
             .eraseToAnyPublisher()
     }
     
-    func getModels<T: Codable>(endpoint: Endpoint, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
+    func getModels<T: Codable>(model: T.Type? = nil, endpoint: Endpoint, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
         var params = parameters
         params["page"] = page
         params["region"] = "US"
