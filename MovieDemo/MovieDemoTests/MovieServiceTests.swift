@@ -8,8 +8,6 @@
 
 import XCTest
 import Combine
-import Alamofire
-import Mocker
 @testable import MovieDemo
 
 class MovieServiceTests: XCTestCase {
@@ -18,48 +16,34 @@ class MovieServiceTests: XCTestCase {
     override func setUpWithError() throws {
         cancellables = []
     }
-
+    
     func test_getModels_success() {
-        let configuration = URLSessionConfiguration.af.default
-        configuration.protocolClasses = [MockingURLProtocol.self]
-        let sessionManager = Alamofire.Session(configuration: configuration)
-
-        let apiEndpoint = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
+        let mocker = MockData()
         
-        let mockedData = try! Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movies", withExtension: "json")!)
-        let mock = Mock(url: apiEndpoint, ignoreQuery: true, dataType: .json, statusCode: 200, data: [
-            .get : mockedData
-        ])
-        mock.register()
+        mocker.register(jsonFile: "Movies", url: url)
         
-        var movieCount = 0
-        var pages = 0
-        var error: Error?
-        let expectation = self.expectation(description: "Get Movies")
+        var results = (movies: [Movie](), totalPages: 0)
+        let sut = MovieService(session: mocker.session)
+        results = try! awaitPublisher( sut.getModels(model: Movie.self, endpoint: .NowPlaying) )
         
-        let sut = MovieService(session: sessionManager)
-
-        sut.getModels(model: Movie.self, endpoint: .NowPlaying)
-            .sink { completion  in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let serviceError):
-                    error = serviceError
-                }
-
-                expectation.fulfill()
-            } receiveValue: { movies, totalPages in
-                movieCount = movies.count
-                pages = totalPages
-            }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 5)
-        
-        XCTAssertEqual(movieCount, 20)
-        XCTAssertEqual(pages, 33)
-        XCTAssertNil(error)
+        XCTAssertEqual(results.movies.count, 20)
+        XCTAssertEqual(results.totalPages, 33)
     }
+    
+    func test_getModels_failsOnEmptyResult() {
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
+        let mocker = MockData()
+        
+        let emptyResult = [String:String]()
+        mocker.register(jsonObject: emptyResult, url: url)
 
+        var results = (movies: [Movie](), totalPages: 0)
+        let sut = MovieService(session: mocker.session)
+        results = try! awaitPublisher( sut.getModels(model: Movie.self, endpoint: .NowPlaying) )
+        
+        XCTAssertEqual(results.movies.count, 20)
+        XCTAssertEqual(results.totalPages, 33)
+    }
+    
 }
