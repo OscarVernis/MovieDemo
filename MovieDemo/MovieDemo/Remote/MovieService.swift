@@ -1,5 +1,5 @@
 //
-//  MovieDBService.swift
+//  MovieService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 7/13/19.
@@ -10,21 +10,33 @@ import Foundation
 import Alamofire
 import Combine
 
-struct MovieDBService {
+struct MovieService {
     enum ServiceError: Error {
         case jsonError
         case incorrectCredentials
         case noSuccess
     }
     
-    init(sessionId: String? = nil) {
-        self.sessionId = sessionId
-    }
-    
     private let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     private let baseURL = "https://api.themoviedb.org/3"
+    
+    private let sessionManager: Session
     let sessionId: String?
+    
+    init(sessionId: String? = nil, session: Session? = nil) {
+        self.sessionId = sessionId
         
+        if let session = session {
+            self.sessionManager = session
+        } else {
+            let configuration = URLSessionConfiguration.af.default
+            //        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+            //        configuration.timeoutIntervalForRequest = 5
+            //        configuration.timeoutIntervalForResource = 5
+            self.sessionManager =  Session(configuration: configuration)
+        }
+    }
+    
     func defaultParameters(withSessionId sessionId: String? = nil, additionalParameters: [String: Any]? = nil) -> [String: Any] {
         let language = NSLocalizedString("service-locale", comment: "")
         var params: [String: Any] = ["language": language, "api_key": apiKey]
@@ -38,7 +50,7 @@ struct MovieDBService {
         if let additionalParameters = additionalParameters {
             params.merge(additionalParameters) { _, new in new }
         }
-            
+        
         return params
     }
     
@@ -51,7 +63,7 @@ struct MovieDBService {
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = keyDecodingStrategy
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
@@ -59,39 +71,28 @@ struct MovieDBService {
         return decoder
     }
     
-    private let sessionManager: Session = {
-        let configuration = URLSessionConfiguration.af.default
-//        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
-//        configuration.timeoutIntervalForRequest = 5
-//        configuration.timeoutIntervalForResource = 5
-        return Session(configuration: configuration)
-    }()
 }
 
 //MARK: - Generic Functions
-extension MovieDBService {
-    func getModels<T: Codable>(endpoint path: String, sessionId: String? = nil, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
-        var params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
-        params["page"] = page
-        params["region"] = "US"
-        
-        return sessionManager.request(endpoint(forPath: path), parameters: params, encoding: URLEncoding.default)
-            .validate()
-            .publishDecodable(type: ServiceModelsResult<T>.self, decoder: jsonDecoder())
-            .value()
-            .map { ($0.results, $0.totalPages) }
-            .mapError { $0 as Error }
-            .eraseToAnyPublisher()
-    }
-    
-    func getModel<T: Codable>(path: String, parameters: [String: Any]?) -> AnyPublisher<T, Error> {
+extension MovieService {
+    func getModel<T: Codable>(model: T.Type? = nil, path: String, parameters: [String: Any]? = nil) -> AnyPublisher<T, Error> {
         let params = defaultParameters(withSessionId: sessionId, additionalParameters: parameters)
-
+        
         return AF.request(endpoint(forPath: path), parameters: params, encoding: URLEncoding.default)
             .validate()
             .publishDecodable(type: T.self, decoder: jsonDecoder())
             .value()
             .mapError { $0 as Error }
+            .eraseToAnyPublisher()
+    }
+    
+    func getModels<T: Codable>(endpoint path: String, parameters: [String: Any] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
+        var params = parameters
+        params["page"] = page
+        params["region"] = "US"
+        
+        return getModel(model: ServiceModelsResult<T>.self, path: path, parameters: params)
+            .map { ($0.results, $0.totalPages) }
             .eraseToAnyPublisher()
     }
     
@@ -118,7 +119,7 @@ extension MovieDBService {
 }
 
 //MARK: - Image Utils
-extension MovieDBService {
+extension MovieService {
     enum MoviePosterSize: String {
         case w92, w154, w185, w342, w500, w780, original
     }

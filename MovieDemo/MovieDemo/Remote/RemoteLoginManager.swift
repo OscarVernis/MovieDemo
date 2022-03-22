@@ -10,11 +10,11 @@ import Foundation
 import Combine
 
 struct RemoteLoginManager {
-    let service = MovieDBService()
+    let service = MovieService()
     
     func requestToken() -> AnyPublisher<String, Error> {
         return service.successAction(path: "/authentication/token/new")
-            .tryMap { guard let requestToken = $0.requestToken else { throw MovieDBService.ServiceError.jsonError }
+            .tryMap { guard let requestToken = $0.requestToken else { throw MovieService.ServiceError.jsonError }
                 return requestToken
             }
             .eraseToAnyPublisher()
@@ -36,7 +36,7 @@ struct RemoteLoginManager {
         let body = ["request_token": requestToken]
         
         return service.successAction(path: "/authentication/session/new", body: body, method: .post)
-            .tryMap { guard let sessionId =  $0.sessionId else { throw MovieDBService.ServiceError.jsonError }
+            .tryMap { guard let sessionId =  $0.sessionId else { throw MovieService.ServiceError.jsonError }
                 return sessionId
             }
             .eraseToAnyPublisher()

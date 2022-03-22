@@ -36,7 +36,7 @@ class UserViewModel {
     
     var avatarURL: URL? {
         if let avatarHash = user?.avatar {
-            return MovieDBService.userImageURL(forHash: avatarHash)
+            return MovieService.userImageURL(forHash: avatarHash)
         }
         
         return nil

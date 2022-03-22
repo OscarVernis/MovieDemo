@@ -41,7 +41,7 @@ extension CastCreditViewModel {
     var profileImageURL: URL? {
         guard let pathString = castCredit.profilePath else { return nil }
         
-        return MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+        return MovieService.profileImageURL(forPath: pathString, size: .h632)
     }
     
 }

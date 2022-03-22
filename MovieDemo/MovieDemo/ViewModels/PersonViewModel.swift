@@ -92,7 +92,7 @@ extension PersonViewModel {
     var profileImageURL: URL? {
         guard let pathString = person.profilePath else { return nil }
         
-        return MovieDBService.profileImageURL(forPath: pathString, size: .original)
+        return MovieService.profileImageURL(forPath: pathString, size: .original)
     }
     
     var knownForMovies: String? {

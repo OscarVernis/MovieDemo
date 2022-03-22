@@ -11,15 +11,15 @@ import Combine
 
 struct RemoteMoviesLoader: MovieLoader {
     let sessionId: String?
-    let service: MovieDBService
+    let service: MovieService
     
     init(sessionId: String? = nil) {
         self.sessionId = sessionId
-        self.service = MovieDBService(sessionId: sessionId)
+        self.service = MovieService(sessionId: sessionId)
     }
     
     func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
-        return service.getModels(endpoint: endpoint(movieList: movieList), sessionId: self.sessionId, page: page)
+        return service.getModels(endpoint: endpoint(movieList: movieList), page: page)
     }
     
     func endpoint(movieList: MovieList) -> String {

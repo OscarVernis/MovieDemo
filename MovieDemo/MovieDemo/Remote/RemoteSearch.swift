@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 struct RemoteSearch {
-    let service = MovieDBService()
+    let service = MovieService()
     
     func search(query: String, page: Int = 1) -> AnyPublisher<([Any], Int), Error>  {
         let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: "/search/multi", parameters: ["query" : query], page: page)

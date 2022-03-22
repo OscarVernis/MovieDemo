@@ -63,7 +63,7 @@ extension CrewCreditViewModel {
     var profileImageURL: URL? {
         guard let pathString = crewCredit.profilePath else { return nil }
         
-        return MovieDBService.profileImageURL(forPath: pathString, size: .h632)
+        return MovieService.profileImageURL(forPath: pathString, size: .h632)
     }
 }
 

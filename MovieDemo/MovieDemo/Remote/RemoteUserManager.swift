@@ -11,11 +11,11 @@ import Combine
 
 struct RemoteUserManager {
     let sessionId: String?
-    let service: MovieDBService
+    let service: MovieService
     
     init(sessionId: String? = nil) {
         self.sessionId = sessionId
-        self.service = MovieDBService(sessionId: sessionId)
+        self.service = MovieService(sessionId: sessionId)
     }
     
     private struct FavoriteRequestBody: Encodable {
