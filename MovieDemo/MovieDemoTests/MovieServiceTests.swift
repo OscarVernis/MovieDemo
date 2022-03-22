@@ -40,10 +40,14 @@ class MovieServiceTests: XCTestCase {
 
         var results = (movies: [Movie](), totalPages: 0)
         let sut = MovieService(session: mocker.session)
-        results = try! awaitPublisher( sut.getModels(model: Movie.self, endpoint: .NowPlaying) )
+        do {
+            results = try awaitPublisher( sut.getModels(model: Movie.self, endpoint: .NowPlaying) )
+        } catch(let error) {
+            XCTAssertNotNil(error)
+        }
         
-        XCTAssertEqual(results.movies.count, 20)
-        XCTAssertEqual(results.totalPages, 33)
+        XCTAssertEqual(results.movies.count, 0)
+        XCTAssertEqual(results.totalPages, 0)
     }
     
 }
