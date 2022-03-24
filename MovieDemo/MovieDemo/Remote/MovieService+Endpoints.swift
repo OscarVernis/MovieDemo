@@ -50,7 +50,6 @@ extension MovieService {
             )
         }
         
-        print(url)
         return url
     }
     
