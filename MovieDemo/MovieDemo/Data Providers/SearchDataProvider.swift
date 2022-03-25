@@ -31,8 +31,8 @@ class SearchDataProvider: ArrayDataProvider {
                 
                 return query
             }
-            .sink { _ in
-                self.refresh()
+            .sink { [weak self] _ in
+                self?.refresh()
             }
             .store(in: &cancellables)
     }
@@ -81,25 +81,25 @@ class SearchDataProvider: ArrayDataProvider {
         
         let searchQuery = query
         searchService.search(query: searchQuery, page: page)
-            .sink { completion in
-                self.isLoading = false
+            .sink { [weak self] completion in
+                self?.isLoading = false
                 
                 switch completion {
                 case .finished:
-                    self.didUpdate?(nil)
+                    self?.didUpdate?(nil)
                 case .failure(let error):
-                    self.didUpdate?(error)
+                    self?.didUpdate?(error)
                 }
-            } receiveValue: { (items, totalPages) in
-                self.currentPage += 1
+            } receiveValue: { [weak self] (items, totalPages) in
+                self?.currentPage += 1
                 
-                if self.currentPage == 1 {
-                    self.items.removeAll()
+                if self?.currentPage == 1 {
+                    self?.items.removeAll()
                 }
                 
-                self.totalPages = totalPages
+                self?.totalPages = totalPages
                 
-                self.items.append(contentsOf: items)
+                self?.items.append(contentsOf: items)
             }
             .store(in: &cancellables)
     }

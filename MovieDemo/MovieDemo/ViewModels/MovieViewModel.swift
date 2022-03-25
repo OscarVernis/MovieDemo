@@ -54,15 +54,15 @@ extension MovieViewModel {
     
     private func getMovieDetails() {
         movieService.getMovieDetails(movieId: movie.id!)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.didUpdate?(nil)
+                    self?.didUpdate?(nil)
                 case .failure(let error):
-                    self.didUpdate?(error)
+                    self?.didUpdate?(error)
                 }
-            } receiveValue: { movie in
-                self.updateMovie(movie)
+            } receiveValue: { [weak self] movie in
+                self?.updateMovie(movie)
             }
             .store(in: &cancellables)
     }
@@ -264,10 +264,10 @@ extension MovieViewModel {
         }
         
         userService.markAsFavorite(favorite, movieId: id)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.movie.favorite = favorite
+                    self?.movie.favorite = favorite
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)
@@ -284,10 +284,10 @@ extension MovieViewModel {
         }
         
         userService.addToWatchlist(watchlist, movieId: id)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.movie.watchlist = watchlist
+                    self?.movie.watchlist = watchlist
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)
@@ -314,11 +314,11 @@ extension MovieViewModel {
         }
         
         userService.rateMovie(adjustedRating, movieId: id)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.movie.userRating = adjustedRating
-                    self.movie.watchlist = false //Server removes movie from watchlist when rating
+                    self?.movie.userRating = adjustedRating
+                    self?.movie.watchlist = false //Server removes movie from watchlist when rating
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)
@@ -336,10 +336,10 @@ extension MovieViewModel {
         }
         
         userService.deleteRate(movieId: movie.id)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.movie.userRating = nil
+                    self?.movie.userRating = nil
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)

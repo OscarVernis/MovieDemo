@@ -54,8 +54,8 @@ extension SessionManager {
             case .failure(let error):
                 completionHandler(error)
             }
-        } receiveValue: { sessionId in
-            self.save(username: username, sessionId: sessionId)
+        } receiveValue: { [weak self] sessionId in
+            self?.save(username: username, sessionId: sessionId)
         }.store(in: &cancellables)
     }
     
@@ -98,10 +98,10 @@ extension SessionManager {
         guard let sessionId = sessionId else { return }
         
         service.deleteSession(sessionId: sessionId)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.deleteUserInfo()
+                    self?.deleteUserInfo()
                 case .failure(_):
                     break
                 }

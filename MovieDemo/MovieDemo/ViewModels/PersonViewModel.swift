@@ -44,15 +44,15 @@ extension PersonViewModel {
     
     private func loadPersonDetails() {
         personService.getPersonDetails(personId: person.id)
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.didUpdate?(nil)
+                    self?.didUpdate?(nil)
                 case .failure(let error):
-                    self.didUpdate?(error)
+                    self?.didUpdate?(error)
                 }
-            } receiveValue: { person in
-                self.updatePerson(person)
+            } receiveValue: { [weak self] person in
+                self?.updatePerson(person)
             }
             .store(in: &cancellables)
     }

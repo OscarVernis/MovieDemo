@@ -50,15 +50,15 @@ class UserViewModel {
         isLoading = false
         
         service.getUserDetails()
-            .sink { completion in
+            .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self.didUpdate?(nil)
+                    self?.didUpdate?(nil)
                 case .failure(let error):
-                    self.didUpdate?(error)
+                    self?.didUpdate?(error)
                 }
-            } receiveValue: { user in
-                self.user = user
+            } receiveValue: { [weak self] user in
+                self?.user = user
             }
             .store(in: &cancellables)
     }
