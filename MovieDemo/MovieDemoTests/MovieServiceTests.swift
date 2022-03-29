@@ -17,12 +17,12 @@ class MovieServiceTests: XCTestCase {
         let mocker = MockData(jsonFile: "Movie", url: url)
         
         let sut = MovieService(session: mocker.session)
-        var movie: Movie?
+        var movie = Movie()
         
         XCTAssertNoThrow(movie = try awaitPublisher( sut.getModel(endpoint: .MovieDetails(movieId: movieId)) ))
         
-        XCTAssertEqual(movie?.id, movieId)
-        XCTAssertEqual(movie?.title, "The Dark Knight")
+        XCTAssertEqual(movie.id, movieId)
+        XCTAssertEqual(movie.title, "The Dark Knight")
     }
     
     func test_getModels_success() {
@@ -30,12 +30,12 @@ class MovieServiceTests: XCTestCase {
         let mocker = MockData(jsonFile: "Movies", url: url)
         
         let sut = MovieService(session: mocker.session)
-        var results: (movies: [Movie], totalPages: Int)?
+        var results = (movies: [Movie](), totalPages: 0)
         
         XCTAssertNoThrow(results = try awaitPublisher( sut.getModels(endpoint: .NowPlaying) ))
         
-        XCTAssertEqual(results?.movies.count, 20)
-        XCTAssertEqual(results?.totalPages, 33)
+        XCTAssertEqual(results.movies.count, 20)
+        XCTAssertEqual(results.totalPages, 33)
     }
     
     func test_getModels_failsOnEmptyResult() {
@@ -45,7 +45,7 @@ class MovieServiceTests: XCTestCase {
         
         let sut = MovieService(session: mocker.session)
         var results: (movies: [Movie], totalPages: Int)?
-        
+
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .NowPlaying) ))
         XCTAssertNil(results)
     }
