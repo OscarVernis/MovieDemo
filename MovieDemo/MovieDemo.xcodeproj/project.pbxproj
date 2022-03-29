@@ -1407,6 +1407,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = oscarvernis.MovieDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1428,7 +1429,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_CODE_SIGN_FLAGS = "--generate-entitlement-der";
+				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = oscarvernis.MovieDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1481,8 +1482,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WeTransfer/Mocker";
 			requirement = {
-				kind = exactVersion;
-				version = 2.5.4;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.4;
 			};
 		};
 		557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {

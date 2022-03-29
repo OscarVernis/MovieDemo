@@ -1,61 +1,59 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Alamofire",
-        "repositoryURL": "https://github.com/Alamofire/Alamofire",
-        "state": {
-          "branch": null,
-          "revision": "d120af1e8638c7da36c8481fd61a66c0c08dc4fc",
-          "version": "5.4.4"
-        }
-      },
-      {
-        "package": "AlamofireImage",
-        "repositoryURL": "https://github.com/Alamofire/AlamofireImage",
-        "state": {
-          "branch": null,
-          "revision": "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
-          "version": "4.2.0"
-        }
-      },
-      {
-        "package": "KeychainAccess",
-        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
-        "state": {
-          "branch": null,
-          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
-          "version": "4.2.2"
-        }
-      },
-      {
-        "package": "Loaf",
-        "repositoryURL": "https://github.com/schmidyy/Loaf",
-        "state": {
-          "branch": null,
-          "revision": "5f78a659666fd1025579ded60960452a4c60eda6",
-          "version": "0.7.0"
-        }
-      },
-      {
-        "package": "Mocker",
-        "repositoryURL": "https://github.com/WeTransfer/Mocker",
-        "state": {
-          "branch": null,
-          "revision": "352066f1a29108548386487ae083b4115e94c1fb",
-          "version": "2.5.4"
-        }
-      },
-      {
-        "package": "SPStorkController",
-        "repositoryURL": "https://github.com/ivanvorobei/SPStorkController",
-        "state": {
-          "branch": null,
-          "revision": "87440c439e84bea61b28e82788ae704ab7171eb1",
-          "version": "1.8.5"
-        }
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire",
+      "state" : {
+        "revision" : "f82c23a8a7ef8dc1a49a8bfc6a96883e79121864",
+        "version" : "5.5.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "alamofireimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/AlamofireImage",
+      "state" : {
+        "revision" : "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
+        "version" : "4.2.0"
+      }
+    },
+    {
+      "identity" : "keychainaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kishikawakatsumi/KeychainAccess",
+      "state" : {
+        "revision" : "84e546727d66f1adc5439debad16270d0fdd04e7",
+        "version" : "4.2.2"
+      }
+    },
+    {
+      "identity" : "loaf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/schmidyy/Loaf",
+      "state" : {
+        "revision" : "5f78a659666fd1025579ded60960452a4c60eda6",
+        "version" : "0.7.0"
+      }
+    },
+    {
+      "identity" : "mocker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WeTransfer/Mocker",
+      "state" : {
+        "revision" : "077c52a31f5ebb649ebe546cc77d8647760b2279",
+        "version" : "2.5.5"
+      }
+    },
+    {
+      "identity" : "spstorkcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ivanvorobei/SPStorkController",
+      "state" : {
+        "revision" : "9eea2c3259420c278fcd2dbbab242ef5fcf54dc9",
+        "version" : "1.8.5"
+      }
+    }
+  ],
+  "version" : 2
 }
