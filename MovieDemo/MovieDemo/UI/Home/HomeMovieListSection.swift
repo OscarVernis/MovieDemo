@@ -33,7 +33,7 @@ class HomeMovieListSection: FetchableSection {
         sectionType.title()
     }
     
-    var dataProvider: MovieListDataProvider
+    var dataProvider: MoviesDataProvider
     var movieService: MovieList = .NowPlaying
     
     var sectionType: SectionType = .NowPlaying
@@ -50,13 +50,13 @@ class HomeMovieListSection: FetchableSection {
         
         switch sectionType {
         case .NowPlaying:
-            self.dataProvider = MovieListDataProvider(.NowPlaying, movieLoader: RemoteMoviesLoaderWithCache())
+            self.dataProvider = MoviesDataProvider(.NowPlaying, movieLoader: RemoteMoviesLoaderWithCache())
         case .Popular:
-            self.dataProvider = MovieListDataProvider(.Popular, movieLoader: RemoteMoviesLoaderWithCache())
+            self.dataProvider = MoviesDataProvider(.Popular, movieLoader: RemoteMoviesLoaderWithCache())
         case .TopRated:
-            self.dataProvider = MovieListDataProvider(.TopRated, movieLoader: RemoteMoviesLoaderWithCache())
+            self.dataProvider = MoviesDataProvider(.TopRated, movieLoader: RemoteMoviesLoaderWithCache())
         case .Upcoming:
-            self.dataProvider = MovieListDataProvider(.Upcoming, movieLoader: RemoteMoviesLoaderWithCache())
+            self.dataProvider = MoviesDataProvider(.Upcoming, movieLoader: RemoteMoviesLoaderWithCache())
         }
         
         self.dataProvider.didUpdate = { error in

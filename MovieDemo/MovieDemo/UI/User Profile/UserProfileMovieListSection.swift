@@ -73,14 +73,14 @@ class UserProfileMovieListSection: ConfigurableSection {
     func reusableView(withCollectionView collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
 
-        let dataProvider: MovieListDataProvider
+        let dataProvider: MoviesDataProvider
         switch sectionType {
         case .Favorites:
-            dataProvider = MovieListDataProvider(.UserFavorites)
+            dataProvider = MoviesDataProvider(.UserFavorites)
         case .Watchlist:
-            dataProvider = MovieListDataProvider(.UserWatchList)
+            dataProvider = MoviesDataProvider(.UserWatchList)
         case .Rated:
-            dataProvider = MovieListDataProvider(.UserRated)
+            dataProvider = MoviesDataProvider(.UserRated)
         }
         
         var tapHandler: (() -> ())? = nil

@@ -130,14 +130,14 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     }
     
     func showMovieList(section: HomeMovieListSection) {
-        let dataProvider = MovieListDataProvider(section.dataProvider.currentService)
+        let dataProvider = MoviesDataProvider(section.dataProvider.currentService)
         mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
     }
     
     //MARK: - CollectionView Delegate
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let section = sections[indexPath.section] as? HomeMovieListSection {
-            let movie = section.dataProvider.item(atIndex: indexPath.row)
+            let movie = section.dataProvider.movie(atIndex: indexPath.row)
             
             mainCoordinator.showMovieDetail(movie: movie)
         }

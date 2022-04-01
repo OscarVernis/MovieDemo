@@ -9,7 +9,7 @@
 import UIKit
 
 class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigurator>: FetchableSection {
-    let dataProvider: Provider
+    var dataProvider: Provider
     let cellConfigurator: Configurator
     
     init(dataProvider: Provider, cellConfigurator: Configurator) {

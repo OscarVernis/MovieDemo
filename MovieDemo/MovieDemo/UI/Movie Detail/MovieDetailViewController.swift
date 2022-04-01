@@ -175,7 +175,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             recommendedSection.titleHeaderButtonHandler = { [weak self] in
                 guard let self = self else {return }
                 
-                self.mainCoordinator.showMovieList(title: recommendedSection.title, dataProvider: MovieListDataProvider(.Recommended(movieId: self.movie.id)))
+                self.mainCoordinator.showMovieList(title: recommendedSection.title, dataProvider: MoviesDataProvider(.Recommended(movieId: self.movie.id)))
             }
             
             sections.append(recommendedSection)
