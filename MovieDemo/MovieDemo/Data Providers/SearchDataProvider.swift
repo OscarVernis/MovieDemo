@@ -86,19 +86,17 @@ class SearchDataProvider: ArrayDataProvider {
                 
                 switch completion {
                 case .finished:
+                    self?.currentPage += 1
                     self?.didUpdate?(nil)
                 case .failure(let error):
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] (items, totalPages) in
-                self?.currentPage += 1
-                
                 if self?.currentPage == 1 {
                     self?.items.removeAll()
                 }
                 
                 self?.totalPages = totalPages
-                
                 self?.items.append(contentsOf: items)
             }
             .store(in: &cancellables)

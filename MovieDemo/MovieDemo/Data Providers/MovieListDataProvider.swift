@@ -69,42 +69,26 @@ class MovieListDataProvider: ArrayDataProvider {
         }
         
         isLoading = true
-        
-        let completionHandler: MovieLoader.MovieListCompletion = { [weak self] result in
-            guard let self = self else { return }
-            
-            self.isLoading = false
-            
-            switch result {
-            case .success((let movies, let totalPages)):
-                self.currentPage += 1
-                
-                if self.currentPage == 1 {
-                    self.movies.removeAll()
-                }
-                
-                self.totalPages = totalPages
-                self.movies.append(contentsOf: movies)
-
-                self.didUpdate?(nil)
-            case .failure(let error):
-                self.didUpdate?(error)
-            }
-            
-        }
-        
         let page = currentPage + 1
         
         movieLoader.getMovies(movieList: currentService, page: page)
-            .sink { completion in
+            .sink { [weak self] completion in
+                self?.isLoading = false
+
                 switch completion {
                 case .finished:
-                    break
+                    self?.currentPage += 1
+                    self?.didUpdate?(nil)
                 case .failure(let error):
-                    completionHandler(.failure(error))
+                    self?.didUpdate?(error)
                 }
-            } receiveValue: { movies, totalPages in
-                completionHandler(.success((movies, totalPages)))
+            } receiveValue: { [weak self] movies, totalPages in
+                if self?.currentPage == 1 {
+                    self?.movies.removeAll()
+                }
+                
+                self?.totalPages = totalPages
+                self?.movies.append(contentsOf: movies)
             }
             .store(in: &cancellables)
     }
