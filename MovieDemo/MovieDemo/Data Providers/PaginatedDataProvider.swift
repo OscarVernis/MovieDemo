@@ -44,7 +44,6 @@ class PaginatedDataProvider<T>: ArrayDataProvider {
     }
     
     func refresh() {
-        items.removeAll()
         currentPage = 0
         totalPages = 1
         getItems()

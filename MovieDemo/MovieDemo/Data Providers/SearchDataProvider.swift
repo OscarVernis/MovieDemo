@@ -48,6 +48,10 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] (items, totalPages) in
+                if self?.currentPage == 1 {
+                    self?.items.removeAll()
+                }
+                
                 self?.totalPages = totalPages
                 self?.items.append(contentsOf: items)
             }

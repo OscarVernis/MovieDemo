@@ -39,6 +39,10 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] movies, totalPages in
+                if self?.currentPage == 1 {
+                    self?.items.removeAll()
+                }
+                
                 self?.totalPages = totalPages
                 self?.items.append(contentsOf: movies.map(MovieViewModel.init) )
             }
