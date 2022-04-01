@@ -22,10 +22,6 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
         self.movieLoader = movieLoader
     }
     
-    func movie(atIndex index: Int) -> MovieViewModel {
-        return items[index]
-    }
-    
     override func getItems() {
         let page = currentPage + 1
         
@@ -39,7 +35,7 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] movies, totalPages in
-                if self?.currentPage == 1 {
+                if self?.currentPage == 0 {
                     self?.items.removeAll()
                 }
                 

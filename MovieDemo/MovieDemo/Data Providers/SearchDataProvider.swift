@@ -34,10 +34,26 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
     
     let searchService = RemoteSearch()
     
+    override func item(atIndex index: Int) -> Any {
+        let item = items[index]
+        
+        switch item {
+        case let movie as Movie:
+           return MovieViewModel(movie: movie)
+        case let person as Person:
+            return PersonViewModel(person: person)
+        default:
+            fatalError("Unknown Media Type")
+        }
+    }
+    
     override func getItems() {
+        guard query.count > 1 else { return }
+        
         let page = currentPage + 1
         
         let searchQuery = query
+        print("Query: \(searchQuery)")
         searchService.search(query: searchQuery, page: page)
             .sink { [weak self] completion in
                 switch completion {
@@ -48,7 +64,7 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] (items, totalPages) in
-                if self?.currentPage == 1 {
+                if self?.currentPage == 0 {
                     self?.items.removeAll()
                 }
                 

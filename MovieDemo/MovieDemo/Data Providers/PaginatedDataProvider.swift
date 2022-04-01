@@ -15,9 +15,7 @@ class PaginatedDataProvider<T>: ArrayDataProvider {
     var items = [T]()
     var cancellables = Set<AnyCancellable>()
     
-    init() {
-        
-    }
+    init() {}
     
     var itemCount: Int {
         return items.count

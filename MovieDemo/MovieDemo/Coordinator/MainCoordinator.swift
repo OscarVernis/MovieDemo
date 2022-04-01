@@ -106,7 +106,7 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: true)
         
         lvc.didSelectedItem = { [weak self] index in
-            let movie = dataProvider.movie(atIndex: index)
+            let movie = dataProvider.item(atIndex: index)
 
             self?.showMovieDetail(movie: movie)
         }

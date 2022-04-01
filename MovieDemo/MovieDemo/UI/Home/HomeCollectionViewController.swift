@@ -82,10 +82,10 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
             let item = self.searchSection.dataProvider.item(atIndex: index)
             
             switch item {
-            case let movie as Movie:
-                self.mainCoordinator.showMovieDetail(movie: MovieViewModel(movie: movie))
-            case let person as Person:
-                self.mainCoordinator.showPersonProfile(PersonViewModel(person: person))
+            case let movie as MovieViewModel:
+                self.mainCoordinator.showMovieDetail(movie: movie)
+            case let person as PersonViewModel:
+                self.mainCoordinator.showPersonProfile(person)
             default:
                 break
             }
@@ -137,7 +137,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     //MARK: - CollectionView Delegate
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let section = sections[indexPath.section] as? HomeMovieListSection {
-            let movie = section.dataProvider.movie(atIndex: indexPath.row)
+            let movie = section.dataProvider.item(atIndex: indexPath.row)
             
             mainCoordinator.showMovieDetail(movie: movie)
         }
