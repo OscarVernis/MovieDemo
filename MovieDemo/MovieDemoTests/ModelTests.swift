@@ -58,6 +58,22 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(movie.genres, [.Fantasy, .Action, .Crime])
     }
     
+    func test_PersonModel_Detail() {
+        var personData = Data()
+        XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
+        
+        let decoder = jsonDecoder()
+        var person = Person()
+        XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
+        
+        XCTAssertNotNil(person)
+        XCTAssertEqual(person.id, 10859)
+        XCTAssertEqual(person.name, "Ryan Reynolds")
+        
+        XCTAssertEqual(person.castCredits?.map(\.movie).filter { $0 == nil }.count, 0)
+        XCTAssertEqual(person.crewCredits?.map(\.movie).filter { $0 == nil }.count, 0)
+    }
+    
     //MARK: - Helpers
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         let decoder = JSONDecoder()

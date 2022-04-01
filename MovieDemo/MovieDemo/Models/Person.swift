@@ -47,16 +47,18 @@ extension Person: Codable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+       
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        knownForDepartment = try container.decodeIfPresent(String.self, forKey: .knownForDepartment)
-        birthday = try container.decodeIfPresent(Date.self, forKey: .birthday)
-        deathday = try container.decodeIfPresent(Date.self, forKey: .deathday)
-        biography = try container.decodeIfPresent(String.self, forKey: .biography)
-        placeOfBirth = try container.decodeIfPresent(String.self, forKey: .placeOfBirth)
-        profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
-        knownForMovies = try container.decodeIfPresent([Movie].self, forKey: .knownForMovies)
+        do {
+            knownForDepartment = try container.decodeIfPresent(String.self, forKey: .knownForDepartment)
+            birthday = try container.decodeIfPresent(Date.self, forKey: .birthday)
+            deathday = try container.decodeIfPresent(Date.self, forKey: .deathday)
+            biography = try container.decodeIfPresent(String.self, forKey: .biography)
+            placeOfBirth = try container.decodeIfPresent(String.self, forKey: .placeOfBirth)
+            profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
+            knownForMovies = try container.decodeIfPresent([Movie].self, forKey: .knownForMovies)
+        } catch { }
         
         let nestedContainer = try decoder.container(keyedBy: NestedKeys.self)
         

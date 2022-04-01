@@ -153,9 +153,7 @@ extension MovieService {
     static func userImageURL(forHash hash: String) -> URL {
         let urlString = String(format: avatarImageURL, hash)
         let url = URL(string: urlString)!
-        
-        print(url)
-        
+                
         return url
     }
 }

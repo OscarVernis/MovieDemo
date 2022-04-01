@@ -10,14 +10,20 @@ import Foundation
 import Combine
 
 struct RemoteMoviesLoaderWithCache: MovieLoader {
-    let remoteMoviesLoader = RemoteMoviesLoader(sessionId: SessionManager.shared.sessionId)
-    let movieCache = MovieCache()
+    let remote: MovieLoader
+    let cache: MovieCache
+    
+    init(remote: MovieLoader = RemoteMoviesLoader(sessionId: SessionManager.shared.sessionId),
+         cache: MovieCache = MovieCache()) {
+        self.remote = remote
+        self.cache = cache
+    }
     
     func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
-        return remoteMoviesLoader.getMovies(movieList: movieList, page: page)
-            .caching(movieCache, page: page, movieList: movieList)
-            .catch { error  in
-                return movieCache.getMovies(movieList: movieList, page: page)
+        return remote.getMovies(movieList: movieList, page: page)
+            .caching(cache, page: page, movieList: movieList)
+            .catch { _ in
+                return cache.getMovies(movieList: movieList, page: page)
             }
             .eraseToAnyPublisher()
     }
