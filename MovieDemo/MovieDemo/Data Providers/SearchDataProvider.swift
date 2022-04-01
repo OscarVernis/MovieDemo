@@ -45,8 +45,6 @@ class SearchDataProvider: ArrayDataProvider {
     
     let searchService = RemoteSearch()
 
-    private var isLoading = false
-
     var currentPage = 0
     var totalPages = 1
     
@@ -58,32 +56,25 @@ class SearchDataProvider: ArrayDataProvider {
     private var cancellables = Set<AnyCancellable>()
     
     func loadMore() {
-        if isLastPage {
-            return
+        if !isLastPage {
+            getItems()
         }
         
-        getItems()
     }
     
     func refresh() {
+        items.removeAll()
         currentPage = 0
         totalPages = 1
         getItems()
     }
     
     private func getItems() {
-        if isLoading || query.isEmpty {
-            return
-        }
-        
-        isLoading = true
         let page = currentPage + 1
         
         let searchQuery = query
         searchService.search(query: searchQuery, page: page)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                
+            .sink { [weak self] completion in                
                 switch completion {
                 case .finished:
                     self?.currentPage += 1
@@ -92,10 +83,6 @@ class SearchDataProvider: ArrayDataProvider {
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] (items, totalPages) in
-                if self?.currentPage == 1 {
-                    self?.items.removeAll()
-                }
-                
                 self?.totalPages = totalPages
                 self?.items.append(contentsOf: items)
             }

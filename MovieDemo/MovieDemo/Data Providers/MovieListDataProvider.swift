@@ -39,7 +39,6 @@ class MovieListDataProvider: ArrayDataProvider {
         }
     }
     
-    private var isLoading = false
     var currentPage = 0
     var totalPages = 1
     
@@ -50,31 +49,24 @@ class MovieListDataProvider: ArrayDataProvider {
     var didUpdate: ((Error?) -> Void)?
     
     func loadMore() {
-        if isLastPage {
-            return
+        if !isLastPage {
+            getMovies()
         }
         
-        getMovies()
     }
     
     func refresh() {
+        movies.removeAll()
         currentPage = 0
         totalPages = 1
         getMovies()
     }
     
     private func getMovies() {
-        if isLoading {
-            return
-        }
-        
-        isLoading = true
         let page = currentPage + 1
         
         movieLoader.getMovies(movieList: currentService, page: page)
             .sink { [weak self] completion in
-                self?.isLoading = false
-
                 switch completion {
                 case .finished:
                     self?.currentPage += 1
@@ -83,10 +75,6 @@ class MovieListDataProvider: ArrayDataProvider {
                     self?.didUpdate?(error)
                 }
             } receiveValue: { [weak self] movies, totalPages in
-                if self?.currentPage == 1 {
-                    self?.movies.removeAll()
-                }
-                
                 self?.totalPages = totalPages
                 self?.movies.append(contentsOf: movies)
             }
