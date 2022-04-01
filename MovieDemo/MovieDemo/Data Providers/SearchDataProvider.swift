@@ -11,7 +11,14 @@ import Foundation
 class SearchDataProvider: PaginatedDataProvider<Any> {
     typealias Model = Any
 
-    @Published var query: String = ""
+    @Published var query: String = "" {
+        didSet {
+            if query.isEmpty {
+                items.removeAll()
+                didUpdate?(nil)
+            }
+        }
+    }
     
     override init() {
         super.init()
@@ -20,12 +27,13 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
             .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .compactMap { query -> String? in
-                if query.count < 1 {
+                if query.isEmpty {
                     return nil
                 }
                 
                 return query
             }
+            .print()
             .sink { [weak self] _ in
                 self?.refresh()
             }
@@ -48,12 +56,11 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
     }
     
     override func getItems() {
-        guard query.count > 1 else { return }
+        guard !query.isEmpty else { return }
         
         let page = currentPage + 1
         
         let searchQuery = query
-        print("Query: \(searchQuery)")
         searchService.search(query: searchQuery, page: page)
             .sink { [weak self] completion in
                 switch completion {

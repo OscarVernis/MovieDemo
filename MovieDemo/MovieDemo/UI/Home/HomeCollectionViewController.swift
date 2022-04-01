@@ -166,9 +166,10 @@ extension HomeCollectionViewController {
 extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControllerDelegate {
     func scrollListViewControllerToTop() {
         //Scroll results list to top everytime is shown.
+        let firstIndexPath = IndexPath(row: 0, section: 0)
         if let listController = navigationItem.searchController?.searchResultsController as? ListViewController,
-           listController.collectionView.indexPathsForVisibleItems.count > 0 {
-            listController.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+           listController.collectionView.cellForItem(at: firstIndexPath) != nil {
+            listController.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
         }
         
     }
@@ -178,7 +179,7 @@ extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControl
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchQuery = searchController.searchBar.text, !searchQuery.isEmpty {
+        if let searchQuery = searchController.searchBar.text {
             searchSection.dataProvider.query = searchQuery
         } else {
             scrollListViewControllerToTop()
