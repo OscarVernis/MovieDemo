@@ -24,6 +24,4 @@ protocol MovieLoader {
     typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
     
     func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error>
-
-//    func getMovies(movieList: MovieList, page: Int, completion: @escaping MovieListCompletion)
 }

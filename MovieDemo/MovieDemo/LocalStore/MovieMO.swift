@@ -21,6 +21,7 @@ public class MovieMO: NSManagedObject {
         super.init(entity: Self.entity(), insertInto: context)
         
         self.id = Int64(movie.id)
+#warning("Change this after testing!")
         self.title = "CD_" + movie.title
         self.backdropPath = movie.backdropPath
         self.originalTitle = movie.originalTitle

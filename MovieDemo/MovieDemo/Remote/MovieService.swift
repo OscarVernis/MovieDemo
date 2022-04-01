@@ -30,9 +30,9 @@ struct MovieService {
             self.sessionManager = session
         } else {
             let configuration = URLSessionConfiguration.af.default
-            //        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
-            //        configuration.timeoutIntervalForRequest = 5
-            //        configuration.timeoutIntervalForResource = 5
+            configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+            configuration.timeoutIntervalForRequest = 5
+            configuration.timeoutIntervalForResource = 5
             self.sessionManager =  Session(configuration: configuration)
         }
     }
@@ -127,7 +127,7 @@ extension MovieService {
     }
     
     static let baseImageURL = "https://image.tmdb.org/t/p/"
-    static let avatarImageURL = "https://www.gravatar.com/avatar/"
+    static let avatarImageURL = "https://www.gravatar.com/avatar/%@/?s=400"
     
     static func backdropImageURL(forPath path: String, size: BackdropSize = .original) -> URL {
         var url = URL(string: baseImageURL)!
@@ -151,8 +151,10 @@ extension MovieService {
     }
     
     static func userImageURL(forHash hash: String) -> URL {
-        var url = URL(string: avatarImageURL)!
-        url.appendPathComponent(hash)
+        let urlString = String(format: avatarImageURL, hash)
+        let url = URL(string: urlString)!
+        
+        print(url)
         
         return url
     }
