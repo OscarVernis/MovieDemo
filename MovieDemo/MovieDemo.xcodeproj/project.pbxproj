@@ -137,6 +137,7 @@
 		55B6CBCD27E0315B007DB4C2 /* RemoteMoviesLoaderWithCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBCC27E0315B007DB4C2 /* RemoteMoviesLoaderWithCache.swift */; };
 		55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */; };
 		55BB863E251FA1CB00F17D7F /* MovieRatingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */; };
+		55C350C227F768F1006F4E7C /* Person.json in Resources */ = {isa = PBXBuildFile; fileRef = 55C350C127F768F1006F4E7C /* Person.json */; };
 		55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */; };
 		55C4F40A251814AF002B73A9 /* CastCreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */; };
 		55CB2102252E899900BBC662 /* DataProviderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CB2101252E899900BBC662 /* DataProviderSection.swift */; };
@@ -325,6 +326,7 @@
 		55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 		55BB863F251FA1CB00F17D7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieRatingViewController.storyboard; sourceTree = "<group>"; };
 		55BB8643251FA1CF00F17D7F /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MovieRatingViewController.strings"; sourceTree = "<group>"; };
+		55C350C127F768F1006F4E7C /* Person.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Person.json; sourceTree = "<group>"; };
 		55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewCreditViewModel.swift; sourceTree = "<group>"; };
 		55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCreditViewModel.swift; sourceTree = "<group>"; };
 		55CB2101252E899900BBC662 /* DataProviderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderSection.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 				5565DE2627E97C3200D7F4EB /* Movies.json */,
 				555D760A27EA443200B8FFAB /* Movie.json */,
 				555D761827EA4CC100B8FFAB /* Movie_NoRating.json */,
+				55C350C127F768F1006F4E7C /* Person.json */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -958,6 +961,7 @@
 			files = (
 				5565DE2D27E9817800D7F4EB /* Movies.json in Resources */,
 				555D761927EA4CC200B8FFAB /* Movie_NoRating.json in Resources */,
+				55C350C227F768F1006F4E7C /* Person.json in Resources */,
 				555D760B27EA443200B8FFAB /* Movie.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
