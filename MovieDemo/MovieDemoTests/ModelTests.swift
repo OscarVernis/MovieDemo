@@ -9,8 +9,7 @@
 import XCTest
 @testable import MovieDemo
 
-class ModelTests: XCTestCase {
-
+class MovieModelTests: XCTestCase {
     func test_MovieModel_Detail() throws {
         var movieData = Data()
         XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
@@ -57,8 +56,11 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(movie.title, "Suicide Squad")
         XCTAssertEqual(movie.genres, [.Fantasy, .Action, .Crime])
     }
-    
-    func test_PersonModel_Detail() {
+}
+
+
+class PersonModelTests: XCTestCase {
+    func test_PersonModel_Detail() throws {
         var personData = Data()
         XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
         
@@ -72,18 +74,6 @@ class ModelTests: XCTestCase {
         
         XCTAssertEqual(person.castCredits?.map(\.movie).filter { $0 == nil }.count, 0)
         XCTAssertEqual(person.crewCredits?.map(\.movie).filter { $0 == nil }.count, 0)
-    }
-    
-    //MARK: - Helpers
-    func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = keyDecodingStrategy
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        return decoder
     }
 
 }

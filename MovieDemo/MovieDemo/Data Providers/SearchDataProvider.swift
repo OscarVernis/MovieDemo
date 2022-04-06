@@ -33,7 +33,6 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
                 
                 return query
             }
-            .print()
             .sink { [weak self] _ in
                 self?.refresh()
             }
