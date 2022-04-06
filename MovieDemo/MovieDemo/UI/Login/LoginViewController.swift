@@ -68,21 +68,22 @@ class LoginViewController: UIViewController {
     fileprivate func handlelogin() {
         isLoading = true
         
-        SessionManager.shared.login(withUsername: userTextField.text!, password: passwordTextField.text!) { [weak self] error  in
-            guard let self = self else { return }
+        Task {
+            let result = await SessionManager.shared.login(withUsername: userTextField.text!, password: passwordTextField.text!)
             
-            self.isLoading = false
-
-            if error == nil {
+            isLoading = false
+                        
+            switch result {
+            case .success():
                 self.didFinishLoginProcess?(true)
-            } else {
+            case .failure(let error):
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 
                 self.userTextField.text = ""
                 self.passwordTextField.text = ""
-
+                
                 self.errorLabel.isHidden = false
-                if let error = error?.asAFError, error.responseCode == 401 {
+                if let error = error.asAFError, error.responseCode == 401 {
                     self.errorLabel.text = NSLocalizedString("Invalid username and/or password.", comment: "")
                 } else {
                     self.errorLabel.text = NSLocalizedString("Login error. Please try again.", comment: "")

@@ -32,31 +32,21 @@ class SessionManager {
 
 //MARK:- Login
 extension SessionManager {
-    func login(withUsername username: String, password: String, completionHandler: @escaping (Error?) -> Void) {
-        let tokenPublisher = service.requestToken()
+    func login(withUsername username: String, password: String) async -> Result<Void, Error> {
         var token = ""
+        var sessionId = ""
         
-        let validatePubliser = tokenPublisher
-            .flatMap { resultToken -> AnyPublisher<Bool, Error> in
-                token = resultToken
-                return self.service.validateToken(username: username, password: password, requestToken: token)
-            }
-                
-        let sessionPubliser = validatePubliser
-            .flatMap { _ in
-                self.service.createSession(requestToken: token)
-            }
+        do {
+            token = try await service.requestToken()
+            try await service.validateToken(username: username, password: password, requestToken: token)
+            sessionId = try await service.createSession(requestToken: token)
+        } catch {
+            return .failure(error)
+        }
         
-        sessionPubliser.sink { completion in
-            switch completion {
-            case .finished:
-                completionHandler(nil)
-            case .failure(let error):
-                completionHandler(error)
-            }
-        } receiveValue: { [weak self] sessionId in
-            self?.save(username: username, sessionId: sessionId)
-        }.store(in: &cancellables)
+        save(username: username, sessionId: sessionId)
+        
+        return .success(())
     }
     
 }
