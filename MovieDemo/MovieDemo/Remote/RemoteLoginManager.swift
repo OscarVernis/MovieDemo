@@ -13,27 +13,10 @@ struct RemoteLoginManager {
     let service = MovieService()
     
     func requestToken() async throws -> String {
-        try await withCheckedThrowingContinuation { continuation in
-            var cancellable: AnyCancellable?
-            
-            let publisher: AnyPublisher<ServiceSuccessResult, Error> = service.successAction(endpoint: .RequestToken)
-            cancellable = publisher
-                .tryMap { guard let requestToken = $0.requestToken else { throw MovieService.ServiceError.jsonError }
-                    return requestToken
-                }
-                .eraseToAnyPublisher()
-                .sink { result in
-                    switch result {
-                    case .finished:
-                        break
-                    case let .failure(error):
-                        continuation.resume(throwing: error)
-                    }
-                    cancellable?.cancel()
-                } receiveValue: { value in
-                    continuation.resume(with: .success(value) )
-                }
-        }
+        let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .RequestToken)
+        guard let token: String = serviceResult.requestToken else { throw MovieService.ServiceError.jsonError }
+        
+        return token
     }
     
     func validateToken(username: String, password: String, requestToken: String) async throws {
@@ -43,56 +26,28 @@ struct RemoteLoginManager {
             "request_token": requestToken
         ]
         
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>)  in
-            var cancellable: AnyCancellable?
-            
-            let publisher: AnyPublisher<ServiceSuccessResult, Error> = service.successAction(endpoint: .ValidateToken, body: body, method: .post)
-            cancellable = publisher
-                .sink { result in
-                    switch result {
-                    case .finished:
-                        continuation.resume()
-                    case let .failure(error):
-                        continuation.resume(throwing: error)
-                    }
-                    cancellable?.cancel()
-                } receiveValue: { _ in }
-        }
+        let _: ServiceSuccessResult = try await service.successAction(endpoint: .ValidateToken, body: body, method: .post)
     }
     
     
     func createSession(requestToken: String) async throws -> String  {
-        try await withCheckedThrowingContinuation { continuation in
-            var cancellable: AnyCancellable?
-            let body = ["request_token": requestToken]
-            
-            
-            let publisher: AnyPublisher<ServiceSuccessResult, Error> =  service.successAction(endpoint: .CreateSession, body: body, method: .post)
-            cancellable = publisher
-                .tryMap { guard let sessionId = $0.sessionId else { throw MovieService.ServiceError.jsonError }
-                    return sessionId
-                }
-                .eraseToAnyPublisher()
-                .sink { result in
-                    switch result {
-                    case .finished:
-                        break
-                    case let .failure(error):
-                        continuation.resume(throwing: error)
-                    }
-                    cancellable?.cancel()
-                } receiveValue: { value in
-                    continuation.resume(with: .success(value) )
-                }
-        }
+        let body = ["request_token": requestToken]
+        let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .CreateSession, body: body, method: .post)
         
+        guard let sessionId: String = serviceResult.sessionId else { throw MovieService.ServiceError.jsonError }
+        
+        return sessionId
     }
     
-    func deleteSession(sessionId: String) -> AnyPublisher<Bool, Error> {
+    func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
         let body = ["session_id": sessionId]
         
-        return service.successAction(endpoint: .DeleteSession, body: body, method: .delete)
-            .compactMap { $0.success }
-            .eraseToAnyPublisher()
+        let result = try await service.successAction(endpoint: .DeleteSession, body: body, method: .delete)
+        if let success = result.success, success == true {
+            return .success(())
+        } else {
+            return .failure(MovieService.ServiceError.noSuccess)
+        }
+
     }
 }

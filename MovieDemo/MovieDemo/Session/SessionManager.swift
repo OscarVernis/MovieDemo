@@ -22,9 +22,7 @@ class SessionManager {
     var isLoggedIn: Bool = false
     var username: String?
     var sessionId: String?
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     private init() {
         load()
     }
@@ -83,20 +81,26 @@ extension SessionManager {
 
 //MARK:- Logout
 extension SessionManager {
-    //TODO: Handle Logout service error
-    func logout() {
-        guard let sessionId = sessionId else { return }
+    func logout() async -> Result<Void, Error> {
+        guard let sessionId = sessionId else { return .success(()) }
+        var result: Result<Void, Error>?
         
-        service.deleteSession(sessionId: sessionId)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.deleteUserInfo()
-                case .failure(_):
-                    break
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
+        do {
+            result = try await service.deleteSession(sessionId: sessionId)
+        } catch {
+            return .failure(error)
+        }
+        
+        switch result {
+        case .success():
+            deleteUserInfo()
+            return .success(())
+        case .failure(let error):
+            return .failure(error)
+        case .none:
+            return .failure(MovieService.ServiceError.noSuccess)
+        }
+        
     }
     
     func deleteUserInfo() {

@@ -62,15 +62,26 @@ final class MainCoordinator {
     }
     
     func logout() {
-        SessionManager.shared.logout()
-        
-        if isLoginRequired {
-            showLogin(animated: true)
+        Task {
+            let result = await SessionManager.shared.logout()
+            
+            await MainActor.run {
+                switch result {
+                case .success():
+                    if self.isLoginRequired {
+                        self.showLogin(animated: true)
+                    }
+                    
+                    UINotificationFeedbackGenerator().notificationOccurred(.success)
+                    
+                    self.rootNavigationViewController?.popToRootViewController(animated: true)
+                case .failure(_):
+                    AlertManager.showErrorAlert("Logout error. Please try again.", sender: self.rootNavigationViewController!)
+                    break
+                }
+                
+            }
         }
-        
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
-        
-        rootNavigationViewController?.popToRootViewController(animated: true)
     }
     
     func showUserProfile() {
