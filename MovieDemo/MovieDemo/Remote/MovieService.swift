@@ -84,7 +84,6 @@ extension MovieService {
     func getModels<T: Codable>(model: T.Type? = nil, endpoint: Endpoint, parameters: [String: String] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
         var params = parameters
         params["page"] = String(page)
-        params["region"] = "US"
         
         return getModel(model: ServiceModelsResult<T>.self, endpoint: endpoint, parameters: params)
             .map { ($0.results, $0.totalPages) }
