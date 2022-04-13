@@ -38,7 +38,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK:- ViewController
+    //MARK: - ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
@@ -65,7 +65,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         return .portrait
     }
     
-    //MARK:- Setup
+    //MARK: - Setup
     fileprivate func setup() {
         view.backgroundColor = .appBackgroundColor
         collectionView.backgroundColor = .clear
@@ -117,7 +117,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         actionsCell.rateButton.setIsSelected(movie.rated, animated: false)
     }
     
-    //MARK:- Sections
+    //MARK: - Sections
     fileprivate func reloadSections() {
         sections = [ConfigurableSection]()
         
@@ -190,7 +190,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         collectionView.reloadData()
     }
 
-    //MARK:- Actions
+    //MARK: - Actions
     @objc fileprivate func markAsFavorite() {
         if !SessionManager.shared.isLoggedIn {
             return
@@ -281,7 +281,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     
 }
 
-// MARK:- UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         guard let reusableView = view as? MovieDetailHeaderView else { return }

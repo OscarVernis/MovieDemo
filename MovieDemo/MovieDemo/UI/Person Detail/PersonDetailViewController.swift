@@ -32,7 +32,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     private var titleAnimator: UIViewPropertyAnimator?
     private var isHeaderViewCompact = false
     
-    //MARK:- View Controller
+    //MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         sections = []
@@ -59,7 +59,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         titleAnimator?.stopAnimation(true)
     }
     
-    //MARK:- Setup
+    //MARK: - Setup
     @IBAction func close(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -156,7 +156,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     
 }
     
-    //MARK:- Header Animations
+//MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func setupAnimations() {
         blurView.effect = nil
@@ -262,7 +262,7 @@ extension PersonDetailViewController {
 
 }
 
-//MARK:- CollectionView Delegate
+//MARK: - CollectionView Delegate
 extension PersonDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = sections[indexPath.section]

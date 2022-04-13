@@ -46,7 +46,7 @@ class MovieViewModel {
     
 }
 
-//MARK:- Load Movie Details
+//MARK: - Load Movie Details
 extension MovieViewModel {
     func refresh() {
         getMovieDetails()
@@ -69,7 +69,7 @@ extension MovieViewModel {
     
 }
 
-//MARK:- Properties
+//MARK: - Properties
 extension MovieViewModel {
     var id: Int {
         return movie.id
@@ -231,7 +231,7 @@ extension MovieViewModel {
     
 }
 
-//MARK:- User States
+//MARK: - User States
 extension MovieViewModel {
     var favorite: Bool {
         return movie.favorite ?? false
@@ -351,7 +351,7 @@ extension MovieViewModel {
     
 }
 
-//MARK:- Generated data
+//MARK: - Generated data
 extension MovieViewModel {
     private func updateInfoArray() {
         var info = [[String : String]]()

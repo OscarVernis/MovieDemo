@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    //MARK:- Setup
+    //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
         
     }
 
-    //MARK:- Actions
+    //MARK: - Actions
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         handlelogin()
     }
@@ -118,7 +118,7 @@ class LoginViewController: UIViewController {
         UIApplication.shared.open(url)
     }
     
-    //MARK:- Keyboard animation
+    //MARK: - Keyboard animation
     @objc func keyboardWillShow(notification: NSNotification) {
         animateWithKeyboard(notification: notification) { keyboardSize in
             self.bottomConstraint.constant = keyboardSize.height + 12

@@ -57,7 +57,7 @@ class GenericCollectionDataSource: NSObject, UICollectionViewDataSource {
         
     }
     
-    //MARK:- UICollectionViewDataSource
+    //MARK: - UICollectionViewDataSource
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }

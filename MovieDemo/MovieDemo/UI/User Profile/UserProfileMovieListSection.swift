@@ -116,7 +116,7 @@ class UserProfileMovieListSection: ConfigurableSection {
     
 }
 
-//MARK: Utils
+//MARK: - Utils
 extension UserProfileMovieListSection {
    fileprivate func emptyMessageForSection() -> NSAttributedString {
        var messageString = NSAttributedString()

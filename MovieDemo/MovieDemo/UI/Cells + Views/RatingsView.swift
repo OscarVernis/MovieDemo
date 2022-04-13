@@ -77,7 +77,7 @@ class RatingsView: UIControl {
     private let redTrackColor = #colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.5)
     private let grayTrackColor = UIColor.systemGray3
                 
-    //MARK:- Setup
+    //MARK: - Setup
     override func awakeFromNib() {
         setupView()
     }
@@ -106,7 +106,7 @@ class RatingsView: UIControl {
         return layer as! ProgressLayer
     }
     
-    //MARK:- Animations
+    //MARK: - Animations
     func setRating(rating: CGFloat, animated: Bool) {
         if animated {
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 6, options: .curveEaseIn) {
@@ -130,7 +130,7 @@ class RatingsView: UIControl {
         
     }
     
-    //MARK:- Interaction
+    //MARK: - Interaction
     @objc fileprivate func panHandler(_ gestureRecognizer: UIPanGestureRecognizer) {
         let touchLocation = gestureRecognizer.location(in: self)
         let touchRect = thumbRect.insetBy(dx: -16, dy: -16)
@@ -184,7 +184,7 @@ class RatingsView: UIControl {
         return angle
     }
 
-    //MARK:- Drawing
+    //MARK: - Drawing
     override func draw(_ rect: CGRect) {
         let layerRating = progressLayer.presentation() != nil ? progressLayer.presentation()!.rating : rating
         

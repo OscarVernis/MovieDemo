@@ -44,7 +44,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
     
     private var playerLayerKVO: NSKeyValueObservation?
     
-    //MARK:- ViewController
+    //MARK: - ViewController
     
     init(videoURL: URL? = nil, imageURL: URL? = nil, image: UIImage? = nil, presentFromView view: UIView? = nil) {
         self.videoURL = videoURL
@@ -88,7 +88,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
         playerLayerKVO?.invalidate()
     }
     
-    //MARK:- Setup
+    //MARK: - Setup
     fileprivate func createViews() {
         //Create ScrollView
         zoomScrollView = UIScrollView(frame: view.bounds)
@@ -261,7 +261,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
         return scale
     }
     
-    //MARK:- Video Handling
+    //MARK: - Video Handling
     fileprivate func startPlayingVideo() {
         isLoading = false
         
@@ -314,7 +314,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
 
     }
     
-    //MARK:- Actions
+    //MARK: - Actions
     @objc fileprivate func close(sender: UIButton) {
         if zoomScrollView.zoomScale > zoomScrollView.minimumZoomScale {
             zoomScrollView.setZoomScale(zoomScrollView.minimumZoomScale, animated: false)
@@ -324,7 +324,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
         dismiss(animated: true)
     }
         
-    //MARK:- Gesture Handlers
+    //MARK: - Gesture Handlers
     @IBAction fileprivate func handleAttachmentGesture(sender: UIPanGestureRecognizer) {
         guard isLoading == false, zoomScrollView.zoomScale <= zoomScrollView.minimumZoomScale, let contentView = contentView else {
             return
@@ -423,7 +423,7 @@ final class MediaViewerViewController: UIViewController, UIScrollViewDelegate, U
         return zoomRect
     }
     
-    //MARK:- UIScrollViewDelegate
+    //MARK: - UIScrollViewDelegate
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         if isLoading {
             return nil

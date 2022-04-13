@@ -17,7 +17,7 @@ class MovieVideoViewModel {
     }
 }
 
-//MARK:- Youtube Utils
+//MARK: - Youtube Utils
 extension MovieVideoViewModel {
     private var baseTrailerURL: String {
         return "https://www.youtube.com/watch?v="
@@ -29,7 +29,7 @@ extension MovieVideoViewModel {
 
 }
 
-//MARK:- Properties
+//MARK: - Properties
 extension MovieVideoViewModel {
     var name: String {
         return video.name ?? ""

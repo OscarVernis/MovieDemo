@@ -25,7 +25,7 @@ class MovieRatingViewController: UIViewController {
     
     var didUpdateRating: (() -> Void)? = nil
     
-    //MARK:- Setup
+    //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,7 +63,7 @@ class MovieRatingViewController: UIViewController {
         }
     }
     
-    //MARK:- Actions
+    //MARK: - Actions
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true)
     }

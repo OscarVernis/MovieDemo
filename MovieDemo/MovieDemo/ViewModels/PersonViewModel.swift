@@ -36,7 +36,7 @@ class PersonViewModel {
     
 }
 
-//MARK:- Load Person Details
+//MARK: - Load Person Details
 extension PersonViewModel {
     func refresh() {
         loadPersonDetails()
@@ -59,7 +59,7 @@ extension PersonViewModel {
     
 }
     
-//MARK:- Properties
+//MARK: - Properties
 extension PersonViewModel {
     var id: Int {
         return person.id

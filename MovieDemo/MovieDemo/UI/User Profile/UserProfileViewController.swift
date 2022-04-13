@@ -22,7 +22,7 @@ class UserProfileViewController: UIViewController, GenericCollection {
     private var user = UserViewModel()
 
     
-    //MARK:- Setup
+    //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,7 +117,7 @@ extension UserProfileViewController {
     }
 }
 
-//MARK: UICollectionViewDelegate
+//MARK: - UICollectionViewDelegate
 extension UserProfileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let section = sections[indexPath.section] as? UserProfileMovieListSection, section.movies.count > 0 {

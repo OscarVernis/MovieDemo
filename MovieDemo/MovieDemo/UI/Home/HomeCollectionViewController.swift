@@ -22,7 +22,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
 
     let manager = NetworkReachabilityManager(host: "www.google.com")
     
-    //MARK:- Setup
+    //MARK: - Setup
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -120,7 +120,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
         refresh()
     }
     
-    //MARK:- Actions
+    //MARK: - Actions
     @objc func showUser() {
         mainCoordinator.showUserProfile()
     }

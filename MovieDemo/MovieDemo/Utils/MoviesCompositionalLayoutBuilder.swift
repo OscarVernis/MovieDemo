@@ -17,7 +17,7 @@ struct MoviesCompositionalLayoutBuilder {
         }
     }
     
-    //MARK:- General
+    //MARK: - General
     func createHeader(height: NSCollectionLayoutDimension) -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: height)
@@ -49,7 +49,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
-    //MARK:- Headers
+    //MARK: - Headers
     func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         return createHeader(height: .absolute(48))
     }
@@ -59,7 +59,7 @@ struct MoviesCompositionalLayoutBuilder {
         return createHeader(height: .estimated(500))
     }
     
-    //MARK:- Lists
+    //MARK: - Lists
     
     //Regular List
     func createListSection(height: CGFloat = 150, columns: Int = 1) ->  NSCollectionLayoutSection {
@@ -81,7 +81,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
-    //MARK:- Other
+    //MARK: - Other
     
     //Horizontal scroll with no paging, several items at a time
     func createHorizontalPosterSection() ->  NSCollectionLayoutSection {

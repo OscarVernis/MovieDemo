@@ -22,7 +22,7 @@ class MediaViewerPlayerControls: UIView {
     
     var playerOberservationToken: NSKeyValueObservation? = nil
     
-    //MARK:- UIView
+    //MARK: - UIView
     override func awakeFromNib() {
         layer.cornerRadius = 12
         layer.masksToBounds = true
@@ -32,7 +32,7 @@ class MediaViewerPlayerControls: UIView {
         playerOberservationToken?.invalidate()
     }
     
-    //MARK:- Setup
+    //MARK: - Setup
     fileprivate func setup() {
         transportSlider.setThumbImage(UIImage(named: "thumb"), for: .normal)
         transportSlider.setThumbImage(UIImage(named: "thumb"), for: .highlighted)
@@ -71,7 +71,7 @@ class MediaViewerPlayerControls: UIView {
         
     }
     
-    //MARK:- Actions
+    //MARK: - Actions
     @IBAction func playButtonTapped() {
         switch player?.timeControlStatus {
         case .playing:

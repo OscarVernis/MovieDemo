@@ -28,7 +28,7 @@ class SessionManager {
     }
 }
 
-//MARK:- Login
+//MARK: - Login
 extension SessionManager {
     func login(withUsername username: String, password: String) async -> Result<Void, Error> {
         var token = ""
@@ -49,7 +49,7 @@ extension SessionManager {
     
 }
 
-//MARK:- Save and retrieve session
+//MARK: - Save and retrieve session
 extension SessionManager {
     fileprivate func load() {
         let loggedIn = UserDefaults.standard.bool(forKey: LocalKeys.loggedIn.rawValue)
@@ -79,7 +79,7 @@ extension SessionManager {
     }
 }
 
-//MARK:- Logout
+//MARK: - Logout
 extension SessionManager {
     func logout() async -> Result<Void, Error> {
         guard let sessionId = sessionId else { return .success(()) }
