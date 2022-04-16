@@ -14,7 +14,7 @@ struct RemoteLoginManager {
     
     func requestToken() async throws -> String {
         let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .RequestToken)
-        guard let token: String = serviceResult.requestToken else { throw MovieService.ServiceError.jsonError }
+        guard let token: String = serviceResult.requestToken else { throw MovieService.ServiceError.JsonError }
         
         return token
     }
@@ -34,7 +34,7 @@ struct RemoteLoginManager {
         let body = ["request_token": requestToken]
         let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .CreateSession, body: body, method: .post)
         
-        guard let sessionId: String = serviceResult.sessionId else { throw MovieService.ServiceError.jsonError }
+        guard let sessionId: String = serviceResult.sessionId else { throw MovieService.ServiceError.JsonError }
         
         return sessionId
     }
@@ -46,7 +46,7 @@ struct RemoteLoginManager {
         if let success = result.success, success == true {
             return .success(())
         } else {
-            return .failure(MovieService.ServiceError.noSuccess)
+            return .failure(MovieService.ServiceError.NoSuccess)
         }
 
     }

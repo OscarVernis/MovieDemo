@@ -16,6 +16,10 @@ fileprivate enum LocalKeys: String {
 }
 
 class SessionManager {
+    enum LoginError: Error {
+        case IncorrectCredentials
+    }
+    
     static let shared = SessionManager()
     private var service = RemoteLoginManager()
     
@@ -39,7 +43,11 @@ extension SessionManager {
             try await service.validateToken(username: username, password: password, requestToken: token)
             sessionId = try await service.createSession(requestToken: token)
         } catch {
-            return .failure(error)
+            if error as? MovieService.ServiceError == MovieService.ServiceError.IncorrectCredentials {
+                return .failure(LoginError.IncorrectCredentials)
+            } else {
+                return .failure(error)
+            }
         }
         
         save(username: username, sessionId: sessionId)
@@ -98,7 +106,7 @@ extension SessionManager {
         case .failure(let error):
             return .failure(error)
         case .none:
-            return .failure(MovieService.ServiceError.noSuccess)
+            return .failure(MovieService.ServiceError.NoSuccess)
         }
         
     }

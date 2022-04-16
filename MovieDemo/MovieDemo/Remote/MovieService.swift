@@ -12,9 +12,9 @@ import Combine
 
 struct MovieService {
     enum ServiceError: Error {
-        case jsonError
-        case incorrectCredentials
-        case noSuccess
+        case JsonError
+        case IncorrectCredentials
+        case NoSuccess
     }
     
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
@@ -98,7 +98,7 @@ extension MovieService {
             .publishDecodable(type: ServiceSuccessResult.self, decoder: jsonDecoder(keyDecodingStrategy: .convertFromSnakeCase))
             .value()
             .tryMap { result in
-                guard let success = result.success, success == true else { throw ServiceError.noSuccess }
+                guard let success = result.success, success == true else { throw ServiceError.NoSuccess }
                 
                 return result
             }
@@ -118,6 +118,13 @@ extension MovieService {
             var cancellable: AnyCancellable?
                         
             let publisher = successAction(endpoint: endpoint, body: body, method: method)
+                .mapError { error -> Error in
+                    if let error = error.asAFError, error.responseCode == 401 {
+                        return ServiceError.IncorrectCredentials
+                    } else {
+                        return error
+                    }
+                }
             
             cancellable = publisher
                 .sink { result in
