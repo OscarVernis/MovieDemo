@@ -135,7 +135,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         }
         
         if !person.popularMovies.isEmpty {
-            let popularSection = MovieDetailRecommendedSection(title: NSLocalizedString("Known For", comment: ""), movies: person.popularMovies)
+            let popularSection = MoviesSection(title: NSLocalizedString("Known For", comment: ""), movies: person.popularMovies)
             sections.append(popularSection)
         }
         
@@ -268,7 +268,7 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         let section = sections[indexPath.section]
         
         switch section {
-        case _ as MovieDetailRecommendedSection:
+        case _ as MoviesSection:
             let movie = person.popularMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: movie)
         case _ as PersonCastCreditsSection:

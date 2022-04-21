@@ -163,7 +163,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         
         addSection(MovieDetailVideoSection(videos: movie.videos), validate: !movie.videos.isEmpty)
         
-        let recommendedSection = MovieDetailRecommendedSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies)
+        let recommendedSection = MoviesSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies)
         recommendedSection.titleHeaderButtonHandler = { [weak self] in
             guard let self = self else {return }
             
@@ -305,7 +305,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             let crewCredit = movie.topCrew[indexPath.row]
             let person = crewCredit.person()
             mainCoordinator.showPersonProfile(person)
-        case _ as MovieDetailRecommendedSection:
+        case _ as MoviesSection:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator.showMovieDetail(movie: recommendedMovie)
         case _ as MovieDetailVideoSection:

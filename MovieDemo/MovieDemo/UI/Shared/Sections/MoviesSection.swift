@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailRecommendedSection: ConfigurableSection {
+class MoviesSection: ConfigurableSection {
     var title: String
     var movies: [MovieViewModel]
     
