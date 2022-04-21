@@ -49,7 +49,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
         navigationController?.delegate = self
         
         //CollectionView setup
-        collectionView.backgroundColor = .appBackgroundColor
+        collectionView.backgroundColor = .asset(.AppBackgroundColor)
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         

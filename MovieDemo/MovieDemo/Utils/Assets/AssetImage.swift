@@ -1,5 +1,5 @@
 //
-//  UIImage+AppImages.swift
+//  AssetImage.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 21/04/22.

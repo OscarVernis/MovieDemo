@@ -44,7 +44,7 @@ public class ListViewController: UIViewController, GenericCollection {
         
     fileprivate func setup() {
         navigationController?.delegate = self
-        collectionView.backgroundColor = .appBackgroundColor
+        collectionView.backgroundColor = .asset(.AppBackgroundColor)
         
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)

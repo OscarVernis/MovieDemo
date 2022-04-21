@@ -68,7 +68,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     
     //MARK: - Setup
     fileprivate func setup() {
-        view.backgroundColor = .appBackgroundColor
+        view.backgroundColor = .asset(.AppBackgroundColor)
         collectionView.backgroundColor = .clear
         
         //Set NavigationBar/ScrollView settings for design

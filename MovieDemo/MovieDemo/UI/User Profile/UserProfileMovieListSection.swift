@@ -123,7 +123,7 @@ extension UserProfileMovieListSection {
        switch sectionType {
        case .Favorites:
            let imageAttachment = NSTextAttachment()
-           imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(.favoriteColor)
+           imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(.asset(.FavoriteColor))
 
            let fullString = NSMutableAttributedString(string: .localized(.EmptyUserFavorites))
            fullString.append(NSAttributedString(attachment: imageAttachment))
@@ -131,7 +131,7 @@ extension UserProfileMovieListSection {
            messageString = fullString
        case .Watchlist:
            let imageAttachment = NSTextAttachment()
-           imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.watchlistColor)
+           imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.asset(.WatchlistColor))
            
            let fullString = NSMutableAttributedString(string: .localized(.EmptyUserWatchlist))
            fullString.append(NSAttributedString(attachment: imageAttachment))
@@ -141,7 +141,7 @@ extension UserProfileMovieListSection {
            break
        case .Rated:
            let imageAttachment = NSTextAttachment()
-           imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.ratingColor)
+           imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.asset(.RatingColor))
 
            let fullString = NSMutableAttributedString(string: .localized(.EmptyUserRated))
            fullString.append(NSAttributedString(attachment: imageAttachment))
