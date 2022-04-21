@@ -761,10 +761,10 @@
 		55A6A9902511A70E00305C29 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				55EDA7142811185C0055696F /* Assets */,
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
 				555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */,
-				55EDA712281109030055696F /* LocalizedString.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -880,6 +880,15 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
+		55EDA7142811185C0055696F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				55EDA712281109030055696F /* LocalizedString.swift */,
+				55EE51A6251EC5DE00915AB3 /* UIColor+AppColors.swift */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		55EECCD825117C3B0041EAE7 /* Data Providers */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,7 +909,6 @@
 				55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */,
 				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
 				55741CE1251CFCAC00A6281B /* Double+Math.swift */,
-				55EE51A6251EC5DE00915AB3 /* UIColor+AppColors.swift */,
 				55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */,
 			);
 			path = Extensions;
