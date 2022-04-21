@@ -435,10 +435,6 @@
 		552E705A251547D7009CC4CD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5506BAB72512EC9F0052B0F2 /* CreditCell.swift */,
-				5506BABA2512ECB00052B0F2 /* CreditCell.xib */,
-				55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */,
-				55FEF44F25141A40009363F8 /* CreditPhotoListCell.xib */,
 				551E79252513CBD700EE2FCA /* InfoListCell.swift */,
 				551E79262513CBD700EE2FCA /* InfoListCell.xib */,
 				55EDD3512513E346004F8117 /* LoadingCell.swift */,
@@ -453,14 +449,6 @@
 				558A5A9A25106F8900E5FB40 /* MovieRatingListCell.xib */,
 				55EE51A0251E99B100915AB3 /* EmptyMovieCell.swift */,
 				55EE51A1251E99B100915AB3 /* EmptyMovieCell.xib */,
-				5570358A251EE7C80083089C /* TrailerCell.swift */,
-				551A293F251F1BC4003746EE /* TrailerCell.xib */,
-				554DE175251EF83C000286D2 /* OverviewCell.swift */,
-				554DE176251EF83C000286D2 /* OverviewCell.xib */,
-				554DE17A251EFC07000286D2 /* UserActionsCell.swift */,
-				551A2938251F1B3C003746EE /* UserActionsCell.xib */,
-				55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */,
-				55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */,
 				55206B7F253291D100AD13AE /* PersonCreditCell.swift */,
 				55206B80253291D100AD13AE /* PersonCreditCell.xib */,
 			);
@@ -513,6 +501,7 @@
 			isa = PBXGroup;
 			children = (
 				556B78602524F21100F212D1 /* Sections */,
+				55EDA70C2810F4D70055696F /* Cells */,
 				556B78612524F21700F212D1 /* Views */,
 				55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */,
 			);
@@ -827,6 +816,25 @@
 				555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		55EDA70C2810F4D70055696F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5506BAB72512EC9F0052B0F2 /* CreditCell.swift */,
+				5506BABA2512ECB00052B0F2 /* CreditCell.xib */,
+				55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */,
+				55FEF44F25141A40009363F8 /* CreditPhotoListCell.xib */,
+				554DE175251EF83C000286D2 /* OverviewCell.swift */,
+				554DE176251EF83C000286D2 /* OverviewCell.xib */,
+				5570358A251EE7C80083089C /* TrailerCell.swift */,
+				551A293F251F1BC4003746EE /* TrailerCell.xib */,
+				554DE17A251EFC07000286D2 /* UserActionsCell.swift */,
+				551A2938251F1B3C003746EE /* UserActionsCell.xib */,
+				55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */,
+				55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		55EECCD825117C3B0041EAE7 /* Data Providers */ = {

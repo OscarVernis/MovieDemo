@@ -8,6 +8,7 @@
 
 import UIKit
 import SPStorkController
+import SwiftUI
 
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
@@ -16,7 +17,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
     
-    private var sections: [ConfigurableSection]!
+    private var sections = [ConfigurableSection]()
     private var isLoading = true
     
     private var movie: MovieViewModel!
@@ -43,9 +44,9 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         super.viewDidLoad()
         navigationController?.delegate = self
 
-        reloadSections()
         createCollectionView()
         setup()
+        reloadSections()
         setupDataProvider()
     }
     
@@ -118,73 +119,61 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     //MARK: - Sections
-    fileprivate func reloadSections() {
-        sections = [ConfigurableSection]()
-        
-        //Header
-        let headerSection = MovieDetailHeaderSection(movie: movie)
-        headerSection.imageTapHandler = { [weak self] in
-            self?.showImage()
-        }
-                
-        sections.append(headerSection)
-        
-        if !movie.overview.isEmpty {
-            let overviewSection = MovieDetailOverviewSection(title: NSLocalizedString("Overview", comment: ""), overview: movie.overview)
-            sections.append(overviewSection)
-        }
-        
-        if isLoading {
-            sections.append(LoadingSection())
+    fileprivate func addSection(_ section: ConfigurableSection, validate: Bool? = nil) {
+        if let validate = validate, validate == false {
             return
         }
         
-        if movie.trailerURL != nil {
-            sections.append(MovieDetailTrailerSection())
-        }
-        
-        if !movie.topCast.isEmpty {
-            let castSection = MovieDetailCastSection(cast: movie.topCast)
-            castSection.titleHeaderButtonHandler = { [weak self] in
-                guard let self = self else {return }
-                
-                self.mainCoordinator.showCastCreditList(title: castSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.cast))
-            }
-            
-            sections.append(castSection)
-        }
+        sections.append(section)
+    }
 
-        if !movie.topCrew.isEmpty {
-            let crewSection = MovieDetailCrewSection(crew: movie.topCrew)
-            crewSection.titleHeaderButtonHandler = { [weak self] in
-                guard let self = self else {return }
+    
+    fileprivate func reloadSections() {
+        sections.removeAll()
+        
+        //Header
+        let headerSection = MovieDetailHeaderSection(movie: movie)
+        headerSection.imageTapHandler = showImage
+        addSection(headerSection)
+        
+        let overviewSection = MovieDetailOverviewSection(title: NSLocalizedString("Overview", comment: ""), overview: movie.overview)
+        addSection(overviewSection, validate: !movie.overview.isEmpty)
+        
+        addSection(LoadingSection(), validate: isLoading)
+        
+        addSection(MovieDetailTrailerSection(), validate: movie.trailerURL != nil)
                 
-                self.mainCoordinator.showCrewCreditList(title: crewSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.crew))
-            }
+        let castSection = MovieDetailCastSection(cast: movie.topCast)
+        castSection.titleHeaderButtonHandler = { [weak self] in
+            guard let self = self else {return }
             
-            sections.append(crewSection)
+            self.mainCoordinator.showCastCreditList(title: castSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.cast))
         }
         
-        if !movie.videos.isEmpty {
-            let movieSection = MovieDetailVideoSection(videos: movie.videos)
-            sections.append(movieSection)
-        }
+        addSection(castSection, validate: !movie.topCast.isEmpty)
         
-        if !movie.recommendedMovies.isEmpty {
-            let recommendedSection = MovieDetailRecommendedSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies)
-            recommendedSection.titleHeaderButtonHandler = { [weak self] in
-                guard let self = self else {return }
-                
-                self.mainCoordinator.showMovieList(title: recommendedSection.title, dataProvider: MoviesDataProvider(.Recommended(movieId: self.movie.id)))
-            }
+        let crewSection = MovieDetailCrewSection(crew: movie.topCrew)
+        crewSection.titleHeaderButtonHandler = { [weak self] in
+            guard let self = self else {return }
             
-            sections.append(recommendedSection)
+            self.mainCoordinator.showCrewCreditList(title: crewSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.crew))
         }
         
-        if !movie.infoArray.isEmpty {
-            let infoSection = MovieDetailInfoSection(info: movie.infoArray)
-            sections.append(infoSection)
+        addSection(crewSection, validate: !movie.topCrew.isEmpty)
+        
+        addSection(MovieDetailVideoSection(videos: movie.videos), validate: !movie.videos.isEmpty)
+        
+        let recommendedSection = MovieDetailRecommendedSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies)
+        recommendedSection.titleHeaderButtonHandler = { [weak self] in
+            guard let self = self else {return }
+            
+            self.mainCoordinator.showMovieList(title: recommendedSection.title, dataProvider: MoviesDataProvider(.Recommended(movieId: self.movie.id)))
         }
+        
+        addSection(recommendedSection, validate: !movie.recommendedMovies.isEmpty)
+        
+        addSection(MovieDetailInfoSection(info: movie.infoArray), validate: !movie.infoArray.isEmpty)
+        
 
         dataSource.sections = sections
         collectionView.reloadData()
