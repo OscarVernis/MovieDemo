@@ -14,8 +14,9 @@ class MovieDetailCrewSection: ConfigurableSection {
     
     var titleHeaderButtonHandler: (()->Void)?
     
-    init(crew: [CrewCreditViewModel]) {
+    init(crew: [CrewCreditViewModel], titleHeaderButtonHandler: (()->Void)? = nil) {
         self.topCrew = crew
+        self.titleHeaderButtonHandler = titleHeaderButtonHandler
     }
     
     var itemCount: Int {

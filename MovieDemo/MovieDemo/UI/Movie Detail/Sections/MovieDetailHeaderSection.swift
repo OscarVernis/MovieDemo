@@ -14,8 +14,9 @@ class MovieDetailHeaderSection: ConfigurableSection {
         
     var imageTapHandler: (()->Void)?
     
-    init(movie: MovieViewModel) {
+    init(movie: MovieViewModel, imageTapHandler: (()->Void)? = nil) {
         self.movie = movie
+        self.imageTapHandler = imageTapHandler
     }
 
     var itemCount: Int {

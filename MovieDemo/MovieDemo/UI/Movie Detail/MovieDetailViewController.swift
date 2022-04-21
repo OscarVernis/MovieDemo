@@ -120,58 +120,30 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     
     //MARK: - Sections
     fileprivate func addSection(_ section: ConfigurableSection, validate: Bool? = nil) {
-        if let validate = validate, validate == false {
-            return
-        }
+        //Only add the section if validation passes
+        if let validate = validate, validate == false { return }
         
         sections.append(section)
     }
-
     
     fileprivate func reloadSections() {
         sections.removeAll()
         
-        //Header
-        let headerSection = MovieDetailHeaderSection(movie: movie)
-        headerSection.imageTapHandler = showImage
-        addSection(headerSection)
-        
-        let overviewSection = MovieDetailOverviewSection(title: NSLocalizedString("Overview", comment: ""), overview: movie.overview)
-        addSection(overviewSection, validate: !movie.overview.isEmpty)
-        
-        addSection(LoadingSection(), validate: isLoading)
-        
-        addSection(MovieDetailTrailerSection(), validate: movie.trailerURL != nil)
-                
-        let castSection = MovieDetailCastSection(cast: movie.topCast)
-        castSection.titleHeaderButtonHandler = { [weak self] in
-            guard let self = self else {return }
-            
-            self.mainCoordinator.showCastCreditList(title: castSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.cast))
-        }
-        
-        addSection(castSection, validate: !movie.topCast.isEmpty)
-        
-        let crewSection = MovieDetailCrewSection(crew: movie.topCrew)
-        crewSection.titleHeaderButtonHandler = { [weak self] in
-            guard let self = self else {return }
-            
-            self.mainCoordinator.showCrewCreditList(title: crewSection.title, dataProvider: StaticArrayDataProvider(models: self.movie.crew))
-        }
-        
-        addSection(crewSection, validate: !movie.topCrew.isEmpty)
-        
-        addSection(MovieDetailVideoSection(videos: movie.videos), validate: !movie.videos.isEmpty)
-        
-        let recommendedSection = MoviesSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies)
-        recommendedSection.titleHeaderButtonHandler = { [weak self] in
-            guard let self = self else {return }
-            
-            self.mainCoordinator.showMovieList(title: recommendedSection.title, dataProvider: MoviesDataProvider(.Recommended(movieId: self.movie.id)))
-        }
-        
-        addSection(recommendedSection, validate: !movie.recommendedMovies.isEmpty)
-        
+        addSection(MovieDetailHeaderSection(movie: movie, imageTapHandler: showImage))
+        addSection(MovieDetailOverviewSection(title: NSLocalizedString("Overview", comment: ""), overview: movie.overview),
+                   validate: !movie.overview.isEmpty)
+        addSection(LoadingSection(),
+                   validate: isLoading)
+        addSection(MovieDetailTrailerSection(),
+                   validate: movie.trailerURL != nil)
+        addSection(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast),
+                   validate: !movie.topCast.isEmpty)
+        addSection(MovieDetailCrewSection(crew: movie.topCrew, titleHeaderButtonHandler: showCrew),
+                    validate: !movie.topCrew.isEmpty)
+        addSection(MovieDetailVideoSection(videos: movie.videos),
+                   validate: !movie.videos.isEmpty)
+        addSection(MoviesSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies),
+                   validate: !movie.recommendedMovies.isEmpty)
         addSection(MovieDetailInfoSection(info: movie.infoArray), validate: !movie.infoArray.isEmpty)
         
 
@@ -180,6 +152,19 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
 
     //MARK: - Actions
+    fileprivate func showRecommendedMovies() {
+        let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
+        mainCoordinator.showMovieList(title: NSLocalizedString("Recommended Movies", comment: ""), dataProvider: provider)
+    }
+    
+    fileprivate func showCast() {
+        mainCoordinator.showCastCreditList(title: NSLocalizedString("Cast", comment: ""), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
+    }
+    
+    fileprivate func showCrew() {
+        mainCoordinator.showCrewCreditList(title: NSLocalizedString("Crew", comment: ""), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
+    }
+    
     @objc fileprivate func markAsFavorite() {
         if !SessionManager.shared.isLoggedIn {
             return

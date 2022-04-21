@@ -14,8 +14,9 @@ class MovieDetailCastSection: ConfigurableSection {
     
     var titleHeaderButtonHandler: (()->Void)?
     
-    init(cast: [CastCreditViewModel]) {
+    init(cast: [CastCreditViewModel], titleHeaderButtonHandler: (()->Void)? = nil) {
         self.topCast = cast
+        self.titleHeaderButtonHandler = titleHeaderButtonHandler
     }
     
     var itemCount: Int {

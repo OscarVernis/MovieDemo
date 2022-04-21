@@ -14,9 +14,10 @@ class MoviesSection: ConfigurableSection {
     
     var titleHeaderButtonHandler: (()->Void)?
     
-    init(title: String, movies: [MovieViewModel]) {
+    init(title: String, movies: [MovieViewModel], titleHeaderButtonHandler: (()->Void)? = nil) {
         self.title = title
         self.movies = movies
+        self.titleHeaderButtonHandler = titleHeaderButtonHandler
     }
     
     var itemCount: Int {
