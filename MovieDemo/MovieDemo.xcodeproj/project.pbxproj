@@ -160,6 +160,7 @@
 		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
 		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */; };
 		55ED2E1927F785BB0067F635 /* PaginatedDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED2E1827F785BB0067F635 /* PaginatedDataProvider.swift */; };
+		55EDA713281109030055696F /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDA712281109030055696F /* LocalizedString.swift */; };
 		55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3512513E346004F8117 /* LoadingCell.swift */; };
 		55EDD3542513E346004F8117 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55EDD3522513E346004F8117 /* LoadingCell.xib */; };
 		55EDD3602513F2E0004F8117 /* MovieInfoCellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */; };
@@ -347,6 +348,7 @@
 		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
 		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsLoader.swift; sourceTree = "<group>"; };
 		55ED2E1827F785BB0067F635 /* PaginatedDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedDataProvider.swift; sourceTree = "<group>"; };
+		55EDA712281109030055696F /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		55EDD3512513E346004F8117 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		55EDD3522513E346004F8117 /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		55EDD35F2513F2E0004F8117 /* MovieInfoCellConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoCellConfigurator.swift; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
 				555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */,
+				55EDA712281109030055696F /* LocalizedString.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1156,6 +1159,7 @@
 				55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */,
 				55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */,
 				5535CE6B251406E700260617 /* CellConfigurator.swift in Sources */,
+				55EDA713281109030055696F /* LocalizedString.swift in Sources */,
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				5532CF872524FC0600663844 /* MovieDetailTrailerSection.swift in Sources */,
 				557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */,

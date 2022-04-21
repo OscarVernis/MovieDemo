@@ -144,8 +144,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
                    validate: !movie.videos.isEmpty)
         addSection(MoviesSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies),
                    validate: !movie.recommendedMovies.isEmpty)
-        addSection(MovieDetailInfoSection(info: movie.infoArray), validate: !movie.infoArray.isEmpty)
-        
+        addSection(MovieDetailInfoSection(info: movie.infoArray),
+                   validate: !movie.infoArray.isEmpty)
 
         dataSource.sections = sections
         collectionView.reloadData()
