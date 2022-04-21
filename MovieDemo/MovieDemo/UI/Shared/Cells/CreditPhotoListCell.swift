@@ -14,7 +14,7 @@ class CreditPhotoListCell: UICollectionViewCell {
     @IBOutlet weak var roleLabel: UILabel!
     
     override func prepareForReuse() {
-        creditImageView.image = UIImage(named: "PersonPlaceholder")
+        creditImageView.image = .asset(.PersonPlaceholder)
     }
 
 }

@@ -34,8 +34,8 @@ class MediaViewerPlayerControls: UIView {
     
     //MARK: - Setup
     fileprivate func setup() {
-        transportSlider.setThumbImage(UIImage(named: "thumb"), for: .normal)
-        transportSlider.setThumbImage(UIImage(named: "thumb"), for: .highlighted)
+        transportSlider.setThumbImage(.asset(.Thumb), for: .normal)
+        transportSlider.setThumbImage(.asset(.Thumb), for: .highlighted)
         
         playerOberservationToken = player?.observe(\.timeControlStatus, changeHandler: { player, change in
             switch player.timeControlStatus {

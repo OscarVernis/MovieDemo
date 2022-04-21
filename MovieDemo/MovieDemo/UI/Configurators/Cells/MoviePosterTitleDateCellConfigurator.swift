@@ -11,7 +11,7 @@ import UIKit
 struct MoviePosterTitleDateCellConfigurator {
     func configure(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
         cell.posterImageView.af.cancelImageRequest()
-        cell.posterImageView.image = UIImage(named: "PosterPlaceholder")
+        cell.posterImageView.image = .asset(.PersonPlaceholder)
         
         if let url = movie.posterImageURL(size: .w342) {
             cell.posterImageView.setRemoteImage(withURL: url)
