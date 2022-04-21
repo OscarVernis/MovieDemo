@@ -11,7 +11,7 @@ import UIKit
 class MovieDetailInfoSection: ConfigurableSection {
     private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
     
-    var title = NSLocalizedString("Info", comment: "")
+    var title: String = .localized(.Info)
     var movieInfo: [[String : String]]
         
     init(info: [[String : String]]) {

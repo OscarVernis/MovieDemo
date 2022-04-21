@@ -76,7 +76,7 @@ final class MainCoordinator {
                 
                 self.rootNavigationViewController?.popToRootViewController(animated: true)
             case .failure(_):
-                AlertManager.showErrorAlert("Logout error. Please try again.", sender: self.rootNavigationViewController!)
+                AlertManager.showErrorAlert(.localized(.LogoutError), sender: self.rootNavigationViewController!)
                 break
             }
         }

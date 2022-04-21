@@ -45,7 +45,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func setup() {
-        title = NSLocalizedString("Movies", comment: "")
+        title = .localized(.Movies)
         navigationController?.delegate = self
         
         //CollectionView setup

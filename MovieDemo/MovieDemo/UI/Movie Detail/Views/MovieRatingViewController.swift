@@ -95,7 +95,7 @@ class MovieRatingViewController: UIViewController {
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                AlertManager.showRatingAlert(text: NSLocalizedString("Couldn't set rating! Please try again.", comment: ""), sender: self)
+                AlertManager.showRatingAlert(text: .localized(.RatingError), sender: self)
             }
         }
         
@@ -116,7 +116,7 @@ class MovieRatingViewController: UIViewController {
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                AlertManager.showRatingAlert(text: NSLocalizedString("Couldn't delete rating! Please try again.", comment: ""), sender: self)
+                AlertManager.showRatingAlert(text: .localized(.DeleteRatingError), sender: self)
                 
             }
         }

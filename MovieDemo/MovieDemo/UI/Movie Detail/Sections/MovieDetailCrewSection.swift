@@ -9,7 +9,7 @@
 import UIKit
 
 class MovieDetailCrewSection: ConfigurableSection {
-    var title = NSLocalizedString("Crew", comment: "")
+    var title: String = .localized(.Crew)
     var topCrew: [CrewCreditViewModel]
     
     var titleHeaderButtonHandler: (()->Void)?

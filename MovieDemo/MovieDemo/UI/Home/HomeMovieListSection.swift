@@ -18,13 +18,13 @@ class HomeMovieListSection: FetchableSection {
         func title() -> String {
             switch self {
             case .NowPlaying:
-                return NSLocalizedString("Now Playing", comment: "")
+                return .localized(.NowPlaying)
             case .Popular:
-                return NSLocalizedString("Popular", comment: "")
+                return .localized(.Popular)
             case .TopRated:
-                return NSLocalizedString("Top Rated", comment: "")
+                return .localized(.TopRated)
             case .Upcoming:
-                return NSLocalizedString("Upcoming", comment: "")
+                return .localized(.Upcoming)
             }
         }
     }

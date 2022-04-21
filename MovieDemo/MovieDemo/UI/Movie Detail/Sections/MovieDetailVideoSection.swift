@@ -9,7 +9,7 @@
 import UIKit
 
 class MovieDetailVideoSection: ConfigurableSection {
-    var title = NSLocalizedString("Videos", comment: "")
+    var title: String = .localized(.Videos)
     var videos: [MovieVideoViewModel]
         
     init(videos: [MovieVideoViewModel]) {

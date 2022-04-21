@@ -88,7 +88,7 @@ extension MovieViewModel {
     }
     
     var ratingString: String {
-        return isRatingAvailable ? "\(percentRating)" : NSLocalizedString("NR", comment: "")
+        return isRatingAvailable ? "\(percentRating)" : .localized(.NR)
     }
     
     var percentRating: UInt {
@@ -250,7 +250,7 @@ extension MovieViewModel {
     }
     
     var userRatingString: String {
-        return rated ? "\(percentUserRating)" : NSLocalizedString("NR", comment: "")
+        return rated ? "\(percentUserRating)" : .localized(.NR)
     }
     
     var watchlist: Bool {
@@ -356,31 +356,31 @@ extension MovieViewModel {
     private func updateInfoArray() {
         var info = [[String : String]]()
         if let originalTitle = originalTitle, originalTitle != title {
-            info.append([NSLocalizedString("Original Title", comment: ""): originalTitle])
+            info.append([.localized(.OriginalTitle): originalTitle])
         }
         
         if let releaseDate = releaseDate {
-            info.append([NSLocalizedString("Release Date", comment: ""): releaseDate])
+            info.append([.localized(.ReleaseDate): releaseDate])
         }
         
         if let status = status {
-            info.append([NSLocalizedString("Status", comment: ""): status])
+            info.append([.localized(.Status): status])
         }
         
         if let coutries = productionCountries {
-            info.append([NSLocalizedString("Country", comment: ""): coutries])
+            info.append([.localized(.Country): coutries])
         }
         
         if let originalLanguage = originalLanguage {
-            info.append([NSLocalizedString("Original Language", comment: ""): originalLanguage])
+            info.append([.localized(.OriginalLanguage): originalLanguage])
         }
 
         if let budget = budget {
-            info.append([NSLocalizedString("Budget", comment: ""): budget])
+            info.append([.localized(.Budget): budget])
         }
         
         if let revenue = revenue {
-            info.append([NSLocalizedString("Revenue", comment: ""): revenue])
+            info.append([.localized(.Revenue): revenue])
         }
         
         infoArray = info

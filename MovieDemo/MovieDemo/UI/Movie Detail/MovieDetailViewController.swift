@@ -130,7 +130,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         sections.removeAll()
         
         addSection(MovieDetailHeaderSection(movie: movie, imageTapHandler: showImage))
-        addSection(MovieDetailOverviewSection(title: NSLocalizedString("Overview", comment: ""), overview: movie.overview),
+        addSection(MovieDetailOverviewSection(title: .localized(.Overview), overview: movie.overview),
                    validate: !movie.overview.isEmpty)
         addSection(LoadingSection(),
                    validate: isLoading)
@@ -142,7 +142,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
                     validate: !movie.topCrew.isEmpty)
         addSection(MovieDetailVideoSection(videos: movie.videos),
                    validate: !movie.videos.isEmpty)
-        addSection(MoviesSection(title: NSLocalizedString("Recommended Movies", comment: ""), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies),
+        addSection(MoviesSection(title: .localized(.RecommendedMovies), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies),
                    validate: !movie.recommendedMovies.isEmpty)
         addSection(MovieDetailInfoSection(info: movie.infoArray),
                    validate: !movie.infoArray.isEmpty)
@@ -154,15 +154,15 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     //MARK: - Actions
     fileprivate func showRecommendedMovies() {
         let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
-        mainCoordinator.showMovieList(title: NSLocalizedString("Recommended Movies", comment: ""), dataProvider: provider)
+        mainCoordinator.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
     }
     
     fileprivate func showCast() {
-        mainCoordinator.showCastCreditList(title: NSLocalizedString("Cast", comment: ""), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
+        mainCoordinator.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
     }
     
     fileprivate func showCrew() {
-        mainCoordinator.showCrewCreditList(title: NSLocalizedString("Crew", comment: ""), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
+        mainCoordinator.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
     }
     
     @objc fileprivate func markAsFavorite() {
@@ -187,7 +187,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsCell?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
-                AlertManager.showFavoriteAlert(text: NSLocalizedString("Couldn't set favorite! Please try again.", comment: ""), sender: self)
+                AlertManager.showFavoriteAlert(text: .localized(.FavoriteError), sender: self)
             }
         }
     }
@@ -214,7 +214,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 self.actionsCell?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
-                AlertManager.showWatchlistAlert(text: NSLocalizedString("Couldn't add to watchlist! Please try again.", comment: ""), sender: self)
+                AlertManager.showWatchlistAlert(text: .localized(.WatchListError), sender: self)
             }
         }
     }

@@ -41,7 +41,7 @@ struct MovieService {
 //MARK: - Helpers
 extension MovieService {
     func defaultParameters(additionalParameters: [String: String]? = nil) -> [String: String] {
-        let language = NSLocalizedString("service-locale", comment: "")
+        let language = String.localized(.ServiceLocale)
         var params: [String: String] = ["language": language, "api_key": apiKey]
         
         if let sessionId = self.sessionId {

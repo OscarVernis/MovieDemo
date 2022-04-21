@@ -17,11 +17,11 @@ class UserProfileMovieListSection: ConfigurableSection {
         var title: String {
             switch self {
             case .Favorites:
-                return NSLocalizedString("Favorites", comment: "")
+                return .localized(.Favorites)
             case .Watchlist:
-                return NSLocalizedString("Watchlist", comment: "")
+                return .localized(.Watchlist)
             case .Rated:
-                return NSLocalizedString("Rated", comment: "")
+                return .localized(.Rated)
             }
         }
         
@@ -125,16 +125,17 @@ extension UserProfileMovieListSection {
            let imageAttachment = NSTextAttachment()
            imageAttachment.image = UIImage(systemName: "heart.fill")?.withTintColor(.favoriteColor)
 
-           let fullString = NSMutableAttributedString(string: NSLocalizedString("Movies you mark as Favorite ", comment: ""))
+           let fullString = NSMutableAttributedString(string: .localized(.EmptyUserFavorites))
            fullString.append(NSAttributedString(attachment: imageAttachment))
-           fullString.append(NSAttributedString(string: NSLocalizedString(" will appear here.", comment: "")))
+           fullString.append(NSAttributedString(string: .localized(.WillAppearMessage)))
            messageString = fullString
        case .Watchlist:
            let imageAttachment = NSTextAttachment()
            imageAttachment.image = UIImage(systemName: "bookmark.fill")?.withTintColor(.watchlistColor)
-           let fullString = NSMutableAttributedString(string: NSLocalizedString("Movies you add to your Watchlist ", comment: ""))
+           
+           let fullString = NSMutableAttributedString(string: .localized(.EmptyUserWatchlist))
            fullString.append(NSAttributedString(attachment: imageAttachment))
-           fullString.append(NSAttributedString(string: NSLocalizedString(" will appear here.", comment: "")))
+           fullString.append(NSAttributedString(string: .localized(.WillAppearMessage)))
 
            messageString = fullString
            break
@@ -142,9 +143,9 @@ extension UserProfileMovieListSection {
            let imageAttachment = NSTextAttachment()
            imageAttachment.image = UIImage(systemName: "star.fill")?.withTintColor(.ratingColor)
 
-           let fullString = NSMutableAttributedString(string: NSLocalizedString("Movies you rate ", comment: ""))
+           let fullString = NSMutableAttributedString(string: .localized(.EmptyUserRated))
            fullString.append(NSAttributedString(attachment: imageAttachment))
-           fullString.append(NSAttributedString(string: NSLocalizedString(" will appear here.", comment: "")))
+           fullString.append(NSAttributedString(string: .localized(.WillAppearMessage)))
            messageString = fullString
            break
        }

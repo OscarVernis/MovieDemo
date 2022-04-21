@@ -15,11 +15,11 @@ struct AlertManager {
     }
     
     static func showNetworkConnectionAlert(sender: UIViewController) {
-        Loaf(NSLocalizedString("Check your network connection.", comment: ""), state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short)
+        Loaf(.localized(.NetworkConnectionError), state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short)
         
     }
     
-    static func showRefreshErrorAlert(text: String = NSLocalizedString("Couldn't refresh content.", comment: ""), sender: UIViewController, completion: (() -> Void)? = nil) {
+    static func showRefreshErrorAlert(text: String = .localized(.RefreshError), sender: UIViewController, completion: (() -> Void)? = nil) {
         Loaf(text, state: .error, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: sender).show(.short) { _ in
             completion?()
         }

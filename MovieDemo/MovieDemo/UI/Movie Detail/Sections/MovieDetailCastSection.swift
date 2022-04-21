@@ -9,7 +9,7 @@
 import UIKit
 
 class MovieDetailCastSection: ConfigurableSection {
-    var title = NSLocalizedString("Cast", comment: "")
+    var title: String = .localized(.Cast)
     var topCast: [CastCreditViewModel]
     
     var titleHeaderButtonHandler: (()->Void)?

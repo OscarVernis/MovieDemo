@@ -84,9 +84,9 @@ class LoginViewController: UIViewController {
                 
                 self.errorLabel.isHidden = false
                 if error as? SessionManager.LoginError == SessionManager.LoginError.IncorrectCredentials {
-                    self.errorLabel.text = NSLocalizedString("Invalid username and/or password.", comment: "")
+                    self.errorLabel.text = .localized(.LoginCredentialsError)
                 } else {
-                    self.errorLabel.text = NSLocalizedString("Login error. Please try again.", comment: "")
+                    self.errorLabel.text = .localized(.LoginError)
                 }
             }
         }

@@ -32,43 +32,43 @@ enum MovieGenre: Int, Codable {
     func string() -> String {
         switch self {
         case .Action:
-            return NSLocalizedString("Action", comment: "")
+            return .localized(.Action)
         case .Adventure:
-            return NSLocalizedString("Adventure", comment: "")
+            return .localized(.Adventure)
         case .Animation:
-            return NSLocalizedString("Animation", comment: "")
+            return .localized(.Animation)
         case .Comedy:
-            return NSLocalizedString("Comedy", comment: "")
+            return .localized(.Comedy)
         case .Crime:
-            return NSLocalizedString("Crime", comment: "")
+            return .localized(.Crime)
         case .Documentary:
-            return NSLocalizedString("Documentary", comment: "")
+            return .localized(.Documentary)
         case .Drama:
-            return NSLocalizedString("Drama", comment: "")
+            return .localized(.Drama)
         case .Family:
-            return NSLocalizedString("Family", comment: "")
+            return .localized(.Family)
         case .Fantasy:
-            return NSLocalizedString("Fantasy", comment: "")
+            return .localized(.Fantasy)
         case .History:
-            return NSLocalizedString("History", comment: "")
+            return .localized(.History)
         case .Horror:
-            return NSLocalizedString("Horror", comment: "")
+            return .localized(.Horror)
         case .Music:
-            return NSLocalizedString("Music", comment: "")
+            return .localized(.Music)
         case .Mystery:
-            return NSLocalizedString("Mystery", comment: "")
+            return .localized(.Mystery)
         case .Romance:
-            return NSLocalizedString("Romance", comment: "")
+            return .localized(.Romance)
         case .ScienceFiction:
-            return NSLocalizedString("Science Fiction", comment: "")
+            return .localized(.ScienceFiction)
         case .TVMovie:
-            return NSLocalizedString("TV Movie", comment: "")
+            return .localized(.TVMovie)
         case .Thriller:
-            return NSLocalizedString("Thriller", comment: "")
+            return .localized(.Thriller)
         case .War:
-            return NSLocalizedString("War", comment: "")
+            return .localized(.War)
         case .Western:
-            return NSLocalizedString("Western", comment: "")
+            return .localized(.Western)
         }
     }
     

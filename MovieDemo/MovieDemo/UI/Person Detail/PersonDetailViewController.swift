@@ -135,12 +135,12 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         }
         
         if !person.popularMovies.isEmpty {
-            let popularSection = MoviesSection(title: NSLocalizedString("Known For", comment: ""), movies: person.popularMovies)
+            let popularSection = MoviesSection(title: .localized(.KnownFor), movies: person.popularMovies)
             sections.append(popularSection)
         }
         
         if !person.castCredits.isEmpty {
-            let castCreditsSection = PersonCastCreditsSection(title: NSLocalizedString("Acting", comment: ""), credits: person.castCredits)
+            let castCreditsSection = PersonCastCreditsSection(title: .localized(.Acting), credits: person.castCredits)
             sections.append(castCreditsSection)
         }
         

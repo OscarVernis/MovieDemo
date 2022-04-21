@@ -9,70 +9,72 @@
 import Foundation
 
 enum LocalizedString: String {
-    case serviceLocale = "service-locale"
-    case WillAppearMessage = " will appear here."
-    case Action = "Action"
-    case Acting = "Acting"
-    case Adventure = "Adventure"
-    case Animation = "Animation"
-    case Budget = "Budget"
-    case Cast = "Cast"
-    case Characters = "Characters"
-    case NetworkConnectionError = "Check your network connection."
-    case Cinematography = "Cinematography"
-    case Comedy = "Comedy"
-    case FavoriteError = "Couldn't set favorite! Please try again."
-    case WatchListError = "Couldn't add to watchlist! Please try again."
-    case RefreshError = "Couldn't refresh content."
-    case RatingError = "Couldn't set rating! Please try again."
-    case DeleteRatingError = "Couldn't delete rating! Please try again."
-    case Country = "Country"
-    case Crew = "Crew"
-    case Crime = "Crime"
-    case Director = "Director"
-    case Documentary = "Documentary"
-    case Drama = "Drama"
-    case Editor = "Editor"
-    case Family = "Family"
-    case Fantasy = "Fantasy"
-    case Favorites = "Favorites"
-    case History = "History"
-    case Horror = "Horror"
-    case Info = "Info"
-    case LoginCredentialsError = "Invalid username and/or password."
-    case KnownFor = "Known For"
-    case LoginError = "Login error. Please try again."
-    case LogoutError = "Logout error. Please try again."
-    case Movies = "Movies"
-    case MoviesBy = "Movies by: %@"
-    case EmptyUserWatchlist  = "Movies you add to your Watchlist "
-    case EmptyUserFavorites  = "Movies you mark as Favorite "
-    case EmptyUserRated  = "Movies you rate "
-    case MoviesWith = "Movies with: %@"
-    case Music = "Music"
-    case Mystery = "Mystery"
-    case NowPlaying = "Now Playing"
-    case NR = "NR"
-    case Overview = "Overview"
-    case OriginalLanguage = "Original Language"
-    case Popular = "Popular"
-    case Rated = "Rated"
-    case RecommendedMovies = "Recommended Movies"
-    case ReleaseDate = "Release Date"
-    case Revenue = "Revenue"
-    case Romance = "Romance"
-    case ScienceFiction = "Science Fiction"
-    case Screenplay = "Screenplay"
-    case Status = "Status"
-    case Story = "Story"
-    case Thriller = "Thriller"
-    case TopRated = "Top Rated"
-    case TVMovie = "TV Movie"
-    case Upcoming = "Upcoming"
-    case War = "War"
-    case Watchlist = "Watchlist"
-    case Western = "Western"
-    case Writer = "Writer"
+    case ServiceLocale
+    case WillAppearMessage
+    case Action
+    case Acting
+    case Adventure
+    case Animation
+    case Budget
+    case Cast
+    case Characters
+    case NetworkConnectionError
+    case Cinematography
+    case Comedy
+    case FavoriteError
+    case WatchListError
+    case RefreshError
+    case RatingError
+    case DeleteRatingError
+    case Country
+    case Crew
+    case Crime
+    case Director
+    case Documentary
+    case Drama
+    case Editor
+    case Family
+    case Fantasy
+    case Favorites
+    case History
+    case Horror
+    case Info
+    case LoginCredentialsError
+    case KnownFor
+    case LoginError
+    case LogoutError
+    case Movies
+    case MoviesBy
+    case EmptyUserWatchlist
+    case EmptyUserFavorites
+    case EmptyUserRated
+    case MoviesWith
+    case Music
+    case Mystery
+    case NowPlaying
+    case NR
+    case Overview
+    case OriginalLanguage
+    case OriginalTitle
+    case Popular
+    case Rated
+    case RecommendedMovies
+    case ReleaseDate
+    case Revenue
+    case Romance
+    case ScienceFiction
+    case Screenplay
+    case Status
+    case Story
+    case Thriller
+    case TopRated
+    case TVMovie
+    case Upcoming
+    case Videos
+    case War
+    case Watchlist
+    case Western
+    case Writer
 
     var localized: String { NSLocalizedString(rawValue, comment: "") }
 }
