@@ -167,62 +167,10 @@ extension PersonDetailViewController {
         blurAnimator.pausesOnCompletion = true
     }
     
-    fileprivate func setIsHeaderViewCompact(_ isHeaderViewCompact: Bool, animated: Bool) {
-        self.isHeaderViewCompact = isHeaderViewCompact
-        titleAnimator?.stopAnimation(true)
-        
-        let titleHeight:CGFloat = 60
-        let navBarHeight = view.safeAreaInsets.top + 44 + (isHeaderViewCompact ? 0 : titleHeight)
-        
-        let animationDuration = animated ? 0.3 : 0
-        if isHeaderViewCompact {
-            self.titleNameLabel.transform = self.titleNameLabel.transform.translatedBy(x: 0, y: 0)
-            self.titleNameLabel.transform = self.titleNameLabel.transform.scaledBy(x: 1.1, y: 1.1)
-            self.headerHeightConstraint.constant = navBarHeight
-            titleAnimator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeIn) {
-                UIView.animateKeyframes(withDuration: animationDuration, delay: 0) {
-                    self.personImageView.superview?.layoutIfNeeded()
-
-                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
-                        self.nameLabel.alpha = 0
-                        self.nameLabel.transform = self.nameLabel.transform.scaledBy(x: 0.4, y: 0.4)
-                    }
-                    
-                    UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6) {
-                        self.titleNameLabel.alpha = 1
-                        self.titleNameLabel.transform = .identity
-                    }
-                }
-            }
-        } else {
-            titleAnimator = UIViewPropertyAnimator(duration: animationDuration, curve: .easeOut) {
-                self.headerHeightConstraint.constant = navBarHeight
-                UIView.animateKeyframes(withDuration: animationDuration, delay: 0) {
-                    self.personImageView.superview?.layoutIfNeeded()
-                    
-                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
-                        self.titleNameLabel.alpha = 0
-                        self.titleNameLabel.transform = self.titleNameLabel.transform.translatedBy(x: 0, y: 15)
-                        self.titleNameLabel.transform = self.titleNameLabel.transform.scaledBy(x: 1.1, y: 1.1)
-                    }
-                    
-                    UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.6) {
-                        self.nameLabel.alpha = 1
-                        self.nameLabel.transform = .identity
-                    }
-                }
-            }
-        }
-        
-        titleAnimator?.pausesOnCompletion = true
-        titleAnimator?.startAnimation()
-        
-    }
-    
     fileprivate func updateHeader() {
         let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
         let height = width * 1.5
-        let titleHeight:CGFloat = 60
+        let titleHeight: CGFloat = 60
         let navBarHeight = view.safeAreaInsets.top + 44 + titleHeight
         
         var headerHeight = height
@@ -231,19 +179,6 @@ extension PersonDetailViewController {
         } else {
             headerHeight = navBarHeight
         }
-        
-//        if creditsHeaderView != nil {
-//            let creditsSectionPos = creditsHeaderView!.frame.origin.y - collectionView.contentOffset.y - navBarHeight
-//            if creditsSectionPos < 0 {
-//                if !isHeaderViewCompact {
-//                    setIsHeaderViewCompact(true, animated: true)
-//                }
-//            } else {
-//                if isHeaderViewCompact {
-//                    setIsHeaderViewCompact(false, animated: true)
-//                }
-//            }
-//        }
         
         let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.6)
         blurAnimator.fractionComplete = ratio
