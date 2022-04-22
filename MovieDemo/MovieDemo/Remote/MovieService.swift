@@ -7,11 +7,12 @@
 //
 
 import Foundation
-import Alamofire
 import Combine
 
 struct MovieService {
-    enum ServiceError: Error {
+    enum ServiceError: Error, Equatable {
+        case ServiceError
+        case StatusCodeError(code: Int)
         case JsonError
         case IncorrectCredentials
         case NoSuccess
@@ -20,20 +21,20 @@ struct MovieService {
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     let baseURL = "api.themoviedb.org"
     
-    private let sessionManager: Session
+    private let session: URLSession
     let sessionId: String?
     
-    init(sessionId: String? = nil, session: Session? = nil) {
+    init(sessionId: String? = nil, session: URLSession? = nil) {
         self.sessionId = sessionId
         
         if let session = session {
-            self.sessionManager = session
+            self.session = session
         } else {
-            let configuration = URLSessionConfiguration.af.default
+            let configuration = URLSessionConfiguration.default
             configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
             configuration.timeoutIntervalForRequest = 5
             configuration.timeoutIntervalForResource = 5
-            self.sessionManager =  Session(configuration: configuration)
+            self.session =  URLSession(configuration: configuration)
         }
     }
 }
@@ -65,19 +66,19 @@ extension MovieService {
         
         return decoder
     }
-    
+        
 }
 
 //MARK: - Generic Functions
 extension MovieService {
-    func getModel<T: Codable>(model: T.Type? = nil, endpoint: Endpoint, parameters: [String: String]? = nil) -> AnyPublisher<T, Error> {
+    func getModel<Model: Codable>(model: Model.Type? = nil, endpoint: Endpoint, parameters: [String: String]? = nil) -> AnyPublisher<Model, Error> {
         let url = urlforEndpoint(endpoint, parameters: parameters)
         
-        return sessionManager.request(url)
+        return session
+            .dataTaskPublisher(for: url)
             .validate()
-            .publishDecodable(type: T.self, decoder: jsonDecoder())
-            .value()
-            .mapError { $0 as Error }
+            .decode(type: Model.self, decoder: jsonDecoder())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -93,15 +94,32 @@ extension MovieService {
     func successAction<T: Encodable>(endpoint: Endpoint, body: T?, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
         let url = urlforEndpoint(endpoint)
         
-        return AF.request(url, method: method, parameters: body, encoder: JSONParameterEncoder.default)
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+
+        if let body = body {
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
+            let codedBody: Data? = try? JSONEncoder().encode(body)
+            request.httpBody = codedBody
+        }
+
+        return session
+            .dataTaskPublisher(for: request)
             .validate()
-            .publishDecodable(type: ServiceSuccessResult.self, decoder: jsonDecoder(keyDecodingStrategy: .convertFromSnakeCase))
-            .value()
+            .decode(type: ServiceSuccessResult.self, decoder: jsonDecoder(keyDecodingStrategy: .convertFromSnakeCase))
             .tryMap { result in
                 guard let success = result.success, success == true else { throw ServiceError.NoSuccess }
-                
+
                 return result
             }
+            .receive(on: DispatchQueue.main)
+            .mapError({
+                print($0)
+                
+                return $0
+            })
             .eraseToAnyPublisher()
     }
     
@@ -118,13 +136,6 @@ extension MovieService {
             var cancellable: AnyCancellable?
                         
             let publisher = successAction(endpoint: endpoint, body: body, method: method)
-                .mapError { error -> Error in
-                    if let error = error.asAFError, error.responseCode == 401 {
-                        return ServiceError.IncorrectCredentials
-                    } else {
-                        return error
-                    }
-                }
             
             cancellable = publisher
                 .sink { result in
