@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502F500251C2D38003EEC0A /* CustomButton.swift */; };
 		5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */; };
-		5506BAB52512E64A0052B0F2 /* MovieDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BAB42512E64A0052B0F2 /* MovieDetailHeaderView.xib */; };
 		5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAB72512EC9F0052B0F2 /* CreditCell.swift */; };
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
@@ -54,6 +53,7 @@
 		554DE177251EF83C000286D2 /* OverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DE175251EF83C000286D2 /* OverviewCell.swift */; };
 		554DE178251EF83C000286D2 /* OverviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554DE176251EF83C000286D2 /* OverviewCell.xib */; };
 		554DE17C251EFC07000286D2 /* UserActionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DE17A251EFC07000286D2 /* UserActionsCell.swift */; };
+		554F691028125D9500B6BBDF /* MovieDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */; };
 		5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5550409B251E70A400D919FF /* UserProfileViewController.swift */; };
 		55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55518D422511292E00DAEB7F /* SectionTitleView.swift */; };
 		555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */; };
@@ -191,7 +191,6 @@
 /* Begin PBXFileReference section */
 		5502F500251C2D38003EEC0A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesCompositionalLayoutBuilder.swift; sourceTree = "<group>"; };
-		5506BAB42512E64A0052B0F2 /* MovieDetailHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieDetailHeaderView.xib; sourceTree = "<group>"; };
 		5506BAB72512EC9F0052B0F2 /* CreditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCell.swift; sourceTree = "<group>"; };
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
@@ -244,6 +243,8 @@
 		554DE175251EF83C000286D2 /* OverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCell.swift; sourceTree = "<group>"; };
 		554DE176251EF83C000286D2 /* OverviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverviewCell.xib; sourceTree = "<group>"; };
 		554DE17A251EFC07000286D2 /* UserActionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActionsCell.swift; sourceTree = "<group>"; };
+		554F691128125D9500B6BBDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MovieDetailHeaderView.xib; sourceTree = "<group>"; };
+		554F691428125DA800B6BBDF /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MovieDetailHeaderView.strings"; sourceTree = "<group>"; };
 		5550409B251E70A400D919FF /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		55518D422511292E00DAEB7F /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
 		555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCrewCredit.swift; sourceTree = "<group>"; };
@@ -649,7 +650,7 @@
 			isa = PBXGroup;
 			children = (
 				55135E712512C866004C4361 /* MovieDetailHeaderView.swift */,
-				5506BAB42512E64A0052B0F2 /* MovieDetailHeaderView.xib */,
+				554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */,
 				5560466B251BB4000037D08B /* MovieRatingViewController.swift */,
 				55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */,
 			);
@@ -1031,7 +1032,7 @@
 			files = (
 				55BB863E251FA1CB00F17D7F /* MovieRatingViewController.storyboard in Resources */,
 				558A5A9C25106F8900E5FB40 /* MovieRatingListCell.xib in Resources */,
-				5506BAB52512E64A0052B0F2 /* MovieDetailHeaderView.xib in Resources */,
+				554F691028125D9500B6BBDF /* MovieDetailHeaderView.xib in Resources */,
 				55FEF45125141A40009363F8 /* CreditPhotoListCell.xib in Resources */,
 				55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */,
 				551A2936251F1B3C003746EE /* UserActionsCell.xib in Resources */,
@@ -1271,6 +1272,15 @@
 				551A2941251F1BE4003746EE /* es-419 */,
 			);
 			name = TrailerCell.xib;
+			sourceTree = "<group>";
+		};
+		554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				554F691128125D9500B6BBDF /* Base */,
+				554F691428125DA800B6BBDF /* es-419 */,
+			);
+			name = MovieDetailHeaderView.xib;
 			sourceTree = "<group>";
 		};
 		559D132922D98E4B00C96FC8 /* LaunchScreen.storyboard */ = {

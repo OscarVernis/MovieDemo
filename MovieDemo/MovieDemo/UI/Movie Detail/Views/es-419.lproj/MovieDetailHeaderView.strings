@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Overview"; ObjectID = "0DP-e5-lfa"; */
+"0DP-e5-lfa.text" = "Resumen";
+
+/* Class = "UIButton"; normalTitle = " Favorite"; ObjectID = "KW3-ni-2DH"; */
+"KW3-ni-2DH.normalTitle" = " Favorita";
+
+/* Class = "UIButton"; normalTitle = "Play Trailer"; ObjectID = "Qcp-E3-PKm"; */
+"Qcp-E3-PKm.normalTitle" = "Ver Avance";
+
+/* Class = "UIButton"; normalTitle = "Rate"; ObjectID = "RQF-K0-V1z"; */
+"RQF-K0-V1z.normalTitle" = "Califica";
+
+/* Class = "UIButton"; normalTitle = "Watchlist"; ObjectID = "hmd-EO-EFe"; */
+"hmd-EO-EFe.normalTitle" = "Seguir";
