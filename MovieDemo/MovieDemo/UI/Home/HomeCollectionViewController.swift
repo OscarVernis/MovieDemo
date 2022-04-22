@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class HomeCollectionViewController: UIViewController, GenericCollection {    
     var collectionView: UICollectionView!
@@ -19,8 +18,6 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
     var didSelectItem: ((Movie) -> ())?
     
     var sections = [ConfigurableSection]()
-
-    let manager = NetworkReachabilityManager(host: "www.google.com")
     
     //MARK: - Setup
     required init?(coder: NSCoder) {
@@ -55,13 +52,6 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
         
         //User Profile NavBar Button
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(showUser))
-        
-        //Network connection manager
-        manager?.startListening { status in
-            if status == .notReachable || status == .unknown {
-                AlertManager.showNetworkConnectionAlert(sender: self)
-            }
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

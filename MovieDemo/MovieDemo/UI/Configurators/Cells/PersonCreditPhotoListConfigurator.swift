@@ -10,7 +10,7 @@ import Foundation
 
 struct PersonCreditPhotoListConfigurator {
     func configure(cell: CreditPhotoListCell, person: PersonViewModel) {        
-        cell.creditImageView.af.cancelImageRequest()
+        cell.creditImageView.cancelImageRequest()
         
         cell.nameLabel.text = person.name
         cell.roleLabel.text = person.knownForMovies

@@ -12,7 +12,7 @@ import UIKit
 
 struct CastCreditCellConfigurator {
     func configure(cell: CreditCell, with castCredit: CastCreditViewModel) {
-        cell.creditImageView.af.cancelImageRequest()
+        cell.creditImageView.cancelImageRequest()
 
         cell.nameLabel.text = castCredit.name
         cell.roleLabel.text = castCredit.character

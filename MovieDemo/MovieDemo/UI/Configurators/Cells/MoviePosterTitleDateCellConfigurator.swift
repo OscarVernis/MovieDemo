@@ -10,7 +10,7 @@ import UIKit
 
 struct MoviePosterTitleDateCellConfigurator {
     func configure(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
-        cell.posterImageView.af.cancelImageRequest()
+        cell.posterImageView.cancelImageRequest()
         cell.posterImageView.image = .asset(.PersonPlaceholder)
         
         if let url = movie.posterImageURL(size: .w342) {

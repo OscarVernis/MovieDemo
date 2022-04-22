@@ -13,7 +13,7 @@ struct CrewCreditPhotoListCellConfigurator: CellConfigurator {
     typealias Cell = CreditPhotoListCell
     
     func configure(cell: Cell, with crewCredit: Model) {
-        cell.creditImageView.af.cancelImageRequest()
+        cell.creditImageView.cancelImageRequest()
         
         cell.nameLabel.text = crewCredit.name
         cell.roleLabel.text = crewCredit.job

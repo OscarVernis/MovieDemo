@@ -13,7 +13,7 @@ struct MovieInfoCellConfigurator: CellConfigurator {
     typealias Cell = MovieInfoListCell
     
     func configure(cell: MovieInfoListCell, with movie: Model) {        
-        cell.posterImageView.af.cancelImageRequest()
+        cell.posterImageView.cancelImageRequest()
         cell.posterImageView.image = .asset(.PosterPlaceholder)
         
         if let url = movie.posterImageURL(size: .w342) {

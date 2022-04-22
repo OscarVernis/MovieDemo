@@ -7,17 +7,18 @@
 //
 
 import UIKit
-import AlamofireImage
+import SDWebImage
 
 extension UIImageView {
     func setRemoteImage(withURL url: URL, animated: Bool = true, completion: (() -> ())? = nil) {
-        var afCompletion: ((AFIDataResponse<UIImage>) -> Void)? = nil
-        if let completion = completion { 
-            afCompletion = { response in
-                completion()
-            }
+        self.sd_imageTransition = animated ? .fade : .none
+        self.sd_setImage(with: url) { image, error, cache, url in
+            completion?()
         }
-        
-        self.af.setImage(withURL: url, imageTransition: animated ? .crossDissolve(0.3) : .noTransition, completion: afCompletion)
     }
+    
+    func cancelImageRequest() {
+        self.sd_cancelCurrentImageLoad()
+    }
+    
 }

@@ -10,7 +10,7 @@ import UIKit
 
 struct MovieBannerCellConfigurator {
     func configure(cell: MovieBannerCell, withMovie movie: MovieViewModel) {
-        cell.bannerImageView.af.cancelImageRequest()
+        cell.bannerImageView.cancelImageRequest()
         cell.bannerImageView.image = .asset(.BackdropPlaceholder)
         
         cell.titleLabel.text = movie.title
