@@ -14,6 +14,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
     var dataSource: GenericCollectionDataSource!
         
+    let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
+    
     private var sections = [ConfigurableSection]()
     private var isLoading = true
     
@@ -74,14 +76,11 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
         //Load Background Blur View
-        if let imageURL = movie.posterImageURL(size: .w342) {
+        if let imageURL = movie.posterImageURL(size: .w342), let bgView = BlurBackgroundView.instantiateFromNib() {
             collectionView.backgroundColor = .clear
-
-            let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
 
             bgView.imageView.setRemoteImage(withURL: imageURL)
             collectionView.backgroundView = bgView
@@ -107,19 +106,26 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         movie.refresh()
     }
     
-    fileprivate func setupHeaderActions() {
-        headerView?.favoriteButton?.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
-        headerView?.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
-        headerView?.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-        updateActionButtons()
+    fileprivate func setupHeaderView() {
+        guard let headerView = headerView else { return }
         
-        headerView?.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+        //Adjust the top of the Poster Image so it doesn't go unde the bar
+        headerView.topConstraint.constant = topInset + 55
+        
+        headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+        
+        headerView.favoriteButton?.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
+        headerView.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
+        headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
+        updateActionButtons()
     }
     
     fileprivate func updateActionButtons() {
-        headerView?.favoriteButton?.setIsSelected(movie.favorite, animated: false)
-        headerView?.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
-        headerView?.rateButton?.setIsSelected(movie.rated, animated: false)
+        guard let headerView = headerView else { return }
+        
+        headerView.favoriteButton?.setIsSelected(movie.favorite, animated: false)
+        headerView.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
+        headerView.rateButton?.setIsSelected(movie.rated, animated: false)
     }
     
     //MARK: - Sections
@@ -263,8 +269,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         guard let reusableView = view as? MovieDetailHeaderView else { return }
         
-        headerView = reusableView
-        setupHeaderActions()
+        if reusableView != headerView {
+            headerView = reusableView
+            setupHeaderView()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

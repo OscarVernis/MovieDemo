@@ -12,4 +12,10 @@ extension UIView {
     static func namedNib(bundle: Bundle = .main) -> UINib {
         return UINib(nibName: String(String(describing: self)), bundle: bundle)
     }
+    
+    static func instantiateFromNib(nib: UINib? = nil) -> Self? {
+        let newNib = nib ?? Self.namedNib()
+        
+        return newNib.instantiate(withOwner: nil).first as? Self
+    }
 }

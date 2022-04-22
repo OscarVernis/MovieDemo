@@ -9,9 +9,12 @@
 import UIKit
 
 extension UIViewController {
-    static func instantiateFromStoryboard(_ storyboard: UIStoryboard? = nil) -> Self {
-        let newStoryboard = storyboard != nil ? storyboard! : UIStoryboard(name: String(describing: self), bundle: .main)
+    static func instantiateFromStoryboard(named: String? = nil, identifier: String? = nil) -> Self {
+        let storyboardName = named ?? String(describing: self)
+        let viewControllerIdentifier = identifier ?? String(describing: self)
+        
+        let storyboard = UIStoryboard(name: storyboardName, bundle: .main)
     
-        return newStoryboard.instantiateViewController(identifier: String(describing: self))
+        return storyboard.instantiateViewController(identifier: viewControllerIdentifier)
     }
 }

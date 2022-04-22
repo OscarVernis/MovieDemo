@@ -9,7 +9,6 @@
 import UIKit
 
 class MovieDetailHeaderSection: ConfigurableSection {
-    private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     let movie: MovieViewModel
     var isLoading = false
         
@@ -43,9 +42,7 @@ class MovieDetailHeaderSection: ConfigurableSection {
     
     func reusableView(withCollectionView collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
-
-            //Adjust the top of the Poster Image so it doesn't go unde the bar
-            headerView.topConstraint.constant = topInset + 55
+        
             headerView.imageTapHandler = imageTapHandler
 
             let userLoggedIn = SessionManager.shared.isLoggedIn
