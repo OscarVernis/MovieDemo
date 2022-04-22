@@ -26,6 +26,7 @@ class MovieDetailHeaderSection: ConfigurableSection {
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
+        SectionTitleView.registerHeader(withCollectionView: collectionView)
         LoadingCell.register(withCollectionView: collectionView)
     }
     

@@ -118,6 +118,11 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         headerView.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
         headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
         updateActionButtons()
+        
+        //Preload Poster Image for Image Viewer transition.
+        if let url = self.movie.posterImageURL(size: .original) {
+            UIImage.loadRemoteImage(url: url)
+        }
     }
     
     fileprivate func updateActionButtons() {
