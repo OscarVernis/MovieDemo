@@ -624,7 +624,6 @@
 			isa = PBXGroup;
 			children = (
 				556B78622524F23600F212D1 /* MovieDetailHeaderSection.swift */,
-				55FAAD2A27DFE76200C1D929 /* LoadingSection.swift */,
 				5532CF892524FE0900663844 /* MovieDetailCastSection.swift */,
 				5532CF8D2525013700663844 /* MovieDetailCrewSection.swift */,
 				5532CF902525029400663844 /* MovieDetailVideoSection.swift */,
@@ -656,6 +655,7 @@
 		5587114C25108082005A0975 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55EDA7112810F8870055696F /* Sections */,
 				55893B6A2513F4EA00233677 /* CollectionView Reusable */,
 				552E705A251547D7009CC4CD /* Cells */,
@@ -752,9 +752,7 @@
 			isa = PBXGroup;
 			children = (
 				55EDA7142811185C0055696F /* Assets */,
-				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
-				555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -862,6 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				5532CF93252503FE00663844 /* MoviesSection.swift */,
+				55FAAD2A27DFE76200C1D929 /* LoadingSection.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -891,12 +890,13 @@
 		55EECCDB2511905A0041EAE7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
-				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
-				55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */,
-				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
 				55741CE1251CFCAC00A6281B /* Double+Math.swift */,
+				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
+				55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */,
+				555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */,
 				55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */,
+				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
+				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

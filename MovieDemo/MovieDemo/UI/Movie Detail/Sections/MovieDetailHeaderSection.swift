@@ -11,27 +11,29 @@ import UIKit
 class MovieDetailHeaderSection: ConfigurableSection {
     private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     let movie: MovieViewModel
+    var isLoading = false
         
     var imageTapHandler: (()->Void)?
     
-    init(movie: MovieViewModel, imageTapHandler: (()->Void)? = nil) {
+    init(movie: MovieViewModel, isLoading: Bool = false, imageTapHandler: (()->Void)? = nil) {
         self.movie = movie
         self.imageTapHandler = imageTapHandler
+        self.isLoading = isLoading
     }
 
     var itemCount: Int {
-        return 0
+        return isLoading ? 1 : 0
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
-        SectionTitleView.registerHeader(withCollectionView: collectionView)
+        LoadingCell.register(withCollectionView: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
 
-        let section = sectionBuilder.createSection(groupHeight: .absolute(44))
+        let section = sectionBuilder.createListSection(height: 100)
 
         let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
@@ -53,7 +55,7 @@ class MovieDetailHeaderSection: ConfigurableSection {
     }
     
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        fatalError()
+        return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
     }
     
 }

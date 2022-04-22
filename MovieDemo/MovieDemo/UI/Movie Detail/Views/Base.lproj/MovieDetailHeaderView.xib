@@ -283,6 +283,9 @@
         </collectionReusableView>
     </objects>
     <designables>
+        <designable name="1VZ-S8-68h">
+            <size key="intrinsicContentSize" width="45" height="45"/>
+        </designable>
         <designable name="94i-wU-iKW">
             <size key="intrinsicContentSize" width="240" height="360"/>
         </designable>
