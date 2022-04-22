@@ -8,14 +8,13 @@
 
 import Foundation
 import Mocker
-import Alamofire
 
 class MockData {
-    var session: Session = {
-        let configuration = URLSessionConfiguration.af.default
+    var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
         configuration.protocolClasses = [MockingURLProtocol.self]
         
-        return Alamofire.Session(configuration: configuration)
+        return URLSession(configuration: configuration)
     }()
     
     init(data: Data, url: URL, statusCode: Int = 200) {

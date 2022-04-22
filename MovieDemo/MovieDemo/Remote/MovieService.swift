@@ -82,11 +82,11 @@ extension MovieService {
             .eraseToAnyPublisher()
     }
     
-    func getModels<T: Codable>(model: T.Type? = nil, endpoint: Endpoint, parameters: [String: String] = [:], page: Int = 1) -> AnyPublisher<([T], Int), Error> {
+    func getModels<Model: Codable>(model: Model.Type? = nil, endpoint: Endpoint, parameters: [String: String] = [:], page: Int = 1) -> AnyPublisher<([Model], Int), Error> {
         var params = parameters
         params["page"] = String(page)
         
-        return getModel(model: ServiceModelsResult<T>.self, endpoint: endpoint, parameters: params)
+        return getModel(model: ServiceModelsResult<Model>.self, endpoint: endpoint, parameters: params)
             .map { ($0.results, $0.totalPages) }
             .eraseToAnyPublisher()
     }
