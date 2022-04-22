@@ -13,17 +13,13 @@ import SwiftUI
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator!
     var dataSource: GenericCollectionDataSource!
-    
-    private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
-    private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
-    
+        
     private var sections = [ConfigurableSection]()
     private var isLoading = true
     
     private var movie: MovieViewModel!
         
     private weak var headerView: MovieDetailHeaderView?
-    private weak var actionsCell: UserActionsCell?
     var collectionView: UICollectionView!
     
     required init(movie: MovieViewModel) {
@@ -78,6 +74,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
+        let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
         //Load Background Blur View
@@ -110,12 +107,19 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         movie.refresh()
     }
     
+    fileprivate func setupHeaderActions() {
+        headerView?.favoriteButton?.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
+        headerView?.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
+        headerView?.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
+        updateActionButtons()
+        
+        headerView?.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+    }
+    
     fileprivate func updateActionButtons() {
-        guard let actionsCell = actionsCell else { return }
-
-        actionsCell.favoriteButton.setIsSelected(movie.favorite, animated: false)
-        actionsCell.watchlistButton.setIsSelected(movie.watchlist, animated: false)
-        actionsCell.rateButton.setIsSelected(movie.rated, animated: false)
+        headerView?.favoriteButton?.setIsSelected(movie.favorite, animated: false)
+        headerView?.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
+        headerView?.rateButton?.setIsSelected(movie.rated, animated: false)
     }
     
     //MARK: - Sections
@@ -130,12 +134,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         sections.removeAll()
         
         addSection(MovieDetailHeaderSection(movie: movie, imageTapHandler: showImage))
-        addSection(MovieDetailOverviewSection(title: .localized(.Overview), overview: movie.overview),
-                   validate: !movie.overview.isEmpty)
         addSection(LoadingSection(),
                    validate: isLoading)
-        addSection(MovieDetailTrailerSection(),
-                   validate: movie.trailerURL != nil)
         addSection(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast),
                    validate: !movie.topCast.isEmpty)
         addSection(MovieDetailCrewSection(crew: movie.topCrew, titleHeaderButtonHandler: showCrew),
@@ -166,12 +166,12 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     @objc fileprivate func markAsFavorite() {
-        if !SessionManager.shared.isLoggedIn {
+        guard SessionManager.shared.isLoggedIn, let favoriteButton = headerView?.favoriteButton else {
             return
         }
         
-        actionsCell?.favoriteButton.setIsSelected(!movie.favorite, animated: true)
-        actionsCell?.favoriteButton.isUserInteractionEnabled = false
+        favoriteButton.setIsSelected(!movie.favorite, animated: true)
+        favoriteButton.isUserInteractionEnabled = false
         
         if movie.favorite {
             UISelectionFeedbackGenerator().selectionChanged()
@@ -182,23 +182,23 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         movie.markAsFavorite(!movie.favorite) { [weak self] success in
             guard let self = self else { return }
             
-            self.actionsCell?.favoriteButton.isUserInteractionEnabled = true
+            favoriteButton.isUserInteractionEnabled = true
 
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                self.actionsCell?.favoriteButton.setIsSelected(self.movie.favorite, animated: false)
+                favoriteButton.setIsSelected(self.movie.favorite, animated: false)
                 AlertManager.showFavoriteAlert(text: .localized(.FavoriteError), sender: self)
             }
         }
     }
     
     @objc fileprivate func addToWatchlist() {
-        if !SessionManager.shared.isLoggedIn {
+        guard SessionManager.shared.isLoggedIn, let watchlistButton = headerView?.watchlistButton else {
             return
         }
         
-        actionsCell?.watchlistButton.setIsSelected(!movie.watchlist, animated: true)
-        actionsCell?.watchlistButton.isUserInteractionEnabled = false
+        watchlistButton.setIsSelected(!movie.watchlist, animated: true)
+        watchlistButton.isUserInteractionEnabled = false
         
         if movie.watchlist {
             UISelectionFeedbackGenerator().selectionChanged()
@@ -209,17 +209,22 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         movie.addToWatchlist(!movie.watchlist) { [weak self] success in
             guard let self = self else { return }
 
-            self.actionsCell?.watchlistButton.isUserInteractionEnabled = true
+            watchlistButton.isUserInteractionEnabled = true
 
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                self.actionsCell?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+                watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
                 AlertManager.showWatchlistAlert(text: .localized(.WatchListError), sender: self)
             }
         }
     }
     
     @objc fileprivate func addRating() {
+        guard SessionManager.shared.isLoggedIn,
+              let watchlistButton = headerView?.watchlistButton,
+              let rateButton = headerView?.rateButton
+        else { return }
+        
         let mrvc = MovieRatingViewController.instantiateFromStoryboard()
         mrvc.movie = movie
         
@@ -231,8 +236,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         transitionDelegate.showIndicator = false
         
         mrvc.didUpdateRating = {
-            self.actionsCell?.rateButton.setIsSelected(self.movie.rated, animated: false)
-            self.actionsCell?.watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+            rateButton.setIsSelected(self.movie.rated, animated: false)
+            watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
         }
         
         self.present(mrvc, animated: true)
@@ -261,22 +266,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         guard let reusableView = view as? MovieDetailHeaderView else { return }
         
         headerView = reusableView
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        switch cell {
-        case let cell as UserActionsCell:
-            cell.favoriteButton.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
-            cell.watchlistButton.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
-            cell.rateButton.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-
-            actionsCell = cell
-            updateActionButtons()
-        case let cell as TrailerCell:
-            cell.trailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
-        default:
-            break
-        }
+        setupHeaderActions()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

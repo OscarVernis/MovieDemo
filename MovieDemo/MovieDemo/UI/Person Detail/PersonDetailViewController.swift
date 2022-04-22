@@ -130,7 +130,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         sections = [ConfigurableSection]()
         
         if let bio = person.biography, !bio.isEmpty {
-            let bioSection = MovieDetailOverviewSection(overview: bio)
+            let bioSection = OverviewSection(overview: bio)
             sections.append(bioSection)
         }
         

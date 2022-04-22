@@ -1,5 +1,5 @@
 //
-//  MovieDetailOverviewSection.swift
+//  OverviewSection.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 30/09/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailOverviewSection: ConfigurableSection {
+class OverviewSection: ConfigurableSection {
     var title: String?
     var overview: String
     

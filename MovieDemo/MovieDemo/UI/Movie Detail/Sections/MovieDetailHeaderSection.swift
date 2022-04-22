@@ -20,12 +20,11 @@ class MovieDetailHeaderSection: ConfigurableSection {
     }
 
     var itemCount: Int {
-        return SessionManager.shared.isLoggedIn ? 1 : 0
+        return 0
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
-        UserActionsCell.register(withCollectionView: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
@@ -47,15 +46,14 @@ class MovieDetailHeaderSection: ConfigurableSection {
             headerView.topConstraint.constant = topInset + 55
             headerView.imageTapHandler = imageTapHandler
 
-            headerView.configure(movie: movie)
+            let userLoggedIn = SessionManager.shared.isLoggedIn
+            headerView.configure(movie: movie, showsUserActions: userLoggedIn)
 
             return headerView
     }
     
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserActionsCell.reuseIdentifier, for: indexPath) as! UserActionsCell
-
-        return cell
+        fatalError()
     }
     
 }

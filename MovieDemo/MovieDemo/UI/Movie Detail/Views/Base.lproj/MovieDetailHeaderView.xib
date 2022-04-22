@@ -136,6 +136,24 @@
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorder" value="NO"/>
                                     </userDefinedRuntimeAttributes>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmd-EO-EFe" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
+                                    <rect key="frame" x="142.5" y="18" width="129" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="gLT-NJ-Cmj"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Watchlist" image="bookmark" catalog="system"/>
+                                    <state key="selected" image="bookmark.fill" catalog="system"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
+                                            <color key="value" name="WatchlistColor"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="12"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQF-K0-V1z" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
                                     <rect key="frame" x="285.5" y="18" width="128.5" height="44"/>
                                     <constraints>
@@ -155,24 +173,6 @@
                                             <real key="value" value="12"/>
                                         </userDefinedRuntimeAttribute>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorder" value="NO"/>
-                                    </userDefinedRuntimeAttributes>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmd-EO-EFe" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                                    <rect key="frame" x="142.5" y="18" width="129" height="44"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="gLT-NJ-Cmj"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="Watchlist" image="bookmark" catalog="system"/>
-                                    <state key="selected" image="bookmark.fill" catalog="system"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
-                                            <color key="value" name="WatchlistColor"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="12"/>
-                                        </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </button>
                             </subviews>
@@ -262,21 +262,27 @@
                 <constraint firstItem="ouV-Hx-pXV" firstAttribute="leading" secondItem="DNB-Gv-WPX" secondAttribute="leading" id="Ysc-X4-neX"/>
             </constraints>
             <connections>
+                <outlet property="container" destination="ouV-Hx-pXV" id="3Ty-2A-42J"/>
+                <outlet property="favoriteButton" destination="KW3-ni-2DH" id="VjW-Qw-a37"/>
                 <outlet property="genresLabel" destination="iov-9M-utK" id="amn-kK-K34"/>
+                <outlet property="overviewLabel" destination="yH8-y0-MCs" id="RIR-aX-bRU"/>
+                <outlet property="overviewView" destination="d1r-3e-PE6" id="K7R-0b-OCw"/>
+                <outlet property="playTrailerButton" destination="Qcp-E3-PKm" id="2MO-dh-atz"/>
                 <outlet property="posterImageView" destination="94i-wU-iKW" id="dzm-Ps-hjm"/>
+                <outlet property="rateButton" destination="RQF-K0-V1z" id="ZMu-Hh-jQJ"/>
                 <outlet property="ratingsLabel" destination="ax3-Ua-dpM" id="nSc-4f-UdZ"/>
                 <outlet property="ratingsView" destination="1VZ-S8-68h" id="Qnn-22-gBi"/>
                 <outlet property="releaseDateLabel" destination="4Gd-kH-za6" id="K3Z-sJ-m1V"/>
                 <outlet property="titleLabel" destination="wfA-iS-qhX" id="e6b-RM-a2K"/>
                 <outlet property="topConstraint" destination="KoX-Tt-en5" id="m0h-9j-Lt9"/>
+                <outlet property="trailerView" destination="WTQ-ap-eGy" id="LoZ-dI-fgd"/>
+                <outlet property="userActionsView" destination="bub-XJ-hjL" id="cEa-l8-17Z"/>
+                <outlet property="watchlistButton" destination="hmd-EO-EFe" id="NUD-QJ-YEi"/>
             </connections>
             <point key="canvasLocation" x="-680" y="-528"/>
         </collectionReusableView>
     </objects>
     <designables>
-        <designable name="1VZ-S8-68h">
-            <size key="intrinsicContentSize" width="45" height="45"/>
-        </designable>
         <designable name="94i-wU-iKW">
             <size key="intrinsicContentSize" width="240" height="360"/>
         </designable>
