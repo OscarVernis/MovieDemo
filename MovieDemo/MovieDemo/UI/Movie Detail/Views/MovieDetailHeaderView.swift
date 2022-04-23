@@ -70,11 +70,11 @@ class MovieDetailHeaderView: UICollectionReusableView {
         //Overview
         if !movie.overview.isEmpty {
             overviewLabel.text = movie.overview
-        } else {
+        } else if overviewView != nil {
             container.removeArrangedSubview(overviewView)
             overviewView.removeFromSuperview()
         }
-        
     }
+
     
 }
