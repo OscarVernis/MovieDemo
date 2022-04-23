@@ -53,13 +53,9 @@ class UserProfileHeaderSection: ConfigurableSection {
     }
     
     func cell(withCollectionView collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        if isLoading {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath) as! LoadingCell
-            
-            return cell
-        } else {
-            fatalError("Should be empty!")
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath) as! LoadingCell
+        
+        return cell
     }
     
 }

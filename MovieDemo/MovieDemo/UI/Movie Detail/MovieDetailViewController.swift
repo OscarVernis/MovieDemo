@@ -51,6 +51,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        //Update Rating View if appeareance changes
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             SPStorkController.updatePresentingController(parent: self)
         }
@@ -71,17 +72,14 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .always
-
-        collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Load Background Blur View
         if let imageURL = movie.posterImageURL(size: .w342), let bgView = BlurBackgroundView.instantiateFromNib() {
-            collectionView.backgroundColor = .clear
-
             bgView.imageView.setRemoteImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
@@ -134,36 +132,43 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     //MARK: - Sections
-    fileprivate func addSection(_ section: ConfigurableSection, validate: Bool? = nil) {
-        //Only add the section if validation passes
-        if let validate = validate, validate == false { return }
-        
-        sections.append(section)
-    }
-    
     fileprivate func reloadSections() {
         sections.removeAll()
         
-        addSection(MovieDetailHeaderSection(movie: movie, isLoading: isLoading, imageTapHandler: showImage))
-        addSection(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast),
-                   validate: !movie.topCast.isEmpty)
-        addSection(MovieDetailCrewSection(crew: movie.topCrew, titleHeaderButtonHandler: showCrew),
-                    validate: !movie.topCrew.isEmpty)
-        addSection(MovieDetailVideoSection(videos: movie.videos),
-                   validate: !movie.videos.isEmpty)
-        addSection(MoviesSection(title: .localized(.RecommendedMovies), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies),
-                   validate: !movie.recommendedMovies.isEmpty)
-        addSection(MovieDetailInfoSection(info: movie.infoArray),
-                   validate: !movie.infoArray.isEmpty)
+        sections.append(MovieDetailHeaderSection(movie: movie, isLoading: isLoading, imageTapHandler: showImage))
+        
+        if !movie.topCast.isEmpty {
+            sections.append(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast))
+        }
+        
+        if !movie.topCrew.isEmpty {
+            sections.append(MovieDetailCrewSection(crew: movie.topCrew, titleHeaderButtonHandler: showCrew))
+        }
+        
+        if !movie.videos.isEmpty {
+            sections.append(MovieDetailVideoSection(videos: movie.videos))
+        }
+        
+        if !movie.recommendedMovies.isEmpty {
+            sections.append(MoviesSection(title: .localized(.RecommendedMovies), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies))
+        }
+        
+        if !movie.infoArray.isEmpty {
+            sections.append(MovieDetailInfoSection(info: movie.infoArray))
+        }
 
         dataSource.sections = sections
         collectionView.reloadData()
     }
 
     //MARK: - Actions
-    fileprivate func showRecommendedMovies() {
-        let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
-        mainCoordinator.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
+    fileprivate func showImage() {
+        guard let url = self.movie.posterImageURL(size: .original), let headerView = headerView else { return }
+        let mvvc = MediaViewerViewController(imageURL: url,
+                                             image: headerView.posterImageView.image,
+                                             presentFromView: headerView.posterImageView
+        )
+        present(mvvc, animated: true)
     }
     
     fileprivate func showCast() {
@@ -172,6 +177,17 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     
     fileprivate func showCrew() {
         mainCoordinator.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
+    }
+    
+    fileprivate func showRecommendedMovies() {
+        let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
+        mainCoordinator.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
+    }
+    
+    @objc fileprivate func playYoutubeTrailer() {
+        guard let youtubeURL = movie.trailerURL else { return }
+        
+        UIApplication.shared.open(youtubeURL)
     }
     
     @objc fileprivate func markAsFavorite() {
@@ -250,21 +266,6 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         }
         
         self.present(mrvc, animated: true)
-    }
-
-    fileprivate func showImage() {
-        guard let url = self.movie.posterImageURL(size: .original), let headerView = headerView else { return }
-        let mvvc = MediaViewerViewController(imageURL: url,
-                                             image: headerView.posterImageView.image,
-                                             presentFromView: headerView.posterImageView
-        )
-        present(mvvc, animated: true)
-    }
-    
-    @objc fileprivate func playYoutubeTrailer() {
-        guard let youtubeURL = movie.trailerURL else { return }
-        
-        UIApplication.shared.open(youtubeURL)
     }
     
 }

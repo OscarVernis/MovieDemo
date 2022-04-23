@@ -9,6 +9,8 @@
 import UIKit
 
 class MovieDetailHeaderView: UICollectionReusableView {
+    @IBOutlet weak var topConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var container: UIStackView!
     @IBOutlet weak var userActionsView: UIView!
     @IBOutlet weak var overviewView: UIView!
@@ -28,9 +30,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var overviewLabel: UILabel!
     
     @IBOutlet weak var playTrailerButton: CustomButton!
-        
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
-        
+                
     var imageTapHandler: (()->Void)? = nil
 
     override func awakeFromNib() {        
@@ -42,14 +42,16 @@ class MovieDetailHeaderView: UICollectionReusableView {
         imageTapHandler?()
     }
     
-    func configure(movie: MovieViewModel, showsUserActions: Bool = true) {
-        //Movie Info
+    func configure(movie: MovieViewModel, showsUserActions: Bool = false) {
+        //Load Poster image
         if let url = movie.posterImageURL(size: .w342) {
             posterImageView.contentMode = .scaleAspectFill
             posterImageView.setRemoteImage(withURL: url)
         }
         
+        //Movie Info
         titleLabel.text = movie.title
+        overviewLabel.text = movie.overview
         ratingsView.rating = CGFloat(movie.percentRating)
         ratingsView.isRatingAvailable = movie.isRatingAvailable
         ratingsLabel.text = movie.ratingString
@@ -61,19 +63,10 @@ class MovieDetailHeaderView: UICollectionReusableView {
             releaseDateLabel.text = "\(movie.releaseYear)"
         }
         
-        //UserActions
-        if !showsUserActions, userActionsView != nil {
-            container.removeArrangedSubview(userActionsView)
-            userActionsView.removeFromSuperview()
-        }
-        
-        //Overview
-        if !movie.overview.isEmpty {
-            overviewLabel.text = movie.overview
-        } else if overviewView != nil {
-            container.removeArrangedSubview(overviewView)
-            overviewView.removeFromSuperview()
-        }
+        //Hiding Header Sections
+        userActionsView.isHidden = !showsUserActions
+        overviewView.isHidden = movie.overview.isEmpty
+        trailerView.isHidden = (movie.trailerURL == nil)
     }
 
     
