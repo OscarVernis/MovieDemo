@@ -8,7 +8,6 @@
 
 import Foundation
 import KeychainAccess
-import Combine
 
 fileprivate enum LocalKeys: String {
     case loggedIn
@@ -35,11 +34,10 @@ class SessionManager {
 //MARK: - Login
 extension SessionManager {
     func login(withUsername username: String, password: String) async -> Result<Void, Error> {
-        var token = ""
         var sessionId = ""
         
         do {
-            token = try await service.requestToken()
+            let token = try await service.requestToken()
             try await service.validateToken(username: username, password: password, requestToken: token)
             sessionId = try await service.createSession(requestToken: token)
         } catch {

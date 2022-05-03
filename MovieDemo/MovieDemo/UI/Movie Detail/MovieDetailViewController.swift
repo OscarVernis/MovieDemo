@@ -115,20 +115,16 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         headerView.favoriteButton?.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
         headerView.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
         headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-        updateActionButtons()
+    
+        //Update header buttons status
+        headerView.favoriteButton?.setIsSelected(movie.favorite, animated: false)
+        headerView.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
+        headerView.rateButton?.setIsSelected(movie.rated, animated: false)
         
         //Preload Poster Image for Image Viewer transition.
         if let url = self.movie.posterImageURL(size: .original) {
             UIImage.loadRemoteImage(url: url)
         }
-    }
-    
-    fileprivate func updateActionButtons() {
-        guard let headerView = headerView else { return }
-        
-        headerView.favoriteButton?.setIsSelected(movie.favorite, animated: false)
-        headerView.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
-        headerView.rateButton?.setIsSelected(movie.rated, animated: false)
     }
     
     //MARK: - Sections
@@ -163,7 +159,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
 
     //MARK: - Actions
     fileprivate func showImage() {
-        guard let url = self.movie.posterImageURL(size: .original), let headerView = headerView else { return }
+        guard let url = movie.posterImageURL(size: .original), let headerView = headerView else { return }
         let mvvc = MediaViewerViewController(imageURL: url,
                                              image: headerView.posterImageView.image,
                                              presentFromView: headerView.posterImageView
@@ -172,11 +168,11 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func showCast() {
-        mainCoordinator.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: self.movie.cast))
+        mainCoordinator.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
     }
     
     fileprivate func showCrew() {
-        mainCoordinator.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: self.movie.crew))
+        mainCoordinator.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
     }
     
     fileprivate func showRecommendedMovies() {
@@ -298,8 +294,6 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case _ as MovieDetailVideoSection:
             let video = movie.videos[indexPath.row]
             UIApplication.shared.open(video.youtubeURL)
-            
-                        
         default:
             break
         }

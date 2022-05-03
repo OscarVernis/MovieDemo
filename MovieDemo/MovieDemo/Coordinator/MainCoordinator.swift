@@ -116,7 +116,6 @@ final class MainCoordinator {
         
         lvc.didSelectedItem = { [weak self] index in
             let movie = dataProvider.item(atIndex: index)
-
             self?.showMovieDetail(movie: movie)
         }
 

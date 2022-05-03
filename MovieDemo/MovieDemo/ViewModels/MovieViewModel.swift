@@ -403,7 +403,7 @@ extension MovieViewModel {
     private func updateVideos() {
         guard let videos = movie.videos, videos.count > 1 else { return }
         
-        self.videos = videos.map { MovieVideoViewModel(video: $0) }
+        self.videos = videos.map(MovieVideoViewModel.init)
     }
     
 }

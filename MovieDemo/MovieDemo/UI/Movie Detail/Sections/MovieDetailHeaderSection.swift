@@ -35,7 +35,7 @@ class MovieDetailHeaderSection: ConfigurableSection {
 
         let section = sectionBuilder.createListSection(height: 100)
 
-        let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
+        let sectionHeader = sectionBuilder.createDetailSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section

@@ -55,7 +55,7 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //The Header section for MovieDetailViewController
-    func createMovieDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    func createDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         return createHeader(height: .estimated(500))
     }
     

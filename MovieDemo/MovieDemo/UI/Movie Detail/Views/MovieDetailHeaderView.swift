@@ -57,10 +57,9 @@ class MovieDetailHeaderView: UICollectionReusableView {
         ratingsLabel.text = movie.ratingString
         genresLabel.text = movie.genres(separatedBy: ", ")
         
+        releaseDateLabel.text = "\(movie.releaseYear)"
         if let runtime = movie.runtime {
-            releaseDateLabel.text = "\(movie.releaseYear)  •  \(runtime)"
-        } else {
-            releaseDateLabel.text = "\(movie.releaseYear)"
+            releaseDateLabel.text?.append(contentsOf:"   •  \(runtime)")
         }
         
         //Hiding Header Sections

@@ -34,7 +34,7 @@ class UserProfileHeaderSection: ConfigurableSection {
 
         let section = sectionBuilder.createSection(groupHeight: .estimated(150))
         
-        let sectionHeader = sectionBuilder.createMovieDetailSectionHeader()
+        let sectionHeader = sectionBuilder.createDetailSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
