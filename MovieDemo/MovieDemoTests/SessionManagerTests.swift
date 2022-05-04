@@ -120,7 +120,6 @@ class SessionManagerTests: XCTestCase {
 }
 
 //MARK: - Mock
-
 class LoginManagerMock: LoginManager {
     let fails: Bool
     let error: MovieService.ServiceError?

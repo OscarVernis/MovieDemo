@@ -115,11 +115,6 @@ extension MovieService {
                 return result
             }
             .receive(on: DispatchQueue.main)
-            .mapError({
-                print($0)
-                
-                return $0
-            })
             .eraseToAnyPublisher()
     }
     

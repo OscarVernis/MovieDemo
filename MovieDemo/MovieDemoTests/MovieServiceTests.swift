@@ -71,5 +71,82 @@ class MovieServiceTests: XCTestCase {
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .NowPlaying) ))
         XCTAssertNil(results)
     }
-
+    
+    func test_successAction_succeeds() {
+        let url = URL(string: "https://api.themoviedb.org/3/account/id/favorite")!
+        let data = ServiceSuccessResult(success: true, sessionId: "sessionId", requestToken: "requestToken")
+        let mocker = MockData(jsonObject: data, url: url)
+        let sut = MovieService(session: mocker.session)
+        
+        var result: ServiceSuccessResult?
+        
+        XCTAssertNoThrow(result = try awaitPublisher( sut.successAction(endpoint: .MarkAsFavorite)) )
+        XCTAssertEqual(result?.success, true)
+        XCTAssertEqual(result?.sessionId, "sessionId")
+        XCTAssertEqual(result?.requestToken, "requestToken")
+    }
+    
+    func test_successAction_thowsError_onFailure() {
+        let url = URL(string: "https://api.themoviedb.org/3/account/id/favorite")!
+        let data = ServiceSuccessResult(success: false)
+        let mocker = MockData(jsonObject: data, url: url)
+        let sut = MovieService(session: mocker.session)
+                
+        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .MarkAsFavorite)) ) { error in
+            XCTAssertEqual(error as? MovieService.ServiceError, MovieService.ServiceError.NoSuccess)
+        }
+    }
+    
+    func test_successAction_thowsError_onWrongData() {
+        let url = URL(string: "https://api.themoviedb.org/3/account/id/favorite")!
+        let mocker = MockData(jsonFile: "Movies", url: url)
+        
+        let sut = MovieService(session: mocker.session)
+        
+        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .MarkAsFavorite)) )
+    }
+    
+    func test_successAction_thowsError_On404Status() {
+        let url = URL(string: "https://api.themoviedb.org/3/account/id/favorite")!
+        let data = ServiceSuccessResult(success: true)
+        let mocker = MockData(jsonObject: data, url: url, statusCode: 404)
+        let sut = MovieService(session: mocker.session)
+                
+        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .MarkAsFavorite)) )
+    }
+    
+    func test_successAction_async_succeeds() async throws {
+        let url = URL(string: "https://api.themoviedb.org/3/account/id/watchlist")!
+        let data = ServiceSuccessResult(success: true, sessionId: "sessionId", requestToken: "requestToken")
+        let mocker = MockData(jsonObject: data, url: url)
+        let sut = MovieService(session: mocker.session)
+        
+        var result: ServiceSuccessResult?
+        do {
+            result = try await  sut.successAction(endpoint: .AddToWatchlist)
+        } catch {
+            XCTAssertNil(error)
+        }
+        
+        XCTAssertEqual(result?.success, true)
+        XCTAssertEqual(result?.sessionId, "sessionId")
+        XCTAssertEqual(result?.requestToken, "requestToken")
+    }
+    
+    func test_successAction_async_fails() async throws {
+        let url = URL(string: "https://api.themoviedb.org/3/account/id/watchlist")!
+        let data = ServiceSuccessResult(success: false, sessionId: "sessionId", requestToken: "requestToken")
+        let mocker = MockData(jsonObject: data, url: url)
+        let sut = MovieService(session: mocker.session)
+        
+        var resultError: Error? = nil
+        do {
+            let _ = try await  sut.successAction(endpoint: .AddToWatchlist)
+        } catch {
+            resultError = error
+        }
+        
+        XCTAssertNotNil(resultError)
+    }
+    
 }
