@@ -20,101 +20,89 @@ class SessionManagerTests: XCTestCase {
         SessionManager.shared.service = RemoteLoginManager()
     }
 
-    func test_login_success() throws {
+    func test_login_success() async throws {
         let sessionManager = SessionManager.shared
         sessionManager.userManager = UserManagerMock(isLoggedIn: false)
         sessionManager.service = LoginManagerMock()
         
-        Task {
-            let result = await sessionManager.login(withUsername:"username", password: "password")
-            switch result {
-            case .failure(_):
-                XCTFail()
-            default:
-                XCTAssertEqual(sessionManager.isLoggedIn, true)
-                XCTAssertEqual(sessionManager.username, "username")
-                XCTAssertEqual(sessionManager.sessionId, "sessionId")
-                break
-            }
-
+        let result = await sessionManager.login(withUsername:"username", password: "password")
+        switch result {
+        case .failure(_):
+            XCTFail()
+        default:
+            XCTAssertEqual(sessionManager.isLoggedIn, true)
+            XCTAssertEqual(sessionManager.username, "username")
+            XCTAssertEqual(sessionManager.sessionId, "sessionId")
+            break
         }
+        
     }
     
-    func test_login_fails() throws {
+    func test_login_fails() async throws {
         let sessionManager = SessionManager.shared
         sessionManager.userManager = UserManagerMock(isLoggedIn: false)
         sessionManager.service = LoginManagerMock(fails: true)
         
-        Task {
-            let result = await sessionManager.login(withUsername:"username", password: "password")
-            switch result {
-            case .failure(let error):
-                XCTAssert(error is SessionManager.LoginError)
-                XCTAssertEqual(error as! SessionManager.LoginError, SessionManager.LoginError.Default)
-            default:
-                XCTFail()
-                break
-            }
-
+        let result = await sessionManager.login(withUsername:"username", password: "password")
+        switch result {
+        case .failure(let error):
+            XCTAssertEqual(error as? SessionManager.LoginError, SessionManager.LoginError.Default)
+        default:
+            XCTFail()
+            break
         }
+        
     }
     
-    func test_login_fails_on401() throws {
+    func test_login_fails_on401() async throws {
         let sessionManager = SessionManager.shared
         sessionManager.userManager = UserManagerMock(isLoggedIn: false)
         sessionManager.service = LoginManagerMock(fails: true, error: .IncorrectCredentials)
         
-        Task {
-            let result = await sessionManager.login(withUsername:"username", password: "password")
-            switch result {
-            case .failure(let error):
-                XCTAssert(error is SessionManager.LoginError)
-                XCTAssertEqual(error as! SessionManager.LoginError, SessionManager.LoginError.IncorrectCredentials)
-            default:
-                XCTFail()
-                break
-            }
-
+        let result = await sessionManager.login(withUsername:"username", password: "password")
+        switch result {
+        case .failure(let error):
+            XCTAssertEqual(error as? SessionManager.LoginError, SessionManager.LoginError.IncorrectCredentials)
+        default:
+            XCTFail()
+            break
         }
+        
     }
     
-    func test_logout_success() throws {
+    func test_logout_success() async throws {
         let sessionManager = SessionManager.shared
         sessionManager.userManager = UserManagerMock(sessionId: "sessionid", username: "username")
         sessionManager.service = LoginManagerMock()
         
-        Task {
-            let result = await sessionManager.logout()
-            switch result {
-            case .failure(_):
-                XCTFail()
-            default:
-                XCTAssertEqual(sessionManager.isLoggedIn, false)
-                XCTAssertNil(sessionManager.username)
-                XCTAssertNil(sessionManager.sessionId)
-            }
-
+        let result = await sessionManager.logout()
+        switch result {
+        case .failure(_):
+            XCTFail()
+        default:
+            XCTAssertEqual(sessionManager.isLoggedIn, false)
+            XCTAssertNil(sessionManager.username)
+            XCTAssertNil(sessionManager.sessionId)
         }
+        
     }
     
-    func test_logout_fails() throws {
+    func test_logout_fails() async throws {
         let sessionManager = SessionManager.shared
         sessionManager.userManager = UserManagerMock(sessionId: "sessionid", username: "username")
         sessionManager.service = LoginManagerMock(fails: true)
         
-        Task {
-            let result = await sessionManager.logout()
-            switch result {
-            case .failure(_):
-                XCTAssertEqual(sessionManager.isLoggedIn, true)
-                XCTAssertNotNil(sessionManager.username)
-                XCTAssertNotNil(sessionManager.sessionId)
-                break
-            default:
-                XCTFail()
-            }
-            
+        let result = await sessionManager.logout()
+        switch result {
+        case .failure(_):
+            XCTAssertEqual(sessionManager.isLoggedIn, true)
+            XCTAssertNotNil(sessionManager.username)
+            XCTAssertNotNil(sessionManager.sessionId)
+            break
+        default:
+            XCTFail()
         }
+        
     }
     
 }
