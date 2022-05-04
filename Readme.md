@@ -28,15 +28,8 @@ Demo application built as a showcase for potential clients and employers. Comple
 - Support for both Light and Dark modes.
 - Swift Package Manager for dependency management.
 
-### Libraries used:
-- AlamoFire
-- AlamoFireImage
-- ObjectMapper
-- KeychainAccess
-- Loaf
-
 ## About Me
-Software developer with 10 years of experience, specialized on the iOS platform. I have experience in the development and long term maintenance of apps, including the full cycle, from conception to submission to the App Store. Self-taught, pragmatic and obsessed with the details.
+Software developer with more than 10 years of experience, specialized on iOS. I have experience in the development and long term maintenance of apps, including the full cycle, from conception to submission to the App Store. Self-taught, pragmatic and obsessed with the details.
 
 ## Contact
 Email: <oscar.vernis@gmail.com><br>
