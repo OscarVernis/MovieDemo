@@ -9,25 +9,34 @@
 import Foundation
 import KeychainAccess
 
-fileprivate enum LocalKeys: String {
-    case loggedIn
-    case username
-}
-
 class SessionManager {
     enum LoginError: Error {
         case IncorrectCredentials
     }
     
     static let shared = SessionManager()
-    private var service = RemoteLoginManager()
+    var service = RemoteLoginManager()
+    var userManager: UserManager = LocalUserManager() {
+        didSet {
+            updateLocalInfo()
+        }
+    }
     
     var isLoggedIn: Bool = false
     var username: String?
     var sessionId: String?
         
     private init() {
-        load()
+        updateLocalInfo()
+    }
+}
+
+//MARK: - Update
+extension SessionManager {
+    fileprivate func updateLocalInfo() {
+        sessionId = userManager.sessionId
+        username = userManager.username
+        isLoggedIn = userManager.isLoggedIn
     }
 }
 
@@ -48,41 +57,12 @@ extension SessionManager {
             }
         }
         
-        save(username: username, sessionId: sessionId)
+        userManager.save(username: username, sessionId: sessionId)
+        updateLocalInfo()
         
         return .success(())
     }
     
-}
-
-//MARK: - Save and retrieve session
-extension SessionManager {
-    fileprivate func load() {
-        let loggedIn = UserDefaults.standard.bool(forKey: LocalKeys.loggedIn.rawValue)
-        let user =  UserDefaults.standard.value(forKey: LocalKeys.username.rawValue) as? String
-        
-        let keychain = Keychain(service: "oscarvernis.MovieDemo")
-        sessionId = keychain[user ?? ""]
-        
-        if sessionId != nil {
-            isLoggedIn = loggedIn
-            username = user
-        }
-    }
-    
-    fileprivate func save(username: String, sessionId: String) {
-        self.isLoggedIn = true
-        self.username = username
-        self.sessionId = sessionId
-        
-        //Save state to user defaults
-        UserDefaults.standard.setValue(username, forKey: LocalKeys.username.rawValue)
-        UserDefaults.standard.setValue(true, forKey: LocalKeys.loggedIn.rawValue)
-        
-        //Save sessionId to keychain
-        let keychain = Keychain(service: "oscarvernis.MovieDemo")
-        keychain[username] = sessionId
-    }
 }
 
 //MARK: - Logout
@@ -99,7 +79,7 @@ extension SessionManager {
         
         switch result {
         case .success():
-            deleteUserInfo()
+            userManager.delete()
             return .success(())
         case .failure(let error):
             return .failure(error)
@@ -107,19 +87,6 @@ extension SessionManager {
             return .failure(MovieService.ServiceError.NoSuccess)
         }
         
-    }
-    
-    func deleteUserInfo() {
-        //Save state to user defaults
-        UserDefaults.standard.setValue(nil, forKey: LocalKeys.username.rawValue)
-        UserDefaults.standard.setValue(false, forKey: LocalKeys.loggedIn.rawValue)
-        
-        //Save sessionId to keychain
-        let keychain = Keychain(service: "oscarvernis.MovieDemo")
-        keychain[username!] = nil
-        
-        self.isLoggedIn = false
-        self.username = nil
     }
     
 }

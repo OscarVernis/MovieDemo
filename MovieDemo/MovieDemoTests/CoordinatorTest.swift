@@ -33,6 +33,10 @@ class CoordinatorTest: XCTestCase {
     
     func test_Coordinator_Loads_Login() throws {
         let coordinator = MainCoordinator(window: window, isLoginRequired: true)
+        
+        let sessionManager = SessionManager.shared
+        sessionManager.userManager = UserManagerMock(isLoggedIn: false)
+        
         coordinator.start()
         
         let login = navCont?.visibleViewController
@@ -98,6 +102,31 @@ class CoordinatorTest: XCTestCase {
         XCTAssert(castList is ListViewController)
     }
     
+    func test_Coordinator_Shows_UserProfile_IfLoggedIn() throws {
+        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        coordinator.start()
+        
+        let sessionManager = SessionManager.shared
+        sessionManager.userManager = UserManagerMock(isLoggedIn: true)
+        
+        coordinator.showUserProfile(animated: false)
+        
+        let userProfile = navCont?.visibleViewController
+        XCTAssert(userProfile is UserProfileViewController)
+    }
+    
+    func test_Coordinator_Shows_UserLogin_IfNotLoggedIn() throws {
+        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        coordinator.start()
+        
+        let sessionManager = SessionManager.shared
+        sessionManager.userManager = UserManagerMock(isLoggedIn: false)
+        
+        coordinator.showUserProfile(animated: false)
+        
+        let login = navCont?.visibleViewController
+        XCTAssert(login is LoginViewController)
+    }
 }
 
 //MARK: - Helpers
@@ -122,5 +151,24 @@ extension CoordinatorTest {
         XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
         
         return PersonViewModel(person: person)
+    }
+}
+
+//MARK: - User Manager Mock
+struct UserManagerMock: UserManager {
+    var sessionId: String?
+    var username: String?
+    var isLoggedIn: Bool
+    
+    init(sessionId: String? = nil, username: String? = nil, isLoggedIn: Bool) {
+        self.sessionId = sessionId
+        self.username = username
+        self.isLoggedIn = isLoggedIn
+    }
+    
+    func save(username: String, sessionId: String) {
+    }
+    
+    func delete() {
     }
 }

@@ -53,6 +53,8 @@
 		5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5550409B251E70A400D919FF /* UserProfileViewController.swift */; };
 		55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55518D422511292E00DAEB7F /* SectionTitleView.swift */; };
 		555498F9282217D700E89119 /* CoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498F8282217D700E89119 /* CoordinatorTest.swift */; };
+		555498FB2822284B00E89119 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FA2822284B00E89119 /* UserManager.swift */; };
+		555498FD282228D000E89119 /* LocalUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FC282228D000E89119 /* LocalUserManager.swift */; };
 		5554DA49281343C900845F9E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5554DA48281343C900845F9E /* SDWebImage */; };
 		5554DA4B2813482500845F9E /* UIImage+RemoteLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */; };
 		555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */; };
@@ -239,6 +241,8 @@
 		5550409B251E70A400D919FF /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		55518D422511292E00DAEB7F /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
 		555498F8282217D700E89119 /* CoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTest.swift; sourceTree = "<group>"; };
+		555498FA2822284B00E89119 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		555498FC282228D000E89119 /* LocalUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserManager.swift; sourceTree = "<group>"; };
 		5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+RemoteLoading.swift"; sourceTree = "<group>"; };
 		555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCrewCredit.swift; sourceTree = "<group>"; };
 		555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCrewCreditViewModel.swift; sourceTree = "<group>"; };
@@ -427,6 +431,8 @@
 			isa = PBXGroup;
 			children = (
 				557FFA8A251A625900D79F68 /* SessionManager.swift */,
+				555498FA2822284B00E89119 /* UserManager.swift */,
+				555498FC282228D000E89119 /* LocalUserManager.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -1131,6 +1137,7 @@
 				5523970D27D19C2C00E4C18F /* RemoteSearch.swift in Sources */,
 				558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */,
 				5565DDED27E969CD00D7F4EB /* MovieService+Endpoints.swift in Sources */,
+				555498FB2822284B00E89119 /* UserManager.swift in Sources */,
 				55CB9F6F251918EE00E13891 /* MovieRatingListCellConfigurator.swift in Sources */,
 				5560523B2531246A00023BD9 /* PersonCastCredit.swift in Sources */,
 				5523970827D19B6700E4C18F /* RemoteMoviesLoader.swift in Sources */,
@@ -1169,6 +1176,7 @@
 				556B78632524F23600F212D1 /* MovieDetailHeaderSection.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
+				555498FD282228D000E89119 /* LocalUserManager.swift in Sources */,
 				55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */,
 				55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */,
 				55A60DDA2527AAB30082810C /* MediaViewerViewController.swift in Sources */,

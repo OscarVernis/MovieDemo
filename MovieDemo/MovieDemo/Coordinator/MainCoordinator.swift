@@ -83,14 +83,14 @@ final class MainCoordinator {
         }
     }
     
-    func showUserProfile() {
+    func showUserProfile(animated: Bool = true) {
         if !SessionManager.shared.isLoggedIn {
-            showLogin()
+            showLogin(animated: animated)
         } else {
             let upvc = UserProfileViewController()
             upvc.mainCoordinator = self
             
-            rootNavigationViewController?.pushViewController(upvc, animated: true)
+            rootNavigationViewController?.pushViewController(upvc, animated: animated)
         }
     }
     
