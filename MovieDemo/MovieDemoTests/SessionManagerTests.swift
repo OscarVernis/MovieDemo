@@ -80,7 +80,7 @@ class SessionManagerTests: XCTestCase {
     
     func test_logout_success() throws {
         let sessionManager = SessionManager.shared
-        sessionManager.userManager = UserManagerMock(sessionId: "sessionid", username: "username", isLoggedIn: true)
+        sessionManager.userManager = UserManagerMock(sessionId: "sessionid", username: "username")
         sessionManager.service = LoginManagerMock()
         
         Task {
@@ -99,7 +99,7 @@ class SessionManagerTests: XCTestCase {
     
     func test_logout_fails() throws {
         let sessionManager = SessionManager.shared
-        sessionManager.userManager = UserManagerMock(sessionId: "sessionid", username: "username", isLoggedIn: true)
+        sessionManager.userManager = UserManagerMock(sessionId: "sessionid", username: "username")
         sessionManager.service = LoginManagerMock(fails: true)
         
         Task {

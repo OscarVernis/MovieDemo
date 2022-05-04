@@ -20,6 +20,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
+        SessionManager.shared.userManager = LocalUserManager()
         navCont?.viewControllers = []
         window = nil
     }

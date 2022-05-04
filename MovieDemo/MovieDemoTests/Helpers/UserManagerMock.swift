@@ -12,23 +12,23 @@ import Foundation
 class UserManagerMock: UserManager {
     var sessionId: String?
     var username: String?
-    var isLoggedIn: Bool
     
-    init(sessionId: String? = nil, username: String? = nil, isLoggedIn: Bool) {
+    init(sessionId: String? = nil, username: String? = nil, isLoggedIn: Bool = false) {
         self.sessionId = sessionId
         self.username = username
-        self.isLoggedIn = isLoggedIn
+        
+        if isLoggedIn && self.sessionId == nil {
+            self.sessionId = "sessionId"
+        }
     }
     
     func save(username: String, sessionId: String) {
         self.sessionId = sessionId
         self.username = username
-        self.isLoggedIn = true
     }
     
     func delete() {
         self.sessionId = nil
         self.username = nil
-        self.isLoggedIn = false
     }
 }
