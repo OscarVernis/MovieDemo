@@ -47,11 +47,11 @@ class LocalUserManager: UserManager {
     }
     
     func delete() {
-        //Save state to user defaults
+        //Delte state from user defaults
         UserDefaults.standard.setValue(nil, forKey: LocalKeys.username.rawValue)
         UserDefaults.standard.setValue(false, forKey: LocalKeys.loggedIn.rawValue)
         
-        //Save sessionId to keychain
+        //Delete sessionId from keychain
         let keychain = Keychain(service: "oscarvernis.MovieDemo")
         keychain[username!] = nil
         

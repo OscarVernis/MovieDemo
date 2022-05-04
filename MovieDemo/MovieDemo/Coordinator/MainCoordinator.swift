@@ -63,7 +63,7 @@ final class MainCoordinator {
     }
     
     @MainActor
-    func logout() {
+    func logout(completion: (() -> Void)? = nil) {
         Task {
             let result = await SessionManager.shared.logout()
             
@@ -76,9 +76,10 @@ final class MainCoordinator {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 
                 self.rootNavigationViewController?.popToRootViewController(animated: true)
+                completion?()
             case .failure(_):
                 AlertManager.showErrorAlert(.localized(.LogoutError), sender: self.rootNavigationViewController!)
-                break
+                completion?()
             }
         }
     }

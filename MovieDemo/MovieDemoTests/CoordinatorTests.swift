@@ -1,5 +1,5 @@
 //
-//  CoordinatorTest.swift
+//  CoordinatorTests.swift
 //  MovieDemoTests
 //
 //  Created by Oscar Vernis on 03/05/22.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import MovieDemo
 
-class CoordinatorTest: XCTestCase {
+class CoordinatorTests: XCTestCase {
     var window: UIWindow!
     var navCont: UINavigationController? {
         window.rootViewController as? UINavigationController
@@ -20,6 +20,7 @@ class CoordinatorTest: XCTestCase {
     }
     
     override func tearDownWithError() throws {
+        navCont?.viewControllers = []
         window = nil
     }
     
@@ -130,7 +131,7 @@ class CoordinatorTest: XCTestCase {
 }
 
 //MARK: - Helpers
-extension CoordinatorTest {
+extension CoordinatorTests {
     func anyMovie() -> MovieViewModel {
         var movieData = Data()
         XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )

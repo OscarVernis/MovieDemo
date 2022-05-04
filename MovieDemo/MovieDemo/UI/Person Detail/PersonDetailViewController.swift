@@ -55,7 +55,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     }
     
     deinit {
-        blurAnimator.stopAnimation(true)
+        blurAnimator?.stopAnimation(true)
         titleAnimator?.stopAnimation(true)
     }
     

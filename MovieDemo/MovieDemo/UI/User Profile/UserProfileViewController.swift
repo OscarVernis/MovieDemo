@@ -96,7 +96,7 @@ class UserProfileViewController: UIViewController, GenericCollection {
         return headerSection
     }
     
-    fileprivate func reloadSections() {
+    fileprivate func reloadSections() {        
         sections = [
             headerSection(),
             UserProfileMovieListSection(.Favorites, movies: user.favorites, coordinator: mainCoordinator),

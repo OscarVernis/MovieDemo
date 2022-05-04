@@ -52,7 +52,7 @@
 		554F691028125D9500B6BBDF /* MovieDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */; };
 		5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5550409B251E70A400D919FF /* UserProfileViewController.swift */; };
 		55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55518D422511292E00DAEB7F /* SectionTitleView.swift */; };
-		555498F9282217D700E89119 /* CoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498F8282217D700E89119 /* CoordinatorTest.swift */; };
+		555498F9282217D700E89119 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498F8282217D700E89119 /* CoordinatorTests.swift */; };
 		555498FB2822284B00E89119 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FA2822284B00E89119 /* UserManager.swift */; };
 		555498FD282228D000E89119 /* LocalUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FC282228D000E89119 /* LocalUserManager.swift */; };
 		5554DA49281343C900845F9E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5554DA48281343C900845F9E /* SDWebImage */; };
@@ -240,7 +240,7 @@
 		554F691428125DA800B6BBDF /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MovieDetailHeaderView.strings"; sourceTree = "<group>"; };
 		5550409B251E70A400D919FF /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		55518D422511292E00DAEB7F /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
-		555498F8282217D700E89119 /* CoordinatorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTest.swift; sourceTree = "<group>"; };
+		555498F8282217D700E89119 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
 		555498FA2822284B00E89119 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		555498FC282228D000E89119 /* LocalUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserManager.swift; sourceTree = "<group>"; };
 		5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+RemoteLoading.swift"; sourceTree = "<group>"; };
@@ -585,7 +585,7 @@
 				5565DE2327E97B6E00D7F4EB /* Assets */,
 				555D761027EA44A900B8FFAB /* ModelTests.swift */,
 				5565DE1927E97A6100D7F4EB /* MovieServiceTests.swift */,
-				555498F8282217D700E89119 /* CoordinatorTest.swift */,
+				555498F8282217D700E89119 /* CoordinatorTests.swift */,
 				5565DE0027E9785100D7F4EB /* Info.plist */,
 			);
 			path = MovieDemoTests;
@@ -1059,7 +1059,7 @@
 			files = (
 				5565DE1A27E97A6100D7F4EB /* MovieServiceTests.swift in Sources */,
 				5565DE3427E98C2B00D7F4EB /* MockData.swift in Sources */,
-				555498F9282217D700E89119 /* CoordinatorTest.swift in Sources */,
+				555498F9282217D700E89119 /* CoordinatorTests.swift in Sources */,
 				555D760527EA3D3B00B8FFAB /* XCTestCase+Helpers.swift in Sources */,
 				555D761127EA44A900B8FFAB /* ModelTests.swift in Sources */,
 			);
