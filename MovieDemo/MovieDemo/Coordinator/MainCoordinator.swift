@@ -13,10 +13,11 @@ final class MainCoordinator {
     private var rootNavigationViewController: UINavigationController?
     
     //If set to true, it will force you to login before showing Home
-    private let isLoginRequired = false
+    private let isLoginRequired: Bool
     
-    init(window: UIWindow) {
+    init(window: UIWindow, isLoginRequired: Bool = false) {
         self.window = window
+        self.isLoginRequired = isLoginRequired
     }
     
     func start() {
@@ -100,19 +101,19 @@ final class MainCoordinator {
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
-    func showMovieDetail(movie: MovieViewModel) {
+    func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         let mdvc = MovieDetailViewController(movie: movie)
         mdvc.mainCoordinator = self
         
-        rootNavigationViewController?.pushViewController(mdvc, animated: true)
+        rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
     
-    func showMovieList(title: String, dataProvider: MoviesDataProvider) {
+    func showMovieList<T: ArrayDataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: MovieInfoCellConfigurator())
         let lvc = ListViewController(section: section)
         lvc.title = title
         
-        rootNavigationViewController?.pushViewController(lvc, animated: true)
+        rootNavigationViewController?.pushViewController(lvc, animated: animated)
         
         lvc.didSelectedItem = { [weak self] index in
             let movie = dataProvider.item(atIndex: index)
@@ -121,15 +122,15 @@ final class MainCoordinator {
 
     }
     
-    func showPersonProfile(_ viewModel: PersonViewModel) {
+    func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
         pvc.person = viewModel
         pvc.mainCoordinator = self
         
-        rootNavigationViewController?.pushViewController(pvc, animated: true)
+        rootNavigationViewController?.pushViewController(pvc, animated: animated)
     }
     
-    func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>) {
+    func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>, animated: Bool = true) {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CrewCreditPhotoListCellConfigurator())
         let lvc = ListViewController(section: section)
         lvc.title = title
@@ -143,10 +144,10 @@ final class MainCoordinator {
             self.showPersonProfile(person)
         }
         
-        rootNavigationViewController?.pushViewController(lvc, animated: true)
+        rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
-    func showCastCreditList(title: String, dataProvider: StaticArrayDataProvider<CastCreditViewModel>) {
+    func showCastCreditList(title: String, dataProvider: StaticArrayDataProvider<CastCreditViewModel>, animated: Bool = true) {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CastCreditPhotoListCellConfigurator())
         let lvc = ListViewController(section: section)
         lvc.title = title
@@ -160,7 +161,7 @@ final class MainCoordinator {
             self.showPersonProfile(person)
         }
         
-        rootNavigationViewController?.pushViewController(lvc, animated: true)
+        rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
 }
