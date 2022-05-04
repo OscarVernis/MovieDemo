@@ -99,6 +99,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             
             self.isLoading = false
             self.reloadSections()
+            self.updateUserActionButtons()
         }
         
         movie.refresh()
@@ -117,14 +118,21 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
     
         //Update header buttons status
-        headerView.favoriteButton?.setIsSelected(movie.favorite, animated: false)
-        headerView.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
-        headerView.rateButton?.setIsSelected(movie.rated, animated: false)
+        updateUserActionButtons()
         
         //Preload Poster Image for Image Viewer transition.
         if let url = self.movie.posterImageURL(size: .original) {
             UIImage.loadRemoteImage(url: url)
         }
+        
+    }
+    
+    fileprivate func updateUserActionButtons() {
+        guard let headerView = headerView else { return }
+
+        headerView.favoriteButton?.setIsSelected(movie.favorite, animated: false)
+        headerView.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
+        headerView.rateButton?.setIsSelected(movie.rated, animated: false)
     }
     
     //MARK: - Sections

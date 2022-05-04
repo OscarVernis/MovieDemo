@@ -23,7 +23,7 @@ class SessionManager {
         }
     }
     
-    var isLoggedIn: Bool = false
+    var isLoggedIn: Bool { sessionId != nil }
     var username: String?
     var sessionId: String?
         
@@ -37,7 +37,6 @@ extension SessionManager {
     fileprivate func updateLocalInfo() {
         sessionId = userManager.sessionId
         username = userManager.username
-        isLoggedIn = userManager.isLoggedIn
     }
 }
 

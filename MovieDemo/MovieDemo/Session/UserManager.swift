@@ -11,7 +11,6 @@ import Foundation
 protocol UserManager {
     var sessionId: String? { get }
     var username: String? { get }
-    var isLoggedIn: Bool { get }
 
     func save(username: String, sessionId: String)
     func delete()
