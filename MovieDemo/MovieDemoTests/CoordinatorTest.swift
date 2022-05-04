@@ -27,16 +27,16 @@ class CoordinatorTest: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
         
-        let home = navCont?.visibleViewController as? HomeCollectionViewController
-        XCTAssertNotNil(home)
+        let home = navCont?.visibleViewController
+        XCTAssert(home is HomeCollectionViewController)
     }
     
     func test_Coordinator_Loads_Login() throws {
         let coordinator = MainCoordinator(window: window, isLoginRequired: true)
         coordinator.start()
         
-        let login = navCont?.visibleViewController as? LoginViewController
-        XCTAssertNotNil(login)
+        let login = navCont?.visibleViewController
+        XCTAssert(login is LoginViewController)
     }
     
     func test_Coordinator_Shows_MovieDetail() throws {
@@ -45,8 +45,8 @@ class CoordinatorTest: XCTestCase {
         
         coordinator.showMovieDetail(movie: anyMovie(), animated: false)
         
-        let movieDetail = navCont?.visibleViewController as? MovieDetailViewController
-        XCTAssertNotNil(movieDetail)
+        let movieDetail = navCont?.visibleViewController
+        XCTAssert(movieDetail is MovieDetailViewController)
     }
     
     func test_Coordinator_Shows_MovieList() throws {
@@ -58,8 +58,8 @@ class CoordinatorTest: XCTestCase {
                                   dataProvider: StaticArrayDataProvider(models: movie.recommendedMovies),
                                   animated: false)
         
-        let movieList = navCont?.visibleViewController as? ListViewController
-        XCTAssertNotNil(movieList)
+        let movieList = navCont?.visibleViewController
+        XCTAssert(movieList is ListViewController)
     }
     
     func test_Coordinator_Shows_PersonDetail() throws {
@@ -68,8 +68,8 @@ class CoordinatorTest: XCTestCase {
         
         coordinator.showPersonProfile(anyPerson(), animated: false)
         
-        let personDetail = navCont?.visibleViewController as? PersonDetailViewController
-        XCTAssertNotNil(personDetail)
+        let personDetail = navCont?.visibleViewController
+        XCTAssert(personDetail is PersonDetailViewController)
     }
     
     func test_Coordinator_Shows_CastList() throws {
@@ -81,8 +81,8 @@ class CoordinatorTest: XCTestCase {
                                        dataProvider: StaticArrayDataProvider(models: movie.cast),
                                        animated: false)
         
-        let castList = navCont?.visibleViewController as? ListViewController
-        XCTAssertNotNil(castList)
+        let castList = navCont?.visibleViewController
+        XCTAssert(castList is ListViewController)
     }
     
     func test_Coordinator_Shows_CrewList() throws {
@@ -94,8 +94,8 @@ class CoordinatorTest: XCTestCase {
                                        dataProvider: StaticArrayDataProvider(models: movie.crew),
                                        animated: false)
         
-        let castList = navCont?.visibleViewController as? ListViewController
-        XCTAssertNotNil(castList)
+        let castList = navCont?.visibleViewController
+        XCTAssert(castList is ListViewController)
     }
     
 }
