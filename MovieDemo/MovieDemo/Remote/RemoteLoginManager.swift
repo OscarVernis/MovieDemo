@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemoteLoginManager {
+struct RemoteLoginManager: LoginManager {
     let service = MovieService()
     
     func requestToken() async throws -> String {

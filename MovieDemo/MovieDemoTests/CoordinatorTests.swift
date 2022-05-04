@@ -154,22 +154,3 @@ extension CoordinatorTests {
         return PersonViewModel(person: person)
     }
 }
-
-//MARK: - User Manager Mock
-struct UserManagerMock: UserManager {
-    var sessionId: String?
-    var username: String?
-    var isLoggedIn: Bool
-    
-    init(sessionId: String? = nil, username: String? = nil, isLoggedIn: Bool) {
-        self.sessionId = sessionId
-        self.username = username
-        self.isLoggedIn = isLoggedIn
-    }
-    
-    func save(username: String, sessionId: String) {
-    }
-    
-    func delete() {
-    }
-}

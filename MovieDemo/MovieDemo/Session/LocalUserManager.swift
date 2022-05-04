@@ -57,5 +57,6 @@ class LocalUserManager: UserManager {
         
         self.isLoggedIn = false
         self.username = nil
+        self.sessionId = nil
     }
 }

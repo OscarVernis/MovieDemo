@@ -11,7 +11,7 @@ import Combine
 
 class UserViewModel {
     var user: User?
-    private let service = RemoteUserManager(sessionId: SessionManager.shared.sessionId)
+    private let service = RemoteUserLoader(sessionId: SessionManager.shared.sessionId)
     private var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()

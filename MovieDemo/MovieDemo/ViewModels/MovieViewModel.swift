@@ -13,7 +13,7 @@ class MovieViewModel {
     private var movie: Movie
     
     private let movieService = RemoteMovieDetailsLoader(sessionId: SessionManager.shared.sessionId)
-    private let userService = RemoteUserManager(sessionId: SessionManager.shared.sessionId)
+    private let userService = RemoteUserLoader(sessionId: SessionManager.shared.sessionId)
 
     private var isLoading = false
     var didUpdate: ((Error?) -> Void)?

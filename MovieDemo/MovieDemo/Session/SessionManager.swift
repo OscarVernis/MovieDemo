@@ -11,11 +11,12 @@ import KeychainAccess
 
 class SessionManager {
     enum LoginError: Error {
+        case Default
         case IncorrectCredentials
     }
     
     static let shared = SessionManager()
-    var service = RemoteLoginManager()
+    var service: LoginManager = RemoteLoginManager()
     var userManager: UserManager = LocalUserManager() {
         didSet {
             updateLocalInfo()
@@ -53,7 +54,7 @@ extension SessionManager {
             if error as? MovieService.ServiceError == MovieService.ServiceError.IncorrectCredentials {
                 return .failure(LoginError.IncorrectCredentials)
             } else {
-                return .failure(error)
+                return .failure(LoginError.Default)
             }
         }
         
@@ -80,6 +81,7 @@ extension SessionManager {
         switch result {
         case .success():
             userManager.delete()
+            updateLocalInfo()
             return .success(())
         case .failure(let error):
             return .failure(error)

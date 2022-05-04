@@ -1,5 +1,5 @@
 //
-//  RemoteUserActionManager.swift
+//  RemoteUserLoader.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/03/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemoteUserManager {
+struct RemoteUserLoader {
     let sessionId: String?
     let service: MovieService
     
@@ -20,7 +20,7 @@ struct RemoteUserManager {
 }
 
 //MARK: - Actions
-extension RemoteUserManager {
+extension RemoteUserLoader {
     func getUserDetails() -> AnyPublisher<User, Error> {
         let params = ["append_to_response": "favorite/movies,rated/movies,watchlist/movies"]
         
