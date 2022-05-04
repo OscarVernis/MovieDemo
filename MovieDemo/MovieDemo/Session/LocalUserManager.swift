@@ -28,7 +28,7 @@ class LocalUserManager: UserManager {
         let user =  UserDefaults.standard.value(forKey: LocalKeys.username.rawValue) as? String
         
         let keychain = Keychain(service: "oscarvernis.MovieDemo")
-        sessionId = keychain[user ?? ""]
+        self.sessionId = keychain[user ?? ""]
         
         if sessionId != nil {
             isLoggedIn = loggedIn
@@ -37,6 +37,10 @@ class LocalUserManager: UserManager {
     }
     
     func save(username: String, sessionId: String) {
+        self.isLoggedIn = true
+        self.username = username
+        self.sessionId = sessionId
+        
         //Save state to user defaults
         UserDefaults.standard.setValue(username, forKey: LocalKeys.username.rawValue)
         UserDefaults.standard.setValue(true, forKey: LocalKeys.loggedIn.rawValue)
