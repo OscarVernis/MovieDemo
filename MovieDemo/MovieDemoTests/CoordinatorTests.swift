@@ -49,7 +49,7 @@ class CoordinatorTests: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
         
-        coordinator.showMovieDetail(movie: anyMovie(), animated: false)
+        coordinator.showMovieDetail(movie: anyMovieVM(), animated: false)
         
         let movieDetail = navCont?.visibleViewController
         XCTAssert(movieDetail is MovieDetailViewController)
@@ -59,7 +59,7 @@ class CoordinatorTests: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
         
-        let movie = anyMovie()
+        let movie = anyMovieVM()
         coordinator.showMovieList(title: "Movies",
                                   dataProvider: StaticArrayDataProvider(models: movie.recommendedMovies),
                                   animated: false)
@@ -72,7 +72,7 @@ class CoordinatorTests: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
         
-        coordinator.showPersonProfile(anyPerson(), animated: false)
+        coordinator.showPersonProfile(anyPersonVM(), animated: false)
         
         let personDetail = navCont?.visibleViewController
         XCTAssert(personDetail is PersonDetailViewController)
@@ -82,7 +82,7 @@ class CoordinatorTests: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
         
-        let movie = anyMovie()
+        let movie = anyMovieVM()
         coordinator.showCastCreditList(title: "Cast",
                                        dataProvider: StaticArrayDataProvider(models: movie.cast),
                                        animated: false)
@@ -95,7 +95,7 @@ class CoordinatorTests: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
         
-        let movie = anyMovie()
+        let movie = anyMovieVM()
         coordinator.showCrewCreditList(title: "Crew",
                                        dataProvider: StaticArrayDataProvider(models: movie.crew),
                                        animated: false)

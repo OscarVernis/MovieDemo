@@ -11,7 +11,7 @@ import Combine
 @testable import MovieDemo
 
 extension XCTestCase {
-    func anyMovie() -> MovieViewModel {
+    func anyMovie() -> Movie {
         var movieData = Data()
         XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
         
@@ -19,10 +19,14 @@ extension XCTestCase {
         var movie = Movie()
         XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
         
-        return MovieViewModel(movie: movie)
+        return movie
     }
     
-    func anyPerson() -> PersonViewModel {
+    func anyMovieVM() -> MovieViewModel {
+        return MovieViewModel(movie: anyMovie())
+    }
+    
+    func anyPerson() -> Person {
         var personData = Data()
         XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
         
@@ -30,7 +34,21 @@ extension XCTestCase {
         var person = Person()
         XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
         
-        return PersonViewModel(person: person)
+        return person
+    }
+    
+    func anyPersonVM() -> PersonViewModel {
+        return PersonViewModel(person: anyPerson())
+    }
+    
+    func anyMovies(count: Int) -> [Movie] {
+        var movies = [Movie]()
+        
+        for _ in 0..<count {
+            movies.append(anyMovie())
+        }
+        
+        return movies
     }
     
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {

@@ -38,7 +38,6 @@ class PaginatedDataProvider<T>: ArrayDataProvider {
         if !isLastPage {
             getItems()
         }
-        
     }
     
     func refresh() {
