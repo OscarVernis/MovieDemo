@@ -8,8 +8,31 @@
 
 import XCTest
 import Combine
+@testable import MovieDemo
 
 extension XCTestCase {
+    func anyMovie() -> MovieViewModel {
+        var movieData = Data()
+        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
+        
+        let decoder = jsonDecoder()
+        var movie = Movie()
+        XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
+        
+        return MovieViewModel(movie: movie)
+    }
+    
+    func anyPerson() -> PersonViewModel {
+        var personData = Data()
+        XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
+        
+        let decoder = jsonDecoder()
+        var person = Person()
+        XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
+        
+        return PersonViewModel(person: person)
+    }
+    
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = keyDecodingStrategy

@@ -130,28 +130,3 @@ class CoordinatorTests: XCTestCase {
         XCTAssert(login is LoginViewController)
     }
 }
-
-//MARK: - Helpers
-extension CoordinatorTests {
-    func anyMovie() -> MovieViewModel {
-        var movieData = Data()
-        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
-        
-        let decoder = jsonDecoder()
-        var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
-        
-        return MovieViewModel(movie: movie)
-    }
-    
-    func anyPerson() -> PersonViewModel {
-        var personData = Data()
-        XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
-        
-        let decoder = jsonDecoder()
-        var person = Person()
-        XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
-        
-        return PersonViewModel(person: person)
-    }
-}

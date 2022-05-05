@@ -25,10 +25,15 @@ class PersonViewModel {
     
     init(person: Person) {
         self.person = person
+        updateInfo()
     }
     
     func updatePerson(_ person: Person) {
         self.person = person
+        updateInfo()
+    }
+    
+    func updateInfo() {
         updateCastCredits()
         updateCrewCredits()
         updatePopularMovies()

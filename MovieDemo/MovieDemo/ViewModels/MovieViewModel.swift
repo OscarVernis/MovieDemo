@@ -34,10 +34,15 @@ class MovieViewModel {
     
     init(movie: Movie) {
         self.movie = movie
+        updateInfo()
     }
     
     func updateMovie(_ movie: Movie) {
         self.movie = movie
+        updateInfo()
+    }
+    
+    func updateInfo() {
         updateTopCrew()
         updateTopCast()
         updateInfoArray()
