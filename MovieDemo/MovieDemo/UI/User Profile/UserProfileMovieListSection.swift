@@ -27,12 +27,12 @@ class UserProfileMovieListSection: ConfigurableSection {
         
     }
     
-    weak var mainCoordinator: MainCoordinator!
+    weak var mainCoordinator: MainCoordinator?
     
     var sectionType: Section = .Favorites
     var movies: [MovieViewModel]
     
-    init(_ section: Section, movies: [MovieViewModel], coordinator: MainCoordinator) {
+    init(_ section: Section, movies: [MovieViewModel], coordinator: MainCoordinator?) {
         self.sectionType = section
         self.movies = movies
         self.mainCoordinator = coordinator
@@ -88,7 +88,7 @@ class UserProfileMovieListSection: ConfigurableSection {
             tapHandler = { [weak self] in
                 guard let self = self else { return }
 
-                self.mainCoordinator.showMovieList(title: self.sectionType.title, dataProvider: dataProvider)
+                self.mainCoordinator?.showMovieList(title: self.sectionType.title, dataProvider: dataProvider)
             }
         }
 

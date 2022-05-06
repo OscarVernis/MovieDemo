@@ -9,7 +9,7 @@
 import UIKit
 
 class UserProfileViewController: UIViewController, GenericCollection {
-    weak var mainCoordinator: MainCoordinator!
+    weak var mainCoordinator: MainCoordinator?
     
     private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
@@ -113,7 +113,7 @@ class UserProfileViewController: UIViewController, GenericCollection {
 //MARK: - Actions
 extension UserProfileViewController {
     fileprivate func logout() {
-        mainCoordinator.logout()
+        mainCoordinator?.logout()
     }
 }
 
@@ -122,7 +122,7 @@ extension UserProfileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let section = sections[indexPath.section] as? UserProfileMovieListSection, section.movies.count > 0 {
             let movie = section.movies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: movie)
+            mainCoordinator?.showMovieDetail(movie: movie)
         }
     }
 
