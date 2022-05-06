@@ -1,5 +1,5 @@
 //
-//  MockData.swift
+//  ServiceMocker.swift
 //  MovieDemoTests
 //
 //  Created by Oscar Vernis on 21/03/22.
@@ -8,8 +8,9 @@
 
 import Foundation
 import Mocker
+@testable import MovieDemo
 
-class MockData {
+class ServiceMocker {
     private var mock: Mock
     
     var session: URLSession = {
@@ -37,4 +38,9 @@ class MockData {
         let mockedData = try! JSONEncoder().encode(jsonObject)
         self.init(data: mockedData, url: url, statusCode: statusCode, onRequest: onRequest)
     }
+    
+    func movieService() -> MovieService {
+        return MovieService(session: session)
+    }
+
 }

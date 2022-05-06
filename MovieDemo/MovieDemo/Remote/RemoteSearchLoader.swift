@@ -10,7 +10,11 @@ import Foundation
 import Combine
 
 struct RemoteSearchLoader: SearchLoader {
-    let service = MovieService()
+    let service: MovieService
+    
+    init(service: MovieService = MovieService()) {
+        self.service = service
+    }
     
     func search(query: String, page: Int = 1) -> AnyPublisher<([Any], Int), Error>  {
         let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: .Search, parameters: ["query" : query], page: page)

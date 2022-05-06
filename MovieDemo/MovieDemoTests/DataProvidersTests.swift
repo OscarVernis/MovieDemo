@@ -1,5 +1,5 @@
 //
-//  DataProviderTests.swift
+//  DataProvidersTests.swift
 //  MovieDemoTests
 //
 //  Created by Oscar Vernis on 05/05/22.
@@ -10,7 +10,7 @@ import XCTest
 import Combine
 @testable import MovieDemo
 
-class DataProviderTests: XCTestCase {
+class DataProvidersTests: XCTestCase {
     
     //MARK: - StaticArrayDataProvider Tests
     func test_StaticArrayDataProvider_success() throws {
@@ -104,7 +104,7 @@ class DataProviderTests: XCTestCase {
 }
  
 //MARK: - Helpers
-extension DataProviderTests {
+extension DataProvidersTests {
     func assertDataProviderPaging<T>(dataProvider: PaginatedDataProvider<T>) {
         var callCount = 0
         dataProvider.didUpdate = { error in
