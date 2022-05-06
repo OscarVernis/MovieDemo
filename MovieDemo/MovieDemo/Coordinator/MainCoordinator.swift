@@ -96,7 +96,7 @@ final class MainCoordinator {
     }
     
     func showHome() {
-        let hvc = HomeCollectionViewController()
+        let hvc = HomeViewController()
         hvc.mainCoordinator = self
         
         rootNavigationViewController?.viewControllers = [hvc]

@@ -30,7 +30,7 @@ class CoordinatorTests: XCTestCase {
         coordinator.start()
         
         let home = navCont?.visibleViewController
-        XCTAssert(home is HomeCollectionViewController)
+        XCTAssert(home is HomeViewController)
     }
     
     func test_Coordinator_Loads_Login() throws {

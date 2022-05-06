@@ -1,5 +1,5 @@
 //
-//  HomeCollectionViewController.swift
+//  HomeViewController.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 27/09/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeCollectionViewController: UIViewController, GenericCollection {    
+class HomeViewController: UIViewController, GenericCollection {    
     var collectionView: UICollectionView!
     var dataSource: GenericCollectionDataSource!
     var searchSection: SearchSection!
@@ -136,7 +136,7 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
 }
 
 //MARK: - CollectionView CompositionalLayout
-extension HomeCollectionViewController {
+extension HomeViewController {
     func createLayout() -> UICollectionViewLayout {
         let layout = (UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 
@@ -152,7 +152,7 @@ extension HomeCollectionViewController {
 }
 
 // MARK: - Searching
-extension HomeCollectionViewController: UISearchResultsUpdating, UISearchControllerDelegate {
+extension HomeViewController: UISearchResultsUpdating, UISearchControllerDelegate {
     func scrollListViewControllerToTop() {
         //Scroll results list to top everytime is shown.
         let firstIndexPath = IndexPath(row: 0, section: 0)

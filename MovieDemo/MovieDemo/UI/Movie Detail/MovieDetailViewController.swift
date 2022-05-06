@@ -11,7 +11,7 @@ import SPStorkController
 import SwiftUI
 
 class MovieDetailViewController: UIViewController, GenericCollection {
-    weak var mainCoordinator: MainCoordinator!
+    weak var mainCoordinator: MainCoordinator?
     var dataSource: GenericCollectionDataSource!
         
     let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
@@ -177,16 +177,16 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     fileprivate lazy var showCast:(() -> Void) = { [unowned self] in
-        mainCoordinator.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
+        mainCoordinator?.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
     }
     
     fileprivate lazy var showCrew: (() -> Void) = { [unowned self] in
-        mainCoordinator.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
+        mainCoordinator?.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
     }
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
         let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
-        mainCoordinator.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
+        mainCoordinator?.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
     }
     
     @objc fileprivate func playYoutubeTrailer() {
@@ -292,14 +292,14 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case _ as MovieDetailCastSection:
             let castCredit = movie.topCast[indexPath.row]
             let person = castCredit.person()
-            mainCoordinator.showPersonProfile(person)
+            mainCoordinator?.showPersonProfile(person)
         case _ as MovieDetailCrewSection:
             let crewCredit = movie.topCrew[indexPath.row]
             let person = crewCredit.person()
-            mainCoordinator.showPersonProfile(person)
+            mainCoordinator?.showPersonProfile(person)
         case _ as MoviesSection:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: recommendedMovie)
+            mainCoordinator?.showMovieDetail(movie: recommendedMovie)
         case _ as MovieDetailVideoSection:
             let video = movie.videos[indexPath.row]
             UIApplication.shared.open(video.youtubeURL)
