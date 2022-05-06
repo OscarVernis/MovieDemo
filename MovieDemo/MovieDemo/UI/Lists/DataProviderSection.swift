@@ -16,8 +16,8 @@ class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigu
         self.dataProvider = dataProvider
         self.cellConfigurator = cellConfigurator
         
-        self.dataProvider.didUpdate = { error in
-            self.didUpdate?(error)
+        self.dataProvider.didUpdate = { [weak self] error in
+            self?.didUpdate?(error)
         }
     }
     

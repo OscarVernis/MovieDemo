@@ -35,9 +35,10 @@ class GenericCollectionDataSource: NSObject, UICollectionViewDataSource {
             section.registerReusableViews(withCollectionView: collectionView)
             
             if var section = section as? FetchableSection {
-                section.didUpdate = { error in
+                section.didUpdate = { [weak self] error in
+                    
                     if error == nil {
-                        self.didUpdate(sectionIndex: index)
+                        self?.didUpdate(sectionIndex: index)
                     }
                 }
             }

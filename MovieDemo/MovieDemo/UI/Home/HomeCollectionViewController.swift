@@ -138,11 +138,10 @@ class HomeCollectionViewController: UIViewController, GenericCollection {
 //MARK: - CollectionView CompositionalLayout
 extension HomeCollectionViewController {
     func createLayout() -> UICollectionViewLayout {
-        let layout = (UICollectionViewCompositionalLayout { (sectionIndex: Int,
-            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+        let layout = (UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 
-            let section = self.dataSource.sections[sectionIndex]
-            return section.sectionLayout()
+            let section = self?.dataSource.sections[sectionIndex]
+            return section?.sectionLayout()
         })
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)

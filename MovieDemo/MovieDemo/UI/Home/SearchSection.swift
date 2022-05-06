@@ -12,8 +12,8 @@ class SearchSection: FetchableSection {
     var dataProvider = SearchDataProvider()
     
     init() {
-        self.dataProvider.didUpdate = { error in
-            self.didUpdate?(error)
+        self.dataProvider.didUpdate = { [weak self] error in
+            self?.didUpdate?(error)
         }
     }
     

@@ -59,10 +59,9 @@ class HomeMovieListSection: FetchableSection {
             self.dataProvider = MoviesDataProvider(.Upcoming, movieLoader: RemoteMoviesLoaderWithCache())
         }
         
-        self.dataProvider.didUpdate = { error in
-            self.didUpdate?(error)
+        self.dataProvider.didUpdate = { [weak self] error in
+            self?.didUpdate?(error)
         }
-        
     }
     
     var itemCount: Int {
