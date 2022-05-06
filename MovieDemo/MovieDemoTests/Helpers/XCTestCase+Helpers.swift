@@ -7,9 +7,9 @@
 //
 
 import XCTest
-import Combine
 @testable import MovieDemo
 
+//MARK: - Models
 extension XCTestCase {
     func anyMovie() -> Movie {
         var movieData = Data()
@@ -37,7 +37,6 @@ extension XCTestCase {
         return person
     }
     
-    
     func anyPersonVM() -> PersonViewModel {
         return PersonViewModel(person: anyPerson())
     }
@@ -62,6 +61,10 @@ extension XCTestCase {
         return person
     }
     
+}
+
+//MARK: - Helpers
+extension XCTestCase {
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = keyDecodingStrategy
@@ -73,6 +76,18 @@ extension XCTestCase {
         return decoder
     }
     
+    func wait(for delay: Double) {
+        let exp = XCTestExpectation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { exp.fulfill() }
+        wait(for: [exp], timeout: delay)
+    }
+    
+}
+
+//MARK: - Combine
+import Combine
+
+extension XCTestCase {
     func awaitPublisher<T: Publisher>(
         _ publisher: T,
         timeout: TimeInterval = 10,
@@ -119,4 +134,5 @@ extension XCTestCase {
 
         return try unwrappedResult.get()
     }
+    
 }

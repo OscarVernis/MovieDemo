@@ -44,7 +44,7 @@ class DataProviderTests: XCTestCase {
         //First try should fail
         assertDataProviderPagingFailure(dataProvider: dataProvider)
         
-        //Setting the error to nil so retry succeds
+        //Setting the error to nil so retry should succeed
         movieLoaderMock.error = nil
         assertDataProviderPaging(dataProvider: dataProvider)
     }
@@ -62,15 +62,10 @@ class DataProviderTests: XCTestCase {
         }
         
         //$query Publisher has a debounce so search should only be called once.
-        let exp = XCTestExpectation()
         dataProvider.query = "S"
         dataProvider.query = "Sea"
         dataProvider.query = "Search"
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            exp.fulfill()
-        }
-                
-        wait(for: [exp], timeout: 1)
+        wait(for: 0.5)
         
         XCTAssertEqual(dataProvider.query, "Search")
         XCTAssert(dataProvider.item(atIndex: 0) is MovieViewModel)
@@ -84,13 +79,9 @@ class DataProviderTests: XCTestCase {
         let searchLoader = SearchLoaderMock(results: results, pageCount: 3)
         let dataProvider = SearchDataProvider(searchLoader: searchLoader)
         
-        let exp = XCTestExpectation()
         dataProvider.query = "Search"
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            exp.fulfill()
-        }
-                
-        wait(for: [exp], timeout: 1)
+        wait(for: 0.5)
+        
         assertDataProviderPaging(dataProvider: dataProvider)
     }
     
@@ -99,13 +90,9 @@ class DataProviderTests: XCTestCase {
         let searchLoader = SearchLoaderMock(results: results, pageCount: 3, error: MovieService.ServiceError.ServiceError)
         let dataProvider = SearchDataProvider(searchLoader: searchLoader)
         
-        let exp = XCTestExpectation()
         dataProvider.query = "Search"
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            exp.fulfill()
-        }
-                
-        wait(for: [exp], timeout: 1)
+        wait(for: 0.5)
+        
         //First try should fail
         assertDataProviderPagingFailure(dataProvider: dataProvider)
         
@@ -157,10 +144,9 @@ extension DataProviderTests {
         XCTAssertEqual(dataProvider.itemCount, 60)
         XCTAssertEqual(dataProvider.isLastPage, true)
         
-        //Assert Completion was called everytime (Completion is not called if already at last page)
-        XCTAssertEqual(callCount, 3)
+
     }
-    
+        
     func assertDataProviderPagingFailure<T>(dataProvider: PaginatedDataProvider<T>) {
         //First try should fail
         dataProvider.didUpdate = { error in
