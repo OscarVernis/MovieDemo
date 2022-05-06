@@ -20,11 +20,14 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
         }
     }
     
-    override init() {
+    let searchService: SearchLoader
+    
+    init(searchLoader: SearchLoader = RemoteSearchLoader()) {
+        self.searchService = searchLoader
         super.init()
         
         $query
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .compactMap { query -> String? in
                 if query.isEmpty {
@@ -38,8 +41,6 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
             }
             .store(in: &cancellables)
     }
-    
-    let searchService = RemoteSearch()
     
     override func item(atIndex index: Int) -> Any {
         let item = items[index]

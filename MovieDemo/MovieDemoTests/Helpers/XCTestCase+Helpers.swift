@@ -37,6 +37,7 @@ extension XCTestCase {
         return person
     }
     
+    
     func anyPersonVM() -> PersonViewModel {
         return PersonViewModel(person: anyPerson())
     }
@@ -49,6 +50,16 @@ extension XCTestCase {
         }
         
         return movies
+    }
+    
+    func anyPersons(count: Int) -> [Person] {
+        var person = [Person]()
+        
+        for _ in 0..<count {
+            person.append(anyPerson())
+        }
+        
+        return person
     }
     
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {

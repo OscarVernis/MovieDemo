@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  RemoteSearchLoader.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/03/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemoteSearch {
+struct RemoteSearchLoader: SearchLoader {
     let service = MovieService()
     
     func search(query: String, page: Int = 1) -> AnyPublisher<([Any], Int), Error>  {
