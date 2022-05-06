@@ -166,7 +166,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
 
     //MARK: - Actions
-    fileprivate func showImage() {
+
+    fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
         guard let url = movie.posterImageURL(size: .original), let headerView = headerView else { return }
         let mvvc = MediaViewerViewController(imageURL: url,
                                              image: headerView.posterImageView.image,
@@ -175,15 +176,15 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         present(mvvc, animated: true)
     }
     
-    fileprivate func showCast() {
+    fileprivate lazy var showCast:(() -> Void) = { [unowned self] in
         mainCoordinator.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
     }
     
-    fileprivate func showCrew() {
+    fileprivate lazy var showCrew: (() -> Void) = { [unowned self] in
         mainCoordinator.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
     }
     
-    fileprivate func showRecommendedMovies() {
+    fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
         let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
         mainCoordinator.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
     }
