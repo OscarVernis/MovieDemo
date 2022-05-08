@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class SearchDataProvider: PaginatedDataProvider<Any> {
     typealias Model = Any
@@ -21,7 +22,9 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
     }
     
     let searchService: SearchLoader
-    
+    var searchCancellable: AnyCancellable?
+    var cancellables = Set<AnyCancellable>()
+
     init(searchLoader: SearchLoader = RemoteSearchLoader()) {
         self.searchService = searchLoader
         super.init()
@@ -60,8 +63,7 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
         
         let page = currentPage + 1
         
-        let searchQuery = query
-        searchService.search(query: searchQuery, page: page)
+        searchCancellable = searchService.search(query: query, page: page)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
@@ -78,7 +80,6 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
                 self?.totalPages = totalPages
                 self?.items.append(contentsOf: items)
             }
-            .store(in: &cancellables)
     }
-    
+
 }

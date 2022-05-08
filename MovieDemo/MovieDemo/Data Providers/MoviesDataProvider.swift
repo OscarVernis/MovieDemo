@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import Combine
 
 class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
     let movieLoader: MovieLoader
+    var serviceCancellable: AnyCancellable?
     
     var currentService: MovieList = .NowPlaying {
         didSet {
@@ -25,7 +27,7 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
     override func getItems() {
         let page = currentPage + 1
         
-        movieLoader.getMovies(movieList: currentService, page: page)
+        serviceCancellable = movieLoader.getMovies(movieList: currentService, page: page)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
@@ -42,6 +44,6 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                 self?.totalPages = totalPages
                 self?.items.append(contentsOf: movies.map(MovieViewModel.init))
             }
-            .store(in: &cancellables)
     }
+    
 }

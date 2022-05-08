@@ -7,13 +7,11 @@
 //
 
 import Foundation
-import Combine
 
 class PaginatedDataProvider<T>: ArrayDataProvider {
     typealias Model = T
     
     var items = [T]()
-    var cancellables = Set<AnyCancellable>()
     
     init() {}
     

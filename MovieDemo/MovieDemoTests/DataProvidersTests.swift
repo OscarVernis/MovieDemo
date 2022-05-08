@@ -61,11 +61,11 @@ class DataProvidersTests: XCTestCase {
             callCount += 1
         }
         
-        //$query Publisher has a debounce so search should only be called once.
+        //$query Publisher has a debounce (0.3) so search should only be called once.
         dataProvider.query = "S"
         dataProvider.query = "Sea"
         dataProvider.query = "Search"
-        wait(for: 0.5)
+        wait(for: 0.35)
         
         XCTAssertEqual(dataProvider.query, "Search")
         XCTAssert(dataProvider.item(atIndex: 0) is MovieViewModel)
@@ -80,7 +80,7 @@ class DataProvidersTests: XCTestCase {
         let dataProvider = SearchDataProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"
-        wait(for: 0.5)
+        wait(for: 0.35)
         
         assertDataProviderPaging(dataProvider: dataProvider)
     }
@@ -91,7 +91,7 @@ class DataProvidersTests: XCTestCase {
         let dataProvider = SearchDataProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"
-        wait(for: 0.5)
+        wait(for: 0.35)
         
         //First try should fail
         assertDataProviderPagingFailure(dataProvider: dataProvider)
@@ -144,11 +144,10 @@ extension DataProvidersTests {
         XCTAssertEqual(dataProvider.itemCount, 60)
         XCTAssertEqual(dataProvider.isLastPage, true)
         
-
+        XCTAssertEqual(callCount, 3)
     }
         
     func assertDataProviderPagingFailure<T>(dataProvider: PaginatedDataProvider<T>) {
-        //First try should fail
         dataProvider.didUpdate = { error in
             XCTAssertNotNil(error)
         }
@@ -163,31 +162,7 @@ extension DataProvidersTests {
 
 }
 
-//MARK: - Mocks
-class MovieLoaderMock: MovieLoader {
-    var pageCount: Int
-    var movies: [Movie]
-    var error: Error?
-    
-    init(movies: [Movie] = [], pageCount: Int = 1, error: Error? = nil) {
-        self.pageCount = pageCount
-        self.movies = movies
-        self.error = error
-    }
-    
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
-        if let error = error {
-            return Fail(outputType: ([Movie], Int).self, failure: error)
-                .eraseToAnyPublisher()
-        }
-        
-        return Just( (movies, pageCount) )
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-    
-}
-
+//MARK: - Mock
 class SearchLoaderMock: SearchLoader {
     let results: [Any]
     var pageCount: Int

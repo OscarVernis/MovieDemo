@@ -53,6 +53,7 @@
 		5547ED5B282593200079BD14 /* UserProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED5A282593200079BD14 /* UserProfileViewControllerTests.swift */; };
 		5547ED5D2825941F0079BD14 /* LoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED5C2825941F0079BD14 /* LoginViewControllerTests.swift */; };
 		5547ED5F282594A60079BD14 /* ListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */; };
+		5547ED6128259EDE0079BD14 /* MovieLoaderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */; };
 		554DE177251EF83C000286D2 /* OverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DE175251EF83C000286D2 /* OverviewCell.swift */; };
 		554DE178251EF83C000286D2 /* OverviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554DE176251EF83C000286D2 /* OverviewCell.xib */; };
 		554F691028125D9500B6BBDF /* MovieDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */; };
@@ -254,6 +255,7 @@
 		5547ED5A282593200079BD14 /* UserProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		5547ED5C2825941F0079BD14 /* LoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerTests.swift; sourceTree = "<group>"; };
 		5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerTests.swift; sourceTree = "<group>"; };
+		5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLoaderMock.swift; sourceTree = "<group>"; };
 		554DE175251EF83C000286D2 /* OverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCell.swift; sourceTree = "<group>"; };
 		554DE176251EF83C000286D2 /* OverviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverviewCell.xib; sourceTree = "<group>"; };
 		554F691128125D9500B6BBDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MovieDetailHeaderView.xib; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				5565DE3327E98C2A00D7F4EB /* ServiceMocker.swift */,
 				555D760427EA3D3B00B8FFAB /* XCTestCase+Helpers.swift */,
 				55C6753528223396007FB18C /* UserManagerMock.swift */,
+				5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1121,6 +1124,7 @@
 				55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */,
 				5547ED5D2825941F0079BD14 /* LoginViewControllerTests.swift in Sources */,
 				55C6753628223396007FB18C /* UserManagerMock.swift in Sources */,
+				5547ED6128259EDE0079BD14 /* MovieLoaderMock.swift in Sources */,
 				556719A72824D50000370D4D /* RemoteSearchLoaderTests.swift in Sources */,
 				5547ED5F282594A60079BD14 /* ListViewControllerTests.swift in Sources */,
 				5547ED5B282593200079BD14 /* UserProfileViewControllerTests.swift in Sources */,
