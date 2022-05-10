@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol ArrayDataProvider {
+protocol ArrayDataProvider {
     associatedtype Model
     
-    var currentPage: Int { get }
-    var totalPages: Int { get }
+    var items: [Model] { get }
+    
     var isLastPage: Bool { get }
     var didUpdate: ((Error?) -> Void)? { get set }
     
@@ -22,4 +22,14 @@ public protocol ArrayDataProvider {
     func loadMore()
     func refresh()
 
+}
+
+extension ArrayDataProvider {
+    var itemCount: Int {
+        return items.count
+    }
+    
+    func item(atIndex index: Int) -> Model {
+        return items[index]
+    }
 }

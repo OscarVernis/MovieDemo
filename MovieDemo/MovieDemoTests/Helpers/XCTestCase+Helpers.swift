@@ -13,7 +13,7 @@ import XCTest
 extension XCTestCase {
     func anyMovie() -> Movie {
         var movieData = Data()
-        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!))
+        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
         
         let decoder = jsonDecoder()
         var movie = Movie()
@@ -79,7 +79,7 @@ extension XCTestCase {
     func wait(for delay: Double) {
         let exp = XCTestExpectation()
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { exp.fulfill() }
-        wait(for: [exp], timeout: delay)
+        wait(for: [exp], timeout: delay + 0.5)
     }
     
     func executeRunLoop() {

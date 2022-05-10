@@ -15,14 +15,6 @@ class PaginatedDataProvider<T>: ArrayDataProvider {
     
     init() {}
     
-    var itemCount: Int {
-        return items.count
-    }
-    
-    func item(atIndex index: Int) -> T {
-        return items[index]
-    }
-    
     var currentPage = 0
     var totalPages = 1
     

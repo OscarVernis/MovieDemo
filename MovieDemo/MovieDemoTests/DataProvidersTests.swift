@@ -21,8 +21,6 @@ class DataProvidersTests: XCTestCase {
             XCTAssertNil(error)
         }
                 
-        XCTAssertEqual(dataProvider.currentPage, 1)
-        XCTAssertEqual(dataProvider.totalPages, 1)
         XCTAssertEqual(dataProvider.itemCount, 20)
         XCTAssertEqual(dataProvider.isLastPage, true)
     }

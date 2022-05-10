@@ -45,19 +45,6 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
             .store(in: &cancellables)
     }
     
-    override func item(atIndex index: Int) -> Any {
-        let item = items[index]
-        
-        switch item {
-        case let movie as Movie:
-           return MovieViewModel(movie: movie)
-        case let person as Person:
-            return PersonViewModel(person: person)
-        default:
-            fatalError("Unknown Media Type")
-        }
-    }
-    
     override func getItems() {
         guard !query.isEmpty else { return }
         
@@ -78,7 +65,18 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
                 }
                 
                 self?.totalPages = totalPages
-                self?.items.append(contentsOf: items)
+                let itemViewModels: [Any] = items.compactMap { item in
+                    switch item {
+                    case let movie as Movie:
+                       return MovieViewModel(movie: movie)
+                    case let person as Person:
+                        return PersonViewModel(person: person)
+                    default:
+                        return nil
+                    }
+                }
+                
+                self?.items.append(contentsOf: itemViewModels)
             }
     }
 

@@ -11,22 +11,12 @@ import Foundation
 struct StaticArrayDataProvider<T>: ArrayDataProvider {
     typealias Model = T
     
-    private var items: [T]
+    private(set) var items: [T]
     
     init(models: [T]) {
         self.items = models
     }
     
-    var itemCount: Int {
-        return items.count
-    }
-    
-    func item(atIndex index: Int) -> T {
-        return items[index]
-    }
-    
-    var currentPage = 1
-    var totalPages = 1
     var isLastPage = true
     
     var didUpdate: ((Error?) -> Void)?
