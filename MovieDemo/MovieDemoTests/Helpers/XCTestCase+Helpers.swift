@@ -82,6 +82,10 @@ extension XCTestCase {
         wait(for: [exp], timeout: delay)
     }
     
+    func executeRunLoop() {
+        RunLoop.current.run(until: Date())
+    }
+    
 }
 
 //MARK: - Combine

@@ -10,7 +10,7 @@ import UIKit
 
 final class MainCoordinator {
     private var window: UIWindow
-    private var rootNavigationViewController: UINavigationController?
+    private(set) var rootNavigationViewController: UINavigationController?
     
     //If set to true, it will force you to login before showing Home
     private let isLoginRequired: Bool
@@ -117,6 +117,8 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
         
         lvc.didSelectedItem = { [weak self] index in
+            if index >= dataProvider.itemCount { return }
+
             let movie = dataProvider.item(atIndex: index)
             self?.showMovieDetail(movie: movie)
         }
