@@ -46,7 +46,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_MovieDetail() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         coordinator.showMovieDetail(movie: anyMovieVM(), animated: false)
@@ -56,7 +56,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_MovieList() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         let movie = anyMovieVM()
@@ -69,7 +69,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_PersonDetail() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         coordinator.showPersonProfile(anyPersonVM(), animated: false)
@@ -79,7 +79,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_CastList() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         let movie = anyMovieVM()
@@ -92,7 +92,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_CrewList() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         let movie = anyMovieVM()
@@ -105,7 +105,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_UserProfile_IfLoggedIn() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         let sessionManager = SessionManager.shared
@@ -118,7 +118,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_UserLogin_IfNotLoggedIn() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window)
         coordinator.start()
         
         let sessionManager = SessionManager.shared

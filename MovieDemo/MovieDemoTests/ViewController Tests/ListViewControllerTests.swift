@@ -32,6 +32,7 @@ class ListViewControllerTests: XCTestCase {
     override func tearDownWithError() throws {
         sut = nil
         coordinator = nil
+        dataProvider = nil
     }
     
     func test_deallocation() throws {
