@@ -55,4 +55,5 @@ class LocalUserManager: UserManager {
         self.username = nil
         self.sessionId = nil
     }
+    
 }
