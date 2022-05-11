@@ -92,14 +92,21 @@ class LoginViewController: UIViewController {
         }
         
     }
+    
+    func validateInput() -> Bool {
+        return !(userTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true)
+    }
+    
+}
 
-    //MARK: - Actions
+//MARK: - Actions
+extension LoginViewController {
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         handlelogin()
     }
     
     @IBAction func textFieldUpdated(_ sender: Any) {
-        let valid =  !(userTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true)
+        let valid =  validateInput()
         loginButton.isEnabled = valid
         errorLabel.isHidden = true
     }
@@ -117,8 +124,26 @@ class LoginViewController: UIViewController {
         let url = URL(string: "https://www.themoviedb.org/signup")!
         UIApplication.shared.open(url)
     }
+}
+
+//MARK: - Keyboard animation
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField === userTextField {
+            passwordTextField.becomeFirstResponder()
+        }
+        
+        if textField === passwordTextField && validateInput() {
+            handlelogin()
+        }
+        
+        return true
+    }
     
-    //MARK: - Keyboard animation
+}
+
+//MARK: - Keyboard animation
+extension LoginViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
         animateWithKeyboard(notification: notification) { keyboardSize in
             let padding: CGFloat = 12
@@ -157,5 +182,5 @@ class LoginViewController: UIViewController {
         
         animator.startAnimation()
     }
+    
 }
-
