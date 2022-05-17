@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var userTextField: UITextField!
@@ -22,17 +23,14 @@ class LoginViewController: UIViewController {
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
     
-    var isLoading = false {
-        didSet {
-            updateUI()
-        }
-    }
+    var loginViewModel = LoginViewModel()
+    var cancellables: Set<AnyCancellable> = []
     
     //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
+        subscribeToPublishers()
     }
     
     deinit {
@@ -44,17 +42,43 @@ class LoginViewController: UIViewController {
     }
     
     fileprivate func setup() {
-        navigationController?.delegate = self
         closeButton.isHidden = !showsCloseButton
         
         loginButton.layer.masksToBounds = true
         loginButton.layer.cornerRadius = 8
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    fileprivate func updateUI() {
+    //MARK: - View Model
+    fileprivate func subscribeToPublishers() {
+        loginViewModel.$loggedIn
+            .sink { [weak self] loggedIn in
+                if loggedIn {
+                    self?.didFinishLoginProcess?()
+                }
+            }
+            .store(in: &cancellables)
+        
+        loginViewModel.$isLoading
+            .sink { [weak self] isLoading in
+                self?.updateUI(isLoading)
+            }
+            .store(in: &cancellables)
+        
+        loginViewModel.$errorString
+            .sink { [weak self] errorString in
+                self?.handleError(errorString)
+            }
+            .store(in: &cancellables)
+        
+        loginViewModel.$validInput
+            .assign(to: \.isEnabled, on: loginButton!)
+            .store(in: &cancellables)
+    }
+    
+    fileprivate func updateUI(_ isLoading: Bool) {
         if isLoading {
             loginButton.isEnabled = false
             loginButton.titleLabel?.alpha = 0
@@ -65,36 +89,25 @@ class LoginViewController: UIViewController {
         }
     }
     
-    fileprivate func handlelogin() {
-        isLoading = true
-        
-        Task {
-            let result = await SessionManager.shared.login(withUsername: userTextField.text!, password: passwordTextField.text!)
-            
-            isLoading = false
-            
-            switch result {
-            case .success():
-                self.didFinishLoginProcess?()
-            case .failure(let error):
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                
-                self.userTextField.text = ""
-                self.passwordTextField.text = ""
-                
-                self.errorLabel.isHidden = false
-                if error as? SessionManager.LoginError == SessionManager.LoginError.IncorrectCredentials {
-                    self.errorLabel.text = .localized(.LoginCredentialsError)
-                } else {
-                    self.errorLabel.text = .localized(.LoginError)
-                }
-            }
+    fileprivate func handleError(_ errorString: String?) {
+        if errorString != nil {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            userTextField.text = ""
+            passwordTextField.text = ""
         }
         
+        errorLabel.text = errorString
+        errorLabel.isHidden = (errorString == nil)
     }
     
-    func validateInput() -> Bool {
-        return !(userTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true)
+    fileprivate func validateInput() {
+        loginViewModel.validateInput(username: userTextField.text, password: passwordTextField.text)
+    }
+    
+    fileprivate func handlelogin() {
+        guard loginViewModel.validInput else { return }
+        
+        loginViewModel.login(username: userTextField.text!, password: passwordTextField.text!)
     }
     
 }
@@ -106,9 +119,8 @@ extension LoginViewController {
     }
     
     @IBAction func textFieldUpdated(_ sender: Any) {
-        let valid =  validateInput()
-        loginButton.isEnabled = valid
-        errorLabel.isHidden = true
+        loginViewModel.resetError()
+        validateInput()
     }
     
     @IBAction func closeTapped(_ sender: Any) {
@@ -133,7 +145,7 @@ extension LoginViewController: UITextFieldDelegate {
             passwordTextField.becomeFirstResponder()
         }
         
-        if textField === passwordTextField && validateInput() {
+        if textField === passwordTextField {
             handlelogin()
         }
         

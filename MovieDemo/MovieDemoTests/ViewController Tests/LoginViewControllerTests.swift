@@ -115,9 +115,14 @@ class LoginViewControllerTests: XCTestCase {
         sut.userTextField.text = "username"
         sut.passwordTextField.text = "password"
         
+        //Trigger validation publisher
+        sut.passwordTextField.sendActions(for: .editingChanged)
+        
+        //Show keyboard on Password TextField
         sut.passwordTextField.becomeFirstResponder()
         executeRunLoop()
         
+        //Simulate return on Password TextField
         let _ = sut.passwordTextField.delegate?.textFieldShouldReturn?(sut.passwordTextField)
         wait(for: [exp], timeout: 1)
         
