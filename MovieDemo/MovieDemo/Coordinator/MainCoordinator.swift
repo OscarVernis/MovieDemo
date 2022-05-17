@@ -49,7 +49,7 @@ final class MainCoordinator {
             lvc.modalPresentationStyle = .overFullScreen
         }
         
-        lvc.didFinishLoginProcess = { [weak self] success in
+        lvc.didFinishLoginProcess = { [weak self] in
             self?.rootNavigationViewController?.dismiss(animated: true)
         }
         

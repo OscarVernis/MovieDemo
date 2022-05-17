@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
     private let bottomConstraintDefault: CGFloat = 200
 
     var showsCloseButton: Bool = true
-    var didFinishLoginProcess: ((Bool) -> Void)? = nil
+    var didFinishLoginProcess: (() -> Void)? = nil
     
     var isLoading = false {
         didSet {
@@ -75,7 +75,7 @@ class LoginViewController: UIViewController {
             
             switch result {
             case .success():
-                self.didFinishLoginProcess?(true)
+                self.didFinishLoginProcess?()
             case .failure(let error):
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 

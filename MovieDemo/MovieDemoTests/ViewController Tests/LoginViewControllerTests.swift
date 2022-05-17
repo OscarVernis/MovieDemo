@@ -39,12 +39,16 @@ class LoginViewControllerTests: XCTestCase {
     }
     
     func test_userTextField_attributesShouldBeSet() {
+        sut.loadViewIfNeeded()
+
         let textField = sut.userTextField!
         XCTAssertEqual(textField.textContentType, .username)
         XCTAssertTrue(textField.enablesReturnKeyAutomatically)
     }
     
     func test_passwordTextField_attributesShouldBeSet() {
+        sut.loadViewIfNeeded()
+
         let textField = sut.passwordTextField!
         XCTAssertEqual(textField.textContentType, .password)
         XCTAssertTrue(textField.isSecureTextEntry)
@@ -103,17 +107,16 @@ class LoginViewControllerTests: XCTestCase {
         SessionManager.shared.userManager = UserManagerMock(isLoggedIn: false)
         SessionManager.shared.service = loginManagerMock
         
+        sut.loadViewIfNeeded()
+        
+        let exp = XCTestExpectation(description: "Login finishes")
+        sut.didFinishLoginProcess = { exp.fulfill() }
+        
         sut.userTextField.text = "username"
         sut.passwordTextField.text = "password"
         
         sut.passwordTextField.becomeFirstResponder()
         executeRunLoop()
-        
-        let exp = XCTestExpectation(description: "Login finishes")
-        sut.didFinishLoginProcess = { success in
-            XCTAssertTrue(success)
-            exp.fulfill()
-        }
         
         let _ = sut.passwordTextField.delegate?.textFieldShouldReturn?(sut.passwordTextField)
         wait(for: [exp], timeout: 1)
