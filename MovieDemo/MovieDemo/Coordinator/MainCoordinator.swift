@@ -129,7 +129,7 @@ final class MainCoordinator {
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
         pvc.person = viewModel
         pvc.mainCoordinator = self
-        
+                        
         rootNavigationViewController?.pushViewController(pvc, animated: animated)
     }
     

@@ -33,10 +33,6 @@ class LoginViewController: UIViewController {
         subscribeToPublishers()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
@@ -51,7 +47,13 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    //MARK: - View Model
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+    
+//MARK: - View Model
+extension LoginViewController {
     fileprivate func subscribeToPublishers() {
         loginViewModel.$loggedIn
             .sink { [weak self] loggedIn in
@@ -138,13 +140,15 @@ extension LoginViewController {
     }
 }
 
-//MARK: - Keyboard animation
+//MARK: - UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //Return in userTextField moves to passwordTextField
         if textField === userTextField {
             passwordTextField.becomeFirstResponder()
         }
         
+        //Return in passwordTextField logins
         if textField === passwordTextField {
             handlelogin()
         }

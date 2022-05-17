@@ -11,7 +11,6 @@ import UIKit
 class HomeViewController: UIViewController, GenericCollection {    
     var collectionView: UICollectionView!
     var dataSource: GenericCollectionDataSource!
-    var searchSection: SearchSection!
     
     weak var mainCoordinator: MainCoordinator!
     
@@ -60,33 +59,8 @@ class HomeViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func setupSearch() {
-        searchSection = SearchSection()
-        let movieListController = ListViewController(section: searchSection)
-
-        movieListController.didSelectedItem = { [weak self] index in
-            guard let self = self else { return }
-            
-            //Avoid the navigation bar showing after the Person Detail is shown
-            self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-
-            let item = self.searchSection.dataProvider.item(atIndex: index)
-            
-            switch item {
-            case let movie as MovieViewModel:
-                self.mainCoordinator.showMovieDetail(movie: movie)
-            case let person as PersonViewModel:
-                self.mainCoordinator.showPersonProfile(person)
-            default:
-                break
-            }
-
-        }
-        
-        let search = UISearchController(searchResultsController: movieListController)
-        search.searchResultsUpdater = self
-        search.delegate = self
-        navigationItem.searchController = search
-
+        let searchViewController = SearchViewController(coordinator: mainCoordinator)
+        navigationItem.searchController = searchViewController.searchController
     }
     
     fileprivate func setupDataSource() {
@@ -149,30 +123,4 @@ extension HomeViewController {
         return layout
     }
 
-}
-
-// MARK: - Searching
-extension HomeViewController: UISearchResultsUpdating, UISearchControllerDelegate {
-    func scrollListViewControllerToTop() {
-        //Scroll results list to top everytime is shown.
-        let firstIndexPath = IndexPath(row: 0, section: 0)
-        if let listController = navigationItem.searchController?.searchResultsController as? ListViewController,
-           listController.collectionView.cellForItem(at: firstIndexPath) != nil {
-            listController.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
-        }
-        
-    }
-    
-    func willPresentSearchController(_ searchController: UISearchController) {
-       scrollListViewControllerToTop()
-    }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchQuery = searchController.searchBar.text {
-            searchSection.dataProvider.query = searchQuery
-        } else {
-            scrollListViewControllerToTop()
-        }
-    }
-    
 }
