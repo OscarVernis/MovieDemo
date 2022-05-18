@@ -12,12 +12,12 @@ import Combine
 class MovieUserStatesViewModel {
     private var movie: Movie
     
-    private let service: RemoteUserLoader!
+    private let service: RemoteUserState!
 
     private var cancellables = Set<AnyCancellable>()
 
     init(movie: Movie, sessionId: String?) {
-        self.service = RemoteUserLoader(sessionId: sessionId)
+        self.service = RemoteUserState(sessionId: sessionId)
         self.movie = movie
         update()
     }

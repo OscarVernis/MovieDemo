@@ -26,35 +26,5 @@ extension RemoteUserLoader {
         
         return service.getModel(endpoint: .UserDetails, parameters: params)
     }
-    
-    func markAsFavorite(_ favorite: Bool, movieId: Int) -> AnyPublisher<Never, Error> {
-        let body = FavoriteRequestBody(media_id: movieId, favorite: favorite)
 
-        return service.successAction(endpoint: .MarkAsFavorite, body: body, method: .post)
-            .ignoreOutput()
-            .eraseToAnyPublisher()
-    }
-    
-    func addToWatchlist(_ watchlist: Bool, movieId: Int) -> AnyPublisher<Never, Error> {
-        let body = WatchlistRequestBody(media_id: movieId, watchlist: watchlist)
-
-        return service.successAction(endpoint: .AddToWatchlist, body: body, method: .post)
-            .ignoreOutput()
-            .eraseToAnyPublisher()
-    }
-    
-    func rateMovie(_ rating: Float, movieId: Int) -> AnyPublisher<Never, Error> {
-        let body = ["value": rating]
-        
-        return service.successAction(endpoint: .RateMovie(movieId: movieId), body: body, method: .post)
-            .ignoreOutput()
-            .eraseToAnyPublisher()
-    }
-    
-    func deleteRate(movieId: Int) -> AnyPublisher<Never, Error> {
-        return service.successAction(endpoint: .DeleteRate(movieId: movieId), method: .delete)
-            .ignoreOutput()
-            .eraseToAnyPublisher()
-    }
-    
 }

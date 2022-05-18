@@ -12,7 +12,7 @@ import Combine
 class MovieViewModel {
     private var movie: Movie
     
-    private var movieService: RemoteMovieDetailsLoader!
+    private var service: RemoteMovieDetailsLoader!
     private var sessionManager: SessionManager?
     var userState: MovieUserStatesViewModel? = nil
 
@@ -36,17 +36,16 @@ class MovieViewModel {
     init(movie: Movie, sessionManager: SessionManager? = SessionManager.shared) {
         self.movie = movie
         self.sessionManager = sessionManager
-        self.movieService = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
+        self.service = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
         updateInfo()
         
-        if sessionManager?.isLoggedIn ?? false {
+        if hasUserState {
             userState = MovieUserStatesViewModel(movie: movie, sessionId: sessionManager?.sessionId)
         }
     }
     
     func updateMovie(_ movie: Movie) {
         self.movie = movie
-        self.movieService = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
         updateInfo()
         
         userState?.update(movie: movie)
@@ -68,7 +67,7 @@ extension MovieViewModel {
     }
     
     private func getMovieDetails() {
-        movieService.getMovieDetails(movieId: movie.id!)
+        service.getMovieDetails(movieId: movie.id!)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:

@@ -1,5 +1,5 @@
 //
-//  LoginManager.swift
+//  RemoteLoginManager.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/03/22.
@@ -11,7 +11,10 @@ import Combine
 
 struct RemoteLoginManager: LoginManager {
     let service = MovieService()
-    
+}
+
+//MARK: - Login
+extension RemoteLoginManager {
     func requestToken() async throws -> String {
         let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .RequestToken)
         guard let token: String = serviceResult.requestToken else { throw MovieService.ServiceError.JsonError }
@@ -39,6 +42,10 @@ struct RemoteLoginManager: LoginManager {
         return sessionId
     }
     
+}
+
+//MARK: - Logout
+extension RemoteLoginManager {
     func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
         let body = ["session_id": sessionId]
         
@@ -48,6 +55,6 @@ struct RemoteLoginManager: LoginManager {
         } else {
             return .failure(MovieService.ServiceError.NoSuccess)
         }
-
     }
+
 }

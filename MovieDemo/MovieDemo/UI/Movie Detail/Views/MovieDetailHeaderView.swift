@@ -32,6 +32,8 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var playTrailerButton: CustomButton!
                 
     var imageTapHandler: (()->Void)? = nil
+    
+    var movie: MovieViewModel!
 
     override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
@@ -42,7 +44,17 @@ class MovieDetailHeaderView: UICollectionReusableView {
         imageTapHandler?()
     }
     
+    fileprivate func updateUserActionButtons(animated: Bool = false) {
+        guard let userState = movie.userState else { return }
+
+        favoriteButton?.setIsSelected(userState.favorite, animated: animated)
+        watchlistButton?.setIsSelected(userState.watchlist, animated: animated)
+        rateButton?.setIsSelected(userState.rated, animated: animated)
+    }
+    
     func configure(movie: MovieViewModel, showsUserActions: Bool = false) {
+        self.movie = movie
+        
         //Load Poster image
         if let url = movie.posterImageURL(size: .w342) {
             posterImageView.contentMode = .scaleAspectFill
@@ -66,6 +78,9 @@ class MovieDetailHeaderView: UICollectionReusableView {
         userActionsView.isHidden = !showsUserActions
         overviewView.isHidden = movie.overview.isEmpty
         trailerView.isHidden = (movie.trailerURL == nil)
+        
+        //Update User Action State
+        updateUserActionButtons()
     }
 
     
