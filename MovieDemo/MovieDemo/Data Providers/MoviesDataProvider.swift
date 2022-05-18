@@ -42,7 +42,7 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                 }
                 
                 self?.totalPages = totalPages
-                self?.items.append(contentsOf: movies.map(MovieViewModel.init))
+                self?.items.append(contentsOf: movies.map { MovieViewModel(movie: $0) })
             }
     }
     

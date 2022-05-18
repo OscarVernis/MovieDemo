@@ -10,12 +10,14 @@ import UIKit
 
 class MovieDetailHeaderSection: ConfigurableSection {
     let movie: MovieViewModel
+    let showUserActions: Bool
     var isLoading = false
         
     var imageTapHandler: (()->Void)?
     
-    init(movie: MovieViewModel, isLoading: Bool = false, imageTapHandler: (()->Void)? = nil) {
+    init(movie: MovieViewModel, showUserActions: Bool = false, isLoading: Bool = false, imageTapHandler: (()->Void)? = nil) {
         self.movie = movie
+        self.showUserActions = showUserActions
         self.imageTapHandler = imageTapHandler
         self.isLoading = isLoading
     }
@@ -46,8 +48,7 @@ class MovieDetailHeaderSection: ConfigurableSection {
         
             headerView.imageTapHandler = imageTapHandler
 
-            let userLoggedIn = SessionManager.shared.isLoggedIn
-            headerView.configure(movie: movie, showsUserActions: userLoggedIn)
+            headerView.configure(movie: movie, showsUserActions: showUserActions)
 
             return headerView
     }

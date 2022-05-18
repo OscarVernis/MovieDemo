@@ -128,18 +128,19 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func updateUserActionButtons() {
-        guard let headerView = headerView else { return }
+        guard let headerView = headerView, let userState = movie.userState else { return }
 
-        headerView.favoriteButton?.setIsSelected(movie.favorite, animated: false)
-        headerView.watchlistButton?.setIsSelected(movie.watchlist, animated: false)
-        headerView.rateButton?.setIsSelected(movie.rated, animated: false)
+        headerView.favoriteButton?.setIsSelected(userState.favorite, animated: false)
+        headerView.watchlistButton?.setIsSelected(userState.watchlist, animated: false)
+        headerView.rateButton?.setIsSelected(userState.rated, animated: false)
     }
     
     //MARK: - Sections
     fileprivate func reloadSections() {
         sections.removeAll()
         
-        sections.append(MovieDetailHeaderSection(movie: movie, isLoading: isLoading, imageTapHandler: showImage))
+        let showUserActions = movie.hasUserState
+        sections.append(MovieDetailHeaderSection(movie: movie, showUserActions: showUserActions, isLoading: isLoading, imageTapHandler: showImage))
         
         if !movie.topCast.isEmpty {
             sections.append(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast))
@@ -196,67 +197,67 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     @objc fileprivate func markAsFavorite() {
-        guard SessionManager.shared.isLoggedIn, let favoriteButton = headerView?.favoriteButton else {
+        guard let userState = movie.userState, let favoriteButton = headerView?.favoriteButton else {
             return
         }
         
-        favoriteButton.setIsSelected(!movie.favorite, animated: true)
+        favoriteButton.setIsSelected(!userState.favorite, animated: true)
         favoriteButton.isUserInteractionEnabled = false
         
-        if movie.favorite {
+        if userState.favorite {
             UISelectionFeedbackGenerator().selectionChanged()
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        movie.markAsFavorite(!movie.favorite) { [weak self] success in
+        userState.markAsFavorite(!userState.favorite) { [weak self] success in
             guard let self = self else { return }
             
             favoriteButton.isUserInteractionEnabled = true
 
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                favoriteButton.setIsSelected(self.movie.favorite, animated: false)
+                favoriteButton.setIsSelected(userState.favorite, animated: false)
                 AlertManager.showFavoriteAlert(text: .localized(.FavoriteError), sender: self)
             }
         }
     }
     
     @objc fileprivate func addToWatchlist() {
-        guard SessionManager.shared.isLoggedIn, let watchlistButton = headerView?.watchlistButton else {
+        guard let userState = movie.userState, let watchlistButton = headerView?.watchlistButton else {
             return
         }
         
-        watchlistButton.setIsSelected(!movie.watchlist, animated: true)
+        watchlistButton.setIsSelected(!userState.watchlist, animated: true)
         watchlistButton.isUserInteractionEnabled = false
         
-        if movie.watchlist {
+        if userState.watchlist {
             UISelectionFeedbackGenerator().selectionChanged()
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        movie.addToWatchlist(!movie.watchlist) { [weak self] success in
+        userState.addToWatchlist(!userState.watchlist) { [weak self] success in
             guard let self = self else { return }
 
             watchlistButton.isUserInteractionEnabled = true
 
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+                watchlistButton.setIsSelected(userState.watchlist, animated: false)
                 AlertManager.showWatchlistAlert(text: .localized(.WatchListError), sender: self)
             }
         }
     }
     
     @objc fileprivate func addRating() {
-        guard SessionManager.shared.isLoggedIn,
+        guard let userState = movie.userState,
               let watchlistButton = headerView?.watchlistButton,
               let rateButton = headerView?.rateButton
         else { return }
         
         let mrvc = MovieRatingViewController.instantiateFromStoryboard()
-        mrvc.movie = movie
+        mrvc.userState = userState
         
         let transitionDelegate = SPStorkTransitioningDelegate()
         mrvc.transitioningDelegate = transitionDelegate
@@ -266,8 +267,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         transitionDelegate.showIndicator = false
         
         mrvc.didUpdateRating = {
-            rateButton.setIsSelected(self.movie.rated, animated: false)
-            watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
+            rateButton.setIsSelected(userState.rated, animated: false)
+            watchlistButton.setIsSelected(userState.watchlist, animated: false)
         }
         
         self.present(mrvc, animated: true)

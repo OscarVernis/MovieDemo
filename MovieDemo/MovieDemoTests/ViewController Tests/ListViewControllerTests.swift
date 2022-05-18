@@ -39,7 +39,7 @@ class ListViewControllerTests: XCTestCase {
     
     func test_deallocation() throws {
         assertDeallocation {
-            let movies = anyMovies(count: 10).map(MovieViewModel.init)
+            let movies = anyMovies(count: 10).map { MovieViewModel(movie: $0) }
             let dataProvider = StaticArrayDataProvider(models: movies)
             let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: MovieInfoCellConfigurator())
             

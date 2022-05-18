@@ -12,8 +12,9 @@ import Combine
 class MovieViewModel {
     private var movie: Movie
     
-    private let movieService = RemoteMovieDetailsLoader(sessionId: SessionManager.shared.sessionId)
-    private let userService = RemoteUserLoader(sessionId: SessionManager.shared.sessionId)
+    private var movieService: RemoteMovieDetailsLoader!
+    private var sessionManager: SessionManager?
+    var userState: MovieUserStatesViewModel? = nil
 
     private var isLoading = false
     var didUpdate: ((Error?) -> Void)?
@@ -32,14 +33,23 @@ class MovieViewModel {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(movie: Movie) {
+    init(movie: Movie, sessionManager: SessionManager? = SessionManager.shared) {
         self.movie = movie
+        self.sessionManager = sessionManager
+        self.movieService = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
         updateInfo()
+        
+        if sessionManager?.isLoggedIn ?? false {
+            userState = MovieUserStatesViewModel(movie: movie, sessionId: sessionManager?.sessionId)
+        }
     }
     
     func updateMovie(_ movie: Movie) {
         self.movie = movie
+        self.movieService = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
         updateInfo()
+        
+        userState?.update(movie: movie)
     }
     
     func updateInfo() {
@@ -76,6 +86,10 @@ extension MovieViewModel {
 
 //MARK: - Properties
 extension MovieViewModel {
+    var hasUserState: Bool {
+        return sessionManager?.isLoggedIn ?? false
+    }
+    
     var id: Int {
         return movie.id
     }
@@ -232,126 +246,6 @@ extension MovieViewModel {
     
     var recommendedMovies: [MovieViewModel] {
         return movie.recommendedMovies?.compactMap { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
-    }
-    
-}
-
-//MARK: - User States
-extension MovieViewModel {
-    var favorite: Bool {
-        return movie.favorite ?? false
-    }
-    
-    var rated: Bool {
-        return movie.userRating != nil
-    }
-    
-    var userRating: UInt {
-        return UInt(movie.userRating ?? 0)
-    }
-
-    var percentUserRating: UInt {
-        return UInt((movie.userRating ?? 0) * 10)
-    }
-    
-    var userRatingString: String {
-        return rated ? "\(percentUserRating)" : .localized(.NR)
-    }
-    
-    var watchlist: Bool {
-        return movie.watchlist ?? false
-    }
-    
-    func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
-        guard SessionManager.shared.isLoggedIn else {
-            completionHandler(false)
-            return
-        }
-        
-        userService.markAsFavorite(favorite, movieId: id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.favorite = favorite
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
-        
-    }
-    
-    func addToWatchlist(_ watchlist: Bool, completionHandler: @escaping (Bool) -> Void) {
-        guard SessionManager.shared.isLoggedIn else {
-            completionHandler(false)
-            return
-        }
-        
-        userService.addToWatchlist(watchlist, movieId: id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.watchlist = watchlist
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
-    }
-    
-    func rate(_ rating: Int, completionHandler: @escaping (Bool) -> Void) {
-        guard SessionManager.shared.isLoggedIn else {
-            completionHandler(false)
-            return
-        }
-        
-        //ViewModel receives rating as 0 to 100, but service receives 0.5 to 10 in multiples of 0.5
-        var adjustedRating:Float = Float(rating) / 10
-        adjustedRating = (adjustedRating / 0.5).rounded(.down) * 0.5
-        
-        if adjustedRating > 10 {
-            adjustedRating = 10
-        }
-        if adjustedRating < 0.5 {
-            adjustedRating = 0.5
-        }
-        
-        userService.rateMovie(adjustedRating, movieId: id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.userRating = adjustedRating
-                    self?.movie.watchlist = false //Server removes movie from watchlist when rating
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
-        
-    }
-    
-    func deleteRate(completionHandler: @escaping (Bool) -> Void) {
-        guard SessionManager.shared.isLoggedIn else {
-            completionHandler(false)
-            return
-        }
-        
-        userService.deleteRate(movieId: movie.id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.userRating = nil
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
     }
     
 }

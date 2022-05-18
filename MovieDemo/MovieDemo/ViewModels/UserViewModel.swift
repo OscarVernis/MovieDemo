@@ -23,15 +23,15 @@ class UserViewModel {
     }
     
     var favorites: [MovieViewModel] {
-        return user?.favorites.map(MovieViewModel.init) ?? [MovieViewModel]()
+        return user?.favorites.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
     var watchlist: [MovieViewModel] {
-        return user?.watchlist.map(MovieViewModel.init) ?? [MovieViewModel]()
+        return user?.watchlist.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
     var rated: [MovieViewModel] {
-        return user?.rated.map(MovieViewModel.init) ?? [MovieViewModel]()
+        return user?.rated.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
     var avatarURL: URL? {
