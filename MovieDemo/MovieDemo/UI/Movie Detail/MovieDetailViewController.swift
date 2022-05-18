@@ -127,8 +127,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     fileprivate func reloadSections() {
         sections.removeAll()
         
-        let showUserActions = movie.hasUserState
-        sections.append(MovieDetailHeaderSection(movie: movie, showUserActions: showUserActions, isLoading: isLoading, imageTapHandler: showImage))
+        sections.append(MovieDetailHeaderSection(movie: movie, isLoading: isLoading, imageTapHandler: showImage))
         
         if !movie.topCast.isEmpty {
             sections.append(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast))

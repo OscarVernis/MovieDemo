@@ -29,8 +29,6 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     
     private var gradient: CAGradientLayer!
     private var blurAnimator: UIViewPropertyAnimator!
-    private var titleAnimator: UIViewPropertyAnimator?
-    private var isHeaderViewCompact = false
     
     //MARK: - View Controller
     override func viewDidLoad() {
@@ -56,7 +54,6 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     
     deinit {
         blurAnimator?.stopAnimation(true)
-        titleAnimator?.stopAnimation(true)
     }
     
     //MARK: - Setup

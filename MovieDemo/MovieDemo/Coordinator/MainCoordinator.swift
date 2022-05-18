@@ -12,6 +12,8 @@ final class MainCoordinator {
     private var window: UIWindow
     private(set) var rootNavigationViewController: UINavigationController?
     
+    private var sessionManager = SessionManager.shared
+    
     //If set to true, it will force you to login before showing Home
     private let isLoginRequired: Bool
     
@@ -34,7 +36,7 @@ final class MainCoordinator {
         window.rootViewController = rootNavigationViewController
         window.makeKeyAndVisible()
         
-        if isLoginRequired && SessionManager.shared.isLoggedIn == false {
+        if isLoginRequired && sessionManager.isLoggedIn == false {
             showLogin(animated: false)
         } else {
             showHome()
@@ -65,7 +67,7 @@ final class MainCoordinator {
     @MainActor
     func logout(completion: (() -> Void)? = nil) {
         Task {
-            let result = await SessionManager.shared.logout()
+            let result = await sessionManager.logout()
             
             switch result {
             case .success():
@@ -85,7 +87,7 @@ final class MainCoordinator {
     }
     
     func showUserProfile(animated: Bool = true) {
-        if !SessionManager.shared.isLoggedIn {
+        if !sessionManager.isLoggedIn {
             showLogin(animated: animated)
         } else {
             let upvc = UserProfileViewController()

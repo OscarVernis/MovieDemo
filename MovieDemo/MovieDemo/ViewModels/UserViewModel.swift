@@ -11,10 +11,16 @@ import Combine
 
 class UserViewModel {
     var user: User?
-    private let service = RemoteUserLoader(sessionId: SessionManager.shared.sessionId)
+    private let sessionManager: SessionManager
+    private let service: RemoteUserLoader
     private var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
+    
+    init(sessionManager: SessionManager = SessionManager.shared) {
+        self.sessionManager = sessionManager
+        self.service = RemoteUserLoader(sessionId: sessionManager.sessionId)
+    }
     
     var didUpdate: ((Error?) -> Void)?
     
@@ -46,7 +52,7 @@ class UserViewModel {
         if isLoading { return }
         isLoading = true
         
-        guard SessionManager.shared.isLoggedIn else { return }
+        guard sessionManager.isLoggedIn else { return }
         isLoading = false
         
         service.getUserDetails()

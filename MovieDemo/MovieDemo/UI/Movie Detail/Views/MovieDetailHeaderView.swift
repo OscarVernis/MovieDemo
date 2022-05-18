@@ -52,7 +52,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         rateButton?.setIsSelected(userState.rated, animated: animated)
     }
     
-    func configure(movie: MovieViewModel, showsUserActions: Bool = false) {
+    func configure(movie: MovieViewModel) {
         self.movie = movie
         
         //Load Poster image
@@ -75,7 +75,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         }
         
         //Hiding Header Sections
-        userActionsView.isHidden = !showsUserActions
+        userActionsView.isHidden = !movie.hasUserState
         overviewView.isHidden = movie.overview.isEmpty
         trailerView.isHidden = (movie.trailerURL == nil)
         

@@ -15,7 +15,11 @@ class LoginViewModel {
     @Published var isLoading: Bool = false
     @Published var validInput: Bool = false
     
-    let sessionManager = SessionManager.shared
+    let sessionManager: SessionManager
+    
+    init(sessionManager: SessionManager = SessionManager.shared) {
+        self.sessionManager = sessionManager
+    }
     
     func validateInput(username: String?, password: String?) {
         validInput = !(username?.isEmpty ?? true || password?.isEmpty ?? true)
