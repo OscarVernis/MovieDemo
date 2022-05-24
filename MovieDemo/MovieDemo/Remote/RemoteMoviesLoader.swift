@@ -17,7 +17,7 @@ struct RemoteMoviesLoader: MovieLoader {
     }
     
     func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResults, Error> {
-        return service.getModels(endpoint: movieList, page: page)
+        return service.getModels(endpoint: .movies(movieList), page: page)
             .map { (movies, totalPages) in
                 MoviesResults(movies: movies, totalPages: totalPages)
             }

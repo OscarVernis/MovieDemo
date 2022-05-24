@@ -8,11 +8,6 @@
 
 import Foundation
 
-//MARK: - Endpoints
-protocol Endpoint {
-    var path: String { get }
-}
-
 //MARK: - Helper
 extension MovieService {
     func urlforEndpoint(_ endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
@@ -38,7 +33,18 @@ extension MovieService {
 }
 
 //MARK: - Endpoints
-enum MoviesEndpoint: Endpoint {
+struct Endpoint {
+    var path: String
+}
+
+//MARK: - Movie Lists
+extension Endpoint {
+    static func movies(_ endpoint: MoviesEndpoint) -> Endpoint {
+        Endpoint(path: endpoint.path)
+    }
+}
+
+enum MoviesEndpoint {
     case NowPlaying
     case Popular
     case TopRated
@@ -71,59 +77,63 @@ enum MoviesEndpoint: Endpoint {
     
 }
 
-struct MovieDetailsEndpoint: Endpoint {
-    let movieId: Int
-    
-    var path: String {
-        "/movie/\(movieId)"
+//MARK: - Search
+extension Endpoint {
+    static var search: Endpoint {
+        Endpoint(path: "/search/multi")
     }
 }
 
-struct SearchEndpoint: Endpoint {
-    var path: String {
-        "/search/multi"
+//MARK: - Details
+extension Endpoint {
+    static func movieDetails(movieId: Int) -> Endpoint {
+        Endpoint(path: "/movie/\(movieId)")
+    }
+    
+    static func personDetails(personId: Int) -> Endpoint {
+        Endpoint(path: "/person/\(personId)")
     }
 }
 
-struct PersonDetailsEndpoint: Endpoint {
-    let personId: Int
+//MARK: - User
+extension Endpoint {
+    static var userDetails: Endpoint {
+        Endpoint(path: "/account/id")
+    }
     
-    var path: String {
-        "/person/\(personId)"
+    static var markAsFavorite: Endpoint {
+        Endpoint(path: "/account/id/favorite")
+    }
+    
+    static var addToWatchlist: Endpoint {
+        Endpoint(path: "/account/id/watchlist")
+    }
+    
+    static func rateMovie(_ movieId: Int) -> Endpoint {
+        Endpoint(path: "/movie/\(movieId)/rating")
+    }
+    
+    static func deleteRate(_ movieId: Int) -> Endpoint {
+        Endpoint(path: "/movie/\(movieId)/rating")
     }
 }
 
-enum UserEndpoint: Endpoint {
-    case UserDetails
-    case MarkAsFavorite
-    case AddToWatchlist
-    case RateMovie(movieId: Int)
-    case DeleteRate(movieId: Int)
-    
-    var path: String {
-        switch self {
-        case .UserDetails:
-            return "/account/id"
-        case .MarkAsFavorite:
-            return "/account/id/favorite"
-        case .AddToWatchlist:
-            return "/account/id/watchlist"
-        case .RateMovie(movieId: let movieId):
-            return "/movie/\(movieId)/rating"
-        case .DeleteRate(movieId: let movieId):
-            return "/movie/\(movieId)/rating"
-        }
+//MARK: - Session
+extension Endpoint {
+    static var requestToken: Endpoint {
+        Endpoint(path: "/authentication/token/new")
     }
     
-}
-
-enum SessionEndpoint: String, Endpoint {
-    case RequestToken = "/authentication/token/new"
-    case ValidateToken = "/authentication/token/validate_with_login"
-    case CreateSession = "/authentication/session/new"
-    case DeleteSession = "/authentication/session"
-    
-    var path: String {
-        self.rawValue
+    static var validateToken: Endpoint {
+        Endpoint(path: "/authentication/token/validate_with_login")
     }
+    
+    static var createSession: Endpoint {
+        Endpoint(path: "/authentication/session/new")
+    }
+    
+    static var deleteSession: Endpoint {
+        Endpoint(path: "/authentication/session")
+    }
+    
 }

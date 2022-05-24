@@ -16,7 +16,7 @@ struct RemoteLoginManager: LoginManager {
 //MARK: - Login
 extension RemoteLoginManager {
     func requestToken() async throws -> String {
-        let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: SessionEndpoint.RequestToken)
+        let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .requestToken)
         guard let token: String = serviceResult.requestToken else { throw MovieService.ServiceError.JsonError }
         
         return token
@@ -29,13 +29,13 @@ extension RemoteLoginManager {
             "request_token": requestToken
         ]
         
-        let _: ServiceSuccessResult = try await service.successAction(endpoint: SessionEndpoint.ValidateToken, body: body, method: .post)
+        let _: ServiceSuccessResult = try await service.successAction(endpoint: .validateToken, body: body, method: .post)
     }
     
     
     func createSession(requestToken: String) async throws -> String  {
         let body = ["request_token": requestToken]
-        let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: SessionEndpoint.CreateSession, body: body, method: .post)
+        let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .createSession, body: body, method: .post)
         
         guard let sessionId: String = serviceResult.sessionId else { throw MovieService.ServiceError.JsonError }
         
@@ -49,7 +49,7 @@ extension RemoteLoginManager {
     func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
         let body = ["session_id": sessionId]
         
-        let result = try await service.successAction(endpoint: SessionEndpoint.DeleteSession, body: body, method: .delete)
+        let result = try await service.successAction(endpoint: .deleteSession, body: body, method: .delete)
         if let success = result.success, success == true {
             return .success(())
         } else {
