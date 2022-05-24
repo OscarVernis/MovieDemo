@@ -9,23 +9,38 @@
 import Foundation
 import Combine
 
-extension AnyPublisher {
+//Source: https://www.swiftbysundell.com/articles/connecting-async-await-with-other-swift-code/
+extension Publishers {
+    struct MissingOutputError: Error {}
+}
+
+extension Publisher {
     func async() async throws -> Output {
-        try await withCheckedThrowingContinuation { continuation in
-            var cancellable: AnyCancellable?
-            
-            cancellable = first()
-                .sink { result in
-                    switch result {
-                    case .finished:
-                        break
-                    case let .failure(error):
+        var cancellable: AnyCancellable?
+        var didReceiveValue = false
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            cancellable = sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
                         continuation.resume(throwing: error)
+                    case .finished:
+                        if !didReceiveValue {
+                            continuation.resume(
+                                throwing: Publishers.MissingOutputError()
+                            )
+                        }
                     }
+                },
+                receiveValue: { value in
+                    guard !didReceiveValue else { return }
+                    
+                    didReceiveValue = true
                     cancellable?.cancel()
-                } receiveValue: { value in
-                    continuation.resume(with: .success(value))
+                    continuation.resume(returning: value)
                 }
+            )
         }
     }
 }

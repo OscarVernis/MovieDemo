@@ -22,14 +22,13 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
     }
     
     let searchService: SearchLoader
-    var searchCancellable: AnyCancellable?
-    var cancellables = Set<AnyCancellable>()
+    var queryCancellable: AnyCancellable?
 
     init(searchLoader: SearchLoader = RemoteSearchLoader()) {
         self.searchService = searchLoader
         super.init()
         
-        $query
+        queryCancellable = $query
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .compactMap { query -> String? in
@@ -42,42 +41,45 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
             .sink { [weak self] _ in
                 self?.refresh()
             }
-            .store(in: &cancellables)
     }
     
     override func getItems() {
         guard !query.isEmpty else { return }
         
+        Task { await itemsTask() }
+    }
+    
+    @MainActor func itemsTask() async {
         let page = currentPage + 1
         
-        searchCancellable = searchService.search(query: query, page: page)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.currentPage += 1
-                    self?.didUpdate?(nil)
-                case .failure(let error):
-                    self?.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] results in
-                if self?.currentPage == 0 {
-                    self?.items.removeAll()
-                }
-                
-                self?.totalPages = results.totalPages
-                let itemViewModels: [Any] = results.items.compactMap { item in
-                    switch item {
-                    case let movie as Movie:
-                       return MovieViewModel(movie: movie)
-                    case let person as Person:
-                        return PersonViewModel(person: person)
-                    default:
-                        return nil
-                    }
-                }
-                
-                self?.items.append(contentsOf: itemViewModels)
+        let results: SearchResults
+        do {
+            results = try await searchService.search(query: query, page: page).async()
+        } catch {
+            didUpdate?(error)
+            return
+        }
+        
+        if currentPage == 0 {
+            items.removeAll()
+        }
+        
+        let itemViewModels: [Any] = results.items.compactMap { item in
+            switch item {
+            case let movie as Movie:
+               return MovieViewModel(movie: movie)
+            case let person as Person:
+                return PersonViewModel(person: person)
+            default:
+                return nil
             }
+        }
+        
+        items.append(contentsOf: itemViewModels)
+        totalPages = results.totalPages
+
+        currentPage += 1
+        didUpdate?(nil)
     }
 
 }
