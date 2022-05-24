@@ -63,7 +63,6 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
            listController.collectionView.cellForItem(at: firstIndexPath) != nil {
             listController.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
         }
-        
     }
     
     func willPresentSearchController(_ searchController: UISearchController) {

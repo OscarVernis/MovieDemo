@@ -184,7 +184,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     @objc fileprivate func markAsFavorite() {
-        guard let userState = movie.userState, let favoriteButton = headerView?.favoriteButton else {
+        guard let userState = movie.userStates, let favoriteButton = headerView?.favoriteButton else {
             return
         }
         
@@ -211,7 +211,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     @objc fileprivate func addToWatchlist() {
-        guard let userState = movie.userState, let watchlistButton = headerView?.watchlistButton else {
+        guard let userState = movie.userStates, let watchlistButton = headerView?.watchlistButton else {
             return
         }
         
@@ -238,7 +238,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     @objc fileprivate func addRating() {
-        guard let userState = movie.userState,
+        guard let userState = movie.userStates,
               let watchlistButton = headerView?.watchlistButton,
               let rateButton = headerView?.rateButton
         else { return }

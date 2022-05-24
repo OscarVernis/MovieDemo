@@ -76,17 +76,12 @@ extension MovieCache: MovieLoader {
             break
         }
                 
-        var movies = [Movie]()
-        if let managedMovies = managedMovies {
-            movies = managedMovies.compactMap { $0.toMovie() }
-        }
+        let movies = managedMovies?.compactMap { $0.toMovie() } ?? []
              
         let totalPages = 1
-        let publisher = PassthroughSubject<([Movie], Int), Error>()
-        publisher.send((movies, totalPages))
-        publisher.send(completion: .finished)
-        
-        return publisher
+        let results = (movies, totalPages)
+        return Just(results)
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
     

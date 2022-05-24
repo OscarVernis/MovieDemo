@@ -45,7 +45,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     }
     
     fileprivate func updateUserActionButtons(animated: Bool = false) {
-        guard let userState = movie.userState else { return }
+        guard let userState = movie.userStates else { return }
 
         favoriteButton?.setIsSelected(userState.favorite, animated: animated)
         watchlistButton?.setIsSelected(userState.watchlist, animated: animated)
@@ -75,7 +75,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         }
         
         //Hiding Header Sections
-        userActionsView.isHidden = !movie.hasUserState
+        userActionsView.isHidden = !movie.hasUserStates
         overviewView.isHidden = movie.overview.isEmpty
         trailerView.isHidden = (movie.trailerURL == nil)
         

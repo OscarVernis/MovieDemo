@@ -14,7 +14,7 @@ class MovieViewModel {
     
     private var service: RemoteMovieDetailsLoader!
     private var sessionManager: SessionManager?
-    var userState: MovieUserStatesViewModel? = nil
+    var userStates: MovieUserStatesViewModel? = nil
 
     private var isLoading = false
     var didUpdate: ((Error?) -> Void)?
@@ -39,8 +39,8 @@ class MovieViewModel {
         self.service = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
         updateInfo()
         
-        if hasUserState {
-            userState = MovieUserStatesViewModel(movie: movie, sessionId: sessionManager?.sessionId)
+        if hasUserStates {
+            userStates = MovieUserStatesViewModel(movie: movie, sessionId: sessionManager?.sessionId)
         }
     }
     
@@ -48,7 +48,7 @@ class MovieViewModel {
         self.movie = movie
         updateInfo()
         
-        userState?.update(movie: movie)
+        userStates?.update(movie: movie)
     }
     
     func updateInfo() {
@@ -58,6 +58,9 @@ class MovieViewModel {
         updateVideos()
     }
     
+    var hasUserStates: Bool {
+        return sessionManager?.isLoggedIn ?? false
+    }
 }
 
 //MARK: - Load Movie Details
@@ -85,10 +88,6 @@ extension MovieViewModel {
 
 //MARK: - Properties
 extension MovieViewModel {
-    var hasUserState: Bool {
-        return sessionManager?.isLoggedIn ?? false
-    }
-    
     var id: Int {
         return movie.id
     }

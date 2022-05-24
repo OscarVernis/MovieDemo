@@ -17,7 +17,7 @@ class LoginManagerMock: LoginManager {
     var password = ""
     var loginCount = 0
     
-    init(fails: Bool = false, error: MovieService.ServiceError? = .ServiceError) {
+    init(fails: Bool = false, error: MovieService.ServiceError? = .RequestError) {
         self.fails = fails
         self.error = error
     }
@@ -36,7 +36,7 @@ class LoginManagerMock: LoginManager {
             if let error = error {
                 throw error
             } else {
-                throw MovieService.ServiceError.ServiceError
+                throw MovieService.ServiceError.RequestError
             }
         }
         
@@ -46,7 +46,7 @@ class LoginManagerMock: LoginManager {
     }
     
     func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
-        return fails ? .failure(MovieService.ServiceError.ServiceError) : .success(())
+        return fails ? .failure(MovieService.ServiceError.RequestError) : .success(())
     }
     
 }

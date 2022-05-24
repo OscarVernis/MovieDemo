@@ -25,7 +25,7 @@ extension Publisher where Output == DataTaskResult {
                     }
                 }
                 
-                throw MovieService.ServiceError.ServiceError
+                throw MovieService.ServiceError.RequestError
             }
             .eraseToAnyPublisher()
     }

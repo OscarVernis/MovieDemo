@@ -50,8 +50,11 @@ struct CoreDataStore {
     }
     
     func save() {
+        let context = persistentContainer.viewContext
+        guard context.hasChanges else { return }
+        
         do {
-            try persistentContainer.viewContext.save()
+            try context.save()
         } catch {
             print("Failed to save Context: \(error)")
         }

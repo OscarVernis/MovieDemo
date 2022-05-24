@@ -11,7 +11,7 @@ import Combine
 
 struct MovieService {
     enum ServiceError: Error, Equatable {
-        case ServiceError
+        case RequestError
         case StatusCodeError(code: Int)
         case JsonError
         case IncorrectCredentials
