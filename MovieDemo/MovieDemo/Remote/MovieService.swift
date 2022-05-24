@@ -57,6 +57,26 @@ extension MovieService {
         return params
     }
     
+    func urlforEndpoint(_ endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
+        let path = endpoint.path
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = baseURL
+        components.path = "/3" + path
+        
+        let params = defaultParameters(additionalParameters: parameters)
+        components.queryItems = params.compactMap{ URLQueryItem(name: $0.0, value: $0.1) }
+        
+        guard let url = components.url else {
+            preconditionFailure(
+                "Invalid URL components: \(components)"
+            )
+        }
+        
+        return url
+    }
+    
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = keyDecodingStrategy
@@ -67,7 +87,7 @@ extension MovieService {
         
         return decoder
     }
-        
+    
 }
 
 //MARK: - Generic Functions
