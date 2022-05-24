@@ -79,7 +79,7 @@ struct MovieCache {
 }
 
 extension MovieCache: MovieLoader {
-    func getMovies(movieList: MovieList, page: Int = 1) -> AnyPublisher<([Movie], Int), Error> {
+    func getMovies(movieList: MovieList, page: Int = 1) -> AnyPublisher<MoviesResults, Error> {
         let totalPages = 1
         let movies = fetchMovies(movieList: movieList)
         return Just((movies, totalPages))

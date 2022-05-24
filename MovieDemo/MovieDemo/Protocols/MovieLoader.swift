@@ -20,8 +20,8 @@ enum MovieList: Equatable {
     case UserRated
 }
 
-protocol MovieLoader {
-    typealias MovieListCompletion = (Result<([Movie], Int), Error>) -> Void
-    
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error>
+typealias MoviesResults = (movies: [Movie], totalPages: Int)
+
+protocol MovieLoader {    
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResults, Error>
 }

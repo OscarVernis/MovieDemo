@@ -49,7 +49,7 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                         self.didUpdate?(error)
                     }
                 }
-            } receiveValue: { [weak self] movies, totalPages in
+            } receiveValue: { [weak self] results in
                 guard let self = self else { return }
                 
                 if self.currentPage == 0 {
@@ -57,9 +57,9 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                     self.cache?.delete(movieList: self.currentService)
                 }
                 
-                self.totalPages = totalPages
-                self.cache?.save(movies: movies, movieList: self.currentService)
-                self.items.append(contentsOf: movies.map { MovieViewModel(movie: $0) })
+                self.totalPages = results.totalPages
+                self.cache?.save(movies: results.movies, movieList: self.currentService)
+                self.items.append(contentsOf: results.movies.map { MovieViewModel(movie: $0) })
             }
     }
     

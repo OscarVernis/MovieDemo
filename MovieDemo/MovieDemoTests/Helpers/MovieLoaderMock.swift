@@ -21,13 +21,13 @@ class MovieLoaderMock: MovieLoader {
         self.error = error
     }
     
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResults, Error> {
         if let error = error {
-            return Fail(outputType: ([Movie], Int).self, failure: error)
+            return Fail(outputType: MoviesResults.self, failure: error)
                 .eraseToAnyPublisher()
         }
         
-        return Just( (movies, pageCount) )
+        return Just( MoviesResults(movies: movies, totalPages: pageCount) )
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

@@ -59,13 +59,13 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
                 case .failure(let error):
                     self?.didUpdate?(error)
                 }
-            } receiveValue: { [weak self] (items, totalPages) in
+            } receiveValue: { [weak self] results in
                 if self?.currentPage == 0 {
                     self?.items.removeAll()
                 }
                 
-                self?.totalPages = totalPages
-                let itemViewModels: [Any] = items.compactMap { item in
+                self?.totalPages = results.totalPages
+                let itemViewModels: [Any] = results.items.compactMap { item in
                     switch item {
                     case let movie as Movie:
                        return MovieViewModel(movie: movie)
