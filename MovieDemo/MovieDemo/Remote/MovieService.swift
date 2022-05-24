@@ -145,35 +145,6 @@ extension MovieService {
     
 }
 
-//MARK: - async/await
-extension MovieService {
-    func successAction<T: Encodable>(endpoint: Endpoint, body: T?, method: HTTPMethod = .get) async throws -> ServiceSuccessResult {
-        try await withCheckedThrowingContinuation { continuation in
-            var cancellable: AnyCancellable?
-                        
-            let publisher = successAction(endpoint: endpoint, body: body, method: method)
-            
-            cancellable = publisher
-                .sink { result in
-                    switch result {
-                    case .finished:
-                        break
-                    case let .failure(error):
-                        continuation.resume(throwing: error)
-                    }
-                    cancellable?.cancel()
-                } receiveValue: { value in
-                    continuation.resume(with: .success(value) )
-                }
-        }
-    }
-    
-    func successAction(endpoint: Endpoint, method: HTTPMethod = .get) async throws -> ServiceSuccessResult {
-        return try await successAction(endpoint: endpoint, body: Optional<String>.none, method: method)
-    }
-    
-}
-
 //MARK: - Image Utils
 extension MovieService {
     enum MoviePosterSize: String {
