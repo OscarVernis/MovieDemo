@@ -9,17 +9,8 @@
 import Foundation
 import Combine
 
-enum MovieList: Equatable {
-    case NowPlaying
-    case Popular
-    case TopRated
-    case Upcoming
-    case Recommended(movieId: Int)
-    case UserFavorites
-    case UserWatchList
-    case UserRated
-}
 
+typealias MovieList = MoviesEndpoint
 typealias MoviesResults = (movies: [Movie], totalPages: Int)
 
 protocol MovieLoader {    

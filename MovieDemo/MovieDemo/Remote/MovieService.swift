@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+//MARK: - MovieService
 struct MovieService {
     enum ServiceError: Error, Equatable {
         case RequestError
@@ -196,5 +197,21 @@ extension MovieService {
         let url = URL(string: urlString)!
                 
         return url
+    }
+    
+}
+
+//MARK: - HTTPMethods
+extension MovieService {
+    enum HTTPMethod: String {
+        case connect = "CONNECT"
+        case delete = "DELETE"
+        case get = "GET"
+        case head = "HEAD"
+        case options = "OPTIONS"
+        case patch = "PATCH"
+        case post = "POST"
+        case put = "PUT"
+        case trace = "TRACE"
     }
 }

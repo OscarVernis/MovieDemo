@@ -24,7 +24,7 @@ extension RemoteUserLoader {
     func getUserDetails() -> AnyPublisher<User, Error> {
         let params = ["append_to_response": "favorite/movies,rated/movies,watchlist/movies"]
         
-        return service.getModel(endpoint: .UserDetails, parameters: params)
+        return service.getModel(endpoint: UserEndpoint.UserDetails, parameters: params)
     }
 
 }

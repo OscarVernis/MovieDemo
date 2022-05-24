@@ -19,7 +19,7 @@ struct RemoteMovieDetailsLoader {
     func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
         let params = ["append_to_response" : "credits,recommendations,account_states,videos"]
         
-        return service.getModel(endpoint: .MovieDetails(movieId: movieId), parameters: params)
+        return service.getModel(endpoint: MovieDetailsEndpoint(movieId: movieId), parameters: params)
     }
     
 }

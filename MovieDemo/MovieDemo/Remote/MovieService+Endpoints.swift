@@ -8,48 +8,15 @@
 
 import Foundation
 
-//MARK: - HTTPMethods
-extension MovieService {
-    enum HTTPMethod: String {
-        case connect = "CONNECT"
-        case delete = "DELETE"
-        case get = "GET"
-        case head = "HEAD"
-        case options = "OPTIONS"
-        case patch = "PATCH"
-        case post = "POST"
-        case put = "PUT"
-        case trace = "TRACE"
-    }
+//MARK: - Endpoints
+protocol Endpoint {
+    var path: String { get }
 }
 
-//MARK: - Endpoints
-extension MovieService {    
-    enum Endpoint {
-        case NowPlaying
-        case Popular
-        case TopRated
-        case Upcoming
-        case Recommended(movieId: Int)
-        case UserFavorites
-        case UserWatchList
-        case UserRated
-        case MovieDetails(movieId: Int)
-        case Search
-        case PersonDetails(personId: Int)
-        case UserDetails
-        case MarkAsFavorite
-        case AddToWatchlist
-        case RateMovie(movieId: Int)
-        case DeleteRate(movieId: Int)
-        case RequestToken
-        case ValidateToken
-        case CreateSession
-        case DeleteSession
-    }
-    
+//MARK: - Helper
+extension MovieService {
     func urlforEndpoint(_ endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
-        let path = pathforEndpoint(endpoint)
+        let path = endpoint.path
         
         var components = URLComponents()
         components.scheme = "https"
@@ -68,8 +35,21 @@ extension MovieService {
         return url
     }
     
-    private func pathforEndpoint(_ endpoint: Endpoint) -> String {
-        switch endpoint {
+}
+
+//MARK: - Endpoints
+enum MoviesEndpoint: Endpoint {
+    case NowPlaying
+    case Popular
+    case TopRated
+    case Upcoming
+    case Recommended(movieId: Int)
+    case UserFavorites
+    case UserWatchList
+    case UserRated
+    
+    var path: String {
+        switch self {
         case .NowPlaying:
             return "/movie/now_playing"
         case .Popular:
@@ -86,12 +66,42 @@ extension MovieService {
             return "/account/id/watchlist/movies"
         case .UserRated:
             return "/account/id/rated/movies"
-        case .MovieDetails(movieId: let movieId):
-            return "/movie/\(movieId)"
-        case .Search:
-            return "/search/multi"
-        case .PersonDetails(personId: let personId):
-            return "/person/\(personId)"
+        }
+    }
+    
+}
+
+struct MovieDetailsEndpoint: Endpoint {
+    let movieId: Int
+    
+    var path: String {
+        "/movie/\(movieId)"
+    }
+}
+
+struct SearchEndpoint: Endpoint {
+    var path: String {
+        "/search/multi"
+    }
+}
+
+struct PersonDetailsEndpoint: Endpoint {
+    let personId: Int
+    
+    var path: String {
+        "/person/\(personId)"
+    }
+}
+
+enum UserEndpoint: Endpoint {
+    case UserDetails
+    case MarkAsFavorite
+    case AddToWatchlist
+    case RateMovie(movieId: Int)
+    case DeleteRate(movieId: Int)
+    
+    var path: String {
+        switch self {
         case .UserDetails:
             return "/account/id"
         case .MarkAsFavorite:
@@ -102,15 +112,18 @@ extension MovieService {
             return "/movie/\(movieId)/rating"
         case .DeleteRate(movieId: let movieId):
             return "/movie/\(movieId)/rating"
-        case .RequestToken:
-            return "/authentication/token/new"
-        case .ValidateToken:
-            return "/authentication/token/validate_with_login"
-        case .CreateSession:
-            return "/authentication/session/new"
-        case .DeleteSession:
-            return "/authentication/session"
         }
     }
     
+}
+
+enum SessionEndpoint: String, Endpoint {
+    case RequestToken = "/authentication/token/new"
+    case ValidateToken = "/authentication/token/validate_with_login"
+    case CreateSession = "/authentication/session/new"
+    case DeleteSession = "/authentication/session"
+    
+    var path: String {
+        self.rawValue
+    }
 }

@@ -17,7 +17,7 @@ struct RemoteSearchLoader: SearchLoader {
     }
     
     func search(query: String, page: Int = 1) -> AnyPublisher<SearchResults, Error>  {
-        let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: .Search, parameters: ["query" : query], page: page)
+        let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: SearchEndpoint(), parameters: ["query" : query], page: page)
         
         return publisher
             .compactMap { (items, totalPages) in
