@@ -19,7 +19,7 @@ class MovieServiceTests: XCTestCase {
         let sut = MovieService(session: mocker.session)
         var movie = Movie()
         
-        XCTAssertNoThrow(movie = try awaitPublisher( sut.getModel(endpoint: MovieDetailsEndpoint(movieId: movieId)) ))
+        XCTAssertNoThrow(movie = try awaitPublisher( sut.getModel(endpoint: .movieDetails(movieId: movieId)) ))
         
         XCTAssertEqual(movie.id, movieId)
         XCTAssertEqual(movie.title, "The Dark Knight")
@@ -32,7 +32,7 @@ class MovieServiceTests: XCTestCase {
         let sut = MovieService(session: mocker.session)
         var results = (movies: [Movie](), totalPages: 0)
         
-        XCTAssertNoThrow(results = try awaitPublisher( sut.getModels(endpoint: MoviesEndpoint.NowPlaying) ))
+        XCTAssertNoThrow(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         
         XCTAssertEqual(results.movies.count, 20)
         XCTAssertEqual(results.totalPages, 33)
@@ -46,7 +46,7 @@ class MovieServiceTests: XCTestCase {
         let sut = MovieService(session: mocker.session)
         var results: (movies: [Movie], totalPages: Int)?
 
-        XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: MoviesEndpoint.NowPlaying) ))
+        XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
     }
     
@@ -57,7 +57,7 @@ class MovieServiceTests: XCTestCase {
         let sut = MovieService(session: mocker.session)
         var results: (movies: [Movie], totalPages: Int)?
         
-        XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: MoviesEndpoint.NowPlaying) ))
+        XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
     }
     
@@ -68,7 +68,7 @@ class MovieServiceTests: XCTestCase {
         let sut = MovieService(session: mocker.session)
         var results: (movies: [Movie], totalPages: Int)?
         
-        XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: MoviesEndpoint.NowPlaying) ))
+        XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
     }
     
@@ -80,7 +80,7 @@ class MovieServiceTests: XCTestCase {
         
         var result: ServiceSuccessResult?
         
-        XCTAssertNoThrow(result = try awaitPublisher( sut.successAction(endpoint: UserEndpoint.MarkAsFavorite)) )
+        XCTAssertNoThrow(result = try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) )
         XCTAssertEqual(result?.success, true)
         XCTAssertEqual(result?.sessionId, "sessionId")
         XCTAssertEqual(result?.requestToken, "requestToken")
@@ -92,7 +92,7 @@ class MovieServiceTests: XCTestCase {
         let mocker = ServiceMocker(jsonObject: data, url: url)
         let sut = MovieService(session: mocker.session)
                 
-        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: UserEndpoint.MarkAsFavorite)) ) { error in
+        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) ) { error in
             XCTAssertEqual(error as? MovieService.ServiceError, MovieService.ServiceError.NoSuccess)
         }
     }
@@ -103,7 +103,7 @@ class MovieServiceTests: XCTestCase {
         
         let sut = MovieService(session: mocker.session)
         
-        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: UserEndpoint.MarkAsFavorite)) )
+        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) )
     }
     
     func test_successAction_thowsError_On404Status() {
@@ -112,7 +112,7 @@ class MovieServiceTests: XCTestCase {
         let mocker = ServiceMocker(jsonObject: data, url: url, statusCode: 404)
         let sut = MovieService(session: mocker.session)
                 
-        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: UserEndpoint.MarkAsFavorite)) )
+        XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) )
     }
     
     func test_successAction_async_succeeds() async throws {
@@ -123,7 +123,7 @@ class MovieServiceTests: XCTestCase {
         
         var result: ServiceSuccessResult?
         do {
-            result = try await  sut.successAction(endpoint: UserEndpoint.AddToWatchlist)
+            result = try await  sut.successAction(endpoint: .addToWatchlist)
         } catch {
             XCTAssertNil(error)
         }
@@ -141,7 +141,7 @@ class MovieServiceTests: XCTestCase {
         
         var resultError: Error? = nil
         do {
-            let _ = try await  sut.successAction(endpoint: UserEndpoint.AddToWatchlist)
+            let _ = try await  sut.successAction(endpoint: .addToWatchlist)
         } catch {
             resultError = error
         }
