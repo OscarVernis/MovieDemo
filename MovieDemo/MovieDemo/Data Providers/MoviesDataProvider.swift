@@ -11,6 +11,7 @@ import Combine
 
 class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
     let movieLoader: MovieLoader
+    let cache: MovieCache?
     var serviceCancellable: AnyCancellable?
     
     var currentService: MovieList = .NowPlaying {
@@ -19,9 +20,12 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
         }
     }
 
-    init(_ service: MovieList = .NowPlaying, movieLoader: MovieLoader = RemoteMoviesLoaderWithCache()) {
+    init(_ service: MovieList = .NowPlaying,
+         movieLoader: MovieLoader = RemoteMoviesLoader(),
+         cache: MovieCache? = MovieCache()) {
         self.currentService = service
         self.movieLoader = movieLoader
+        self.cache = cache
     }
     
     override func getItems() {
@@ -29,20 +33,33 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
         
         serviceCancellable = movieLoader.getMovies(movieList: currentService, page: page)
             .sink { [weak self] completion in
+                guard let self = self else { return }
+                
                 switch completion {
                 case .finished:
-                    self?.currentPage += 1
-                    self?.didUpdate?(nil)
+                    self.currentPage += 1
+                    self.didUpdate?(nil)
                 case .failure(let error):
-                    self?.didUpdate?(error)
+                    let movies = self.cache?.fetchMovies(movieList: self.currentService) ?? [Movie]()
+                    self.items = movies.map { MovieViewModel(movie: $0) }
+                    
+                    if page == 0 && movies.count > 0 {
+                        self.didUpdate?(nil)
+                    } else {
+                        self.didUpdate?(error)
+                    }
                 }
             } receiveValue: { [weak self] movies, totalPages in
-                if self?.currentPage == 0 {
-                    self?.items.removeAll()
+                guard let self = self else { return }
+                
+                if self.currentPage == 0 {
+                    self.items.removeAll()
+                    self.cache?.delete(movieList: self.currentService)
                 }
                 
-                self?.totalPages = totalPages
-                self?.items.append(contentsOf: movies.map { MovieViewModel(movie: $0) })
+                self.totalPages = totalPages
+                self.cache?.save(movies: movies, movieList: self.currentService)
+                self.items.append(contentsOf: movies.map { MovieViewModel(movie: $0) })
             }
     }
     

@@ -12,6 +12,26 @@ import CoreData
 
 struct MovieCache {
     private var store = CoreDataStore.shared
+    
+    func fetchMovies(movieList: MovieList) -> [Movie] {
+        let cache = ManagedCache.uniqueInstance(in: store.context)
+        var managedMovies: [MovieMO]?
+        
+        switch movieList {
+        case .NowPlaying:
+            managedMovies = cache.nowPlaying?.array as? [MovieMO]
+        case .Popular:
+            managedMovies = cache.popular?.array as? [MovieMO]
+        case .TopRated:
+            managedMovies = cache.topRated?.array as? [MovieMO]
+        case .Upcoming:
+            managedMovies = cache.upcoming?.array as? [MovieMO]
+        default:
+            break
+        }
+                
+        return managedMovies?.compactMap { $0.toMovie() } ?? []
+    }
         
     func save(movies: [Movie], movieList: MovieList) {
         let cache = ManagedCache.uniqueInstance(in: store.context)
@@ -59,28 +79,10 @@ struct MovieCache {
 }
 
 extension MovieCache: MovieLoader {
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<([Movie], Int), Error> {
-        let cache = ManagedCache.uniqueInstance(in: store.context)
-        var managedMovies: [MovieMO]?
-        
-        switch movieList {
-        case .NowPlaying:
-            managedMovies = cache.nowPlaying?.array as? [MovieMO]
-        case .Popular:
-            managedMovies = cache.popular?.array as? [MovieMO]
-        case .TopRated:
-            managedMovies = cache.topRated?.array as? [MovieMO]
-        case .Upcoming:
-            managedMovies = cache.upcoming?.array as? [MovieMO]
-        default:
-            break
-        }
-                
-        let movies = managedMovies?.compactMap { $0.toMovie() } ?? []
-             
+    func getMovies(movieList: MovieList, page: Int = 1) -> AnyPublisher<([Movie], Int), Error> {
         let totalPages = 1
-        let results = (movies, totalPages)
-        return Just(results)
+        let movies = fetchMovies(movieList: movieList)
+        return Just((movies, totalPages))
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
