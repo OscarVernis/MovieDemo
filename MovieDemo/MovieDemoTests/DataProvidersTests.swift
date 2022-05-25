@@ -78,7 +78,6 @@ class DataProvidersTests: XCTestCase {
         let dataProvider = SearchDataProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"
-        wait(for: 0.35)
         
         assertDataProviderPaging(dataProvider: dataProvider)
     }
@@ -89,7 +88,6 @@ class DataProvidersTests: XCTestCase {
         let dataProvider = SearchDataProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"
-        wait(for: 0.35)
         
         //First try should fail
         assertDataProviderPagingFailure(dataProvider: dataProvider)
@@ -105,30 +103,53 @@ class DataProvidersTests: XCTestCase {
 extension DataProvidersTests {
     func assertDataProviderPaging<T>(dataProvider: PaginatedDataProvider<T>) {
         var callCount = 0
+          
+        //Page 1
+        var exp = XCTestExpectation()
         dataProvider.didUpdate = { error in
             XCTAssertNil(error)
             callCount += 1
+            
+            exp.fulfill()
         }
         
-        //Page 1
         dataProvider.refresh()
         
+        wait(for: [exp], timeout: 0.1)
         XCTAssertEqual(dataProvider.currentPage, 1)
         XCTAssertEqual(dataProvider.totalPages, 3)
         XCTAssertEqual(dataProvider.itemCount, 20)
         XCTAssertEqual(dataProvider.isLastPage, false)
 
         //Page 2
+        exp = XCTestExpectation()
+        dataProvider.didUpdate = { error in
+            XCTAssertNil(error)
+            callCount += 1
+            
+            exp.fulfill()
+        }
+        
         dataProvider.loadMore()
 
+        wait(for: [exp], timeout: 0.1)
         XCTAssertEqual(dataProvider.currentPage, 2)
         XCTAssertEqual(dataProvider.totalPages, 3)
         XCTAssertEqual(dataProvider.itemCount, 40)
         XCTAssertEqual(dataProvider.isLastPage, false)
 
         //Page 3
+        exp = XCTestExpectation()
+        dataProvider.didUpdate = { error in
+            XCTAssertNil(error)
+            callCount += 1
+            
+            exp.fulfill()
+        }
+        
         dataProvider.loadMore()
 
+        wait(for: [exp], timeout: 0.1)
         XCTAssertEqual(dataProvider.currentPage, 3)
         XCTAssertEqual(dataProvider.totalPages, 3)
         XCTAssertEqual(dataProvider.itemCount, 60)
@@ -146,12 +167,15 @@ extension DataProvidersTests {
     }
         
     func assertDataProviderPagingFailure<T>(dataProvider: PaginatedDataProvider<T>) {
+        let exp = XCTestExpectation()
         dataProvider.didUpdate = { error in
             XCTAssertNotNil(error)
+            exp.fulfill()
         }
         
         dataProvider.refresh()
         
+        wait(for: [exp], timeout: 0.1)
         XCTAssertEqual(dataProvider.currentPage, 0)
         XCTAssertEqual(dataProvider.totalPages, 1)
         XCTAssertEqual(dataProvider.itemCount, 0)
@@ -178,7 +202,7 @@ class SearchLoaderMock: SearchLoader {
                 .eraseToAnyPublisher()
         }
         
-        return Just( (results, pageCount) )
+        return Just( SearchResults(items: results, totalPages: pageCount) )
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
