@@ -30,12 +30,12 @@ class MovieServiceTests: XCTestCase {
         let mocker = ServiceMocker(jsonFile: "Movies", url: url)
         
         let sut = MovieService(session: mocker.session)
-        var results = (movies: [Movie](), totalPages: 0)
+        var results: ServiceModelsResult<Movie>?
         
         XCTAssertNoThrow(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         
-        XCTAssertEqual(results.movies.count, 20)
-        XCTAssertEqual(results.totalPages, 33)
+        XCTAssertEqual(results?.items.count, 20)
+        XCTAssertEqual(results?.totalPages, 33)
     }
     
     func test_getModels_failsOnEmptyResult() {
@@ -44,7 +44,7 @@ class MovieServiceTests: XCTestCase {
         let mocker = ServiceMocker(jsonObject: emptyResult, url: url)
         
         let sut = MovieService(session: mocker.session)
-        var results: (movies: [Movie], totalPages: Int)?
+        var results: ServiceModelsResult<Movie>?
 
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
@@ -55,7 +55,7 @@ class MovieServiceTests: XCTestCase {
         let mocker = ServiceMocker(jsonFile: "Movies", url: url, statusCode: 401)
         
         let sut = MovieService(session: mocker.session)
-        var results: (movies: [Movie], totalPages: Int)?
+        var results: ServiceModelsResult<Movie>?
         
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
@@ -66,7 +66,7 @@ class MovieServiceTests: XCTestCase {
         let mocker = ServiceMocker(jsonFile: "Movies", url: url, statusCode: 404)
         
         let sut = MovieService(session: mocker.session)
-        var results: (movies: [Movie], totalPages: Int)?
+        var results: ServiceModelsResult<Movie>?
         
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
@@ -123,7 +123,7 @@ class MovieServiceTests: XCTestCase {
         
         var result: ServiceSuccessResult?
         do {
-            result = try await  sut.successAction(endpoint: .addToWatchlist)
+            result = try await  sut.successAction(endpoint: .addToWatchlist).async()
         } catch {
             XCTAssertNil(error)
         }
@@ -141,7 +141,7 @@ class MovieServiceTests: XCTestCase {
         
         var resultError: Error? = nil
         do {
-            let _ = try await  sut.successAction(endpoint: .addToWatchlist)
+            let _ = try await  sut.successAction(endpoint: .addToWatchlist).async()
         } catch {
             resultError = error
         }

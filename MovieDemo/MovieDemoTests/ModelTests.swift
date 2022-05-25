@@ -50,7 +50,7 @@ class MovieModelTests: XCTestCase {
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(ServiceModelsResult<Movie>.self, from: movieData).results.first! )
+        XCTAssertNoThrow( movie = try decoder.decode(ServiceModelsResult<Movie>.self, from: movieData).items.first! )
         
         XCTAssertEqual(movie.id, 297761)
         XCTAssertEqual(movie.title, "Suicide Squad")

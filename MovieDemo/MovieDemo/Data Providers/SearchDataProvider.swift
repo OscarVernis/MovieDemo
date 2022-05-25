@@ -63,7 +63,7 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
         if currentPage == 0 {
             items.removeAll()
         }
-        
+            
         let itemViewModels: [Any] = results.items.compactMap { item in
             switch item {
             case let movie as Movie:
@@ -75,10 +75,10 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
             }
         }
         
+        currentPage += 1
         items.append(contentsOf: itemViewModels)
         totalPages = results.totalPages
 
-        currentPage += 1
         didUpdate?(nil)
     }
 

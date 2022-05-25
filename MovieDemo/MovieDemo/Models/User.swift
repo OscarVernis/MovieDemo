@@ -44,13 +44,13 @@ extension User: Codable {
         username = try container.decode(String.self, forKey: .username)
         
         let favoritesResults = try? container.decodeIfPresent(ServiceModelsResult<Movie>.self, forKey: .favorites)
-        favorites = favoritesResults?.results ?? [Movie]()
+        favorites = favoritesResults?.items ?? [Movie]()
         
         let watchListResults = try? container.decodeIfPresent(ServiceModelsResult<Movie>.self, forKey: .watchlist)
-        watchlist = watchListResults?.results ?? [Movie]()
+        watchlist = watchListResults?.items ?? [Movie]()
 
         let ratedResults = try? container.decodeIfPresent(ServiceModelsResult<Movie>.self, forKey: .rated)
-        rated = ratedResults?.results ?? [Movie]()
+        rated = ratedResults?.items ?? [Movie]()
 
         let avatarContainer = try? container.nestedContainer(keyedBy: NestedKeys.self, forKey: .avatar)
         let gravatarContainer = try? avatarContainer?.nestedContainer(keyedBy: SpecialKeys.self, forKey: .gravatar)

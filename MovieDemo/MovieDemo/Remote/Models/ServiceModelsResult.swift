@@ -9,11 +9,11 @@
 import Foundation
 
 struct ServiceModelsResult<T: Codable>: Codable {
-    var results: [T]
+    var items: [T]
     var totalPages: Int
     
     enum CodingKeys: String, CodingKey {
-        case results
+        case items = "results"
         case totalPages = "total_pages"
     }
 }

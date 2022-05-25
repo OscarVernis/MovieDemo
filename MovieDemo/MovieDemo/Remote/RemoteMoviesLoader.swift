@@ -17,11 +17,14 @@ struct RemoteMoviesLoader: MovieLoader {
     }
     
     func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResults, Error> {
-        return service.getModels(endpoint: .movies(movieList), page: page)
-            .map { (movies, totalPages) in
-                MoviesResults(movies: movies, totalPages: totalPages)
+        let publisher: AnyPublisher<ServiceModelsResult<Movie>, Error> = service.getModels(endpoint: .movies(movieList), page: page)
+        
+        return publisher
+            .map { result in
+                MoviesResults(movies: result.items, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()
+        
     }
     
 }

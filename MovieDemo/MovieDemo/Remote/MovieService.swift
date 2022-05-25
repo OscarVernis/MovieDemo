@@ -42,7 +42,7 @@ struct MovieService {
 
 //MARK: - Helpers
 extension MovieService {
-    func defaultParameters(additionalParameters: [String: String]? = nil) -> [String: String] {
+    func defaultParameters(with additionalParameters: [String: String]? = nil) -> [String: String] {
         let language = String.localized(.ServiceLocale)
         var params: [String: String] = ["language": language, "api_key": apiKey]
         
@@ -65,7 +65,7 @@ extension MovieService {
         components.host = baseURL
         components.path = "/3" + path
         
-        let params = defaultParameters(additionalParameters: parameters)
+        let params = defaultParameters(with: parameters)
         components.queryItems = params.compactMap{ URLQueryItem(name: $0.0, value: $0.1) }
         
         guard let url = components.url else {
@@ -103,13 +103,11 @@ extension MovieService {
             .eraseToAnyPublisher()
     }
     
-    func getModels<Model: Codable>(model: Model.Type? = nil, endpoint: Endpoint, parameters: [String: String] = [:], page: Int = 1) -> AnyPublisher<([Model], Int), Error> {
+    func getModels<Model: Codable>(model: Model.Type? = nil, endpoint: Endpoint, parameters: [String: String] = [:], page: Int = 1) -> AnyPublisher<ServiceModelsResult<Model>, Error> {
         var params = parameters
         params["page"] = String(page)
         
         return getModel(model: ServiceModelsResult<Model>.self, endpoint: endpoint, parameters: params)
-            .map { ($0.results, $0.totalPages) }
-            .eraseToAnyPublisher()
     }
     
     func successAction<T: Encodable>(endpoint: Endpoint, body: T?, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {

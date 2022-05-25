@@ -17,11 +17,11 @@ struct RemoteSearchLoader: SearchLoader {
     }
     
     func search(query: String, page: Int = 1) -> AnyPublisher<SearchResults, Error>  {
-        let publisher: AnyPublisher<([MediaItem], Int), Error> = service.getModels(endpoint: .search, parameters: ["query" : query], page: page)
+        let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = service.getModels(endpoint: .search, parameters: ["query" : query], page: page)
         
         return publisher
-            .compactMap { (items, totalPages) in
-                let searchResults: [Any] = items.compactMap { item in
+            .compactMap { result in
+                let searchResults: [Any] = result.items.compactMap { item -> Any? in
                     switch item {
                     case .person(let person):
                         return person
@@ -32,7 +32,7 @@ struct RemoteSearchLoader: SearchLoader {
                     }
                 }
                 
-                return (searchResults, totalPages)
+                return (searchResults, result.totalPages)
             }
             .eraseToAnyPublisher()
     }
