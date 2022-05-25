@@ -103,8 +103,7 @@ class DataProvidersTests: XCTestCase {
 extension DataProvidersTests {
     func assertDataProviderPaging<T>(dataProvider: PaginatedDataProvider<T>) {
         var callCount = 0
-          
-        //Page 1
+        
         var exp = XCTestExpectation()
         dataProvider.didUpdate = { error in
             XCTAssertNil(error)
@@ -112,7 +111,8 @@ extension DataProvidersTests {
             
             exp.fulfill()
         }
-        
+          
+        //Page 1
         dataProvider.refresh()
         
         wait(for: [exp], timeout: 0.1)
@@ -123,13 +123,6 @@ extension DataProvidersTests {
 
         //Page 2
         exp = XCTestExpectation()
-        dataProvider.didUpdate = { error in
-            XCTAssertNil(error)
-            callCount += 1
-            
-            exp.fulfill()
-        }
-        
         dataProvider.loadMore()
 
         wait(for: [exp], timeout: 0.1)
@@ -140,13 +133,6 @@ extension DataProvidersTests {
 
         //Page 3
         exp = XCTestExpectation()
-        dataProvider.didUpdate = { error in
-            XCTAssertNil(error)
-            callCount += 1
-            
-            exp.fulfill()
-        }
-        
         dataProvider.loadMore()
 
         wait(for: [exp], timeout: 0.1)

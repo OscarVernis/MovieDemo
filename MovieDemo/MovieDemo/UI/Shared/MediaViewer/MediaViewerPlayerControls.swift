@@ -40,9 +40,9 @@ class MediaViewerPlayerControls: UIView {
         playerOberservationToken = player?.observe(\.timeControlStatus, changeHandler: { player, change in
             switch player.timeControlStatus {
             case .paused:
-                self.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+                self.playButton.setImage(.asset(.play), for: .normal)
             case .playing:
-                self.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+                self.playButton.setImage(.asset(.pause), for: .normal)
             default:
                 break
             }

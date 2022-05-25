@@ -50,7 +50,7 @@ class HomeViewController: UIViewController, GenericCollection {
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         //User Profile NavBar Button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle"), style: .plain, target: self, action: #selector(showUser))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .asset(.person), style: .plain, target: self, action: #selector(showUser))
     }
     
     override func viewWillAppear(_ animated: Bool) {

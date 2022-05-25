@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum AssetColor: String {
+enum ColorAsset: String, CaseIterable {
     case AppBackgroundColor
     case AppTintColor
     case FavoriteColor
@@ -20,10 +20,11 @@ enum AssetColor: String {
     var color: UIColor {
         UIColor(named: rawValue)!
     }
+    
 }
 
 extension UIColor {
-    static func asset(_ assetColor: AssetColor) -> UIColor {
+    static func asset(_ assetColor: ColorAsset) -> UIColor {
         return assetColor.color
     }
     
