@@ -27,7 +27,7 @@ class MovieLoaderMock: MovieLoader {
                 .eraseToAnyPublisher()
         }
         
-        return Just( MoviesResults(movies: movies, totalPages: pageCount) )
+        return Just( MoviesResult(movies: movies, totalPages: pageCount) )
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

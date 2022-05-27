@@ -188,7 +188,7 @@ class SearchLoaderMock: SearchLoader {
                 .eraseToAnyPublisher()
         }
         
-        return Just( SearchResults(items: results, totalPages: pageCount) )
+        return Just( SearchResult(items: results, totalPages: pageCount) )
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
