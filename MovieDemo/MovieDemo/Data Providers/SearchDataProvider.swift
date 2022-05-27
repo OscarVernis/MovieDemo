@@ -52,9 +52,9 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
     @MainActor func itemsTask() async {
         let page = currentPage + 1
         
-        let results: SearchResults
+        let result: SearchResult
         do {
-            results = try await searchService.search(query: query, page: page).async()
+            result = try await searchService.search(query: query, page: page).async()
         } catch {
             didUpdate?(error)
             return
@@ -64,7 +64,7 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
             items.removeAll()
         }
             
-        let itemViewModels: [Any] = results.items.compactMap { item in
+        let itemViewModels: [Any] = result.items.compactMap { item in
             switch item {
             case let movie as Movie:
                return MovieViewModel(movie: movie)
@@ -77,7 +77,7 @@ class SearchDataProvider: PaginatedDataProvider<Any> {
         
         currentPage += 1
         items.append(contentsOf: itemViewModels)
-        totalPages = results.totalPages
+        totalPages = result.totalPages
 
         didUpdate?(nil)
     }

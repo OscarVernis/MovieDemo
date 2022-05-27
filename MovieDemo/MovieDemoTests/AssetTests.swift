@@ -11,7 +11,7 @@ import XCTest
 
 class AssetTests: XCTestCase {
 
-    func testImageAssetsExist() throws {
+    func testImageAssetsExists() throws {
         let assets = ImageAsset.allCases
         
         for asset in assets {
@@ -20,7 +20,7 @@ class AssetTests: XCTestCase {
         }
     }
     
-    func testColorAssetsExist() throws {
+    func testColorAssetsExists() throws {
         let assets = ColorAsset.allCases
         
         for asset in assets {

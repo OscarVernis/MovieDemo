@@ -11,8 +11,8 @@ import Combine
 
 
 typealias MovieList = MoviesEndpoint
-typealias MoviesResults = (movies: [Movie], totalPages: Int)
+typealias MoviesResult = (movies: [Movie], totalPages: Int)
 
 protocol MovieLoader {    
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResults, Error>
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResult, Error>
 }

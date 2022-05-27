@@ -16,7 +16,7 @@ struct RemoteSearchLoader: SearchLoader {
         self.service = service
     }
     
-    func search(query: String, page: Int = 1) -> AnyPublisher<SearchResults, Error>  {
+    func search(query: String, page: Int = 1) -> AnyPublisher<SearchResult, Error>  {
         let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = service.getModels(endpoint: .search, parameters: ["query" : query], page: page)
         
         return publisher

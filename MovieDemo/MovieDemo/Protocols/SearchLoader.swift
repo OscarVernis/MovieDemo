@@ -9,8 +9,8 @@
 import Foundation
 import Combine
 
-typealias SearchResults = (items: [Any], totalPages: Int)
+typealias SearchResult = (items: [Any], totalPages: Int)
 
 protocol SearchLoader {
-    func search(query: String, page: Int) -> AnyPublisher<SearchResults, Error>
+    func search(query: String, page: Int) -> AnyPublisher<SearchResult, Error>
 }

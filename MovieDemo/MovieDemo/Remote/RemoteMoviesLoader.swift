@@ -16,12 +16,12 @@ struct RemoteMoviesLoader: MovieLoader {
         self.service = MovieService(sessionId: sessionId)
     }
     
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResults, Error> {
+    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResult, Error> {
         let publisher: AnyPublisher<ServiceModelsResult<Movie>, Error> = service.getModels(endpoint: .movies(movieList), page: page)
         
         return publisher
             .map { result in
-                MoviesResults(movies: result.items, totalPages: result.totalPages)
+                MoviesResult(movies: result.items, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()
         

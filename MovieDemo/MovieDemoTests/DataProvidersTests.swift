@@ -182,9 +182,9 @@ class SearchLoaderMock: SearchLoader {
         self.error = error
     }
     
-    func search(query: String, page: Int) -> AnyPublisher<SearchResults, Error> {
+    func search(query: String, page: Int) -> AnyPublisher<SearchResult, Error> {
         if let error = error {
-            return Fail(outputType: SearchResults.self, failure: error)
+            return Fail(outputType: SearchResult.self, failure: error)
                 .eraseToAnyPublisher()
         }
         

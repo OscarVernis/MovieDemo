@@ -446,7 +446,6 @@
 		5518200327DFE3FB00237F39 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				5518200927DFE4B400237F39 /* Protocols */,
 				5506BAA92512E2B10052B0F2 /* Home */,
 				55518D4A251151B300DAEB7F /* Movie Detail */,
 				556807C42530E85300F8DF16 /* Person Detail */,
@@ -746,6 +745,7 @@
 			isa = PBXGroup;
 			children = (
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
+				5518200927DFE4B400237F39 /* Protocols */,
 				55EDA7112810F8870055696F /* Sections */,
 				55893B6A2513F4EA00233677 /* CollectionView Reusable */,
 				552E705A251547D7009CC4CD /* Cells */,
