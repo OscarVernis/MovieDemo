@@ -28,8 +28,19 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
         self.cache = cache
     }
     
+    func loadFromCache() {
+        //Only load from Cache on first page and when items are empty.
+        guard let cache = cache,
+                currentPage == 0,
+                items.count == 0
+        else { return }
+        
+        items = cache.fetchMovies(movieList: currentService).map { MovieViewModel(movie: $0) }
+    }
+    
     override func getItems() {
         let page = currentPage + 1
+        loadFromCache()
         
         serviceCancellable = movieLoader.getMovies(movieList: currentService, page: page)
             .sink { [weak self] completion in
@@ -40,16 +51,9 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                     self.currentPage += 1
                     self.didUpdate?(nil)
                 case .failure(let error):
-                    let movies = self.cache?.fetchMovies(movieList: self.currentService) ?? [Movie]()
-                    self.items = movies.map { MovieViewModel(movie: $0) }
-                    
-                    if page == 0 && movies.count > 0 {
-                        self.didUpdate?(nil)
-                    } else {
-                        self.didUpdate?(error)
-                    }
+                    self.didUpdate?(error)
                 }
-            } receiveValue: { [weak self] results in
+            } receiveValue: { [weak self] result in
                 guard let self = self else { return }
                 
                 if self.currentPage == 0 {
@@ -57,9 +61,9 @@ class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
                     self.cache?.delete(movieList: self.currentService)
                 }
                 
-                self.totalPages = results.totalPages
-                self.cache?.save(movies: results.movies, movieList: self.currentService)
-                self.items.append(contentsOf: results.movies.map { MovieViewModel(movie: $0) })
+                self.totalPages = result.totalPages
+                self.cache?.save(movies: result.movies, movieList: self.currentService)
+                self.items.append(contentsOf: result.movies.map { MovieViewModel(movie: $0) })
             }
     }
     
