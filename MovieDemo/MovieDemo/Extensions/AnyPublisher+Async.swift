@@ -15,6 +15,31 @@ extension Publishers {
 }
 
 extension Publisher {
+    func completion(handler: @escaping ((Result<Output, Error>) -> Void)) {
+        var cancellable: AnyCancellable?
+        var didReceiveValue = false
+                
+        cancellable = sink(
+            receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    handler(.failure(error))
+                case .finished:
+                    if !didReceiveValue {
+                        handler(.failure(Publishers.MissingOutputError()))
+                    }
+                }
+            },
+            receiveValue: { value in
+                guard !didReceiveValue else { return }
+                
+                didReceiveValue = true
+                cancellable?.cancel()
+                handler(.success(value))
+            }
+        )
+    }
+    
     func async() async throws -> Output {
         var cancellable: AnyCancellable?
         var didReceiveValue = false
