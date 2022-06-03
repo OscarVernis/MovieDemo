@@ -1,5 +1,5 @@
 //
-//  UserManager.swift
+//  UserStore.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/05/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserManager {
+protocol UserStore {
     var sessionId: String? { get }
     var username: String? { get }
 

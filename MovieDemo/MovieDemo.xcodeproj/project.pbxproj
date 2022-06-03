@@ -11,7 +11,7 @@
 		5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */; };
 		5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAB72512EC9F0052B0F2 /* CreditCell.swift */; };
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
-		550A70F2282B4A4A00A39930 /* LoginManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* LoginManagerMock.swift */; };
+		550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55135E712512C866004C4361 /* MovieDetailHeaderView.swift */; };
@@ -62,9 +62,9 @@
 		5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5550409B251E70A400D919FF /* UserProfileViewController.swift */; };
 		55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55518D422511292E00DAEB7F /* SectionTitleView.swift */; };
 		555498F9282217D700E89119 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498F8282217D700E89119 /* CoordinatorTests.swift */; };
-		555498FB2822284B00E89119 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FA2822284B00E89119 /* UserManager.swift */; };
-		555498FD282228D000E89119 /* LocalUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FC282228D000E89119 /* LocalUserManager.swift */; };
-		55549901282232BF00E89119 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55549900282232BF00E89119 /* LoginManager.swift */; };
+		555498FB2822284B00E89119 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FA2822284B00E89119 /* UserStore.swift */; };
+		555498FD282228D000E89119 /* LocalUserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FC282228D000E89119 /* LocalUserStore.swift */; };
+		55549901282232BF00E89119 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55549900282232BF00E89119 /* SessionService.swift */; };
 		5554DA49281343C900845F9E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5554DA48281343C900845F9E /* SDWebImage */; };
 		5554DA4B2813482500845F9E /* UIImage+RemoteLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */; };
 		5557136128348AA9006A20AB /* MovieUserStatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5557136028348AA9006A20AB /* MovieUserStatesViewModel.swift */; };
@@ -175,7 +175,7 @@
 		55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E5871D27DBC66000159201 /* ServiceModelsResult.swift */; };
 		55EA4A742539420E00306DA0 /* PersonCrewCreditsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA4A732539420E00306DA0 /* PersonCrewCreditsSection.swift */; };
 		55EA4A7B25394CD600306DA0 /* SearchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EA4A7A25394CD600306DA0 /* SearchSection.swift */; };
-		55EB72A327D19EC800B98342 /* RemoteLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteLoginManager.swift */; };
+		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
 		55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */; };
 		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
 		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */; };
@@ -213,7 +213,7 @@
 		5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesCompositionalLayoutBuilder.swift; sourceTree = "<group>"; };
 		5506BAB72512EC9F0052B0F2 /* CreditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCell.swift; sourceTree = "<group>"; };
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
-		550A70F1282B4A4A00A39930 /* LoginManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerMock.swift; sourceTree = "<group>"; };
+		550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		55135E712512C866004C4361 /* MovieDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -271,9 +271,9 @@
 		5550409B251E70A400D919FF /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		55518D422511292E00DAEB7F /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
 		555498F8282217D700E89119 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
-		555498FA2822284B00E89119 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
-		555498FC282228D000E89119 /* LocalUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserManager.swift; sourceTree = "<group>"; };
-		55549900282232BF00E89119 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		555498FA2822284B00E89119 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
+		555498FC282228D000E89119 /* LocalUserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserStore.swift; sourceTree = "<group>"; };
+		55549900282232BF00E89119 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+RemoteLoading.swift"; sourceTree = "<group>"; };
 		5557136028348AA9006A20AB /* MovieUserStatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieUserStatesViewModel.swift; sourceTree = "<group>"; };
 		555713622834AB76006A20AB /* RemoteUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserState.swift; sourceTree = "<group>"; };
@@ -384,7 +384,7 @@
 		55E5871D27DBC66000159201 /* ServiceModelsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModelsResult.swift; sourceTree = "<group>"; };
 		55EA4A732539420E00306DA0 /* PersonCrewCreditsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCrewCreditsSection.swift; sourceTree = "<group>"; };
 		55EA4A7A25394CD600306DA0 /* SearchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSection.swift; sourceTree = "<group>"; };
-		55EB72A227D19EC800B98342 /* RemoteLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLoginManager.swift; sourceTree = "<group>"; };
+		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
 		55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserLoader.swift; sourceTree = "<group>"; };
 		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
 		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsLoader.swift; sourceTree = "<group>"; };
@@ -473,8 +473,8 @@
 			isa = PBXGroup;
 			children = (
 				557FFA8A251A625900D79F68 /* SessionManager.swift */,
-				555498FA2822284B00E89119 /* UserManager.swift */,
-				555498FC282228D000E89119 /* LocalUserManager.swift */,
+				555498FA2822284B00E89119 /* UserStore.swift */,
+				555498FC282228D000E89119 /* LocalUserStore.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -565,9 +565,9 @@
 		555498FF2822329600E89119 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				55549900282232BF00E89119 /* LoginManager.swift */,
 				5523970227D17F6100E4C18F /* MovieLoader.swift */,
 				5570994B282485780028ED44 /* SearchLoader.swift */,
+				55549900282232BF00E89119 /* SessionService.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -640,7 +640,7 @@
 				55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */,
 				55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */,
 				555713622834AB76006A20AB /* RemoteUserState.swift */,
-				55EB72A227D19EC800B98342 /* RemoteLoginManager.swift */,
+				55EB72A227D19EC800B98342 /* RemoteSessionService.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -690,7 +690,7 @@
 				555D760427EA3D3B00B8FFAB /* XCTestCase+Helpers.swift */,
 				55C6753528223396007FB18C /* UserManagerMock.swift */,
 				5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */,
-				550A70F1282B4A4A00A39930 /* LoginManagerMock.swift */,
+				550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1138,7 +1138,7 @@
 				556719A72824D50000370D4D /* RemoteSearchLoaderTests.swift in Sources */,
 				5547ED5F282594A60079BD14 /* ListViewControllerTests.swift in Sources */,
 				5547ED5B282593200079BD14 /* UserProfileViewControllerTests.swift in Sources */,
-				550A70F2282B4A4A00A39930 /* LoginManagerMock.swift in Sources */,
+				550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */,
 				555498F9282217D700E89119 /* CoordinatorTests.swift in Sources */,
 				555D760527EA3D3B00B8FFAB /* XCTestCase+Helpers.swift in Sources */,
 				5547ED55282590A10079BD14 /* HomeViewControllerTests.swift in Sources */,
@@ -1184,7 +1184,7 @@
 				5532CF912525029400663844 /* MovieDetailVideoSection.swift in Sources */,
 				55EA4A7B25394CD600306DA0 /* SearchSection.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
-				55549901282232BF00E89119 /* LoginManager.swift in Sources */,
+				55549901282232BF00E89119 /* SessionService.swift in Sources */,
 				553190072834082F0035036F /* SearchViewController.swift in Sources */,
 				555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */,
 				55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */,
@@ -1226,7 +1226,7 @@
 				5523970D27D19C2C00E4C18F /* RemoteSearchLoader.swift in Sources */,
 				558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */,
 				5565DDED27E969CD00D7F4EB /* Endpoint.swift in Sources */,
-				555498FB2822284B00E89119 /* UserManager.swift in Sources */,
+				555498FB2822284B00E89119 /* UserStore.swift in Sources */,
 				55CB9F6F251918EE00E13891 /* MovieRatingListCellConfigurator.swift in Sources */,
 				5560523B2531246A00023BD9 /* PersonCastCredit.swift in Sources */,
 				5523970827D19B6700E4C18F /* RemoteMoviesLoader.swift in Sources */,
@@ -1267,7 +1267,7 @@
 				555713632834AB76006A20AB /* RemoteUserState.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
-				555498FD282228D000E89119 /* LocalUserManager.swift in Sources */,
+				555498FD282228D000E89119 /* LocalUserStore.swift in Sources */,
 				55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */,
 				559B08D3283D4EBF002DA8DF /* AnyPublisher+Async.swift in Sources */,
 				55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */,
@@ -1282,7 +1282,7 @@
 				55E3E5082516EA6300D6FAA9 /* CrewCreditInfoListCellConfigurator.swift in Sources */,
 				555725AB2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift in Sources */,
 				5545203B22D99D8F004B7924 /* MovieService.swift in Sources */,
-				55EB72A327D19EC800B98342 /* RemoteLoginManager.swift in Sources */,
+				55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */,
 				55EE519D251E8CF800915AB3 /* UserProfileHeaderView.swift in Sources */,
 				55C4F40A251814AF002B73A9 /* CastCreditViewModel.swift in Sources */,
 				55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */,

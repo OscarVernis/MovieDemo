@@ -20,7 +20,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        SessionManager.shared.userManager = LocalUserManager()
+        SessionManager.shared.store = LocalUserStore()
         navCont?.viewControllers = []
         window = nil
     }
@@ -37,7 +37,7 @@ class CoordinatorTests: XCTestCase {
         let coordinator = MainCoordinator(window: window, isLoginRequired: true)
         
         let sessionManager = SessionManager.shared
-        sessionManager.userManager = UserManagerMock(isLoggedIn: false)
+        sessionManager.store = UserStoreMock(isLoggedIn: false)
         
         coordinator.start()
         
@@ -109,7 +109,7 @@ class CoordinatorTests: XCTestCase {
         coordinator.start()
         
         let sessionManager = SessionManager.shared
-        sessionManager.userManager = UserManagerMock(isLoggedIn: true)
+        sessionManager.store = UserStoreMock(isLoggedIn: true)
         
         coordinator.showUserProfile(animated: false)
         
@@ -122,7 +122,7 @@ class CoordinatorTests: XCTestCase {
         coordinator.start()
         
         let sessionManager = SessionManager.shared
-        sessionManager.userManager = UserManagerMock(isLoggedIn: false)
+        sessionManager.store = UserStoreMock(isLoggedIn: false)
         
         coordinator.showUserProfile(animated: false)
         

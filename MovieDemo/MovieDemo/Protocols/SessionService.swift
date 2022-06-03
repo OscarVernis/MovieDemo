@@ -1,5 +1,5 @@
 //
-//  LoginManager.swift
+//  SessionService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/05/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LoginManager {
+protocol SessionService {
     func requestToken() async throws -> String
     
     func validateToken(username: String, password: String, requestToken: String) async throws

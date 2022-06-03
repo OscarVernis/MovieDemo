@@ -16,28 +16,17 @@ class SessionManager {
     }
     
     static let shared = SessionManager()
-    var service: LoginManager = RemoteLoginManager()
-    var userManager: UserManager = LocalUserManager() {
-        didSet {
-            updateLocalInfo()
-        }
-    }
+    var service: SessionService = RemoteSessionService()
+    var store: UserStore = LocalUserStore()
     
     var isLoggedIn: Bool { sessionId != nil }
-    var username: String?
-    var sessionId: String?
-        
-    private init() {
-        updateLocalInfo()
+    var username: String? {
+        return store.username
     }
-}
-
-//MARK: - Update
-extension SessionManager {
-    fileprivate func updateLocalInfo() {
-        sessionId = userManager.sessionId
-        username = userManager.username
+    var sessionId: String? {
+        return store.sessionId
     }
+    
 }
 
 //MARK: - Login
@@ -57,8 +46,7 @@ extension SessionManager {
             }
         }
         
-        userManager.save(username: username, sessionId: sessionId)
-        updateLocalInfo()
+        store.save(username: username, sessionId: sessionId)
         
         return .success(())
     }
@@ -79,8 +67,7 @@ extension SessionManager {
         
         switch result {
         case .success():
-            userManager.delete()
-            updateLocalInfo()
+            store.delete()
             return .success(())
         case .failure(let error):
             return .failure(error)

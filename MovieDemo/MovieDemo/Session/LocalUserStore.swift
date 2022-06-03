@@ -9,10 +9,12 @@
 import Foundation
 import KeychainAccess
 
-class LocalUserManager: UserManager {
+class LocalUserStore: UserStore {
     fileprivate enum LocalKeys: String {
         case username
     }
+    
+    let keychainKey = "oscarvernis.MovieDemo"
     
     var sessionId: String?
     var username: String?
@@ -24,7 +26,7 @@ class LocalUserManager: UserManager {
     fileprivate func load() {
         let user =  UserDefaults.standard.value(forKey: LocalKeys.username.rawValue) as? String
         
-        let keychain = Keychain(service: "oscarvernis.MovieDemo")
+        let keychain = Keychain(service: keychainKey)
         self.sessionId = keychain[user ?? ""]
         
         if sessionId != nil {
@@ -40,7 +42,7 @@ class LocalUserManager: UserManager {
         UserDefaults.standard.setValue(username, forKey: LocalKeys.username.rawValue)
         
         //Save sessionId to keychain
-        let keychain = Keychain(service: "oscarvernis.MovieDemo")
+        let keychain = Keychain(service: keychainKey)
         keychain[username] = sessionId
     }
     
@@ -49,7 +51,7 @@ class LocalUserManager: UserManager {
         UserDefaults.standard.setValue(nil, forKey: LocalKeys.username.rawValue)
         
         //Delete sessionId from keychain
-        let keychain = Keychain(service: "oscarvernis.MovieDemo")
+        let keychain = Keychain(service: keychainKey)
         keychain[username!] = nil
         
         self.username = nil

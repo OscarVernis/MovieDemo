@@ -1,5 +1,5 @@
 //
-//  LoginManagerMock.swift
+//  SessionServiceMock.swift
 //  MovieDemoTests
 //
 //  Created by Oscar Vernis on 10/05/22.
@@ -9,7 +9,7 @@
 import Foundation
 @testable import MovieDemo
 
-class LoginManagerMock: LoginManager {
+class SessionServiceMock: SessionService {
     let fails: Bool
     let error: MovieService.ServiceError?
     

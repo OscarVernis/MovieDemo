@@ -1,5 +1,5 @@
 //
-//  UserManagerMock.swift
+//  UserStoreMock.swift
 //  MovieDemoTests
 //
 //  Created by Oscar Vernis on 03/05/22.
@@ -9,7 +9,7 @@
 import Foundation
 @testable import MovieDemo
 
-class UserManagerMock: UserManager {
+class UserStoreMock: UserStore {
     var sessionId: String?
     var username: String?
     

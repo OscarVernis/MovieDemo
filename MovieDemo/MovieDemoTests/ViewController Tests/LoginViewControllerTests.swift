@@ -103,9 +103,9 @@ class LoginViewControllerTests: XCTestCase {
     }
     
     func test_returnOnPassword_shouldLogin() {
-        let loginManagerMock = LoginManagerMock()
-        SessionManager.shared.userManager = UserManagerMock(isLoggedIn: false)
-        SessionManager.shared.service = loginManagerMock
+        let sessionService = SessionServiceMock()
+        SessionManager.shared.store = UserStoreMock(isLoggedIn: false)
+        SessionManager.shared.service = sessionService
         
         sut.loadViewIfNeeded()
         
@@ -126,9 +126,9 @@ class LoginViewControllerTests: XCTestCase {
         let _ = sut.passwordTextField.delegate?.textFieldShouldReturn?(sut.passwordTextField)
         wait(for: [exp], timeout: 1)
         
-        XCTAssertEqual(loginManagerMock.loginCount, 1)
-        XCTAssertEqual(loginManagerMock.username, "username")
-        XCTAssertEqual(loginManagerMock.password, "password")
+        XCTAssertEqual(sessionService.loginCount, 1)
+        XCTAssertEqual(sessionService.username, "username")
+        XCTAssertEqual(sessionService.password, "password")
     }
     
 }
