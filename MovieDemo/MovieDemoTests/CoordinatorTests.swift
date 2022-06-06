@@ -34,7 +34,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Loads_Login() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: true)
+        let coordinator = MainCoordinator(window: window, isLoginRequired: true, usesWebLogin: false)
         
         let sessionManager = SessionManager.shared
         sessionManager.store = UserStoreMock(isLoggedIn: false)
@@ -118,7 +118,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_UserLogin_IfNotLoggedIn() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
+        let coordinator = MainCoordinator(window: window, isLoginRequired: false, usesWebLogin: false)
         coordinator.start()
         
         let sessionManager = SessionManager.shared

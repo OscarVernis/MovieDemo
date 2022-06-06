@@ -20,7 +20,7 @@ final class MainCoordinator {
     //Set to true uses Web Auth, false uses username and password.
     private let usesWebLogin: Bool
     
-    init(window: UIWindow, isLoginRequired: Bool = false, usesWebLogin: Bool = false) {
+    init(window: UIWindow, isLoginRequired: Bool = false, usesWebLogin: Bool = true) {
         self.window = window
         self.isLoginRequired = isLoginRequired
         self.usesWebLogin = usesWebLogin

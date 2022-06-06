@@ -14,10 +14,13 @@ class LoginViewControllerTests: XCTestCase {
     var coordinator: MainCoordinator!
 
     override func setUpWithError() throws {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        coordinator = appDelegate?.appCoordinator
+        let appDelegate = try XCTUnwrap(UIApplication.shared.delegate as? AppDelegate)
         
-        coordinator?.showLogin(animated: false)
+        coordinator = MainCoordinator(window: appDelegate.window!, isLoginRequired: true, usesWebLogin: false)
+        appDelegate.appCoordinator = coordinator
+        coordinator.start()
+        
+        coordinator.showLogin(animated: false)
         let topVC = coordinator?.rootNavigationViewController?.visibleViewController
         let sut = topVC as? LoginViewController
 
