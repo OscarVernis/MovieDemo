@@ -160,6 +160,8 @@
 		55ABEB79283365AF009DCE7C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEB78283365AF009DCE7C /* LoginViewModel.swift */; };
 		55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC532028243CD300836A30 /* ViewModelsTests.swift */; };
 		55AC53232824422C00836A30 /* DataProvidersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC53222824422C00836A30 /* DataProvidersTests.swift */; };
+		55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */; };
+		55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */; };
 		55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5D7502515D8B700E1076D /* RatingsView.swift */; };
 		55B6CBB427E02248007DB4C2 /* MovieDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */; };
 		55B6CBBA27E024A6007DB4C2 /* MovieMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB827E024A6007DB4C2 /* MovieMO.swift */; };
@@ -393,6 +395,8 @@
 		55ABEB78283365AF009DCE7C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		55AC532028243CD300836A30 /* ViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsTests.swift; sourceTree = "<group>"; };
 		55AC53222824422C00836A30 /* DataProvidersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvidersTests.swift; sourceTree = "<group>"; };
+		55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
+		55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebLoginViewController.storyboard; sourceTree = "<group>"; };
 		55B5D7502515D8B700E1076D /* RatingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingsView.swift; sourceTree = "<group>"; };
 		55B6CBB327E02248007DB4C2 /* MovieDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieDemo.xcdatamodel; sourceTree = "<group>"; };
 		55B6CBB827E024A6007DB4C2 /* MovieMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieMO.swift; sourceTree = "<group>"; };
@@ -792,6 +796,8 @@
 		557FFA95251A6D5400D79F68 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */,
+				55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */,
 				557FFA96251A6D7100D79F68 /* LoginViewController.swift */,
 				55ABEB78283365AF009DCE7C /* LoginViewModel.swift */,
 				551A2924251F189B003746EE /* LoginViewController.storyboard */,
@@ -1199,6 +1205,7 @@
 				55915776251438450085DB69 /* BlurBackgroundView.xib in Resources */,
 				5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */,
 				5587114B25108079005A0975 /* MovieInfoListCell.xib in Resources */,
+				55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */,
 				551A2929251F18E9003746EE /* SectionTitleView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1355,7 +1362,7 @@
 				555713632834AB76006A20AB /* RemoteUserState.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
-				555498FD282228D000E89119 /* LocalUserStore.swift in Sources */,
+				555498FD282228D000E89119 /* KeychainSessionStore.swift in Sources */,
 				55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */,
 				559B08D3283D4EBF002DA8DF /* AnyPublisher+Async.swift in Sources */,
 				55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */,
@@ -1366,6 +1373,7 @@
 				5576FB692531415B00C91479 /* PersonViewModel.swift in Sources */,
 				558A63AF2512AD5E0064438D /* MovieViewModel.swift in Sources */,
 				550577A8284DAA7A007ED892 /* Localizable.swift in Sources */,
+				55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */,
 				55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */,
 				55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */,
 				55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */,
