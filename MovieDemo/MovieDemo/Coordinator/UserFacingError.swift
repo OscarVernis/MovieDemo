@@ -33,7 +33,6 @@ enum UserFacingError: LocalizedError {
             return .localized(.LogoutError)
 
         }
-        
     }
     
     var alertImage: UIImage? {

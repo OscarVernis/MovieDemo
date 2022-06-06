@@ -10,7 +10,7 @@ import UIKit
 import Loaf
 
 struct AlertManager {
-    static func showErrorAlert(_ title: String, color: UIColor? = nil, image: UIImage? = nil, sender: UIViewController) {
+    static func showErrorAlert(_ title: String, color: UIColor? = nil, image: UIImage? = nil, sender: UIViewController, completion: (() -> Void)? = nil) {
         var state = Loaf.State.error
         if let color = color {
             state = .custom(.init(backgroundColor: color,
@@ -23,7 +23,9 @@ struct AlertManager {
              state: state,
              location: .bottom,
              sender: sender)
-        .show(.short)
+        .show(.short) { _ in
+            completion?()
+        }
     }
     
     static func showRefreshErrorAlert(text: String = .localized(.RefreshError), sender: UIViewController, completion: (() -> Void)? = nil) {

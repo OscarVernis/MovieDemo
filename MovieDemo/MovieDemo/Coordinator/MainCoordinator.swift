@@ -22,13 +22,14 @@ final class MainCoordinator {
         self.isLoginRequired = isLoginRequired
     }
     
-    func handle(error: UserFacingError) {
+    func handle(error: UserFacingError, completion: (() -> Void)? = nil) {
         guard let sender = rootNavigationViewController else { return }
         
         AlertManager.showErrorAlert(error.localizedDescription,
                                     color: error.alertColor,
                                     image: error.alertImage,
-                                    sender: sender)
+                                    sender: sender,
+                                    completion: completion)
     }
     
     func start() {
@@ -88,8 +89,8 @@ final class MainCoordinator {
                 
                 self.rootNavigationViewController?.popToRootViewController(animated: true)
                 completion?()
-            case .failure(_):
-                AlertManager.showErrorAlert(.localized(.LogoutError), sender: self.rootNavigationViewController!)
+            case .failure(let error):
+                handle(error: error)
                 completion?()
             }
         }
