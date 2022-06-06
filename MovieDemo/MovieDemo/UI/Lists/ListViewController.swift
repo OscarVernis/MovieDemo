@@ -15,14 +15,17 @@ public class ListViewController: UIViewController, GenericCollection {
     
     var collectionView: UICollectionView!
     var dataSource: GenericCollectionDataSource!
+    
+    weak var coordinator: MainCoordinator?
 
     var didSelectedItem: ((Int) -> ())?
        
     var mainSection: FetchableSection
     var loadingSection = LoadingSection()
     
-    init(section: FetchableSection) {
+    init(section: FetchableSection, coordinator: MainCoordinator? = nil) {
         self.mainSection = section
+        self.coordinator = coordinator
                 
         super.init(nibName: nil, bundle: nil)
     }
@@ -57,7 +60,7 @@ public class ListViewController: UIViewController, GenericCollection {
             guard let self = self else { return }
             
             if error != nil {
-                AlertManager.showRefreshErrorAlert(sender: self)
+                self.coordinator?.handle(error: .refreshError)
             }
             
             self.loadingSection.isLoading = !self.mainSection.isLastPage

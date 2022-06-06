@@ -73,7 +73,7 @@ class UserProfileViewController: UIViewController, GenericCollection {
             }
             
             if error != nil {
-                AlertManager.showRefreshErrorAlert(sender: self) {
+                self.mainCoordinator?.handle(error: .refreshError) {
                     self.navigationController?.popViewController(animated: true)
                 }
             }

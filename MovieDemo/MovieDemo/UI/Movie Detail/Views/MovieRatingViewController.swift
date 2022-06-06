@@ -15,6 +15,8 @@ class MovieRatingViewController: UIViewController {
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    var coordinator: MainCoordinator? = nil
+    
     private var isLoading = false {
         didSet {
             updateUI()
@@ -95,7 +97,7 @@ class MovieRatingViewController: UIViewController {
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                AlertManager.showRatingAlert(text: .localized(.RatingError), sender: self)
+                self.coordinator?.handle(error: .ratingError)
             }
         }
         
@@ -116,8 +118,7 @@ class MovieRatingViewController: UIViewController {
                 self.presentingViewController?.dismiss(animated: true)
             } else {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                AlertManager.showRatingAlert(text: .localized(.DeleteRatingError), sender: self)
-                
+                self.coordinator?.handle(error: .deleteRatingError)
             }
         }
         

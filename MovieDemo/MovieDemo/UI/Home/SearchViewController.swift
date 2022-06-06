@@ -9,7 +9,6 @@
 import UIKit
 
 class SearchViewController: ListViewController {
-    weak var coordinator: MainCoordinator?
     var searchSection: SearchSection!
 
     override func viewDidLoad() {

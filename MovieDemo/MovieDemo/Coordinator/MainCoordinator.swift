@@ -123,7 +123,7 @@ final class MainCoordinator {
     
     func showMovieList<T: ArrayDataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: MovieInfoCellConfigurator())
-        let lvc = ListViewController(section: section)
+        let lvc = ListViewController(section: section, coordinator: self)
         lvc.title = title
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
@@ -147,7 +147,7 @@ final class MainCoordinator {
     
     func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>, animated: Bool = true) {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CrewCreditPhotoListCellConfigurator())
-        let lvc = ListViewController(section: section)
+        let lvc = ListViewController(section: section, coordinator: self)
         lvc.title = title
         
         lvc.didSelectedItem = { index in
@@ -164,7 +164,7 @@ final class MainCoordinator {
     
     func showCastCreditList(title: String, dataProvider: StaticArrayDataProvider<CastCreditViewModel>, animated: Bool = true) {
         let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CastCreditPhotoListCellConfigurator())
-        let lvc = ListViewController(section: section)
+        let lvc = ListViewController(section: section, coordinator: self)
         lvc.title = title
         
         lvc.didSelectedItem = { index in

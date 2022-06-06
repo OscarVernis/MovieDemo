@@ -55,26 +55,23 @@ extension SessionManager {
 
 //MARK: - Logout
 extension SessionManager {
-    func logout() async -> Result<Void, Error> {
+    func logout() async -> Result<Void, UserFacingError> {
         guard let sessionId = sessionId else { return .success(()) }
         var result: Result<Void, Error>?
-        
+                
         do {
             result = try await service.deleteSession(sessionId: sessionId)
         } catch {
-            return .failure(error)
+            return .failure(.logoutError)
         }
         
         switch result {
         case .success():
             store.delete()
             return .success(())
-        case .failure(let error):
-            return .failure(error)
-        case .none:
-            return .failure(MovieService.ServiceError.NoSuccess)
+        case .failure(_), .none:
+            return .failure(.logoutError)
         }
-        
     }
     
 }

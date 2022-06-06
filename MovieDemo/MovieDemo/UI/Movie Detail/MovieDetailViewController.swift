@@ -92,7 +92,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             guard let self = self else { return }
             
             if error != nil {
-                AlertManager.showRefreshErrorAlert(sender: self) {
+                self.mainCoordinator?.handle(error: .refreshError) {
                     self.navigationController?.popViewController(animated: true)
                 }
             }
@@ -205,7 +205,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 favoriteButton.setIsSelected(userState.favorite, animated: false)
-                AlertManager.showFavoriteAlert(text: .localized(.FavoriteError), sender: self)
+                self.mainCoordinator?.handle(error: .favoriteError)
             }
         }
     }
@@ -232,7 +232,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 watchlistButton.setIsSelected(userState.watchlist, animated: false)
-                AlertManager.showWatchlistAlert(text: .localized(.WatchListError), sender: self)
+                self.mainCoordinator?.handle(error: .watchlistError)
             }
         }
     }
@@ -244,6 +244,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         else { return }
         
         let mrvc = MovieRatingViewController.instantiateFromStoryboard()
+        mrvc.coordinator = self.mainCoordinator
         mrvc.userState = userState
         
         let transitionDelegate = SPStorkTransitioningDelegate()
