@@ -39,9 +39,9 @@ class LoginViewModel {
                 loggedIn = true
             case .failure(let error):
                 if error as? SessionManager.LoginError == SessionManager.LoginError.IncorrectCredentials {
-                    errorString = .localized(.LoginCredentialsError)
+                    errorString = .localized(ErrorString.LoginCredentialsError)
                 } else {
-                    errorString = .localized(.LoginError)
+                    errorString = .localized(ErrorString.LoginError)
                 }
             }
         }

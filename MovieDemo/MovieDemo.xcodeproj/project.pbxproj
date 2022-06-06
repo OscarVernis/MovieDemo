@@ -191,6 +191,8 @@
 		55EE51A7251EC5DE00915AB3 /* ColorAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE51A6251EC5DE00915AB3 /* ColorAsset.swift */; };
 		55EE51AB251ECF5800915AB3 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE51AA251ECF5800915AB3 /* RoundImageView.swift */; };
 		55EE573A284D826400C6A170 /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE5739284D826400C6A170 /* UserFacingError.swift */; };
+		55EE573D284D948400C6A170 /* ErrorString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE573C284D948400C6A170 /* ErrorString.swift */; };
+		55EE573F284D949D00C6A170 /* GenreString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EE573E284D949D00C6A170 /* GenreString.swift */; };
 		55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */; };
 		55EECCE525119A1A0041EAE7 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */; };
 		55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */; };
@@ -401,6 +403,8 @@
 		55EE51A6251EC5DE00915AB3 /* ColorAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAsset.swift; sourceTree = "<group>"; };
 		55EE51AA251ECF5800915AB3 /* RoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
 		55EE5739284D826400C6A170 /* UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
+		55EE573C284D948400C6A170 /* ErrorString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorString.swift; sourceTree = "<group>"; };
+		55EE573E284D949D00C6A170 /* GenreString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreString.swift; sourceTree = "<group>"; };
 		55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboard.swift"; sourceTree = "<group>"; };
 		55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
@@ -844,6 +848,7 @@
 		55A6A9902511A70E00305C29 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				55EE573B284D947500C6A170 /* Localizable */,
 				55EDA7142811185C0055696F /* Assets */,
 				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
 			);
@@ -952,11 +957,20 @@
 		55EDA7142811185C0055696F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				55EDA712281109030055696F /* LocalizedString.swift */,
 				55EE51A6251EC5DE00915AB3 /* ColorAsset.swift */,
 				55EDA71528111CC80055696F /* ImageAsset.swift */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		55EE573B284D947500C6A170 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				55EDA712281109030055696F /* LocalizedString.swift */,
+				55EE573C284D948400C6A170 /* ErrorString.swift */,
+				55EE573E284D949D00C6A170 /* GenreString.swift */,
+			);
+			path = Localizable;
 			sourceTree = "<group>";
 		};
 		55EECCD825117C3B0041EAE7 /* Data Providers */ = {
@@ -1190,6 +1204,7 @@
 				55549901282232BF00E89119 /* SessionService.swift in Sources */,
 				553190072834082F0035036F /* SearchViewController.swift in Sources */,
 				555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */,
+				55EE573D284D948400C6A170 /* ErrorString.swift in Sources */,
 				55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */,
 				5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */,
 				555A144D2523D97B0024AFAA /* ConfigurableSection.swift in Sources */,
@@ -1257,6 +1272,7 @@
 				555A144B2523D97B0024AFAA /* HomeViewController.swift in Sources */,
 				5570356E251ED37A0083089C /* MovieVideo.swift in Sources */,
 				55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */,
+				55EE573F284D949D00C6A170 /* GenreString.swift in Sources */,
 				55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */,
 				5535CE6B251406E700260617 /* CellConfigurator.swift in Sources */,
 				55EDA713281109030055696F /* LocalizedString.swift in Sources */,

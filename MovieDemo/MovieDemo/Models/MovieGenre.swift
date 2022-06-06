@@ -32,43 +32,43 @@ enum MovieGenre: Int, Codable {
     func string() -> String {
         switch self {
         case .Action:
-            return .localized(.Action)
+            return .localized(GenreString.Action)
         case .Adventure:
-            return .localized(.Adventure)
+            return .localized(GenreString.Adventure)
         case .Animation:
-            return .localized(.Animation)
+            return .localized(GenreString.Animation)
         case .Comedy:
-            return .localized(.Comedy)
+            return .localized(GenreString.Comedy)
         case .Crime:
-            return .localized(.Crime)
+            return .localized(GenreString.Crime)
         case .Documentary:
-            return .localized(.Documentary)
+            return .localized(GenreString.Documentary)
         case .Drama:
-            return .localized(.Drama)
+            return .localized(GenreString.Drama)
         case .Family:
-            return .localized(.Family)
+            return .localized(GenreString.Family)
         case .Fantasy:
-            return .localized(.Fantasy)
+            return .localized(GenreString.Fantasy)
         case .History:
-            return .localized(.History)
+            return .localized(GenreString.History)
         case .Horror:
-            return .localized(.Horror)
+            return .localized(GenreString.Horror)
         case .Music:
-            return .localized(.Music)
+            return .localized(GenreString.Music)
         case .Mystery:
-            return .localized(.Mystery)
+            return .localized(GenreString.Mystery)
         case .Romance:
-            return .localized(.Romance)
+            return .localized(GenreString.Romance)
         case .ScienceFiction:
-            return .localized(.ScienceFiction)
+            return .localized(GenreString.ScienceFiction)
         case .TVMovie:
-            return .localized(.TVMovie)
+            return .localized(GenreString.TVMovie)
         case .Thriller:
-            return .localized(.Thriller)
+            return .localized(GenreString.Thriller)
         case .War:
-            return .localized(.War)
+            return .localized(GenreString.War)
         case .Western:
-            return .localized(.Western)
+            return .localized(GenreString.Western)
         }
     }
     

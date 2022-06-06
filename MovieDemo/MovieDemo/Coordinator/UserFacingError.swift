@@ -20,17 +20,17 @@ enum UserFacingError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .refreshError:
-            return .localized(.RefreshError)
+            return .localized(ErrorString.RefreshError)
         case .favoriteError:
-            return .localized(.FavoriteError)
+            return .localized(ErrorString.FavoriteError)
         case .watchlistError:
-            return .localized(.WatchListError)
+            return .localized(ErrorString.WatchListError)
         case .ratingError:
-            return .localized(.RatingError)
+            return .localized(ErrorString.RatingError)
         case .deleteRatingError:
-            return .localized(.DeleteRatingError)
+            return .localized(ErrorString.DeleteRatingError)
         case .logoutError:
-            return .localized(.LogoutError)
+            return .localized(ErrorString.LogoutError)
 
         }
     }
