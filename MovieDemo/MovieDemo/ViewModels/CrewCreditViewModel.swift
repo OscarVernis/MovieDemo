@@ -82,21 +82,21 @@ extension CrewCreditViewModel {
         var creditTitle: String {
             switch self {
             case .Director:
-                return .localized(.Director)
+                return .localized(CreditString.Director)
             case .Writer:
-                return .localized(.Writer)
+                return .localized(CreditString.Writer)
             case .Story:
-                return .localized(.Story)
+                return .localized(CreditString.Story)
             case .Screenplay:
-                return .localized(.Screenplay)
+                return .localized(CreditString.Screenplay)
             case .DOP:
-                return .localized(.Cinematography)
+                return .localized(CreditString.Cinematography)
             case .Composer:
-                return .localized(.Music)
+                return .localized(CreditString.Music)
             case .Editor:
-                return .localized(.Editor)
+                return .localized(CreditString.Editor)
             case .Characters:
-                return .localized(.Characters)
+                return .localized(CreditString.Characters)
             }
         }
     }

@@ -17,11 +17,11 @@ class UserProfileMovieListSection: ConfigurableSection {
         var title: String {
             switch self {
             case .Favorites:
-                return .localized(.Favorites)
+                return .localized(UserString.Favorites)
             case .Watchlist:
-                return .localized(.Watchlist)
+                return .localized(UserString.Watchlist)
             case .Rated:
-                return .localized(.Rated)
+                return .localized(UserString.Rated)
             }
         }
         
@@ -125,17 +125,17 @@ extension UserProfileMovieListSection {
            let imageAttachment = NSTextAttachment()
            imageAttachment.image = .asset(.heart).withTintColor(.asset(.FavoriteColor))
 
-           let fullString = NSMutableAttributedString(string: .localized(.EmptyUserFavorites))
+           let fullString = NSMutableAttributedString(string: .localized(UserString.EmptyUserFavorites))
            fullString.append(NSAttributedString(attachment: imageAttachment))
-           fullString.append(NSAttributedString(string: .localized(.WillAppearMessage)))
+           fullString.append(NSAttributedString(string: .localized(UserString.WillAppearMessage)))
            messageString = fullString
        case .Watchlist:
            let imageAttachment = NSTextAttachment()
            imageAttachment.image = .asset(.bookmark).withTintColor(.asset(.WatchlistColor))
            
-           let fullString = NSMutableAttributedString(string: .localized(.EmptyUserWatchlist))
+           let fullString = NSMutableAttributedString(string: .localized(UserString.EmptyUserWatchlist))
            fullString.append(NSAttributedString(attachment: imageAttachment))
-           fullString.append(NSAttributedString(string: .localized(.WillAppearMessage)))
+           fullString.append(NSAttributedString(string: .localized(UserString.WillAppearMessage)))
 
            messageString = fullString
            break
@@ -143,9 +143,9 @@ extension UserProfileMovieListSection {
            let imageAttachment = NSTextAttachment()
            imageAttachment.image = .asset(.star).withTintColor(.asset(.RatingColor))
 
-           let fullString = NSMutableAttributedString(string: .localized(.EmptyUserRated))
+           let fullString = NSMutableAttributedString(string: .localized(UserString.EmptyUserRated))
            fullString.append(NSAttributedString(attachment: imageAttachment))
-           fullString.append(NSAttributedString(string: .localized(.WillAppearMessage)))
+           fullString.append(NSAttributedString(string: .localized(UserString.WillAppearMessage)))
            messageString = fullString
            break
        }

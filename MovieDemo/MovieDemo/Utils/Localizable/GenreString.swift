@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GenreString: String, Localizable {
+enum GenreString: String, Localizable, CaseIterable {
     case Action
     case Adventure
     case Animation

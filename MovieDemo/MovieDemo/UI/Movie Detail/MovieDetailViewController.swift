@@ -142,7 +142,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         }
         
         if !movie.recommendedMovies.isEmpty {
-            sections.append(MoviesSection(title: .localized(.RecommendedMovies), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies))
+            sections.append(MoviesSection(title: .localized(MovieString.RecommendedMovies), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies))
         }
         
         if !movie.infoArray.isEmpty {
@@ -165,16 +165,16 @@ class MovieDetailViewController: UIViewController, GenericCollection {
     }
     
     fileprivate lazy var showCast:(() -> Void) = { [unowned self] in
-        mainCoordinator?.showCastCreditList(title: .localized(.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
+        mainCoordinator?.showCastCreditList(title: .localized(MovieString.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
     }
     
     fileprivate lazy var showCrew: (() -> Void) = { [unowned self] in
-        mainCoordinator?.showCrewCreditList(title: .localized(.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
+        mainCoordinator?.showCrewCreditList(title: .localized(MovieString.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
     }
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
         let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
-        mainCoordinator?.showMovieList(title: .localized(.RecommendedMovies), dataProvider: provider)
+        mainCoordinator?.showMovieList(title: .localized(MovieString.RecommendedMovies), dataProvider: provider)
     }
     
     @objc fileprivate func playYoutubeTrailer() {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ErrorString: String, Localizable {
+enum ErrorString: String, Localizable, CaseIterable {
     case LoginCredentialsError
     case NetworkConnectionError
     case FavoriteError

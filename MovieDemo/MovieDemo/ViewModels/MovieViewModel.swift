@@ -105,7 +105,7 @@ extension MovieViewModel {
     }
     
     var ratingString: String {
-        return isRatingAvailable ? "\(percentRating)" : .localized(.NR)
+        return isRatingAvailable ? "\(percentRating)" : .localized(MovieString.NR)
     }
     
     var percentRating: UInt {
@@ -253,31 +253,31 @@ extension MovieViewModel {
     private func updateInfoArray() {
         var info = [[String : String]]()
         if let originalTitle = originalTitle, originalTitle != title {
-            info.append([.localized(.OriginalTitle): originalTitle])
+            info.append([.localized(MovieString.OriginalTitle): originalTitle])
         }
         
         if let releaseDate = releaseDate {
-            info.append([.localized(.ReleaseDate): releaseDate])
+            info.append([.localized(MovieString.ReleaseDate): releaseDate])
         }
         
         if let status = status {
-            info.append([.localized(.Status): status])
+            info.append([.localized(MovieString.Status): status])
         }
         
         if let coutries = productionCountries {
-            info.append([.localized(.Country): coutries])
+            info.append([.localized(MovieString.Country): coutries])
         }
         
         if let originalLanguage = originalLanguage {
-            info.append([.localized(.OriginalLanguage): originalLanguage])
+            info.append([.localized(MovieString.OriginalLanguage): originalLanguage])
         }
 
         if let budget = budget {
-            info.append([.localized(.Budget): budget])
+            info.append([.localized(MovieString.Budget): budget])
         }
         
         if let revenue = revenue {
-            info.append([.localized(.Revenue): revenue])
+            info.append([.localized(MovieString.Revenue): revenue])
         }
         
         infoArray = info

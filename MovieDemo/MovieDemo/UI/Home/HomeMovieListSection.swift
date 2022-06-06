@@ -18,13 +18,13 @@ class HomeMovieListSection: FetchableSection {
         func title() -> String {
             switch self {
             case .NowPlaying:
-                return .localized(.NowPlaying)
+                return .localized(HomeString.NowPlaying)
             case .Popular:
-                return .localized(.Popular)
+                return .localized(HomeString.Popular)
             case .TopRated:
-                return .localized(.TopRated)
+                return .localized(HomeString.TopRated)
             case .Upcoming:
-                return .localized(.Upcoming)
+                return .localized(HomeString.Upcoming)
             }
         }
     }

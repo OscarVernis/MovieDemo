@@ -60,7 +60,7 @@ extension MovieUserStatesViewModel {
     }
     
     var userRatingString: String {
-        return rated ? "\(percentUserRating)" : .localized(.NR)
+        return rated ? "\(percentUserRating)" : .localized(MovieString.NR)
     }
     
     func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
