@@ -15,6 +15,7 @@ enum UserFacingError: LocalizedError {
     case watchlistError
     case ratingError
     case deleteRatingError
+    case loginError
     case logoutError
     
     var errorDescription: String? {
@@ -29,6 +30,8 @@ enum UserFacingError: LocalizedError {
             return .localized(ErrorString.RatingError)
         case .deleteRatingError:
             return .localized(ErrorString.DeleteRatingError)
+        case .loginError:
+            return .localized(ErrorString.LoginError)
         case .logoutError:
             return .localized(ErrorString.LogoutError)
 
@@ -43,7 +46,7 @@ enum UserFacingError: LocalizedError {
             return .asset(.bookmark)
         case .ratingError, .deleteRatingError:
             return .asset(.star)
-        case .refreshError, .logoutError:
+        case .refreshError, .loginError,.logoutError:
             return nil
         }
     }
@@ -56,7 +59,7 @@ enum UserFacingError: LocalizedError {
             return .asset(.WatchlistColor)
         case .ratingError, .deleteRatingError:
             return .asset(.RatingColor)
-        case .refreshError, .logoutError:
+        case .refreshError, .loginError,.logoutError:
             return nil
         }
     }

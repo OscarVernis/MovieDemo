@@ -17,7 +17,7 @@ struct AlertManager {
              state: state,
              location: .bottom,
              sender: sender)
-        .show(.short) { _ in
+        .show(.average) { _ in
             completion?()
         }
     }

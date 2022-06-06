@@ -26,7 +26,7 @@ final class MainCoordinator {
     }
     
     func handle(error: UserFacingError, completion: (() -> Void)? = nil) {
-        guard let sender = rootNavigationViewController else { return }
+        guard let sender = rootNavigationViewController?.visibleViewController else { return }
         
         AlertManager.showErrorAlert(error.localizedDescription,
                                     color: error.alertColor,
@@ -87,6 +87,7 @@ final class MainCoordinator {
     
     func showWebLogin(animated: Bool = true) {
         let lvc = WebLoginViewController.instantiateFromStoryboard()
+        lvc.coordinator = self
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
             lvc.modalPresentationStyle = .overFullScreen

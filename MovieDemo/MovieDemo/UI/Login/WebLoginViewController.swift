@@ -12,6 +12,7 @@ import AuthenticationServices
 class WebLoginViewController: UIViewController {
     let service = RemoteSessionService()
     let sessionManager = SessionManager.shared
+    var coordinator: MainCoordinator? = nil
     
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
@@ -21,35 +22,40 @@ class WebLoginViewController: UIViewController {
     }
     
     @IBAction func login(_ sender: Any) {
-        Task { await showWebLogin() }
+        Task { await startWebLogin() }
     }
     
-    func showWebLogin() async {
-        let token = try? await service.requestToken()
-        
-        guard let token = token else { return }
-        
+    func startWebLogin() async {
+        var token: String = ""
+        do {
+            token = try await service.requestToken()
+        } catch {
+            coordinator?.handle(error: .loginError)
+            return
+        }
+                
         let urlString = "https://www.themoviedb.org/authenticate/\(token)?redirect_to=moviedemoauth://"
-        guard let authURL = URL(string: urlString) else { return }
+        let authURL = URL(string: urlString)!
         let scheme = "moviedemoauth"
 
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: scheme) { callbackURL, error in
             guard error == nil, let callbackURL = callbackURL else { return }
             
-            print(callbackURL)
-
             let queryItems = URLComponents(string: callbackURL.absoluteString)?.queryItems
-            let denied = queryItems?.filter({ $0.name == "denied" }).first?.value
             let approved = queryItems?.filter({ $0.name == "approved" }).first?.value
-
-            if approved == "true" {
-                print("Approved")
+            
+            if approved != "true"{
+                self.coordinator?.handle(error: .loginError)
+                return
             }
             
             Task {
                 let sessionId = try? await self.service.createSession(requestToken: token)
-                guard let sessionId = sessionId else { return }
-                print(sessionId)
+                guard let sessionId = sessionId else {
+                    self.coordinator?.handle(error: .loginError)
+                    return
+                }
+                
                 self.sessionManager.save(sessionId: sessionId)
                 self.didFinishLoginProcess?()
             }
