@@ -1,5 +1,5 @@
 //
-//  UserStore.swift
+//  SessionStore.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/05/22.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol UserStore {
+protocol SessionStore {
     var sessionId: String? { get }
 
     func save(sessionId: String)

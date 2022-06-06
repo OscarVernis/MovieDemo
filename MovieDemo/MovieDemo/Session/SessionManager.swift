@@ -17,7 +17,7 @@ class SessionManager {
     
     static let shared = SessionManager()
     var service: SessionService = RemoteSessionService()
-    var store: UserStore = LocalUserStore()
+    var store: SessionStore = KeychainSessionStore()
     
     var isLoggedIn: Bool { sessionId != nil }
 
@@ -48,7 +48,7 @@ extension SessionManager {
             }
         }
         
-        store.save(sessionId: sessionId)
+        save(sessionId: sessionId)
         
         return .success(())
     }

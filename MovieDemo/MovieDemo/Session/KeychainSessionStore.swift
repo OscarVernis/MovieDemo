@@ -1,5 +1,5 @@
 //
-//  LocalUserManager.swift
+//  KeychainSessionStore.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/05/22.
@@ -9,7 +9,7 @@
 import Foundation
 import KeychainAccess
 
-class LocalUserStore: UserStore {
+class KeychainSessionStore: SessionStore {
     let keychainKey = "oscarvernis.MovieDemo"
     let sessionKey = "session-id"
     

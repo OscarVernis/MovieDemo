@@ -9,7 +9,7 @@
 import Foundation
 @testable import MovieDemo
 
-class UserStoreMock: UserStore {
+class UserStoreMock: SessionStore {
     var sessionId: String?
     
     init(sessionId: String? = nil, isLoggedIn: Bool = false) {
