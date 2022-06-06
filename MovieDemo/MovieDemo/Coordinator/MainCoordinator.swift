@@ -22,6 +22,15 @@ final class MainCoordinator {
         self.isLoginRequired = isLoginRequired
     }
     
+    func handle(error: UserFacingError) {
+        guard let sender = rootNavigationViewController else { return }
+        
+        AlertManager.showErrorAlert(error.localizedDescription,
+                                    color: error.alertColor,
+                                    image: error.alertImage,
+                                    sender: sender)
+    }
+    
     func start() {
         rootNavigationViewController = UINavigationController()
         rootNavigationViewController?.navigationBar.prefersLargeTitles = true
