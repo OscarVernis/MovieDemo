@@ -10,8 +10,7 @@ import Foundation
 
 protocol UserStore {
     var sessionId: String? { get }
-    var username: String? { get }
 
-    func save(username: String, sessionId: String)
+    func save(sessionId: String)
     func delete()
 }

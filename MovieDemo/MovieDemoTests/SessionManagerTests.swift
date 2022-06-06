@@ -22,7 +22,6 @@ class SessionManagerTests: XCTestCase {
             XCTFail()
         default:
             XCTAssertEqual(sessionManager.isLoggedIn, true)
-            XCTAssertEqual(sessionManager.username, "username")
             XCTAssertEqual(sessionManager.sessionId, "sessionId")
             break
         }
@@ -63,7 +62,7 @@ class SessionManagerTests: XCTestCase {
     
     func test_logout_success() async throws {
         let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(sessionId: "sessionid", username: "username")
+        sessionManager.store = UserStoreMock(sessionId: "sessionid")
         sessionManager.service = SessionServiceMock()
         
         let result = await sessionManager.logout()
@@ -72,7 +71,6 @@ class SessionManagerTests: XCTestCase {
             XCTFail()
         default:
             XCTAssertEqual(sessionManager.isLoggedIn, false)
-            XCTAssertNil(sessionManager.username)
             XCTAssertNil(sessionManager.sessionId)
         }
         
@@ -80,14 +78,13 @@ class SessionManagerTests: XCTestCase {
     
     func test_logout_fails() async throws {
         let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(sessionId: "sessionid", username: "username")
+        sessionManager.store = UserStoreMock(sessionId: "sessionid")
         sessionManager.service = SessionServiceMock(fails: true)
         
         let result = await sessionManager.logout()
         switch result {
         case .failure(_):
             XCTAssertEqual(sessionManager.isLoggedIn, true)
-            XCTAssertNotNil(sessionManager.username)
             XCTAssertNotNil(sessionManager.sessionId)
             break
         default:

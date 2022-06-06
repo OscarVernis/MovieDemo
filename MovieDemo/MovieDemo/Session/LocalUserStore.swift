@@ -10,51 +10,33 @@ import Foundation
 import KeychainAccess
 
 class LocalUserStore: UserStore {
-    fileprivate enum LocalKeys: String {
-        case username
-    }
-    
     let keychainKey = "oscarvernis.MovieDemo"
+    let sessionKey = "session-id"
     
     var sessionId: String?
-    var username: String?
     
     init() {
         load()
     }
     
     fileprivate func load() {
-        let user =  UserDefaults.standard.value(forKey: LocalKeys.username.rawValue) as? String
-        
         let keychain = Keychain(service: keychainKey)
-        self.sessionId = keychain[user ?? ""]
-        
-        if sessionId != nil {
-            username = user
-        }
+        self.sessionId = keychain[sessionKey]
     }
     
-    func save(username: String, sessionId: String) {
-        self.username = username
+    func save(sessionId: String) {
         self.sessionId = sessionId
-        
-        //Save state to user defaults
-        UserDefaults.standard.setValue(username, forKey: LocalKeys.username.rawValue)
         
         //Save sessionId to keychain
         let keychain = Keychain(service: keychainKey)
-        keychain[username] = sessionId
+        keychain[sessionKey] = sessionId
     }
     
     func delete() {
-        //Delete state from user defaults
-        UserDefaults.standard.setValue(nil, forKey: LocalKeys.username.rawValue)
-        
         //Delete sessionId from keychain
         let keychain = Keychain(service: keychainKey)
-        keychain[username!] = nil
+        keychain[sessionKey] = nil
         
-        self.username = nil
         self.sessionId = nil
     }
     

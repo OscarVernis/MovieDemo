@@ -20,9 +20,7 @@ class SessionManager {
     var store: UserStore = LocalUserStore()
     
     var isLoggedIn: Bool { sessionId != nil }
-    var username: String? {
-        return store.username
-    }
+
     var sessionId: String? {
         return store.sessionId
     }
@@ -31,6 +29,10 @@ class SessionManager {
 
 //MARK: - Login
 extension SessionManager {
+    func save(sessionId: String) {
+        store.save(sessionId: sessionId)
+    }
+    
     func login(withUsername username: String, password: String) async -> Result<Void, Error> {
         var sessionId = ""
         
@@ -46,7 +48,7 @@ extension SessionManager {
             }
         }
         
-        store.save(username: username, sessionId: sessionId)
+        store.save(sessionId: sessionId)
         
         return .success(())
     }
