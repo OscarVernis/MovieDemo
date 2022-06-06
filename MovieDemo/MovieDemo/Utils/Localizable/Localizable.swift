@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 protocol Localizable {
     var localized: String { get }
 }
