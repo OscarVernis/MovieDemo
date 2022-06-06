@@ -18,11 +18,12 @@ final class MainCoordinator {
     private let isLoginRequired: Bool
     
     //Set to true uses Web Auth, false uses username and password.
-    private let usesWebLogin: Bool = true
+    private let usesWebLogin: Bool
     
-    init(window: UIWindow, isLoginRequired: Bool = false) {
+    init(window: UIWindow, isLoginRequired: Bool = false, usesWebLogin: Bool = false) {
         self.window = window
         self.isLoginRequired = isLoginRequired
+        self.usesWebLogin = usesWebLogin
     }
     
     func handle(error: UserFacingError, completion: (() -> Void)? = nil) {

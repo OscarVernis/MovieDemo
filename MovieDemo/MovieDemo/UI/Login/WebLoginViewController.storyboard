@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,30 +18,87 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m0b-p6-WnI">
-                                <rect key="frame" x="20" y="424" width="374" height="48"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4NP-wV-fgu">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CQj-vg-gi2">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="8Va-xF-cdl">
+                                            <rect key="frame" x="0.0" y="281" width="414" height="254"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginIcon" translatesAutoresizingMaskIntoConstraints="NO" id="9Ud-K0-7Qn">
+                                                    <rect key="frame" x="119" y="0.0" width="176" height="150"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="9Ud-K0-7Qn" secondAttribute="height" multiplier="213:182" id="WCr-s4-ccZ"/>
+                                                        <constraint firstAttribute="height" constant="150" id="htq-3f-CeF"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfZ-WG-ClO">
+                                                    <rect key="frame" x="40" y="210" width="334" height="44"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="gLN-D0-O3u"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="18"/>
+                                                    <state key="normal" title="Login" backgroundImage="LoginButtonBg">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <state key="disabled">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="login:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="H5X-cy-RFP"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AfZ-WG-ClO" firstAttribute="leading" secondItem="8Va-xF-cdl" secondAttribute="leading" constant="40" id="8fI-SM-gan"/>
+                                                <constraint firstAttribute="trailing" secondItem="AfZ-WG-ClO" secondAttribute="trailing" constant="40" id="n9y-dT-me4"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <gestureRecognizers/>
+                                    <constraints>
+                                        <constraint firstItem="8Va-xF-cdl" firstAttribute="centerY" secondItem="CQj-vg-gi2" secondAttribute="centerY" constant="-40" id="IwC-6s-a18"/>
+                                        <constraint firstAttribute="trailing" secondItem="8Va-xF-cdl" secondAttribute="trailing" id="P6z-Y3-PqP"/>
+                                        <constraint firstItem="8Va-xF-cdl" firstAttribute="leading" secondItem="CQj-vg-gi2" secondAttribute="leading" id="T0p-nm-P4b"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="systemMaterial"/>
+                            </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra7-sp-sAS">
+                                <rect key="frame" x="366" y="52" width="40" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="3Tl-CL-WdX"/>
+                                    <constraint firstAttribute="width" constant="40" id="49z-Hy-cPG"/>
+                                    <constraint firstAttribute="height" constant="40" id="JW8-ee-jEC"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Login">
-                                    <fontDescription key="titleFontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                    <color key="baseForegroundColor" name="AppTintColor"/>
-                                    <color key="baseBackgroundColor" name="AppTintColor"/>
-                                </buttonConfiguration>
+                                <color key="tintColor" systemColor="placeholderTextColor"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="xmark.circle.fill" catalog="system" symbolScale="large" renderingMode="template"/>
+                                </state>
                                 <connections>
-                                    <action selector="login:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="lO2-gL-awG"/>
+                                    <action selector="closeTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="u3t-Qn-Vjx"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="m0b-p6-WnI" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="6fB-jK-QmS"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="m0b-p6-WnI" secondAttribute="trailing" constant="20" id="IO0-4L-o6k"/>
-                            <constraint firstItem="m0b-p6-WnI" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="d4h-NX-Vzv"/>
+                            <constraint firstItem="ra7-sp-sAS" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="8" id="De2-5G-ucj"/>
+                            <constraint firstItem="4NP-wV-fgu" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="Of1-WE-Oqn"/>
+                            <constraint firstItem="4NP-wV-fgu" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="RIt-gm-PBM"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ra7-sp-sAS" secondAttribute="trailing" constant="8" id="S8Y-cl-hJl"/>
+                            <constraint firstAttribute="bottom" secondItem="4NP-wV-fgu" secondAttribute="bottom" id="UfC-of-eWy"/>
+                            <constraint firstItem="4NP-wV-fgu" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ljR-u3-mRc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="closeButton" destination="ra7-sp-sAS" id="iCS-Te-tr1"/>
+                        <outlet property="loginButton" destination="AfZ-WG-ClO" id="rnQ-7g-38X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -48,11 +106,14 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="AppTintColor">
-            <color red="0.68599998950958252" green="0.32199999690055847" blue="0.87100005149841309" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <image name="LoginButtonBg" width="110" height="60"/>
+        <image name="LoginIcon" width="206" height="164"/>
+        <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

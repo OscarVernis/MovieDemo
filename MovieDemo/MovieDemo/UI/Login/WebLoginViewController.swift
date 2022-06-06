@@ -14,11 +14,22 @@ class WebLoginViewController: UIViewController {
     let sessionManager = SessionManager.shared
     var coordinator: MainCoordinator? = nil
     
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    fileprivate func setup() {
+        closeButton.isHidden = !showsCloseButton
+        
+        loginButton.layer.masksToBounds = true
+        loginButton.layer.cornerRadius = 8
     }
     
     @IBAction func login(_ sender: Any) {
@@ -63,6 +74,10 @@ class WebLoginViewController: UIViewController {
         
         session.presentationContextProvider = self
         session.start()
+    }
+    
+    @IBAction func closeTapped(_ sender: Any) {
+        presentingViewController?.dismiss(animated: true)
     }
 
 }
