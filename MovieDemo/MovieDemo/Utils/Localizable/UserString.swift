@@ -17,5 +17,5 @@ enum UserString: String, Localizable, CaseIterable {
     case EmptyUserFavorites
     case EmptyUserRated
 
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "User" }
 }

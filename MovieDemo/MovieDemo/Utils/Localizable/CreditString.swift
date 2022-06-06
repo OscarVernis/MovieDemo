@@ -18,5 +18,5 @@ enum CreditString: String, Localizable, CaseIterable {
     case Editor
     case Characters
     
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Credit" }
 }

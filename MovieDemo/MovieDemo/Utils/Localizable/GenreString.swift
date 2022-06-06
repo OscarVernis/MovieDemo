@@ -29,5 +29,5 @@ enum GenreString: String, Localizable, CaseIterable {
     case War
     case Western
     
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Genre" }
 }

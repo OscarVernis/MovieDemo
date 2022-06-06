@@ -10,6 +10,11 @@ import Foundation
 
 protocol Localizable {
     var localized: String { get }
+    var tableName: String { get }
+}
+
+extension Localizable where Self: RawRepresentable, Self.RawValue == String {    
+    var localized: String { NSLocalizedString(rawValue, tableName: tableName, comment: "") }
 }
 
 extension String {
@@ -18,3 +23,4 @@ extension String {
     }
     
 }
+

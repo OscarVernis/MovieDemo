@@ -15,5 +15,5 @@ enum HomeString: String, Localizable, CaseIterable {
     case TopRated
     case Upcoming
 
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Home" }
 }

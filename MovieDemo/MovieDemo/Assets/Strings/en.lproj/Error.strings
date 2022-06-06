@@ -1,0 +1,25 @@
+/* 
+  Error.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"LoginCredentialsError" = "Invalid username and/or password.";
+
+"NetworkConnectionError" = "Check your network connection.";
+
+"FavoriteError" = "Couldn't set favorite! Please try again.";
+
+"WatchListError" = "Couldn't add to watchlist! Please try again.";
+
+"RefreshError" = "Couldn't refresh content.";
+
+"RatingError" = "Couldn't set rating! Please try again.";
+
+"DeleteRatingError" = "Couldn't delete rating! Please try again.";
+
+"LoginError" = "Login error. Please try again.";
+
+"LogoutError" = "Logout error. Please try again.";

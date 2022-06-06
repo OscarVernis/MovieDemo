@@ -1,0 +1,25 @@
+/* 
+  User.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"Favorites" = "Favorites";
+
+"Watchlist" = "Watchlist";
+
+"Rated" = "Rated";
+
+"EmptyUserWatchlist" = "Movies you add to your Watchlist ";
+
+"EmptyUserRated" = "Movies you rate ";
+
+"WillAppearMessage" = " will appear here.";
+
+"EmptyUserWatchlist" = "Movies you add to your Watchlist ";
+
+"EmptyUserFavorites" = "Movies you mark as Favorite ";
+
+"EmptyUserRated" = "Movies you rate ";

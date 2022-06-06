@@ -23,5 +23,5 @@ enum MovieString: String, Localizable, CaseIterable {
     case Info
     case RecommendedMovies
 
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Movie" }
 }

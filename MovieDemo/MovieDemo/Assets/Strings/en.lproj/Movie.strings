@@ -1,0 +1,33 @@
+/* 
+  Movie.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"Cast" = "Cast";
+
+"Crew" = "Crew";
+
+"NR" = "NR";
+
+"OriginalLanguage" = "Original Language";
+
+"OriginalTitle" = "Original Title";
+
+"ReleaseDate" = "Release Date";
+
+"Revenue" = "Revenue";
+
+"Status" = "Status";
+
+"Country" = "Country";
+
+"Budget" = "Budget";
+
+"Videos" = "Videos";
+
+"Info" = "Info";
+
+"RecommendedMovies" = "Recommended Movies";

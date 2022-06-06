@@ -1,0 +1,45 @@
+/* 
+  Genre.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"Action" = "Action";
+
+"Adventure" = "Adventure";
+
+"Animation" = "Animation";
+
+"Crime" = "Crime";
+
+"Comedy" = "Comedy";
+
+"Drama" = "Drama";
+
+"Documentary" = "Documentary";
+
+"Family" = "Family";
+
+"Fantasy" = "Fantasy";
+
+"History" = "History";
+
+"Horror" = "Horror";
+
+"Music" = "Music";
+
+"Mystery" = "Mystery";
+
+"Romance" = "Romance";
+
+"ScienceFiction" = "Science Fiction";
+
+"Thriller" = "Thriller";
+
+"TVMovie" = "TV Movie";
+
+"War" = "War";
+
+"Western" = "Western";

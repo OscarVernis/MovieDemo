@@ -1,0 +1,17 @@
+/* 
+  Home.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"Movies" = "Películas";
+
+"NowPlaying" = "En Cartelera";
+
+"Popular" = "Popular";
+
+"TopRated" = "Mejor Calificadas";
+
+"Upcoming" = "Próximas Películas";

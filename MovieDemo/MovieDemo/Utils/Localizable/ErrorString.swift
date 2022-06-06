@@ -19,5 +19,5 @@ enum ErrorString: String, Localizable, CaseIterable {
     case LoginError
     case LogoutError
     
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Error" }
 }

@@ -11,5 +11,5 @@ import Foundation
 enum ServiceString: String, Localizable, CaseIterable {
     case ServiceLocale
     
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Service" }
 }

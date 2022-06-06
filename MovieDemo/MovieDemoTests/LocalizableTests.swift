@@ -45,15 +45,16 @@ class LocalizableTests: XCTestCase {
     }
     
     //MARK: - Helper
-    func assertLocalizedStrings<T: CaseIterable & RawRepresentable>(_ type: T.Type) where T.RawValue == String {
+    func assertLocalizedStrings<T: CaseIterable & RawRepresentable & Localizable>(_ type: T.Type) where T.RawValue == String {
         let testValue = "test-value"
-        let stringCases = T.allCases.map(\.rawValue)
+        let cases = T.allCases.map(\.rawValue)
+        let tableName = T.allCases.first!.tableName
         
-        for string in stringCases {
-            let localizedString = NSLocalizedString(string, value: testValue, comment: "")
+        for key in cases {
+            let localizedString = NSLocalizedString(key, tableName: tableName, value: testValue, comment: "")
             
             //NSLocalizedString() returns 'value' if the key is not found.
-            XCTAssertNotEqual(localizedString, testValue, "\(string) not found!")
+            XCTAssertNotEqual(localizedString, testValue, "\(key) not found!")
         }
     }
 

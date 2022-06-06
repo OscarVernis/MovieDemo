@@ -1,0 +1,26 @@
+/* 
+  User.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"Favorites" = "Favoritos";
+
+"Watchlist" = "Lista de Seguimiento";
+
+"Rated" = "Calificaciones";
+
+"EmptyUserWatchlist" = "Las películas que agregues a tu Lista de Seguimiento ";
+
+"EmptyUserRated" = "Las películas que califiques ";
+
+"WillAppearMessage" = " aparecerán aquí.";
+
+"EmptyUserWatchlist" = "Las películas que agregues a tu Lista de Seguimiento ";
+
+"EmptyUserFavorites" = "Las películas que agregues a Favoritos ";
+
+"EmptyUserRated" = "Las películas que califiques ";
+

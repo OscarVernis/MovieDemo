@@ -1,0 +1,33 @@
+/* 
+  Movie.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 06/06/22.
+  Copyright © 2022 Oscar Vernis. All rights reserved.
+*/
+
+"Cast" = "Reparto";
+
+"Crew" = "Equipo";
+
+"NR" = "SC";
+
+"OriginalLanguage" = "Idioma Original";
+
+"OriginalTitle" = "Título Original";
+
+"ReleaseDate" = "Estreno";
+
+"Revenue" = "Ingresos";
+
+"Status" = "Estado";
+
+"Country" = "País";
+
+"Budget" = "Presupuesto";
+
+"Videos" = "Videos";
+
+"Info" = "Información";
+
+"RecommendedMovies" = "Recomendaciones";

@@ -12,5 +12,5 @@ enum PersonString: String, Localizable, CaseIterable {
     case Acting
     case KnownFor
     
-    var localized: String { NSLocalizedString(rawValue, comment: "") }
+    var tableName: String { "Person" }
 }
