@@ -20,6 +20,7 @@ class WebLoginViewController: UIViewController {
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
 
+    //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -32,10 +33,16 @@ class WebLoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 8
     }
     
+    //MARK: - Actions
+    @IBAction func closeTapped(_ sender: Any) {
+        presentingViewController?.dismiss(animated: true)
+    }
+    
     @IBAction func login(_ sender: Any) {
         Task { await startWebLogin() }
     }
     
+    //MARK: - Login
     func startWebLogin() async {
         var token: String = ""
         do {
@@ -74,10 +81,6 @@ class WebLoginViewController: UIViewController {
         
         session.presentationContextProvider = self
         session.start()
-    }
-    
-    @IBAction func closeTapped(_ sender: Any) {
-        presentingViewController?.dismiss(animated: true)
     }
 
 }

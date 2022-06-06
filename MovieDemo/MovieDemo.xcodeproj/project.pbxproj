@@ -162,6 +162,7 @@
 		55AC53232824422C00836A30 /* DataProvidersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC53222824422C00836A30 /* DataProvidersTests.swift */; };
 		55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */; };
 		55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */; };
+		55B0DA15284EA46A0043A8B3 /* WebLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */; };
 		55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5D7502515D8B700E1076D /* RatingsView.swift */; };
 		55B6CBB427E02248007DB4C2 /* MovieDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */; };
 		55B6CBBA27E024A6007DB4C2 /* MovieMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB827E024A6007DB4C2 /* MovieMO.swift */; };
@@ -397,6 +398,7 @@
 		55AC53222824422C00836A30 /* DataProvidersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvidersTests.swift; sourceTree = "<group>"; };
 		55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
 		55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebLoginViewController.storyboard; sourceTree = "<group>"; };
+		55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewControllerTests.swift; sourceTree = "<group>"; };
 		55B5D7502515D8B700E1076D /* RatingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingsView.swift; sourceTree = "<group>"; };
 		55B6CBB327E02248007DB4C2 /* MovieDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieDemo.xcdatamodel; sourceTree = "<group>"; };
 		55B6CBB827E024A6007DB4C2 /* MovieMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieMO.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				5547ED58282592450079BD14 /* PersonDetailViewControllerTests.swift */,
 				5547ED5A282593200079BD14 /* UserProfileViewControllerTests.swift */,
 				5547ED5C2825941F0079BD14 /* LoginViewControllerTests.swift */,
+				55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */,
 				5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */,
 			);
 			path = "ViewController Tests";
@@ -1235,6 +1238,7 @@
 				55C6753428223356007FB18C /* SessionManagerTests.swift in Sources */,
 				5547ED59282592450079BD14 /* PersonDetailViewControllerTests.swift in Sources */,
 				558D9933283DBD3900CE0745 /* AssetTests.swift in Sources */,
+				55B0DA15284EA46A0043A8B3 /* WebLoginViewControllerTests.swift in Sources */,
 				5547ED53282589700079BD14 /* MovieDetailViewControllerTests.swift in Sources */,
 				555D761127EA44A900B8FFAB /* ModelTests.swift in Sources */,
 			);

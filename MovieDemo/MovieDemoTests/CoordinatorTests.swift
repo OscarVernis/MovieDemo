@@ -45,6 +45,18 @@ class CoordinatorTests: XCTestCase {
         XCTAssert(login is LoginViewController)
     }
     
+    func test_Coordinator_Loads_WebLogin() throws {
+        let coordinator = MainCoordinator(window: window, isLoginRequired: true, usesWebLogin: true)
+        
+        let sessionManager = SessionManager.shared
+        sessionManager.store = UserStoreMock(isLoggedIn: false)
+        
+        coordinator.start()
+        
+        let login = navCont?.visibleViewController
+        XCTAssert(login is WebLoginViewController)
+    }
+    
     func test_Coordinator_Shows_MovieDetail() throws {
         let coordinator = MainCoordinator(window: window, isLoginRequired: false)
         coordinator.start()
@@ -128,5 +140,18 @@ class CoordinatorTests: XCTestCase {
         
         let login = navCont?.visibleViewController
         XCTAssert(login is LoginViewController)
+    }
+    
+    func test_Coordinator_Shows_WebLogin_IfNotLoggedIn() throws {
+        let coordinator = MainCoordinator(window: window, isLoginRequired: false, usesWebLogin: true)
+        coordinator.start()
+        
+        let sessionManager = SessionManager.shared
+        sessionManager.store = UserStoreMock(isLoggedIn: false)
+        
+        coordinator.showUserProfile(animated: false)
+        
+        let login = navCont?.visibleViewController
+        XCTAssert(login is WebLoginViewController)
     }
 }
