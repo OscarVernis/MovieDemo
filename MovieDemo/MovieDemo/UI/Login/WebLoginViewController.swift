@@ -13,6 +13,7 @@ class WebLoginViewController: UIViewController {
     let service = RemoteSessionService()
     let sessionManager = SessionManager.shared
     
+    var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
 
     override func viewDidLoad() {

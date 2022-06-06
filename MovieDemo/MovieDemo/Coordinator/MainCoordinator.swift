@@ -17,6 +17,9 @@ final class MainCoordinator {
     //If set to true, it will force you to login before showing Home
     private let isLoginRequired: Bool
     
+    //Set to true uses Web Auth, false uses username and password.
+    private let usesWebLogin: Bool = true
+    
     init(window: UIWindow, isLoginRequired: Bool = false) {
         self.window = window
         self.isLoginRequired = isLoginRequired
@@ -55,7 +58,35 @@ final class MainCoordinator {
     }
     
     func showLogin(animated: Bool = true) {
+        if usesWebLogin {
+            showWebLogin(animated: animated)
+        } else {
+            showDefaultLogin(animated: animated)
+        }
+    }
+    
+    func showDefaultLogin(animated: Bool = true) {
         let lvc = LoginViewController.instantiateFromStoryboard()
+        lvc.showsCloseButton = !isLoginRequired
+        if isLoginRequired {
+            lvc.modalPresentationStyle = .overFullScreen
+        }
+        
+        lvc.didFinishLoginProcess = { [weak self] in
+            self?.rootNavigationViewController?.dismiss(animated: true)
+        }
+        
+        rootNavigationViewController?.present(lvc, animated: animated, completion: { [weak self] in
+            guard let self = self else { return }
+            
+            if self.isLoginRequired && self.rootNavigationViewController!.viewControllers.isEmpty {
+                self.showHome()
+            }
+        })
+    }
+    
+    func showWebLogin(animated: Bool = true) {
+        let lvc = WebLoginViewController.instantiateFromStoryboard()
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
             lvc.modalPresentationStyle = .overFullScreen
