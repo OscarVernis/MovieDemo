@@ -799,11 +799,8 @@
 		557FFA95251A6D5400D79F68 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */,
-				55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */,
-				557FFA96251A6D7100D79F68 /* LoginViewController.swift */,
-				55ABEB78283365AF009DCE7C /* LoginViewModel.swift */,
-				551A2924251F189B003746EE /* LoginViewController.storyboard */,
+				55B0DA17284EA82C0043A8B3 /* Web */,
+				55B0DA16284EA8180043A8B3 /* Username */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -922,6 +919,25 @@
 				55CB2101252E899900BBC662 /* DataProviderSection.swift */,
 			);
 			path = Lists;
+			sourceTree = "<group>";
+		};
+		55B0DA16284EA8180043A8B3 /* Username */ = {
+			isa = PBXGroup;
+			children = (
+				557FFA96251A6D7100D79F68 /* LoginViewController.swift */,
+				55ABEB78283365AF009DCE7C /* LoginViewModel.swift */,
+				551A2924251F189B003746EE /* LoginViewController.storyboard */,
+			);
+			path = Username;
+			sourceTree = "<group>";
+		};
+		55B0DA17284EA82C0043A8B3 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */,
+				55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */,
+			);
+			path = Web;
 			sourceTree = "<group>";
 		};
 		55B6CB8727E0201B007DB4C2 /* LocalStore */ = {
