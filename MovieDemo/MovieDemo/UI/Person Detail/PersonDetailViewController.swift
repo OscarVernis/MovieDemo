@@ -110,9 +110,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
             guard let self = self else { return }
             
             if error != nil {
-                self.mainCoordinator.handle(error: .refreshError) {
-                    self.navigationController?.popViewController(animated: true)
-                }
+                self.mainCoordinator.handle(error: .refreshError, shouldDismiss: true)
             }
             
             self.reloadSections()

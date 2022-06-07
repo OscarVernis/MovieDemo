@@ -26,8 +26,13 @@ final class MainCoordinator {
         self.usesWebLogin = usesWebLogin
     }
     
-    func handle(error: UserFacingError, completion: (() -> Void)? = nil) {
+    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
         guard let sender = rootNavigationViewController?.visibleViewController else { return }
+        let completion = {
+            if shouldDismiss {
+                self.rootNavigationViewController?.popViewController(animated: true)
+            }
+        }
         
         AlertManager.showErrorAlert(error.localizedDescription,
                                     color: error.alertColor,
