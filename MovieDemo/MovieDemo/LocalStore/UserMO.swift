@@ -22,11 +22,22 @@ public class UserMO: NSManagedObject {
         
         self.username = user.username
         self.avatar = user.avatar
+        addToFavorites(NSOrderedSet(array: user.favorites.map { MovieMO(withMovie: $0, context: context) }))
+        addToWatchlist(NSOrderedSet(array: user.watchlist.map { MovieMO(withMovie: $0, context: context) }))
+        addToRated(NSOrderedSet(array: user.rated.map { MovieMO(withMovie: $0, context: context) }))
     }
     
     func toUser() -> User {
+        let favorites = (self.favorites?.array as? [MovieMO])?.compactMap( { $0.toMovie() }) ?? []
+        let watchlist = (self.watchlist?.array as? [MovieMO])?.compactMap { $0.toMovie() } ?? []
+        let rated = (self.rated?.array as? [MovieMO])?.compactMap { $0.toMovie() } ?? []
+
+        
         let user = User(avatar: self.avatar,
-                        username: self.username)
+                        username: self.username,
+                        favorites: favorites,
+                        watchlist: watchlist,
+                        rated: rated)
         
         return user
     }
