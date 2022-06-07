@@ -10,16 +10,16 @@
 
 "NetworkConnectionError" = "Verifique su conexión a internet.";
 
-"FavoriteError" = "No se pudo agregar a Favoritos. Por favor inténtelo más tarde.";
+"FavoriteError" = "No se pudo agregar a Favoritos.\nPor favor inténtelo de nuevo.";
 
-"WatchListError" = "No se pudo agregar a la Lista de Seguimiento. Por favor inténtelo más tarde.";
+"WatchListError" = "No se pudo agregar a la Lista de Seguimiento.\nPor favor inténtelo de nuevo.";
 
 "RefreshError" = "No se pudo refrescar el contenido.";
 
-"RatingError" = "No se pudo mandar la Calificación.";
+"RatingError" = "No se pudo mandar la Calificación.\nPor favor inténtelo de nuevo.";
 
-"DeleteRatingError" = "No se pudo eliminar la Calificación.";
+"DeleteRatingError" = "No se pudo eliminar la Calificación.\nPor favor inténtelo de nuevo.";
 
-"LoginError" = "Error al iniciar sesión. Por favor inténtelo de nuevo.";
+"LoginError" = "Error al iniciar sesión.\nPor favor inténtelo de nuevo.";
 
-"LogoutError" = "Error al cerrar sesión. Por favor inténtelo de nuevo.";
+"LogoutError" = "Error al cerrar sesión.\nPor favor inténtelo de nuevo.";

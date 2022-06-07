@@ -10,16 +10,16 @@
 
 "NetworkConnectionError" = "Check your network connection.";
 
-"FavoriteError" = "Couldn't set favorite! Please try again.";
+"FavoriteError" = "Couldn't set favorite!\nPlease try again.";
 
-"WatchListError" = "Couldn't add to watchlist! Please try again.";
+"WatchListError" = "Couldn't add to watchlist!\nPlease try again.";
 
 "RefreshError" = "Couldn't refresh content.";
 
-"RatingError" = "Couldn't set rating! Please try again.";
+"RatingError" = "Couldn't set rating!\nPlease try again.";
 
-"DeleteRatingError" = "Couldn't delete rating! Please try again.";
+"DeleteRatingError" = "Couldn't delete rating!\nPlease try again.";
 
-"LoginError" = "Login error. Please try again.";
+"LoginError" = "Login error.\nPlease try again.";
 
-"LogoutError" = "Logout error. Please try again.";
+"LogoutError" = "Logout error.\nPlease try again.";
