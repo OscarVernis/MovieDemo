@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemoteUserLoader {
+struct RemoteUserLoader: UserLoader {
     let sessionId: String?
     let service: MovieService
     

@@ -182,6 +182,9 @@
 		55D05CBF251AE48100FD5F8C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D05CBE251AE48100FD5F8C /* User.swift */; };
 		55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D05CC1251AED9300FD5F8C /* UserViewModel.swift */; };
 		55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D309DB281325D0004F2725 /* URLSession+Extensions.swift */; };
+		55D317F8284EF44D0090CF34 /* UserMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317F6284EF44D0090CF34 /* UserMO.swift */; };
+		55D317FB284EF6090090CF34 /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317FA284EF6090090CF34 /* UserCache.swift */; };
+		55D317FD284EF6A40090CF34 /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317FC284EF6A40090CF34 /* UserLoader.swift */; };
 		55D35E1C2517DE0D00114602 /* Loaf in Frameworks */ = {isa = PBXBuildFile; productRef = 55D35E1B2517DE0D00114602 /* Loaf */; };
 		55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D35E1E2517DE1D00114602 /* AlertManager.swift */; };
 		55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */; };
@@ -419,6 +422,9 @@
 		55D05CBE251AE48100FD5F8C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		55D05CC1251AED9300FD5F8C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		55D309DB281325D0004F2725 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
+		55D317F6284EF44D0090CF34 /* UserMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMO.swift; sourceTree = "<group>"; };
+		55D317FA284EF6090090CF34 /* UserCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
+		55D317FC284EF6A40090CF34 /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
 		55D35E1E2517DE1D00114602 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieVideoViewModel.swift; sourceTree = "<group>"; };
 		55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeVideoCell.swift; sourceTree = "<group>"; };
@@ -616,6 +622,7 @@
 				5523970227D17F6100E4C18F /* MovieLoader.swift */,
 				5570994B282485780028ED44 /* SearchLoader.swift */,
 				55549900282232BF00E89119 /* SessionService.swift */,
+				55D317FC284EF6A40090CF34 /* UserLoader.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -948,6 +955,8 @@
 				55B6CBC727E02E49007DB4C2 /* MovieCache.swift */,
 				55B6CBB827E024A6007DB4C2 /* MovieMO.swift */,
 				55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */,
+				55D317F6284EF44D0090CF34 /* UserMO.swift */,
+				55D317FA284EF6090090CF34 /* UserCache.swift */,
 				55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */,
 			);
 			path = LocalStore;
@@ -1281,6 +1290,7 @@
 				558A5A9825106C1400E5FB40 /* SectionBackgroundDecorationView.swift in Sources */,
 				5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */,
 				55EE51A7251EC5DE00915AB3 /* ColorAsset.swift in Sources */,
+				55D317FB284EF6090090CF34 /* UserCache.swift in Sources */,
 				55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */,
 				555EAF6527DC465D000B6525 /* ServiceGenre.swift in Sources */,
 				5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */,
@@ -1302,6 +1312,7 @@
 				5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */,
 				555A144D2523D97B0024AFAA /* ConfigurableSection.swift in Sources */,
 				5599B2A3252429C60075473C /* UserProfileHeaderSection.swift in Sources */,
+				55D317FD284EF6A40090CF34 /* UserLoader.swift in Sources */,
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
@@ -1324,6 +1335,7 @@
 				55EE573A284D826400C6A170 /* UserFacingError.swift in Sources */,
 				55A60DD82527AAB30082810C /* MediaViewerAnimator.swift in Sources */,
 				55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */,
+				55D317F8284EF44D0090CF34 /* UserMO.swift in Sources */,
 				5562D7412539291900E4FD42 /* MediaItem.swift in Sources */,
 				55CB2102252E899900BBC662 /* DataProviderSection.swift in Sources */,
 				5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */,

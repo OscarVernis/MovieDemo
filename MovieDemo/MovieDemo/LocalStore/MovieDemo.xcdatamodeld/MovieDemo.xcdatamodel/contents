@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ManagedCache" representedClassName="ManagedCache" syncable="YES" codeGenerationType="category">
         <relationship name="nowPlaying" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieMO" inverseName="nowPlayingCache" inverseEntity="MovieMO"/>
         <relationship name="popular" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="MovieMO" inverseName="popularCache" inverseEntity="MovieMO"/>
@@ -27,9 +27,14 @@
         <relationship name="topRatedCache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="topRated" inverseEntity="ManagedCache"/>
         <relationship name="upcomingCache" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManagedCache" inverseName="upcoming" inverseEntity="ManagedCache"/>
     </entity>
+    <entity name="UserMO" representedClassName="UserMO" syncable="YES" codeGenerationType="category">
+        <attribute name="avatar" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
+        <element name="ManagedCache" positionX="-36" positionY="72" width="128" height="89"/>
         <element name="MovieGenreMO" positionX="-54" positionY="9" width="128" height="73"/>
         <element name="MovieMO" positionX="-63" positionY="-18" width="128" height="268"/>
-        <element name="ManagedCache" positionX="-36" positionY="72" width="128" height="103"/>
+        <element name="UserMO" positionX="-45" positionY="99" width="128" height="59"/>
     </elements>
 </model>

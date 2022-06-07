@@ -118,6 +118,10 @@ final class MainCoordinator {
                     self.showLogin(animated: true)
                 }
                 
+                //Delete cache
+                let cache = UserCache()
+                cache.delete()
+                
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 
                 self.rootNavigationViewController?.popToRootViewController(animated: true)

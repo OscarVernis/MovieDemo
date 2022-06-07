@@ -12,14 +12,17 @@ import Combine
 class UserViewModel {
     var user: User?
     private let sessionManager: SessionManager
-    private let service: RemoteUserLoader
+    private let service: UserLoader
+    private let cache: UserCache?
     private var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(sessionManager: SessionManager = SessionManager.shared) {
+    init(sessionManager: SessionManager = SessionManager.shared,
+         cache: UserCache? = UserCache()) {
         self.sessionManager = sessionManager
         self.service = RemoteUserLoader(sessionId: sessionManager.sessionId)
+        self.cache = cache
     }
     
     var didUpdate: ((Error?) -> Void)?
@@ -55,6 +58,9 @@ class UserViewModel {
         guard sessionManager.isLoggedIn else { return }
         isLoading = false
         
+        //Load from Cache
+        loadCache()
+        
         service.getUserDetails()
             .sink { [weak self] completion in
                 switch completion {
@@ -65,8 +71,17 @@ class UserViewModel {
                 }
             } receiveValue: { [weak self] user in
                 self?.user = user
+                self?.cache?.save(user: user)
             }
             .store(in: &cancellables)
+    }
+    
+    func loadCache() {
+        let user = cache?.load()
+        if let user = user {
+            self.user = user
+            self.didUpdate?(nil)
+        }
     }
 }
 

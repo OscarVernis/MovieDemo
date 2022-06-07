@@ -33,12 +33,10 @@ class UserProfileViewController: UIViewController, GenericCollection {
         createCollectionView()
         setupCollectionView()
         setupDataProvider()
-        
-        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         user.updateUser()
     }
     
@@ -56,11 +54,14 @@ class UserProfileViewController: UIViewController, GenericCollection {
         
         //Set so the scrollIndicator stops before the status bar
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        
+        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)   
     }
     
     fileprivate func setupDataProvider()  {
         let updateCollectionView:(Error?) -> () = { [weak self] error in
             guard let self = self else { return }
+            
             
             //Load Blur Background
             if let imageURL = self.user.avatarURL {
@@ -82,7 +83,6 @@ class UserProfileViewController: UIViewController, GenericCollection {
         }
         
         user.didUpdate = updateCollectionView
-        user.updateUser()
     }
     
     //MARK: - Section Loading
