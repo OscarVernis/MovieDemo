@@ -40,15 +40,13 @@ class MovieViewModel {
         updateInfo()
         
         if hasUserStates {
-            userStates = MovieUserStatesViewModel(movie: movie, sessionId: sessionManager?.sessionId)
+            userStates = MovieUserStatesViewModel(movie: self, sessionId: sessionManager?.sessionId)
         }
     }
     
     func updateMovie(_ movie: Movie) {
         self.movie = movie
         updateInfo()
-        
-        userStates?.update(movie: movie)
     }
     
     func updateInfo() {
@@ -60,6 +58,37 @@ class MovieViewModel {
     
     var hasUserStates: Bool {
         return sessionManager?.isLoggedIn ?? false
+    }
+}
+
+//MARK: - Movie State
+extension MovieViewModel {
+    var favorite: Bool {
+        movie.favorite ?? false
+    }
+    
+    var watchlist: Bool {
+        movie.watchlist ?? false
+    }
+    
+    var userRating: Float? {
+        movie.userRating
+    }
+    
+    var rated: Bool {
+        movie.userRating != nil
+    }
+    
+    func setFavorite(_ isFavorite: Bool) {
+        movie.favorite = isFavorite
+    }
+    
+    func setWatchlist(_ isOnWatchlist: Bool) {
+        movie.watchlist = isOnWatchlist
+    }
+    
+    func setUserRating(_ rating: Float?) {
+        movie.userRating = rating
     }
 }
 

@@ -23,6 +23,7 @@ class MovieRatingViewController: UIViewController {
         }
     }
     
+    var movie: MovieViewModel!
     var userState: MovieUserStatesViewModel!
     
     var didUpdateRating: (() -> Void)? = nil
@@ -40,7 +41,7 @@ class MovieRatingViewController: UIViewController {
         
         ratingsView.addTarget(self, action: #selector(ratingsViewValueChanged), for: .valueChanged)
         
-        if !userState.rated {
+        if !movie.rated {
             deleteRatingButton.isHidden = true
             ratingsView.isRatingAvailable = false
             ratingLabel.text = userState.userRatingString

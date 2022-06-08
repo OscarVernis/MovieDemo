@@ -10,41 +10,15 @@ import Foundation
 import Combine
 
 class MovieUserStatesViewModel {
-    private var movie: Movie
+    private unowned var movie: MovieViewModel
     
     private let service: RemoteUserState!
 
     private var cancellables = Set<AnyCancellable>()
 
-    init(movie: Movie, sessionId: String?) {
+    init(movie: MovieViewModel, sessionId: String?) {
         self.service = RemoteUserState(sessionId: sessionId)
         self.movie = movie
-        update()
-    }
-    
-    func update(movie: Movie) {
-        self.movie = movie
-        update()
-    }
-    
-    fileprivate func update() {
-        self.favorite = movie.favorite ?? false
-        self.rated = (movie.userRating != nil)
-        self.watchlist = movie.watchlist ?? false
-    }
-    
-    @Published var favorite: Bool = false {
-        didSet {
-            movie.favorite = favorite
-        }
-    }
-    
-    @Published var rated: Bool = false
-    
-    @Published var watchlist: Bool  = false {
-        didSet {
-            movie.watchlist = watchlist
-        }
     }
     
 }
@@ -60,7 +34,7 @@ extension MovieUserStatesViewModel {
     }
     
     var userRatingString: String {
-        return rated ? "\(percentUserRating)" : .localized(MovieString.NR)
+        return movie.userRating != nil ? "\(percentUserRating)" : .localized(MovieString.NR)
     }
     
     func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
@@ -68,7 +42,7 @@ extension MovieUserStatesViewModel {
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self?.favorite = favorite
+                    self?.movie.setFavorite(favorite)
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)
@@ -83,7 +57,7 @@ extension MovieUserStatesViewModel {
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self?.movie.watchlist = watchlist
+                    self?.movie.setWatchlist(watchlist)
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)
@@ -108,9 +82,8 @@ extension MovieUserStatesViewModel {
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self?.movie.userRating = adjustedRating
-                    self?.rated = true
-                    self?.watchlist = false //Server removes movie from watchlist when rating
+                    self?.movie.setUserRating(adjustedRating)
+                    self?.movie.setWatchlist(false) //Server removes movie from watchlist when rating
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)
@@ -126,7 +99,7 @@ extension MovieUserStatesViewModel {
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self?.movie.userRating = nil
+                    self?.movie.setUserRating(nil)
                     completionHandler(true)
                 case .failure(_):
                     completionHandler(false)

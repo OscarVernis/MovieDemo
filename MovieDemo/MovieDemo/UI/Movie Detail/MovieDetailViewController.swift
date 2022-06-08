@@ -186,23 +186,23 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             return
         }
         
-        favoriteButton.setIsSelected(!userState.favorite, animated: true)
+        favoriteButton.setIsSelected(!movie.favorite, animated: true)
         favoriteButton.isUserInteractionEnabled = false
         
-        if userState.favorite {
+        if movie.favorite {
             UISelectionFeedbackGenerator().selectionChanged()
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        userState.markAsFavorite(!userState.favorite) { [weak self] success in
+        userState.markAsFavorite(!movie.favorite) { [weak self] success in
             guard let self = self else { return }
             
             favoriteButton.isUserInteractionEnabled = true
 
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                favoriteButton.setIsSelected(userState.favorite, animated: false)
+                favoriteButton.setIsSelected(self.movie.favorite, animated: false)
                 self.mainCoordinator?.handle(error: .favoriteError)
             }
         }
@@ -213,23 +213,23 @@ class MovieDetailViewController: UIViewController, GenericCollection {
             return
         }
         
-        watchlistButton.setIsSelected(!userState.watchlist, animated: true)
+        watchlistButton.setIsSelected(!movie.watchlist, animated: true)
         watchlistButton.isUserInteractionEnabled = false
         
-        if userState.watchlist {
+        if movie.watchlist {
             UISelectionFeedbackGenerator().selectionChanged()
         } else {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        userState.addToWatchlist(!userState.watchlist) { [weak self] success in
+        userState.addToWatchlist(!movie.watchlist) { [weak self] success in
             guard let self = self else { return }
 
             watchlistButton.isUserInteractionEnabled = true
 
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
-                watchlistButton.setIsSelected(userState.watchlist, animated: false)
+                watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
                 self.mainCoordinator?.handle(error: .watchlistError)
             }
         }
@@ -243,6 +243,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         
         let mrvc = MovieRatingViewController.instantiateFromStoryboard()
         mrvc.coordinator = self.mainCoordinator
+        mrvc.movie = movie
         mrvc.userState = userState
         
         let transitionDelegate = SPStorkTransitioningDelegate()
@@ -253,8 +254,8 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         transitionDelegate.showIndicator = false
         
         mrvc.didUpdateRating = {
-            rateButton.setIsSelected(userState.rated, animated: false)
-            watchlistButton.setIsSelected(userState.watchlist, animated: false)
+            rateButton.setIsSelected(self.movie.rated, animated: false)
+            watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
         }
         
         self.present(mrvc, animated: true)

@@ -45,11 +45,11 @@ class MovieDetailHeaderView: UICollectionReusableView {
     }
     
     fileprivate func updateUserActionButtons(animated: Bool = false) {
-        guard let userState = movie.userStates else { return }
+        guard movie.hasUserStates else { return }
 
-        favoriteButton?.setIsSelected(userState.favorite, animated: animated)
-        watchlistButton?.setIsSelected(userState.watchlist, animated: animated)
-        rateButton?.setIsSelected(userState.rated, animated: animated)
+        favoriteButton?.setIsSelected(movie.favorite, animated: animated)
+        watchlistButton?.setIsSelected(movie.watchlist, animated: animated)
+        rateButton?.setIsSelected(movie.rated, animated: animated)
     }
     
     func configure(movie: MovieViewModel) {
