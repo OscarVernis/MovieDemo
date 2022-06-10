@@ -9,7 +9,7 @@
 import UIKit
 
 class PersonDetailViewController: UIViewController, GenericCollection {
-    weak var mainCoordinator: MainCoordinator!
+    weak var mainCoordinator: MainCoordinator?
 
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
@@ -110,7 +110,7 @@ class PersonDetailViewController: UIViewController, GenericCollection {
             guard let self = self else { return }
             
             if error != nil {
-                self.mainCoordinator.handle(error: .refreshError, shouldDismiss: true)
+                self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
             }
             
             self.reloadSections()
@@ -200,16 +200,16 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         switch section {
         case _ as MoviesSection:
             let movie = person.popularMovies[indexPath.row]
-            mainCoordinator.showMovieDetail(movie: movie)
+            mainCoordinator?.showMovieDetail(movie: movie)
         case _ as PersonCastCreditsSection:
             let castCredit = person.castCredits[indexPath.row]
             if let movie = castCredit.movie {
-                mainCoordinator.showMovieDetail(movie: movie)
+                mainCoordinator?.showMovieDetail(movie: movie)
             }
         case let section as PersonCrewCreditsSection:
             let crewCredit = section.credits[indexPath.row]
             if let movie = crewCredit.movie {
-                mainCoordinator.showMovieDetail(movie: movie)
+                mainCoordinator?.showMovieDetail(movie: movie)
             }
         default:
             break

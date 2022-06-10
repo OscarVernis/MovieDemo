@@ -78,7 +78,6 @@ class HomeViewController: UIViewController, GenericCollection {
         self.dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
         dataSource.didUpdate = { [weak self] section in
             self?.collectionView.refreshControl?.endRefreshing()
-            self?.collectionView.reloadData()
         }
         
         refresh()

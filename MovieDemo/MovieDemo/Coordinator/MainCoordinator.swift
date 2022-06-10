@@ -112,9 +112,9 @@ final class MainCoordinator {
         })
     }
     
-    @MainActor
+    
     func logout(completion: (() -> Void)? = nil) {
-        Task {
+        Task { @MainActor in
             let result = await sessionManager.logout()
             
             switch result {
@@ -142,8 +142,7 @@ final class MainCoordinator {
         if !sessionManager.isLoggedIn {
             showLogin(animated: animated)
         } else {
-            let upvc = UserProfileViewController()
-            upvc.mainCoordinator = self
+            let upvc = UserProfileViewController(coordinator: self)
             
             rootNavigationViewController?.pushViewController(upvc, animated: animated)
         }
@@ -171,7 +170,7 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
         
         lvc.didSelectedItem = { [weak self] index in
-            if index >= dataProvider.itemCount { return }
+            guard index < dataProvider.itemCount else { return }
 
             let movie = dataProvider.item(atIndex: index)
             self?.showMovieDetail(movie: movie)
