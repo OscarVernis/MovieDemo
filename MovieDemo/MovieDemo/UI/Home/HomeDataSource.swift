@@ -11,6 +11,10 @@ import UIKit
 import SwiftUI
 
 class HomeDataSource: SectionedCollectionDataSource {
+    enum Section: Int {
+        case nowPlaying, upcoming, popular, topRated
+    }
+    
     unowned var collectionView: UICollectionView
 
     var providers: [MoviesDataProvider] = []
@@ -24,7 +28,6 @@ class HomeDataSource: SectionedCollectionDataSource {
         refresh()
     }
     
-    typealias Section = Int
     var didUpdate: ((Section, Error?) -> Void)?
     
     //MARK: - Setup
@@ -36,26 +39,39 @@ class HomeDataSource: SectionedCollectionDataSource {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
+    func setupDataSources() {
+        dataSources = [
+            dataSource(for: .nowPlaying),
+            dataSource(for: .upcoming),
+            dataSource(for: .popular),
+            dataSource(for: .topRated)
+        ]
+        
+        for (section, provider) in providers.enumerated() {
+            provider.didUpdate = { [weak self] error in
+                self?.didUpdate?(Section(rawValue: section)!, error)
+                self?.collectionView.reloadData()
+            }
+        }
+
+    }
+    
     func refresh() {
         providers.forEach { $0.refresh() }
     }
         
     //MARK: - Data Sources
-    func setupDataSources() {
-        dataSources = [
-            makeNowPlaying(),
-            makeUpcoming(),
-            makePopular(),
-            makeTopRated()
-        ]
-        
-        for (section, provider) in providers.enumerated() {
-            provider.didUpdate = { [weak self] error in
-                self?.didUpdate?(section, error)
-                self?.collectionView.reloadData()
-            }
+    func dataSource(for section: Section) -> UICollectionViewDataSource {
+        switch section {
+        case .nowPlaying:
+            return makeNowPlaying()
+        case .upcoming:
+            return makeUpcoming()
+        case .popular:
+            return makePopular()
+        case .topRated:
+            return makeTopRated()
         }
-
     }
     
     func makeNowPlaying() -> UICollectionViewDataSource {
@@ -110,15 +126,8 @@ class HomeDataSource: SectionedCollectionDataSource {
     }
     
     func makeTopRated() -> UICollectionViewDataSource {
-        let provider = MoviesDataProvider(.TopRated)
-        providers.append(provider)
-        
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MovieRatingListCell.reuseIdentifier) { movie, cell, indexPath in
-            guard let cell = cell as? MovieRatingListCell else { return }
-                    
-            MovieRatingListCellConfigurator().configure(cell: cell, withMovie: movie, showSeparator: true)
-        }
+        let dataSource = TopRatedDataSource()
+        providers.append(dataSource.dataProvider)
         
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.TopRated),
                                                           dataSource: dataSource)

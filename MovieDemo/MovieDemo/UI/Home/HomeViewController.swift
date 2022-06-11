@@ -30,7 +30,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
                         
         createCollectionView()
         setupDataSource()
-        setup()
+        setupViewController()
         setupSearch()
     }
     
@@ -44,18 +44,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
+        
+        //Setup
+        collectionView.backgroundColor = .asset(.AppBackgroundColor)
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
 
         view.addSubview(collectionView)
     }
     
-    fileprivate func setup() {
+    fileprivate func setupViewController() {
         title = .localized(HomeString.Movies)
         navigationController?.delegate = self
-        
-        //CollectionView setup
-        collectionView.backgroundColor = .asset(.AppBackgroundColor)
-        collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         //User Profile NavBar Button
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: .asset(.person), style: .plain, target: self, action: #selector(showUser))
@@ -90,18 +90,27 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         dataSource.refresh()
     }
     
-    func showMovieList(section: HomeMovieListSection) {
-        let dataProvider = MoviesDataProvider(section.dataProvider.currentService)
-        mainCoordinator.showMovieList(title: section.title, dataProvider: dataProvider)
+    func showMovieList(title: String, provider: MoviesDataProvider) {
+        mainCoordinator.showMovieList(title: title, dataProvider: provider)
     }
     
     //MARK: - CollectionView Delegate
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        guard let titleHeader = view as? SectionTitleView else { return }
+        
+        let dataProvider = dataSource.providers[indexPath.section]
+        let title = titleHeader.titleLabel.text ?? ""
+        
+        titleHeader.tapHandler = { [weak self] in
+            self?.showMovieList(title: title, provider: dataProvider)
+        }
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let provider = dataSource.providers[indexPath.section] 
+        let provider = dataSource.providers[indexPath.section]
         let movie = provider.item(atIndex: indexPath.row)
         
         mainCoordinator.showMovieDetail(movie: movie)
-        
     }
     
 }
@@ -111,15 +120,16 @@ extension HomeViewController {
 
     func createLayout() -> UICollectionViewLayout {
         let layout = (UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            let section = HomeDataSource.Section(rawValue: sectionIndex)
             
-            switch(sectionIndex) {
-            case 0:
+            switch(section) {
+            case .nowPlaying:
                 return self?.makeBannerSection()
-            case 1:
+            case .upcoming:
                 return self?.makeHorizontalPosterSection()
-            case 2:
+            case .popular:
                 return self?.makeListSection()
-            case 3:
+            case .topRated:
                 return self?.makeDecoratedListSection()
             default:
                 return nil
