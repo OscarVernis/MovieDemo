@@ -8,16 +8,14 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, GenericCollection {    
+class HomeViewController: UIViewController, UICollectionViewDelegate {
     var collectionView: UICollectionView!
-    var dataSource: GenericCollectionDataSource!
+    var dataSource: HomeDataSource!
     
     weak var mainCoordinator: MainCoordinator!
     
     var didSelectItem: ((Movie) -> ())?
-    
-    var sections = [ConfigurableSection]()
-    
+        
     //MARK: - Setup
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -31,13 +29,23 @@ class HomeViewController: UIViewController, GenericCollection {
         super.viewDidLoad()
                         
         createCollectionView()
+        setupDataSource()
         setup()
         setupSearch()
-        setupDataSource()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+    
+    func createCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
+
+        view.addSubview(collectionView)
     }
     
     fileprivate func setup() {
@@ -64,21 +72,11 @@ class HomeViewController: UIViewController, GenericCollection {
     }
     
     fileprivate func setupDataSource() {
-        let sectionHeaderHandler: (HomeMovieListSection) -> Void = { [weak self] section in
-            self?.showMovieList(section: section)
-        }
-        
-        sections = [
-            HomeMovieListSection(.NowPlaying, sectionHeaderButtonHandler: sectionHeaderHandler),
-            HomeMovieListSection(.Upcoming, sectionHeaderButtonHandler: sectionHeaderHandler),
-            HomeMovieListSection(.Popular, sectionHeaderButtonHandler: sectionHeaderHandler),
-            HomeMovieListSection(.TopRated, sectionHeaderButtonHandler: sectionHeaderHandler)
-        ]
-                
-        self.dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
-        dataSource.didUpdate = { [weak self] section in
+        self.dataSource = HomeDataSource(collectionView: self.collectionView)
+        dataSource.didUpdate = { [weak self] section, _ in
             self?.collectionView.refreshControl?.endRefreshing()
         }
+        collectionView.dataSource = dataSource
         
         refresh()
     }
@@ -99,27 +97,92 @@ class HomeViewController: UIViewController, GenericCollection {
     
     //MARK: - CollectionView Delegate
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let section = sections[indexPath.section] as? HomeMovieListSection {
-            let movie = section.dataProvider.item(atIndex: indexPath.row)
-            
-            mainCoordinator.showMovieDetail(movie: movie)
-        }
+        let provider = dataSource.providers[indexPath.section] 
+        let movie = provider.item(atIndex: indexPath.row)
+        
+        mainCoordinator.showMovieDetail(movie: movie)
+        
     }
     
 }
 
 //MARK: - CollectionView CompositionalLayout
 extension HomeViewController {
+
     func createLayout() -> UICollectionViewLayout {
         let layout = (UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-
-            let section = self?.dataSource.sections[sectionIndex]
-            return section?.sectionLayout()
+            
+            switch(sectionIndex) {
+            case 0:
+                return self?.makeBannerSection()
+            case 1:
+                return self?.makeHorizontalPosterSection()
+            case 2:
+                return self?.makeListSection()
+            case 3:
+                return self?.makeDecoratedListSection()
+            default:
+                return nil
+            }
         })
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
         
         return layout
     }
+    
+    func makeBannerSection() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        let sectionHeader = sectionBuilder.createTitleSectionHeader()
 
+        let section: NSCollectionLayoutSection
+        section = sectionBuilder.createBannerSection()
+        section.contentInsets.top = 10
+        section.contentInsets.bottom = 10
+        
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    func makeHorizontalPosterSection() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        let sectionHeader = sectionBuilder.createTitleSectionHeader()
+
+        let section: NSCollectionLayoutSection
+        section = sectionBuilder.createHorizontalPosterSection()
+        section.contentInsets.top = 10
+        section.contentInsets.bottom = 20
+        
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    func makeListSection() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        let sectionHeader = sectionBuilder.createTitleSectionHeader()
+
+        let section: NSCollectionLayoutSection
+        section = sectionBuilder.createListSection()
+        section.contentInsets.bottom = 30
+        
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+
+    func makeDecoratedListSection() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        let sectionHeader = sectionBuilder.createTitleSectionHeader()
+
+        let section: NSCollectionLayoutSection
+        section = sectionBuilder.createDecoratedListSection()
+        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
 }

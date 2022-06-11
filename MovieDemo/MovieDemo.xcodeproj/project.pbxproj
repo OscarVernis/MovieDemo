@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502F500251C2D38003EEC0A /* CustomButton.swift */; };
+		55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55040587285429890027E1C0 /* SectionedCollectionDataSource.swift */; };
 		5505779E284DAA0F007ED892 /* MovieString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5505779D284DAA0F007ED892 /* MovieString.swift */; };
 		550577A0284DAA1E007ED892 /* PersonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5505779F284DAA1E007ED892 /* PersonString.swift */; };
 		550577A2284DAA2C007ED892 /* UserString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550577A1284DAA2C007ED892 /* UserString.swift */; };
@@ -237,6 +238,7 @@
 
 /* Begin PBXFileReference section */
 		5502F500251C2D38003EEC0A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		55040587285429890027E1C0 /* SectionedCollectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedCollectionDataSource.swift; sourceTree = "<group>"; };
 		5505779D284DAA0F007ED892 /* MovieString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieString.swift; sourceTree = "<group>"; };
 		5505779F284DAA1E007ED892 /* PersonString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonString.swift; sourceTree = "<group>"; };
 		550577A1284DAA2C007ED892 /* UserString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserString.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 			isa = PBXGroup;
 			children = (
 				553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */,
+				55040587285429890027E1C0 /* SectionedCollectionDataSource.swift */,
 				553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */,
 				553D6AF02853C2E5001491CB /* HomeDataSource.swift */,
 				553D6AF22853C5BC001491CB /* ProviderDataSource.swift */,
@@ -1339,6 +1342,7 @@
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
 				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,
+				55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedDataProvider.swift in Sources */,
 				55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,

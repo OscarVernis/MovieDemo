@@ -28,7 +28,7 @@ class TitleHeaderDataSource: NSObject, UICollectionViewDataSource {
 //            self.actionHandler?(self)
 //        }
 //        
-//        HomeTitleSectionConfigurator().configure(headerView: sectionTitleView, title: sectionType.title(), tapHandler: actionHandler)
+        HomeTitleSectionConfigurator().configure(headerView: sectionTitleView, title: title)
         
         return sectionTitleView
     }

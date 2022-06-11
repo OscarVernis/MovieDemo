@@ -10,17 +10,14 @@ import Foundation
 import UIKit
 import SwiftUI
 
-class HomeDataSource: NSObject {
-    unowned var collectionView: UICollectionView?
-    var dataSources: [UICollectionViewDataSource]!
+class HomeDataSource: SectionedCollectionDataSource {
+    unowned var collectionView: UICollectionView
+
+    var providers: [MoviesDataProvider] = []
     
-    var providers: [MoviesDataProvider] {
-        let providerDataSources = dataSources as? [ProviderDataSource<MoviesDataProvider>] ?? []
-        return providerDataSources.map(\.dataProvider)
-    }
-    
-    override init() {
-        super.init()
+    init(collectionView: UICollectionView) {
+        self.collectionView = collectionView
+        super.init(dataSources: [])
         
         registerReusableViews()
         setupDataSources()
@@ -32,8 +29,6 @@ class HomeDataSource: NSObject {
     
     //MARK: - Setup
     func registerReusableViews() {
-        guard let collectionView = collectionView else { return }
-
         MoviePosterInfoCell.register(withCollectionView: collectionView)
         MovieBannerCell.register(withCollectionView: collectionView)
         MovieRatingListCell.register(withCollectionView: collectionView)
@@ -44,7 +39,7 @@ class HomeDataSource: NSObject {
     func refresh() {
         providers.forEach { $0.refresh() }
     }
-    
+        
     //MARK: - Data Sources
     func setupDataSources() {
         dataSources = [
@@ -57,14 +52,17 @@ class HomeDataSource: NSObject {
         for (section, provider) in providers.enumerated() {
             provider.didUpdate = { [weak self] error in
                 self?.didUpdate?(section, error)
-                self?.collectionView?.reloadSections(IndexSet(integer: section))
+                self?.collectionView.reloadData()
             }
         }
 
     }
     
     func makeNowPlaying() -> UICollectionViewDataSource {
-        let dataSource = ProviderDataSource(dataProvider: MoviesDataProvider(.NowPlaying),
+        let provider = MoviesDataProvider(.NowPlaying)
+        providers.append(provider)
+        
+        let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: MovieBannerCell.reuseIdentifier) { movie, cell, _ in
             guard let cell = cell as? MovieBannerCell else { return }
                     
@@ -78,7 +76,10 @@ class HomeDataSource: NSObject {
     }
     
     func makeUpcoming() -> UICollectionViewDataSource {
-        let dataSource = ProviderDataSource(dataProvider: MoviesDataProvider(.Upcoming),
+        let provider = MoviesDataProvider(.Upcoming)
+        providers.append(provider)
+        
+        let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: MoviePosterInfoCell.reuseIdentifier) { movie, cell, _ in
             guard let cell = cell as? MoviePosterInfoCell else { return }
                     
@@ -92,7 +93,10 @@ class HomeDataSource: NSObject {
     }
     
     func makePopular() -> UICollectionViewDataSource {
-        let dataSource = ProviderDataSource(dataProvider: MoviesDataProvider(.Popular),
+        let provider = MoviesDataProvider(.Popular)
+        providers.append(provider)
+        
+        let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: MovieInfoListCell.reuseIdentifier) { movie, cell, _ in
             guard let cell = cell as? MovieInfoListCell else { return }
                     
@@ -106,7 +110,10 @@ class HomeDataSource: NSObject {
     }
     
     func makeTopRated() -> UICollectionViewDataSource {
-        let dataSource = ProviderDataSource(dataProvider: MoviesDataProvider(.TopRated),
+        let provider = MoviesDataProvider(.TopRated)
+        providers.append(provider)
+        
+        let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: MovieRatingListCell.reuseIdentifier) { movie, cell, indexPath in
             guard let cell = cell as? MovieRatingListCell else { return }
                     
@@ -117,6 +124,13 @@ class HomeDataSource: NSObject {
                                                           dataSource: dataSource)
         
         return titleDataSource
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let dataSource = dataSources[indexPath.section]
+        let indexPath = IndexPath(row: indexPath.row, section: 0)
+
+        return dataSource.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at:indexPath)
     }
     
 }
