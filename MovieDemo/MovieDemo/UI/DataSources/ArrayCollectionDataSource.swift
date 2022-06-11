@@ -8,15 +8,17 @@
 import Foundation
 import UIKit
 
-class ArrayCollectionDataSource<Model, C: CellConfigurator>: NSObject, UICollectionViewDataSource {
+class ArrayCollectionDataSource<Model>: NSObject, UICollectionViewDataSource {
+    typealias CellConfigurator = (Model, UICollectionViewCell, IndexPath) -> Void
+
     var models: [Model]
         
     private let reuseIdentifier: String
-    private let cellConfigurator: C
+    private let cellConfigurator: CellConfigurator?
     
     init(models: [Model],
          reuseIdentifier: String,
-         cellConfigurator: C) {
+         cellConfigurator: CellConfigurator? = nil) {
         self.models = models
         self.reuseIdentifier = reuseIdentifier
         self.cellConfigurator = cellConfigurator
@@ -27,10 +29,10 @@ class ArrayCollectionDataSource<Model, C: CellConfigurator>: NSObject, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let model = models[indexPath.row] as! C.Model
+        let model = models[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
-        cellConfigurator.configure(cell: cell as! C.Cell, with: model)
+        cellConfigurator?(model, cell, indexPath)
         
         return cell
     }

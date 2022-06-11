@@ -14,7 +14,7 @@ class UserViewModel {
     private let sessionManager: SessionManager
     private let service: UserLoader
     private let cache: UserCache?
-    private var isLoading = false
+    var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
     
