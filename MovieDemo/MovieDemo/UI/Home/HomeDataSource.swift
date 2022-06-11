@@ -32,19 +32,19 @@ class HomeDataSource: SectionedCollectionDataSource {
     
     //MARK: - Setup
     func registerReusableViews() {
-        MoviePosterInfoCell.register(withCollectionView: collectionView)
-        MovieBannerCell.register(withCollectionView: collectionView)
-        MovieRatingListCell.register(withCollectionView: collectionView)
-        MovieInfoListCell.register(withCollectionView: collectionView)
+        MoviePosterInfoCell.register(to: collectionView)
+        MovieBannerCell.register(to: collectionView)
+        MovieRatingListCell.register(to: collectionView)
+        MovieInfoListCell.register(to: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
     func setupDataSources() {
         dataSources = [
-            dataSource(for: .nowPlaying),
-            dataSource(for: .upcoming),
-            dataSource(for: .popular),
-            dataSource(for: .topRated)
+            makeNowPlaying(),
+            makeUpcoming(),
+            makePopular(),
+            makeTopRated()
         ]
         
         for (section, provider) in providers.enumerated() {
@@ -61,19 +61,6 @@ class HomeDataSource: SectionedCollectionDataSource {
     }
         
     //MARK: - Data Sources
-    func dataSource(for section: Section) -> UICollectionViewDataSource {
-        switch section {
-        case .nowPlaying:
-            return makeNowPlaying()
-        case .upcoming:
-            return makeUpcoming()
-        case .popular:
-            return makePopular()
-        case .topRated:
-            return makeTopRated()
-        }
-    }
-    
     func makeNowPlaying() -> UICollectionViewDataSource {
         let provider = MoviesDataProvider(.NowPlaying)
         providers.append(provider)

@@ -9,7 +9,7 @@
 import UIKit
 
 extension UICollectionViewCell {
-    static func register(withCollectionView collectionView: UICollectionView) {
+    static func register(to collectionView: UICollectionView) {
         collectionView.register(namedNib(), forCellWithReuseIdentifier: reuseIdentifier)
     }
 }

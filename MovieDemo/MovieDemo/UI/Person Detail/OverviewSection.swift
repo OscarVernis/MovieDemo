@@ -22,7 +22,7 @@ class OverviewSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        OverviewCell.register(withCollectionView: collectionView)
+        OverviewCell.register(to: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     

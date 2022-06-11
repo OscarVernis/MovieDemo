@@ -25,7 +25,7 @@ class MoviesSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        MoviePosterInfoCell.register(withCollectionView: collectionView)
+        MoviePosterInfoCell.register(to: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     

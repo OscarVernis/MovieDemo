@@ -117,7 +117,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
 
 //MARK: - CollectionView CompositionalLayout
 extension HomeViewController {
-
     func createLayout() -> UICollectionViewLayout {
         let layout = (UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let section = HomeDataSource.Section(rawValue: sectionIndex)

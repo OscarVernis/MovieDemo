@@ -16,7 +16,7 @@ class LoadingSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        LoadingCell.register(withCollectionView: collectionView)
+        LoadingCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

@@ -21,7 +21,7 @@ class MovieDetailVideoSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        YoutubeVideoCell.register(withCollectionView: collectionView)
+        YoutubeVideoCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

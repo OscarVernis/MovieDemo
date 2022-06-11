@@ -36,8 +36,8 @@ class SearchSection: FetchableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        MovieInfoListCell.register(withCollectionView: collectionView)
-        CreditPhotoListCell.register(withCollectionView: collectionView)
+        MovieInfoListCell.register(to: collectionView)
+        CreditPhotoListCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

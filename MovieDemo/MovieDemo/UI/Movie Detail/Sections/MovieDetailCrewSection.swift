@@ -24,7 +24,7 @@ class MovieDetailCrewSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        InfoListCell.register(withCollectionView: collectionView)
+        InfoListCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

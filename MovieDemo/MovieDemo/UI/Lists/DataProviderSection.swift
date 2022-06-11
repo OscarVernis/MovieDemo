@@ -40,7 +40,7 @@ class DataProviderSection<Provider: ArrayDataProvider, Configurator: CellConfigu
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        Configurator.Cell.register(withCollectionView: collectionView)
+        Configurator.Cell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

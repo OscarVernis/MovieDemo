@@ -26,7 +26,7 @@ class UserProfileHeaderSection: ConfigurableSection {
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         UserProfileHeaderView.registerHeader(withCollectionView: collectionView)
-        LoadingCell.register(withCollectionView: collectionView)
+        LoadingCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

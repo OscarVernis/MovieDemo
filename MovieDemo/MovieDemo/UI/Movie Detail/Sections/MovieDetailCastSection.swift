@@ -24,7 +24,7 @@ class MovieDetailCastSection: ConfigurableSection {
     }
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
-        CreditCell.register(withCollectionView: collectionView)
+        CreditCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

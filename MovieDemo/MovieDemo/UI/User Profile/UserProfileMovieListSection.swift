@@ -44,8 +44,8 @@ class UserProfileMovieListSection: ConfigurableSection {
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
-        MoviePosterInfoCell.register(withCollectionView: collectionView)
-        EmptyMovieCell.register(withCollectionView: collectionView)
+        MoviePosterInfoCell.register(to: collectionView)
+        EmptyMovieCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {
