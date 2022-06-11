@@ -28,7 +28,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
                         
-        createCollectionView()
+        setupCollectionView()
         setupDataSource()
         setupViewController()
         setupSearch()
@@ -38,7 +38,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         return .portrait
     }
     
-    func createCollectionView() {
+    func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         

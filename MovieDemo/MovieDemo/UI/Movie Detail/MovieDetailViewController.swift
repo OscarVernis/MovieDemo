@@ -13,7 +13,7 @@ import SwiftUI
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator?
     var dataSource: GenericCollectionDataSource!
-        
+    
     let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     
     private var sections = [ConfigurableSection]()

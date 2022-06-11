@@ -13,13 +13,7 @@ struct MovieDetailTitleSectionConfigurator {
         headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 20)!
         
         headerView.titleLabel.text = title
-        
-        if tapHandler == nil {
-            headerView.actionButton.isHidden = true
-        } else {
-            headerView.actionButton.isHidden = false
-            headerView.tapHandler = tapHandler
-        }
+        headerView.tapHandler = tapHandler
     }
     
 }
