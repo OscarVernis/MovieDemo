@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import Combine
 
 class PaginatedDataProvider<T>: ArrayDataProvider {
     typealias Model = T
     
-    var items = [T]()
+    @Published var items = [T]()
     
     init() {}
     

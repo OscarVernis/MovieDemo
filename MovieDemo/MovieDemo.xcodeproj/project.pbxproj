@@ -51,6 +51,10 @@
 		5535CE6B251406E700260617 /* CellConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5535CE6A251406E700260617 /* CellConfigurator.swift */; };
 		553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553660F922DAFC0B00BE03BB /* CastCredit.swift */; };
 		5536610722DB037500BE03BB /* CrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5536610522DB037500BE03BB /* CrewCredit.swift */; };
+		553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */; };
+		553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */; };
+		553D6AF12853C2E5001491CB /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AF02853C2E5001491CB /* HomeDataSource.swift */; };
+		553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AF22853C5BC001491CB /* ProviderDataSource.swift */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
 		5545203822D99CB0004B7924 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203622D99CB0004B7924 /* Movie.swift */; };
 		5545203B22D99D8F004B7924 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203A22D99D8F004B7924 /* MovieService.swift */; };
@@ -281,6 +285,10 @@
 		5535CE6A251406E700260617 /* CellConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellConfigurator.swift; sourceTree = "<group>"; };
 		553660F922DAFC0B00BE03BB /* CastCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCredit.swift; sourceTree = "<group>"; };
 		5536610522DB037500BE03BB /* CrewCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewCredit.swift; sourceTree = "<group>"; };
+		553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayCollectionDataSource.swift; sourceTree = "<group>"; };
+		553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderDataSource.swift; sourceTree = "<group>"; };
+		553D6AF02853C2E5001491CB /* HomeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
+		553D6AF22853C5BC001491CB /* ProviderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDataSource.swift; sourceTree = "<group>"; };
 		553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSuccessResult.swift; sourceTree = "<group>"; };
 		5545203622D99CB0004B7924 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		5545203A22D99D8F004B7924 /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
@@ -499,6 +507,7 @@
 		5518200327DFE3FB00237F39 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				553D6AEB2853C0BB001491CB /* DataSources */,
 				5506BAA92512E2B10052B0F2 /* Home */,
 				55518D4A251151B300DAEB7F /* Movie Detail */,
 				556807C42530E85300F8DF16 /* Person Detail */,
@@ -560,6 +569,17 @@
 				5511D95425317056004B3697 /* BlurButton.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		553D6AEB2853C0BB001491CB /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */,
+				553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */,
+				553D6AF02853C2E5001491CB /* HomeDataSource.swift */,
+				553D6AF22853C5BC001491CB /* ProviderDataSource.swift */,
+			);
+			path = DataSources;
 			sourceTree = "<group>";
 		};
 		5547ED57282590BA0079BD14 /* ViewController Tests */ = {
@@ -1284,6 +1304,7 @@
 				5536610722DB037500BE03BB /* CrewCredit.swift in Sources */,
 				55EDA71628111CC80055696F /* ImageAsset.swift in Sources */,
 				557FFA8B251A625900D79F68 /* SessionManager.swift in Sources */,
+				553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */,
 				556807C72530E87A00F8DF16 /* PersonDetailViewController.swift in Sources */,
 				55164AFB25154A6500D219BC /* MoviePosterInfoCell.swift in Sources */,
 				55D05CBF251AE48100FD5F8C /* User.swift in Sources */,
@@ -1303,6 +1324,7 @@
 				55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */,
 				5532CF912525029400663844 /* MovieDetailVideoSection.swift in Sources */,
 				55EA4A7B25394CD600306DA0 /* SearchSection.swift in Sources */,
+				553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				55549901282232BF00E89119 /* SessionService.swift in Sources */,
 				553190072834082F0035036F /* SearchViewController.swift in Sources */,
@@ -1316,6 +1338,7 @@
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
+				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedDataProvider.swift in Sources */,
 				55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
@@ -1386,6 +1409,7 @@
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */,
 				55ABEB79283365AF009DCE7C /* LoginViewModel.swift in Sources */,
+				553D6AF12853C2E5001491CB /* HomeDataSource.swift in Sources */,
 				55EE51A2251E99B100915AB3 /* EmptyMovieCell.swift in Sources */,
 				55206B872532933600AD13AE /* PersonCastCreditsSection.swift in Sources */,
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,

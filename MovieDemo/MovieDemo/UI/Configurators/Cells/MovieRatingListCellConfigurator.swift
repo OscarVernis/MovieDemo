@@ -8,7 +8,16 @@
 
 import UIKit
 
-struct MovieRatingListCellConfigurator {
+struct MovieRatingListCellConfigurator: CellConfigurator {
+    typealias Cell = MovieRatingListCell
+    
+    typealias Model = MovieViewModel
+    
+    #warning("Fix This")
+    func configure(cell: MovieRatingListCell, with model: MovieViewModel) {
+        configure(cell: cell, withMovie: model, showSeparator: true)
+    }
+    
     func configure(cell: MovieRatingListCell, withMovie movie: MovieViewModel, showSeparator: Bool = true) {
         cell.titleLabel.text = movie.title
         

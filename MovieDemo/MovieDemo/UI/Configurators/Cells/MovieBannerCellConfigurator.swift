@@ -8,8 +8,11 @@
 
 import UIKit
 
-struct MovieBannerCellConfigurator {
-    func configure(cell: MovieBannerCell, withMovie movie: MovieViewModel) {
+struct MovieBannerCellConfigurator: CellConfigurator {
+    typealias Cell = MovieBannerCell
+    typealias Model = MovieViewModel
+    
+    func configure(cell: MovieBannerCell, with movie: MovieViewModel) {
         cell.bannerImageView.cancelImageRequest()
         cell.bannerImageView.image = .asset(.BackdropPlaceholder)
         

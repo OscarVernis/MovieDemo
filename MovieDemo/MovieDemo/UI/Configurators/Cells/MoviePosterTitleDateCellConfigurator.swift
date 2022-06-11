@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct MoviePosterTitleDateCellConfigurator {
+struct MoviePosterTitleDateCellConfigurator: CellConfigurator {
     func configure(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
         cell.posterImageView.cancelImageRequest()
         cell.posterImageView.image = .asset(.PersonPlaceholder)

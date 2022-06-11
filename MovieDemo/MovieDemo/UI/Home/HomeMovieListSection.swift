@@ -142,7 +142,7 @@ class HomeMovieListSection: FetchableSection {
         case .NowPlaying:
             let bannerCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieBannerCell.reuseIdentifier, for: indexPath) as! MovieBannerCell
             
-            MovieBannerCellConfigurator().configure(cell: bannerCell, withMovie: movie)
+            MovieBannerCellConfigurator().configure(cell: bannerCell, with: movie)
             cell = bannerCell
         case .Upcoming:
             let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
