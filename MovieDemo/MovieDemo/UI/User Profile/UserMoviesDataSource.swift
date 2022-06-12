@@ -17,6 +17,10 @@ class UserMoviesDataSource: ArrayCollectionDataSource<MovieViewModel> {
         super.init(models: models, reuseIdentifier: "")
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        models.count > 0 ? models.count : 1
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if models.count > 0 {
             let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell

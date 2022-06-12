@@ -11,7 +11,7 @@ import UIKit
 
 class UserProfileDataSource: SectionedCollectionDataSource {
     enum Section: Int, CaseIterable {
-        case favorites, watchlist, rated
+        case header, favorites, watchlist, rated
     }
     
     unowned var collectionView: UICollectionView
@@ -81,7 +81,15 @@ class UserProfileDataSource: SectionedCollectionDataSource {
         return titleDataSource
     }
     
+    //MARK: - Header Data Source
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let dataSource = dataSources[indexPath.section]
+        let indexPath = IndexPath(row: indexPath.row, section: 0)
+
+        return dataSource.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at:indexPath)
+    }
     
+    //MARK: - Helper
     fileprivate func emptyMessage(for section: Section) -> NSAttributedString {
         var messageString = NSAttributedString()
         switch section {
@@ -102,7 +110,6 @@ class UserProfileDataSource: SectionedCollectionDataSource {
             fullString.append(NSAttributedString(string: .localized(UserString.WillAppearMessage)))
 
             messageString = fullString
-            break
         case .rated:
             let imageAttachment = NSTextAttachment()
             imageAttachment.image = .asset(.star).withTintColor(.asset(.RatingColor))
@@ -111,7 +118,8 @@ class UserProfileDataSource: SectionedCollectionDataSource {
             fullString.append(NSAttributedString(attachment: imageAttachment))
             fullString.append(NSAttributedString(string: .localized(UserString.WillAppearMessage)))
             messageString = fullString
-            break
+        default:
+            messageString = NSAttributedString()
         }
 
         return messageString

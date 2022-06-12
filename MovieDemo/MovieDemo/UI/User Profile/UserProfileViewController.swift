@@ -16,12 +16,10 @@ class UserProfileViewController: UIViewController {
     private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
     
     var collectionView: UICollectionView!
-    var dataSource: GenericCollectionDataSource!
+    var dataSource: UserProfileDataSource!
     
     let sectionBuilder = MoviesCompositionalLayoutBuilder()
-    
-    private var sections: [ConfigurableSection]!
-    
+        
     private var user = UserViewModel()
 
     //MARK: - View Controller
@@ -37,10 +35,6 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        sections = [
-            headerSection(loading: true)
-        ]
                 
         createCollectionView()
         setupCollectionView()
@@ -61,7 +55,6 @@ class UserProfileViewController: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        collectionView.dataSource = dataSource
         collectionView.delegate = self
 
         view.addSubview(collectionView)
@@ -78,7 +71,8 @@ class UserProfileViewController: UIViewController {
         //Set so the scrollIndicator stops before the status bar
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
-        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)   
+        dataSource = UserProfileDataSource(collectionView: collectionView, user: user)
+        collectionView.dataSource = dataSource
     }
     
     fileprivate func setupDataProvider()  {
@@ -100,33 +94,11 @@ class UserProfileViewController: UIViewController {
                 self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
             }
             
-            self.reloadSections()
+            self.dataSource.reload()
+            self.collectionView.reloadData()
         }
         
         user.didUpdate = updateCollectionView
-    }
-    
-    //MARK: - Section Loading
-    fileprivate func headerSection(loading: Bool = false) -> UserProfileHeaderSection {
-        let headerSection = UserProfileHeaderSection(user: user)
-        headerSection.isLoading = loading
-        headerSection.logoutButtonHandler = { [weak self] in
-            self?.logout()
-        }
-        
-        return headerSection
-    }
-    
-    fileprivate func reloadSections() {        
-        sections = [
-            headerSection(),
-            UserProfileMovieListSection(.Favorites, movies: user.favorites, coordinator: mainCoordinator),
-            UserProfileMovieListSection(.Watchlist, movies: user.watchlist, coordinator: mainCoordinator),
-            UserProfileMovieListSection(.Rated, movies: user.rated, coordinator: mainCoordinator),
-        ]
-        
-        dataSource.sections = sections
-        collectionView.reloadData()
     }
     
 }
@@ -141,10 +113,10 @@ extension UserProfileViewController {
 //MARK: - UICollectionViewDelegate
 extension UserProfileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let section = sections[indexPath.section] as? UserProfileMovieListSection, section.movies.count > 0 {
-            let movie = section.movies[indexPath.row]
-            mainCoordinator?.showMovieDetail(movie: movie)
-        }
+//        if let section = sections[indexPath.section] as? UserProfileMovieListSection, section.movies.count > 0 {
+//            let movie = section.movies[indexPath.row]
+//            mainCoordinator?.showMovieDetail(movie: movie)
+//        }
     }
 
 }
@@ -155,12 +127,23 @@ extension UserProfileViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
             
-            let section = self.dataSource.sections[sectionIndex]
-            return section.sectionLayout()
+            let section = UserProfileDataSource.Section(rawValue: sectionIndex)!
+            
+            switch section {
+            case .header:
+                return self.makeHeaderSection()
+            case .favorites:
+                return (self.user.favorites.count > 0) ? self.makeMoviesSection() : self.makeEmptySection()
+            case .watchlist:
+                return (self.user.watchlist.count > 0) ? self.makeMoviesSection() : self.makeEmptySection()
+            case .rated:
+                return (self.user.rated.count > 0) ? self.makeMoviesSection() : self.makeEmptySection()
+            }
         }
         
         return layout
     }
+    
     
     func makeHeaderSection() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createSection(groupHeight: .estimated(150))
