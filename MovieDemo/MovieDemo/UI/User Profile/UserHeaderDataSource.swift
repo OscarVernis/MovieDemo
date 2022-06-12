@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class UserHeaderDataSource: NSObject, UICollectionViewDataSource {
-    private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
     let user: UserViewModel
     
     init(user: UserViewModel) {
@@ -21,7 +20,7 @@ class UserHeaderDataSource: NSObject, UICollectionViewDataSource {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
         
         //Adjust the top of the Header so it doesn't go unde the bar
-        headerView.topConstraint.constant = topInset + 55
+        headerView.topConstraint.constant = UIWindow.topInset + 55
         
         headerView.configure(user: user)
         

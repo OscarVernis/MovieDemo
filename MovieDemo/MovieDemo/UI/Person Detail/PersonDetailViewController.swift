@@ -85,8 +85,8 @@ class PersonDetailViewController: UIViewController, GenericCollection {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
-        let bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
+        let topInset = UIWindow.topInset
+        let bottomInset = UIWindow.bottomInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
 
         

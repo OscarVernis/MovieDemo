@@ -11,10 +11,6 @@ import UIKit
 class UserProfileViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
     
-    //TODO: Move this to Extension
-    private var topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
-    private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
-    
     var collectionView: UICollectionView!
     var dataSource: UserProfileDataSource!
     
@@ -69,7 +65,7 @@ class UserProfileViewController: UIViewController {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: UIWindow.topInset, left: 0, bottom: 0, right: 0)
         
         dataSource = UserProfileDataSource(collectionView: collectionView, user: user)
         collectionView.dataSource = dataSource

@@ -20,6 +20,7 @@
 		5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */; };
 		5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAB72512EC9F0052B0F2 /* CreditCell.swift */; };
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
+		550869B22855765700465008 /* UIWindow+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550869B12855765700465008 /* UIWindow+Utils.swift */; };
 		550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
@@ -251,6 +252,7 @@
 		5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesCompositionalLayoutBuilder.swift; sourceTree = "<group>"; };
 		5506BAB72512EC9F0052B0F2 /* CreditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCell.swift; sourceTree = "<group>"; };
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
+		550869B12855765700465008 /* UIWindow+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Utils.swift"; sourceTree = "<group>"; };
 		550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
@@ -1123,6 +1125,7 @@
 				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
 				55D309DB281325D0004F2725 /* URLSession+Extensions.swift */,
 				559B08D2283D4EBF002DA8DF /* AnyPublisher+Async.swift */,
+				550869B12855765700465008 /* UIWindow+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1340,6 +1343,7 @@
 				553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				55549901282232BF00E89119 /* SessionService.swift in Sources */,
+				550869B22855765700465008 /* UIWindow+Utils.swift in Sources */,
 				553190072834082F0035036F /* SearchViewController.swift in Sources */,
 				555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */,
 				55EE573D284D948400C6A170 /* ErrorString.swift in Sources */,

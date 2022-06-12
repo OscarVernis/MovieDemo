@@ -9,8 +9,6 @@
 import UIKit
 
 class MovieDetailInfoSection: ConfigurableSection {
-    private var bottomInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
-    
     var title: String = .localized(MovieString.Info)
     var movieInfo: [[String : String]]
         
@@ -31,7 +29,7 @@ class MovieDetailInfoSection: ConfigurableSection {
         let section = sectionBuilder.createListSection(height: 50)
         
         section.contentInsets.top = 5
-        section.contentInsets.bottom = self.bottomInset + 30
+        section.contentInsets.bottom = UIWindow.bottomInset + 30
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]

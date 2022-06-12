@@ -8,14 +8,11 @@
 
 import UIKit
 import SPStorkController
-import SwiftUI
 
 class MovieDetailViewController: UIViewController, GenericCollection {
     weak var mainCoordinator: MainCoordinator?
     var dataSource: GenericCollectionDataSource!
-    
-    let topInset = UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
-    
+        
     private var sections = [ConfigurableSection]()
     private var isLoading = true
     
@@ -74,7 +71,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         navigationItem.largeTitleDisplayMode = .always
         
         //Set so the scrollIndicator stops before the status bar
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: UIWindow.topInset, left: 0, bottom: 0, right: 0)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
@@ -106,7 +103,7 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         guard let headerView = headerView else { return }
         
         //Adjust the top of the Poster Image so it doesn't go unde the bar
-        headerView.topConstraint.constant = topInset + 55
+        headerView.topConstraint.constant = UIWindow.topInset + 55
         
         headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
         
