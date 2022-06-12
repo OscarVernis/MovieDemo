@@ -21,7 +21,7 @@ class HomeDataSource: SectionedCollectionDataSource {
     
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
-        super.init(dataSources: [])
+        super.init()
         
         registerReusableViews()
         setupDataSources()

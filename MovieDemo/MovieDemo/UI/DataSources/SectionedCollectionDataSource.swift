@@ -11,7 +11,7 @@ import UIKit
 class SectionedCollectionDataSource: NSObject, UICollectionViewDataSource {
     var dataSources: [UICollectionViewDataSource]
     
-    init(dataSources: [UICollectionViewDataSource]) {
+    init(dataSources: [UICollectionViewDataSource] = []) {
         self.dataSources = dataSources
     }
     

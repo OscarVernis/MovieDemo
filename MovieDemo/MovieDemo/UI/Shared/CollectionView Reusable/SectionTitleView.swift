@@ -28,3 +28,17 @@ class SectionTitleView: UICollectionReusableView {
         tapHandler?()
     }
 }
+
+//MARK: - Configure
+extension SectionTitleView {
+    static func configureForHome(headerView: SectionTitleView, title: String) {
+        headerView.titleLabel.text = title
+    }
+    
+    static func configureForDetail(headerView: SectionTitleView, title: String) {
+        headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 20)!
+        
+        headerView.titleLabel.text = title
+    }
+    
+}

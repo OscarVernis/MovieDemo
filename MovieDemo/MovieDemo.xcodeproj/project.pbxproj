@@ -83,7 +83,6 @@
 		555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */; };
 		555725AB2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */; };
 		55596E00251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596DFF251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift */; };
-		55596E062513076E00A2B821 /* HomeTitleSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E052513076E00A2B821 /* HomeTitleSectionConfigurator.swift */; };
 		55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E0F251317AC00A2B821 /* UIView+Nib.swift */; };
 		555A14492523D97B0024AFAA /* GenericCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A14432523D97B0024AFAA /* GenericCollection.swift */; };
 		555A144B2523D97B0024AFAA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A14452523D97B0024AFAA /* HomeViewController.swift */; };
@@ -316,7 +315,6 @@
 		555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCrewCredit.swift; sourceTree = "<group>"; };
 		555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCrewCreditViewModel.swift; sourceTree = "<group>"; };
 		55596DFF251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTitleSectionConfigurator.swift; sourceTree = "<group>"; };
-		55596E052513076E00A2B821 /* HomeTitleSectionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTitleSectionConfigurator.swift; sourceTree = "<group>"; };
 		55596E0F251317AC00A2B821 /* UIView+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Nib.swift"; sourceTree = "<group>"; };
 		555A14432523D97B0024AFAA /* GenericCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericCollection.swift; sourceTree = "<group>"; };
 		555A14452523D97B0024AFAA /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -679,7 +677,6 @@
 			isa = PBXGroup;
 			children = (
 				55596DFF251305BC00A2B821 /* MovieDetailTitleSectionConfigurator.swift */,
-				55596E052513076E00A2B821 /* HomeTitleSectionConfigurator.swift */,
 			);
 			name = "Suplementary Views";
 			sourceTree = "<group>";
@@ -1298,7 +1295,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55596E062513076E00A2B821 /* HomeTitleSectionConfigurator.swift in Sources */,
 				55A60DD62527AAB30082810C /* MediaViewerTransitionDelegate.swift in Sources */,
 				55915773251438390085DB69 /* BlurBackgroundView.swift in Sources */,
 				5519CB2A27F78FE500AAE38E /* SearchDataProvider.swift in Sources */,

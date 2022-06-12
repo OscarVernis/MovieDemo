@@ -21,7 +21,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
         self.collectionView = collectionView
         self.user = user
         
-        super.init(dataSources: [])
+        super.init()
         
         registerReusableViews()
         setupDataSources()
@@ -56,10 +56,8 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     
     func makeTitleHeader(title: String, dataSource: UICollectionViewDataSource) -> UICollectionViewDataSource {
         let titleDataSource = TitleHeaderDataSource(title: title,
-                                                    dataSource: dataSource) { title, header in
-            guard let header = header as? SectionTitleView else { return }
-            MovieDetailTitleSectionConfigurator().configure(headerView: header, title: title)
-        }
+                                                    dataSource: dataSource,
+                                                    headerConfigurator: SectionTitleView.configureForDetail)
         
         return titleDataSource
     }

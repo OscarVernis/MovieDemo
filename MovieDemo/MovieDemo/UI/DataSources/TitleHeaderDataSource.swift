@@ -10,29 +10,23 @@ import Foundation
 import UIKit
 
 class TitleHeaderDataSource: NSObject, UICollectionViewDataSource {
-    typealias HeaderConfigurator = (String, UICollectionReusableView) -> Void
+    typealias TitleHeaderConfigurator = (SectionTitleView, String) -> Void
     
     let title: String
     let contentDataSource: UICollectionViewDataSource
-    var headerConfigurator: HeaderConfigurator = { title, header in
-        guard let header = header as? SectionTitleView else { return }
-        HomeTitleSectionConfigurator().configure(headerView: header, title: title)
-    }
+    var headerConfigurator: TitleHeaderConfigurator
     
-    init(title: String, dataSource: UICollectionViewDataSource, headerConfigurator: HeaderConfigurator? = nil) {
+    init(title: String, dataSource: UICollectionViewDataSource, headerConfigurator: @escaping TitleHeaderConfigurator = SectionTitleView.configureForHome(headerView:title:)) {
         self.title = title
         self.contentDataSource = dataSource
-        
-        if let headerConfigurator = headerConfigurator {
-            self.headerConfigurator = headerConfigurator
-        }
+        self.headerConfigurator = headerConfigurator
     }
     
     //Header DataSource
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as? SectionTitleView  else { fatalError() }
         
-        headerConfigurator(title, sectionTitleView)
+        headerConfigurator(sectionTitleView, title)
         
         return sectionTitleView
     }
