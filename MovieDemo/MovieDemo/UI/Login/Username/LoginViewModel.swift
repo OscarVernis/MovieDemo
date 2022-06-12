@@ -17,7 +17,7 @@ class LoginViewModel {
     
     let sessionManager: SessionManager
     
-    init(sessionManager: SessionManager = SessionManager.shared) {
+    init(sessionManager: SessionManager) {
         self.sessionManager = sessionManager
     }
     

@@ -12,8 +12,8 @@ import Combine
 class MovieViewModel {
     private var movie: Movie
     
-    private var service: RemoteMovieDetailsLoader!
-    private var sessionManager: SessionManager?
+    var service: RemoteMovieDetailsLoader
+    
     var userStates: MovieUserStatesViewModel? = nil
 
     private var isLoading = false
@@ -31,17 +31,12 @@ class MovieViewModel {
     //Store the movie videos
     var videos = [MovieVideoViewModel]()
     
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellable: AnyCancellable? = nil
     
-    init(movie: Movie, sessionManager: SessionManager? = SessionManager.shared) {
+    init(movie: Movie, service: RemoteMovieDetailsLoader = RemoteMovieDetailsLoader()) {
         self.movie = movie
-        self.sessionManager = sessionManager
-        self.service = RemoteMovieDetailsLoader(sessionId: sessionManager?.sessionId)
-        updateInfo()
-        
-        if hasUserStates {
-            userStates = MovieUserStatesViewModel(movie: self, sessionId: sessionManager?.sessionId)
-        }
+        self.service = service
+        updateInfo() 
     }
     
     func updateMovie(_ movie: Movie) {
@@ -57,7 +52,7 @@ class MovieViewModel {
     }
     
     var hasUserStates: Bool {
-        return sessionManager?.isLoggedIn ?? false
+        return userStates != nil
     }
 }
 
@@ -99,7 +94,7 @@ extension MovieViewModel {
     }
     
     private func getMovieDetails() {
-        service.getMovieDetails(movieId: movie.id!)
+        cancellable = service.getMovieDetails(movieId: movie.id!)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
@@ -110,7 +105,6 @@ extension MovieViewModel {
             } receiveValue: { [weak self] movie in
                 self?.updateMovie(movie)
             }
-            .store(in: &cancellables)
     }
     
 }

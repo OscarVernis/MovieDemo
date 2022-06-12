@@ -15,15 +15,21 @@ final class MainCoordinator {
     private var sessionManager = SessionManager.shared
     
     //If set to true, it will force you to login before showing Home
-    private let isLoginRequired: Bool
+    private var isLoginRequired: Bool = false
     
     //Set to true uses Web Auth, false uses username and password.
-    private let usesWebLogin: Bool
+    private var usesWebLogin: Bool = false
     
-    init(window: UIWindow, isLoginRequired: Bool = false, usesWebLogin: Bool = true) {
+    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = true) {
         self.window = window
-        self.isLoginRequired = isLoginRequired
-        self.usesWebLogin = usesWebLogin
+        
+        if let isLoginRequired = isLoginRequired {
+            self.isLoginRequired = isLoginRequired
+        }
+        
+        if let usesWebLogin = usesWebLogin {
+            self.usesWebLogin = usesWebLogin
+        }
     }
     
     func handle(error: UserFacingError, shouldDismiss: Bool = false) {
@@ -73,6 +79,8 @@ final class MainCoordinator {
     
     func showDefaultLogin(animated: Bool = true) {
         let lvc = LoginViewController.instantiateFromStoryboard()
+        lvc.loginViewModel = LoginViewModel(sessionManager: SessionManager.shared)
+        
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
             lvc.modalPresentationStyle = .overFullScreen
@@ -93,7 +101,9 @@ final class MainCoordinator {
     
     func showWebLogin(animated: Bool = true) {
         let lvc = WebLoginViewController.instantiateFromStoryboard()
+        lvc.sessionManager = sessionManager
         lvc.coordinator = self
+        
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
             lvc.modalPresentationStyle = .overFullScreen
@@ -139,12 +149,13 @@ final class MainCoordinator {
     }
     
     func showUserProfile(animated: Bool = true) {
-        if !sessionManager.isLoggedIn {
-            showLogin(animated: animated)
-        } else {
-            let upvc = UserProfileViewController(coordinator: self)
+        if let sessionId = sessionManager.sessionId {
+            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
+            let upvc = UserProfileViewController(user: user, coordinator: self)
             
             rootNavigationViewController?.pushViewController(upvc, animated: animated)
+        } else {
+            showLogin(animated: animated)
         }
     }
     
@@ -156,6 +167,14 @@ final class MainCoordinator {
     }
     
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
+        if let sessionId = sessionManager.sessionId {
+            movie.service = RemoteMovieDetailsLoader(sessionId: sessionId)
+            movie.userStates = MovieUserStatesViewModel(movie: movie, service: RemoteUserState(sessionId: sessionId))
+        } else {
+            movie.service = RemoteMovieDetailsLoader()
+            movie.userStates = nil
+        }
+        
         let mdvc = MovieDetailViewController(movie: movie)
         mdvc.mainCoordinator = self
         

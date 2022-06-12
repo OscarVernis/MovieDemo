@@ -37,7 +37,10 @@ class LoginViewControllerTests: XCTestCase {
     
     func test_deallocation() throws {
         assertDeallocation {
-            LoginViewController.instantiateFromStoryboard()
+            let lvc = LoginViewController.instantiateFromStoryboard()
+            lvc.loginViewModel = LoginViewModel(sessionManager: SessionManager.shared)
+            
+            return lvc
         }
     }
     

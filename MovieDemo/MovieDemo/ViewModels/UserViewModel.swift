@@ -11,17 +11,14 @@ import Combine
 
 class UserViewModel {
     var user: User?
-    private let sessionManager: SessionManager
     private let service: UserLoader
     private let cache: UserCache?
     var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(sessionManager: SessionManager = SessionManager.shared,
-         cache: UserCache? = UserCache()) {
-        self.sessionManager = sessionManager
-        self.service = RemoteUserLoader(sessionId: sessionManager.sessionId)
+    init(service: UserLoader, cache: UserCache? = UserCache()) {
+        self.service = service
         self.cache = cache
     }
     
@@ -54,15 +51,14 @@ class UserViewModel {
     func updateUser() {
         if isLoading { return }
         isLoading = true
-        
-        guard sessionManager.isLoggedIn else { return }
-        isLoading = false
-        
+                
         //Load from Cache
         loadCache()
         
         service.getUserDetails()
             .sink { [weak self] completion in
+                self?.isLoading = false
+
                 switch completion {
                 case .finished:
                     self?.didUpdate?(nil)
@@ -80,8 +76,8 @@ class UserViewModel {
         let user = cache?.load()
         if let user = user {
             self.user = user
-            self.didUpdate?(nil)
+            didUpdate?(nil)
         }
     }
+    
 }
-

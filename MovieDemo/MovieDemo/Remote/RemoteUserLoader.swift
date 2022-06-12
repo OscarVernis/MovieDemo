@@ -10,10 +10,10 @@ import Foundation
 import Combine
 
 struct RemoteUserLoader: UserLoader {
-    let sessionId: String?
+    let sessionId: String
     let service: MovieService
     
-    init(sessionId: String? = nil) {
+    init(sessionId: String) {
         self.sessionId = sessionId
         self.service = MovieService(sessionId: sessionId)
     }

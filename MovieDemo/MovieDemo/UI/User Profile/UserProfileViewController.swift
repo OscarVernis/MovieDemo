@@ -16,11 +16,12 @@ class UserProfileViewController: UIViewController {
     
     let sectionBuilder = MoviesCompositionalLayoutBuilder()
         
-    private var user = UserViewModel()
+    private var user: UserViewModel
 
     //MARK: - View Controller
-    init(coordinator: MainCoordinator? = nil) {
+    init(user: UserViewModel, coordinator: MainCoordinator? = nil) {
         self.mainCoordinator = coordinator
+        self.user = user
         
         super.init(nibName: nil, bundle: nil)
     }

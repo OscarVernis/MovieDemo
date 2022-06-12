@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
     
-    var loginViewModel = LoginViewModel()
+    var loginViewModel: LoginViewModel!
     var cancellables: Set<AnyCancellable> = []
     
     //MARK: - Setup

@@ -11,7 +11,7 @@ import AuthenticationServices
 
 class WebLoginViewController: UIViewController {
     let service = RemoteSessionService()
-    let sessionManager = SessionManager.shared
+    var sessionManager: SessionManager!
     var coordinator: MainCoordinator? = nil
     
     @IBOutlet weak var closeButton: UIButton!
