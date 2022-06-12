@@ -26,7 +26,7 @@ class UserMoviesDataSource: ArrayCollectionDataSource<MovieViewModel> {
             let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
             
             let movie = models[indexPath.row]
-            MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: movie)
+            MoviePosterInfoCell.configureWithRating(cell: posterCell, with: movie)
             
             return posterCell
         } else {

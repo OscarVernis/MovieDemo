@@ -14,7 +14,7 @@ class TopRatedDataSource: ProviderDataSource<MoviesDataProvider, MovieRatingList
     init() {
         super.init(dataProvider: MoviesDataProvider(.TopRated),
                    reuseIdentifier: MovieRatingListCell.reuseIdentifier,
-                   cellConfigurator: MovieRatingListCellConfigurator().configure)
+                   cellConfigurator: MovieRatingListCell.configure)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

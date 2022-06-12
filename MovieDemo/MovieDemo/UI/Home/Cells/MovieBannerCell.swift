@@ -14,4 +14,20 @@ class MovieBannerCell: UICollectionViewCell {
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var infoLabel: UILabel!
 
+    static func configure(cell: MovieBannerCell, with movie: MovieViewModel) {
+        cell.bannerImageView.cancelImageRequest()
+        cell.bannerImageView.image = .asset(.BackdropPlaceholder)
+        
+        cell.titleLabel.text = movie.title
+        
+        cell.infoLabel.text = movie.genres()
+        
+        cell.ratingsView.rating = CGFloat(movie.percentRating)
+        cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
+        
+        if let url = movie.backdropImageURL(size: .w780) {
+            cell.bannerImageView.setRemoteImage(withURL: url)
+        }
+    }
+    
 }

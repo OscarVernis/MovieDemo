@@ -53,7 +53,7 @@ class MoviesSection: ConfigurableSection {
         let posterCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
         
         let recommendedMovie = movies[indexPath.row]
-        MoviePosterTitleRatingCellConfigurator().configure(cell: posterCell, with: recommendedMovie)
+        MoviePosterInfoCell.configureWithRating(cell: posterCell, with: recommendedMovie)
         
         return posterCell
     }

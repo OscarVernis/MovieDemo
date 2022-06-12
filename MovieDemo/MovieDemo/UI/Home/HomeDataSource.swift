@@ -67,7 +67,7 @@ class HomeDataSource: SectionedCollectionDataSource {
         
         let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: MovieBannerCell.reuseIdentifier,
-                                            cellConfigurator: MovieBannerCellConfigurator().configure)
+                                            cellConfigurator: MovieBannerCell.configure)
         
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.NowPlaying),
                                                           dataSource: dataSource)
@@ -81,7 +81,7 @@ class HomeDataSource: SectionedCollectionDataSource {
         
         let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
-                                            cellConfigurator: MoviePosterTitleDateCellConfigurator().configure)
+                                            cellConfigurator: MoviePosterInfoCell.configureWithDate)
         
 
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.Upcoming),

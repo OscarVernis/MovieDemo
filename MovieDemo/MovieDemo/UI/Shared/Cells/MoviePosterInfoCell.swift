@@ -91,3 +91,39 @@ class MoviePosterInfoCell: UICollectionViewCell {
     }
     
 }
+
+//MARK: - Configure
+extension MoviePosterInfoCell {
+    static func configureWithDate(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
+        cell.posterImageView.cancelImageRequest()
+        cell.posterImageView.image = .asset(.PersonPlaceholder)
+        
+        if let url = movie.posterImageURL(size: .w342) {
+            cell.posterImageView.setRemoteImage(withURL: url)
+        }
+        
+        cell.setPosterRatio((3/2))
+        
+        cell.title = movie.title
+        cell.info = movie.releaseDateWithoutYear
+        
+        cell.loadViews()
+    }
+    
+    static func configureWithRating(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
+        cell.posterImageView.cancelImageRequest()
+        cell.posterImageView.image = .asset(.PosterPlaceholder)
+        
+        if let url = movie.posterImageURL(size: .w342) {
+            cell.posterImageView.setRemoteImage(withURL: url)
+        }
+        
+        cell.setPosterRatio((3/2))
+        
+        cell.title = movie.title
+        cell.rating = movie.percentRating
+        
+        cell.loadViews()
+    }
+    
+}
