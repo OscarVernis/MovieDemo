@@ -9,7 +9,7 @@
 import UIKit
 import SPStorkController
 
-class MovieDetailViewController: UIViewController, GenericCollection {
+class MovieDetailViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
     var dataSource: GenericCollectionDataSource!
         
@@ -43,6 +43,16 @@ class MovieDetailViewController: UIViewController, GenericCollection {
         setup()
         reloadSections()
         setupDataProvider()
+    }
+    
+    func createCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
+
+        view.addSubview(collectionView)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -294,4 +304,19 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         
     }
 
+}
+
+//MARK: - CollectionView CompositionalLayout
+extension MovieDetailViewController {
+    func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil }
+            
+            let section = self.dataSource.sections[sectionIndex]
+            return section.sectionLayout()
+        }
+        
+        return layout
+    }
+    
 }
