@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-class ProviderDataSource<Provider: ArrayDataProvider>: NSObject, UICollectionViewDataSource {
-    typealias CellConfigurator = (Provider.Model, UICollectionViewCell, IndexPath) -> Void
+class ProviderDataSource<Provider: ArrayDataProvider, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
+    typealias CellConfigurator = (Cell, Provider.Model) -> Void
     
     var dataProvider: Provider
     private let cellConfigurator: CellConfigurator
@@ -30,9 +30,9 @@ class ProviderDataSource<Provider: ArrayDataProvider>: NSObject, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let model = dataProvider.item(atIndex: indexPath.row)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Cell
         
-        cellConfigurator(model, cell, indexPath)
+        cellConfigurator(cell, model)
         
         return cell
     }

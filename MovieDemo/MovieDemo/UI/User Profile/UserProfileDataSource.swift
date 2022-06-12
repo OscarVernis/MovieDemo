@@ -42,7 +42,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     
     func setupDataSources() {
         dataSources = [
-            makeHeader(),
+            makeUserHeader(),
             makeFavorites(),
             makeWatchlist(),
             makeRated()
@@ -50,7 +50,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     }
     
     //MARK: - Data Sources
-    func makeHeader() -> UICollectionViewDataSource {
+    func makeUserHeader() -> UICollectionViewDataSource {
         UserHeaderDataSource(user: user)
     }
     

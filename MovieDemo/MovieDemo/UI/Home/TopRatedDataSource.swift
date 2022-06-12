@@ -8,16 +8,13 @@
 
 import UIKit
 
-class TopRatedDataSource: ProviderDataSource<MoviesDataProvider> {
+class TopRatedDataSource: ProviderDataSource<MoviesDataProvider, MovieRatingListCell> {
     var maxTopRated = 10
     
     init() {
         super.init(dataProvider: MoviesDataProvider(.TopRated),
-                   reuseIdentifier: MovieRatingListCell.reuseIdentifier) { movie, cell, indexPath in
-            guard let cell = cell as? MovieRatingListCell else { return }
-                    
-            MovieRatingListCellConfigurator().configure(cell: cell, withMovie: movie, showSeparator: true)
-        }
+                   reuseIdentifier: MovieRatingListCell.reuseIdentifier,
+                   cellConfigurator: MovieRatingListCellConfigurator().configure)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -66,11 +66,8 @@ class HomeDataSource: SectionedCollectionDataSource {
         providers.append(provider)
         
         let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MovieBannerCell.reuseIdentifier) { movie, cell, _ in
-            guard let cell = cell as? MovieBannerCell else { return }
-                    
-            MovieBannerCellConfigurator().configure(cell: cell, with: movie)
-        }
+                                            reuseIdentifier: MovieBannerCell.reuseIdentifier,
+                                            cellConfigurator: MovieBannerCellConfigurator().configure)
         
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.NowPlaying),
                                                           dataSource: dataSource)
@@ -83,11 +80,9 @@ class HomeDataSource: SectionedCollectionDataSource {
         providers.append(provider)
         
         let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MoviePosterInfoCell.reuseIdentifier) { movie, cell, _ in
-            guard let cell = cell as? MoviePosterInfoCell else { return }
-                    
-            MoviePosterTitleDateCellConfigurator().configure(cell: cell, with: movie)
-        }
+                                            reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
+                                            cellConfigurator: MoviePosterTitleDateCellConfigurator().configure)
+        
 
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.Upcoming),
                                                           dataSource: dataSource)
@@ -100,11 +95,7 @@ class HomeDataSource: SectionedCollectionDataSource {
         providers.append(provider)
         
         let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier) { movie, cell, _ in
-            guard let cell = cell as? MovieInfoListCell else { return }
-                    
-            MovieInfoCellConfigurator().configure(cell: cell, with: movie)
-        }
+                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier, cellConfigurator: MovieInfoCellConfigurator().configure)
       
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.Popular),
                                                           dataSource: dataSource)
