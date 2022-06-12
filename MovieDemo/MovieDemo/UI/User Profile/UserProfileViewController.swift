@@ -105,18 +105,58 @@ class UserProfileViewController: UIViewController {
 
 //MARK: - Actions
 extension UserProfileViewController {
-    fileprivate func logout() {
+    @objc fileprivate func logout() {
         mainCoordinator?.logout()
     }
+    
+    func showMovieDetail(at index: Int, from movies: [MovieViewModel]) {
+        guard movies.count > 0 else { return }
+        let movie = movies[index]
+        mainCoordinator?.showMovieDetail(movie: movie)
+    }
+    
+    func configureTitleHeader(_ header: UICollectionReusableView, list: MovieList) {
+        guard let titleHeader = header as? SectionTitleView else { return }
+        
+        let title = titleHeader.titleLabel.text ?? ""
+        
+        titleHeader.tapHandler = { [weak self] in
+            self?.mainCoordinator?.showMovieList(title: title, list: list)
+        }
+    }
+    
 }
 
 //MARK: - UICollectionViewDelegate
 extension UserProfileViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        let section = UserProfileDataSource.Section(rawValue: indexPath.section)!
+
+        switch section {
+        case .header:
+            guard let header = view as? UserProfileHeaderView else { return }
+            header.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        case .favorites:
+            configureTitleHeader(view, list: .UserFavorites)
+        case .watchlist:
+            configureTitleHeader(view, list: .UserWatchList)
+        case .rated:
+            configureTitleHeader(view, list: .UserRated)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if let section = sections[indexPath.section] as? UserProfileMovieListSection, section.movies.count > 0 {
-//            let movie = section.movies[indexPath.row]
-//            mainCoordinator?.showMovieDetail(movie: movie)
-//        }
+        let section = UserProfileDataSource.Section(rawValue: indexPath.section)!
+        switch section {
+        case .favorites:
+            showMovieDetail(at: indexPath.row, from: user.favorites)
+        case .watchlist:
+            showMovieDetail(at: indexPath.row, from: user.watchlist)
+        case .rated:
+            showMovieDetail(at: indexPath.row, from: user.rated)
+        default:
+            break
+        }
     }
 
 }

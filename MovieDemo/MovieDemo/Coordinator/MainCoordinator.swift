@@ -178,6 +178,13 @@ final class MainCoordinator {
 
     }
     
+    func showMovieList(title: String, list: MovieList, animated: Bool = true)  {
+        let sessionId = sessionManager.sessionId
+        let dataProvider = MoviesDataProvider(list, movieLoader: RemoteMoviesLoader(sessionId: sessionId))
+        
+        showMovieList(title: title, dataProvider: dataProvider, animated: animated)
+    }
+    
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
         pvc.person = viewModel
