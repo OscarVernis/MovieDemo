@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class ArrayCollectionDataSource<Model>: NSObject, UICollectionViewDataSource {
-    typealias CellConfigurator = (Model, UICollectionViewCell, IndexPath) -> Void
+class ArrayCollectionDataSource<Model, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
+    typealias CellConfigurator = (Cell, Model) -> Void
 
     var models: [Model]
         
@@ -30,9 +30,9 @@ class ArrayCollectionDataSource<Model>: NSObject, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let model = models[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Cell
         
-        cellConfigurator?(model, cell, indexPath)
+        cellConfigurator?(cell, model)
         
         return cell
     }

@@ -6,7 +6,6 @@
 //  Copyright © 2022 Oscar Vernis. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class UserProfileDataSource: SectionedCollectionDataSource {

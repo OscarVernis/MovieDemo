@@ -16,7 +16,6 @@ struct CrewCreditInfoListCellConfigurator {
     }
     
     func configure(cell: InfoListCell, with crewCredit: CrewCreditViewModel) {
-        
         cell.titleLabel.text = crewCredit.name
         cell.infoLabel.text = crewCredit.jobs
     }

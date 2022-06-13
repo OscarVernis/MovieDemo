@@ -16,7 +16,7 @@ class MovieViewModel {
     
     var userStates: MovieUserStatesViewModel? = nil
 
-    private var isLoading = false
+    private(set) var isLoading = false
     var didUpdate: ((Error?) -> Void)?
     
     //Stores basic info about the movie

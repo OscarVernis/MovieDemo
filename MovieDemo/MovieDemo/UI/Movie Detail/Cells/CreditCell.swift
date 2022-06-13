@@ -17,4 +17,15 @@ class CreditCell: UICollectionViewCell {
         creditImageView.image = .asset(.PersonPlaceholder)
     }
     
+    //MARK: - Configure
+    static func configure(cell: CreditCell, with castCredit: CastCreditViewModel) {
+        cell.creditImageView.cancelImageRequest()
+
+        cell.nameLabel.text = castCredit.name
+        cell.roleLabel.text = castCredit.character
+        
+        if let url = castCredit.profileImageURL {
+            cell.creditImageView.setRemoteImage(withURL: url)
+        }
+    }
 }

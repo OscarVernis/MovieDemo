@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class UserMoviesDataSource: ArrayCollectionDataSource<MovieViewModel> {
+class UserMoviesDataSource: ArrayCollectionDataSource<MovieViewModel, MoviePosterInfoCell> {
     var emptyMessage: NSAttributedString
     
     init(models: [MovieViewModel], emptyMessage: NSAttributedString) {

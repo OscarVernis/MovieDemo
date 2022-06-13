@@ -13,7 +13,7 @@ class UserViewModel {
     var user: User?
     private let service: UserLoader
     private let cache: UserCache?
-    var isLoading = false
+    private(set) var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
     
