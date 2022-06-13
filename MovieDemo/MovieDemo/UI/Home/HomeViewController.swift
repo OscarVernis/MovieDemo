@@ -39,7 +39,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: HomeLayoutProvider().createLayout)
+        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
+        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         collectionView.dataSource = dataSource
@@ -111,87 +114,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         let movie = provider.item(atIndex: indexPath.row)
         
         mainCoordinator.showMovieDetail(movie: movie)
-    }
-    
-}
-
-//MARK: - CollectionView CompositionalLayout
-extension HomeViewController {
-    func createLayout() -> UICollectionViewLayout {
-        let layout = (UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let section = HomeDataSource.Section(rawValue: sectionIndex)
-            
-            switch(section) {
-            case .nowPlaying:
-                return self?.makeBannerSection()
-            case .upcoming:
-                return self?.makeHorizontalPosterSection()
-            case .popular:
-                return self?.makeListSection()
-            case .topRated:
-                return self?.makeDecoratedListSection()
-            default:
-                return nil
-            }
-        })
-        
-        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
-        
-        return layout
-    }
-    
-    func makeBannerSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
-        let section: NSCollectionLayoutSection
-        section = sectionBuilder.createBannerSection()
-        section.contentInsets.top = 10
-        section.contentInsets.bottom = 10
-        
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeHorizontalPosterSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
-        let section: NSCollectionLayoutSection
-        section = sectionBuilder.createHorizontalPosterSection()
-        section.contentInsets.top = 10
-        section.contentInsets.bottom = 20
-        
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeListSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
-        let section: NSCollectionLayoutSection
-        section = sectionBuilder.createListSection()
-        section.contentInsets.bottom = 30
-        
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-
-    func makeDecoratedListSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
-        let section: NSCollectionLayoutSection
-        section = sectionBuilder.createDecoratedListSection()
-        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-        
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
     }
     
 }

@@ -13,9 +13,7 @@ class UserProfileViewController: UIViewController {
     
     var collectionView: UICollectionView!
     var dataSource: UserProfileDataSource!
-    
-    let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        
+            
     private var user: UserViewModel
 
     //MARK: - View Controller
@@ -49,7 +47,8 @@ class UserProfileViewController: UIViewController {
     
     //MARK: - Setup
     func createCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: UserProfileLayoutProvider(user: user).createLayout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         collectionView.delegate = self
@@ -156,64 +155,4 @@ extension UserProfileViewController: UICollectionViewDelegate {
         }
     }
 
-}
-
-//MARK: - CollectionView CompositionalLayout
-extension UserProfileViewController {
-    func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let self = self else { return nil }
-            
-            let section = UserProfileDataSource.Section(rawValue: sectionIndex)!
-            
-            switch section {
-            case .header:
-                return self.makeHeaderSection()
-            case .favorites:
-                return (self.user.favorites.count > 0) ? self.makeMoviesSection() : self.makeEmptySection()
-            case .watchlist:
-                return (self.user.watchlist.count > 0) ? self.makeMoviesSection() : self.makeEmptySection()
-            case .rated:
-                return (self.user.rated.count > 0) ? self.makeMoviesSection() : self.makeEmptySection()
-            }
-        }
-        
-        return layout
-    }
-    
-    
-    func makeHeaderSection() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createSection(groupHeight: .estimated(150))
-        
-        let sectionHeader = sectionBuilder.createDetailSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeMoviesSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        let section = sectionBuilder.createHorizontalPosterSection()
-        
-        return makeTitleSection(with: section)
-    }
-    
-    func makeEmptySection() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createSection(groupHeight: .estimated(260))
-        section.contentInsets.top = 10
-        section.contentInsets.bottom = 20
-        
-        return makeTitleSection(with: section)
-    }
-    
-    func makeTitleSection(with section: NSCollectionLayoutSection) -> NSCollectionLayoutSection {
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        
-        section.contentInsets.top = 12
-        section.contentInsets.bottom = 10
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
 }

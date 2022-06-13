@@ -8,10 +8,10 @@
 
 import UIKit
 
-class MovieDetailLayoutProvider {
+struct MovieDetailLayoutProvider {
     let sectionBuilder = MoviesCompositionalLayoutBuilder()
     
-    func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+    func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = MovieDetailDataSource.Section(rawValue: sectionIndex)!
         switch section {
         case .header:
