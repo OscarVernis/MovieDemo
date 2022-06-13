@@ -24,11 +24,11 @@ class SearchDataSource: ProviderDataSource<SearchDataProvider, UICollectionViewC
         switch item {
         case let movie as MovieViewModel:
             let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as! MovieInfoListCell
-            MovieInfoCellConfigurator().configure(cell: movieCell, with: movie)
+            MovieInfoListCell.configure(cell: movieCell, with: movie)
             cell = movieCell
         case let person as PersonViewModel:
             let personCell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditPhotoListCell.reuseIdentifier, for: indexPath) as! CreditPhotoListCell
-            PersonCreditPhotoListConfigurator().configure(cell: personCell, person: person)
+            CreditPhotoListCell.configure(cell: personCell, person: person)
             cell = personCell
         default:
             fatalError("Unknown Media Type")

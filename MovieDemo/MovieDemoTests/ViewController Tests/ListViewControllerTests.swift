@@ -43,7 +43,7 @@ class ListViewControllerTests: XCTestCase {
             let dataProvider = StaticArrayDataProvider(models: movies)
             let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                                 reuseIdentifier: MovieInfoListCell.reuseIdentifier,
-                                                cellConfigurator: MovieInfoCellConfigurator().configure)
+                                                cellConfigurator: MovieInfoListCell.configure)
             
             let sut = ListViewController(dataSource: dataSource, coordinator: nil)
             sut.loadViewIfNeeded()

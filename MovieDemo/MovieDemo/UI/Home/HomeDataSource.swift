@@ -95,7 +95,7 @@ class HomeDataSource: SectionedCollectionDataSource {
         providers.append(provider)
         
         let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier, cellConfigurator: MovieInfoCellConfigurator().configure)
+                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier, cellConfigurator: MovieInfoListCell.configure)
       
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.Popular),
                                                           dataSource: dataSource)

@@ -184,7 +184,7 @@ final class MainCoordinator {
     func showMovieList<T: ArrayDataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: MovieInfoListCell.reuseIdentifier,
-                                        cellConfigurator: MovieInfoCellConfigurator().configure)
+                                        cellConfigurator: MovieInfoListCell.configure)
         let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         

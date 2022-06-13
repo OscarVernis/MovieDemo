@@ -15,5 +15,22 @@ class MovieInfoListCell: UICollectionViewCell {
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
-    
+}
+
+extension MovieInfoListCell {
+    static func configure(cell: MovieInfoListCell, with movie: MovieViewModel) {
+        cell.posterImageView.cancelImageRequest()
+        cell.posterImageView.image = .asset(.PosterPlaceholder)
+        
+        if let url = movie.posterImageURL(size: .w342) {
+            cell.posterImageView.setRemoteImage(withURL: url)
+        }
+        
+        cell.titleLabel.text = movie.title
+        cell.ratingsView.rating = CGFloat(movie.percentRating)
+        cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
+        cell.overviewLabel.text = movie.overview
+        cell.genresLabel.text = movie.genres()
+        cell.releaseDateLabel.text = movie.releaseYear
+    }
 }

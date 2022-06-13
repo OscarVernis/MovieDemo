@@ -43,4 +43,15 @@ extension CreditPhotoListCell {
         }
     }
     
+    static func configure(cell: CreditPhotoListCell, person: PersonViewModel) {
+        cell.creditImageView.cancelImageRequest()
+        
+        cell.nameLabel.text = person.name
+        cell.roleLabel.text = person.knownForMovies
+        
+        if let url = person.profileImageURL {
+            cell.creditImageView.setRemoteImage(withURL: url)
+        }
+    }
+    
 }
