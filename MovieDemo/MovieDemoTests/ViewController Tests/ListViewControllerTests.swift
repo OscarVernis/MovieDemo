@@ -10,7 +10,7 @@ import XCTest
 @testable import MovieDemo
 
 class ListViewControllerTests: XCTestCase {
-    var sut: ListViewController!
+    var sut: ListViewController<MoviesDataProviderSpy, MovieInfoListCell>!
     var coordinator: MainCoordinator!
     var dataProvider: MoviesDataProviderSpy!
     
@@ -24,7 +24,7 @@ class ListViewControllerTests: XCTestCase {
         
         coordinator?.showMovieList(title: "", dataProvider: dataProvider, animated: false)
         let topVC = coordinator?.rootNavigationViewController?.topViewController
-        let sut = topVC as? ListViewController
+        let sut = topVC as? ListViewController<MoviesDataProviderSpy, MovieInfoListCell>
 
         self.sut = try XCTUnwrap(sut, "Expected ListViewController, " + "but was \(String(describing: topVC))")
     }
@@ -41,9 +41,12 @@ class ListViewControllerTests: XCTestCase {
         assertDeallocation {
             let movies = anyMovies(count: 10).map { MovieViewModel(movie: $0) }
             let dataProvider = StaticArrayDataProvider(models: movies)
-            let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: MovieInfoCellConfigurator())
+            let dataSource = ProviderDataSource(dataProvider: dataProvider, reuseIdentifier: MovieInfoListCell.reuseIdentifier)
             
-            return ListViewController(section: section)
+            let sut = ListViewController(dataSource: dataSource, coordinator: nil)
+            sut.loadViewIfNeeded()
+            
+            return sut
         }
     }
     
@@ -112,7 +115,7 @@ class ListViewControllerTests: XCTestCase {
                 
         executeRunLoop()
         let topVC = coordinator.rootNavigationViewController?.topViewController
-        XCTAssert(topVC is MovieDetailViewController)
+        XCTAssert(topVC is MovieDetailViewController, "Expected MovieDetailViewController, " + "but was \(String(describing: topVC))")
     }
     
 }

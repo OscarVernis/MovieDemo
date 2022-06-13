@@ -49,9 +49,12 @@ class ListViewController<Provider: ArrayDataProvider, Cell: UICollectionViewCell
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
+        Cell.register(to: collectionView)
+        LoadingCell.register(to: collectionView)
+        
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-
+        
         view.addSubview(collectionView)
     }
         
@@ -63,9 +66,6 @@ class ListViewController<Provider: ArrayDataProvider, Cell: UICollectionViewCell
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         collectionView.keyboardDismissMode = .onDrag
-        
-        Cell.register(to: collectionView)
-        LoadingCell.register(to: collectionView)
                 
         provider.didUpdate = { [weak self] error in
             guard let self = self else { return }
