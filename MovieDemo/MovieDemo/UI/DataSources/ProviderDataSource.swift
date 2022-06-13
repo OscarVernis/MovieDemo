@@ -13,12 +13,12 @@ class ProviderDataSource<Provider: ArrayDataProvider, Cell: UICollectionViewCell
     typealias CellConfigurator = (Cell, Provider.Model) -> Void
     
     var dataProvider: Provider
-    private let cellConfigurator: CellConfigurator
+    private let cellConfigurator: CellConfigurator?
     private let reuseIdentifier: String
         
     init(dataProvider: Provider,
          reuseIdentifier: String,
-         cellConfigurator: @escaping CellConfigurator) {
+         cellConfigurator: CellConfigurator? = nil) {
         self.dataProvider = dataProvider
         self.reuseIdentifier = reuseIdentifier
         self.cellConfigurator = cellConfigurator
@@ -32,7 +32,7 @@ class ProviderDataSource<Provider: ArrayDataProvider, Cell: UICollectionViewCell
         let model = dataProvider.item(atIndex: indexPath.row)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! Cell
         
-        cellConfigurator(cell, model)
+        cellConfigurator?(cell, model)
         
         return cell
     }
