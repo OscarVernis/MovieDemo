@@ -108,6 +108,14 @@ extension PersonViewModel {
             .joined(separator: ", ")
     }
     
+    var crewJobs: [String] {
+        crewCredits.compactMap(\.job)
+    }
+    
+    func credits(for job: String) -> [PersonCrewCreditViewModel] {
+        return crewCredits.filter { $0.job == job }
+    }
+    
     fileprivate func updateCastCredits() {
         guard let credits = person.castCredits else { return }
         

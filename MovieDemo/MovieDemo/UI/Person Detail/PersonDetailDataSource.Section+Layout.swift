@@ -11,7 +11,6 @@ import UIKit
 extension PersonDetailDataSource.Section {
     func sectionLayout() -> NSCollectionLayoutSection {
         switch self {
-            
         case .overview:
             return makeOverview()
         case .popular:

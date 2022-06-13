@@ -62,14 +62,24 @@ class MovieDetailViewController: UIViewController {
     
     //MARK: - Setup
     func createCollectionView() {
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: MovieDetailLayoutProvider().createLayout)
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
 
         view.addSubview(collectionView)
+    }
+    
+    func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil }
+            
+            let section = self.dataSource.sections[sectionIndex]
+            return section.sectionLayout()
+        }
+        
+        return layout
     }
     
     fileprivate func setup() {
@@ -276,7 +286,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = MovieDetailDataSource.Section(rawValue: indexPath.section)!
+        let section = dataSource.sections[indexPath.section]
         switch section {
         case .cast:
             let castCredit = movie.topCast[indexPath.row]

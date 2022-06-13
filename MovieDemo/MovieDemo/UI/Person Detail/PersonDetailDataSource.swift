@@ -45,6 +45,9 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
     }
     
     func setupDataSources() {
+        dataSources = []
+        sections = []
+        
         if let bio = person.biography, !bio.isEmpty {
             dataSources.append(makeOverview())
             sections.append(.overview)
@@ -60,9 +63,9 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
             sections.append(.castCredits)
         }
         
-        let crewGrouping = Dictionary(grouping: person.crewCredits, by: \.job)
-        for (key, credits) in crewGrouping {
-            dataSources.append(makeCrew(title: key ?? "", credits: credits))
+        for job in person.crewJobs {
+            let credits = person.credits(for: job)
+            dataSources.append(makeCrew(title: job, credits: credits))
             sections.append(.crewCredits)
         }
         

@@ -21,6 +21,8 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     unowned var collectionView: UICollectionView
     let movie: MovieViewModel
     
+    var sections: [Section] = []
+    
     init(collectionView: UICollectionView, movie: MovieViewModel) {
         self.collectionView = collectionView
         self.movie = movie
@@ -47,14 +49,37 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     }
     
     func setupDataSources() {
-        dataSources = [
-            makeMovieHeader(),
-            makeCast(),
-            makeCrew(),
-            makeVideos(),
-            makeRecommended(),
-            makeInfo()
-        ]
+        dataSources = []
+        sections = []
+        
+        dataSources.append(makeMovieHeader())
+        sections.append(.header)
+        
+        if !movie.topCast.isEmpty {
+            dataSources.append(makeCast())
+            sections.append(.cast)
+        }
+        
+        if !movie.topCrew.isEmpty {
+            dataSources.append(makeCrew())
+            sections.append(.crew)
+        }
+        
+        if !movie.videos.isEmpty {
+            dataSources.append(makeVideos())
+            sections.append(.videos)
+        }
+        
+        if !movie.recommendedMovies.isEmpty {
+            dataSources.append(makeRecommended())
+            sections.append(.recommended)
+        }
+        
+        if !movie.infoArray.isEmpty {
+            dataSources.append(makeInfo())
+            sections.append(.info)
+        }
+        
     }
     
     //MARK: - Data Sources
