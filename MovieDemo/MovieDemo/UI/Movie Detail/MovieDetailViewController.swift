@@ -12,9 +12,7 @@ import SPStorkController
 class MovieDetailViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
     var dataSource: MovieDetailDataSource!
-    
-    let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        
+            
     private var isLoading = true
     
     private var movie: MovieViewModel!
@@ -42,17 +40,7 @@ class MovieDetailViewController: UIViewController {
 
         createCollectionView()
         setup()
-        setupDataProvider()
-    }
-    
-    func createCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        collectionView.dataSource = dataSource
-        collectionView.delegate = self
-
-        view.addSubview(collectionView)
+        setupViewModel()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -73,6 +61,17 @@ class MovieDetailViewController: UIViewController {
     }
     
     //MARK: - Setup
+    func createCollectionView() {
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: MovieDetailLayoutProvider().createLayout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
+
+        view.addSubview(collectionView)
+    }
+    
     fileprivate func setup() {
         view.backgroundColor = .asset(.AppBackgroundColor)
         collectionView.backgroundColor = .clear
@@ -95,19 +94,8 @@ class MovieDetailViewController: UIViewController {
         collectionView.dataSource = dataSource
     }
     
-    fileprivate func setupDataProvider()  {
-        movie.didUpdate = { [weak self] error in
-            guard let self = self else { return }
-            
-            if error != nil {
-                self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
-            }
-            
-            self.isLoading = false
-            self.dataSource.reload()
-            self.collectionView.reloadData()
-        }
-        
+    fileprivate func setupViewModel()  {
+        movie.didUpdate = viewModelDidUpdate
         movie.refresh()
     }
     
@@ -147,6 +135,18 @@ class MovieDetailViewController: UIViewController {
     }
 
     //MARK: - Actions
+    
+    fileprivate lazy var viewModelDidUpdate: ((Error?) -> Void) = { [weak self] error in
+        guard let self = self else { return }
+        
+        if error != nil {
+            self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
+        }
+        
+        self.isLoading = false
+        self.dataSource.reload()
+        self.collectionView.reloadData()
+    }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
         guard let url = movie.posterImageURL(size: .original), let headerView = headerView else { return }
@@ -297,101 +297,4 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         }
     }
 
-}
-
-//MARK: - CollectionView CompositionalLayout
-extension MovieDetailViewController {
-    func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let self = self else { return nil }
-            
-            let section = MovieDetailDataSource.Section(rawValue: sectionIndex)!
-            switch section {
-            case .header:
-                return self.makeHeader()
-            case .cast:
-                return self.makeCast()
-            case .crew:
-                return self.makeCrew()
-            case .videos:
-                return self.makeVideos()
-            case .recommended:
-                return self.makeRecommended()
-            case .info:
-                return self.makeInfo()
-            }
-        }
-        
-        return layout
-    }
-    
-    func makeHeader() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createListSection(height: 100)
-
-        let sectionHeader = sectionBuilder.createDetailSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeCast() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createHorizontalCreditSection()
-
-        section.contentInsets.top = 8
-        section.contentInsets.bottom = 0
-
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeCrew() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createListSection(height: 50, columns: 2)
-
-        section.contentInsets.top = 5
-        section.contentInsets.bottom = 10
-
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeRecommended() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createHorizontalPosterSection()
-        
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        section.contentInsets.top = 12
-        section.contentInsets.bottom = 10
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeVideos() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createBannerSection()
-        
-        section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets.top = 10
-        section.contentInsets.bottom = 0
-        
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func makeInfo() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createListSection(height: 50)
-        
-        section.contentInsets.top = 5
-        section.contentInsets.bottom = UIWindow.bottomInset + 30
-        
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
 }
