@@ -98,4 +98,5 @@ struct MovieDetailLayoutProvider {
         
         return section
     }
+    
 }
