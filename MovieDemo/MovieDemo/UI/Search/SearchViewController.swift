@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: GenericListViewController<SearchDataProvider, UICollectionViewCell> {
+class SearchViewController: ListViewController<SearchDataProvider, UICollectionViewCell> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
@@ -74,9 +74,8 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     func scrollListViewControllerToTop() {
         //Scroll results list to top everytime is shown.
         let firstIndexPath = IndexPath(row: 0, section: 0)
-        if let listController = navigationItem.searchController?.searchResultsController as? ListViewController,
-           listController.collectionView.cellForItem(at: firstIndexPath) != nil {
-            listController.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
+        if self.collectionView.cellForItem(at: firstIndexPath) != nil {
+            self.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
         }
     }
     

@@ -185,9 +185,7 @@ final class MainCoordinator {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                         cellConfigurator: MovieInfoCellConfigurator().configure)
-        let lvc = GenericListViewController(dataSource: dataSource, coordinator: self)
-//        let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: MovieInfoCellConfigurator())
-//        let lvc = ListViewController(section: section, coordinator: self)
+        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
@@ -220,10 +218,7 @@ final class MainCoordinator {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                         cellConfigurator: CrewCreditPhotoListCellConfigurator().configure)
-        let lvc = GenericListViewController(dataSource: dataSource, coordinator: self)
-        
-//        let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CrewCreditPhotoListCellConfigurator())
-//        let lvc = ListViewController(section: section, coordinator: self)
+        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         
         lvc.didSelectedItem = { index in
@@ -242,10 +237,7 @@ final class MainCoordinator {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                         cellConfigurator: CastCreditPhotoListCellConfigurator().configure)
-        let lvc = GenericListViewController(dataSource: dataSource, coordinator: self)
-        
-//        let section = DataProviderSection(dataProvider: dataProvider, cellConfigurator: CastCreditPhotoListCellConfigurator())
-//        let lvc = ListViewController(section: section, coordinator: self)
+        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         
         lvc.didSelectedItem = { index in

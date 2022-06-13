@@ -2,30 +2,29 @@
 //  ListViewController.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 07/10/20.
-//  Copyright © 2020 Oscar Vernis. All rights reserved.
+//  Created by Oscar Vernis on 12/06/22.
+//  Copyright © 2022 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-public class ListViewController: UIViewController, GenericCollection {
+class ListViewController<Provider: ArrayDataProvider, Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate {
     enum Section: Int, CaseIterable {
         case Main
     }
     
     var collectionView: UICollectionView!
-    var dataSource: GenericCollectionDataSource!
+    var dataSource: ListDataSource
+    var provider: Provider
     
     weak var coordinator: MainCoordinator?
 
     var didSelectedItem: ((Int) -> ())?
-       
-    var mainSection: FetchableSection
-    var loadingSection = LoadingSection()
     
-    init(section: FetchableSection, coordinator: MainCoordinator? = nil) {
-        self.mainSection = section
+    init(dataSource: ProviderDataSource<Provider, Cell>, coordinator: MainCoordinator? = nil) {
         self.coordinator = coordinator
+        self.dataSource = ListDataSource(dataSource: dataSource)
+        self.provider = dataSource.dataProvider
                 
         super.init(nibName: nil, bundle: nil)
     }
@@ -44,6 +43,17 @@ public class ListViewController: UIViewController, GenericCollection {
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
+    func createCollectionView() {
+        let layout = UICollectionViewCompositionalLayout(section: sectionLayout())
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
+
+        view.addSubview(collectionView)
+    }
         
     fileprivate func setup() {
         navigationController?.delegate = self
@@ -54,22 +64,23 @@ public class ListViewController: UIViewController, GenericCollection {
         
         collectionView.keyboardDismissMode = .onDrag
         
-        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: [mainSection, loadingSection])
-        
-        mainSection.didUpdate = { [weak self] error in
+        Cell.register(to: collectionView)
+        LoadingCell.register(to: collectionView)
+                
+        provider.didUpdate = { [weak self] error in
             guard let self = self else { return }
             
             if error != nil {
                 self.coordinator?.handle(error: .refreshError)
             }
             
-            self.loadingSection.isLoading = !self.mainSection.isLastPage
-            
+            self.dataSource.loadingDataSource.isLoading = !self.provider.isLastPage
+                        
             self.collectionView.refreshControl?.endRefreshing()
             self.reload()
         }
         
-        mainSection.refresh()
+        provider.refresh()
     }
     
     func reload() {
@@ -81,16 +92,22 @@ public class ListViewController: UIViewController, GenericCollection {
     }
     
     @objc func refresh() {
-        mainSection.refresh()
+        provider.refresh()
     }
     
-}
-
+    func sectionLayout() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        
+        let section = sectionBuilder.createListSection()
+        section.contentInsets.bottom = 30
+        
+        return section
+    }
+    
     //MARK: - CollectionView Delegate
-extension ListViewController:UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.section == 1 { //Loads next page when Loading Cell is showing
-            mainSection.loadMore()
+            provider.loadMore()
         }
     }
     

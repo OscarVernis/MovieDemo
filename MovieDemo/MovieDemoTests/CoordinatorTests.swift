@@ -77,7 +77,7 @@ class CoordinatorTests: XCTestCase {
                                   animated: false)
         
         let movieList = navCont?.visibleViewController
-        XCTAssert(movieList is ListViewController)
+        XCTAssert(movieList is ListViewController<MoviesDataProvider, UICollectionViewCell>)
     }
     
     func test_Coordinator_Shows_PersonDetail() throws {
@@ -100,7 +100,7 @@ class CoordinatorTests: XCTestCase {
                                        animated: false)
         
         let castList = navCont?.visibleViewController
-        XCTAssert(castList is ListViewController)
+        XCTAssert(castList is ListViewController<ProviderDataSource, UICollectionViewCell>)
     }
     
     func test_Coordinator_Shows_CrewList() throws {
