@@ -41,7 +41,9 @@ class ListViewControllerTests: XCTestCase {
         assertDeallocation {
             let movies = anyMovies(count: 10).map { MovieViewModel(movie: $0) }
             let dataProvider = StaticArrayDataProvider(models: movies)
-            let dataSource = ProviderDataSource(dataProvider: dataProvider, reuseIdentifier: MovieInfoListCell.reuseIdentifier)
+            let dataSource = ProviderDataSource(dataProvider: dataProvider,
+                                                reuseIdentifier: MovieInfoListCell.reuseIdentifier,
+                                                cellConfigurator: MovieInfoCellConfigurator().configure)
             
             let sut = ListViewController(dataSource: dataSource, coordinator: nil)
             sut.loadViewIfNeeded()
