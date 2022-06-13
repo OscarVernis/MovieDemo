@@ -11,11 +11,10 @@ import SPStorkController
 
 class MovieDetailViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
-    var dataSource: GenericCollectionDataSource!
+    var dataSource: MovieDetailDataSource!
     
     let sectionBuilder = MoviesCompositionalLayoutBuilder()
         
-    private var sections = [ConfigurableSection]()
     private var isLoading = true
     
     private var movie: MovieViewModel!
@@ -43,7 +42,6 @@ class MovieDetailViewController: UIViewController {
 
         createCollectionView()
         setup()
-        reloadSections()
         setupDataProvider()
     }
     
@@ -93,7 +91,8 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
-        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
+        dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie)
+        collectionView.dataSource = dataSource
     }
     
     fileprivate func setupDataProvider()  {
@@ -105,7 +104,8 @@ class MovieDetailViewController: UIViewController {
             }
             
             self.isLoading = false
-            self.reloadSections()
+            self.dataSource.reload()
+            self.collectionView.reloadData()
         }
         
         movie.refresh()
@@ -123,6 +123,8 @@ class MovieDetailViewController: UIViewController {
         headerView.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
         headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
         
+        headerView.imageTapHandler = showImage
+        
         //Preload Poster Image for Image Viewer transition.
         if let url = self.movie.posterImageURL(size: .original) {
             UIImage.loadRemoteImage(url: url)
@@ -130,34 +132,18 @@ class MovieDetailViewController: UIViewController {
         
     }
     
-    //MARK: - Sections
-    fileprivate func reloadSections() {
-        sections.removeAll()
-        
-        sections.append(MovieDetailHeaderSection(movie: movie, isLoading: isLoading, imageTapHandler: showImage))
-        
-        if !movie.topCast.isEmpty {
-            sections.append(MovieDetailCastSection(cast: movie.topCast, titleHeaderButtonHandler: showCast))
+    fileprivate func setupTitleHeader(header: SectionTitleView, indexPath: IndexPath) {
+        let section = MovieDetailDataSource.Section(rawValue: indexPath.section)!
+        switch section {
+        case .cast:
+            header.tapHandler = showCast
+        case .crew:
+            header.tapHandler = showCrew
+        case .recommended:
+            header.tapHandler = showRecommendedMovies
+        default:
+            header.tapHandler = nil
         }
-        
-        if !movie.topCrew.isEmpty {
-            sections.append(MovieDetailCrewSection(crew: movie.topCrew, titleHeaderButtonHandler: showCrew))
-        }
-        
-        if !movie.videos.isEmpty {
-            sections.append(MovieDetailVideoSection(videos: movie.videos))
-        }
-        
-        if !movie.recommendedMovies.isEmpty {
-            sections.append(MoviesSection(title: .localized(MovieString.RecommendedMovies), movies: movie.recommendedMovies, titleHeaderButtonHandler: showRecommendedMovies))
-        }
-        
-        if !movie.infoArray.isEmpty {
-            sections.append(MovieDetailInfoSection(info: movie.infoArray))
-        }
-
-        dataSource.sections = sections
-        collectionView.reloadData()
     }
 
     //MARK: - Actions
@@ -275,35 +261,40 @@ class MovieDetailViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        guard let reusableView = view as? MovieDetailHeaderView else { return }
-        
-        if reusableView != headerView {
+
+        //Configure Movie Header
+        if let reusableView = view as? MovieDetailHeaderView, reusableView != headerView {
             headerView = reusableView
             setupHeaderView()
         }
+        
+        //Configure TitleHeader
+        if let titleHeader = view as? SectionTitleView {
+            setupTitleHeader(header: titleHeader, indexPath: indexPath)
+        }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = sections[indexPath.section]
-        switch(section) {
-        case _ as MovieDetailCastSection:
+        let section = MovieDetailDataSource.Section(rawValue: indexPath.section)!
+        switch section {
+        case .cast:
             let castCredit = movie.topCast[indexPath.row]
             let person = castCredit.person()
             mainCoordinator?.showPersonProfile(person)
-        case _ as MovieDetailCrewSection:
+        case .crew:
             let crewCredit = movie.topCrew[indexPath.row]
             let person = crewCredit.person()
             mainCoordinator?.showPersonProfile(person)
-        case _ as MoviesSection:
+        case .recommended:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             mainCoordinator?.showMovieDetail(movie: recommendedMovie)
-        case _ as MovieDetailVideoSection:
+        case .videos:
             let video = movie.videos[indexPath.row]
             UIApplication.shared.open(video.youtubeURL)
         default:
             break
         }
-        
     }
 
 }

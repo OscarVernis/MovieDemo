@@ -119,7 +119,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
                                                    reuseIdentifier: InfoListCell.reuseIdentifier,
                                                    cellConfigurator: InfoListCell.configure)
         
-        let titleDataSource = TitleHeaderDataSource(title: .localized(MovieString.RecommendedMovies),
+        let titleDataSource = TitleHeaderDataSource(title: .localized(MovieString.Info),
                                                           dataSource: dataSource)
         
         return titleDataSource
