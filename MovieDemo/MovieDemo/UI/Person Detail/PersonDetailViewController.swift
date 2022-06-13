@@ -14,17 +14,14 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var dataSource: GenericCollectionDataSource!
+    var dataSource: PersonDetailDataSource!
     
     @IBOutlet weak var personImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var titleNameLabel: UILabel!
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var backButton: BlurButton!
-    
-    var creditsHeaderView: UICollectionReusableView?
-    
-    private var sections: [ConfigurableSection]!
+        
     var person: PersonViewModel!
     
     private var gradient: CAGradientLayer!
@@ -33,7 +30,6 @@ class PersonDetailViewController: UIViewController {
     //MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
-        sections = []
         
         setupAnimations()
         setup()
@@ -86,7 +82,8 @@ class PersonDetailViewController: UIViewController {
         //Setup CollectionView
         collectionView.delegate = self
         collectionView.collectionViewLayout = createLayout()
-        dataSource = GenericCollectionDataSource(collectionView: collectionView, sections: sections)
+        dataSource = PersonDetailDataSource(collectionView: collectionView, person: person)
+        collectionView.dataSource = dataSource
         
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .never
@@ -124,40 +121,12 @@ class PersonDetailViewController: UIViewController {
                 self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
             }
             
-            self.reloadSections()
+            self.dataSource.reload()
+            self.collectionView.reloadData()
         }
         
         person.didUpdate = updateCollectionView
         person.refresh()
-    }
-    
-    //MARK: - Section Loading
-    fileprivate func reloadSections() {
-        sections = [ConfigurableSection]()
-        
-        if let bio = person.biography, !bio.isEmpty {
-            let bioSection = OverviewSection(overview: bio)
-            sections.append(bioSection)
-        }
-        
-        if !person.popularMovies.isEmpty {
-            let popularSection = MoviesSection(title: .localized(PersonString.KnownFor), movies: person.popularMovies)
-            sections.append(popularSection)
-        }
-        
-        if !person.castCredits.isEmpty {
-            let castCreditsSection = PersonCastCreditsSection(title: .localized(PersonString.Acting), credits: person.castCredits)
-            sections.append(castCreditsSection)
-        }
-        
-        let crewGrouping = Dictionary(grouping: person.crewCredits, by: \.job)
-        for (key, credits) in crewGrouping {
-            let crewCreditsSection = PersonCrewCreditsSection(title: key!, credits: credits)
-            sections.append(crewCreditsSection)
-        }
-
-        dataSource.sections = sections
-        collectionView.reloadData()
     }
     
 }
@@ -206,20 +175,20 @@ extension PersonDetailViewController {
 //MARK: - CollectionView Delegate
 extension PersonDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = sections[indexPath.section]
+        let section = dataSource.sections[indexPath.section]
         
         switch section {
-        case _ as MoviesSection:
+        case .popular:
             let movie = person.popularMovies[indexPath.row]
             mainCoordinator?.showMovieDetail(movie: movie)
-        case _ as PersonCastCreditsSection:
+        case .castCredits:
             let castCredit = person.castCredits[indexPath.row]
             if let movie = castCredit.movie {
                 mainCoordinator?.showMovieDetail(movie: movie)
             }
-        case let section as PersonCrewCreditsSection:
-            let crewCredit = section.credits[indexPath.row]
-            if let movie = crewCredit.movie {
+        case .crewCredits:
+            if let crewCredit = dataSource.crewCredit(at: indexPath),
+               let movie = crewCredit.movie {
                 mainCoordinator?.showMovieDetail(movie: movie)
             }
         default:
@@ -229,14 +198,7 @@ extension PersonDetailViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        let section = sections[indexPath.section]
-        
-        switch section {
-        case _ as PersonCastCreditsSection:
-            creditsHeaderView = view
-        default:
-            break
-        }
+
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

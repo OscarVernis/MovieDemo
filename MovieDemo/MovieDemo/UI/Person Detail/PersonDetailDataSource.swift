@@ -68,6 +68,13 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
         
     }
     
+    func crewCredit(at indexPath: IndexPath) -> PersonCrewCreditViewModel? {
+        let titleDataSource = dataSources[indexPath.section] as? TitleHeaderDataSource
+        let crewDataSource = titleDataSource?.contentDataSource as? ArrayCollectionDataSource<PersonCrewCreditViewModel, PersonCreditCell>
+        
+        return crewDataSource?.models[indexPath.row]
+    }
+    
     //MARK: - Data Sources
     func makeOverview() -> UICollectionViewDataSource {
         let dataSource = OverviewDataSource(overview: person.biography ?? "")
