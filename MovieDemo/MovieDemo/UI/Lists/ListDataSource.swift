@@ -13,8 +13,7 @@ class ListDataSource: SectionedCollectionDataSource {
     var loadingDataSource = LoadingDataSource()
     
     init(dataSource: UICollectionViewDataSource) {
-        super.init(dataSources: [dataSource,
-                                 loadingDataSource
-                                ])
+        super.init(dataSources: [dataSource, loadingDataSource])
     }
+    
 }

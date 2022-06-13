@@ -18,3 +18,29 @@ class CreditPhotoListCell: UICollectionViewCell {
     }
 
 }
+
+//MARK: - Configure
+extension CreditPhotoListCell {
+    static func configure(cell: CreditPhotoListCell, with castCredit: CastCreditViewModel) {
+        cell.creditImageView.cancelImageRequest()
+        
+        cell.nameLabel.text = castCredit.name
+        cell.roleLabel.text = castCredit.character
+        
+        if let url = castCredit.profileImageURL {
+            cell.creditImageView.setRemoteImage(withURL: url)
+        }
+    }
+    
+    static func configure(cell: CreditPhotoListCell, with crewCredit: CrewCreditViewModel) {
+        cell.creditImageView.cancelImageRequest()
+        
+        cell.nameLabel.text = crewCredit.name
+        cell.roleLabel.text = crewCredit.job
+        
+        if let url = crewCredit.profileImageURL {
+            cell.creditImageView.setRemoteImage(withURL: url)
+        }
+    }
+    
+}

@@ -217,7 +217,7 @@ final class MainCoordinator {
     func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>, animated: Bool = true) {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
-                                        cellConfigurator: CrewCreditPhotoListCellConfigurator().configure)
+                                        cellConfigurator: CreditPhotoListCell.configure)
         let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         
@@ -236,7 +236,7 @@ final class MainCoordinator {
     func showCastCreditList(title: String, dataProvider: StaticArrayDataProvider<CastCreditViewModel>, animated: Bool = true) {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
-                                        cellConfigurator: CastCreditPhotoListCellConfigurator().configure)
+                                        cellConfigurator: CreditPhotoListCell.configure)
         let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         
