@@ -37,5 +37,4 @@ class SearchDataSource: ProviderDataSource<SearchDataProvider, UICollectionViewC
         return cell
     }
     
-    
 }

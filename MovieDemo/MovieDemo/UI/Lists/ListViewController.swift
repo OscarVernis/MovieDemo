@@ -57,6 +57,15 @@ class ListViewController<Provider: ArrayDataProvider, Cell: UICollectionViewCell
         
         view.addSubview(collectionView)
     }
+    
+    func sectionLayout() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        
+        let section = sectionBuilder.createListSection()
+        section.contentInsets.bottom = 30
+        
+        return section
+    }
         
     fileprivate func setup() {
         navigationController?.delegate = self
@@ -93,15 +102,6 @@ class ListViewController<Provider: ArrayDataProvider, Cell: UICollectionViewCell
     
     @objc func refresh() {
         provider.refresh()
-    }
-    
-    func sectionLayout() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        
-        let section = sectionBuilder.createListSection()
-        section.contentInsets.bottom = 30
-        
-        return section
     }
     
     //MARK: - CollectionView Delegate

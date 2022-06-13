@@ -23,7 +23,6 @@ class PersonCastCreditsSection: ConfigurableSection {
     
     func registerReusableViews(withCollectionView collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
-        PersonCreditCell.register(to: collectionView)
     }
     
     func sectionLayout() -> NSCollectionLayoutSection {

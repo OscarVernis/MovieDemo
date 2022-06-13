@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PersonDetailViewController: UIViewController, GenericCollection {
+class PersonDetailViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
 
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
@@ -59,6 +59,17 @@ class PersonDetailViewController: UIViewController, GenericCollection {
     //MARK: - Setup
     @IBAction func close(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil }
+            
+            let section = self.dataSource.sections[sectionIndex]
+            return section.sectionLayout()
+        }
+        
+        return layout
     }
     
     fileprivate func setup() {

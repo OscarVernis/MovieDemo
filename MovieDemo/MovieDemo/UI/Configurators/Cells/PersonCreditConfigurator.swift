@@ -23,4 +23,6 @@ struct PersonCreditConfigurator {
         
         cell.creditLabel.text = crewCredit.job
         cell.creditLabel.isHidden = crewCredit.job == nil
-    }}
+    }
+    
+}
