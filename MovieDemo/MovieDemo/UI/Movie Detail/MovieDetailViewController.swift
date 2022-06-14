@@ -129,7 +129,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupTitleHeader(header: SectionTitleView, indexPath: IndexPath) {
-        let section = MovieDetailDataSource.Section(rawValue: indexPath.section)!
+        let section = dataSource.sections[indexPath.section]
         switch section {
         case .cast:
             header.tapHandler = showCast
