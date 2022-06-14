@@ -30,11 +30,11 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         super.init()
         
         registerReusableViews()
-        setupDataSources()
+        setupSections()
     }
     
     func reload() {
-        setupDataSources()
+        setupSections()
     }
     
     //MARK: - Setup
@@ -48,38 +48,36 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         MoviePosterInfoCell.register(to: collectionView)
     }
     
-    func setupDataSources() {
-        dataSources.removeAll()
-        sections.removeAll()
+    func setupSections() {
+        sections = [
+            .header,
+            .cast,
+            .crew,
+            .videos,
+            .recommended,
+            .info
+        ]
         
-        dataSources.append(makeMovieHeader())
-        sections.append(.header)
-        
-        if !movie.topCast.isEmpty {
-            dataSources.append(makeCast())
-            sections.append(.cast)
+        dataSources = sections.compactMap(dataSource(for:))
+    }
+    
+    func dataSource(for section: Section) -> UICollectionViewDataSource? {
+        switch section {
+        case .header:
+            return makeMovieHeader()
+        case .cast:
+            if !movie.topCast.isEmpty { return makeCast() }
+        case .crew:
+            if !movie.topCrew.isEmpty { return makeCrew() }
+        case .videos:
+            if !movie.videos.isEmpty { return makeVideos() }
+        case .recommended:
+            if !movie.recommendedMovies.isEmpty { return makeRecommended() }
+        case .info:
+            if !movie.infoArray.isEmpty && !movie.isLoading { return makeInfo() }
         }
         
-        if !movie.topCrew.isEmpty {
-            dataSources.append(makeCrew())
-            sections.append(.crew)
-        }
-        
-        if !movie.videos.isEmpty {
-            dataSources.append(makeVideos())
-            sections.append(.videos)
-        }
-        
-        if !movie.recommendedMovies.isEmpty {
-            dataSources.append(makeRecommended())
-            sections.append(.recommended)
-        }
-        
-        if !movie.infoArray.isEmpty && !movie.isLoading {
-            dataSources.append(makeInfo())
-            sections.append(.info)
-        }
-        
+        return nil
     }
     
     //MARK: - Data Sources
