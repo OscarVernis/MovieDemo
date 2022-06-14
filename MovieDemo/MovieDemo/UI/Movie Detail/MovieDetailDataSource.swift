@@ -38,7 +38,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     }
     
     //MARK: - Setup
-    func registerReusableViews() {
+    fileprivate func registerReusableViews() {
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         LoadingCell.register(to: collectionView)
@@ -48,7 +48,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         MoviePosterInfoCell.register(to: collectionView)
     }
     
-    func setupSections() {
+    fileprivate func setupSections() {
         sections = [
             .header,
             .cast,
@@ -58,63 +58,80 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
             .info
         ]
                 
-        sections = sections.filter { dataSource(for: $0) != nil }
-        dataSources = sections.compactMap(dataSource(for:))
+        sections = sections.filter(validate(section:))
+        dataSources = sections.map(dataSource(for:))
     }
     
-    func dataSource(for section: Section) -> UICollectionViewDataSource? {
+    fileprivate func validate(section: Section) -> Bool {
+        switch section {
+        case .header:
+            return true
+        case .cast:
+            if !movie.topCast.isEmpty { return true }
+        case .crew:
+            if !movie.topCrew.isEmpty { return true }
+        case .videos:
+            if !movie.videos.isEmpty { return true }
+        case .recommended:
+            if !movie.recommendedMovies.isEmpty { return true }
+        case .info:
+            if !movie.infoArray.isEmpty && !movie.isLoading { return true }
+        }
+        
+        return false
+    }
+    
+    fileprivate func dataSource(for section: Section) -> UICollectionViewDataSource {
         switch section {
         case .header:
             return makeMovieHeader()
         case .cast:
-            if !movie.topCast.isEmpty { return makeCast() }
+            return makeCast()
         case .crew:
-            if !movie.topCrew.isEmpty { return makeCrew() }
+            return makeCrew()
         case .videos:
-            if !movie.videos.isEmpty { return makeVideos() }
+            return makeVideos()
         case .recommended:
-            if !movie.recommendedMovies.isEmpty { return makeRecommended() }
+            return makeRecommended()
         case .info:
-            if !movie.infoArray.isEmpty && !movie.isLoading { return makeInfo() }
+            return makeInfo()
         }
-        
-        return nil
     }
     
     //MARK: - Data Sources
-    func makeMovieHeader() -> UICollectionViewDataSource {
+    fileprivate func makeMovieHeader() -> UICollectionViewDataSource {
         return MovieHeaderDataSource(movie: movie)
     }
     
-    func makeCast() -> UICollectionViewDataSource {
+    fileprivate func makeCast() -> UICollectionViewDataSource {
         makeSection(models: movie.topCast,
                     title: .localized(MovieString.Cast),
                     reuseIdentifier: CreditCell.reuseIdentifier,
                     cellConfigurator: CreditCell.configure)
     }
     
-    func makeCrew() -> UICollectionViewDataSource {
+    fileprivate func makeCrew() -> UICollectionViewDataSource {
         makeSection(models: movie.topCrew,
                     title: .localized(MovieString.Crew),
                     reuseIdentifier: InfoListCell.reuseIdentifier,
                     cellConfigurator: InfoListCell.configure)
     }
     
-    func makeVideos() -> UICollectionViewDataSource {
+    fileprivate func makeVideos() -> UICollectionViewDataSource {
         makeSection(models: movie.videos,
                     title: .localized(MovieString.Videos),
                     reuseIdentifier: YoutubeVideoCell.reuseIdentifier,
                     cellConfigurator: YoutubeVideoCell.configure)
     }
     
-    func makeRecommended() -> UICollectionViewDataSource {
+    fileprivate func makeRecommended() -> UICollectionViewDataSource {
         makeSection(models: movie.recommendedMovies,
                     title: .localized(MovieString.RecommendedMovies),
                     reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
                     cellConfigurator: MoviePosterInfoCell.configureWithRating)
     }
     
-    func makeInfo() -> UICollectionViewDataSource {
+    fileprivate func makeInfo() -> UICollectionViewDataSource {
         makeSection(models: movie.infoArray,
                     title: .localized(MovieString.Info),
                     reuseIdentifier: InfoListCell.reuseIdentifier,
@@ -122,7 +139,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     }
     
     //MARK: Helper
-    func makeSection<Model, Cell: UICollectionViewCell>(models: [Model], title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, Model) -> Void) -> UICollectionViewDataSource {
+    fileprivate func makeSection<Model, Cell: UICollectionViewCell>(models: [Model], title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, Model) -> Void) -> UICollectionViewDataSource {
         let dataSource = ArrayCollectionDataSource(models: models,
                                                    reuseIdentifier: reuseIdentifier,
                                                    cellConfigurator: cellConfigurator)
