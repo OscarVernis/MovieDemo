@@ -12,9 +12,7 @@ import SPStorkController
 class MovieDetailViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
     var dataSource: MovieDetailDataSource!
-            
-    private var isLoading = true
-    
+                
     private var movie: MovieViewModel!
         
     private weak var headerView: MovieDetailHeaderView?
@@ -153,7 +151,6 @@ class MovieDetailViewController: UIViewController {
             self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
         }
         
-        self.isLoading = false
         self.dataSource.reload()
         self.collectionView.reloadData()
     }
