@@ -53,37 +53,33 @@ class UserProfileDataSource: SectionedCollectionDataSource {
         UserHeaderDataSource(user: user)
     }
     
-    func makeTitleHeader(title: String, dataSource: UICollectionViewDataSource) -> UICollectionViewDataSource {
-        let titleDataSource = TitleHeaderDataSource(title: title,
-                                                    dataSource: dataSource,
-                                                    headerConfigurator: SectionTitleView.configureForDetail)
-        
-        return titleDataSource
-    }
-    
     func makeFavorites() -> UICollectionViewDataSource {
-        let dataSource = UserMoviesDataSource(models: user.favorites, emptyMessage: emptyMessage(for: .favorites))
-        
-        let titleDataSource = makeTitleHeader(title: .localized(UserString.Favorites), dataSource: dataSource)
-        
-        return titleDataSource
+        makeSection(models: user.favorites,
+                    title: .localized(UserString.Favorites),
+                    emptyMessage: emptyMessage(for: .favorites))
     }
     
     func makeWatchlist() -> UICollectionViewDataSource {
-        let dataSource = UserMoviesDataSource(models: user.watchlist, emptyMessage: emptyMessage(for: .watchlist))
-        
-        let titleDataSource = makeTitleHeader(title: .localized(UserString.Watchlist), dataSource: dataSource)
-        
-        return titleDataSource
+        makeSection(models: user.watchlist,
+                    title: .localized(UserString.Watchlist),
+                    emptyMessage: emptyMessage(for: .watchlist))
     }
     
     func makeRated() -> UICollectionViewDataSource {
-        let dataSource = UserMoviesDataSource(models: user.rated, emptyMessage: emptyMessage(for: .rated))
+        makeSection(models: user.rated,
+                    title: .localized(UserString.Rated),
+                    emptyMessage: emptyMessage(for: .rated))
+    }
+    
+    //MARK: Helper
+    func makeSection(models: [MovieViewModel], title: String, emptyMessage: NSAttributedString) -> UICollectionViewDataSource {
+        let dataSource = UserMoviesDataSource(models: models, emptyMessage: emptyMessage)
         
-        let titleDataSource = makeTitleHeader(title: .localized(UserString.Rated), dataSource: dataSource)
-
-        
+        let titleDataSource = TitleHeaderDataSource(title: title,
+                                                    dataSource: dataSource,
+                                                    headerConfigurator: SectionTitleView.configureForDetail)
         return titleDataSource
+        
     }
     
     //MARK: - Header Data Source

@@ -57,7 +57,8 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
             .recommended,
             .info
         ]
-        
+                
+        sections = sections.filter { dataSource(for: $0) != nil }
         dataSources = sections.compactMap(dataSource(for:))
     }
     
