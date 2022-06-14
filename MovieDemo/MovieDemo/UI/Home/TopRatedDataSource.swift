@@ -20,4 +20,5 @@ class TopRatedDataSource: ProviderDataSource<MoviesDataProvider, MovieRatingList
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return min(maxTopRated, dataProvider.itemCount)
     }
+    
 }

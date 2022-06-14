@@ -30,7 +30,6 @@ extension MovieDetailDataSource.Section {
         MoviesCompositionalLayoutBuilder()
     }
 
-    
     fileprivate func makeHeader() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 100)
 
@@ -100,4 +99,5 @@ extension MovieDetailDataSource.Section {
         
         return section
     }
+    
 }

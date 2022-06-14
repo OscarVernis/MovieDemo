@@ -20,7 +20,7 @@ extension Endpoint {
     }
 }
 
-enum MoviesEndpoint {
+enum MoviesEndpoint: Equatable {
     case NowPlaying
     case Popular
     case TopRated

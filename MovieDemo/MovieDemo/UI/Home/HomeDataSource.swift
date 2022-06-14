@@ -32,11 +32,11 @@ class HomeDataSource: SectionedCollectionDataSource {
     
     //MARK: - Setup
     func registerReusableViews() {
+        SectionTitleView.registerHeader(withCollectionView: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         MovieBannerCell.register(to: collectionView)
         MovieRatingListCell.register(to: collectionView)
         MovieInfoListCell.register(to: collectionView)
-        SectionTitleView.registerHeader(withCollectionView: collectionView)
     }
     
     func setupDataSources() {
@@ -62,45 +62,24 @@ class HomeDataSource: SectionedCollectionDataSource {
         
     //MARK: - Data Sources
     func makeNowPlaying() -> UICollectionViewDataSource {
-        let provider = MoviesDataProvider(.NowPlaying)
-        providers.append(provider)
-        
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MovieBannerCell.reuseIdentifier,
-                                            cellConfigurator: MovieBannerCell.configure)
-        
-        let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.NowPlaying),
-                                                          dataSource: dataSource)
-        
-        return titleDataSource
+        makeSection(.NowPlaying,
+                    title: .localized(HomeString.NowPlaying),
+                    reuseIdentifier: MovieBannerCell.reuseIdentifier,
+                    cellConfigurator: MovieBannerCell.configure)
     }
     
     func makeUpcoming() -> UICollectionViewDataSource {
-        let provider = MoviesDataProvider(.Upcoming)
-        providers.append(provider)
-        
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
-                                            cellConfigurator: MoviePosterInfoCell.configureWithDate)
-        
-
-        let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.Upcoming),
-                                                          dataSource: dataSource)
-        
-        return titleDataSource
+        makeSection(.Upcoming,
+                    title: .localized(HomeString.Upcoming),
+                    reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
+                    cellConfigurator: MoviePosterInfoCell.configureWithDate)
     }
     
     func makePopular() -> UICollectionViewDataSource {
-        let provider = MoviesDataProvider(.Popular)
-        providers.append(provider)
-        
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier, cellConfigurator: MovieInfoListCell.configure)
-      
-        let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.Popular),
-                                                          dataSource: dataSource)
-        
-        return titleDataSource
+        makeSection(.Popular,
+                    title: .localized(HomeString.Popular),
+                    reuseIdentifier: MovieInfoListCell.reuseIdentifier,
+                    cellConfigurator: MovieInfoListCell.configure)
     }
     
     func makeTopRated() -> UICollectionViewDataSource {
@@ -109,6 +88,22 @@ class HomeDataSource: SectionedCollectionDataSource {
         
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.TopRated),
                                                           dataSource: dataSource)
+        
+        return titleDataSource
+    }
+    
+    //MARK: Helper
+    func makeSection<Cell: UICollectionViewCell>(_ movieList: MovieList, title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, MovieViewModel) -> Void) -> UICollectionViewDataSource {
+        
+        let provider = MoviesDataProvider(movieList)
+        providers.append(provider)
+        
+        let dataSource = ProviderDataSource(dataProvider: provider,
+                                            reuseIdentifier: reuseIdentifier,
+                                            cellConfigurator: cellConfigurator)
+        
+        let titleDataSource = TitleHeaderDataSource(title: title,
+                                                    dataSource: dataSource)
         
         return titleDataSource
     }
