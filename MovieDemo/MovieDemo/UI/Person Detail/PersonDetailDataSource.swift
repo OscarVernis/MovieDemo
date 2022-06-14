@@ -71,13 +71,6 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
         
     }
     
-    func crewCredit(at indexPath: IndexPath) -> PersonCrewCreditViewModel? {
-        let titleDataSource = dataSources[indexPath.section] as? TitleHeaderDataSource
-        let crewDataSource = titleDataSource?.contentDataSource as? ArrayCollectionDataSource<PersonCrewCreditViewModel, PersonCreditCell>
-        
-        return crewDataSource?.models[indexPath.row]
-    }
-    
     //MARK: - Data Sources
     func makeOverview() -> UICollectionViewDataSource {
         let dataSource = OverviewDataSource(overview: person.biography ?? "")
@@ -86,39 +79,32 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
     }
     
     func makePopular() -> UICollectionViewDataSource {
-        let dataSource = ArrayCollectionDataSource(models: person.popularMovies,
-                                                   reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
-                                                   cellConfigurator: MoviePosterInfoCell.configureWithRating)
-        
-        let titleDataSource = TitleHeaderDataSource(title: .localized(PersonString.KnownFor),
-                                                    dataSource: dataSource)
-        
-        return titleDataSource
+        makeSection(models: person.popularMovies,
+                    title: .localized(PersonString.KnownFor),
+                    reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
+                    cellConfigurator: MoviePosterInfoCell.configureWithRating)
     }
     
     func makeCrew(title: String, credits: [PersonCrewCreditViewModel]) -> UICollectionViewDataSource {
-        let dataSource = ArrayCollectionDataSource(models: credits,
-                                                   reuseIdentifier: PersonCreditCell.reuseIdentifier,
-                                                   cellConfigurator: PersonCreditCell.configure)
-        
-        let titleDataSource = TitleHeaderDataSource(title: title,
-                                                    dataSource: dataSource)
-        
-        return titleDataSource
-        
+        makeSection(models: credits,
+                    title: .localized(PersonString.KnownFor),
+                    reuseIdentifier: PersonCreditCell.reuseIdentifier,
+                    cellConfigurator: PersonCreditCell.configure)
     }
     
     func makeCast() -> UICollectionViewDataSource {
-        let dataSource = ArrayCollectionDataSource(models: person.castCredits,
-                                                   reuseIdentifier: PersonCreditCell.reuseIdentifier,
-                                                   cellConfigurator: PersonCreditCell.configure)
-        
-        let titleDataSource = TitleHeaderDataSource(title: .localized(PersonString.Acting),
-                                                    dataSource: dataSource)
-        
-        return titleDataSource    }
+        makeSection(models: person.castCredits,
+                           title: .localized(PersonString.Acting),
+                           reuseIdentifier: PersonCreditCell.reuseIdentifier,
+                           cellConfigurator: PersonCreditCell.configure)
+    }
     
-    func makeTitleHeader(title: String, dataSource: UICollectionViewDataSource) -> UICollectionViewDataSource {
+    //MARK: Helper
+    func makeSection<Model, Cell: UICollectionViewCell>(models: [Model], title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, Model) -> Void) -> UICollectionViewDataSource {
+        let dataSource = ArrayCollectionDataSource(models: models,
+                                                   reuseIdentifier: reuseIdentifier,
+                                                   cellConfigurator: cellConfigurator)
+        
         let titleDataSource = TitleHeaderDataSource(title: title,
                                                     dataSource: dataSource,
                                                     headerConfigurator: SectionTitleView.configureForDetail)
@@ -132,6 +118,14 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
         let indexPath = IndexPath(row: indexPath.row, section: 0)
 
         return dataSource.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at:indexPath)
+    }
+    
+    //MARK: - Helper
+    func crewCredit(at indexPath: IndexPath) -> PersonCrewCreditViewModel? {
+        let titleDataSource = dataSources[indexPath.section] as? TitleHeaderDataSource
+        let crewDataSource = titleDataSource?.contentDataSource as? ArrayCollectionDataSource<PersonCrewCreditViewModel, PersonCreditCell>
+        
+        return crewDataSource?.models[indexPath.row]
     }
     
 }
