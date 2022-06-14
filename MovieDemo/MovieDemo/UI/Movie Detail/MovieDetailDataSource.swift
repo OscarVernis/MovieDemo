@@ -49,8 +49,8 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     }
     
     func setupDataSources() {
-        dataSources = []
-        sections = []
+        dataSources.removeAll()
+        sections.removeAll()
         
         dataSources.append(makeMovieHeader())
         sections.append(.header)
@@ -75,7 +75,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
             sections.append(.recommended)
         }
         
-        if !movie.infoArray.isEmpty {
+        if !movie.infoArray.isEmpty && !movie.isLoading {
             dataSources.append(makeInfo())
             sections.append(.info)
         }
