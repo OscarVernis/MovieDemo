@@ -94,8 +94,12 @@ extension MovieViewModel {
     }
     
     private func getMovieDetails() {
+        isLoading = true
+        
         cancellable = service.getMovieDetails(movieId: movie.id!)
             .sink { [weak self] completion in
+                self?.isLoading = false
+                
                 switch completion {
                 case .finished:
                     self?.didUpdate?(nil)
