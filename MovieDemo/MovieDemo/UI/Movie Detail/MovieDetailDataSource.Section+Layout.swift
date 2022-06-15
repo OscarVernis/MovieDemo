@@ -92,7 +92,7 @@ extension MovieDetailDataSource.Section {
         let section = sectionBuilder.createListSection(height: 50)
         
         section.contentInsets.top = 5
-        section.contentInsets.bottom = UIWindow.bottomInset + 30
+        section.contentInsets.bottom = UIWindow.mainWindow.safeAreaInsets.bottom + 30
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]

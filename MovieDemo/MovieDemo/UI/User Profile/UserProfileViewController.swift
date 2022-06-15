@@ -65,7 +65,8 @@ class UserProfileViewController: UIViewController {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: UIWindow.topInset, left: 0, bottom: 0, right: 0)
+        let topInset = UIWindow.mainWindow.topInset
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
         dataSource = UserProfileDataSource(collectionView: collectionView, user: user)
         collectionView.dataSource = dataSource

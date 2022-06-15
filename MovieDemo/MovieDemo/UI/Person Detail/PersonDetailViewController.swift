@@ -93,8 +93,8 @@ class PersonDetailViewController: UIViewController {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Set so the scrollIndicator stops before the status bar
-        let topInset = UIWindow.topInset
-        let bottomInset = UIWindow.bottomInset
+        let topInset = UIWindow.mainWindow.topInset
+        let bottomInset = UIWindow.mainWindow.bottomInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
 
         
@@ -107,7 +107,7 @@ class PersonDetailViewController: UIViewController {
             personImageView.setRemoteImage(withURL: imageURL)
         }
         
-        let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
+        let width = UIWindow.mainWindow.frame.width
         let height = width * 1.5
         headerHeightConstraint.constant = height
         collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
@@ -143,7 +143,7 @@ extension PersonDetailViewController {
     }
     
     fileprivate func updateHeader() {
-        let width = UIApplication.shared.windows.first(where: \.isKeyWindow)!.frame.width
+        let width = UIWindow.mainWindow.frame.width
         let height = width * 1.5
         let titleHeight: CGFloat = 60
         let navBarHeight = view.safeAreaInsets.top + 44 + titleHeight

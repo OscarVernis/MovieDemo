@@ -20,7 +20,7 @@ class UserHeaderDataSource: NSObject, UICollectionViewDataSource {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
         
         //Adjust the top of the Header so it doesn't go unde the bar
-        headerView.topConstraint.constant = UIWindow.topInset + 55
+        headerView.topConstraint.constant = UIWindow.mainWindow.topInset + 55
         
         headerView.configure(user: user)
         

@@ -8,12 +8,16 @@
 
 import UIKit
 extension UIWindow {
-    static var topInset: CGFloat {
-        UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.top
+    static var mainWindow: UIWindow {
+        (UIApplication.shared.delegate as! AppDelegate).window!
     }
     
-    static var bottomInset: CGFloat {
-        UIApplication.shared.windows.first(where: \.isKeyWindow)!.safeAreaInsets.bottom
+    var topInset: CGFloat {
+        safeAreaInsets.top
+    }
+    
+    var bottomInset: CGFloat {
+        safeAreaInsets.bottom
     }
 }
 

@@ -12,7 +12,7 @@ struct MoviesCompositionalLayoutBuilder {
     var spacing: CGFloat = 20
     
     init() {
-        if let screenWidth = UIApplication.shared.windows.first(where: \.isKeyWindow)?.bounds.width, screenWidth > 500 {
+        if UIWindow.mainWindow.bounds.width > 500 {
             spacing = 50
         }
     }
