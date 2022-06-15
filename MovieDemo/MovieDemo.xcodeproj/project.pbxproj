@@ -507,7 +507,6 @@
 			isa = PBXGroup;
 			children = (
 				5511FF8D285A8CAC00B9C12A /* Extensions */,
-				5511FF88285A763300B9C12A /* Mocks */,
 				5511FF83285A703700B9C12A /* Home.swift */,
 				5511FF8B285A7AFD00B9C12A /* MovieRow.swift */,
 				5511FF94285A900500B9C12A /* MovieBanner.swift */,
@@ -542,9 +541,42 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		5511FF9C285AA7B900B9C12A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
+				55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */,
+				5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */,
+				555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */,
+				55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */,
+				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
+				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
+				550869B12855765700465008 /* UIWindow+Utils.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5511FF9D285AA7E400B9C12A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				55D309DB281325D0004F2725 /* URLSession+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5511FF9E285AA82C00B9C12A /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				55EE5739284D826400C6A170 /* UserFacingError.swift */,
+				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		5518200327DFE3FB00237F39 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5511FF9C285AA7B900B9C12A /* Extensions */,
 				5504058B28543E290027E1C0 /* Search */,
 				5506BAA92512E2B10052B0F2 /* Home */,
 				55518D4A251151B300DAEB7F /* Movie Detail */,
@@ -694,7 +726,6 @@
 			children = (
 				55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */,
 				5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */,
-				55EE5739284D826400C6A170 /* UserFacingError.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -702,6 +733,7 @@
 		5562461A2515611A005E63AB /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				5511FF9D285AA7E400B9C12A /* Extensions */,
 				55A21C8A27DFBD9C00A7E538 /* Models */,
 				5545203A22D99D8F004B7924 /* MovieService.swift */,
 				5565DDEC27E969CD00D7F4EB /* Endpoint.swift */,
@@ -868,14 +900,16 @@
 			isa = PBXGroup;
 			children = (
 				559D132022D98E4800C96FC8 /* AppDelegate.swift */,
-				55A6A9902511A70E00305C29 /* Utils */,
+				55EDA7142811185C0055696F /* Assets */,
 				55EECCDB2511905A0041EAE7 /* Extensions */,
+				5511FF9E285AA82C00B9C12A /* Error */,
 				556246192515610F005E63AB /* Coordinator */,
 				5523970627D19B3B00E4C18F /* Session */,
-				555498FF2822329600E89119 /* Protocols */,
 				55E07D7A22D9983C00AF0144 /* Models */,
+				555498FF2822329600E89119 /* Protocols */,
 				5562461A2515611A005E63AB /* Remote */,
 				55B6CB8727E0201B007DB4C2 /* LocalStore */,
+				5511FF88285A763300B9C12A /* Mocks */,
 				554DE184251F0C23000286D2 /* ViewModels */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
 				5511FF82285A702300B9C12A /* SwiftUI */,
@@ -911,16 +945,6 @@
 				55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */,
 			);
 			path = MediaViewer;
-			sourceTree = "<group>";
-		};
-		55A6A9902511A70E00305C29 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				55EE573B284D947500C6A170 /* Localizable */,
-				55EDA7142811185C0055696F /* Assets */,
-				55D35E1E2517DE1D00114602 /* AlertManager.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		55AA47102506B13A00E25C59 /* Lists */ = {
@@ -1038,10 +1062,12 @@
 		55EDA7142811185C0055696F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				55EE573B284D947500C6A170 /* Localizable */,
 				55EE51A6251EC5DE00915AB3 /* ColorAsset.swift */,
 				55EDA71528111CC80055696F /* ImageAsset.swift */,
 			);
-			path = Assets;
+			name = Assets;
+			path = Utils/Assets;
 			sourceTree = "<group>";
 		};
 		55EE573B284D947500C6A170 /* Localizable */ = {
@@ -1076,16 +1102,7 @@
 			isa = PBXGroup;
 			children = (
 				55741CE1251CFCAC00A6281B /* Double+Math.swift */,
-				556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */,
-				55677461251735E90066B6E4 /* UICollectionViewCell+Register.swift */,
-				5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */,
-				555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */,
-				55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */,
-				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
-				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
-				55D309DB281325D0004F2725 /* URLSession+Extensions.swift */,
 				559B08D2283D4EBF002DA8DF /* AnyPublisher+Async.swift */,
-				550869B12855765700465008 /* UIWindow+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
