@@ -26,6 +26,8 @@
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */; };
 		5511FF84285A703700B9C12A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF83285A703700B9C12A /* Home.swift */; };
+		5511FF87285A761700B9C12A /* now_playing.json in Resources */ = {isa = PBXBuildFile; fileRef = 5511FF86285A761700B9C12A /* now_playing.json */; };
+		5511FF8A285A765600B9C12A /* JSONMovieLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF89285A765600B9C12A /* JSONMovieLoader.swift */; };
 		55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55135E712512C866004C4361 /* MovieDetailHeaderView.swift */; };
 		55164AFB25154A6500D219BC /* MoviePosterInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55164AF925154A6400D219BC /* MoviePosterInfoCell.swift */; };
 		55164AFC25154A6500D219BC /* MoviePosterInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55164AFA25154A6500D219BC /* MoviePosterInfoCell.xib */; };
@@ -241,6 +243,8 @@
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoordinator.swift; sourceTree = "<group>"; };
 		5511FF83285A703700B9C12A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		5511FF86285A761700B9C12A /* now_playing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = now_playing.json; sourceTree = "<group>"; };
+		5511FF89285A765600B9C12A /* JSONMovieLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMovieLoader.swift; sourceTree = "<group>"; };
 		55135E712512C866004C4361 /* MovieDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailHeaderView.swift; sourceTree = "<group>"; };
 		55164AF925154A6400D219BC /* MoviePosterInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterInfoCell.swift; sourceTree = "<group>"; };
 		55164AFA25154A6500D219BC /* MoviePosterInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoviePosterInfoCell.xib; sourceTree = "<group>"; };
@@ -488,9 +492,26 @@
 		5511FF82285A702300B9C12A /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				5511FF88285A763300B9C12A /* Mocks */,
 				5511FF83285A703700B9C12A /* Home.swift */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		5511FF85285A75A500B9C12A /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				5511FF86285A761700B9C12A /* now_playing.json */,
+			);
+			path = Previews;
+			sourceTree = "<group>";
+		};
+		5511FF88285A763300B9C12A /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				5511FF89285A765600B9C12A /* JSONMovieLoader.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		5518200327DFE3FB00237F39 /* UI */ = {
@@ -831,6 +852,7 @@
 				5511FF82285A702300B9C12A /* SwiftUI */,
 				5518200327DFE3FB00237F39 /* UI */,
 				55614008252008D100F1AA5B /* Assets */,
+				5511FF85285A75A500B9C12A /* Previews */,
 				559D132C22D98E4B00C96FC8 /* Info.plist */,
 			);
 			path = MovieDemo;
@@ -1181,6 +1203,7 @@
 				5587114B25108079005A0975 /* MovieInfoListCell.xib in Resources */,
 				55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */,
 				551A2929251F18E9003746EE /* SectionTitleView.xib in Resources */,
+				5511FF87285A761700B9C12A /* now_playing.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1280,6 +1303,7 @@
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
 				551693192857CF8200FD147F /* OverviewDataSource.swift in Sources */,
 				55EE573A284D826400C6A170 /* UserFacingError.swift in Sources */,
+				5511FF8A285A765600B9C12A /* JSONMovieLoader.swift in Sources */,
 				55A60DD82527AAB30082810C /* MediaViewerAnimator.swift in Sources */,
 				5511FF84285A703700B9C12A /* Home.swift in Sources */,
 				55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */,
@@ -1672,6 +1696,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = MovieDemo/Previews;
 				DEVELOPMENT_TEAM = 2YV25EQER7;
 				INFOPLIST_FILE = MovieDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
@@ -1694,6 +1719,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = MovieDemo/Previews;
 				DEVELOPMENT_TEAM = 2YV25EQER7;
 				INFOPLIST_FILE = MovieDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;

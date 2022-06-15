@@ -28,9 +28,13 @@ struct Home: View {
 }
 
 struct Home_Previews: PreviewProvider {
+    static let provider = MoviesProvider(.NowPlaying,
+                                  movieLoader: JSONMovieLoader(filename: "now_playing"),
+                                  cache: nil)
+    
     static var previews: some View {
         NavigationView{
-            Home()
+            Home(coordinator: nil, nowPlayingProvider: provider)
                 .preferredColorScheme(.dark)
         }
     }
