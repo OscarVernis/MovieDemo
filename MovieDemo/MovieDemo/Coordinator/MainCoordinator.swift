@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class MainCoordinator {
+class MainCoordinator {
     private var window: UIWindow
     private(set) var rootNavigationViewController: UINavigationController?
     

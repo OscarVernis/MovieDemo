@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow()
         self.window = window
 
-        appCoordinator = MainCoordinator(window: window)
+        appCoordinator = SwiftUICoordinator(window: window)
         appCoordinator?.start()
         
         return true
