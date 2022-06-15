@@ -10,10 +10,20 @@ import SwiftUI
 
 struct Home: View {
     weak var coordinator: MainCoordinator?
+    @ObservedObject var nowPlayingProvider = MoviesProvider(.NowPlaying)
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .navigationTitle(HomeString.Movies.localized)
+        List {
+            ForEach(nowPlayingProvider.items, id: \.self) { movie in
+                Text(movie.title)
+            }
+        }
+        .onAppear(perform: refresh)
+        .navigationTitle(HomeString.Movies.localized)
+    }
+    
+    func refresh() {
+        nowPlayingProvider.refresh()
     }
 }
 
