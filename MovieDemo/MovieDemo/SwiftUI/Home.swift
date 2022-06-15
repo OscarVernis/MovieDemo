@@ -18,8 +18,19 @@ struct Home: View {
                 Text(movie.title)
             }
         }
+        .toolbar { navigationItems() }
         .onAppear(perform: refresh)
         .navigationTitle(HomeString.Movies.localized)
+    }
+    
+    fileprivate func navigationItems() -> ToolbarItem<Void, Button<Image>> {
+        ToolbarItem(placement: .primaryAction) {
+            Button(action: {
+                coordinator?.showUserProfile()
+            }, label: {
+                Image(asset: .person)
+            })
+        }
     }
     
     func refresh() {
@@ -28,14 +39,16 @@ struct Home: View {
 }
 
 struct Home_Previews: PreviewProvider {
-    static let provider = MoviesProvider(.NowPlaying,
-                                  movieLoader: JSONMovieLoader(filename: "now_playing"),
-                                  cache: nil)
+    static let provider = MoviesProvider(
+        movieLoader: JSONMovieLoader(filename: "now_playing"),
+        cache: nil
+    )
     
     static var previews: some View {
         NavigationView{
             Home(coordinator: nil, nowPlayingProvider: provider)
                 .preferredColorScheme(.dark)
         }
+        .tint(Color(asset: .AppTintColor))
     }
 }

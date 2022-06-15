@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemoteMovieDetailsLoader {
+struct RemoteMovieDetailsLoader: MovieDetailsLoader {
     let service: MovieService
     
     init(sessionId: String? = nil) {

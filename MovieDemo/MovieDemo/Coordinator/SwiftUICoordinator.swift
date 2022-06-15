@@ -11,8 +11,11 @@ import SwiftUI
 
 class SwiftUICoordinator: MainCoordinator {
     override func showHome() {
-        let homeView = Home(coordinator: self)
+        let homeView = Home(coordinator: self)        
         let hvc = UIHostingController(rootView: homeView)
+        
+        let searchViewController = SearchViewController(coordinator: self)
+        hvc.navigationItem.searchController = searchViewController.searchController
         
         rootNavigationViewController?.viewControllers = [hvc]
     }

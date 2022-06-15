@@ -12,7 +12,7 @@ import Combine
 class MovieViewModel {
     private var movie: Movie
     
-    var service: RemoteMovieDetailsLoader
+    var service: MovieDetailsLoader
     
     var userStates: MovieUserStatesViewModel? = nil
 
@@ -33,7 +33,7 @@ class MovieViewModel {
     
     private var cancellable: AnyCancellable? = nil
     
-    init(movie: Movie, service: RemoteMovieDetailsLoader = RemoteMovieDetailsLoader()) {
+    init(movie: Movie, service: MovieDetailsLoader = RemoteMovieDetailsLoader()) {
         self.movie = movie
         self.service = service
         updateInfo() 
