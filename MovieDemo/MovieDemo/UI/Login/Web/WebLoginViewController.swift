@@ -12,7 +12,7 @@ import AuthenticationServices
 class WebLoginViewController: UIViewController {
     let service = RemoteSessionService()
     var sessionManager: SessionManager!
-    var coordinator: MainCoordinator? = nil
+    weak var coordinator: MainCoordinator? = nil
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!

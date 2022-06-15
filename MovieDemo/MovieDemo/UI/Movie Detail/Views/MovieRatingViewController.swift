@@ -15,7 +15,7 @@ class MovieRatingViewController: UIViewController {
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var coordinator: MainCoordinator? = nil
+    weak var coordinator: MainCoordinator? = nil
     
     private var isLoading = false {
         didSet {
