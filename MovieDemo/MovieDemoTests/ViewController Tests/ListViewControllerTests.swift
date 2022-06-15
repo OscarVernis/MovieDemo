@@ -40,7 +40,7 @@ class ListViewControllerTests: XCTestCase {
     func test_deallocation() throws {
         assertDeallocation {
             let movies = anyMovies(count: 10).map { MovieViewModel(movie: $0) }
-            let dataProvider = StaticArrayDataProvider(models: movies)
+            let dataProvider = BasicProvider(models: movies)
             let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                                 reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                                 cellConfigurator: MovieInfoListCell.configure)
@@ -123,7 +123,7 @@ class ListViewControllerTests: XCTestCase {
 }
 
 //MARK: - Spy
-class MoviesDataProviderSpy: MoviesDataProvider {
+class MoviesDataProviderSpy: MoviesProvider {
     var loadMoreCount = 0
     var refreshCount = 0
     

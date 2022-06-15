@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct StaticArrayDataProvider<T>: ArrayDataProvider {
+struct BasicProvider<T>: DataProvider {
     typealias Model = T
     
     private(set) var items: [T]

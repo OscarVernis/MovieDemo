@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ArrayDataProvider {
+protocol DataProvider {
     associatedtype Model
     
     var items: [Model] { get }
@@ -24,7 +24,7 @@ protocol ArrayDataProvider {
 
 }
 
-extension ArrayDataProvider {
+extension DataProvider {
     var itemCount: Int {
         return items.count
     }

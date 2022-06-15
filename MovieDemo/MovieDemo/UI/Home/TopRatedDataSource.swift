@@ -8,11 +8,11 @@
 
 import UIKit
 
-class TopRatedDataSource: ProviderDataSource<MoviesDataProvider, MovieRatingListCell> {
+class TopRatedDataSource: ProviderDataSource<MoviesProvider, MovieRatingListCell> {
     var maxTopRated = 10
     
     init() {
-        super.init(dataProvider: MoviesDataProvider(.TopRated),
+        super.init(dataProvider: MoviesProvider(.TopRated),
                    reuseIdentifier: MovieRatingListCell.reuseIdentifier,
                    cellConfigurator: MovieRatingListCell.configure)
     }

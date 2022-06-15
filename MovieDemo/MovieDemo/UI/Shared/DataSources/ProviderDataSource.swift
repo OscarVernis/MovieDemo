@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ProviderDataSource<Provider: ArrayDataProvider, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
+class ProviderDataSource<Provider: DataProvider, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
     typealias CellConfigurator = (Cell, Provider.Model) -> Void
     
     var dataProvider: Provider

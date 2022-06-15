@@ -181,7 +181,7 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
     
-    func showMovieList<T: ArrayDataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
+    func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                         cellConfigurator: MovieInfoListCell.configure)
@@ -201,7 +201,7 @@ final class MainCoordinator {
     
     func showMovieList(title: String, list: MovieList, animated: Bool = true)  {
         let sessionId = sessionManager.sessionId
-        let dataProvider = MoviesDataProvider(list, movieLoader: RemoteMoviesLoader(sessionId: sessionId))
+        let dataProvider = MoviesProvider(list, movieLoader: RemoteMoviesLoader(sessionId: sessionId))
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
@@ -214,7 +214,7 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(pvc, animated: animated)
     }
     
-    func showCrewCreditList(title: String, dataProvider: StaticArrayDataProvider<CrewCreditViewModel>, animated: Bool = true) {
+    func showCrewCreditList(title: String, dataProvider: BasicProvider<CrewCreditViewModel>, animated: Bool = true) {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                         cellConfigurator: CreditPhotoListCell.configure)
@@ -233,7 +233,7 @@ final class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
-    func showCastCreditList(title: String, dataProvider: StaticArrayDataProvider<CastCreditViewModel>, animated: Bool = true) {
+    func showCastCreditList(title: String, dataProvider: BasicProvider<CastCreditViewModel>, animated: Bool = true) {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                         cellConfigurator: CreditPhotoListCell.configure)

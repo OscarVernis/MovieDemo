@@ -73,11 +73,11 @@ class CoordinatorTests: XCTestCase {
         
         let movie = anyMovieVM()
         coordinator.showMovieList(title: "Movies",
-                                  dataProvider: StaticArrayDataProvider(models: movie.recommendedMovies),
+                                  dataProvider: BasicProvider(models: movie.recommendedMovies),
                                   animated: false)
         
         let movieList = navCont?.visibleViewController
-        XCTAssert(movieList is ListViewController<StaticArrayDataProvider<MovieViewModel>, MovieInfoListCell>, "Expected ListViewController, " + "but was \(String(describing: movieList))")
+        XCTAssert(movieList is ListViewController<BasicProvider<MovieViewModel>, MovieInfoListCell>, "Expected ListViewController, " + "but was \(String(describing: movieList))")
     }
     
     func test_Coordinator_Shows_PersonDetail() throws {
@@ -96,11 +96,11 @@ class CoordinatorTests: XCTestCase {
         
         let movie = anyMovieVM()
         coordinator.showCastCreditList(title: "Cast",
-                                       dataProvider: StaticArrayDataProvider(models: movie.cast),
+                                       dataProvider: BasicProvider(models: movie.cast),
                                        animated: false)
         
         let castList = navCont?.visibleViewController
-        XCTAssert(castList is ListViewController<StaticArrayDataProvider<CastCreditViewModel>, CreditPhotoListCell>)
+        XCTAssert(castList is ListViewController<BasicProvider<CastCreditViewModel>, CreditPhotoListCell>)
     }
     
     func test_Coordinator_Shows_CrewList() throws {
@@ -109,11 +109,11 @@ class CoordinatorTests: XCTestCase {
         
         let movie = anyMovieVM()
         coordinator.showCrewCreditList(title: "Crew",
-                                       dataProvider: StaticArrayDataProvider(models: movie.crew),
+                                       dataProvider: BasicProvider(models: movie.crew),
                                        animated: false)
         
         let castList = navCont?.visibleViewController
-        XCTAssert(castList is ListViewController<StaticArrayDataProvider<CrewCreditViewModel>, CreditPhotoListCell>)
+        XCTAssert(castList is ListViewController<BasicProvider<CrewCreditViewModel>, CreditPhotoListCell>)
     }
     
     func test_Coordinator_Shows_UserProfile_IfLoggedIn() throws {

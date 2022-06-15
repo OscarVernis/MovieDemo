@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: ListViewController<SearchDataProvider, UICollectionViewCell> {
+class SearchViewController: ListViewController<SearchProvider, UICollectionViewCell> {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()

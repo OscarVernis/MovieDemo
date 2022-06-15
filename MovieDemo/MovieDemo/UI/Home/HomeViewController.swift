@@ -93,7 +93,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         dataSource.refresh()
     }
     
-    func showMovieList(title: String, provider: MoviesDataProvider) {
+    func showMovieList(title: String, provider: MoviesProvider) {
         mainCoordinator.showMovieList(title: title, dataProvider: provider)
     }
     

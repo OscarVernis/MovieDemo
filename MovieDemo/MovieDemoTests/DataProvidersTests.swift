@@ -15,7 +15,7 @@ class DataProvidersTests: XCTestCase {
     //MARK: - StaticArrayDataProvider Tests
     func test_StaticArrayDataProvider_success() throws {
         let movies = anyMovies(count: 20)
-        var dataProvider = StaticArrayDataProvider(models: movies)
+        var dataProvider = BasicProvider(models: movies)
         
         dataProvider.didUpdate = { error in
             XCTAssertNil(error)
@@ -29,7 +29,7 @@ class DataProvidersTests: XCTestCase {
     func test_MovieDataProvider_success() throws {
         let movies = anyMovies(count: 20)
         let movieLoaderMock = MovieLoaderMock(movies: movies, pageCount: 3)
-        let dataProvider = MoviesDataProvider(.NowPlaying, movieLoader: movieLoaderMock)
+        let dataProvider = MoviesProvider(.NowPlaying, movieLoader: movieLoaderMock)
         
         assertDataProviderPaging(dataProvider: dataProvider)
     }
@@ -37,7 +37,7 @@ class DataProvidersTests: XCTestCase {
     func test_MovieDataProvider_failure() throws {
         let movies = anyMovies(count: 20)
         let movieLoaderMock = MovieLoaderMock(movies: movies, pageCount: 3, error: MovieService.ServiceError.RequestError)
-        let dataProvider = MoviesDataProvider(.NowPlaying, movieLoader: movieLoaderMock, cache: nil)
+        let dataProvider = MoviesProvider(.NowPlaying, movieLoader: movieLoaderMock, cache: nil)
         
         //First try should fail
         assertDataProviderPagingFailure(dataProvider: dataProvider)
@@ -51,7 +51,7 @@ class DataProvidersTests: XCTestCase {
     func test_SearchDataProvider_query() throws {
         let results: [Any] = anyMovies(count: 5) + anyPersons(count: 5)
         let searchLoader = SearchLoaderMock(results: results, pageCount: 3)
-        let dataProvider = SearchDataProvider(searchLoader: searchLoader)
+        let dataProvider = SearchProvider(searchLoader: searchLoader)
         
         var callCount = 0
         dataProvider.didUpdate = { error in
@@ -75,7 +75,7 @@ class DataProvidersTests: XCTestCase {
     func test_SearchDataProvider_success() throws {
         let results: [Any] = anyMovies(count: 10) + anyPersons(count: 10)
         let searchLoader = SearchLoaderMock(results: results, pageCount: 3)
-        let dataProvider = SearchDataProvider(searchLoader: searchLoader)
+        let dataProvider = SearchProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"
         
@@ -85,7 +85,7 @@ class DataProvidersTests: XCTestCase {
     func test_SearchDataProvider_failure() throws {
         let results: [Any] = anyMovies(count: 10) + anyPersons(count: 10)
         let searchLoader = SearchLoaderMock(results: results, pageCount: 3, error: MovieService.ServiceError.RequestError)
-        let dataProvider = SearchDataProvider(searchLoader: searchLoader)
+        let dataProvider = SearchProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"
         
@@ -101,7 +101,7 @@ class DataProvidersTests: XCTestCase {
  
 //MARK: - Helpers
 extension DataProvidersTests {
-    func assertDataProviderPaging<T>(dataProvider: PaginatedDataProvider<T>) {
+    func assertDataProviderPaging<T>(dataProvider: PaginatedProvider<T>) {
         var callCount = 0
         
         var exp = XCTestExpectation()
@@ -152,7 +152,7 @@ extension DataProvidersTests {
         XCTAssertEqual(callCount, 3)
     }
         
-    func assertDataProviderPagingFailure<T>(dataProvider: PaginatedDataProvider<T>) {
+    func assertDataProviderPagingFailure<T>(dataProvider: PaginatedProvider<T>) {
         let exp = XCTestExpectation()
         dataProvider.didUpdate = { error in
             XCTAssertNotNil(error)

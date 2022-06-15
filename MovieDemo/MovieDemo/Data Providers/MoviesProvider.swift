@@ -1,5 +1,5 @@
 //
-//  MoviesDataProvider.swift
+//  MoviesProvider.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 01/04/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class MoviesDataProvider: PaginatedDataProvider<MovieViewModel> {
+class MoviesProvider: PaginatedProvider<MovieViewModel> {
     let movieLoader: MovieLoader
     let cache: MovieCache?
     var serviceCancellable: AnyCancellable?

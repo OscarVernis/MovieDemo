@@ -165,15 +165,15 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate lazy var showCast:(() -> Void) = { [unowned self] in
-        mainCoordinator?.showCastCreditList(title: .localized(MovieString.Cast), dataProvider: StaticArrayDataProvider(models: movie.cast))
+        mainCoordinator?.showCastCreditList(title: .localized(MovieString.Cast), dataProvider: BasicProvider(models: movie.cast))
     }
     
     fileprivate lazy var showCrew: (() -> Void) = { [unowned self] in
-        mainCoordinator?.showCrewCreditList(title: .localized(MovieString.Crew), dataProvider: StaticArrayDataProvider(models: movie.crew))
+        mainCoordinator?.showCrewCreditList(title: .localized(MovieString.Crew), dataProvider: BasicProvider(models: movie.crew))
     }
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
-        let provider = MoviesDataProvider(.Recommended(movieId: movie.id))
+        let provider = MoviesProvider(.Recommended(movieId: movie.id))
         mainCoordinator?.showMovieList(title: .localized(MovieString.RecommendedMovies), dataProvider: provider)
     }
     

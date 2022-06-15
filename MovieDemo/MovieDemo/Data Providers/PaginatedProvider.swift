@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class PaginatedDataProvider<T>: ArrayDataProvider {
+class PaginatedProvider<T>: DataProvider {
     typealias Model = T
     
     @Published var items = [T]()

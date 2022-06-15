@@ -1,5 +1,5 @@
 //
-//  SearchDataProvider.swift
+//  SearchProvider.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 01/04/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class SearchDataProvider: PaginatedDataProvider<Any> {
+class SearchProvider: PaginatedProvider<Any> {
     typealias Model = Any
 
     @Published var query: String = "" {

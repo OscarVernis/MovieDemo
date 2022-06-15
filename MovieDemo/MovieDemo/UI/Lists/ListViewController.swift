@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewController<Provider: ArrayDataProvider, Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate {
+class ListViewController<Provider: DataProvider, Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate {
     enum Section: Int, CaseIterable {
         case Main
     }

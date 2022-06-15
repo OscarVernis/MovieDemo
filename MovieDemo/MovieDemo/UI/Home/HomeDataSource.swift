@@ -17,7 +17,7 @@ class HomeDataSource: SectionedCollectionDataSource {
     
     unowned var collectionView: UICollectionView
 
-    var providers: [MoviesDataProvider] = []
+    var providers: [MoviesProvider] = []
     
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
@@ -95,7 +95,7 @@ class HomeDataSource: SectionedCollectionDataSource {
     //MARK: Helper
     func makeSection<Cell: UICollectionViewCell>(_ movieList: MovieList, title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, MovieViewModel) -> Void) -> UICollectionViewDataSource {
         
-        let provider = MoviesDataProvider(movieList)
+        let provider = MoviesProvider(movieList)
         providers.append(provider)
         
         let dataSource = ProviderDataSource(dataProvider: provider,
