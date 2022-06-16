@@ -13,15 +13,12 @@ struct Home: View {
     @ObservedObject var nowPlayingProvider = MoviesProvider(.NowPlaying)
     
     var body: some View {
-        List {
-            MovieRow(movies: nowPlayingProvider.items)
-            MovieRow(movies: nowPlayingProvider.items)
-            MovieRow(movies: nowPlayingProvider.items)
-            MovieRow(movies: nowPlayingProvider.items)
+        ScrollView {
+            HStack(alignment: .top, spacing: 1) {
+                MovieRow(movies: nowPlayingProvider.items)
+            }
         }
-        .listStyle(.plain)
-        .listRowSeparator(.hidden)
-        .listRowSeparatorTint(.clear)
+        .background(Color(asset: .AppBackgroundColor))
         .toolbar { navigationItems() }
         .onAppear(perform: refresh)
         .navigationTitle(HomeString.Movies.localized)

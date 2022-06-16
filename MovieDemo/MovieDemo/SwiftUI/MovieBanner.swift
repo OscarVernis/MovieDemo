@@ -15,17 +15,19 @@ struct MovieBanner: View {
     var body: some View {
         VStack(alignment: .leading) {
             WebImage(url: movie.backdropImageURL(size: .w780))
-                .resizable()
                 .placeholder(Image(asset: .BackdropPlaceholder))
+                .resizable()
                 .scaledToFit()
                 .transition(.fade(duration: 0.5))
                 .cornerRadius(12)
             HStack {
                 VStack(alignment: .leading) {
                     Text(movie.title)
+                        .lineLimit(1)
                         .font(.titleFont)
                         .foregroundColor(.label)
                     Text(movie.genres(separatedBy: ", "))
+                        .lineLimit(1)
                         .font(.subtitleFont)
                         .foregroundColor(.secondaryLabel)
                 }

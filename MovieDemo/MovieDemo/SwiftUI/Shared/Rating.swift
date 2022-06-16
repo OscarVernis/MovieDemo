@@ -65,7 +65,7 @@ struct Rating: View {
                 .stroke(ratingColor, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
         }
-        .padding(lineWidth)
+        .padding(lineWidth / 2)
     }
     
     fileprivate var correctedProgress: CGFloat {

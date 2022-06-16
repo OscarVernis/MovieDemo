@@ -13,14 +13,19 @@ struct MovieRow: View {
     
     var body: some View {
         VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(movies, id:\.self) { movie in
-                        MovieBanner(movie: movie)
+            GeometryReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .center, spacing: 20) {
+                        ForEach(movies, id:\.self) { movie in
+                            MovieBanner(movie: movie)
+                                .frame(width: proxy.size.width * 0.85)
+                        }
                     }
+                    .padding([.leading, .trailing], 20)
                 }
             }
         }
+        .scaledToFit()
     }
 }
 
@@ -29,6 +34,7 @@ struct MoviesRow_Previews: PreviewProvider {
     
     static var previews: some View {
         MovieRow(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+            .previewLayout(.fixed(width: 375, height: 500))
             .preferredColorScheme(.dark)
     }
 }
