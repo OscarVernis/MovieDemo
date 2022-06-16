@@ -15,10 +15,20 @@ struct Home: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 1) {
-                SectionTitle(title: .localized(HomeString.NowPlaying))
-                MovieBannerRow(movies: nowPlayingProvider.items)
-                SectionTitle(title: .localized(HomeString.Upcoming))
-                MoviePosterRow(movies: nowPlayingProvider.items)
+//                SectionTitle(title: .localized(HomeString.NowPlaying))
+//                MovieBannerRow(movies: nowPlayingProvider.items)
+//                SectionTitle(title: .localized(HomeString.Upcoming))
+//                MoviePosterRow(movies: nowPlayingProvider.items)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color(asset: .SectionBackgroundColor))
+                    VStack {
+                        SectionTitle(title: .localized(HomeString.TopRated))
+                        RatedMovieList(movies: nowPlayingProvider.items)
+                    }
+                    .padding(.top, 10)
+                }
+                .padding([.leading, .trailing], 20)
                 SectionTitle(title: .localized(HomeString.Popular))
                 MoviePosterList(movies: nowPlayingProvider.items)
             }
@@ -53,7 +63,7 @@ struct Home_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
             Home(coordinator: nil, nowPlayingProvider: provider)
-                .preferredColorScheme(.light)
+                .preferredColorScheme(.dark)
         }
         .tint(Color(asset: .AppTintColor))
     }
