@@ -8,10 +8,17 @@
 
 import SwiftUI
 
+//MARK: - ColorAsset
 extension Color {
     init(asset: ColorAsset) {
         let color = asset.color
         self.init(uiColor: color)
     }
     
+}
+
+//MARK: - Standard Colors
+extension Color {
+    static let label = Color(UIColor.label)
+    static let secondaryLabel = Color(UIColor.secondaryLabel)
 }

@@ -23,9 +23,11 @@ struct MovieBanner: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(movie.title)
-                        .font(.headline)
+                        .font(.titleFont)
+                        .foregroundColor(.label)
                     Text(movie.genres(separatedBy: ", "))
-                        .font(.subheadline)
+                        .font(.subtitleFont)
+                        .foregroundColor(.secondaryLabel)
                 }
                 Spacer()
                 Rating(progress: movie.percentRating)
