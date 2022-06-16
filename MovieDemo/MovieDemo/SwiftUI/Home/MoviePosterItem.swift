@@ -25,15 +25,13 @@ struct MoviePosterItem: View {
 //                .truncationMode(.tail)
 //                .lineLimit(1)
             Text(movie.title)
+                .titleStyle()
                 .truncationMode(.tail)
                 .lineLimit(1)
-                .foregroundColor(.label)
-                .font(.titleFont)
             Text(movie.releaseDateWithoutYear)
+                .subtitleStyle()
                 .truncationMode(.tail)
                 .lineLimit(1)
-                .foregroundColor(.secondaryLabel)
-                .font(.subtitleFont)
         }
     }
 }

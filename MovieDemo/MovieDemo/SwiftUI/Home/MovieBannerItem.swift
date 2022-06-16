@@ -23,13 +23,11 @@ struct MovieBannerItem: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(movie.title)
+                        .titleStyle()
                         .lineLimit(1)
-                        .font(.titleFont)
-                        .foregroundColor(.label)
                     Text(movie.genres())
+                        .subtitleStyle()
                         .lineLimit(1)
-                        .font(.subtitleFont)
-                        .foregroundColor(.secondaryLabel)
                 }
                 Spacer()
                 Rating(progress: movie.percentRating)
