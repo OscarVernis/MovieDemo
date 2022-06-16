@@ -30,9 +30,10 @@ struct MovieList_Previews: PreviewProvider {
 
     static var previews: some View {
         ScrollView {
-            MoviePosterList(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
+            MoviePosterList(title: .localized(HomeString.Popular),
+                            movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+            .previewLayout(.sizeThatFits)
+            .preferredColorScheme(.dark)
         }
     }
 }

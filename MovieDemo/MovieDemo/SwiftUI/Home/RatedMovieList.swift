@@ -20,6 +20,7 @@ struct RatedMovieList: View {
                 if let title = title {
                     SectionTitle(title: title)
                         .padding(.top, 10)
+                        .padding(.bottom, 3)
                 }
                 ForEach(movies, id:\.self) { movie in
                     RatedMovieItem(movie: movie)

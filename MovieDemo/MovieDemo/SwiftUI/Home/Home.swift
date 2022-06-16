@@ -17,7 +17,7 @@ struct Home: View {
         ScrollView {
             VStack(spacing: 20) {
                 MovieBannerRow(title: .localized(HomeString.NowPlaying),
-                    movies: nowPlayingProvider.items)
+                               movies: nowPlayingProvider.items)
                 MoviePosterRow(title: .localized(HomeString.Upcoming),
                                movies: nowPlayingProvider.items)
                 MoviePosterList(title: .localized(HomeString.Popular),
@@ -69,6 +69,5 @@ struct Home_Previews: PreviewProvider {
                  topRatedProvider: provider)
             .preferredColorScheme(.dark)
         }
-        .tint(Color(asset: .AppTintColor))
     }
 }
