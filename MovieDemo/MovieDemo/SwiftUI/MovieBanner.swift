@@ -7,15 +7,20 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MovieBanner: View {
     let movie: MovieViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: movie.backdropImageURL(size: .w300))
+            WebImage(url: movie.backdropImageURL(size: .w300))
+                .resizable()
+                .placeholder(Image(asset: .BackdropPlaceholder))
                 .scaledToFit()
+                .transition(.fade(duration: 0.5))
                 .cornerRadius(12)
+                .frame(height: 300)
             Text(movie.title)
                 .font(.headline)
             Text(movie.genres(separatedBy: ", "))
@@ -29,5 +34,6 @@ struct MovieBanner_Previews: PreviewProvider {
     
     static var previews: some View {
         MovieBanner(movie: MovieViewModel(movie: movieLoader.movie))
+            .preferredColorScheme(.dark)
     }
 }

@@ -29,5 +29,6 @@ struct MoviesRow_Previews: PreviewProvider {
     
     static var previews: some View {
         MovieRow(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+            .preferredColorScheme(.dark)
     }
 }
