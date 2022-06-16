@@ -9,15 +9,19 @@
 import SwiftUI
 
 struct MoviePosterList: View {
+    var title: String?
     let movies: [MovieViewModel]
 
     var body: some View {
         VStack() {
+            if let title = title {
+                SectionTitle(title: title)
+            }
             ForEach(movies, id:\.self) { movie in
                 MovieListItem(movie: movie)
             }
+            .padding([.leading, .trailing], 20)
         }
-        .padding([.leading, .trailing], 20)
     }
 }
 

@@ -9,14 +9,22 @@
 import SwiftUI
 
 struct RatedMovieList: View {
-    let movies: [MovieViewModel]
+    var title: String?
+    var movies: [MovieViewModel]
     
     var body: some View {
         ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color(asset: .SectionBackgroundColor))
             VStack() {
+                if let title = title {
+                    SectionTitle(title: title)
+                        .padding(.top, 10)
+                }
                 ForEach(movies, id:\.self) { movie in
                     RatedMovieItem(movie: movie)
                         .frame(height: 50)
+                        .padding([.leading, .trailing], 20)
                 }
             }
         }
@@ -28,7 +36,7 @@ struct RatedMovieList_Previews: PreviewProvider {
     static let movieLoader = JSONMovieLoader(filename: "now_playing")
 
     static var previews: some View {
-        RatedMovieList(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+        RatedMovieList(title: .localized(HomeString.TopRated), movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }

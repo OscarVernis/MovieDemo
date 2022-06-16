@@ -11,32 +11,33 @@ import SwiftUI
 struct Home: View {
     weak var coordinator: MainCoordinator?
     @ObservedObject var nowPlayingProvider = MoviesProvider(.NowPlaying)
-    
+    @ObservedObject var topRatedProvider = MoviesProvider(.TopRated)
+
     var body: some View {
         ScrollView {
-            VStack(spacing: 1) {
-//                SectionTitle(title: .localized(HomeString.NowPlaying))
-//                MovieBannerRow(movies: nowPlayingProvider.items)
-//                SectionTitle(title: .localized(HomeString.Upcoming))
-//                MoviePosterRow(movies: nowPlayingProvider.items)
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color(asset: .SectionBackgroundColor))
-                    VStack {
-                        SectionTitle(title: .localized(HomeString.TopRated))
-                        RatedMovieList(movies: nowPlayingProvider.items)
-                    }
-                    .padding(.top, 10)
-                }
-                .padding([.leading, .trailing], 20)
-                SectionTitle(title: .localized(HomeString.Popular))
-                MoviePosterList(movies: nowPlayingProvider.items)
+            VStack(spacing: 20) {
+                MovieBannerRow(title: .localized(HomeString.NowPlaying),
+                    movies: nowPlayingProvider.items)
+                MoviePosterRow(title: .localized(HomeString.Upcoming),
+                               movies: nowPlayingProvider.items)
+                MoviePosterList(title: .localized(HomeString.Popular),
+                                movies: nowPlayingProvider.items)
+                RatedMovieList(title: .localized(HomeString.TopRated),
+                               movies: limit(topRatedProvider.items, 10))
             }
         }
         .background(Color(asset: .AppBackgroundColor))
         .toolbar { navigationItems() }
         .onAppear(perform: refresh)
         .navigationTitle(HomeString.Movies.localized)
+    }
+    
+    func limit(_ items: [MovieViewModel], _ limit: Int) -> [MovieViewModel] {
+        if items.count < limit {
+            return items
+        }
+        
+        return Array(items.prefix(upTo: limit))
     }
     
     fileprivate func navigationItems() -> ToolbarItem<Void, Button<Image>> {
@@ -51,6 +52,7 @@ struct Home: View {
     
     func refresh() {
         nowPlayingProvider.refresh()
+        topRatedProvider.refresh()
     }
 }
 
@@ -62,8 +64,10 @@ struct Home_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView{
-            Home(coordinator: nil, nowPlayingProvider: provider)
-                .preferredColorScheme(.dark)
+            Home(coordinator: nil,
+                 nowPlayingProvider: provider,
+                 topRatedProvider: provider)
+            .preferredColorScheme(.dark)
         }
         .tint(Color(asset: .AppTintColor))
     }

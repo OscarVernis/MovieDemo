@@ -9,20 +9,23 @@
 import SwiftUI
 
 struct MovieBannerRow: View {
+    var title: String?
     let movies: [MovieViewModel]
     
     var body: some View {
         VStack {
-            GeometryReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(alignment: .center, spacing: 20) {
-                        ForEach(movies, id:\.self) { movie in
-                            MovieBannerItem(movie: movie)
-                                .frame(width: proxy.size.width * 0.85)
-                        }
+            if let title = title {
+                SectionTitle(title: title)
+                    .padding(.top, 10)
+            }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .center, spacing: 20) {
+                    ForEach(movies, id:\.self) { movie in
+                        MovieBannerItem(movie: movie)
+                            .frame(width: 300, height: 300)
                     }
-                    .padding([.leading, .trailing], 20)
                 }
+                .padding([.leading, .trailing], 20)
             }
         }
         .scaledToFit()
@@ -33,7 +36,8 @@ struct MoviesRow_Previews: PreviewProvider {
     static let movieLoader = JSONMovieLoader(filename: "now_playing")
     
     static var previews: some View {
-        MovieBannerRow(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+        MovieBannerRow(title: .localized(HomeString.NowPlaying),
+            movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
             .previewLayout(.fixed(width: 375, height: 500))
             .preferredColorScheme(.dark)
     }
