@@ -14,10 +14,14 @@ struct Home: View {
     
     var body: some View {
         List {
-            ForEach(nowPlayingProvider.items, id: \.self) { movie in
-                Text(movie.title)
-            }
+            MovieRow(movies: nowPlayingProvider.items)
+            MovieRow(movies: nowPlayingProvider.items)
+            MovieRow(movies: nowPlayingProvider.items)
+            MovieRow(movies: nowPlayingProvider.items)
         }
+        .listStyle(.plain)
+        .listRowSeparator(.hidden)
+        .listRowSeparatorTint(.clear)
         .toolbar { navigationItems() }
         .onAppear(perform: refresh)
         .navigationTitle(HomeString.Movies.localized)

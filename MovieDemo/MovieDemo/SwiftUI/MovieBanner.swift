@@ -12,7 +12,15 @@ struct MovieBanner: View {
     let movie: MovieViewModel
     
     var body: some View {
-        Text(movie.title)
+        VStack(alignment: .leading) {
+            AsyncImage(url: movie.backdropImageURL(size: .w300))
+                .scaledToFit()
+                .cornerRadius(12)
+            Text(movie.title)
+                .font(.headline)
+            Text(movie.genres(separatedBy: ", "))
+                .font(.subheadline)
+        }
     }
 }
 
