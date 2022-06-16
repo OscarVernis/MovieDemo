@@ -15,10 +15,12 @@ struct Home: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 1) {
-                SectionTitle(title: .localized(HomeString.Upcoming))
-                MoviePosterRow(movies: nowPlayingProvider.items)
                 SectionTitle(title: .localized(HomeString.NowPlaying))
                 MovieBannerRow(movies: nowPlayingProvider.items)
+                SectionTitle(title: .localized(HomeString.Upcoming))
+                MoviePosterRow(movies: nowPlayingProvider.items)
+                SectionTitle(title: .localized(HomeString.Popular))
+                MoviePosterList(movies: nowPlayingProvider.items)
             }
         }
         .background(Color(asset: .AppBackgroundColor))

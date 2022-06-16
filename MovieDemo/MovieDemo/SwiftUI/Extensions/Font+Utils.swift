@@ -24,5 +24,10 @@ extension Font {
     static var sectionActionFont: Font {
         .custom("Avenir Next Bold", size: 13.0)
     }
+    
+    static var descriptionFont: Font {
+        .custom("Avenir Light Oblique", size: 13.0)
+    }
+    
 }
 

@@ -11,11 +11,12 @@ import Combine
 
 struct JSONMovieDetailsLoader: MovieDetailsLoader {
     let movie: Movie
-    
+    var jsonDecoder = MovieService().jsonDecoder()
+
     init(filename: String) {
         do {
             let data = try Data(contentsOf: Bundle.main.url(forResource: filename, withExtension: "json")!)
-            movie = try JSONDecoder().decode(Movie.self, from: data)
+            movie = try jsonDecoder.decode(Movie.self, from: data)
         } catch {
             fatalError("Couldn't load \(filename).json")
         }

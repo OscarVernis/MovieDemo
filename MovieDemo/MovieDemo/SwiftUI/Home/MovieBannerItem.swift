@@ -1,5 +1,5 @@
 //
-//  MovieBanner.swift
+//  MovieBannerItem.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 15/06/22.
@@ -9,7 +9,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct MovieBanner: View {
+struct MovieBannerItem: View {
     let movie: MovieViewModel
     
     var body: some View {
@@ -43,7 +43,7 @@ struct MovieBanner_Previews: PreviewProvider {
     static let movieLoader = JSONMovieDetailsLoader(filename: "movie")
     
     static var previews: some View {
-        MovieBanner(movie: MovieViewModel(movie: movieLoader.movie))
+        MovieBannerItem(movie: MovieViewModel(movie: movieLoader.movie))
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
     }
