@@ -1,5 +1,5 @@
 //
-//  MoviesRow.swift
+//  MovieBannerRow.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 15/06/22.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct MovieRow: View {
+struct MovieBannerRow: View {
     let movies: [MovieViewModel]
     
     var body: some View {
@@ -33,7 +33,7 @@ struct MoviesRow_Previews: PreviewProvider {
     static let movieLoader = JSONMovieLoader(filename: "now_playing")
     
     static var previews: some View {
-        MovieRow(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+        MovieBannerRow(movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
             .previewLayout(.fixed(width: 375, height: 500))
             .preferredColorScheme(.dark)
     }

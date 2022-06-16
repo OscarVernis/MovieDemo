@@ -16,5 +16,13 @@ extension Font {
     static var subtitleFont: Font {
         .custom("Avenir Medium", size: 14.0)
     }
+    
+    static var sectionTitleFont: Font {
+        .custom("Avenir Next Condensed Bold", size: 22.0)
+    }
+    
+    static var sectionActionFont: Font {
+        .custom("Avenir Next Bold", size: 13.0)
+    }
 }
 
