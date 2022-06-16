@@ -21,10 +21,16 @@ struct MovieBanner: View {
                 .transition(.fade(duration: 0.5))
                 .cornerRadius(12)
                 .frame(height: 300)
-            Text(movie.title)
-                .font(.headline)
-            Text(movie.genres(separatedBy: ", "))
-                .font(.subheadline)
+            HStack {
+                VStack {
+                    Text(movie.title)
+                        .font(.headline)
+                    Text(movie.genres(separatedBy: ", "))
+                        .font(.subheadline)
+                }
+                CircularRating(progress: movie.percentRating)
+                    .frame(width: 25, height: 25, alignment: .trailing)
+            }
         }
     }
 }
