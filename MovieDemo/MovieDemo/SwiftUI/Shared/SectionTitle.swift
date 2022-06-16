@@ -10,11 +10,17 @@ import SwiftUI
 
 struct SectionTitle: View {
     var title: String
+    var font: Font
+    
+    init(title: String, font: Font = .sectionTitleFont) {
+        self.title = title
+        self.font = font
+    }
     
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
             Text(title)
-                .font(.sectionTitleFont)
+                .font(font)
                 .foregroundColor(.label)
             Spacer()
             Button {
@@ -25,7 +31,7 @@ struct SectionTitle: View {
                     .foregroundColor(Color(asset: .AppTintColor))
             }
         }
-        .frame(height: 30)
+        .frame(height: 40)
         .padding([.leading, .trailing], 20)
     }
     

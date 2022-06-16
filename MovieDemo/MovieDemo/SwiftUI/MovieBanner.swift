@@ -26,14 +26,14 @@ struct MovieBanner: View {
                         .lineLimit(1)
                         .font(.titleFont)
                         .foregroundColor(.label)
-                    Text(movie.genres(separatedBy: ", "))
+                    Text(movie.genres())
                         .lineLimit(1)
                         .font(.subtitleFont)
                         .foregroundColor(.secondaryLabel)
                 }
                 Spacer()
                 Rating(progress: movie.percentRating)
-                    .frame(width: 25, height: 25, alignment: .trailing)
+                    .frame(width: 25, height: 25)
             }
         }
     }

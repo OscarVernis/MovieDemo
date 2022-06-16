@@ -15,9 +15,9 @@ struct Home: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 1) {
-                SectionTitle(title: .localized(HomeString.NowPlaying))
-                MovieBannerRow(movies: nowPlayingProvider.items)
                 SectionTitle(title: .localized(HomeString.Upcoming))
+                MoviePosterRow(movies: nowPlayingProvider.items)
+                SectionTitle(title: .localized(HomeString.NowPlaying))
                 MovieBannerRow(movies: nowPlayingProvider.items)
             }
         }
@@ -51,7 +51,7 @@ struct Home_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView{
             Home(coordinator: nil, nowPlayingProvider: provider)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(.light)
         }
         .tint(Color(asset: .AppTintColor))
     }
