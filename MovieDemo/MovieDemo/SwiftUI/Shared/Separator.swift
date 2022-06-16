@@ -13,6 +13,7 @@ struct Separator: View {
         Rectangle()
             .fill(Color(uiColor: .separator))
             .frame(height: 0.5)
+            .padding(0)
     }
 }
 

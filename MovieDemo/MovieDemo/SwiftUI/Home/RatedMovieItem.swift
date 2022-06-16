@@ -12,7 +12,8 @@ struct RatedMovieItem: View {
     let movie: MovieViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+            Spacer()
             HStack {
                 Text(movie.title)
                     .titleStyle()
@@ -26,6 +27,7 @@ struct RatedMovieItem: View {
                         .font(.custom("Avenir Next Condensed Bold", size: 15))
                 }
             }
+            Spacer()
             Separator()
         }
     }

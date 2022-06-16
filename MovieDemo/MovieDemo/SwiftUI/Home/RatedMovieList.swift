@@ -16,15 +16,16 @@ struct RatedMovieList: View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(asset: .SectionBackgroundColor))
-            VStack() {
+            VStack(spacing: 0) {
                 if let title = title {
                     SectionTitle(title: title)
                         .padding(.top, 10)
                 }
                 ForEach(movies, id:\.self) { movie in
                     RatedMovieItem(movie: movie)
-                        .frame(height: 50)
+                        .padding(.top, 0)
                         .padding([.leading, .trailing], 20)
+                        .frame(height: 50)
                 }
             }
         }
