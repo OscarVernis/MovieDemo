@@ -15,9 +15,9 @@ struct MoviePosterRow: View {
 
     var body: some View {
         VStack {
-//            if let title = title {
-//                SectionTitle(title: title)
-//            }
+            if let title = title {
+                SectionTitle(title: title)
+            }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .center, spacing: 20) {
                     ForEach(movies, id:\.self) { movie in

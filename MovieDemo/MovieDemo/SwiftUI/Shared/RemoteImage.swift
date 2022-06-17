@@ -18,6 +18,9 @@ struct RemoteImage: View {
             .placeholder {
                 if let placeholder = placeholder {
                     placeholder
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(12)
                 }
             }
             .resizable()

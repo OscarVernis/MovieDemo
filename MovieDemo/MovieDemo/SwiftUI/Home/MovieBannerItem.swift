@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct MovieBannerItem: View {
     let movie: MovieViewModel

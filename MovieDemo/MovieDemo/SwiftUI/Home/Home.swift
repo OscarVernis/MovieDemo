@@ -11,6 +11,8 @@ import SwiftUI
 struct Home: View {
     weak var coordinator: MainCoordinator?
     @ObservedObject var nowPlayingProvider = MoviesProvider(.NowPlaying)
+    @ObservedObject var upcomingProvider = MoviesProvider(.Upcoming)
+    @ObservedObject var popularProvider = MoviesProvider(.Popular)
     @ObservedObject var topRatedProvider = MoviesProvider(.TopRated)
 
     var body: some View {
@@ -19,9 +21,9 @@ struct Home: View {
                 MovieBannerRow(title: .localized(HomeString.NowPlaying),
                                movies: nowPlayingProvider.items)
                 MoviePosterRow(title: .localized(HomeString.Upcoming),
-                               movies: nowPlayingProvider.items)
+                               movies: upcomingProvider.items)
                 MoviePosterList(title: .localized(HomeString.Popular),
-                                movies: nowPlayingProvider.items)
+                                movies: popularProvider.items)
                 RatedMovieList(title: .localized(HomeString.TopRated),
                                movies: limit(topRatedProvider.items, 10))
             }
@@ -52,6 +54,8 @@ struct Home: View {
     
     func refresh() {
         nowPlayingProvider.refresh()
+        upcomingProvider.refresh()
+        popularProvider.refresh()
         topRatedProvider.refresh()
     }
 }
@@ -66,6 +70,8 @@ struct Home_Previews: PreviewProvider {
         NavigationView{
             Home(coordinator: nil,
                  nowPlayingProvider: provider,
+                 upcomingProvider: provider,
+                 popularProvider: provider,
                  topRatedProvider: provider)
             .preferredColorScheme(.dark)
         }

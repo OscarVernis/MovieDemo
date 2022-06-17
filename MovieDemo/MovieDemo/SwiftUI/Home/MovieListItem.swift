@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
 
 struct MovieListItem: View {
     let movie: MovieViewModel
@@ -15,12 +14,7 @@ struct MovieListItem: View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 16) {
-                WebImage(url: movie.posterImageURL(size: .w500))
-                    .placeholder(Image(asset: .PosterPlaceholder))
-                    .resizable()
-                    .transition(.fade(duration: 0.5))
-                    .scaledToFit()
-                    .cornerRadius(12)
+                RemoteImage(url: movie.posterImageURL(size: .w500), placeholder: Image(asset: .PosterPlaceholder))
                 VStack(alignment: .leading, spacing: 0) {
                     Text(movie.title)
                         .titleStyle()
