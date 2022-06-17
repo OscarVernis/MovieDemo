@@ -21,4 +21,5 @@ extension Color {
 extension Color {
     static let label = Color(UIColor.label)
     static let secondaryLabel = Color(UIColor.secondaryLabel)
+    static let separator = Color(UIColor.separator)
 }

@@ -11,18 +11,23 @@ import SwiftUI
 struct MovieBannerRow: View {
     var title: String?
     let movies: [MovieViewModel]
+        
+    init(title: String? = nil, movies: [MovieViewModel]) {
+        self.title = title
+        self.movies = movies
+    }
     
     var body: some View {
-        VStack {
+        VStack() {
             if let title = title {
                 SectionTitle(title: title)
                     .padding(.top, 10)
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .center, spacing: 20) {
+                HStack(spacing: 20) {
                     ForEach(movies, id:\.self) { movie in
                         MovieBannerItem(movie: movie)
-                            .frame(width: 300, height: 300)
+                            .frame(width: 300)
                     }
                 }
                 .padding([.leading, .trailing], 20)
@@ -37,8 +42,9 @@ struct MoviesRow_Previews: PreviewProvider {
     
     static var previews: some View {
         MovieBannerRow(title: .localized(HomeString.NowPlaying),
-            movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
-            .previewLayout(.fixed(width: 375, height: 500))
-            .preferredColorScheme(.dark)
+                       movies: movieLoader.movies.map { MovieViewModel(movie: $0) })
+        .previewLayout(.device)
+        .preferredColorScheme(.dark)
     }
+    
 }

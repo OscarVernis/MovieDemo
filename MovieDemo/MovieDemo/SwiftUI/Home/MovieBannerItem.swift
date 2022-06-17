@@ -13,26 +13,24 @@ struct MovieBannerItem: View {
     let movie: MovieViewModel
     
     var body: some View {
-        VStack(alignment: .leading) {
-            WebImage(url: movie.backdropImageURL(size: .w780))
-                .placeholder(Image(asset: .BackdropPlaceholder))
-                .resizable()
-                .scaledToFit()
-                .transition(.fade(duration: 0.5))
-                .cornerRadius(12)
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(movie.title)
-                        .titleStyle()
-                        .lineLimit(1)
-                    Text(movie.genres())
-                        .subtitleStyle()
-                        .lineLimit(1)
+            VStack(alignment: .leading, spacing: 0) {
+                RemoteImage(url: movie.backdropImageURL(size: .w780),
+                            placeholder: Image(asset: .BackdropPlaceholder))
+                .frame(width: 300, height: 170)
+                    .padding(.bottom, 5)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(movie.title)
+                            .titleStyle()
+                            .lineLimit(1)
+                        Text(movie.genres())
+                            .subtitleStyle()
+                            .lineLimit(1)
+                    }
+                    Spacer()
+                    Rating(progress: movie.percentRating)
+                        .frame(width: 25, height: 25)
                 }
-                Spacer()
-                Rating(progress: movie.percentRating)
-                    .frame(width: 25, height: 25)
-            }
         }
     }
 }
@@ -41,8 +39,15 @@ struct MovieBanner_Previews: PreviewProvider {
     static let movieLoader = JSONMovieDetailsLoader(filename: "movie")
     
     static var previews: some View {
-        MovieBannerItem(movie: MovieViewModel(movie: movieLoader.movie))
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 20) {
+                ForEach(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
+                    MovieBannerItem(movie: MovieViewModel(movie: movieLoader.movie))
+                        .frame(width: UIScreen.main.bounds.width * 0.8)
+                }
+            }
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
+        }
     }
 }

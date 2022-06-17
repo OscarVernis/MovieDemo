@@ -22,16 +22,11 @@ struct MoviePosterItem: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            WebImage(url: movie.posterImageURL(size: .w500))
-                .placeholder(Image(asset: .PosterPlaceholder))
-                .resizable()
-                .transition(.fade(duration: 0.5))
-                .scaledToFit()
-                .cornerRadius(12)
+            RemoteImage(url: movie.posterImageURL(size: .w500),
+                        placeholder: Image(asset: .PosterPlaceholder))
+                .frame(width: 140, height: 210)
+                .padding([.leading, .trailing], 0)
                 .padding(.bottom, 5)
-//            Text("==============")
-//                .truncationMode(.tail)
-//                .lineLimit(1)
             Text(movie.title)
                 .titleStyle()
                 .truncationMode(.tail)
@@ -52,12 +47,13 @@ struct MoviePosterItem: View {
 
 struct MoviePoster_Previews: PreviewProvider {
     static let movieLoader = JSONMovieDetailsLoader(filename: "movie")
-
+    
     static var previews: some View {
         MoviePosterItem(movie: MovieViewModel(movie: movieLoader.movie),
-                        showRating: false,
+                        showRating: true,
                         showDate: true)
-            .previewLayout(.sizeThatFits)
-            .preferredColorScheme(.dark)
+        .frame(width: 150, height: 270)
+        .previewLayout(.sizeThatFits)
+        .preferredColorScheme(.dark)
     }
 }

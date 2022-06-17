@@ -15,17 +15,16 @@ struct MoviePosterRow: View {
 
     var body: some View {
         VStack {
-            if let title = title {
-                SectionTitle(title: title)
-                    .padding(.top, 10)
-            }
+//            if let title = title {
+//                SectionTitle(title: title)
+//            }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .center, spacing: 20) {
                     ForEach(movies, id:\.self) { movie in
                         MoviePosterItem(movie: movie)
+                            .frame(width: 140)
                     }
                 }
-                .frame(height: 260)
                 .padding([.leading, .trailing], 20)
             }
         }

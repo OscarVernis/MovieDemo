@@ -28,7 +28,7 @@ struct RatedMovieItem: View {
                 }
             }
             Spacer()
-            Separator()
+            Divider()
         }
     }
 }

@@ -44,7 +44,7 @@ struct MovieListItem: View {
                         .subtitleStyle()
                 }
             }
-            Separator()
+            Divider()
         }
         .padding([.top, .bottom], 2)
         .frame(height: 150)
