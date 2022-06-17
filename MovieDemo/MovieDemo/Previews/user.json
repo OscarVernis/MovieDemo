@@ -1,0 +1,34 @@
+{
+  "avatar": {
+    "gravatar": {
+      "hash": "fd6e56506242dbaa9f41852e780a57b3"
+    },
+    "tmdb": {
+      "avatar_path": null
+    }
+  },
+  "id": 8555334,
+  "iso_639_1": "en",
+  "iso_3166_1": "US",
+  "name": "",
+  "include_adult": false,
+  "username": "oscarvernis",
+  "favorite/movies": {
+    "page": 2,
+    "results": [],
+    "total_pages": 1,
+    "total_results": 3
+  },
+  "rated/movies": {
+    "page": 2,
+    "results": [],
+    "total_pages": 1,
+    "total_results": 2
+  },
+  "watchlist/movies": {
+    "page": 2,
+    "results": [],
+    "total_pages": 0,
+    "total_results": 0
+  }
+}

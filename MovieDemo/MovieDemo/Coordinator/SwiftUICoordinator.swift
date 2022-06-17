@@ -13,7 +13,8 @@ class SwiftUICoordinator: MainCoordinator {
     private var sessionManager = SessionManager.shared
 
     override func showHome() {
-        let homeView = Home(coordinator: self)        
+        let homeView = Home(coordinator: self)
+            .tint(Color(asset: .AppTintColor))
         let hvc = UIHostingController(rootView: homeView)
         
         let searchViewController = SearchViewController(coordinator: self)

@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Image {
     init(asset: ImageAsset) {
-        let image = asset.image.withRenderingMode(.automatic)
+        let image = asset.image.withRenderingMode(.alwaysTemplate)
         self.init(uiImage: image)
     }
     

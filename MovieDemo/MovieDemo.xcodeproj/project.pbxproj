@@ -209,6 +209,8 @@
 		55DD1B93251FB59500EC8C55 /* YoutubeVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */; };
 		55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E5871D27DBC66000159201 /* ServiceModelsResult.swift */; };
 		55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CB285CF14800588D62 /* UserProfile.swift */; };
+		55E8A7CE285CF54400588D62 /* JSONUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */; };
+		55E8A7D0285CF61200588D62 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 55E8A7CF285CF5BC00588D62 /* user.json */; };
 		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
 		55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */; };
 		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
@@ -459,6 +461,8 @@
 		55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YoutubeVideoCell.xib; sourceTree = "<group>"; };
 		55E5871D27DBC66000159201 /* ServiceModelsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModelsResult.swift; sourceTree = "<group>"; };
 		55E8A7CB285CF14800588D62 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUserLoader.swift; sourceTree = "<group>"; };
+		55E8A7CF285CF5BC00588D62 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
 		55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserLoader.swift; sourceTree = "<group>"; };
 		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
@@ -545,6 +549,7 @@
 			children = (
 				5511FF86285A761700B9C12A /* now_playing.json */,
 				5511FF96285A90A300B9C12A /* movie.json */,
+				55E8A7CF285CF5BC00588D62 /* user.json */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -554,6 +559,7 @@
 			children = (
 				5511FF89285A765600B9C12A /* JSONMovieLoader.swift */,
 				5511FF97285A90B900B9C12A /* JSONMovieDetailsLoader.swift */,
+				55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1304,6 +1310,7 @@
 				55915776251438450085DB69 /* BlurBackgroundView.xib in Resources */,
 				5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */,
 				5587114B25108079005A0975 /* MovieInfoListCell.xib in Resources */,
+				55E8A7D0285CF61200588D62 /* user.json in Resources */,
 				55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */,
 				551A2929251F18E9003746EE /* SectionTitleView.xib in Resources */,
 				5511FF87285A761700B9C12A /* now_playing.json in Resources */,
@@ -1408,6 +1415,7 @@
 				55EE51AB251ECF5800915AB3 /* RoundImageView.swift in Sources */,
 				551693112857A23C00FD147F /* SearchDataSource.swift in Sources */,
 				5557136128348AA9006A20AB /* MovieUserStatesViewModel.swift in Sources */,
+				55E8A7CE285CF54400588D62 /* JSONUserLoader.swift in Sources */,
 				55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
 				551693192857CF8200FD147F /* OverviewDataSource.swift in Sources */,
