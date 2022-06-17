@@ -27,7 +27,8 @@ struct UserProfile: View {
                             MoviePosterRow(movies: user.favorites)
                                 .padding(.bottom, 10)
                             SectionTitle(title: UserString.Watchlist.localized, font: .detailSectionTitle)
-                            MoviePosterRow(movies: user.watchlist)
+                            MoviePosterRow(movies: user.watchlist,
+                                           emptyMessage: NSAttributedString(string: "No Movies."))
                                 .padding(.bottom, 10)
                             SectionTitle(title: UserString.Favorites.localized, font: .detailSectionTitle)
                             MoviePosterRow(movies: user.favorites)

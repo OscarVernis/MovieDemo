@@ -20,8 +20,6 @@ class UserViewModel: ObservableObject {
     init(service: UserLoader, cache: UserCache? = UserCache()) {
         self.service = service
         self.cache = cache
-        
-        loadCache()
     }
     
     var didUpdate: ((Error?) -> Void)?
