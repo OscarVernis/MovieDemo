@@ -16,7 +16,7 @@ struct MovieBannerItem: View {
                 RemoteImage(url: movie.backdropImageURL(size: .w780),
                             placeholder: Image(asset: .BackdropPlaceholder))
                 .frame(width: 300, height: 170)
-                    .padding(.bottom, 5)
+                .padding(.bottom, 5)
                 HStack {
                     VStack(alignment: .leading) {
                         Text(movie.title)

@@ -728,10 +728,10 @@
 				5511FF94285A900500B9C12A /* MovieBannerItem.swift */,
 				555072C7285B90FC00C15EF4 /* MoviePosterRow.swift */,
 				5511FFAD285B040700B9C12A /* MoviePosterItem.swift */,
-				555072CA285B9EAD00C15EF4 /* MovieListItem.swift */,
 				555072CC285BA3B200C15EF4 /* MoviePosterList.swift */,
-				557ACF89285BAEC800FFA4CD /* RatedMovieItem.swift */,
+				555072CA285B9EAD00C15EF4 /* MovieListItem.swift */,
 				557ACF8B285BB05300FFA4CD /* RatedMovieList.swift */,
+				557ACF89285BAEC800FFA4CD /* RatedMovieItem.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";

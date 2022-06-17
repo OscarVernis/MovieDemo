@@ -17,7 +17,7 @@ struct Home: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 12) {
                 MovieBannerRow(title: .localized(HomeString.NowPlaying),
                                movies: nowPlayingProvider.items)
                 MoviePosterRow(title: .localized(HomeString.Upcoming),
