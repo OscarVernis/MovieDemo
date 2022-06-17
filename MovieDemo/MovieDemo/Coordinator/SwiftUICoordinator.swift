@@ -16,7 +16,7 @@ class SwiftUICoordinator: MainCoordinator {
         let homeView = Home(coordinator: self)
             .tint(Color(asset: .AppTintColor))
         let hvc = UIHostingController(rootView: homeView)
-        
+
         let searchViewController = SearchViewController(coordinator: self)
         hvc.navigationItem.searchController = searchViewController.searchController
         
@@ -26,9 +26,10 @@ class SwiftUICoordinator: MainCoordinator {
     
     override func showUserProfile(animated: Bool = true) {
         if let sessionId = sessionManager.sessionId {
-            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId), cache: nil)
+            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
             let userProfile = UserProfile(user: user, coordinator: self)
             let upvc = UIHostingController(rootView: userProfile)
+            upvc.navigationItem.largeTitleDisplayMode = .never
 
             rootNavigationViewController?.pushViewController(upvc, animated: animated)
         } else {

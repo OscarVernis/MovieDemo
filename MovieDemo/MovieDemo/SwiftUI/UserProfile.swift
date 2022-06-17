@@ -15,25 +15,28 @@ struct UserProfile: View {
     var body: some View {
         if user.user != nil {
             ZStack(alignment: .top) {
-//                if let url = user.avatarURL {
-//                    BlurBackground(url: url)
-//                }
+                if let url = user.avatarURL {
+                    BlurBackground(url: url)
+                }
                 if let username = user.username, let url = user.avatarURL {
                     ScrollView(.vertical, showsIndicators: true) {
                         VStack(alignment: .center, spacing: 0) {
                             userHeader(url, username)
-                            SectionTitle(title: UserString.Favorites.localized)
+                                .padding(.bottom, 10)
+                            SectionTitle(title: UserString.Favorites.localized, font: .detailSectionTitle)
                             MoviePosterRow(movies: user.favorites)
-                            SectionTitle(title: UserString.Watchlist.localized)
+                                .padding(.bottom, 10)
+                            SectionTitle(title: UserString.Watchlist.localized, font: .detailSectionTitle)
                             MoviePosterRow(movies: user.watchlist)
-                            SectionTitle(title: UserString.Favorites.localized)
+                                .padding(.bottom, 10)
+                            SectionTitle(title: UserString.Favorites.localized, font: .detailSectionTitle)
                             MoviePosterRow(movies: user.favorites)
+                                .padding(.bottom, 10)
                         }
                         .padding(.top, 16)
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
         } else {
             loading()
         }
@@ -46,15 +49,12 @@ struct UserProfile: View {
                 .clipShape(Circle())
                 .padding(.bottom, 17)
             Text(username)
-                .titleStyle()
+                .font(.detailSectionTitle)
                 .padding(.bottom, 30)
             Button {
                 coordinator?.logout()
             } label: {
-                HStack {
-                    Image(asset: .person)
-                    Text("Logout")
-                }
+                Label("Logout", systemImage: ImageAsset.person.rawValue)
             }
             .tint(Color(asset: .AppTintColor))
             .buttonStyle(.bordered)
@@ -83,9 +83,10 @@ struct BlurBackground: View {
     var body: some View {
         ZStack {
             RemoteImage(url: url)
-                .scaledToFill()
+                .aspectRatio(contentMode: .fill)
+                .frame(minWidth: 0, maxWidth: .infinity)
                 .clipped()
-                .ignoresSafeArea()
+                .edgesIgnoringSafeArea(.all)
             Rectangle()
                 .fill(.clear)
                 .background(.thickMaterial)
@@ -98,9 +99,7 @@ struct UserProfile_Previews: PreviewProvider {
                                     cache: nil)
     
     static var previews: some View {
-        NavigationView {
             UserProfile(user: user)
                 .preferredColorScheme(.dark)
         }
-    }
 }

@@ -28,6 +28,9 @@ extension Font {
     static var descriptionFont: Font {
         .custom("Avenir Light Oblique", size: 13.0)
     }
-    
+   
+    static var detailSectionTitle: Font {
+        .custom("Avenir Next Medium", size: 20.0)
+    }
 }
 
