@@ -12,17 +12,29 @@ import Loaf
 struct MoviePosterRow: View {
     var title: String?
     let movies: [MovieViewModel]
+    var tapAction: ((MovieViewModel) -> Void)?
+    var titleAction: (() -> Void)?
+    
+    init(title: String? = nil, movies: [MovieViewModel], tapAction: ((MovieViewModel) -> Void)? = nil, titleAction: (() -> Void)? = nil) {
+        self.title = title
+        self.movies = movies
+        self.tapAction = tapAction
+        self.titleAction = titleAction
+    }
 
     var body: some View {
         VStack {
             if let title = title {
-                SectionTitle(title: title)
+                SectionTitle(title: title, tapAction: titleAction)
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .center, spacing: 20) {
                     ForEach(movies, id:\.self) { movie in
                         MoviePosterItem(movie: movie)
                             .frame(width: 140)
+                            .onTapGesture {
+                                tapAction?(movie)
+                            }
                     }
                 }
                 .padding([.leading, .trailing], 20)

@@ -11,6 +11,15 @@ import SwiftUI
 struct RatedMovieList: View {
     var title: String?
     var movies: [MovieViewModel]
+    var tapAction: ((MovieViewModel) -> Void)?
+    var titleAction: (() -> Void)?
+    
+    init(title: String? = nil, movies: [MovieViewModel], tapAction: ((MovieViewModel) -> Void)? = nil, titleAction: (() -> Void)? = nil) {
+        self.title = title
+        self.movies = movies
+        self.tapAction = tapAction
+        self.titleAction = titleAction
+    }
     
     var body: some View {
         ZStack {
@@ -18,7 +27,7 @@ struct RatedMovieList: View {
                 .fill(Color(asset: .SectionBackgroundColor))
             VStack(spacing: 0) {
                 if let title = title {
-                    SectionTitle(title: title)
+                    SectionTitle(title: title, tapAction: titleAction)
                         .padding(.top, 10)
                         .padding(.bottom, 3)
                 }
@@ -27,6 +36,9 @@ struct RatedMovieList: View {
                         .padding(.top, 0)
                         .padding([.leading, .trailing], 20)
                         .frame(height: 50)
+                        .onTapGesture {
+                            tapAction?(movie)
+                        }
                 }
             }
         }

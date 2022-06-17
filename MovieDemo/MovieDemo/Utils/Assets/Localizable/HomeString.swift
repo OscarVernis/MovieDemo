@@ -14,6 +14,7 @@ enum HomeString: String, Localizable, CaseIterable {
     case Popular
     case TopRated
     case Upcoming
+    case SeeAll
 
     var tableName: String { "Home" }
 }

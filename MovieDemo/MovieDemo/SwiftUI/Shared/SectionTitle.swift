@@ -11,10 +11,12 @@ import SwiftUI
 struct SectionTitle: View {
     var title: String
     var font: Font
+    var tapAction: (() -> Void)?
     
-    init(title: String, font: Font = .sectionTitleFont) {
+    init(title: String, font: Font = .sectionTitleFont, tapAction: (() -> Void)? = nil) {
         self.title = title
         self.font = font
+        self.tapAction = tapAction
     }
     
     var body: some View {
@@ -23,12 +25,12 @@ struct SectionTitle: View {
                 .font(font)
                 .foregroundColor(.label)
             Spacer()
-            Button {
-                print("ok")
-            } label: {
-                Text("SEE ALL")
-                    .font(.sectionActionFont)
-                    .foregroundColor(Color(asset: .AppTintColor))
+            if let tapAction = tapAction {
+                Button(action: tapAction) {
+                    Text(HomeString.SeeAll.localized)
+                        .font(.sectionActionFont)
+                        .foregroundColor(Color(asset: .AppTintColor))
+                }
             }
         }
         .frame(height: 40)

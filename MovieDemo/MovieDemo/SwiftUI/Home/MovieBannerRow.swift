@@ -11,23 +11,30 @@ import SwiftUI
 struct MovieBannerRow: View {
     var title: String?
     let movies: [MovieViewModel]
+    var tapAction: ((MovieViewModel) -> Void)?
+    var titleAction: (() -> Void)?
         
-    init(title: String? = nil, movies: [MovieViewModel]) {
+    init(title: String? = nil, movies: [MovieViewModel], tapAction: ((MovieViewModel) -> Void)? = nil, titleAction: (() -> Void)? = nil) {
         self.title = title
         self.movies = movies
+        self.tapAction = tapAction
+        self.titleAction = titleAction
     }
     
     var body: some View {
         VStack() {
             if let title = title {
-                SectionTitle(title: title)
-                    .padding(.top, 10)
+                SectionTitle(title: title, tapAction: titleAction)
+                .padding(.top, 10)
             }
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 20) {
                     ForEach(movies, id:\.self) { movie in
                         MovieBannerItem(movie: movie)
                             .frame(width: 300)
+                            .onTapGesture {
+                                tapAction?(movie)
+                            }
                     }
                 }
                 .padding([.leading, .trailing], 20)
