@@ -14,21 +14,147 @@
   "include_adult": false,
   "username": "oscarvernis",
   "favorite/movies": {
-    "page": 2,
-    "results": [],
+    "page": 1,
+    "results": [
+      {
+        "genre_ids": [
+          28,
+          12,
+          10751,
+          35
+        ],
+        "original_language": "en",
+        "original_title": "Sonic the Hedgehog 2",
+        "poster_path": "/6DrHO1jr3qVrViUO6s6kFiAGM7.jpg",
+        "video": false,
+        "vote_average": 7.7,
+        "vote_count": 2061,
+        "overview": "After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands.",
+        "release_date": "2022-03-30",
+        "title": "Sonic the Hedgehog 2",
+        "id": 675353,
+        "adult": false,
+        "backdrop_path": "/egoyMDLqCxzjnSrWOz50uLlJWmD.jpg",
+        "popularity": 2984.257
+      },
+      {
+        "vote_average": 8.3,
+        "overview": "An aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.",
+        "release_date": "2022-03-24",
+        "adult": false,
+        "backdrop_path": "/fIwiFha3WPu5nHkBeMQ4GzEk0Hv.jpg",
+        "vote_count": 646,
+        "genre_ids": [
+          28,
+          12,
+          878
+        ],
+        "video": false,
+        "original_language": "en",
+        "original_title": "Everything Everywhere All at Once",
+        "poster_path": "/w3LxiVYdWWRvEVdn5RYq6jIqkb1.jpg",
+        "title": "Everything Everywhere All at Once",
+        "id": 545611,
+        "popularity": 229.821
+      },
+      {
+        "poster_path": "/neMZH82Stu91d3iqvLdNQfqPPyl.jpg",
+        "video": false,
+        "vote_average": 6.8,
+        "overview": "A reclusive romance novelist was sure nothing could be worse than getting stuck on a book tour with her cover model until a kidnapping attempt sweeps them both into a cutthroat jungle adventure, proving life can be so much stranger, and more romantic, than any of her paperback fictions.",
+        "release_date": "2022-03-24",
+        "vote_count": 1182,
+        "adult": false,
+        "backdrop_path": "/1Ds7xy7ILo8u2WWxdnkJth1jQVT.jpg",
+        "title": "The Lost City",
+        "genre_ids": [
+          28,
+          12,
+          35
+        ],
+        "id": 752623,
+        "original_language": "en",
+        "original_title": "The Lost City",
+        "popularity": 3190.602
+      }
+    ],
     "total_pages": 1,
     "total_results": 3
   },
   "rated/movies": {
-    "page": 2,
-    "results": [],
+    "page": 1,
+    "results": [
+      {
+        "original_title": "A Day to Die",
+        "id": 864116,
+        "title": "A Day to Die",
+        "vote_average": 6.0,
+        "overview": "A disgraced parole officer is indebted to a local gang leader and forced to pull off a series of dangerous drug heists within twelve hours in order to pay the $2 million dollars he owes, rescue his kidnapped pregnant wife, and settle a score with the city's corrupt police chief, who is working with the gang leader and double-crossed him years ago.",
+        "release_date": "2022-03-04",
+        "vote_count": 61,
+        "adult": false,
+        "backdrop_path": "/hcNM0HjfPonIzOVy6LVTDBXSfMq.jpg",
+        "video": false,
+        "genre_ids": [
+          28,
+          53,
+          80
+        ],
+        "poster_path": "/8Kce1utfytAG5m1PbtVoDzmDZJH.jpg",
+        "original_language": "en",
+        "popularity": 2847.136,
+        "rating": 7.5
+      },
+      {
+        "original_title": "Memory",
+        "id": 818397,
+        "video": false,
+        "vote_average": 7.3,
+        "overview": "Alex, an assassin-for-hire, finds that he's become a target after he refuses to complete a job for a dangerous criminal organization. With the crime syndicate and FBI in hot pursuit, Alex has the skills to stay ahead, except for one thing: he is struggling with severe memory loss, affecting his every move. Alex must question his every action and whom he can ultimately trust.",
+        "release_date": "2022-04-28",
+        "vote_count": 296,
+        "adult": false,
+        "backdrop_path": "/kiH3KPWi7BaRMvdAigcwrUFViHl.jpg",
+        "title": "Memory",
+        "genre_ids": [
+          28,
+          53,
+          80
+        ],
+        "poster_path": "/QaNLpq3Wuu2yp5ESsXYcQCOpUk.jpg",
+        "original_language": "en",
+        "popularity": 2366.025,
+        "rating": 6.0
+      }
+    ],
     "total_pages": 1,
     "total_results": 2
   },
   "watchlist/movies": {
-    "page": 2,
-    "results": [],
-    "total_pages": 0,
-    "total_results": 0
+    "page": 1,
+    "results": [
+      {
+        "video": false,
+        "vote_average": 6.9,
+        "overview": "Professor Albus Dumbledore knows the powerful, dark wizard Gellert Grindelwald is moving to seize control of the wizarding world. Unable to stop him alone, he entrusts magizoologist Newt Scamander to lead an intrepid team of wizards and witches. They soon encounter an array of old and new beasts as they clash with Grindelwald's growing legion of followers.",
+        "release_date": "2022-04-06",
+        "adult": false,
+        "backdrop_path": "/zGLHX92Gk96O1DJvLil7ObJTbaL.jpg",
+        "id": 338953,
+        "genre_ids": [
+          14,
+          12,
+          28
+        ],
+        "vote_count": 1795,
+        "original_language": "en",
+        "original_title": "Fantastic Beasts: The Secrets of Dumbledore",
+        "poster_path": "/jrgifaYeUtTnaH7NF5Drkgjg2MB.jpg",
+        "title": "Fantastic Beasts: The Secrets of Dumbledore",
+        "popularity": 3456.961
+      }
+    ],
+    "total_pages": 1,
+    "total_results": 1
   }
 }

@@ -13,25 +13,35 @@ struct UserProfile: View {
     weak var coordinator: MainCoordinator?
     
     var body: some View {
-        ZStack(alignment: .top) {
-            if let url = user.avatarURL {
-                BlurBackground(url: url)
-            }
-            ScrollView(.vertical, showsIndicators: true) {
-                VStack(alignment: .center, spacing: 0) {
-                    if let username = user.username, let url = user.avatarURL {
-                        userHeader(url, username)
-                    } else {
-                        loading()
+        if user.user != nil {
+            ZStack(alignment: .top) {
+//                if let url = user.avatarURL {
+//                    BlurBackground(url: url)
+//                }
+                if let username = user.username, let url = user.avatarURL {
+                    ScrollView(.vertical, showsIndicators: true) {
+                        VStack(alignment: .center, spacing: 0) {
+                            userHeader(url, username)
+                            SectionTitle(title: UserString.Favorites.localized)
+                            MoviePosterRow(movies: user.favorites)
+                            SectionTitle(title: UserString.Watchlist.localized)
+                            MoviePosterRow(movies: user.watchlist)
+                            SectionTitle(title: UserString.Favorites.localized)
+                            MoviePosterRow(movies: user.favorites)
+                        }
+                        .padding(.top, 16)
                     }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
+        } else {
+            loading()
         }
     }
     
     fileprivate func userHeader(_ url: URL, _ username: String) -> some View {
         VStack(spacing: 0) {
-            RemoteImage(url: url, placeholder: Image(asset: .person))
+            RemoteImage(url: url)
                 .frame(width: 142, height: 142)
                 .clipShape(Circle())
                 .padding(.bottom, 17)
@@ -66,7 +76,7 @@ struct UserProfile: View {
 struct BlurBackground: View {
     var url: URL
     
-    internal init(url: URL) {
+    init(url: URL) {
         self.url = url
     }
     

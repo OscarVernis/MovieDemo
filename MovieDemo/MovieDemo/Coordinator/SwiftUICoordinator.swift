@@ -21,6 +21,7 @@ class SwiftUICoordinator: MainCoordinator {
         hvc.navigationItem.searchController = searchViewController.searchController
         
         rootNavigationViewController?.viewControllers = [hvc]
+        showUserProfile(animated: false)
     }
     
     override func showUserProfile(animated: Bool = true) {
