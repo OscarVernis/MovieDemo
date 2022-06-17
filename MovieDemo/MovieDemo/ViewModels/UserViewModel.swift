@@ -9,8 +9,8 @@
 import Foundation
 import Combine
 
-class UserViewModel {
-    var user: User?
+class UserViewModel: ObservableObject {
+    @Published var user: User?
     private let service: UserLoader
     private let cache: UserCache?
     private(set) var isLoading = false
@@ -20,6 +20,8 @@ class UserViewModel {
     init(service: UserLoader, cache: UserCache? = UserCache()) {
         self.service = service
         self.cache = cache
+        
+        loadCache()
     }
     
     var didUpdate: ((Error?) -> Void)?

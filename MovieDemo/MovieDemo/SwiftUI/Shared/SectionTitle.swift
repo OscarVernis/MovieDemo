@@ -41,7 +41,7 @@ struct SectionTitle: View {
 
 struct SectionTitle_Previews: PreviewProvider {
     static var previews: some View {
-        SectionTitle(title: .localized(HomeString.NowPlaying))
+        SectionTitle(title: .localized(HomeString.NowPlaying), tapAction: {})
             .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 375, height: 44))
     }

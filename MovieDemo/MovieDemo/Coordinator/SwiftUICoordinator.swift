@@ -10,6 +10,8 @@ import UIKit
 import SwiftUI
 
 class SwiftUICoordinator: MainCoordinator {
+    private var sessionManager = SessionManager.shared
+
     override func showHome() {
         let homeView = Home(coordinator: self)        
         let hvc = UIHostingController(rootView: homeView)
@@ -18,6 +20,18 @@ class SwiftUICoordinator: MainCoordinator {
         hvc.navigationItem.searchController = searchViewController.searchController
         
         rootNavigationViewController?.viewControllers = [hvc]
+    }
+    
+    override func showUserProfile(animated: Bool = true) {
+        if let sessionId = sessionManager.sessionId {
+            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId), cache: nil)
+            let userProfile = UserProfile(user: user, coordinator: self)
+            let upvc = UIHostingController(rootView: userProfile)
+
+            rootNavigationViewController?.pushViewController(upvc, animated: animated)
+        } else {
+            showLogin(animated: animated)
+        }
     }
     
 }

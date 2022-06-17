@@ -208,6 +208,7 @@
 		55DD1B92251FB59500EC8C55 /* YoutubeVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */; };
 		55DD1B93251FB59500EC8C55 /* YoutubeVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */; };
 		55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E5871D27DBC66000159201 /* ServiceModelsResult.swift */; };
+		55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CB285CF14800588D62 /* UserProfile.swift */; };
 		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
 		55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */; };
 		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
@@ -457,6 +458,7 @@
 		55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeVideoCell.swift; sourceTree = "<group>"; };
 		55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = YoutubeVideoCell.xib; sourceTree = "<group>"; };
 		55E5871D27DBC66000159201 /* ServiceModelsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModelsResult.swift; sourceTree = "<group>"; };
+		55E8A7CB285CF14800588D62 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
 		55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserLoader.swift; sourceTree = "<group>"; };
 		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 				5511FF8D285A8CAC00B9C12A /* Extensions */,
 				5511FFA4285AE8DE00B9C12A /* Shared */,
 				555072C9285B9E5200C15EF4 /* Home */,
+				55E8A7CB285CF14800588D62 /* UserProfile.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -1464,6 +1467,7 @@
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,
 				5511D95525317056004B3697 /* BlurButton.swift in Sources */,
 				553AF9B72856F058007D1B20 /* ListDataSource.swift in Sources */,
+				55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */,
 				555713632834AB76006A20AB /* RemoteUserState.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
