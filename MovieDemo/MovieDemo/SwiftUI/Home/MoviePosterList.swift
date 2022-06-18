@@ -20,7 +20,7 @@ struct MoviePosterList: View {
     var body: some View {
         VStack() {
             ForEach(movies, id:\.self) { movie in
-                MovieListItem(movie: movie)
+                MovieListItem(movie: movie, showsDivider: (movie != movies.last))
                     .onTapGesture {
                         tapAction?(movie)
                     }

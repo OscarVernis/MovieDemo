@@ -10,18 +10,17 @@ import SwiftUI
 
 struct SectionBackground<Content: View>: View {
     var content: () -> Content
+    
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(asset: .SectionBackgroundColor))
-            content()
+            VStack(spacing: 0, content: content)
+                .padding([.leading, .trailing], 20)
         }
     }
 }
-
-//struct SectionBackground_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SectionBackground()
-//    }
-//}

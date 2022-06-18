@@ -33,13 +33,10 @@ struct Home: View {
                                 tapAction: showDetail)
                 
                 SectionBackground {
-                    VStack(spacing: 0) {
-                        SectionTitle(title: .localized(HomeString.TopRated), tapAction: showTopRated)
-                            .padding(.top, 10)
-                        RatedMovieList(movies: limit(topRatedProvider.items, 10),
-                                       tapAction: showDetail)
-                    }
-                    .padding([.leading, .trailing], 20)
+                    SectionTitle(title: .localized(HomeString.TopRated), tapAction: showTopRated)
+                        .padding(.top, 10)
+                    RatedMovieList(movies: limit(topRatedProvider.items, 10),
+                                   tapAction: showDetail)
                 }
                 .padding(.top, 20)
             }

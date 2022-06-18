@@ -10,6 +10,12 @@ import SwiftUI
 
 struct RatedMovieItem: View {
     let movie: MovieViewModel
+    var showsDivider: Bool
+    
+    init(movie: MovieViewModel, showsDivider: Bool = true) {
+        self.movie = movie
+        self.showsDivider = showsDivider
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +34,9 @@ struct RatedMovieItem: View {
                 }
             }
             Spacer()
-            Divider()
+            if showsDivider {
+                Divider()
+            }
         }
     }
 }

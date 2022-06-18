@@ -20,7 +20,7 @@ struct RatedMovieList: View {
     var body: some View {
         VStack(spacing: 0) {
             ForEach(movies, id:\.self) { movie in
-                RatedMovieItem(movie: movie)
+                RatedMovieItem(movie: movie, showsDivider: movie != movies.last)
                     .padding(.top, 0)
                     .frame(height: 50)
                     .onTapGesture {

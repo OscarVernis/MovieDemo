@@ -10,6 +10,12 @@ import SwiftUI
 
 struct MovieListItem: View {
     let movie: MovieViewModel
+    var showsDivider: Bool
+    
+    init(movie: MovieViewModel, showsDivider: Bool = true) {
+        self.movie = movie
+        self.showsDivider = showsDivider
+    }
     
     var body: some View {
         VStack {
@@ -38,7 +44,9 @@ struct MovieListItem: View {
                         .subtitleStyle()
                 }
             }
-            Divider()
+            if showsDivider {
+                Divider()
+            }
         }
         .padding([.top, .bottom], 2)
         .frame(height: 150)
