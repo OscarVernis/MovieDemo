@@ -35,6 +35,7 @@ struct UserProfile: View {
                                 .padding(.bottom, 10)
                         }
                         .padding(.top, 16)
+                        .padding([.leading, .trailing], 20)
                     }
                 }
             }

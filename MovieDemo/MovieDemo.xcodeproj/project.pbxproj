@@ -190,6 +190,7 @@
 		55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */; };
 		55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBC727E02E49007DB4C2 /* MovieCache.swift */; };
 		55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */; };
+		55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB1A95285D5273000BC3A0 /* SectionBackground.swift */; };
 		55BB863E251FA1CB00F17D7F /* MovieRatingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */; };
 		55C350C227F768F1006F4E7C /* Person.json in Resources */ = {isa = PBXBuildFile; fileRef = 55C350C127F768F1006F4E7C /* Person.json */; };
 		55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */; };
@@ -442,6 +443,7 @@
 		55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreMO.swift; sourceTree = "<group>"; };
 		55B6CBC727E02E49007DB4C2 /* MovieCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCache.swift; sourceTree = "<group>"; };
 		55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		55BB1A95285D5273000BC3A0 /* SectionBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackground.swift; sourceTree = "<group>"; };
 		55BB863F251FA1CB00F17D7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieRatingViewController.storyboard; sourceTree = "<group>"; };
 		55BB8643251FA1CF00F17D7F /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MovieRatingViewController.strings"; sourceTree = "<group>"; };
 		55C350C127F768F1006F4E7C /* Person.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Person.json; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				5511FFAB285AFD8D00B9C12A /* SectionTitle.swift */,
 				557ACF87285BAC7000FFA4CD /* TextStyles.swift */,
 				557E0DCA285BF6D800D21D93 /* RemoteImage.swift */,
+				55BB1A95285D5273000BC3A0 /* SectionBackground.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1418,6 +1421,7 @@
 				55E8A7CE285CF54400588D62 /* JSONUserLoader.swift in Sources */,
 				55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
+				55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */,
 				551693192857CF8200FD147F /* OverviewDataSource.swift in Sources */,
 				55EE573A284D826400C6A170 /* UserFacingError.swift in Sources */,
 				5511FF8A285A765600B9C12A /* JSONMovieLoader.swift in Sources */,

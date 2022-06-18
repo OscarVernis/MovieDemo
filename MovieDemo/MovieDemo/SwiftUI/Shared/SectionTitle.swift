@@ -34,7 +34,6 @@ struct SectionTitle: View {
             }
         }
         .frame(height: 40)
-        .padding([.leading, .trailing], 20)
     }
     
 }

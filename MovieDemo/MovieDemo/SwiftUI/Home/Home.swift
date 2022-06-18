@@ -17,24 +17,33 @@ struct Home: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 16) {
-                MovieBannerRow(title: .localized(HomeString.NowPlaying),
-                               movies: nowPlayingProvider.items,
-                               tapAction: showDetail,
-                               titleAction: showNowPlaying)
-                MoviePosterRow(title: .localized(HomeString.Upcoming),
-                               movies: upcomingProvider.items,
-                               tapAction: showDetail,
-                               titleAction: showUpcoming)
-                MoviePosterList(title: .localized(HomeString.Popular),
-                                movies: popularProvider.items,
-                                tapAction: showDetail,
-                                titleAction: showPopular)
-                RatedMovieList(title: .localized(HomeString.TopRated),
-                               movies: limit(topRatedProvider.items, 10),
-                               tapAction: showDetail,
-                               titleAction: showTopRated)
+            VStack(spacing: 0) {
+                SectionTitle(title: .localized(HomeString.NowPlaying), tapAction: showNowPlaying)
+                MovieBannerRow(movies: nowPlayingProvider.items,
+                               tapAction: showDetail)
+                
+                SectionTitle(title: .localized(HomeString.Upcoming), tapAction: showUpcoming)
+                    .padding(.top, 20)
+                MoviePosterRow(movies: upcomingProvider.items,
+                               tapAction: showDetail)
+                
+                SectionTitle(title: .localized(HomeString.Popular), tapAction: showPopular)
+                    .padding(.top, 20)
+                MoviePosterList(movies: popularProvider.items,
+                                tapAction: showDetail)
+                
+                SectionBackground {
+                    VStack(spacing: 0) {
+                        SectionTitle(title: .localized(HomeString.TopRated), tapAction: showTopRated)
+                            .padding(.top, 10)
+                        RatedMovieList(movies: limit(topRatedProvider.items, 10),
+                                       tapAction: showDetail)
+                    }
+                    .padding([.leading, .trailing], 20)
+                }
+                .padding(.top, 20)
             }
+            .padding([.leading, .trailing], 20)
         }
         .background(Color(asset: .AppBackgroundColor))
         .toolbar { navigationItems() }
