@@ -26,6 +26,7 @@ struct MoviePosterList: View {
                     }
             }
         }
+        .padding([.leading, .trailing], 20)
     }
 }
 

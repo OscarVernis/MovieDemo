@@ -28,6 +28,7 @@ struct MovieBannerRow: View {
                         }
                 }
             }
+            .padding([.leading, .trailing], 20)
         }
         .scaledToFit()
     }

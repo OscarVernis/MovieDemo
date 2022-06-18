@@ -132,29 +132,8 @@
   },
   "watchlist/movies": {
     "page": 1,
-    "results": [
-      {
-        "video": false,
-        "vote_average": 6.9,
-        "overview": "Professor Albus Dumbledore knows the powerful, dark wizard Gellert Grindelwald is moving to seize control of the wizarding world. Unable to stop him alone, he entrusts magizoologist Newt Scamander to lead an intrepid team of wizards and witches. They soon encounter an array of old and new beasts as they clash with Grindelwald's growing legion of followers.",
-        "release_date": "2022-04-06",
-        "adult": false,
-        "backdrop_path": "/zGLHX92Gk96O1DJvLil7ObJTbaL.jpg",
-        "id": 338953,
-        "genre_ids": [
-          14,
-          12,
-          28
-        ],
-        "vote_count": 1795,
-        "original_language": "en",
-        "original_title": "Fantastic Beasts: The Secrets of Dumbledore",
-        "poster_path": "/jrgifaYeUtTnaH7NF5Drkgjg2MB.jpg",
-        "title": "Fantastic Beasts: The Secrets of Dumbledore",
-        "popularity": 3456.961
-      }
-    ],
+    "results": [],
     "total_pages": 1,
-    "total_results": 1
+    "total_results": 0
   }
 }

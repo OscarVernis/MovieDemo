@@ -28,14 +28,13 @@ struct UserProfile: View {
                                 .padding(.bottom, 10)
                             SectionTitle(title: UserString.Watchlist.localized, font: .detailSectionTitle)
                             MoviePosterRow(movies: user.watchlist,
-                                           emptyMessage: NSAttributedString(string: "No Movies."))
+                                           emptyMessage: NSAttributedString(string: "No Movies"))
                                 .padding(.bottom, 10)
                             SectionTitle(title: UserString.Favorites.localized, font: .detailSectionTitle)
                             MoviePosterRow(movies: user.favorites)
                                 .padding(.bottom, 10)
                         }
                         .padding(.top, 16)
-                        .padding([.leading, .trailing], 20)
                     }
                 }
             }

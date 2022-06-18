@@ -10,25 +10,27 @@ import SwiftUI
 
 struct Home: View {
     weak var coordinator: MainCoordinator?
-    @ObservedObject var nowPlayingProvider = MoviesProvider(.NowPlaying)
-    @ObservedObject var upcomingProvider = MoviesProvider(.Upcoming)
-    @ObservedObject var popularProvider = MoviesProvider(.Popular)
-    @ObservedObject var topRatedProvider = MoviesProvider(.TopRated)
+    @ObservedObject var nowPlayingProvider: MoviesProvider
+    @ObservedObject var upcomingProvider: MoviesProvider
+    @ObservedObject var popularProvider: MoviesProvider
+    @ObservedObject var topRatedProvider: MoviesProvider
+    
+    private var topSectionPadding: CGFloat = 10
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 0) {
+            VStack(spacing: 10) {
                 SectionTitle(title: .localized(HomeString.NowPlaying), tapAction: showNowPlaying)
                 MovieBannerRow(movies: nowPlayingProvider.items,
                                tapAction: showDetail)
                 
                 SectionTitle(title: .localized(HomeString.Upcoming), tapAction: showUpcoming)
-                    .padding(.top, 20)
+                    .padding(.top, topSectionPadding)
                 MoviePosterRow(movies: upcomingProvider.items,
                                tapAction: showDetail)
-                
+
                 SectionTitle(title: .localized(HomeString.Popular), tapAction: showPopular)
-                    .padding(.top, 20)
+                    .padding(.top, topSectionPadding)
                 MoviePosterList(movies: popularProvider.items,
                                 tapAction: showDetail)
                 
@@ -37,15 +39,28 @@ struct Home: View {
                         .padding(.top, 10)
                     RatedMovieList(movies: limit(topRatedProvider.items, 10),
                                    tapAction: showDetail)
+                    .padding(.top, 8)
                 }
-                .padding(.top, 20)
+                .padding(.top, topSectionPadding + 10)
             }
-            .padding([.leading, .trailing], 20)
         }
         .background(Color(asset: .AppBackgroundColor))
         .toolbar { navigationItems() }
         .onAppear(perform: refresh)
         .navigationTitle(HomeString.Movies.localized)
+    }
+    
+    //MARK: - Init
+    init(coordinator: MainCoordinator? = nil,
+         nowPlayingProvider: MoviesProvider = MoviesProvider(.NowPlaying),
+         upcomingProvider: MoviesProvider = MoviesProvider(.Upcoming),
+         popularProvider: MoviesProvider = MoviesProvider(.Popular),
+         topRatedProvider: MoviesProvider = MoviesProvider(.TopRated)) {
+        self.coordinator = coordinator
+        self.nowPlayingProvider = nowPlayingProvider
+        self.upcomingProvider = upcomingProvider
+        self.popularProvider = popularProvider
+        self.topRatedProvider = topRatedProvider
     }
     
     //MARK: - Navigation
@@ -111,6 +126,7 @@ struct Home_Previews: PreviewProvider {
                  upcomingProvider: provider,
                  popularProvider: provider,
                  topRatedProvider: provider)
+            .tint(Color(asset: .AppTintColor))
             .preferredColorScheme(.dark)
         }
     }

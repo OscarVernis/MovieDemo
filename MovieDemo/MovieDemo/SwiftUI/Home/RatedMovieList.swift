@@ -28,6 +28,7 @@ struct RatedMovieList: View {
                     }
             }
         }
+        .padding([.leading, .trailing], 20)
     }
 }
 

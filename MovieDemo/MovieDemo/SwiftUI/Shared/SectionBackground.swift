@@ -20,7 +20,7 @@ struct SectionBackground<Content: View>: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color(asset: .SectionBackgroundColor))
             VStack(spacing: 0, content: content)
-                .padding([.leading, .trailing], 20)
         }
+        .padding([.leading, .trailing], 20)
     }
 }
