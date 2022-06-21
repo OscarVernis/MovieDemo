@@ -121,9 +121,9 @@ struct CircularRating_Previews: PreviewProvider {
                 Rating(style: .line, progress: 0, lineWidth: lineWidth)
                 Rating(style: .line, progress: nil, lineWidth: lineWidth)
             }
-            .padding(10)
+            .padding(20)
             
-            HStack(alignment: .center, spacing: 5) {
+            HStack(alignment: .center, spacing: 10) {
                 Rating(progress: 100, lineWidth: circleWidth)
                 Rating(progress: 80, lineWidth: circleWidth)
                 Rating(progress: 70, lineWidth: circleWidth)
@@ -132,8 +132,10 @@ struct CircularRating_Previews: PreviewProvider {
                 Rating(progress: nil, lineWidth: circleWidth)
             }
             .frame(height: 40)
-            .padding(10)
+            .padding(.top, 10)
+            .padding([.bottom, .leading, .trailing], 20)
         }
+        .background(Color(asset: .AppBackgroundColor))
         .preferredColorScheme(.dark)
         .previewLayout(.sizeThatFits)
 

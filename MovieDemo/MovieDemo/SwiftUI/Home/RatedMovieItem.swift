@@ -28,10 +28,13 @@ struct RatedMovieItem: View {
                 Spacer()
                 ZStack(alignment: .center) {
                     Rating(progress: movie.percentRating)
-                        .frame(width: 32, height: 32)
                     Text(movie.ratingString)
+                        .allowsTightening(true)
                         .font(.custom("Avenir Next Condensed Bold", size: 15))
+                        .padding(.top, 2)
+                        .padding(.leading, 1.5)
                 }
+                .frame(width: 33, height: 33)
             }
             Spacer()
             if showsDivider {
