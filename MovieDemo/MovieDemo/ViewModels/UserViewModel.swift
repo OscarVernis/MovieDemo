@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 class UserViewModel: ObservableObject {
-    @Published var user: User?
+    @Published private(set) var user: User?
     private let service: UserLoader
     private let cache: UserCache?
     private(set) var isLoading = false

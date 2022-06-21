@@ -13,48 +13,53 @@ struct UserProfile: View {
     weak var coordinator: MainCoordinator?
     
     var body: some View {
-        if user.user != nil {
-            ZStack(alignment: .top) {
-                if let url = user.avatarURL {
-                    BlurBackground(url: url)
-                }
-                if let username = user.username, let url = user.avatarURL {
-                    ScrollView(.vertical, showsIndicators: true) {
-                        VStack(alignment: .center, spacing: 0) {
-                            userHeader(url, username)
+        Group {
+            if user.user != nil {
+                ZStack(alignment: .center) {
+                    if let url = user.avatarURL {
+                        BlurBackground(url: url)
+                    }
+                    if let username = user.username, let url = user.avatarURL {
+                        ScrollView(.vertical, showsIndicators: true) {
+                            VStack(alignment: .center, spacing: 0) {
+                                userHeader(username, url)
+                                    .padding(.bottom, 20)
+                                SectionTitle(title: UserString.Favorites.localized,
+                                             font: .detailSectionTitle,
+                                             tapAction: user.favorites.isEmpty ? nil : showFavorites)
+                                MoviePosterRow(movies: user.favorites,
+                                               tapAction: showDetail(movie:),
+                                               emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
                                 .padding(.bottom, 10)
-                            SectionTitle(title: UserString.Favorites.localized,
-                                         font: .detailSectionTitle,
-                            tapAction: user.favorites.isEmpty ? nil : showFavorites)
-                            MoviePosterRow(movies: user.favorites,
-                                           tapAction: showDetail(movie:),
-                                           emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
+                                SectionTitle(title: UserString.Watchlist.localized,
+                                             font: .detailSectionTitle,
+                                             tapAction: user.watchlist.isEmpty ? nil : showWatchlist)
+                                MoviePosterRow(movies: user.watchlist,
+                                               tapAction: showDetail(movie:),
+                                               emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
                                 .padding(.bottom, 10)
-                            SectionTitle(title: UserString.Watchlist.localized,
-                                         font: .detailSectionTitle,
-                                         tapAction: user.watchlist.isEmpty ? nil : showWatchlist)
-                            MoviePosterRow(movies: user.watchlist,
-                                           tapAction: showDetail(movie:),
-                                           emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
+                                SectionTitle(title: UserString.Favorites.localized,
+                                             font: .detailSectionTitle,
+                                             tapAction: user.rated.isEmpty ? nil : showRated)
+                                MoviePosterRow(movies: user.rated,
+                                               tapAction: showDetail(movie:),
+                                               emptyMessage: AttributedStringAsset.emptyRatedMessage)
                                 .padding(.bottom, 10)
-                            SectionTitle(title: UserString.Favorites.localized,
-                                         font: .detailSectionTitle,
-                                         tapAction: user.rated.isEmpty ? nil : showRated)
-                            MoviePosterRow(movies: user.rated,
-                                           tapAction: showDetail(movie:),
-                                           emptyMessage: AttributedStringAsset.emptyRatedMessage)
-                                .padding(.bottom, 10)
+                            }
+                            .padding(.top, 16)
                         }
-                        .padding(.top, 16)
                     }
                 }
+            } else {
+                ActivityIndicator(shouldAnimate: Binding.constant(true))
             }
-        } else {
-            loading()
+        }
+        .onAppear {
+            refresh()
         }
     }
     
-    fileprivate func userHeader(_ url: URL, _ username: String) -> some View {
+    fileprivate func userHeader( _ username: String, _ url: URL) -> some View {
         VStack(spacing: 0) {
             RemoteImage(url: url)
                 .frame(width: 142, height: 142)
@@ -71,13 +76,6 @@ struct UserProfile: View {
             .tint(Color(asset: .AppTintColor))
             .buttonStyle(.bordered)
         }
-    }
-    
-    fileprivate func loading() -> some View {
-        return Text("Loading...")
-            .onAppear {
-                refresh()
-            }
     }
     
     fileprivate func refresh() {
@@ -101,27 +99,6 @@ struct UserProfile: View {
         coordinator?.showMovieDetail(movie: movie)
     }
     
-}
-
-struct BlurBackground: View {
-    var url: URL
-    
-    init(url: URL) {
-        self.url = url
-    }
-    
-    var body: some View {
-        ZStack {
-            RemoteImage(url: url)
-                .aspectRatio(contentMode: .fill)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .clipped()
-                .edgesIgnoringSafeArea(.all)
-            Rectangle()
-                .fill(.clear)
-                .background(.thickMaterial)
-        }
-    }
 }
 
 struct UserProfile_Previews: PreviewProvider {
