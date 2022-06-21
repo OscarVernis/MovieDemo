@@ -26,7 +26,9 @@ struct MoviePosterRow: View {
                 Image(systemName: "film")
                     .foregroundColor(Color(uiColor: .secondarySystemFill))
                     .font(.system(size: 145))
-                Text(emptyMessage.string)
+                Text(AttributedString(emptyMessage))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
                     .foregroundColor(Color(uiColor: .placeholderText))
                     .font(.custom("Avenir Next Regular", size: 17))
             }
@@ -61,7 +63,7 @@ struct MoviePosterRow_Previews: PreviewProvider {
             .previewLayout(.fixed(width: 375, height: 500))
             .preferredColorScheme(.dark)
         MoviePosterRow(movies: [],
-        emptyMessage: NSAttributedString(string: "No Movies"))
+                       emptyMessage: AttributedStringAsset.emptyRatedMessage)
             .previewLayout(.fixed(width: 375, height: 500))
             .preferredColorScheme(.dark)
     }

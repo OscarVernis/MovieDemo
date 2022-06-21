@@ -85,6 +85,7 @@
 		5547ED5F282594A60079BD14 /* ListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */; };
 		5547ED6128259EDE0079BD14 /* MovieLoaderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */; };
 		554DDE1D286239D100DD864A /* AttributedStringAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DDE1C286239D100DD864A /* AttributedStringAsset.swift */; };
+		554DDE1F28623DE300DD864A /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DDE1E28623DE300DD864A /* AttributedText.swift */; };
 		554DE177251EF83C000286D2 /* OverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DE175251EF83C000286D2 /* OverviewCell.swift */; };
 		554DE178251EF83C000286D2 /* OverviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554DE176251EF83C000286D2 /* OverviewCell.xib */; };
 		554F691028125D9500B6BBDF /* MovieDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */; };
@@ -330,6 +331,7 @@
 		5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerTests.swift; sourceTree = "<group>"; };
 		5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLoaderMock.swift; sourceTree = "<group>"; };
 		554DDE1C286239D100DD864A /* AttributedStringAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringAsset.swift; sourceTree = "<group>"; };
+		554DDE1E28623DE300DD864A /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
 		554DE175251EF83C000286D2 /* OverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCell.swift; sourceTree = "<group>"; };
 		554DE176251EF83C000286D2 /* OverviewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverviewCell.xib; sourceTree = "<group>"; };
 		554F691128125D9500B6BBDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MovieDetailHeaderView.xib; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				557ACF87285BAC7000FFA4CD /* TextStyles.swift */,
 				557E0DCA285BF6D800D21D93 /* RemoteImage.swift */,
 				55BB1A95285D5273000BC3A0 /* SectionBackground.swift */,
+				554DDE1E28623DE300DD864A /* AttributedText.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1492,6 +1495,7 @@
 				5511D95525317056004B3697 /* BlurButton.swift in Sources */,
 				553AF9B72856F058007D1B20 /* ListDataSource.swift in Sources */,
 				55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */,
+				554DDE1F28623DE300DD864A /* AttributedText.swift in Sources */,
 				555713632834AB76006A20AB /* RemoteUserState.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
