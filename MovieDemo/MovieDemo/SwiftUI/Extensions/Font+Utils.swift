@@ -32,5 +32,9 @@ extension Font {
     static var detailSectionTitle: Font {
         .custom("Avenir Next Medium", size: 20.0)
     }
+    
+    static var movieDetailTitle: Font {
+        .custom("Avenir Next Medium", size: 28.0)
+    }
 }
 

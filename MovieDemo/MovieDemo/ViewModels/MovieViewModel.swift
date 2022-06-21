@@ -9,8 +9,8 @@
 import Foundation
 import Combine
 
-class MovieViewModel {
-    private var movie: Movie
+class MovieViewModel: ObservableObject {
+    @Published private var movie: Movie
     
     var service: MovieDetailsLoader
     
@@ -36,7 +36,7 @@ class MovieViewModel {
     init(movie: Movie, service: MovieDetailsLoader = RemoteMovieDetailsLoader()) {
         self.movie = movie
         self.service = service
-        updateInfo() 
+        updateInfo()
     }
     
     func updateMovie(_ movie: Movie) {

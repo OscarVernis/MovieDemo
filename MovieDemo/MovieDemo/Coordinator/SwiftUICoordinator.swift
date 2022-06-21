@@ -23,6 +23,22 @@ class SwiftUICoordinator: MainCoordinator {
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
+    override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
+        if let sessionId = sessionManager.sessionId {
+            movie.service = RemoteMovieDetailsLoader(sessionId: sessionId)
+            movie.userStates = MovieUserStatesViewModel(movie: movie, service: RemoteUserState(sessionId: sessionId))
+        } else {
+            movie.service = RemoteMovieDetailsLoader()
+            movie.userStates = nil
+        }
+        
+        let movieDetail = MovieDetail(movie: movie)
+        let mdvc = UIHostingController(rootView: movieDetail)
+        mdvc.navigationItem.largeTitleDisplayMode = .never
+
+        rootNavigationViewController?.pushViewController(mdvc, animated: animated)
+    }
+    
     override func showUserProfile(animated: Bool = true) {
         if let sessionId = sessionManager.sessionId {
             let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
