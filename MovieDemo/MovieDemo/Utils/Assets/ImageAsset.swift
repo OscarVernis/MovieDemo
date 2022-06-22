@@ -22,13 +22,14 @@ enum ImageAsset: String, CaseIterable {
     case person = "person.crop.circle"
     case play = "play.fill"
     case pause = "pause.fill"
+    case trailer = "play.circle.fill"
     
     var image: UIImage {
         switch self {
-        case .heart, .bookmark, .star, .person, .play, .pause:
-            return UIImage(systemName: rawValue)!
-        default:
+        case .BackdropPlaceholder, .PersonPlaceholder, .PosterPlaceholder, .Thumb:
             return UIImage(named: rawValue)!
+        default:
+            return UIImage(systemName: rawValue)!
         }
     }
     

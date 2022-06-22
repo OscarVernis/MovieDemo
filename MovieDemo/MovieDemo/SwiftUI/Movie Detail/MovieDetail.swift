@@ -60,6 +60,7 @@ struct MovieDetail: View {
                         .foregroundColor(Color.secondary)
                 }
             }
+            actionButtons()
             HStack {
                 Text(MovieString.Overview.localized)
                     .font(.detailSectionTitle)
@@ -69,15 +70,31 @@ struct MovieDetail: View {
                 .font(.custom("Avenir Light Oblique", size: 15))
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.leading)
-            Button {
-            } label: {
-                Label("Play Trailer", systemImage: ImageAsset.person.rawValue)
-            }
-            .tint(Color(uiColor: .systemPink))
-            .frame(height: 44)
-            .frame(maxWidth: .infinity)
-            .background(RoundedRectangle(cornerRadius: 12).foregroundColor(Color.pink.opacity(0.3)))
+            RoundedButton(title: "Play Trailer",
+                          image: Image(asset: .trailer),
+                          tintColor: Color.pink,
+                          action: playTrailer)
         }
+    }
+    
+    fileprivate func actionButtons() -> some View {
+        HStack {
+            RoundedButton(title: "Favorite",
+                          image: Image(systemName: "heart"),
+                          tintColor: Color(asset: .FavoriteColor))
+            RoundedButton(title: "Watchlist",
+                          image: Image(systemName: "bookmark"),
+                          tintColor: Color(asset: .WatchlistColor))
+            RoundedButton(title: "Rate",
+                          image: Image(systemName: "star"),
+                          tintColor: Color(asset: .RatingColor))
+        }
+    }
+    
+    //MARK: - Navigation
+    func playTrailer() {
+        guard let youtubeURL = movie.trailerURL else { return }
+        UIApplication.shared.open(youtubeURL)
     }
 }
 

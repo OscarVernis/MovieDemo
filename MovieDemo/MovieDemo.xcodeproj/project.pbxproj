@@ -201,6 +201,7 @@
 		55C4F40A251814AF002B73A9 /* CastCreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */; };
 		55C6753428223356007FB18C /* SessionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C6753328223356007FB18C /* SessionManagerTests.swift */; };
 		55C6753628223396007FB18C /* UserManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C6753528223396007FB18C /* UserManagerMock.swift */; };
+		55CC3AA328637F0800EF6A1C /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CC3AA228637F0800EF6A1C /* RoundedButton.swift */; };
 		55D05CBF251AE48100FD5F8C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D05CBE251AE48100FD5F8C /* User.swift */; };
 		55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D05CC1251AED9300FD5F8C /* UserViewModel.swift */; };
 		55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D309DB281325D0004F2725 /* URLSession+Extensions.swift */; };
@@ -459,6 +460,7 @@
 		55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCreditViewModel.swift; sourceTree = "<group>"; };
 		55C6753328223356007FB18C /* SessionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerTests.swift; sourceTree = "<group>"; };
 		55C6753528223396007FB18C /* UserManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerMock.swift; sourceTree = "<group>"; };
+		55CC3AA228637F0800EF6A1C /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		55D05CBE251AE48100FD5F8C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		55D05CC1251AED9300FD5F8C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		55D309DB281325D0004F2725 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				55BB1A95285D5273000BC3A0 /* SectionBackground.swift */,
 				5511FFAB285AFD8D00B9C12A /* SectionTitle.swift */,
 				557ACF87285BAC7000FFA4CD /* TextStyles.swift */,
+				55CC3AA228637F0800EF6A1C /* RoundedButton.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1505,6 +1508,7 @@
 				5511FF8C285A7AFD00B9C12A /* MovieBannerRow.swift in Sources */,
 				554DDE1D286239D100DD864A /* AttributedStringAsset.swift in Sources */,
 				559276712855095B0063743C /* UserProfileDataSource.swift in Sources */,
+				55CC3AA328637F0800EF6A1C /* RoundedButton.swift in Sources */,
 				5511FFAC285AFD8D00B9C12A /* SectionTitle.swift in Sources */,
 				553D6AF12853C2E5001491CB /* HomeDataSource.swift in Sources */,
 				55EE51A2251E99B100915AB3 /* EmptyMovieCell.swift in Sources */,

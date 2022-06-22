@@ -68,13 +68,12 @@ struct UserProfile: View {
             Text(username)
                 .font(.detailSectionTitle)
                 .padding(.bottom, 30)
-            Button {
+            RoundedButton(title: "Logout",
+                          image: Image(asset: .person),
+                          action: {
                 coordinator?.logout()
-            } label: {
-                Label("Logout", systemImage: ImageAsset.person.rawValue)
-            }
-            .tint(Color(asset: .AppTintColor))
-            .buttonStyle(.bordered)
+            })
+            .padding()
         }
     }
     
