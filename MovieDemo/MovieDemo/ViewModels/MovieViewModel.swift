@@ -25,7 +25,7 @@ class MovieViewModel: ObservableObject {
     //Stores only the first 8 credits from the cast
     var topCast = [CastCreditViewModel]()
     
-    //Stores only the credits with jobs inclueded in the topCrewJobs array
+    //Stores only the credits with jobs included in the topCrewJobs array
     var topCrew = [CrewCreditViewModel]()
     
     //Store the movie videos
@@ -94,9 +94,11 @@ extension MovieViewModel {
     }
     
     private func getMovieDetails() {
-        isLoading = true
+        guard let movieId = movie.id else { return }
         
-        cancellable = service.getMovieDetails(movieId: movie.id!)
+        isLoading = true
+                
+        cancellable = service.getMovieDetails(movieId: movieId)
             .sink { [weak self] completion in
                 self?.isLoading = false
                 

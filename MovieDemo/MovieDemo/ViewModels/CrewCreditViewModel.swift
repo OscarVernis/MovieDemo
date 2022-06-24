@@ -102,7 +102,7 @@ extension CrewCreditViewModel {
     }
     
     static func crewWithTopJobs(credits: [CrewCredit]) -> [CrewCreditViewModel] {
-        var uniqueIds = Set<Int>()
+        var uniqueIds = IndexSet()
         var filteredCredits = [CrewCreditViewModel]()
         
         let topJobs = TopCrewJob.allCases.map(\.rawValue)
