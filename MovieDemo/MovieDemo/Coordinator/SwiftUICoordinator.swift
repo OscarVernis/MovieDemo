@@ -32,7 +32,8 @@ class SwiftUICoordinator: MainCoordinator {
             movie.userStates = nil
         }
         
-        let movieDetail = MovieDetail(movie: movie)
+        var movieDetail = MovieDetail(movie: movie)
+        movieDetail.coordinator = self
         let mdvc = UIHostingController(rootView: movieDetail)
         mdvc.navigationItem.largeTitleDisplayMode = .never
 

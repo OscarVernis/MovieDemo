@@ -27,21 +27,21 @@ struct UserProfile: View {
                                 SectionTitle(title: UserString.Favorites.localized,
                                              font: .detailSectionTitle,
                                              tapAction: user.favorites.isEmpty ? nil : showFavorites)
-                                MoviePosterRow(movies: user.favorites,
+                                PosterRow(movies: user.favorites,
                                                tapAction: showDetail(movie:),
                                                emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
                                 .padding(.bottom, 10)
                                 SectionTitle(title: UserString.Watchlist.localized,
                                              font: .detailSectionTitle,
                                              tapAction: user.watchlist.isEmpty ? nil : showWatchlist)
-                                MoviePosterRow(movies: user.watchlist,
+                                PosterRow(movies: user.watchlist,
                                                tapAction: showDetail(movie:),
                                                emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
                                 .padding(.bottom, 10)
                                 SectionTitle(title: UserString.Favorites.localized,
                                              font: .detailSectionTitle,
                                              tapAction: user.rated.isEmpty ? nil : showRated)
-                                MoviePosterRow(movies: user.rated,
+                                PosterRow(movies: user.rated,
                                                tapAction: showDetail(movie:),
                                                emptyMessage: AttributedStringAsset.emptyRatedMessage)
                                 .padding(.bottom, 10)

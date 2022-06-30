@@ -26,7 +26,7 @@ struct Home: View {
                 
                 SectionTitle(title: .localized(HomeString.Upcoming), tapAction: showUpcoming)
                     .padding(.top, topSectionPadding)
-                MoviePosterRow(movies: upcomingProvider.items,
+                PosterRow(movies: upcomingProvider.items,
                                tapAction: showDetail)
 
                 SectionTitle(title: .localized(HomeString.Popular), tapAction: showPopular)

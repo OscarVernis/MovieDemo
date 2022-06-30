@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct MovieDetail: View {
+    weak var coordinator: MainCoordinator?
+
     @ObservedObject var movie: MovieViewModel
     
     var body: some View {
@@ -21,11 +23,14 @@ struct MovieDetail: View {
                     movieHeader()
                         .padding(.bottom, 20)
                         .padding([.leading, .trailing], 20)
+                    SectionTitle(title: MovieString.Cast.localized, font: .detailSectionTitle)
+                    PosterRow(cast: movie.topCast, tapAction: showCastDetail(credit:))
+                        .padding(.bottom, 20)
                     SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle)
                     InfoTable(credits: movie.topCrew)
                         .padding(.bottom, 20)
                     SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle)
-                    MoviePosterRow(movies: movie.recommendedMovies)
+                    PosterRow(movies: movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))
                         .padding(.bottom, 20)
                     SectionTitle(title: MovieString.Info.localized, font: .detailSectionTitle)
                     InfoTable(info: movie.infoArray)
@@ -98,6 +103,18 @@ struct MovieDetail: View {
     }
     
     //MARK: - Navigation
+    fileprivate func showMovieDetail(movie: MovieViewModel) {
+        coordinator?.showMovieDetail(movie: movie)
+    }
+    
+    fileprivate func showCastDetail(credit: CastCreditViewModel) {
+        coordinator?.showPersonProfile(credit.person())
+    }
+    
+    fileprivate func showCrewDetail(credit: CrewCreditViewModel) {
+        coordinator?.showPersonProfile(credit.person())
+    }
+    
     func playTrailer() {
         guard let youtubeURL = movie.trailerURL else { return }
         UIApplication.shared.open(youtubeURL)
