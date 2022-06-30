@@ -8,42 +8,44 @@
 
 import SwiftUI
 
-struct InfoItemModel: Hashable {
-    var title: String
-    var subtitle: String
-}
-
-struct InfoTable: View {
-    var items: [InfoItemModel] = Array<InfoItemModel>(repeating: InfoItemModel(title: "Test", subtitle: "Test"), count: 20)
-    
+struct InfoTable<Model: Hashable>: View {
+    var models: [Model]
     let columns: [GridItem]
-    
-    init(credits: [CrewCreditViewModel], columns: Int = 2) {
-        self.items = credits.map {
-            InfoItemModel(title: $0.name, subtitle: $0.jobs ?? "")
-        }
-        
-        self.columns = Array<GridItem>(repeating: GridItem(.flexible()), count: columns)
-    }
-    
-    init(info: [[String : String]], columns: Int = 1) {
-        self.items = info.compactMap {
-            guard let title = $0.keys.first, let subtitle = $0.values.first else { return nil}
-            
-            return InfoItemModel(title: title, subtitle: subtitle)
-        }
-            
-        self.columns = Array<GridItem>(repeating: GridItem(.flexible()), count: columns)
-    }
+    var createInfoItemModel: (Model) -> InfoItemModel
+    var tapAction: ((Model) -> Void)?
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(items, id: \.self) { item in
-                    InfoItem(title: item.title, subtitle: item.subtitle)
+                ForEach(models, id: \.self) { model in
+                    InfoItem(model: createInfoItemModel(model))
+                        .onTapGesture {
+                            tapAction?(model)
+                        }
                 }
             }
             .padding([.leading, .trailing], 20)
+        }
+    }
+}
+
+extension InfoTable where Model == CrewCreditViewModel {
+    init(credits: [CrewCreditViewModel], columns: Int = 2, tapAction: ((CrewCreditViewModel) -> Void)? = nil) {
+        self.models = credits
+        self.columns = Array<GridItem>(repeating: GridItem(.flexible()), count: columns)
+        self.createInfoItemModel = { credit in
+            InfoItemModel(title: credit.name, subtitle: credit.job)
+        }
+        self.tapAction = tapAction
+    }
+}
+
+extension InfoTable where Model == [String : String] {
+    init(info: [[String : String]], columns: Int = 1) {
+        self.models = info
+        self.columns = Array<GridItem>(repeating: GridItem(.flexible()), count: columns)
+        self.createInfoItemModel = { info in
+            InfoItemModel(title: info.keys.first!, subtitle: info.values.first!)
         }
     }
 }

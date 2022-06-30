@@ -123,3 +123,14 @@ extension CrewCreditViewModel {
         return filteredCredits
     }
 }
+
+//MARK: - Hashable
+extension CrewCreditViewModel: Equatable, Hashable {
+    static func == (lhs: CrewCreditViewModel, rhs: CrewCreditViewModel) -> Bool {
+        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
+}

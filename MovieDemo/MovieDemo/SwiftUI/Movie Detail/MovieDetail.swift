@@ -27,7 +27,7 @@ struct MovieDetail: View {
                     PosterRow(cast: movie.topCast, tapAction: showCastDetail(credit:))
                         .padding(.bottom, 20)
                     SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle, tapAction: showCrewList)
-                    InfoTable(credits: movie.topCrew)
+                    InfoTable(credits: movie.topCrew, tapAction: showCrewDetail(credit:))
                         .padding(.bottom, 20)
                     SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle, tapAction: showRecommended)
                     PosterRow(movies: movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))

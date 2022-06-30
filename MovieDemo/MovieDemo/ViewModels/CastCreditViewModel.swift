@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CastCreditViewModel: Equatable {
+class CastCreditViewModel {
     let castCredit: CastCredit
         
     init(castCredit: CastCredit) {
@@ -47,7 +47,7 @@ extension CastCreditViewModel {
 }
 
 //MARK: - Hashable
-extension CastCreditViewModel: Hashable {
+extension CastCreditViewModel: Equatable, Hashable {
     static func == (lhs: CastCreditViewModel, rhs: CastCreditViewModel) -> Bool {
         ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
     }

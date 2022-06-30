@@ -8,15 +8,19 @@
 
 import SwiftUI
 
-struct InfoItem: View {
+struct InfoItemModel: Hashable {
     var title: String
     var subtitle: String
+}
+
+struct InfoItem: View {
+    var model: InfoItemModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(title)
+            Text(model.title)
                 .font(.custom("Avenir Medium", size: 16))
-            Text(subtitle)
+            Text(model.subtitle)
                 .foregroundColor(.secondary)
                 .font(.custom("Avenir Medium", size: 15))
             Divider()
@@ -26,7 +30,7 @@ struct InfoItem: View {
 
 struct InfoListItem_Previews: PreviewProvider {
     static var previews: some View {
-        InfoItem(title: "Title", subtitle: "Subtitle")
+        InfoItem(model: InfoItemModel(title: "Title", subtitle: "Subtitle"))
             .background(Color(asset: .AppBackgroundColor))
             .preferredColorScheme(.dark)
             .previewLayout(.sizeThatFits)
