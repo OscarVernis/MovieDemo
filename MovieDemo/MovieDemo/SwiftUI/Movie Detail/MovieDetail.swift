@@ -23,13 +23,13 @@ struct MovieDetail: View {
                     movieHeader()
                         .padding(.bottom, 20)
                         .padding([.leading, .trailing], 20)
-                    SectionTitle(title: MovieString.Cast.localized, font: .detailSectionTitle)
+                    SectionTitle(title: MovieString.Cast.localized, font: .detailSectionTitle, tapAction: showCastList)
                     PosterRow(cast: movie.topCast, tapAction: showCastDetail(credit:))
                         .padding(.bottom, 20)
-                    SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle)
+                    SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle, tapAction: showCrewList)
                     InfoTable(credits: movie.topCrew)
                         .padding(.bottom, 20)
-                    SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle)
+                    SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle, tapAction: showRecommended)
                     PosterRow(movies: movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))
                         .padding(.bottom, 20)
                     SectionTitle(title: MovieString.Info.localized, font: .detailSectionTitle)
@@ -103,6 +103,20 @@ struct MovieDetail: View {
     }
     
     //MARK: - Navigation
+    fileprivate func showCastList() {
+        coordinator?.showCastCreditList(title: MovieString.Cast.localized,
+                                        dataProvider: BasicProvider(models: movie.cast))
+    }
+    
+    fileprivate func showCrewList() {
+        coordinator?.showCrewCreditList(title: MovieString.Crew.localized,
+                                        dataProvider: BasicProvider(models: movie.crew))
+    }
+    
+    fileprivate func showRecommended() {
+        coordinator?.showMovieList(title: MovieString.RecommendedMovies.localized, list: .Recommended(movieId: movie.id))
+    }
+    
     fileprivate func showMovieDetail(movie: MovieViewModel) {
         coordinator?.showMovieDetail(movie: movie)
     }
