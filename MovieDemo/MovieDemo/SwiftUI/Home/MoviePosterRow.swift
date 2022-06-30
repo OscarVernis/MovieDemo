@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Loaf
 
 struct MoviePosterRow: View {
     let movies: [MovieViewModel]

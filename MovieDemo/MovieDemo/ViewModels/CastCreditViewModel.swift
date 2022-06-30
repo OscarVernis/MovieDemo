@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CastCreditViewModel {
+class CastCreditViewModel: Equatable {
     let castCredit: CastCredit
         
     init(castCredit: CastCredit) {
@@ -44,4 +44,15 @@ extension CastCreditViewModel {
         return MovieService.profileImageURL(forPath: pathString, size: .h632)
     }
     
+}
+
+//MARK: - Hashable
+extension CastCreditViewModel: Hashable {
+    static func == (lhs: CastCreditViewModel, rhs: CastCreditViewModel) -> Bool {
+        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
 }
