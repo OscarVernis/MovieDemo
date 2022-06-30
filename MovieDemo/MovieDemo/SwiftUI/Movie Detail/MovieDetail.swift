@@ -23,17 +23,11 @@ struct MovieDetail: View {
                     movieHeader()
                         .padding(.bottom, 20)
                         .padding([.leading, .trailing], 20)
-                    SectionTitle(title: MovieString.Cast.localized, font: .detailSectionTitle, tapAction: showCastList)
-                    PosterRow(cast: movie.topCast, tapAction: showCastDetail(credit:))
-                        .padding(.bottom, 20)
-                    SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle, tapAction: showCrewList)
-                    InfoTable(credits: movie.topCrew, tapAction: showCrewDetail(credit:))
-                        .padding(.bottom, 20)
-                    SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle, tapAction: showRecommended)
-                    PosterRow(movies: movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))
-                        .padding(.bottom, 20)
-                    SectionTitle(title: MovieString.Info.localized, font: .detailSectionTitle)
-                    InfoTable(info: movie.infoArray)
+                    cast()
+                    crew()
+                    videos()
+                    recommended()
+                    info()
                 }
             }
         }
@@ -42,6 +36,7 @@ struct MovieDetail: View {
         }
     }
     
+    //MARK: - Header
     fileprivate func movieHeader() -> some View {
         return VStack(spacing: 10) {
             RemoteImage(url: movie.posterImageURL(size: .w500))
@@ -102,6 +97,46 @@ struct MovieDetail: View {
         }
     }
     
+    //MARK: - Section
+    fileprivate func cast() -> some View {
+        VStack {
+            SectionTitle(title: MovieString.Cast.localized, font: .detailSectionTitle, tapAction: showCastList)
+            PosterRow(cast: movie.topCast, tapAction: showCastDetail(credit:))
+                .padding(.bottom, 20)
+        }
+    }
+    
+    fileprivate func crew() -> some View {
+        VStack {
+            SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle, tapAction: showCrewList)
+            InfoTable(credits: movie.topCrew, tapAction: showCrewDetail(credit:))
+                .padding(.bottom, 20)
+        }
+    }
+    
+    fileprivate func videos() -> some View {
+        VStack {
+            SectionTitle(title: MovieString.Videos.localized, font: .detailSectionTitle)
+            VideoRow(videos: movie.videos, tapAction: playVideo(video:))
+                .padding(.bottom, 20)
+        }
+    }
+    
+    fileprivate func recommended() -> some View {
+        VStack {
+            SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle, tapAction: showRecommended)
+            PosterRow(movies: movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))
+                .padding(.bottom, 20)
+        }
+    }
+    
+    fileprivate func info() -> some View {
+        VStack {
+            SectionTitle(title: MovieString.Info.localized, font: .detailSectionTitle)
+            InfoTable(info: movie.infoArray)
+        }
+    }
+    
     //MARK: - Navigation
     fileprivate func showCastList() {
         coordinator?.showCastCreditList(title: MovieString.Cast.localized,
@@ -127,6 +162,10 @@ struct MovieDetail: View {
     
     fileprivate func showCrewDetail(credit: CrewCreditViewModel) {
         coordinator?.showPersonProfile(credit.person())
+    }
+    
+    func playVideo(video: MovieVideoViewModel) {
+        UIApplication.shared.open(video.youtubeURL)
     }
     
     func playTrailer() {

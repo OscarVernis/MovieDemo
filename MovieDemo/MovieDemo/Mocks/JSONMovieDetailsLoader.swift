@@ -28,4 +28,7 @@ struct JSONMovieDetailsLoader: MovieDetailsLoader {
             .eraseToAnyPublisher()
     }
     
+    var viewModel: MovieViewModel {
+        MovieViewModel(movie: movie)
+    }
 }
