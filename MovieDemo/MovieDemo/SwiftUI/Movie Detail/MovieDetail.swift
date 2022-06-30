@@ -21,8 +21,14 @@ struct MovieDetail: View {
                     movieHeader()
                         .padding(.bottom, 20)
                         .padding([.leading, .trailing], 20)
+                    SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle)
+                    InfoTable(credits: movie.topCrew)
+                        .padding(.bottom, 20)
                     SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle)
                     MoviePosterRow(movies: movie.recommendedMovies)
+                        .padding(.bottom, 20)
+                    SectionTitle(title: MovieString.Info.localized, font: .detailSectionTitle)
+                    InfoTable(info: movie.infoArray)
                 }
             }
         }
