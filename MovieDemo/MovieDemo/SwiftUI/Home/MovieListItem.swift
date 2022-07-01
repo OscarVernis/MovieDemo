@@ -54,10 +54,10 @@ struct MovieListItem: View {
 }
 
 struct MoviePosterListItem_Previews: PreviewProvider {
-    static let movieLoader = JSONMovieDetailsLoader(filename: "movie")
+    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
     
     static var previews: some View {
-        MovieListItem(movie: MovieViewModel(movie: movieLoader.movie))
+        MovieListItem(movie: movie)
             .previewLayout(.fixed(width: 375, height: 150))
             .preferredColorScheme(.dark)
     }

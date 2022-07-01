@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct VideoItem: View {
     let video: MovieVideoViewModel
     

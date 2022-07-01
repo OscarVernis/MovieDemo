@@ -30,4 +30,8 @@ struct JSONMovieLoader: MovieLoader {
             .eraseToAnyPublisher()
     }
     
+    var viewModels: [MovieViewModel] {
+        movies.map { MovieViewModel(movie: $0) }
+    }
+    
 }

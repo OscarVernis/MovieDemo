@@ -12,7 +12,7 @@ struct PosterRow<Model: Hashable>: View {
     let models: [Model]
     var tapAction: ((Model) -> Void)?
     var emptyMessage: NSAttributedString?
-    var createPosterItemModel: (Model) -> PosterItemModel
+    var makePosterItemModel: (Model) -> PosterItemModel
     
     var body: some View {
         if let emptyMessage = emptyMessage, models.isEmpty {
@@ -26,7 +26,7 @@ struct PosterRow<Model: Hashable>: View {
         return ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .center, spacing: 20) {
                 ForEach(models, id:\.self) { model in
-                    PosterItem(model: createPosterItemModel(model))
+                    PosterItem(model: makePosterItemModel(model))
                         .frame(width: 140)
                         .onTapGesture {
                             tapAction?(model)
@@ -65,7 +65,7 @@ extension PosterRow where Model == MovieViewModel {
         self.models = movies
         self.tapAction = tapAction
         self.emptyMessage = emptyMessage
-        self.createPosterItemModel = { movie in
+        self.makePosterItemModel = { movie in
             PosterItemModel(movie: movie, showRating: showRating)
         }
     }
@@ -75,31 +75,31 @@ extension PosterRow where Model == CastCreditViewModel {
     init(cast: [CastCreditViewModel], tapAction: ((CastCreditViewModel) -> Void)? = nil) {
         self.models = cast
         self.tapAction = tapAction
-        self.createPosterItemModel = { credit in
+        self.makePosterItemModel = { credit in
             PosterItemModel(credit: credit)
         }
     }
 }
 
 struct PosterRow_Previews: PreviewProvider {
-    static let movies = JSONMovieLoader(filename: "now_playing").movies
-    static let movie = MovieViewModel(movie: JSONMovieDetailsLoader(filename: "movie").movie)
+    static let movies = JSONMovieLoader(filename: "now_playing").viewModels
+    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
 
     static var previews: some View {
         PosterRow(cast: movie.topCast)
-            .previewLayout(.fixed(width: 375, height: 500))
+            .previewLayout(.fixed(width: 375, height: 300))
             .preferredColorScheme(.dark)
-        PosterRow(movies: movies.map { MovieViewModel(movie: $0) },
+        PosterRow(movies: movies,
                   showRating: true)
-            .previewLayout(.fixed(width: 375, height: 500))
+            .previewLayout(.fixed(width: 375, height: 300))
             .preferredColorScheme(.dark)
-        PosterRow(movies: movies.map { MovieViewModel(movie: $0) },
+        PosterRow(movies: movies,
                   showRating: false)
-            .previewLayout(.fixed(width: 375, height: 500))
+            .previewLayout(.fixed(width: 375, height: 300))
             .preferredColorScheme(.dark)
         PosterRow(movies: [],
                        emptyMessage: AttributedStringAsset.emptyRatedMessage)
-            .previewLayout(.fixed(width: 375, height: 500))
+            .previewLayout(.fixed(width: 375, height: 300))
             .preferredColorScheme(.dark)
     }
 }

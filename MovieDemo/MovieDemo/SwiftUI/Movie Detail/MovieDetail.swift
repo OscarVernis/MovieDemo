@@ -23,11 +23,16 @@ struct MovieDetail: View {
                     movieHeader()
                         .padding(.bottom, 20)
                         .padding([.leading, .trailing], 20)
-                    cast()
-                    crew()
-                    videos()
-                    recommended()
-                    info()
+                    //Cast
+                    if !movie.topCast.isEmpty { cast() }
+                    //Crew
+                    if !movie.topCrew.isEmpty { crew() }
+                    //Videos
+                    if !movie.videos.isEmpty { videos() }
+                    //Recommended
+                    if !movie.recommendedMovies.isEmpty { recommended() }
+                    //Info
+                    if !movie.infoArray.isEmpty { info() }
                 }
             }
         }
@@ -39,7 +44,7 @@ struct MovieDetail: View {
     //MARK: - Header
     fileprivate func movieHeader() -> some View {
         return VStack(spacing: 10) {
-            RemoteImage(url: movie.posterImageURL(size: .w500))
+            RemoteImage(url: movie.posterImageURL(size: .w500), placeholder: Image(asset: .PosterPlaceholder))
                 .frame(width: 160)
             Text(movie.title)
                 .multilineTextAlignment(.center)

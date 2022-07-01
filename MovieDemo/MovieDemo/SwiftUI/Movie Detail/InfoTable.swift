@@ -11,14 +11,14 @@ import SwiftUI
 struct InfoTable<Model: Hashable>: View {
     var models: [Model]
     let columns: [GridItem]
-    var createInfoItemModel: (Model) -> InfoItemModel
+    var makeInfoItemModel: (Model) -> InfoItemModel
     var tapAction: ((Model) -> Void)?
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
                 ForEach(models, id: \.self) { model in
-                    InfoItem(model: createInfoItemModel(model))
+                    InfoItem(model: makeInfoItemModel(model))
                         .onTapGesture {
                             tapAction?(model)
                         }
@@ -33,7 +33,7 @@ extension InfoTable where Model == CrewCreditViewModel {
     init(credits: [CrewCreditViewModel], columns: Int = 2, tapAction: ((CrewCreditViewModel) -> Void)? = nil) {
         self.models = credits
         self.columns = Array<GridItem>(repeating: GridItem(.flexible()), count: columns)
-        self.createInfoItemModel = { credit in
+        self.makeInfoItemModel = { credit in
             InfoItemModel(title: credit.name, subtitle: credit.job)
         }
         self.tapAction = tapAction
@@ -44,26 +44,24 @@ extension InfoTable where Model == [String : String] {
     init(info: [[String : String]], columns: Int = 1) {
         self.models = info
         self.columns = Array<GridItem>(repeating: GridItem(.flexible()), count: columns)
-        self.createInfoItemModel = { info in
+        self.makeInfoItemModel = { info in
             InfoItemModel(title: info.keys.first!, subtitle: info.values.first!)
         }
     }
 }
 
 struct InfoTable_Previews: PreviewProvider {
-    static let movieLoader = JSONMovieDetailsLoader(filename: "movie")
-    static let movieViewModel = MovieViewModel(movie: Movie(id: 0, title: ""),
-                                               service: movieLoader)
+    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
 
     static var previews: some View {
         NavigationView {
             VStack(spacing: 0) {
-                InfoTable(credits: movieViewModel.topCrew)
-                InfoTable(info: movieViewModel.infoArray)
+                InfoTable(credits: movie.topCrew)
+                InfoTable(info: movie.infoArray)
             }
         }
         .onAppear {
-            movieViewModel.refresh()
+            movie.refresh()
         }
         .preferredColorScheme(.dark)
     }
