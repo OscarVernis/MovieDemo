@@ -66,14 +66,7 @@ extension XCTestCase {
 //MARK: - Helpers
 extension XCTestCase {
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = keyDecodingStrategy
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        
-        return decoder
+        MovieDecoder(dateFormat: dateFormat, keyDecodingStrategy: keyDecodingStrategy)
     }
     
     func wait(for delay: Double) {

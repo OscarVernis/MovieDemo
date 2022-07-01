@@ -75,9 +75,7 @@ extension PosterRow where Model == CastCreditViewModel {
     init(cast: [CastCreditViewModel], tapAction: ((CastCreditViewModel) -> Void)? = nil) {
         self.models = cast
         self.tapAction = tapAction
-        self.makePosterItemModel = { credit in
-            PosterItemModel(credit: credit)
-        }
+        self.makePosterItemModel = PosterItemModel.init(credit:)
     }
 }
 

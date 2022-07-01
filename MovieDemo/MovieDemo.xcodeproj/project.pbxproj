@@ -167,6 +167,7 @@
 		558A5A9C25106F8900E5FB40 /* MovieRatingListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558A5A9A25106F8900E5FB40 /* MovieRatingListCell.xib */; };
 		558A63AF2512AD5E0064438D /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A63AE2512AD5D0064438D /* MovieViewModel.swift */; };
 		558D9933283DBD3900CE0745 /* AssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558D9932283DBD3900CE0745 /* AssetTests.swift */; };
+		558F7B7C286E809E00926749 /* MovieDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558F7B7B286E809E00926749 /* MovieDecoder.swift */; };
 		55915773251438390085DB69 /* BlurBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55915772251438390085DB69 /* BlurBackgroundView.swift */; };
 		55915776251438450085DB69 /* BlurBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55915775251438450085DB69 /* BlurBackgroundView.xib */; };
 		5592766F285508030063743C /* UserHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5592766E285508030063743C /* UserHeaderDataSource.swift */; };
@@ -427,6 +428,7 @@
 		558A5A9A25106F8900E5FB40 /* MovieRatingListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieRatingListCell.xib; sourceTree = "<group>"; };
 		558A63AE2512AD5D0064438D /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		558D9932283DBD3900CE0745 /* AssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTests.swift; sourceTree = "<group>"; };
+		558F7B7B286E809E00926749 /* MovieDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDecoder.swift; sourceTree = "<group>"; };
 		55915772251438390085DB69 /* BlurBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBackgroundView.swift; sourceTree = "<group>"; };
 		55915775251438450085DB69 /* BlurBackgroundView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlurBackgroundView.xib; sourceTree = "<group>"; };
 		5592766E285508030063743C /* UserHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeaderDataSource.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 			isa = PBXGroup;
 			children = (
 				55D309DB281325D0004F2725 /* URLSession+Extensions.swift */,
+				558F7B7B286E809E00926749 /* MovieDecoder.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				551693132857C93900FD147F /* PersonDetailDataSource.swift in Sources */,
 				554DDE21286254F200DD864A /* ActivityIndicator.swift in Sources */,
 				5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */,
+				558F7B7C286E809E00926749 /* MovieDecoder.swift in Sources */,
 				55EE51A7251EC5DE00915AB3 /* ColorAsset.swift in Sources */,
 				55D317FB284EF6090090CF34 /* UserCache.swift in Sources */,
 				55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */,

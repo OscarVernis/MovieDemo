@@ -11,7 +11,11 @@ import Combine
 
 struct JSONMovieLoader: MovieLoader {
     var movies: [Movie] = []
-    var jsonDecoder = MovieService().jsonDecoder()
+    var jsonDecoder = MovieDecoder()
+    
+    var viewModels: [MovieViewModel] {
+        movies.map { MovieViewModel(movie: $0) }
+    }
     
     init(filename: String) {
         do {
@@ -28,10 +32,6 @@ struct JSONMovieLoader: MovieLoader {
         return Just(result)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
-    }
-    
-    var viewModels: [MovieViewModel] {
-        movies.map { MovieViewModel(movie: $0) }
     }
     
 }
