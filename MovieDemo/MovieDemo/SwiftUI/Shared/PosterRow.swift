@@ -80,7 +80,7 @@ extension PosterRow where Model == CastCreditViewModel {
 }
 
 struct PosterRow_Previews: PreviewProvider {
-    static let movies = JSONMovieLoader(filename: "now_playing").viewModels
+    static let movies = JSONMoviesLoader(filename: "now_playing").viewModels
     static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
 
     static var previews: some View {

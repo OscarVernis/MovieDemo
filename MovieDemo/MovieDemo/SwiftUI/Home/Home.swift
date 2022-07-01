@@ -115,7 +115,7 @@ struct Home: View {
 //MARK: - Previews
 struct Home_Previews: PreviewProvider {
     static let provider = MoviesProvider(
-        movieLoader: JSONMovieLoader(filename: "now_playing"),
+        movieLoader: JSONMoviesLoader(filename: "now_playing"),
         cache: nil
     )
     

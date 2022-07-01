@@ -10,24 +10,36 @@ import Foundation
 import Combine
 
 struct JSONMovieDetailsLoader: MovieDetailsLoader {
-    let movie: Movie
+    var movie: Movie = Movie()
     var jsonDecoder = MovieDecoder()
+    
+    private var error: Error?
     
     var viewModel: MovieViewModel {
         MovieViewModel(movie: movie)
     }
 
     init(filename: String) {
+        guard let url = Bundle.main.url(forResource: filename, withExtension: "json") else {
+            error = NSError(domain: "Wrong filename!", code: 0)
+            return
+        }
+        
         do {
-            let data = try Data(contentsOf: Bundle.main.url(forResource: filename, withExtension: "json")!)
+            let data = try Data(contentsOf: url)
             movie = try jsonDecoder.decode(Movie.self, from: data)
-        } catch {
-            fatalError("Couldn't load \(filename).json")
+        } catch let jsonError {
+            error = jsonError
         }
     }
     
     func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
-        Just(movie)
+        if let error = error {
+            return Fail(outputType: Movie.self, failure: error)
+                .eraseToAnyPublisher()
+        }
+        
+        return Just(movie)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

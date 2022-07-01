@@ -10,20 +10,32 @@ import Foundation
 import Combine
 
 struct JSONUserLoader: UserLoader {
-    let user: User
-    var jsonDecoder = MovieService().jsonDecoder()
+    var user: User = User()
+    var jsonDecoder = MovieDecoder()
+    
+    private var error: Error?
     
     init(filename: String) {
+        guard let url = Bundle.main.url(forResource: filename, withExtension: "json") else {
+            error = NSError(domain: "Wrong filename!", code: 0)
+            return
+        }
+        
         do {
-            let data = try Data(contentsOf: Bundle.main.url(forResource: filename, withExtension: "json")!)
+            let data = try Data(contentsOf: url)
             user = try jsonDecoder.decode(User.self, from: data)
-        } catch {
-            fatalError("Couldn't load \(filename).json")
+        } catch let jsonError {
+            error = jsonError
         }
     }
     
     func getUserDetails() -> AnyPublisher<User, Error> {
-        Just(user)
+        if let error = error {
+            return Fail(outputType: User.self, failure: error)
+                .eraseToAnyPublisher()
+        }
+        
+        return Just(user)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

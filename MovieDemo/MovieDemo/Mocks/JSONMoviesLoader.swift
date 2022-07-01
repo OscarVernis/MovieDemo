@@ -1,5 +1,5 @@
 //
-//  JSONMovieLoader.swift
+//  JSONMoviesLoader.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 15/06/22.
@@ -9,25 +9,37 @@
 import Foundation
 import Combine
 
-struct JSONMovieLoader: MovieLoader {
+struct JSONMoviesLoader: MovieLoader {
     var movies: [Movie] = []
     var jsonDecoder = MovieDecoder()
+    
+    private var error: Error?
     
     var viewModels: [MovieViewModel] {
         movies.map { MovieViewModel(movie: $0) }
     }
     
     init(filename: String) {
+        guard let url = Bundle.main.url(forResource: filename, withExtension: "json") else {
+            error = NSError(domain: "Wrong filename!", code: 0)
+            return
+        }
+        
         do {
-            let data = try Data(contentsOf: Bundle.main.url(forResource: filename, withExtension: "json")!)
+            let data = try Data(contentsOf: url)
             let result = try jsonDecoder.decode(ServiceModelsResult<Movie>.self, from: data)
             movies = result.items
-        } catch {
-            fatalError("Couldn't load \(filename).json")
+        } catch let jsonError {
+            error = jsonError
         }
     }
     
     func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResult, Error> {
+        if let error = error {
+            return Fail(outputType: MoviesResult.self, failure: error)
+                .eraseToAnyPublisher()
+        }
+
         let result: MoviesResult = (movies: movies, totalPages: 1)
         return Just(result)
             .setFailureType(to: Error.self)
