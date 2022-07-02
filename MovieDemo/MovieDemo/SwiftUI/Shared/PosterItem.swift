@@ -8,36 +8,6 @@
 
 import SwiftUI
 
-struct PosterItemModel: Hashable {
-    var imageURL: URL?
-    var title: String
-    var subtitle: String?
-    var rating: UInt?
-    
-    init(imageURL: URL? = nil, title: String, subtitle: String? = nil, rating: UInt? = nil) {
-        self.imageURL = imageURL
-        self.title = title
-        self.subtitle = subtitle
-        self.rating = rating
-    }
-    
-    init(movie: MovieViewModel, showRating: Bool = false) {
-        self.imageURL = movie.posterImageURL(size: .w500)
-        self.title = movie.title
-        if showRating {
-            self.rating = movie.percentRating
-        } else {
-            self.subtitle = movie.releaseDateWithoutYear
-        }
-    }
-    
-    init(credit: CastCreditViewModel) {
-        self.imageURL = credit.profileImageURL
-        self.title = credit.name
-        self.subtitle = credit.character
-    }
-}
-
 struct PosterItem: View {
     let model: PosterItemModel
     

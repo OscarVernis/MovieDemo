@@ -167,6 +167,7 @@
 		558A5A9C25106F8900E5FB40 /* MovieRatingListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558A5A9A25106F8900E5FB40 /* MovieRatingListCell.xib */; };
 		558A63AF2512AD5E0064438D /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A63AE2512AD5D0064438D /* MovieViewModel.swift */; };
 		558D9933283DBD3900CE0745 /* AssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558D9932283DBD3900CE0745 /* AssetTests.swift */; };
+		558E57142870BE8900B5245B /* PosterItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558E57132870BE8900B5245B /* PosterItemModel.swift */; };
 		558F7B7C286E809E00926749 /* MovieDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558F7B7B286E809E00926749 /* MovieDecoder.swift */; };
 		55915773251438390085DB69 /* BlurBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55915772251438390085DB69 /* BlurBackgroundView.swift */; };
 		55915776251438450085DB69 /* BlurBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55915775251438450085DB69 /* BlurBackgroundView.xib */; };
@@ -428,6 +429,7 @@
 		558A5A9A25106F8900E5FB40 /* MovieRatingListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieRatingListCell.xib; sourceTree = "<group>"; };
 		558A63AE2512AD5D0064438D /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		558D9932283DBD3900CE0745 /* AssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetTests.swift; sourceTree = "<group>"; };
+		558E57132870BE8900B5245B /* PosterItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterItemModel.swift; sourceTree = "<group>"; };
 		558F7B7B286E809E00926749 /* MovieDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDecoder.swift; sourceTree = "<group>"; };
 		55915772251438390085DB69 /* BlurBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBackgroundView.swift; sourceTree = "<group>"; };
 		55915775251438450085DB69 /* BlurBackgroundView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlurBackgroundView.xib; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 				55CC3AA228637F0800EF6A1C /* RoundedButton.swift */,
 				55CEAF06286E016300FEF613 /* PosterItem.swift */,
 				55CEAF08286E03F000FEF613 /* PosterRow.swift */,
+				558E57132870BE8900B5245B /* PosterItemModel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1502,6 +1505,7 @@
 				5560523B2531246A00023BD9 /* PersonCastCredit.swift in Sources */,
 				5523970827D19B6700E4C18F /* RemoteMoviesLoader.swift in Sources */,
 				553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */,
+				558E57142870BE8900B5245B /* PosterItemModel.swift in Sources */,
 				55B6CBBA27E024A6007DB4C2 /* MovieMO.swift in Sources */,
 				55FEF45025141A40009363F8 /* CreditPhotoListCell.swift in Sources */,
 				5570994C282485780028ED44 /* SearchLoader.swift in Sources */,
