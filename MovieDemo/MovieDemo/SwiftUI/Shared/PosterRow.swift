@@ -37,10 +37,6 @@ struct PosterRow<Model: Hashable>: View {
         }
     }
     
-    func itemModel(for model: Model) {
-        
-    }
-    
     fileprivate func empty(_ emptyMessage: NSAttributedString) -> some View {
         return VStack(spacing: 20) {
             Image(systemName: "film")

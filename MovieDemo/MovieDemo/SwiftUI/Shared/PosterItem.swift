@@ -14,6 +14,13 @@ struct PosterItemModel: Hashable {
     var subtitle: String?
     var rating: UInt?
     
+    init(imageURL: URL? = nil, title: String, subtitle: String? = nil, rating: UInt? = nil) {
+        self.imageURL = imageURL
+        self.title = title
+        self.subtitle = subtitle
+        self.rating = rating
+    }
+    
     init(movie: MovieViewModel, showRating: Bool = false) {
         self.imageURL = movie.posterImageURL(size: .w500)
         self.title = movie.title
