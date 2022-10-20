@@ -139,7 +139,7 @@ class MainCoordinator {
                 
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 
-                self.rootNavigationViewController?.popToRootViewController(animated: true)
+                let _ = self.rootNavigationViewController?.popToRootViewController(animated: true)
                 completion?()
             case .failure(let error):
                 handle(error: error)

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        SDWebImageManager.defaultImageCache?.clear(with: .all)
 
-        appCoordinator = SwiftUICoordinator(window: window)
+        appCoordinator = MainCoordinator(window: window)
         appCoordinator?.start()
         
         return true
