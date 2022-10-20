@@ -11,7 +11,7 @@ import XCTest
 
 class MovieServiceTests: XCTestCase {
     
-    func test_getModel_success() {
+    func test_getModel_success() throws {
         let movieId = 155
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)")!
         let mocker = ServiceMocker(jsonFile: "Movie", url: url)
@@ -19,20 +19,24 @@ class MovieServiceTests: XCTestCase {
         let sut = MovieService(session: mocker.session)
         var movie = Movie()
         
-        XCTAssertNoThrow(movie = try awaitPublisher( sut.getModel(endpoint: .movieDetails(movieId: movieId)) ))
+        movie = try awaitPublisher(
+            sut.getModel(endpoint: .movieDetails(movieId: movieId))
+        )
         
         XCTAssertEqual(movie.id, movieId)
         XCTAssertEqual(movie.title, "The Dark Knight")
     }
     
-    func test_getModels_success() {
+    func test_getModels_success() throws {
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
         let mocker = ServiceMocker(jsonFile: "Movies", url: url)
         
         let sut = MovieService(session: mocker.session)
         var results: ServiceModelsResult<Movie>?
         
-        XCTAssertNoThrow(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
+        results = try awaitPublisher(
+            sut.getModels(endpoint: .movies(.NowPlaying))
+        )
         
         XCTAssertEqual(results?.items.count, 20)
         XCTAssertEqual(results?.totalPages, 33)
@@ -72,7 +76,7 @@ class MovieServiceTests: XCTestCase {
         XCTAssertNil(results)
     }
     
-    func test_successAction_succeeds() {
+    func test_successAction_succeeds() throws {
         let url = URL(string: "https://api.themoviedb.org/3/account/id/favorite")!
         let data = ServiceSuccessResult(success: true, sessionId: "sessionId", requestToken: "requestToken")
         let mocker = ServiceMocker(jsonObject: data, url: url)
@@ -80,7 +84,10 @@ class MovieServiceTests: XCTestCase {
         
         var result: ServiceSuccessResult?
         
-        XCTAssertNoThrow(result = try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) )
+        result = try awaitPublisher(
+            sut.successAction(endpoint: .markAsFavorite)
+        )
+        
         XCTAssertEqual(result?.success, true)
         XCTAssertEqual(result?.sessionId, "sessionId")
         XCTAssertEqual(result?.requestToken, "requestToken")

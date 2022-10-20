@@ -17,7 +17,9 @@ class RemoteSearchLoaderTests: XCTestCase {
         let searchLoader = RemoteSearchLoader(service: service)
         
         var results = (items: [Any](), totalPages: 0)
-        XCTAssertNoThrow(results = try awaitPublisher( searchLoader.search(query: "search") ))
+        results = try awaitPublisher(
+            searchLoader.search(query: "search")
+        )
         
         XCTAssertEqual(results.items.count, 13)
         XCTAssertEqual(results.totalPages, 500)

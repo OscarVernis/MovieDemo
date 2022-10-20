@@ -13,11 +13,11 @@ class ViewModelsTests: XCTestCase {
 
     func test_MovieViewModel() throws {
         var movieData = Data()
-        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
+        movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!)
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
+        movie = try decoder.decode(Movie.self, from: movieData)
         
         let viewModel = MovieViewModel(movie: movie)
         
@@ -41,11 +41,11 @@ class ViewModelsTests: XCTestCase {
 
     func test_PersonViewModel() throws {
         var personData = Data()
-        XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
+        personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!)
         
         let decoder = jsonDecoder()
         var person = Person()
-        XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
+        person = try decoder.decode(Person.self, from: personData)
         
         let viewModel = PersonViewModel(person: person)
         

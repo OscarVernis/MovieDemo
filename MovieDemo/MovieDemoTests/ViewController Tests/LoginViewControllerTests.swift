@@ -12,12 +12,10 @@ import XCTest
 class LoginViewControllerTests: XCTestCase {
     var sut: LoginViewController!
     var coordinator: MainCoordinator!
+    let window = UIWindow()
 
     override func setUpWithError() throws {
-        let appDelegate = try XCTUnwrap(UIApplication.shared.delegate as? AppDelegate)
-        
-        coordinator = MainCoordinator(window: appDelegate.window!, isLoginRequired: true, usesWebLogin: false)
-        appDelegate.appCoordinator = coordinator
+        coordinator = MainCoordinator(window: window, isLoginRequired: true, usesWebLogin: false)
         coordinator.start()
         
         coordinator.showLogin(animated: false)

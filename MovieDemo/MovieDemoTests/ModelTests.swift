@@ -12,11 +12,11 @@ import XCTest
 class MovieModelTests: XCTestCase {
     func test_MovieModel_Detail() throws {
         var movieData = Data()
-        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!) )
+        movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!)
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
+        movie = try decoder.decode(Movie.self, from: movieData)
         
         XCTAssertEqual(movie.id, 155)
         XCTAssertEqual(movie.title, "The Dark Knight")
@@ -33,11 +33,11 @@ class MovieModelTests: XCTestCase {
     
     func test_MovieModel_NoRating() throws {
         var movieData = Data()
-        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie_NoRating", withExtension: "json")!) )
+        movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie_NoRating", withExtension: "json")!)
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
+        movie = try decoder.decode(Movie.self, from: movieData)
         
         XCTAssertEqual(movie.id, 414906)
         XCTAssertEqual(movie.title, "The Batman")
@@ -46,11 +46,11 @@ class MovieModelTests: XCTestCase {
     
     func test_MovieModel_FromList() throws {
         var movieData = Data()
-        XCTAssertNoThrow( movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movies", withExtension: "json")!) )
+        movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movies", withExtension: "json")!)
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(ServiceModelsResult<Movie>.self, from: movieData).items.first! )
+        movie = try decoder.decode(ServiceModelsResult<Movie>.self, from: movieData).items.first!
         
         XCTAssertEqual(movie.id, 297761)
         XCTAssertEqual(movie.title, "Suicide Squad")
@@ -62,11 +62,11 @@ class MovieModelTests: XCTestCase {
 class PersonModelTests: XCTestCase {
     func test_PersonModel_Detail() throws {
         var personData = Data()
-        XCTAssertNoThrow( personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!) )
+        personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!)
         
         let decoder = jsonDecoder()
         var person = Person()
-        XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
+        person = try decoder.decode(Person.self, from: personData)
         
         XCTAssertNotNil(person)
         XCTAssertEqual(person.id, 10859)
