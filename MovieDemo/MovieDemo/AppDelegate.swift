@@ -11,17 +11,19 @@ import SDWebImage
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
-    var appCoordinator: MainCoordinator?
+    var window: UIWindow? = UIWindow()
+    lazy var appCoordinator: MainCoordinator = {
+        SwiftUICoordinator(window: window!)
+    }()
+    
+    convenience init(coordinator: MainCoordinator) {
+        self.init()
+        self.appCoordinator = coordinator
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let window = UIWindow()
-        self.window = window
         
-//        SDWebImageManager.defaultImageCache?.clear(with: .all)
-
-        appCoordinator = MainCoordinator(window: window)
-        appCoordinator?.start()
+        appCoordinator.start()
         
         return true
     }

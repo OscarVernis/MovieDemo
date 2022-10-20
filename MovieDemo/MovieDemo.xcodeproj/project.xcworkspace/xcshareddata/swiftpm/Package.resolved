@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/WeTransfer/Mocker",
       "state" : {
-        "revision" : "e7165fb0378193c6784f1d46a9ab2b6184c384fa",
-        "version" : "2.7.0"
+        "revision" : "077c52a31f5ebb649ebe546cc77d8647760b2279",
+        "version" : "2.5.5"
       }
     },
     {
@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage",
       "state" : {
-        "revision" : "9248fe561a2a153916fb9597e3af4434784c6d32",
-        "version" : "5.13.4"
+        "revision" : "2e63d0061da449ad0ed130768d05dceb1496de44",
+        "version" : "5.12.5"
       }
     },
     {

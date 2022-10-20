@@ -13,14 +13,16 @@ class ListViewControllerTests: XCTestCase {
     var sut: ListViewController<MoviesDataProviderSpy, MovieInfoListCell>!
     var coordinator: MainCoordinator!
     var dataProvider: MoviesDataProviderSpy!
-    
+    let window = UIWindow()
+
     override func setUpWithError() throws {
         let movies = anyMovies(count: 20)
         let movieLoader = MovieLoaderMock(movies: movies, pageCount: 3)
         dataProvider = MoviesDataProviderSpy(movieLoader: movieLoader)
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        coordinator = appDelegate?.appCoordinator
+        let window = UIWindow()
+        coordinator = MainCoordinator(window: window)
+        coordinator.start()
         
         coordinator?.showMovieList(title: "", dataProvider: dataProvider, animated: false)
         let topVC = coordinator?.rootNavigationViewController?.topViewController
