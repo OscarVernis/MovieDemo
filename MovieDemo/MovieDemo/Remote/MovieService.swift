@@ -103,7 +103,7 @@ extension MovieService {
         return getModel(model: ServiceModelsResult<Model>.self, endpoint: endpoint, parameters: params)
     }
     
-    func successAction<T: Encodable>(endpoint: Endpoint, body: T?, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
+    func successAction(endpoint: Endpoint, body: (any Encodable)? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
         let url = urlforEndpoint(endpoint)
         
         var request = URLRequest(url: url)
@@ -128,10 +128,6 @@ extension MovieService {
             }
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
-    }
-    
-    func successAction(endpoint: Endpoint, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error> {
-        return successAction(endpoint: endpoint, body: Optional<String>.none, method: method)
     }
     
 }
