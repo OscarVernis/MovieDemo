@@ -42,7 +42,7 @@ class UserViewModel: ObservableObject {
     
     var avatarURL: URL? {
         if let avatarHash = user?.avatar {
-            return MovieService.userImageURL(forHash: avatarHash)
+            return MovieServiceImageUtils.userImageURL(forHash: avatarHash)
         }
         
         return nil

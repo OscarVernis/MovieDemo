@@ -185,13 +185,13 @@ extension MovieViewModel {
         return movie.releaseDate != nil ? dateFormatter.string(from: movie.releaseDate!).capitalized : ""
     }
     
-    func backdropImageURL(size: MovieService.BackdropSize = .w300) -> URL? {
-        let url = (movie.backdropPath != nil) ? MovieService.backdropImageURL(forPath:movie.backdropPath!, size: size) : nil
+    func backdropImageURL(size: MovieServiceImageUtils.BackdropSize = .w300) -> URL? {
+        let url = (movie.backdropPath != nil) ? MovieServiceImageUtils.backdropImageURL(forPath:movie.backdropPath!, size: size) : nil
         return url
     }
     
-    func posterImageURL(size: MovieService.MoviePosterSize = .original) -> URL? {
-        let url = (movie.posterPath != nil) ? MovieService.posterImageURL(forPath:movie.posterPath!, size: size) : nil
+    func posterImageURL(size: MovieServiceImageUtils.MoviePosterSize = .original) -> URL? {
+        let url = (movie.posterPath != nil) ? MovieServiceImageUtils.posterImageURL(forPath:movie.posterPath!, size: size) : nil
         return url
     }
     
