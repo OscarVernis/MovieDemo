@@ -104,7 +104,7 @@ extension DataProvidersTests {
     func assertDataProviderPaging<T>(dataProvider: PaginatedProvider<T>) {
         var callCount = 0
         
-        var exp = XCTestExpectation()
+        var exp = XCTestExpectation(description: "Page 1")
         dataProvider.didUpdate = { error in
             XCTAssertNil(error)
             callCount += 1
@@ -115,27 +115,27 @@ extension DataProvidersTests {
         //Page 1
         dataProvider.refresh()
         
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(dataProvider.currentPage, 1)
         XCTAssertEqual(dataProvider.totalPages, 3)
         XCTAssertEqual(dataProvider.itemCount, 20)
         XCTAssertEqual(dataProvider.isLastPage, false)
 
         //Page 2
-        exp = XCTestExpectation()
+        exp = XCTestExpectation(description: "Page 2")
         dataProvider.loadMore()
 
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(dataProvider.currentPage, 2)
         XCTAssertEqual(dataProvider.totalPages, 3)
         XCTAssertEqual(dataProvider.itemCount, 40)
         XCTAssertEqual(dataProvider.isLastPage, false)
 
         //Page 3
-        exp = XCTestExpectation()
+        exp = XCTestExpectation(description: "Page 3")
         dataProvider.loadMore()
 
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(dataProvider.currentPage, 3)
         XCTAssertEqual(dataProvider.totalPages, 3)
         XCTAssertEqual(dataProvider.itemCount, 60)
@@ -161,7 +161,7 @@ extension DataProvidersTests {
         
         dataProvider.refresh()
         
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 1)
         XCTAssertEqual(dataProvider.currentPage, 0)
         XCTAssertEqual(dataProvider.totalPages, 1)
         XCTAssertEqual(dataProvider.itemCount, 0)
