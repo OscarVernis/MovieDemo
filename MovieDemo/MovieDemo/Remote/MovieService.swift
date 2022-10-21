@@ -19,9 +19,6 @@ struct MovieService {
         case NoSuccess
     }
     
-    let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
-    let baseURL = "api.themoviedb.org"
-    
     private let session: URLSession
     let sessionId: String?
     
@@ -38,55 +35,16 @@ struct MovieService {
             self.session =  URLSession(configuration: configuration)
         }
     }
-}
-
-//MARK: - Helpers
-extension MovieService {
-    func defaultParameters(with additionalParameters: [String: String]? = nil) -> [String: String] {
-        let language = String.localized(ServiceString.ServiceLocale)
-        var params: [String: String] = ["language": language, "api_key": apiKey]
-        
-        if let sessionId = self.sessionId {
-            params["session_id"] = sessionId
-        }
-        
-        if let additionalParameters = additionalParameters {
-            params.merge(additionalParameters) { _, new in new }
-        }
-        
-        return params
-    }
-    
-    func urlforEndpoint(_ endpoint: Endpoint, parameters: [String: String]? = nil) -> URL {
-        let path = endpoint.path
-        
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = baseURL
-        components.path = "/3" + path
-        
-        let params = defaultParameters(with: parameters)
-        components.queryItems = params.compactMap{ URLQueryItem(name: $0.0, value: $0.1) }
-        
-        guard let url = components.url else {
-            preconditionFailure(
-                "Invalid URL components: \(components)"
-            )
-        }
-        
-        return url
-    }
     
     func jsonDecoder(dateFormat: String = "yyyy-MM-dd", keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
         MovieDecoder(dateFormat: dateFormat, keyDecodingStrategy: keyDecodingStrategy)
     }
-    
 }
 
 //MARK: - Generic Functions
 extension MovieService {
     func getModel<Model: Codable>(model: Model.Type? = nil, endpoint: Endpoint, parameters: [String: String]? = nil) -> AnyPublisher<Model, Error> {
-        let url = urlforEndpoint(endpoint, parameters: parameters)
+        let url = endpoint.url(parameters: parameters, sessionId: self.sessionId)
         
         return session
             .dataTaskPublisher(for: url)
@@ -104,7 +62,7 @@ extension MovieService {
     }
     
     func successAction(endpoint: Endpoint, body: (any Encodable)? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
-        let url = urlforEndpoint(endpoint)
+        let url = endpoint.url(sessionId: self.sessionId)
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue

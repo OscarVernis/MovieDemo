@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow? = UIWindow()
     
     lazy var appCoordinator: MainCoordinator = {
-        SwiftUICoordinator(window: window!)
+        MainCoordinator(window: window!)
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

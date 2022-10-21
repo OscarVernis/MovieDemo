@@ -11,6 +11,49 @@ import Foundation
 //MARK: - Endpoint
 struct Endpoint {
     var path: String
+    
+    let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
+    let baseURL = "api.themoviedb.org"
+    
+}
+
+//MARK: - Helpers
+extension Endpoint {
+    private func defaultParameters(with additionalParameters: [String: String]? = nil, sessionId: String? = nil) -> [String: String] {
+        let language = String.localized(ServiceString.ServiceLocale)
+        var params: [String: String] = ["language": language, "api_key": apiKey]
+        
+        if let sessionId = sessionId {
+            params["session_id"] = sessionId
+        }
+        
+        if let additionalParameters = additionalParameters {
+            params.merge(additionalParameters) { _, new in new }
+        }
+        
+        return params
+    }
+    
+    func url(parameters: [String: String]? = nil, sessionId: String? = nil) -> URL {
+        let path = self.path
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = baseURL
+        components.path = "/3" + path
+        
+        let params = defaultParameters(with: parameters, sessionId: sessionId)
+        components.queryItems = params.compactMap{ URLQueryItem(name: $0.0, value: $0.1) }
+        
+        guard let url = components.url else {
+            preconditionFailure(
+                "Invalid URL components: \(components)"
+            )
+        }
+        
+        return url
+    }
+    
 }
 
 //MARK: - Movie Lists
