@@ -19,7 +19,14 @@ struct MovieService {
         case NoSuccess
     }
     
-    private let session: URLSession
+    private var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+        configuration.timeoutIntervalForRequest = 5
+        configuration.timeoutIntervalForResource = 5
+        return URLSession(configuration: configuration)
+    }()
+    
     let sessionId: String?
     
     init(sessionId: String? = nil, session: URLSession? = nil) {
@@ -27,12 +34,6 @@ struct MovieService {
         
         if let session = session {
             self.session = session
-        } else {
-            let configuration = URLSessionConfiguration.default
-            configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
-            configuration.timeoutIntervalForRequest = 5
-            configuration.timeoutIntervalForResource = 5
-            self.session =  URLSession(configuration: configuration)
         }
     }
     
