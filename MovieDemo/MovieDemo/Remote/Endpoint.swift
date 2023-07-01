@@ -14,7 +14,6 @@ struct Endpoint {
     
     let apiKey = "835d1e600e545ac8d88b4e62680b2a65"
     let baseURL = "api.themoviedb.org"
-    
 }
 
 //MARK: - Helpers
@@ -61,6 +60,7 @@ extension Endpoint {
     static func movies(_ endpoint: MoviesEndpoint) -> Endpoint {
         Endpoint(path: endpoint.path)
     }
+    
 }
 
 enum MoviesEndpoint: Equatable {
@@ -101,6 +101,7 @@ extension Endpoint {
     static var search: Endpoint {
         Endpoint(path: "/search/multi")
     }
+    
 }
 
 //MARK: - Details
@@ -112,6 +113,7 @@ extension Endpoint {
     static func personDetails(personId: Int) -> Endpoint {
         Endpoint(path: "/person/\(personId)")
     }
+    
 }
 
 //MARK: - User
@@ -135,6 +137,7 @@ extension Endpoint {
     static func deleteRate(_ movieId: Int) -> Endpoint {
         Endpoint(path: "/movie/\(movieId)/rating")
     }
+    
 }
 
 //MARK: - Session

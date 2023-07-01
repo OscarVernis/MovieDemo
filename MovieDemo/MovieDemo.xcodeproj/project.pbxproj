@@ -21,6 +21,8 @@
 		5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAB72512EC9F0052B0F2 /* CreditCell.swift */; };
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
 		550869B22855765700465008 /* UIWindow+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550869B12855765700465008 /* UIWindow+Utils.swift */; };
+		5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508D7682A50F29900B22A96 /* HTTPClient.swift */; };
+		5508D76B2A50F2B500B22A96 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */; };
 		550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
@@ -273,6 +275,8 @@
 		5506BAB72512EC9F0052B0F2 /* CreditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCell.swift; sourceTree = "<group>"; };
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
 		550869B12855765700465008 /* UIWindow+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Utils.swift"; sourceTree = "<group>"; };
+		5508D7682A50F29900B22A96 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
@@ -557,6 +561,15 @@
 				5504058928543BA60027E1C0 /* TopRatedDataSource.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		5508D7672A50F28B00B22A96 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				5508D7682A50F29900B22A96 /* HTTPClient.swift */,
+				5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */,
+			);
+			path = HTTPClient;
 			sourceTree = "<group>";
 		};
 		5511FF82285A702300B9C12A /* SwiftUI */ = {
@@ -846,6 +859,7 @@
 		5562461A2515611A005E63AB /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				5508D7672A50F28B00B22A96 /* HTTPClient */,
 				5511FF9D285AA7E400B9C12A /* Extensions */,
 				55A21C8A27DFBD9C00A7E538 /* Models */,
 				5545203A22D99D8F004B7924 /* MovieService.swift */,
@@ -1499,6 +1513,7 @@
 				557ACF8A285BAEC800FFA4CD /* RatedMovieItem.swift in Sources */,
 				55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */,
 				55823C632857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift in Sources */,
+				5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */,
 				555CF12527DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift in Sources */,
 				554DDE2628625AEE00DD864A /* MovieDetail.swift in Sources */,
 				5523970D27D19C2C00E4C18F /* RemoteSearchLoader.swift in Sources */,
@@ -1532,6 +1547,7 @@
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */,
 				55ABEB79283365AF009DCE7C /* LoginViewModel.swift in Sources */,
+				5508D76B2A50F2B500B22A96 /* URLSessionHTTPClient.swift in Sources */,
 				5511FF8C285A7AFD00B9C12A /* MovieBannerRow.swift in Sources */,
 				554DDE1D286239D100DD864A /* AttributedStringAsset.swift in Sources */,
 				559276712855095B0063743C /* UserProfileDataSource.swift in Sources */,

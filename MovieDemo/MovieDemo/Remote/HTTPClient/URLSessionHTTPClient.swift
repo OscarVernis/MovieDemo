@@ -1,0 +1,52 @@
+//
+//  URLSessionHTTPClient.swift
+//  MovieDemo
+//
+//  Created by Oscar Vernis on 01/07/23.
+//  Copyright © 2023 Oscar Vernis. All rights reserved.
+//
+
+import Foundation
+import Combine
+
+struct URLSessionHTTPClient: HTTPClient {
+    private var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
+        configuration.timeoutIntervalForRequest = 5
+        configuration.timeoutIntervalForResource = 5
+        return URLSession(configuration: configuration)
+    }()
+    
+    init(session: URLSession? = nil) {
+        if let session = session {
+            self.session = session
+        }
+    }
+    
+    func requestPublisher(with url: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error> {
+        let urlRequest = request(for: url, method: method, payload: body)
+        
+        return URLSession.shared
+            .dataTaskPublisher(for: urlRequest)
+            .mapError { urlerror in
+                urlerror as Error
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func request(for url: URL, method: HTTPMethod, payload: (any Encodable)? = nil) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+
+        if let payload = payload {
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
+            let codedBody: Data? = try? JSONEncoder().encode(payload)
+            request.httpBody = codedBody
+        }
+        
+        return request
+    }
+}
