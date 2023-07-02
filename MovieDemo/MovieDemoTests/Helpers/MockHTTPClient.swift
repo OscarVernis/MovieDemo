@@ -10,7 +10,7 @@ import Foundation
 import Combine
 @testable import MovieDemo
 
-class MockHTTPClient: HTTPClient {
+class MockHTTPClient {
     private var publisher: AnyPublisher<(DataTaskResult), Error>
     
     init(data: Data, url: URL, statusCode: Int = 200) {
@@ -32,8 +32,10 @@ class MockHTTPClient: HTTPClient {
         self.init(data: mockedData, url: url, statusCode: statusCode)
     }
     
+}
+
+extension MockHTTPClient: HTTPClient {
     func requestPublisher(with url: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error> {
         publisher
     }
-    
 }
