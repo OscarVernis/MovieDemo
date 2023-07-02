@@ -40,7 +40,7 @@ struct MoviesCompositionalLayoutBuilder {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: groupWidth, heightDimension: groupHeight)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columns)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: columns)
         group.interItemSpacing = interItemSpacing
         
         let section = NSCollectionLayoutSection(group: group)
