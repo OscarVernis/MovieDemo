@@ -35,4 +35,5 @@ class MockHTTPClient: HTTPClient {
     func requestPublisher(with url: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error> {
         publisher
     }
+    
 }

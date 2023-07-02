@@ -126,10 +126,8 @@
 		5565DDED27E969CD00D7F4EB /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DDEC27E969CD00D7F4EB /* Endpoint.swift */; };
 		5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DDEF27E96D0800D7F4EB /* FavoriteRequestBody.swift */; };
 		5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DDF227E96D2700D7F4EB /* WatchlistRequestBody.swift */; };
-		5565DE1627E9797600D7F4EB /* Mocker in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 5565DE1527E9797600D7F4EB /* Mocker */; };
 		5565DE1A27E97A6100D7F4EB /* MovieServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DE1927E97A6100D7F4EB /* MovieServiceTests.swift */; };
 		5565DE2D27E9817800D7F4EB /* Movies.json in Resources */ = {isa = PBXBuildFile; fileRef = 5565DE2627E97C3200D7F4EB /* Movies.json */; };
-		5565DE3427E98C2B00D7F4EB /* ServiceMocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DE3327E98C2A00D7F4EB /* ServiceMocker.swift */; };
 		5566483A284DC4AF000BE2F3 /* Credit.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5566483C284DC4AF000BE2F3 /* Credit.strings */; };
 		5566483E284DC4B5000BE2F3 /* Error.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55664840284DC4B5000BE2F3 /* Error.strings */; };
 		55664844284DC4CC000BE2F3 /* Genre.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55664846284DC4CC000BE2F3 /* Genre.strings */; };
@@ -388,7 +386,6 @@
 		5565DE0027E9785100D7F4EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5565DE1927E97A6100D7F4EB /* MovieServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServiceTests.swift; sourceTree = "<group>"; };
 		5565DE2627E97C3200D7F4EB /* Movies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Movies.json; sourceTree = "<group>"; };
-		5565DE3327E98C2A00D7F4EB /* ServiceMocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMocker.swift; sourceTree = "<group>"; };
 		5566483B284DC4AF000BE2F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Credit.strings; sourceTree = "<group>"; };
 		5566483D284DC4B1000BE2F3 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Credit.strings"; sourceTree = "<group>"; };
 		5566483F284DC4B5000BE2F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Error.strings; sourceTree = "<group>"; };
@@ -524,7 +521,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5565DE1627E9797600D7F4EB /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -920,9 +916,8 @@
 		5565DE3227E98C0F00D7F4EB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				5565DE3327E98C2A00D7F4EB /* ServiceMocker.swift */,
-				55B5B0242A50F60200728EBC /* MockHTTPClient.swift */,
 				555D760427EA3D3B00B8FFAB /* XCTestCase+Helpers.swift */,
+				55B5B0242A50F60200728EBC /* MockHTTPClient.swift */,
 				55C6753528223396007FB18C /* UserManagerMock.swift */,
 				5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */,
 				550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */,
@@ -1257,7 +1252,6 @@
 			);
 			name = MovieDemoTests;
 			packageProductDependencies = (
-				5565DE1527E9797600D7F4EB /* Mocker */,
 			);
 			productName = MovieDemoTests;
 			productReference = 5565DDFC27E9785100D7F4EB /* MovieDemoTests.xctest */;
@@ -1321,7 +1315,6 @@
 				55D35E1A2517DE0D00114602 /* XCRemoteSwiftPackageReference "Loaf" */,
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
-				5565DE0F27E9796000D7F4EB /* XCRemoteSwiftPackageReference "Mocker" */,
 				5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				5511FF9F285AAFA900B9C12A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
@@ -1397,7 +1390,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5565DE1A27E97A6100D7F4EB /* MovieServiceTests.swift in Sources */,
-				5565DE3427E98C2B00D7F4EB /* ServiceMocker.swift in Sources */,
 				55B5B0252A50F60200728EBC /* MockHTTPClient.swift in Sources */,
 				55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */,
 				5547ED5D2825941F0079BD14 /* LoginViewControllerTests.swift in Sources */,
@@ -2009,14 +2001,6 @@
 				minimumVersion = 1.8.2;
 			};
 		};
-		5565DE0F27E9796000D7F4EB /* XCRemoteSwiftPackageReference "Mocker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WeTransfer/Mocker";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.4;
-			};
-		};
 		557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
@@ -2050,11 +2034,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */;
 			productName = SPStorkController;
-		};
-		5565DE1527E9797600D7F4EB /* Mocker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5565DE0F27E9796000D7F4EB /* XCRemoteSwiftPackageReference "Mocker" */;
-			productName = Mocker;
 		};
 		557FFA8E251A65B700D79F68 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
