@@ -22,5 +22,11 @@ enum HTTPMethod: String {
 }
 
 protocol HTTPClient {
-    func requestPublisher(with: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error>
+    func requestPublisher(with url: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error>
+}
+
+extension HTTPClient {
+    func requestPublisher(with url: URL, body: (any Encodable)? = nil, method: HTTPMethod = .get) -> AnyPublisher<(DataTaskResult), Error> {
+        requestPublisher(with: url, body: body, method: method)
+    }
 }
