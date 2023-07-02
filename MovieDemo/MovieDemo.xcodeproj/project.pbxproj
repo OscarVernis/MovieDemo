@@ -195,6 +195,7 @@
 		55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */; };
 		55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */; };
 		55B0DA15284EA46A0043A8B3 /* WebLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */; };
+		55B5B0252A50F60200728EBC /* MockHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5B0242A50F60200728EBC /* MockHTTPClient.swift */; };
 		55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5D7502515D8B700E1076D /* RatingsView.swift */; };
 		55B6CBB427E02248007DB4C2 /* MovieDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB227E02248007DB4C2 /* MovieDemo.xcdatamodeld */; };
 		55B6CBBA27E024A6007DB4C2 /* MovieMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBB827E024A6007DB4C2 /* MovieMO.swift */; };
@@ -462,6 +463,7 @@
 		55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
 		55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebLoginViewController.storyboard; sourceTree = "<group>"; };
 		55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewControllerTests.swift; sourceTree = "<group>"; };
+		55B5B0242A50F60200728EBC /* MockHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHTTPClient.swift; sourceTree = "<group>"; };
 		55B5D7502515D8B700E1076D /* RatingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingsView.swift; sourceTree = "<group>"; };
 		55B6CBB327E02248007DB4C2 /* MovieDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieDemo.xcdatamodel; sourceTree = "<group>"; };
 		55B6CBB827E024A6007DB4C2 /* MovieMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieMO.swift; sourceTree = "<group>"; };
@@ -919,6 +921,7 @@
 			isa = PBXGroup;
 			children = (
 				5565DE3327E98C2A00D7F4EB /* ServiceMocker.swift */,
+				55B5B0242A50F60200728EBC /* MockHTTPClient.swift */,
 				555D760427EA3D3B00B8FFAB /* XCTestCase+Helpers.swift */,
 				55C6753528223396007FB18C /* UserManagerMock.swift */,
 				5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */,
@@ -1395,6 +1398,7 @@
 			files = (
 				5565DE1A27E97A6100D7F4EB /* MovieServiceTests.swift in Sources */,
 				5565DE3427E98C2B00D7F4EB /* ServiceMocker.swift in Sources */,
+				55B5B0252A50F60200728EBC /* MockHTTPClient.swift in Sources */,
 				55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */,
 				5547ED5D2825941F0079BD14 /* LoginViewControllerTests.swift in Sources */,
 				55C6753628223396007FB18C /* UserManagerMock.swift in Sources */,

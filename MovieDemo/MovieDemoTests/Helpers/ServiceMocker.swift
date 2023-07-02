@@ -39,8 +39,8 @@ class ServiceMocker {
         self.init(data: mockedData, url: url, statusCode: statusCode, onRequest: onRequest)
     }
     
-    func movieService() -> MovieService {
-        return MovieService(session: session)
-    }
+//    func movieService() -> MovieService {
+//        return MovieService(session: session)
+//    }
 
 }

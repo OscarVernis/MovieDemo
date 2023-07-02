@@ -13,7 +13,8 @@ class RemoteSearchLoaderTests: XCTestCase {
     
     func test_RemoteSearchLoader_sucess() throws {
         let url = URL(string: "https://api.themoviedb.org/3/search/multi")!
-        let service = ServiceMocker(jsonFile: "Search", url: url).movieService()
+        let mockClient = MockHTTPClient(jsonFile: "Search", url: url)
+        let service = MovieService(httpClient: mockClient)
         let searchLoader = RemoteSearchLoader(service: service)
         
         var results = (items: [Any](), totalPages: 0)
