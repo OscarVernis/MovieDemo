@@ -857,9 +857,9 @@
 		5562461A2515611A005E63AB /* Remote */ = {
 			isa = PBXGroup;
 			children = (
-				5508D7672A50F28B00B22A96 /* HTTPClient */,
 				5511FF9D285AA7E400B9C12A /* Extensions */,
 				55A21C8A27DFBD9C00A7E538 /* Models */,
+				5508D7672A50F28B00B22A96 /* HTTPClient */,
 				5545203A22D99D8F004B7924 /* MovieService.swift */,
 				554970C72902389000E5A8B3 /* MovieServiceImageUtils.swift */,
 				5565DDEC27E969CD00D7F4EB /* Endpoint.swift */,

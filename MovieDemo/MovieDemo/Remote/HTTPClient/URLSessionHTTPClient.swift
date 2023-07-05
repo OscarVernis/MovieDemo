@@ -9,8 +9,8 @@
 import Foundation
 import Combine
 
-struct URLSessionHTTPClient: HTTPClient {
-    private var session: URLSession = {
+class URLSessionHTTPClient: HTTPClient {
+    private lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
         configuration.timeoutIntervalForRequest = 5
@@ -27,7 +27,7 @@ struct URLSessionHTTPClient: HTTPClient {
     func requestPublisher(with url: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error> {
         let urlRequest = request(for: url, method: method, payload: body)
         
-        return URLSession.shared
+        return session
             .dataTaskPublisher(for: urlRequest)
             .mapError { urlerror in
                 urlerror as Error
@@ -49,4 +49,5 @@ struct URLSessionHTTPClient: HTTPClient {
         
         return request
     }
+    
 }

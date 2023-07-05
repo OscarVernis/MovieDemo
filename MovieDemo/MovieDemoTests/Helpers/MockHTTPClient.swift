@@ -19,7 +19,6 @@ class MockHTTPClient {
         self.publisher = Just(DataTaskResult(data: data, response: response))
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
-        
     }
     
     convenience init (jsonFile: String, url: URL, statusCode: Int = 200) {
@@ -27,7 +26,7 @@ class MockHTTPClient {
         self.init(data: mockedData, url: url, statusCode: statusCode)
     }
     
-    convenience init<T: Encodable>(jsonObject: T, url: URL, statusCode: Int = 200) {
+    convenience init(jsonObject: any Encodable, url: URL, statusCode: Int = 200) {
         let mockedData = try! JSONEncoder().encode(jsonObject)
         self.init(data: mockedData, url: url, statusCode: statusCode)
     }

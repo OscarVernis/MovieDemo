@@ -63,7 +63,7 @@ struct MoviesCompositionalLayoutBuilder {
     
     //Regular List
     func createListSection(height: CGFloat = 150, columns: Int = 1) ->  NSCollectionLayoutSection {
-        let section = createSection(groupHeight: .absolute(height), interItemSpacing: .fixed(8), columns: columns)
+        let section = createSection(groupWidth: .fractionalWidth(1.0/CGFloat(columns)), groupHeight: .absolute(height), interItemSpacing: .fixed(8), columns: columns)
                         
         return section
     }
