@@ -100,12 +100,9 @@ struct UserProfile: View {
     
 }
 
-struct UserProfile_Previews: PreviewProvider {
-    static var user = UserViewModel(service: JSONUserLoader(filename: "user"),
-                                    cache: nil)
-    
+struct UserProfile_Previews: PreviewProvider {    
     static var previews: some View {
-            UserProfile(user: user)
+        UserProfile(user: .preview)
                 .preferredColorScheme(.dark)
         }
 }

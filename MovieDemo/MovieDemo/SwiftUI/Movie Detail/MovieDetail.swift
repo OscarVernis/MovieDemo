@@ -180,13 +180,8 @@ struct MovieDetail: View {
 }
 
 struct MovieDetail_Previews: PreviewProvider {
-    static let movieLoader = JSONMovieDetailsLoader(filename: "movie")
-    static let movieViewModel = MovieViewModel(movie: Movie(id: 0, title: ""),
-                                               service: movieLoader)
-
     static var previews: some View {
-        MovieDetail(movie: movieViewModel)
+        MovieDetail(movie: .preview)
             .preferredColorScheme(.dark)
-            .onAppear { movieViewModel.refresh() }
     }
 }

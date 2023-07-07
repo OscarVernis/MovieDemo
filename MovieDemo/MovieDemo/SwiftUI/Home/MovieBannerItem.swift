@@ -34,14 +34,12 @@ struct MovieBannerItem: View {
     }
 }
 
-struct MovieBanner_Previews: PreviewProvider {
-    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
-    
+struct MovieBanner_Previews: PreviewProvider {    
     static var previews: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 ForEach(/*@START_MENU_TOKEN@*/0 ..< 5/*@END_MENU_TOKEN@*/) { item in
-                    MovieBannerItem(movie: movie)
+                    MovieBannerItem(movie: .preview)
                         .frame(width: UIScreen.main.bounds.width * 0.8)
                 }
             }

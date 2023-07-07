@@ -34,8 +34,8 @@ struct VideoRow: View {
 }
 
 struct VideoRow_Previews: PreviewProvider {
-    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
-    
+    static let movie: MovieViewModel = .preview
+
     static var previews: some View {
         VideoRow(videos: movie.videos)
         .previewLayout(.sizeThatFits)

@@ -31,11 +31,9 @@ struct MoviePosterList: View {
 }
 
 struct MovieList_Previews: PreviewProvider {
-    static let movies = JSONMoviesLoader(filename: "now_playing").viewModels
-
     static var previews: some View {
         ScrollView {
-            MoviePosterList(movies: movies)
+            MoviePosterList(movies: .preview)
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
         }

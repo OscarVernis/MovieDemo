@@ -32,7 +32,7 @@ struct VideoItem: View {
 }
 
 struct VideoItem_Previews: PreviewProvider {
-    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
+    static let movie: MovieViewModel = .preview
     
     static var previews: some View {
         ScrollView(.horizontal, showsIndicators: false) {

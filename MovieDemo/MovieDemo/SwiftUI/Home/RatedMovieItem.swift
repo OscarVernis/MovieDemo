@@ -45,10 +45,8 @@ struct RatedMovieItem: View {
 }
 
 struct RatedMovieItem_Previews: PreviewProvider {
-    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
-
     static var previews: some View {
-        RatedMovieItem(movie: movie)
+        RatedMovieItem(movie: .preview)
             .previewLayout(.fixed(width: 375, height: 50))
             .preferredColorScheme(.dark)
     }

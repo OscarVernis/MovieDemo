@@ -34,11 +34,9 @@ struct MovieBannerRow: View {
     }
 }
 
-struct MoviesRow_Previews: PreviewProvider {
-    static let movies = JSONMoviesLoader(filename: "now_playing").viewModels
-    
+struct MoviesRow_Previews: PreviewProvider {    
     static var previews: some View {
-        MovieBannerRow(movies: movies)
+        MovieBannerRow(movies: .preview)
         .previewLayout(.device)
         .preferredColorScheme(.dark)
     }
