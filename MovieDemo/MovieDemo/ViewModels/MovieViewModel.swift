@@ -7,13 +7,9 @@
 //
 
 import Foundation
-import Combine
 
-class MovieViewModel: ObservableObject {
-    @Published private var movie: Movie
-    
-    private(set) var isLoading = false
-    var didUpdate: ((Error?) -> Void)?
+class MovieViewModel {
+    private var movie: Movie
     
     //Stores basic info about the movie
     var infoArray = [[String : String]]()
@@ -83,13 +79,6 @@ extension MovieViewModel {
     func setUserRating(_ rating: Float?) {
         movie.userRating = rating
     }
-}
-
-//MARK: - Load Movie Details
-extension MovieViewModel {
-    func refresh() {
-    }
-    
 }
 
 //MARK: - Properties

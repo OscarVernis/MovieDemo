@@ -60,9 +60,6 @@ struct InfoTable_Previews: PreviewProvider {
                 InfoTable(info: movie.infoArray)
             }
         }
-        .onAppear {
-            movie.refresh()
-        }
         .preferredColorScheme(.dark)
     }
 }

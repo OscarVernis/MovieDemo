@@ -102,7 +102,7 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
-        dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie)
+        dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie, isLoading: true)
         collectionView.dataSource = dataSource
     }
     
@@ -157,6 +157,7 @@ class MovieDetailViewController: UIViewController {
         }
         
         self.dataSource.movie = movie
+        self.dataSource.isLoading = false
         self.dataSource.reload()
         self.collectionView.reloadData()
     }

@@ -11,9 +11,11 @@ import UIKit
 
 class MovieHeaderDataSource: NSObject, UICollectionViewDataSource {
     let movie: MovieViewModel
+    var isLoading: Bool
     
-    init(movie: MovieViewModel) {
+    init(movie: MovieViewModel, isLoading: Bool) {
         self.movie = movie
+        self.isLoading = isLoading
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -25,7 +27,7 @@ class MovieHeaderDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        (movie.isLoading == true) ? 1 : 0
+        (isLoading == true) ? 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -20,12 +20,14 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     
     unowned var collectionView: UICollectionView
     var movie: MovieViewModel
+    var isLoading: Bool
     
     var sections: [Section] = []
     
-    init(collectionView: UICollectionView, movie: MovieViewModel) {
+    init(collectionView: UICollectionView, movie: MovieViewModel, isLoading: Bool) {
         self.collectionView = collectionView
         self.movie = movie
+        self.isLoading = isLoading
         
         super.init()
         
@@ -75,7 +77,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         case .recommended:
             if !movie.recommendedMovies.isEmpty { return true }
         case .info:
-            if !movie.infoArray.isEmpty && !movie.isLoading { return true }
+            if !movie.infoArray.isEmpty && !isLoading { return true }
         }
         
         return false
@@ -100,7 +102,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     
     //MARK: - Data Sources
     fileprivate func makeMovieHeader() -> UICollectionViewDataSource {
-        return MovieHeaderDataSource(movie: movie)
+        return MovieHeaderDataSource(movie: movie, isLoading: isLoading)
     }
     
     fileprivate func makeCast() -> UICollectionViewDataSource {
