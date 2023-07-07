@@ -39,6 +39,12 @@ class MovieViewModel: ObservableObject {
         updateInfo()
     }
     
+    init(movie: Movie) {
+        self.movie = movie
+        self.service = RemoteMovieDetailsLoader()
+        updateInfo()
+    }
+    
     func updateMovie(_ movie: Movie) {
         self.movie = movie
         updateInfo()
@@ -66,8 +72,16 @@ extension MovieViewModel {
         movie.watchlist ?? false
     }
     
-    var userRating: Float? {
-        movie.userRating
+    var userRating: UInt {
+        return UInt(movie.userRating ?? 0)
+    }
+    
+    var percentUserRating: UInt {
+        return UInt((movie.userRating ?? 0) * 10)
+    }
+    
+    var userRatingString: String {
+        return movie.userRating != nil ? "\(percentUserRating)" : .localized(MovieString.NR)
     }
     
     var rated: Bool {

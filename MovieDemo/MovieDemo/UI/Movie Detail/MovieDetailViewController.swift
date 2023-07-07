@@ -12,14 +12,17 @@ import SPStorkController
 class MovieDetailViewController: UIViewController {
     weak var mainCoordinator: MainCoordinator?
     var dataSource: MovieDetailDataSource!
-                
-    private var movie: MovieViewModel!
+      
+    private var store: MovieDetailStore
+    private var movie: MovieViewModel {
+        store.movie
+    }
         
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
     
-    required init(movie: MovieViewModel) {
-        self.movie = movie
+    required init(store: MovieDetailStore) {
+        self.store = store
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -104,8 +107,8 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupViewModel()  {
-        movie.didUpdate = viewModelDidUpdate
-        movie.refresh()
+        store.didUpdate = storeDidUpdate
+        store.refresh()
     }
     
     fileprivate func setupHeaderView() {
@@ -144,14 +147,14 @@ class MovieDetailViewController: UIViewController {
     }
 
     //MARK: - Actions
-    
-    fileprivate lazy var viewModelDidUpdate: ((Error?) -> Void) = { [weak self] error in
+    fileprivate lazy var storeDidUpdate: ((Error?) -> Void) = { [weak self] error in
         guard let self = self else { return }
         
         if error != nil {
             self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
         }
         
+        self.dataSource.movie = movie
         self.dataSource.reload()
         self.collectionView.reloadData()
     }
@@ -185,7 +188,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc fileprivate func markAsFavorite() {
-        guard let userState = movie.userStates, let favoriteButton = headerView?.favoriteButton else {
+        guard let favoriteButton = headerView?.favoriteButton else {
             return
         }
         
@@ -198,7 +201,7 @@ class MovieDetailViewController: UIViewController {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        userState.markAsFavorite(!movie.favorite) { [weak self] success in
+        store.markAsFavorite(!movie.favorite) { [weak self] success in
             guard let self = self else { return }
             
             favoriteButton.isUserInteractionEnabled = true
@@ -212,7 +215,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc fileprivate func addToWatchlist() {
-        guard let userState = movie.userStates, let watchlistButton = headerView?.watchlistButton else {
+        guard let watchlistButton = headerView?.watchlistButton else {
             return
         }
         
@@ -225,7 +228,7 @@ class MovieDetailViewController: UIViewController {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        userState.addToWatchlist(!movie.watchlist) { [weak self] success in
+        store.addToWatchlist(!movie.watchlist) { [weak self] success in
             guard let self = self else { return }
 
             watchlistButton.isUserInteractionEnabled = true
@@ -239,15 +242,13 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc fileprivate func addRating() {
-        guard let userState = movie.userStates,
-              let watchlistButton = headerView?.watchlistButton,
+        guard let watchlistButton = headerView?.watchlistButton,
               let rateButton = headerView?.rateButton
         else { return }
         
         let mrvc = MovieRatingViewController.instantiateFromStoryboard()
         mrvc.coordinator = self.mainCoordinator
-        mrvc.movie = movie
-        mrvc.userState = userState
+        mrvc.store = store
         
         let transitionDelegate = SPStorkTransitioningDelegate()
         mrvc.transitioningDelegate = transitionDelegate

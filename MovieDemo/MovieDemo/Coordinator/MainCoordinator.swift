@@ -167,15 +167,12 @@ class MainCoordinator {
     }
     
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        if let sessionId = sessionManager.sessionId {
-            movie.service = RemoteMovieDetailsLoader(sessionId: sessionId)
-            movie.userStates = MovieUserStatesViewModel(movie: movie, service: RemoteUserState(sessionId: sessionId))
-        } else {
-            movie.service = RemoteMovieDetailsLoader()
-            movie.userStates = nil
-        }
+        let userStateService: RemoteUserState? = sessionManager.sessionId != nil ? RemoteUserState(sessionId: sessionManager.sessionId!) : nil
+        let store = MovieDetailStore(movie: movie,
+                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
+                                     userStateService: userStateService)
         
-        let mdvc = MovieDetailViewController(movie: movie)
+        let mdvc = MovieDetailViewController(store: store)
         mdvc.mainCoordinator = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)

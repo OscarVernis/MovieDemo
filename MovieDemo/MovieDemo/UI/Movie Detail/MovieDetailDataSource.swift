@@ -19,7 +19,7 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
     }
     
     unowned var collectionView: UICollectionView
-    let movie: MovieViewModel
+    var movie: MovieViewModel
     
     var sections: [Section] = []
     

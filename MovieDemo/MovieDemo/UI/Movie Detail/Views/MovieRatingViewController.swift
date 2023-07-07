@@ -23,8 +23,10 @@ class MovieRatingViewController: UIViewController {
         }
     }
     
-    var movie: MovieViewModel!
-    var userState: MovieUserStatesViewModel!
+    var store: MovieDetailStore!
+    var movie: MovieViewModel {
+        store.movie
+    }
     
     var didUpdateRating: (() -> Void)? = nil
     
@@ -44,10 +46,10 @@ class MovieRatingViewController: UIViewController {
         if !movie.rated {
             deleteRatingButton.isHidden = true
             ratingsView.isRatingAvailable = false
-            ratingLabel.text = userState.userRatingString
+            ratingLabel.text = movie.userRatingString
         } else {
-            ratingsView.rating = CGFloat(userState.percentUserRating)
-            ratingLabel.text = userState.userRatingString
+            ratingsView.rating = CGFloat(movie.percentUserRating)
+            ratingLabel.text = movie.userRatingString
         }
         
     }
@@ -86,7 +88,7 @@ class MovieRatingViewController: UIViewController {
         isLoading = true
         let rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
 
-        userState.rate(Int(rating)) { [weak self] success in
+        store.rate(Int(rating)) { [weak self] success in
             guard let self = self else { return }
             
             self.isLoading = false
@@ -107,7 +109,7 @@ class MovieRatingViewController: UIViewController {
     @IBAction func deleteButtonTapped(_ sender: Any) {
         isLoading = true
         
-        userState.deleteRate { [weak self] success in
+        store.deleteRate { [weak self] success in
             guard let self = self else { return }
     
             self.isLoading = false

@@ -7,15 +7,12 @@
 //
 
 import Foundation
-import Combine
 
 class MovieDetailStore {
     var movie: MovieViewModel
     private var movieService: MovieDetailsLoader?
     private let userStateService: RemoteUserState?
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     init(movie: MovieViewModel, movieService: MovieDetailsLoader? = RemoteMovieDetailsLoader(), userStateService: RemoteUserState? = nil) {
         self.movie = movie
         self.movieService = movieService
@@ -34,21 +31,19 @@ class MovieDetailStore {
         guard let movieService else { return }
 
         isLoading = true
-                
-        movieService.getMovieDetails(movieId: movie.id)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                
-                switch completion {
-                case .finished:
-                    self?.didUpdate?(nil)
-                case .failure(let error):
-                    self?.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] movie in
+
+        movieService.getMovieDetails(movieId: movie.id).completion { [weak self] result in
+            self?.isLoading = false
+
+            switch result {
+            case .success(let movie):
                 self?.movie = MovieViewModel(movie: movie)
+                self?.didUpdate?(nil)
+            case .failure(let error):
+                self?.didUpdate?(error)
             }
-            .store(in: &cancellables)
+        }
+
     }
     
     //MARK: - User Actions
@@ -59,34 +54,32 @@ class MovieDetailStore {
     func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
         
-        userStateService.markAsFavorite(favorite, movieId: movie.id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.setFavorite(favorite)
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
+        userStateService.markAsFavorite(favorite, movieId: movie.id).completion { [weak self] result in
+            switch result {
+            case .success:
+                self?.movie.setFavorite(favorite)
+                completionHandler(true)
+            case .failure(_):
+                completionHandler(false)
+            }
+        }
         
     }
     
+
     func addToWatchlist(_ watchlist: Bool, completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
 
-        userStateService.addToWatchlist(watchlist, movieId: movie.id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.setWatchlist(watchlist)
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
+        userStateService.addToWatchlist(watchlist, movieId: movie.id).completion { [weak self] result in
+            switch result {
+            case .success:
+                self?.movie.setWatchlist(watchlist)
+                completionHandler(true)
+            case .failure(_):
+                completionHandler(false)
+            }
+        }
+
     }
     
     func rate(_ rating: Int, completionHandler: @escaping (Bool) -> Void) {
@@ -103,36 +96,31 @@ class MovieDetailStore {
             adjustedRating = 0.5
         }
         
-        userStateService.rateMovie(adjustedRating, movieId: movie.id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.setUserRating(adjustedRating)
-                    self?.movie.setWatchlist(false) //Server removes movie from watchlist when rating
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
+        userStateService.rateMovie(adjustedRating, movieId: movie.id).completion { [weak self] result in
+            switch result {
+            case .success:
+                self?.movie.setUserRating(adjustedRating)
+                self?.movie.setWatchlist(false) //Server removes movie from watchlist when rating
+                completionHandler(true)
+            case .failure(_):
+                completionHandler(false)
+            }
+        }
         
     }
     
     func deleteRate(completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
 
-        userStateService.deleteRate(movieId: movie.id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.movie.setUserRating(nil)
-                    completionHandler(true)
-                case .failure(_):
-                    completionHandler(false)
-
-                }
-            } receiveValue: { _ in }
-            .store(in: &cancellables)
+        userStateService.deleteRate(movieId: movie.id).completion { [weak self] result in
+            switch result {
+            case .success:
+                self?.movie.setUserRating(nil)
+                completionHandler(true)
+            case .failure(_):
+                completionHandler(false)
+            }
+        }
     }
+    
 }
