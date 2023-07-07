@@ -822,11 +822,11 @@
 			children = (
 				55EDA70C2810F4D70055696F /* Cells */,
 				556B78612524F21700F212D1 /* Views */,
+				556F01462A58941F005B5211 /* MovieDetailStore.swift */,
 				55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */,
 				55823C622857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift */,
 				553AF9AA2856B303007D1B20 /* MovieDetailDataSource.swift */,
 				553AF9AC2856BE93007D1B20 /* MovieHeaderDataSource.swift */,
-				556F01462A58941F005B5211 /* MovieDetailStore.swift */,
 			);
 			path = "Movie Detail";
 			sourceTree = "<group>";
