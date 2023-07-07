@@ -43,3 +43,11 @@ extension UserViewModel {
         UserViewModel(service: .mock, cache: nil)
     }
 }
+
+extension MovieDetailStore {
+    static func preview(showUserActions: Bool) -> MovieDetailStore {
+        let service: UserStateService? = showUserActions ? MockUserStatesService() : nil
+        
+        return MovieDetailStore(movie: .preview, userStateService: service)
+    }
+}

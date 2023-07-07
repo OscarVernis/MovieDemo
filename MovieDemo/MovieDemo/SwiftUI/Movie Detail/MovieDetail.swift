@@ -11,11 +11,11 @@ import SwiftUI
 struct MovieDetail: View {
     weak var coordinator: MainCoordinator?
 
-    @ObservedObject var movie: MovieViewModel
+    @ObservedObject var store: MovieDetailStore
     
     var body: some View {
         ZStack(alignment: .top) {
-            if let url = movie.posterImageURL(size: .w500) {
+            if let url = store.movie.posterImageURL(size: .w500) {
                 BlurBackground(url: url)
             }
             ScrollView(.vertical) {
@@ -24,60 +24,62 @@ struct MovieDetail: View {
                         .padding(.bottom, 20)
                         .padding([.leading, .trailing], 20)
                     //Cast
-                    if !movie.topCast.isEmpty { cast() }
+                    if !store.movie.topCast.isEmpty { cast() }
                     //Crew
-                    if !movie.topCrew.isEmpty { crew() }
+                    if !store.movie.topCrew.isEmpty { crew() }
                     //Videos
-                    if !movie.videos.isEmpty { videos() }
+                    if !store.movie.videos.isEmpty { videos() }
                     //Recommended
-                    if !movie.recommendedMovies.isEmpty { recommended() }
+                    if !store.movie.recommendedMovies.isEmpty { recommended() }
                     //Info
-                    if !movie.infoArray.isEmpty { info() }
+                    if !store.movie.infoArray.isEmpty { info() }
                 }
             }
         }
         .onAppear {
-            movie.refresh()
+            store.refresh()
         }
     }
     
     //MARK: - Header
     fileprivate func movieHeader() -> some View {
         return VStack(spacing: 10) {
-            RemoteImage(url: movie.posterImageURL(size: .w500), placeholder: Image(asset: .PosterPlaceholder))
+            RemoteImage(url: store.movie.posterImageURL(size: .w500), placeholder: Image(asset: .PosterPlaceholder))
                 .frame(width: 160)
-            Text(movie.title)
+            Text(store.movie.title)
                 .multilineTextAlignment(.center)
                 .font(.movieDetailTitle)
             ZStack(alignment: .center) {
-                Rating(progress: movie.percentRating, lineWidth: 4)
-                Text(movie.ratingString)
+                Rating(progress: store.movie.percentRating, lineWidth: 4)
+                Text(store.movie.ratingString)
                     .allowsTightening(true)
                     .font(.custom("Avenir Next Condensed Bold", size: 20))
                     .padding(.top, 2)
                     .padding(.leading, 1.5)
             }
             .frame(width: 45, height: 45)
-            Text(movie.genres())
+            Text(store.movie.genres())
                 .font(.custom("Avenir Medium", size: 16))
                 .foregroundColor(.secondary)
             HStack(spacing: 0) {
-                Text(movie.releaseYear)
+                Text(store.movie.releaseYear)
                     .font(.custom("Avenir Medium", size: 16))
                     .foregroundColor(.secondary)
-                if let runtime = movie.runtime {
+                if let runtime = store.movie.runtime {
                     Text("  •  \(runtime)")
                         .font(.subtitleFont)
                         .foregroundColor(Color.secondary)
                 }
             }
-            actionButtons()
+            if store.hasUserStates {
+                actionButtons()
+            }
             HStack {
                 Text(MovieString.Overview.localized)
                     .font(.detailSectionTitle)
                 Spacer()
             }
-            Text(movie.overview)
+            Text(store.movie.overview)
                 .font(.custom("Avenir Light Oblique", size: 15))
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.leading)
@@ -106,7 +108,7 @@ struct MovieDetail: View {
     fileprivate func cast() -> some View {
         VStack {
             SectionTitle(title: MovieString.Cast.localized, font: .detailSectionTitle, tapAction: showCastList)
-            PosterRow(cast: movie.topCast, tapAction: showCastDetail(credit:))
+            PosterRow(cast: store.movie.topCast, tapAction: showCastDetail(credit:))
                 .padding(.bottom, 20)
         }
     }
@@ -114,7 +116,7 @@ struct MovieDetail: View {
     fileprivate func crew() -> some View {
         VStack {
             SectionTitle(title: MovieString.Crew.localized, font: .detailSectionTitle, tapAction: showCrewList)
-            InfoTable(credits: movie.topCrew, tapAction: showCrewDetail(credit:))
+            InfoTable(credits: store.movie.topCrew, tapAction: showCrewDetail(credit:))
                 .padding(.bottom, 20)
         }
     }
@@ -122,7 +124,7 @@ struct MovieDetail: View {
     fileprivate func videos() -> some View {
         VStack {
             SectionTitle(title: MovieString.Videos.localized, font: .detailSectionTitle)
-            VideoRow(videos: movie.videos, tapAction: playVideo(video:))
+            VideoRow(videos: store.movie.videos, tapAction: playVideo(video:))
                 .padding(.bottom, 20)
         }
     }
@@ -130,7 +132,7 @@ struct MovieDetail: View {
     fileprivate func recommended() -> some View {
         VStack {
             SectionTitle(title: MovieString.RecommendedMovies.localized, font: .detailSectionTitle, tapAction: showRecommended)
-            PosterRow(movies: movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))
+            PosterRow(movies: store.movie.recommendedMovies, showRating: true, tapAction: showMovieDetail(movie:))
                 .padding(.bottom, 20)
         }
     }
@@ -138,23 +140,23 @@ struct MovieDetail: View {
     fileprivate func info() -> some View {
         VStack {
             SectionTitle(title: MovieString.Info.localized, font: .detailSectionTitle)
-            InfoTable(info: movie.infoArray)
+            InfoTable(info: store.movie.infoArray)
         }
     }
     
     //MARK: - Navigation
     fileprivate func showCastList() {
         coordinator?.showCastCreditList(title: MovieString.Cast.localized,
-                                        dataProvider: BasicProvider(models: movie.cast))
+                                        dataProvider: BasicProvider(models: store.movie.cast))
     }
     
     fileprivate func showCrewList() {
         coordinator?.showCrewCreditList(title: MovieString.Crew.localized,
-                                        dataProvider: BasicProvider(models: movie.crew))
+                                        dataProvider: BasicProvider(models: store.movie.crew))
     }
     
     fileprivate func showRecommended() {
-        coordinator?.showMovieList(title: MovieString.RecommendedMovies.localized, list: .Recommended(movieId: movie.id))
+        coordinator?.showMovieList(title: MovieString.RecommendedMovies.localized, list: .Recommended(movieId: store.movie.id))
     }
     
     fileprivate func showMovieDetail(movie: MovieViewModel) {
@@ -174,14 +176,14 @@ struct MovieDetail: View {
     }
     
     func playTrailer() {
-        guard let youtubeURL = movie.trailerURL else { return }
+        guard let youtubeURL = store.movie.trailerURL else { return }
         UIApplication.shared.open(youtubeURL)
     }
 }
 
 struct MovieDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetail(movie: .preview)
+        MovieDetail(store: .preview(showUserActions: true))
             .preferredColorScheme(.dark)
     }
 }

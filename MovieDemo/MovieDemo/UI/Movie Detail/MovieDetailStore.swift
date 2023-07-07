@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import Combine
 
-class MovieDetailStore {
-    var movie: MovieViewModel
+class MovieDetailStore: ObservableObject {
+    @Published var movie: MovieViewModel
     private var movieService: MovieDetailsLoader?
     private let userStateService: UserStateService?
         
-    init(movie: MovieViewModel, movieService: MovieDetailsLoader? = RemoteMovieDetailsLoader(), userStateService: UserStateService? = nil) {
+    init(movie: MovieViewModel, movieService: MovieDetailsLoader? = nil, userStateService: UserStateService? = nil) {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService

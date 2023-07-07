@@ -24,10 +24,12 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-#warning ("Fix dependencies")
+        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
+        let store = MovieDetailStore(movie: movie,
+                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
+                                     userStateService: userStateService)
         
-        var movieDetail = MovieDetail(movie: movie)
-        movieDetail.coordinator = self
+        let movieDetail = MovieDetail(coordinator: self, store: store)
         let mdvc = UIHostingController(rootView: movieDetail)
         mdvc.navigationItem.largeTitleDisplayMode = .never
 

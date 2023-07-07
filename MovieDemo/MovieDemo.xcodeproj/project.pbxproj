@@ -121,6 +121,7 @@
 		55604684251BCC320037D08B /* SPStorkController in Frameworks */ = {isa = PBXBuildFile; productRef = 55604683251BCC320037D08B /* SPStorkController */; };
 		5560523B2531246A00023BD9 /* PersonCastCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5560523A2531246A00023BD9 /* PersonCastCredit.swift */; };
 		5562D7412539291900E4FD42 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5562D7402539291900E4FD42 /* MediaItem.swift */; };
+		556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556465D42A58C636008ADC3A /* MockUserStatesService.swift */; };
 		5565DDED27E969CD00D7F4EB /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DDEC27E969CD00D7F4EB /* Endpoint.swift */; };
 		5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DDEF27E96D0800D7F4EB /* FavoriteRequestBody.swift */; };
 		5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565DDF227E96D2700D7F4EB /* WatchlistRequestBody.swift */; };
@@ -379,6 +380,7 @@
 		5560466B251BB4000037D08B /* MovieRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRatingViewController.swift; sourceTree = "<group>"; };
 		5560523A2531246A00023BD9 /* PersonCastCredit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCastCredit.swift; sourceTree = "<group>"; };
 		5562D7402539291900E4FD42 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		556465D42A58C636008ADC3A /* MockUserStatesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserStatesService.swift; sourceTree = "<group>"; };
 		5565DDEC27E969CD00D7F4EB /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		5565DDEF27E96D0800D7F4EB /* FavoriteRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRequestBody.swift; sourceTree = "<group>"; };
 		5565DDF227E96D2700D7F4EB /* WatchlistRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistRequestBody.swift; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				5511FF89285A765600B9C12A /* JSONMoviesLoader.swift */,
 				5511FF97285A90B900B9C12A /* JSONMovieDetailsLoader.swift */,
 				55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */,
+				556465D42A58C636008ADC3A /* MockUserStatesService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1482,6 +1485,7 @@
 				55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */,
 				55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
+				556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,
 				556F01452A588756005B5211 /* Helpers.swift in Sources */,
 				555463ED286E211A0010AEB0 /* VideoItem.swift in Sources */,
