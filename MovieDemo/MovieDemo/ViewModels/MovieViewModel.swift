@@ -12,10 +12,6 @@ import Combine
 class MovieViewModel: ObservableObject {
     @Published private var movie: Movie
     
-    var service: MovieDetailsLoader
-    
-    var userStates: MovieUserStatesViewModel? = nil
-
     private(set) var isLoading = false
     var didUpdate: ((Error?) -> Void)?
     
@@ -31,17 +27,8 @@ class MovieViewModel: ObservableObject {
     //Store the movie videos
     var videos = [MovieVideoViewModel]()
     
-    private var cancellable: AnyCancellable? = nil
-    
-    init(movie: Movie, service: MovieDetailsLoader = RemoteMovieDetailsLoader()) {
-        self.movie = movie
-        self.service = service
-        updateInfo()
-    }
-    
     init(movie: Movie) {
         self.movie = movie
-        self.service = RemoteMovieDetailsLoader()
         updateInfo()
     }
     
@@ -57,9 +44,6 @@ class MovieViewModel: ObservableObject {
         updateVideos()
     }
     
-    var hasUserStates: Bool {
-        return userStates != nil
-    }
 }
 
 //MARK: - Movie State
@@ -104,27 +88,6 @@ extension MovieViewModel {
 //MARK: - Load Movie Details
 extension MovieViewModel {
     func refresh() {
-        getMovieDetails()
-    }
-    
-    private func getMovieDetails() {
-        guard let movieId = movie.id else { return }
-        
-        isLoading = true
-                
-        cancellable = service.getMovieDetails(movieId: movieId)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                
-                switch completion {
-                case .finished:
-                    self?.didUpdate?(nil)
-                case .failure(let error):
-                    self?.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] movie in
-                self?.updateMovie(movie)
-            }
     }
     
 }

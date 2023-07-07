@@ -24,13 +24,7 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        if let sessionId = sessionManager.sessionId {
-            movie.service = RemoteMovieDetailsLoader(sessionId: sessionId)
-            movie.userStates = MovieUserStatesViewModel(movie: movie, service: RemoteUserState(sessionId: sessionId))
-        } else {
-            movie.service = RemoteMovieDetailsLoader()
-            movie.userStates = nil
-        }
+#warning ("Fix dependencies")
         
         var movieDetail = MovieDetail(movie: movie)
         movieDetail.coordinator = self
