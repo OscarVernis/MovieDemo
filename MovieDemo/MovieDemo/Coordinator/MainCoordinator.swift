@@ -167,7 +167,7 @@ class MainCoordinator {
     }
     
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let userStateService: RemoteUserState? = sessionManager.sessionId != nil ? RemoteUserState(sessionId: sessionManager.sessionId!) : nil
+        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
         let store = MovieDetailStore(movie: movie,
                                      movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
                                      userStateService: userStateService)

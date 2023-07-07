@@ -11,9 +11,9 @@ import Foundation
 class MovieDetailStore {
     var movie: MovieViewModel
     private var movieService: MovieDetailsLoader?
-    private let userStateService: RemoteUserState?
+    private let userStateService: UserStateService?
         
-    init(movie: MovieViewModel, movieService: MovieDetailsLoader? = RemoteMovieDetailsLoader(), userStateService: RemoteUserState? = nil) {
+    init(movie: MovieViewModel, movieService: MovieDetailsLoader? = RemoteMovieDetailsLoader(), userStateService: UserStateService? = nil) {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService
@@ -51,37 +51,38 @@ class MovieDetailStore {
         return userStateService != nil
     }
     
+    @MainActor
     func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
         
-        userStateService.markAsFavorite(favorite, movieId: movie.id).completion { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.setFavorite(favorite)
+        Task {
+            do {
+                try await userStateService.markAsFavorite(favorite, movieId: movie.id)
+                movie.setFavorite(favorite)
                 completionHandler(true)
-            case .failure(_):
+            } catch {
                 completionHandler(false)
             }
         }
         
     }
     
-
+    @MainActor
     func addToWatchlist(_ watchlist: Bool, completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
 
-        userStateService.addToWatchlist(watchlist, movieId: movie.id).completion { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.setWatchlist(watchlist)
+        Task {
+            do {
+                try await userStateService.addToWatchlist(watchlist, movieId: movie.id)
+                movie.setWatchlist(watchlist)
                 completionHandler(true)
-            case .failure(_):
+            } catch {
                 completionHandler(false)
             }
         }
-
     }
     
+    @MainActor
     func rate(_ rating: Int, completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
 
@@ -96,28 +97,29 @@ class MovieDetailStore {
             adjustedRating = 0.5
         }
         
-        userStateService.rateMovie(adjustedRating, movieId: movie.id).completion { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.setUserRating(adjustedRating)
-                self?.movie.setWatchlist(false) //Server removes movie from watchlist when rating
+        Task {
+            do {
+                try await userStateService.rateMovie(adjustedRating, movieId: movie.id)
+                movie.setUserRating(adjustedRating)
+                movie.setWatchlist(false) //Server removes movie from watchlist when rating
                 completionHandler(true)
-            case .failure(_):
+            } catch {
                 completionHandler(false)
             }
         }
         
     }
     
+    @MainActor
     func deleteRate(completionHandler: @escaping (Bool) -> Void) {
         guard let userStateService else { return }
-
-        userStateService.deleteRate(movieId: movie.id).completion { [weak self] result in
-            switch result {
-            case .success:
-                self?.movie.setUserRating(nil)
+        
+        Task {
+            do {
+                try await userStateService.deleteRate(movieId: movie.id)
+                movie.setUserRating(nil)
                 completionHandler(true)
-            case .failure(_):
+            } catch {
                 completionHandler(false)
             }
         }

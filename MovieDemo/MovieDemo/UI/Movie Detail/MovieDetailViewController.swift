@@ -122,7 +122,7 @@ class MovieDetailViewController: UIViewController {
         headerView.favoriteButton?.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
         headerView.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
         headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-        
+                
         headerView.imageTapHandler = showImage
         
         headerView.showUserActions = store.hasUserStates
