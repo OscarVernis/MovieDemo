@@ -9,8 +9,21 @@
 import Foundation
 
 protocol HomeRouter {
-    func showUserProfile()
-    func showMovieList(title: String, dataProvider: MoviesProvider)
-    func showMovieDetail(movie: MovieViewModel)
-    func searchViewController() -> UIViewController
+    func showUserProfile(animated: Bool)
+    func showMovieDetail(movie: MovieViewModel, animated: Bool)
+    
+    func showNowPlaying()
+    func showUpcoming()
+    func showPopular()
+    func showTopRated()
+}
+
+extension HomeRouter {
+    func showUserProfile(animated: Bool = false) {
+        showUserProfile(animated: animated)
+    }
+    
+    func showMovieDetail(movie: MovieViewModel, animated: Bool = false) {
+        showMovieDetail(movie: movie, animated: animated)
+    }
 }

@@ -159,37 +159,17 @@ class MainCoordinator {
         }
     }
     
-    func showUserProfile(animated: Bool = true) {
-        if let sessionId = sessionManager.sessionId {
-            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
-            let upvc = UserProfileViewController(user: user, coordinator: self)
-            
-            rootNavigationViewController?.pushViewController(upvc, animated: animated)
-        } else {
-            showLogin(animated: animated)
-        }
-    }
-    
     func showHome() {
-        let hvc = HomeViewController(mainCoordinator: self,
+        let hvc = HomeViewController(router: self,
                                      nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
                                      upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
                                      popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
                                      topRatedProvider: moviesProvider(for: .TopRated, cacheList: .NowPlaying))
         
+        let searchViewController = SearchViewController(coordinator: self)
+        hvc.navigationItem.searchController = searchViewController.searchController
+        
         rootNavigationViewController?.viewControllers = [hvc]
-    }
-    
-    func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
-        let store = MovieDetailStore(movie: movie,
-                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
-                                     userStateService: userStateService)
-        
-        let mdvc = MovieDetailViewController(store: store)
-        mdvc.mainCoordinator = self
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
     
     func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
@@ -214,22 +194,6 @@ class MainCoordinator {
         let dataProvider = moviesProvider(for: list)
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
-    }
-    
-    func showNowPlaying() {
-        showMovieList(title: .localized(HomeString.NowPlaying), list: .NowPlaying)
-    }
-    
-    func showUpcoming() {
-        showMovieList(title: .localized(HomeString.Upcoming), list: .Upcoming)
-    }
-    
-    func showPopular() {
-        showMovieList(title: .localized(HomeString.Popular), list: .Popular)
-    }
-    
-    func showTopRated() {
-        showMovieList(title: .localized(HomeString.TopRated), list: .TopRated)
     }
     
     func showUserFavorites() {
@@ -296,4 +260,46 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
+    //MARK: - Home Router
+    func showUserProfile(animated: Bool = true) {
+        if let sessionId = sessionManager.sessionId {
+            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
+            let upvc = UserProfileViewController(user: user, coordinator: self)
+            
+            rootNavigationViewController?.pushViewController(upvc, animated: animated)
+        } else {
+            showLogin(animated: animated)
+        }
+    }
+    
+    func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
+        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
+        let store = MovieDetailStore(movie: movie,
+                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
+                                     userStateService: userStateService)
+        
+        let mdvc = MovieDetailViewController(store: store)
+        mdvc.mainCoordinator = self
+        
+        rootNavigationViewController?.pushViewController(mdvc, animated: animated)
+    }
+    
+    func showNowPlaying() {
+        showMovieList(title: .localized(HomeString.NowPlaying), list: .NowPlaying)
+    }
+    
+    func showUpcoming() {
+        showMovieList(title: .localized(HomeString.Upcoming), list: .Upcoming)
+    }
+    
+    func showPopular() {
+        showMovieList(title: .localized(HomeString.Popular), list: .Popular)
+    }
+    
+    func showTopRated() {
+        showMovieList(title: .localized(HomeString.TopRated), list: .TopRated)
+    }
+    
 }
+
+extension MainCoordinator: HomeRouter {}

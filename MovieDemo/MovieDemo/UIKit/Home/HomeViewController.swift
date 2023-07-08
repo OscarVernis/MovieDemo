@@ -12,7 +12,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     var collectionView: UICollectionView!
     var dataSource: HomeDataSource!
     
-    weak var mainCoordinator: MainCoordinator!
+    var router: HomeRouter!
     
     var didSelectItem: ((Movie) -> ())?
     
@@ -22,12 +22,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     var topRatedProvider: MoviesProvider
         
     //MARK: - Setup
-    required init(mainCoordinator: MainCoordinator?,
+    required init(router: HomeRouter?,
                   nowPlayingProvider: MoviesProvider,
                   upcomingProvider: MoviesProvider,
                   popularProvider: MoviesProvider,
                   topRatedProvider: MoviesProvider) {
-        self.mainCoordinator = mainCoordinator
+        self.router = router
         self.nowPlayingProvider = nowPlayingProvider
         self.upcomingProvider = upcomingProvider
         self.popularProvider = popularProvider
@@ -46,7 +46,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         setupCollectionView()
         setupDataSource()
         setupViewController()
-        setupSearch()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -84,11 +83,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         navigationItem.searchController?.hidesNavigationBarDuringPresentation = true
     }
     
-    fileprivate func setupSearch() {
-        let searchViewController = SearchViewController(coordinator: mainCoordinator)
-        navigationItem.searchController = searchViewController.searchController
-    }
-    
     fileprivate func setupDataSource() {
         self.dataSource = HomeDataSource(collectionView: self.collectionView,
         nowPlayingProvider: nowPlayingProvider,
@@ -106,26 +100,32 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: - Actions
     @objc func showUser() {
-        mainCoordinator.showUserProfile()
+        router.showUserProfile()
     }
     
     @objc func refresh() {
         dataSource.refresh()
     }
     
-    func showMovieList(title: String, provider: MoviesProvider) {
-        mainCoordinator.showMovieList(title: title, dataProvider: provider)
+    func showMovieList(section: HomeDataSource.Section) {
+        switch section {
+        case .nowPlaying:
+            router.showNowPlaying()
+        case .upcoming:
+            router.showUpcoming()
+        case .popular:
+            router.showPopular()
+        case .topRated:
+            router.showTopRated()
+        }
     }
     
     //MARK: - CollectionView Delegate
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
         guard let titleHeader = view as? SectionTitleView else { return }
         
-        let dataProvider = dataSource.providers[indexPath.section]
-        let title = titleHeader.titleLabel.text ?? ""
-        
         titleHeader.tapHandler = { [weak self] in
-            self?.showMovieList(title: title, provider: dataProvider)
+            self?.showMovieList(section: .init(rawValue: indexPath.section)!)
         }
     }
     
@@ -133,7 +133,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         let provider = dataSource.providers[indexPath.section]
         let movie = provider.item(atIndex: indexPath.row)
         
-        mainCoordinator.showMovieDetail(movie: movie)
+        router.showMovieDetail(movie: movie)
     }
     
 }
