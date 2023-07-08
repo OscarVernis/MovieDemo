@@ -190,7 +190,7 @@
 		55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */; };
 		55A60DE12527B32F0082810C /* UINavigationController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */; };
 		55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6A98E2511A6C400305C29 /* MovieGenre.swift */; };
-		55ABEB79283365AF009DCE7C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEB78283365AF009DCE7C /* LoginViewModel.swift */; };
+		55ABEB79283365AF009DCE7C /* LoginViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEB78283365AF009DCE7C /* LoginViewStore.swift */; };
 		55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC532028243CD300836A30 /* ViewModelsTests.swift */; };
 		55AC53232824422C00836A30 /* DataProvidersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC53222824422C00836A30 /* DataProvidersTests.swift */; };
 		55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */; };
@@ -464,7 +464,7 @@
 		55A60DD52527AAB30082810C /* MediaViewerPlayerControls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaViewerPlayerControls.swift; sourceTree = "<group>"; };
 		55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Orientation.swift"; sourceTree = "<group>"; };
 		55A6A98E2511A6C400305C29 /* MovieGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenre.swift; sourceTree = "<group>"; };
-		55ABEB78283365AF009DCE7C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		55ABEB78283365AF009DCE7C /* LoginViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewStore.swift; sourceTree = "<group>"; };
 		55AC532028243CD300836A30 /* ViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsTests.swift; sourceTree = "<group>"; };
 		55AC53222824422C00836A30 /* DataProvidersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvidersTests.swift; sourceTree = "<group>"; };
 		55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
@@ -1104,7 +1104,6 @@
 			isa = PBXGroup;
 			children = (
 				557FFA96251A6D7100D79F68 /* LoginViewController.swift */,
-				55ABEB78283365AF009DCE7C /* LoginViewModel.swift */,
 				551A2924251F189B003746EE /* LoginViewController.storyboard */,
 			);
 			path = Username;
@@ -1146,6 +1145,7 @@
 			isa = PBXGroup;
 			children = (
 				55B8548E2A59289B009870B2 /* LoginRouter.swift */,
+				55ABEB78283365AF009DCE7C /* LoginViewStore.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1610,7 +1610,7 @@
 				55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */,
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */,
-				55ABEB79283365AF009DCE7C /* LoginViewModel.swift in Sources */,
+				55ABEB79283365AF009DCE7C /* LoginViewStore.swift in Sources */,
 				5508D76B2A50F2B500B22A96 /* URLSessionHTTPClient.swift in Sources */,
 				5511FF8C285A7AFD00B9C12A /* MovieBannerRow.swift in Sources */,
 				554DDE1D286239D100DD864A /* AttributedStringAsset.swift in Sources */,

@@ -93,7 +93,7 @@ class MainCoordinator {
     
     func showDefaultLogin(animated: Bool = true) {
         let lvc = LoginViewController.instantiateFromStoryboard()
-        lvc.loginViewModel = LoginViewModel(sessionManager: sessionManager)
+        lvc.loginViewModel = LoginViewStore(sessionManager: sessionManager)
         
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {

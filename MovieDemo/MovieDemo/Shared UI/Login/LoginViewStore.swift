@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-class LoginViewModel {
+class LoginViewStore {
     @Published var loggedIn: Bool = false
     @Published var errorString: String? = nil
     @Published var isLoading: Bool = false
