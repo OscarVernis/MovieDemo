@@ -12,13 +12,12 @@ import AuthenticationServices
 class WebLoginViewController: UIViewController {
     let service = RemoteSessionService()
     var sessionManager: SessionManager!
-    weak var coordinator: MainCoordinator? = nil
+    var router: LoginRouter? = nil
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
 
     var showsCloseButton: Bool = true
-    var didFinishLoginProcess: (() -> Void)? = nil
 
     //MARK: - Setup
     override func viewDidLoad() {
@@ -48,7 +47,7 @@ class WebLoginViewController: UIViewController {
         do {
             token = try await service.requestToken()
         } catch {
-            coordinator?.handle(error: .loginError)
+            router?.handle(error: .loginError)
             return
         }
                 
@@ -63,19 +62,19 @@ class WebLoginViewController: UIViewController {
             let approved = queryItems?.filter({ $0.name == "approved" }).first?.value
             
             if approved != "true"{
-                self.coordinator?.handle(error: .loginError)
+                self.router?.handle(error: .loginError)
                 return
             }
             
             Task {
                 let sessionId = try? await self.service.createSession(requestToken: token)
                 guard let sessionId = sessionId else {
-                    self.coordinator?.handle(error: .loginError)
+                    self.router?.handle(error: .loginError)
                     return
                 }
                 
                 self.sessionManager.save(sessionId: sessionId)
-                self.didFinishLoginProcess?()
+                self.router?.didFinishLoginProcess()
             }
         }
         

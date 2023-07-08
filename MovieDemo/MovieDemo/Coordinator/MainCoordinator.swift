@@ -33,6 +33,7 @@ class MainCoordinator {
         }
     }
     
+    //MARK: - Helpers
     func handle(error: UserFacingError, shouldDismiss: Bool = false) {
         guard let sender = rootNavigationViewController?.visibleViewController else { return }
         let completion = {
@@ -59,6 +60,7 @@ class MainCoordinator {
         return MoviesProvider(movieLoader: loader, cache: cache)
     }
     
+    //MARK: - App Start
     func start() {
         rootNavigationViewController = UINavigationController()
         rootNavigationViewController?.navigationBar.prefersLargeTitles = true
@@ -99,7 +101,7 @@ class MainCoordinator {
         }
         
         lvc.didFinishLoginProcess = { [weak self] in
-            self?.rootNavigationViewController?.dismiss(animated: true)
+            self?.didFinishLoginProcess()
         }
         
         rootNavigationViewController?.present(lvc, animated: animated, completion: { [weak self] in
@@ -114,15 +116,11 @@ class MainCoordinator {
     func showWebLogin(animated: Bool = true) {
         let lvc = WebLoginViewController.instantiateFromStoryboard()
         lvc.sessionManager = sessionManager
-        lvc.coordinator = self
+        lvc.router = self
         
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
             lvc.modalPresentationStyle = .overFullScreen
-        }
-        
-        lvc.didFinishLoginProcess = { [weak self] in
-            self?.rootNavigationViewController?.dismiss(animated: true)
         }
         
         rootNavigationViewController?.present(lvc, animated: animated, completion: { [weak self] in
@@ -173,7 +171,20 @@ class MainCoordinator {
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
-    func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
+    //MARK: - Common
+    func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
+        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
+        let store = MovieDetailStore(movie: movie,
+                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
+                                     userStateService: userStateService)
+        
+        let mdvc = MovieDetailViewController(store: store)
+        mdvc.router = self
+        
+        rootNavigationViewController?.pushViewController(mdvc, animated: animated)
+    }
+    
+    fileprivate func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                             reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                             cellConfigurator: MovieInfoListCell.configure)
@@ -191,22 +202,15 @@ class MainCoordinator {
         
     }
     
-    fileprivate func showMovieList(title: String, list: MoviesEndpoint, animated: Bool = true)  {
-        let dataProvider = moviesProvider(for: list)
+    fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
+        let dataProvider = moviesProvider(for: endpoint)
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
     
-    func showUserFavorites() {
-        showMovieList(title: .localized(UserString.Favorites), list: .UserFavorites)
-    }
-    
-    func showUserWatchlist() {
-        showMovieList(title: .localized(UserString.Watchlist), list: .UserWatchList)
-    }
-    
-    func showUserRated() {
-        showMovieList(title: .localized(UserString.Rated), list: .UserRated)
+    //MARK: - Login
+    func didFinishLoginProcess() {
+        rootNavigationViewController?.dismiss(animated: true)
     }
     
     //MARK: - Home Router
@@ -221,32 +225,20 @@ class MainCoordinator {
         }
     }
     
-    func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
-        let store = MovieDetailStore(movie: movie,
-                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
-                                     userStateService: userStateService)
-        
-        let mdvc = MovieDetailViewController(store: store)
-        mdvc.router = self
-        
-        rootNavigationViewController?.pushViewController(mdvc, animated: animated)
-    }
-    
     func showNowPlaying() {
-        showMovieList(title: .localized(HomeString.NowPlaying), list: .NowPlaying)
+        showMovieList(title: .localized(HomeString.NowPlaying), endpoint: .NowPlaying)
     }
     
     func showUpcoming() {
-        showMovieList(title: .localized(HomeString.Upcoming), list: .Upcoming)
+        showMovieList(title: .localized(HomeString.Upcoming), endpoint: .Upcoming)
     }
     
     func showPopular() {
-        showMovieList(title: .localized(HomeString.Popular), list: .Popular)
+        showMovieList(title: .localized(HomeString.Popular), endpoint: .Popular)
     }
     
     func showTopRated() {
-        showMovieList(title: .localized(HomeString.TopRated), list: .TopRated)
+        showMovieList(title: .localized(HomeString.TopRated), endpoint: .TopRated)
     }
     
     //MARK: - Movie Detail Router
@@ -291,7 +283,7 @@ class MainCoordinator {
     }
     
     func showRecommendedMovies(for movieId: Int) {
-        showMovieList(title: .localized(MovieString.RecommendedMovies), list: .Recommended(movieId: movieId))
+        showMovieList(title: .localized(MovieString.RecommendedMovies), endpoint: .Recommended(movieId: movieId))
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
@@ -321,6 +313,19 @@ class MainCoordinator {
         rootNavigationViewController?.visibleViewController?.present(mrvc, animated: true)
     }
 
+    //MARK: - User Detail Router
+    func showUserFavorites() {
+        showMovieList(title: .localized(UserString.Favorites), endpoint: .UserFavorites)
+    }
+    
+    func showUserWatchlist() {
+        showMovieList(title: .localized(UserString.Watchlist), endpoint: .UserWatchList)
+    }
+    
+    func showUserRated() {
+        showMovieList(title: .localized(UserString.Rated), endpoint: .UserRated)
+    }
+    
 }
 
-extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter { }
+extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter, LoginRouter { }
