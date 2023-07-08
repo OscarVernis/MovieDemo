@@ -13,7 +13,7 @@ class MovieDetailViewControllerTests: XCTestCase {
 
     func test_deallocation() throws {
         assertDeallocation {
-            MovieDetailViewController(movie: anyMovieVM())
+            MovieDetailViewController(store: .preview(showUserActions: false))
         }
     }
 
