@@ -11,7 +11,7 @@ import Combine
 import SPStorkController
 
 class MovieDetailViewController: UIViewController {
-    weak var mainCoordinator: MainCoordinator?
+    var router: MovieDetailRouter?
     var dataSource: MovieDetailDataSource!
       
     private var store: MovieDetailStore
@@ -173,7 +173,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func show(error: UserFacingError, shouldDismiss: Bool = false) {
-        mainCoordinator?.handle(error: error, shouldDismiss: shouldDismiss)
+        router?.handle(error: error, shouldDismiss: shouldDismiss)
     }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
@@ -186,15 +186,15 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate lazy var showCast:(() -> Void) = { [unowned self] in
-        mainCoordinator?.showCastCreditList(credits: movie.cast)
+        router?.showCastCreditList(credits: movie.cast)
     }
     
     fileprivate lazy var showCrew: (() -> Void) = { [unowned self] in
-        mainCoordinator?.showCrewCreditList(credits: movie.crew)
+        router?.showCrewCreditList(credits: movie.crew)
     }
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
-        mainCoordinator?.showRecommendedMovies(for: movie.id)
+        router?.showRecommendedMovies(for: movie.id)
     }
     
     @objc fileprivate func playYoutubeTrailer() {
@@ -262,23 +262,10 @@ class MovieDetailViewController: UIViewController {
               let rateButton = headerView?.rateButton
         else { return }
         
-        let mrvc = MovieRatingViewController.instantiateFromStoryboard()
-        mrvc.coordinator = self.mainCoordinator
-        mrvc.store = store
-        
-        let transitionDelegate = SPStorkTransitioningDelegate()
-        mrvc.transitioningDelegate = transitionDelegate
-        mrvc.modalPresentationStyle = .custom
-        mrvc.modalPresentationCapturesStatusBarAppearance = true
-        transitionDelegate.customHeight = 450
-        transitionDelegate.showIndicator = false
-        
-        mrvc.didUpdateRating = {
+        router?.showMovieRatingView(store: store, updateHandler: {
             rateButton.setIsSelected(self.movie.rated, animated: false)
             watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
-        }
-        
-        self.present(mrvc, animated: true)
+        })
     }
     
 }
@@ -306,14 +293,14 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case .cast:
             let castCredit = movie.topCast[indexPath.row]
             let person = castCredit.person()
-            mainCoordinator?.showPersonProfile(person)
+            router?.showPersonProfile(person)
         case .crew:
             let crewCredit = movie.topCrew[indexPath.row]
             let person = crewCredit.person()
-            mainCoordinator?.showPersonProfile(person)
+            router?.showPersonProfile(person)
         case .recommended:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
-            mainCoordinator?.showMovieDetail(movie: recommendedMovie)
+            router?.showMovieDetail(movie: recommendedMovie)
         case .videos:
             let video = movie.videos[indexPath.row]
             UIApplication.shared.open(video.youtubeURL)

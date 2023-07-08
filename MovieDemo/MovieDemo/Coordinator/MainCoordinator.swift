@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SPStorkController
 
 class MainCoordinator {
     private var window: UIWindow
@@ -164,7 +165,7 @@ class MainCoordinator {
                                      nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
                                      upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
                                      popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
-                                     topRatedProvider: moviesProvider(for: .TopRated, cacheList: .NowPlaying))
+                                     topRatedProvider: moviesProvider(for: .TopRated, cacheList: .TopRated))
         
         let searchViewController = SearchViewController(coordinator: self)
         hvc.navigationItem.searchController = searchViewController.searchController
@@ -208,58 +209,6 @@ class MainCoordinator {
         showMovieList(title: .localized(UserString.Rated), list: .UserRated)
     }
     
-    func showRecommendedMovies(for movieId: Int) {
-        showMovieList(title: .localized(MovieString.RecommendedMovies), list: .Recommended(movieId: movieId))
-    }
-    
-    func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
-        let pvc = PersonDetailViewController.instantiateFromStoryboard()
-        pvc.person = viewModel
-        pvc.mainCoordinator = self
-                        
-        rootNavigationViewController?.pushViewController(pvc, animated: animated)
-    }
-    
-    func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
-        let provider = BasicProvider(models: credits)
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                        reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
-                                        cellConfigurator: CreditPhotoListCell.configure)
-        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
-        lvc.title =  MovieString.Crew.localized
-        
-        lvc.didSelectedItem = { index in
-            if index >= provider.itemCount { return }
-            
-            let crewCredit = provider.item(atIndex: index)
-            
-            let person = crewCredit.person()
-            self.showPersonProfile(person)
-        }
-        
-        rootNavigationViewController?.pushViewController(lvc, animated: animated)
-    }
-    
-    func showCastCreditList(credits: [CastCreditViewModel], animated: Bool = true) {
-        let provider = BasicProvider(models: credits)
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                        reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
-                                        cellConfigurator: CreditPhotoListCell.configure)
-        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
-        lvc.title = MovieString.Cast.localized
-        
-        lvc.didSelectedItem = { index in
-            if index >= provider.itemCount { return }
-            
-            let castCredit = provider.item(atIndex: index)
-            
-            let person = castCredit.person()
-            self.showPersonProfile(person)
-        }
-        
-        rootNavigationViewController?.pushViewController(lvc, animated: animated)
-    }
-    
     //MARK: - Home Router
     func showUserProfile(animated: Bool = true) {
         if let sessionId = sessionManager.sessionId {
@@ -279,7 +228,7 @@ class MainCoordinator {
                                      userStateService: userStateService)
         
         let mdvc = MovieDetailViewController(store: store)
-        mdvc.mainCoordinator = self
+        mdvc.router = self
         
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
@@ -300,6 +249,78 @@ class MainCoordinator {
         showMovieList(title: .localized(HomeString.TopRated), list: .TopRated)
     }
     
+    //MARK: - Movie Detail Router
+    func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
+        let provider = BasicProvider(models: credits)
+        let dataSource = ProviderDataSource(dataProvider: provider,
+                                            reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
+                                            cellConfigurator: CreditPhotoListCell.configure)
+        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
+        lvc.title =  MovieString.Crew.localized
+        
+        lvc.didSelectedItem = { index in
+            if index >= provider.itemCount { return }
+            
+            let crewCredit = provider.item(atIndex: index)
+            
+            let person = crewCredit.person()
+            self.showPersonProfile(person)
+        }
+        
+        rootNavigationViewController?.pushViewController(lvc, animated: animated)
+    }
+    
+    func showCastCreditList(credits: [CastCreditViewModel], animated: Bool = true) {
+        let provider = BasicProvider(models: credits)
+        let dataSource = ProviderDataSource(dataProvider: provider,
+                                            reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
+                                            cellConfigurator: CreditPhotoListCell.configure)
+        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
+        lvc.title = MovieString.Cast.localized
+        
+        lvc.didSelectedItem = { index in
+            if index >= provider.itemCount { return }
+            
+            let castCredit = provider.item(atIndex: index)
+            
+            let person = castCredit.person()
+            self.showPersonProfile(person)
+        }
+        
+        rootNavigationViewController?.pushViewController(lvc, animated: animated)
+    }
+    
+    func showRecommendedMovies(for movieId: Int) {
+        showMovieList(title: .localized(MovieString.RecommendedMovies), list: .Recommended(movieId: movieId))
+    }
+    
+    func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
+        let pvc = PersonDetailViewController.instantiateFromStoryboard()
+        pvc.person = viewModel
+        pvc.mainCoordinator = self
+        
+        rootNavigationViewController?.pushViewController(pvc, animated: animated)
+    }
+    
+    func showMovieRatingView(store: MovieDetailStore, updateHandler: @escaping () -> ()) {
+        let mrvc = MovieRatingViewController.instantiateFromStoryboard()
+        mrvc.errorHandler = { [weak self] error in
+            self?.handle(error: error)
+        }
+        mrvc.store = store
+        
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        mrvc.transitioningDelegate = transitionDelegate
+        mrvc.modalPresentationStyle = .custom
+        mrvc.modalPresentationCapturesStatusBarAppearance = true
+        transitionDelegate.customHeight = 450
+        transitionDelegate.showIndicator = false
+        
+        mrvc.didUpdateRating = updateHandler
+        
+        rootNavigationViewController?.visibleViewController?.present(mrvc, animated: true)
+    }
+
 }
 
-extension MainCoordinator: HomeRouter {}
+extension MainCoordinator: HomeRouter, MovieDetailRouter { }
