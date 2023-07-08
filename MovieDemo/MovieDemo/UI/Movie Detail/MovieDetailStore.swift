@@ -18,33 +18,28 @@ class MovieDetailStore: ObservableObject {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService
+        self.isLoading = (movieService != nil)
     }
 
     //MARK: - Get Movie Details
     private(set) var isLoading = false
-    var didUpdate: ((Error?) -> Void)?
+    @Published var error: Error? = nil
     
     func refresh() {
-        getMovieDetails()
-    }
-    
-    private func getMovieDetails() {
         guard let movieService else { return }
-
+        
         isLoading = true
-
+        
         movieService.getMovieDetails(movieId: movie.id).completion { [weak self] result in
             self?.isLoading = false
-
+            
             switch result {
             case .success(let movie):
                 self?.movie = MovieViewModel(movie: movie)
-                self?.didUpdate?(nil)
             case .failure(let error):
-                self?.didUpdate?(error)
+                self?.error = error
             }
         }
-
     }
     
     //MARK: - User Actions

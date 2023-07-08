@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 import SPStorkController
 
 class MovieDetailViewController: UIViewController {
@@ -17,6 +18,8 @@ class MovieDetailViewController: UIViewController {
     private var movie: MovieViewModel {
         store.movie
     }
+    
+    private var cancellables = Set<AnyCancellable>()
         
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
@@ -41,7 +44,7 @@ class MovieDetailViewController: UIViewController {
 
         createCollectionView()
         setup()
-        setupViewModel()
+        setupStore()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -102,13 +105,9 @@ class MovieDetailViewController: UIViewController {
             collectionView.backgroundView = bgView
         }
         
-        dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie, isLoading: true)
+        dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie, isLoading: store.isLoading)
+        dataSource.isLoading = store.isLoading
         collectionView.dataSource = dataSource
-    }
-    
-    fileprivate func setupViewModel()  {
-        store.didUpdate = storeDidUpdate
-        store.refresh()
     }
     
     fileprivate func setupHeaderView() {
@@ -147,19 +146,34 @@ class MovieDetailViewController: UIViewController {
             header.tapHandler = nil
         }
     }
+    
+    fileprivate func setupStore()  {
+        store.$movie.sink { [weak self] movie in
+            self?.didUpdate(movie: movie)
+        }
+        .store(in: &cancellables)
+        
+        store.$error.sink { [weak self] error in
+            if error != nil {
+                self?.show(error: .refreshError, shouldDismiss: true)
+                self?.store.error = nil
+            }
+        }
+        .store(in: &cancellables)
+        
+        store.refresh()
+    }
 
     //MARK: - Actions
-    fileprivate lazy var storeDidUpdate: ((Error?) -> Void) = { [weak self] error in
-        guard let self = self else { return }
-        
-        if error != nil {
-            self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
-        }
-        
-        self.dataSource.movie = movie
-        self.dataSource.isLoading = false
-        self.dataSource.reload()
-        self.collectionView.reloadData()
+    fileprivate func didUpdate(movie: MovieViewModel) {
+        dataSource.movie = movie
+        dataSource.isLoading = store.isLoading
+        dataSource.reload()
+        collectionView.reloadData()
+    }
+    
+    fileprivate func show(error: UserFacingError, shouldDismiss: Bool = false) {
+        mainCoordinator?.handle(error: error, shouldDismiss: shouldDismiss)
     }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
@@ -212,7 +226,7 @@ class MovieDetailViewController: UIViewController {
             if !success  {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 favoriteButton.setIsSelected(self.movie.favorite, animated: false)
-                self.mainCoordinator?.handle(error: .favoriteError)
+                show(error: .favoriteError)
             }
         }
     }
@@ -239,7 +253,7 @@ class MovieDetailViewController: UIViewController {
             if !success {
                 UINotificationFeedbackGenerator().notificationOccurred(.error)
                 watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
-                self.mainCoordinator?.handle(error: .watchlistError)
+                self.show(error: .watchlistError)
             }
         }
     }

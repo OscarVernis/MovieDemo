@@ -34,7 +34,11 @@ class MovieDetailHeaderView: UICollectionReusableView {
     var imageTapHandler: (()->Void)? = nil
     
     var movie: MovieViewModel!
-    var showUserActions = false
+    var showUserActions = false {
+        didSet {
+            updateUserActionButtons()
+        }
+    }
     
     override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
@@ -47,7 +51,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     
     fileprivate func updateUserActionButtons(animated: Bool = false) {
         if !showUserActions { return }
-
+        
         favoriteButton?.setIsSelected(movie.favorite, animated: animated)
         watchlistButton?.setIsSelected(movie.watchlist, animated: animated)
         rateButton?.setIsSelected(movie.rated, animated: animated)
@@ -84,5 +88,4 @@ class MovieDetailHeaderView: UICollectionReusableView {
         updateUserActionButtons()
     }
 
-    
 }
