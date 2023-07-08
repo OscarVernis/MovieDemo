@@ -9,7 +9,7 @@
 import UIKit
 
 struct UserProfileLayoutProvider {
-    let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    fileprivate let sectionBuilder = MoviesCompositionalLayoutBuilder()
     let user: UserViewModel
 
     func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
@@ -27,7 +27,7 @@ struct UserProfileLayoutProvider {
         }
     }
     
-    func makeHeaderSection() -> NSCollectionLayoutSection {
+    fileprivate func makeHeaderSection() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createSection(groupHeight: .estimated(150))
         
         let sectionHeader = sectionBuilder.createDetailSectionHeader()
@@ -36,14 +36,14 @@ struct UserProfileLayoutProvider {
         return section
     }
     
-    func makeMoviesSection() -> NSCollectionLayoutSection {
+    fileprivate func makeMoviesSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let section = sectionBuilder.createHorizontalPosterSection()
         
         return makeTitleSection(with: section)
     }
     
-    func makeEmptySection() -> NSCollectionLayoutSection {
+    fileprivate func makeEmptySection() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createSection(groupHeight: .estimated(260))
         section.contentInsets.top = 10
         section.contentInsets.bottom = 20
@@ -51,7 +51,7 @@ struct UserProfileLayoutProvider {
         return makeTitleSection(with: section)
     }
     
-    func makeTitleSection(with section: NSCollectionLayoutSection) -> NSCollectionLayoutSection {
+    fileprivate func makeTitleSection(with section: NSCollectionLayoutSection) -> NSCollectionLayoutSection {
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         section.contentInsets.top = 12

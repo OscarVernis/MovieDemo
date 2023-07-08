@@ -24,6 +24,7 @@
 		5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508D7682A50F29900B22A96 /* HTTPClient.swift */; };
 		5508D76B2A50F2B500B22A96 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */; };
 		550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */; };
+		550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA06D2A59DB0000541312 /* UserProfileRouter.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */; };
@@ -284,6 +285,7 @@
 		5508D7682A50F29900B22A96 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
+		550DA06D2A59DB0000541312 /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoordinator.swift; sourceTree = "<group>"; };
@@ -588,8 +590,18 @@
 			isa = PBXGroup;
 			children = (
 				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
+				550DA06D2A59DB0000541312 /* UserProfileRouter.swift */,
 			);
 			path = "User Profile";
+			sourceTree = "<group>";
+		};
+		550DA06C2A59D9DB00541312 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				55EE519B251E8CF800915AB3 /* UserProfileHeaderView.swift */,
+				551A2932251F194F003746EE /* UserProfileHeaderView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5511FF82285A702300B9C12A /* SwiftUI */ = {
@@ -792,14 +804,13 @@
 		5550409A251E707900D919FF /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
+				550DA06C2A59D9DB00541312 /* Views */,
 				55EDA70E2810F63E0055696F /* Cells */,
 				5550409B251E70A400D919FF /* UserProfileViewController.swift */,
 				553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */,
 				5592766E285508030063743C /* UserHeaderDataSource.swift */,
 				559276702855095B0063743C /* UserProfileDataSource.swift */,
 				5592767228550DCD0063743C /* UserMoviesDataSource.swift */,
-				55EE519B251E8CF800915AB3 /* UserProfileHeaderView.swift */,
-				551A2932251F194F003746EE /* UserProfileHeaderView.xib */,
 			);
 			path = "User Profile";
 			sourceTree = "<group>";
@@ -1648,6 +1659,7 @@
 				55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */,
 				5511FFA3285ADE8700B9C12A /* Rating.swift in Sources */,
 				55EE519D251E8CF800915AB3 /* UserProfileHeaderView.swift in Sources */,
+				550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */,
 				553AF9AD2856BE93007D1B20 /* MovieHeaderDataSource.swift in Sources */,
 				55C4F40A251814AF002B73A9 /* CastCreditViewModel.swift in Sources */,
 				558B87572A58B4B700416FBB /* RemoteUserStateService.swift in Sources */,

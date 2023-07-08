@@ -31,7 +31,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     }
     
     //MARK: - Setup
-    func registerReusableViews() {
+    fileprivate func registerReusableViews() {
         UserProfileHeaderView.registerHeader(withCollectionView: collectionView)
         LoadingCell.register(to: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
@@ -39,7 +39,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
         EmptyMovieCell.register(to: collectionView)
     }
     
-    func setupDataSources() {
+    fileprivate func setupDataSources() {
         dataSources = [
             makeUserHeader(),
             makeFavorites(),
@@ -49,30 +49,30 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     }
     
     //MARK: - Data Sources
-    func makeUserHeader() -> UICollectionViewDataSource {
+    fileprivate func makeUserHeader() -> UICollectionViewDataSource {
         UserHeaderDataSource(user: user)
     }
     
-    func makeFavorites() -> UICollectionViewDataSource {
+    fileprivate func makeFavorites() -> UICollectionViewDataSource {
         makeSection(models: user.favorites,
                     title: .localized(UserString.Favorites),
                     emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
     }
     
-    func makeWatchlist() -> UICollectionViewDataSource {
+    fileprivate func makeWatchlist() -> UICollectionViewDataSource {
         makeSection(models: user.watchlist,
                     title: .localized(UserString.Watchlist),
                     emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
     }
     
-    func makeRated() -> UICollectionViewDataSource {
+    fileprivate func makeRated() -> UICollectionViewDataSource {
         makeSection(models: user.rated,
                     title: .localized(UserString.Rated),
                     emptyMessage: AttributedStringAsset.emptyRatedMessage)
     }
     
     //MARK: Helper
-    func makeSection(models: [MovieViewModel], title: String, emptyMessage: NSAttributedString) -> UICollectionViewDataSource {
+    fileprivate func makeSection(models: [MovieViewModel], title: String, emptyMessage: NSAttributedString) -> UICollectionViewDataSource {
         let dataSource = UserMoviesDataSource(models: models, emptyMessage: emptyMessage)
         
         let titleDataSource = TitleHeaderDataSource(title: title,

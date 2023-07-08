@@ -9,7 +9,7 @@
 import UIKit
 
 class UserProfileViewController: UIViewController {
-    weak var mainCoordinator: MainCoordinator?
+    var router: UserProfileRouter?
     
     var collectionView: UICollectionView!
     var dataSource: UserProfileDataSource!
@@ -17,8 +17,8 @@ class UserProfileViewController: UIViewController {
     private var user: UserViewModel
 
     //MARK: - View Controller
-    init(user: UserViewModel, coordinator: MainCoordinator? = nil) {
-        self.mainCoordinator = coordinator
+    init(user: UserViewModel, router: UserProfileRouter? = nil) {
+        self.router = router
         self.user = user
         
         super.init(nibName: nil, bundle: nil)
@@ -88,7 +88,7 @@ class UserProfileViewController: UIViewController {
             }
             
             if error != nil {
-                self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
+                self.router?.handle(error: .refreshError, shouldDismiss: true)
             }
             
             self.dataSource.reload()
@@ -103,13 +103,13 @@ class UserProfileViewController: UIViewController {
 //MARK: - Actions
 extension UserProfileViewController {
     @objc fileprivate func logout() {
-        mainCoordinator?.logout()
+        router?.logout()
     }
     
     func showMovieDetail(at index: Int, from movies: [MovieViewModel]) {
         guard movies.count > 0 else { return }
         let movie = movies[index]
-        mainCoordinator?.showMovieDetail(movie: movie)
+        router?.showMovieDetail(movie: movie)
     }
     
     func configureTitleHeader(_ header: UICollectionReusableView, section: UserProfileDataSource.Section) {
@@ -118,11 +118,11 @@ extension UserProfileViewController {
         titleHeader.tapHandler = { [weak self] in
             switch section {
             case .favorites:
-                self?.mainCoordinator?.showUserFavorites()
+                self?.router?.showUserFavorites()
             case .watchlist:
-                self?.mainCoordinator?.showUserWatchlist()
+                self?.router?.showUserWatchlist()
             case .rated:
-                self?.mainCoordinator?.showUserRated()
+                self?.router?.showUserRated()
             default:
                 break
             }

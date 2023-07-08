@@ -136,7 +136,7 @@ class MainCoordinator {
     }
     
     
-    func logout(completion: (() -> Void)? = nil) {
+    func logout() {
         Task { @MainActor in
             let result = await sessionManager.logout()
             
@@ -153,10 +153,8 @@ class MainCoordinator {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 
                 let _ = self.rootNavigationViewController?.popToRootViewController(animated: true)
-                completion?()
             case .failure(let error):
                 handle(error: error)
-                completion?()
             }
         }
     }
@@ -220,7 +218,7 @@ class MainCoordinator {
     func showUserProfile(animated: Bool = true) {
         if let sessionId {
             let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
-            let upvc = UserProfileViewController(user: user, coordinator: self)
+            let upvc = UserProfileViewController(user: user, router: self)
             
             rootNavigationViewController?.pushViewController(upvc, animated: animated)
         } else {
@@ -331,4 +329,4 @@ class MainCoordinator {
     
 }
 
-extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter, LoginRouter { }
+extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter, LoginRouter, UserProfileRouter {}
