@@ -26,6 +26,7 @@
 		550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */; };
 		550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA06D2A59DB0000541312 /* UserProfileRouter.swift */; };
 		550DA0712A59DDF700541312 /* ErrorHandlingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */; };
+		550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA0742A59E0DE00541312 /* SearchViewRouter.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */; };
@@ -288,6 +289,7 @@
 		550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		550DA06D2A59DB0000541312 /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingRouter.swift; sourceTree = "<group>"; };
+		550DA0742A59E0DE00541312 /* SearchViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewRouter.swift; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoordinator.swift; sourceTree = "<group>"; };
@@ -619,6 +621,14 @@
 				550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		550DA0732A59E0CD00541312 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				550DA0742A59E0DE00541312 /* SearchViewRouter.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		5511FF82285A702300B9C12A /* SwiftUI */ = {
@@ -1294,6 +1304,7 @@
 			isa = PBXGroup;
 			children = (
 				550DA0722A59DF3C00541312 /* Common */,
+				550DA0732A59E0CD00541312 /* Search */,
 				55FACCF22A590C8200FB13B5 /* Home */,
 				55FACCF32A590C8A00FB13B5 /* Movie Detail */,
 				55B8548B2A5924FA009870B2 /* Person Detail */,
@@ -1533,6 +1544,7 @@
 				55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */,
 				555EAF6527DC465D000B6525 /* ServiceGenre.swift in Sources */,
 				5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */,
+				550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */,
 				55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */,
 				55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */,
 				5505779E284DAA0F007ED892 /* MovieString.swift in Sources */,

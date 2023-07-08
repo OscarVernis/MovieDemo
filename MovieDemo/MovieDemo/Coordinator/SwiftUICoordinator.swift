@@ -23,7 +23,7 @@ class SwiftUICoordinator: MainCoordinator {
             .tint(Color(asset: .AppTintColor))
         let hvc = UIHostingController(rootView: homeView)
 
-        let searchViewController = SearchViewController(coordinator: self)
+        let searchViewController = SearchViewController(router: self)
         hvc.navigationItem.searchController = searchViewController.searchController
         
         rootNavigationViewController?.viewControllers = [hvc]

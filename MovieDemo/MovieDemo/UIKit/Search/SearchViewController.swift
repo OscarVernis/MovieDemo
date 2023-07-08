@@ -15,9 +15,13 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
         setupSearch()
     }
     
-    init(coordinator: MainCoordinator?) {
+    fileprivate var searchRouter: SearchViewRouter? {
+        router as? SearchViewRouter
+    }
+    
+    init(router: SearchViewRouter?) {
         let searchDataSource = SearchDataSource()
-        super.init(dataSource: searchDataSource, coordinator: coordinator)
+        super.init(dataSource: searchDataSource, router: router)
         self.provider = searchDataSource.dataProvider
     }
     
@@ -49,9 +53,9 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
             
             switch item {
             case let movie as MovieViewModel:
-                self.router?.showMovieDetail(movie: movie)
+                self.searchRouter?.showMovieDetail(movie: movie)
             case let person as PersonViewModel:
-                self.router?.showPersonProfile(person)
+                self.searchRouter?.showPersonProfile(person)
             default:
                 break
             }

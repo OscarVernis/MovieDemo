@@ -166,7 +166,7 @@ class MainCoordinator {
                                      popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
                                      topRatedProvider: moviesProvider(for: .TopRated, cacheList: .TopRated))
         
-        let searchViewController = SearchViewController(coordinator: self)
+        let searchViewController = SearchViewController(router: self)
         hvc.navigationItem.searchController = searchViewController.searchController
         
         rootNavigationViewController?.viewControllers = [hvc]
@@ -189,7 +189,7 @@ class MainCoordinator {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                             reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                             cellConfigurator: MovieInfoListCell.configure)
-        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
+        let lvc = ListViewController(dataSource: dataSource, router: self)
         lvc.title = title
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
@@ -248,7 +248,7 @@ class MainCoordinator {
         let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                             cellConfigurator: CreditPhotoListCell.configure)
-        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
+        let lvc = ListViewController(dataSource: dataSource, router: self)
         lvc.title =  MovieString.Crew.localized
         
         lvc.didSelectedItem = { index in
@@ -268,7 +268,7 @@ class MainCoordinator {
         let dataSource = ProviderDataSource(dataProvider: provider,
                                             reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                             cellConfigurator: CreditPhotoListCell.configure)
-        let lvc = ListViewController(dataSource: dataSource, coordinator: self)
+        let lvc = ListViewController(dataSource: dataSource, router: self)
         lvc.title = MovieString.Cast.localized
         
         lvc.didSelectedItem = { index in
@@ -329,4 +329,4 @@ class MainCoordinator {
     
 }
 
-extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter, LoginRouter, UserProfileRouter {}
+extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter, LoginRouter, UserProfileRouter, SearchViewRouter {}

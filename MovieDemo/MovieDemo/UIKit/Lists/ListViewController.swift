@@ -17,12 +17,12 @@ class ListViewController<Provider: DataProvider, Cell: UICollectionViewCell>: UI
     var dataSource: ListDataSource
     var provider: Provider
     
-    var router: MainCoordinator?
+    var router: ErrorHandlingRouter?
 
     var didSelectedItem: ((Int) -> ())?
     
-    init(dataSource: ProviderDataSource<Provider, Cell>, coordinator: MainCoordinator? = nil) {
-        self.router = coordinator
+    init(dataSource: ProviderDataSource<Provider, Cell>, router: ErrorHandlingRouter? = nil) {
+        self.router = router
         self.dataSource = ListDataSource(dataSource: dataSource)
         self.provider = dataSource.dataProvider
                 
