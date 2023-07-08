@@ -14,6 +14,9 @@ class MainCoordinator {
     private(set) var rootNavigationViewController: UINavigationController?
     
     private var sessionManager = SessionManager.shared
+    private var sessionId: String? {
+        sessionManager.sessionId
+    }
     
     //If set to true, it will force you to login before showing Home
     private var isLoginRequired: Bool = false
@@ -50,7 +53,7 @@ class MainCoordinator {
     }
     
     func moviesProvider(for movieList: MoviesEndpoint, cacheList: MovieCache.CacheList? = nil) -> MoviesProvider {
-        let loader = RemoteMoviesLoader(movieList: movieList, sessionId: sessionManager.sessionId)
+        let loader = RemoteMoviesLoader(movieList: movieList, sessionId: sessionId)
         
         var cache: MovieCache? = nil
         if let cacheList {
@@ -173,9 +176,9 @@ class MainCoordinator {
     
     //MARK: - Common
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
+        let userStateService: RemoteUserStateService? = sessionId != nil ? RemoteUserStateService(sessionId: sessionId!) : nil
         let store = MovieDetailStore(movie: movie,
-                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
+                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionId),
                                      userStateService: userStateService)
         
         let mdvc = MovieDetailViewController(store: store)
@@ -215,7 +218,7 @@ class MainCoordinator {
     
     //MARK: - Home Router
     func showUserProfile(animated: Bool = true) {
-        if let sessionId = sessionManager.sessionId {
+        if let sessionId {
             let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
             let upvc = UserProfileViewController(user: user, coordinator: self)
             

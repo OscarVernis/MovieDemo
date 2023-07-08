@@ -11,7 +11,9 @@ import SwiftUI
 
 class SwiftUICoordinator: MainCoordinator {
     private var sessionManager = SessionManager.shared
-
+    private var sessionId: String? {
+        sessionManager.sessionId
+    }
     override func showHome() {
         let homeView = Home(coordinator: self,
                             nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
@@ -28,9 +30,9 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let userStateService: RemoteUserStateService? = sessionManager.sessionId != nil ? RemoteUserStateService(sessionId: sessionManager.sessionId!) : nil
+        let userStateService: RemoteUserStateService? = sessionId != nil ? RemoteUserStateService(sessionId: sessionId!) : nil
         let store = MovieDetailStore(movie: movie,
-                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionManager.sessionId),
+                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionId),
                                      userStateService: userStateService)
         
         let movieDetail = MovieDetail(coordinator: self, store: store)
@@ -41,7 +43,7 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showUserProfile(animated: Bool = true) {
-        if let sessionId = sessionManager.sessionId {
+        if let sessionId {
             let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
             let userProfile = UserProfile(user: user, coordinator: self)
             let upvc = UIHostingController(rootView: userProfile)
