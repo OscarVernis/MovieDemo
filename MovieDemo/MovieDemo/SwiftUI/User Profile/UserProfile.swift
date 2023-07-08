@@ -83,15 +83,15 @@ struct UserProfile: View {
     
     //MARK: - Navigation
     fileprivate func showFavorites() {
-        coordinator?.showMovieList(title: .localized(UserString.Favorites), list: .UserFavorites)
+        coordinator?.showUserFavorites()
     }
     
     fileprivate func showWatchlist() {
-        coordinator?.showMovieList(title: .localized(UserString.Watchlist), list: .UserWatchList)
+        coordinator?.showUserWatchlist()
     }
     
     fileprivate func showRated() {
-        coordinator?.showMovieList(title: .localized(UserString.Rated), list: .UserRated)
+        coordinator?.showUserRated()
     }
     
     fileprivate func showDetail(movie: MovieViewModel) {

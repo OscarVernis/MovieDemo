@@ -112,13 +112,20 @@ extension UserProfileViewController {
         mainCoordinator?.showMovieDetail(movie: movie)
     }
     
-    func configureTitleHeader(_ header: UICollectionReusableView, list: MoviesEndpoint) {
+    func configureTitleHeader(_ header: UICollectionReusableView, section: UserProfileDataSource.Section) {
         guard let titleHeader = header as? SectionTitleView else { return }
-        
-        let title = titleHeader.titleLabel.text ?? ""
-        
+                
         titleHeader.tapHandler = { [weak self] in
-            self?.mainCoordinator?.showMovieList(title: title, list: list)
+            switch section {
+            case .favorites:
+                self?.mainCoordinator?.showUserFavorites()
+            case .watchlist:
+                self?.mainCoordinator?.showUserWatchlist()
+            case .rated:
+                self?.mainCoordinator?.showUserRated()
+            default:
+                break
+            }
         }
     }
     
@@ -134,11 +141,11 @@ extension UserProfileViewController: UICollectionViewDelegate {
             guard let header = view as? UserProfileHeaderView else { return }
             header.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
         case .favorites:
-            configureTitleHeader(view, list: .UserFavorites)
+            configureTitleHeader(view, section: section)
         case .watchlist:
-            configureTitleHeader(view, list: .UserWatchList)
+            configureTitleHeader(view, section: section)
         case .rated:
-            configureTitleHeader(view, list: .UserRated)
+            configureTitleHeader(view, section: section)
         }
     }
     

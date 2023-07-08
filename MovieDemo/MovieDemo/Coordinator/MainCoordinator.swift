@@ -194,8 +194,8 @@ class MainCoordinator {
     
     func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
-                                        reuseIdentifier: MovieInfoListCell.reuseIdentifier,
-                                        cellConfigurator: MovieInfoListCell.configure)
+                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier,
+                                            cellConfigurator: MovieInfoListCell.configure)
         let lvc = ListViewController(dataSource: dataSource, coordinator: self)
         lvc.title = title
         
@@ -203,23 +203,50 @@ class MainCoordinator {
         
         lvc.didSelectedItem = { [weak self] index in
             guard index < dataProvider.itemCount else { return }
-
+            
             let movie = dataProvider.item(atIndex: index)
             self?.showMovieDetail(movie: movie)
         }
-
+        
     }
     
-    func showMovieList(title: String, list: MoviesEndpoint, animated: Bool = true)  {
+    fileprivate func showMovieList(title: String, list: MoviesEndpoint, animated: Bool = true)  {
         let sessionId = sessionManager.sessionId
-        let dataProvider = MoviesProvider(movieLoader: RemoteMoviesLoader(movieList: list, sessionId: sessionId))
+        let dataProvider = moviesProvider(for: list)
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
     
+    func showNowPlaying() {
+        showMovieList(title: .localized(HomeString.NowPlaying), list: .NowPlaying)
+    }
+    
+    func showUpcoming() {
+        showMovieList(title: .localized(HomeString.Upcoming), list: .Upcoming)
+    }
+    
+    func showPopular() {
+        showMovieList(title: .localized(HomeString.Popular), list: .Popular)
+    }
+    
+    func showTopRated() {
+        showMovieList(title: .localized(HomeString.TopRated), list: .TopRated)
+    }
+    
+    func showUserFavorites() {
+        showMovieList(title: .localized(UserString.Favorites), list: .UserFavorites)
+    }
+    
+    func showUserWatchlist() {
+        showMovieList(title: .localized(UserString.Watchlist), list: .UserWatchList)
+    }
+    
+    func showUserRated() {
+        showMovieList(title: .localized(UserString.Rated), list: .UserRated)
+    }
+    
     func showRecommendedMovies(for movieId: Int) {
-        let provider = moviesProvider(for: .Recommended(movieId: movieId))
-        showMovieList(title: .localized(MovieString.RecommendedMovies), dataProvider: provider)
+        showMovieList(title: .localized(MovieString.RecommendedMovies), list: .Recommended(movieId: movieId))
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
@@ -230,17 +257,18 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(pvc, animated: animated)
     }
     
-    func showCrewCreditList(title: String, dataProvider: BasicProvider<CrewCreditViewModel>, animated: Bool = true) {
-        let dataSource = ProviderDataSource(dataProvider: dataProvider,
+    func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
+        let provider = BasicProvider(models: credits)
+        let dataSource = ProviderDataSource(dataProvider: provider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                         cellConfigurator: CreditPhotoListCell.configure)
         let lvc = ListViewController(dataSource: dataSource, coordinator: self)
-        lvc.title = title
+        lvc.title =  MovieString.Crew.localized
         
         lvc.didSelectedItem = { index in
-            if index >= dataProvider.itemCount { return }
+            if index >= provider.itemCount { return }
             
-            let crewCredit = dataProvider.item(atIndex: index)
+            let crewCredit = provider.item(atIndex: index)
             
             let person = crewCredit.person()
             self.showPersonProfile(person)
@@ -249,17 +277,18 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
-    func showCastCreditList(title: String, dataProvider: BasicProvider<CastCreditViewModel>, animated: Bool = true) {
-        let dataSource = ProviderDataSource(dataProvider: dataProvider,
+    func showCastCreditList(credits: [CastCreditViewModel], animated: Bool = true) {
+        let provider = BasicProvider(models: credits)
+        let dataSource = ProviderDataSource(dataProvider: provider,
                                         reuseIdentifier: CreditPhotoListCell.reuseIdentifier,
                                         cellConfigurator: CreditPhotoListCell.configure)
         let lvc = ListViewController(dataSource: dataSource, coordinator: self)
-        lvc.title = title
+        lvc.title = MovieString.Cast.localized
         
         lvc.didSelectedItem = { index in
-            if index >= dataProvider.itemCount { return }
+            if index >= provider.itemCount { return }
             
-            let castCredit = dataProvider.item(atIndex: index)
+            let castCredit = provider.item(atIndex: index)
             
             let person = castCredit.person()
             self.showPersonProfile(person)

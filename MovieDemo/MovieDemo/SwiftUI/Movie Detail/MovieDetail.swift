@@ -151,17 +151,15 @@ struct MovieDetail: View {
     
     //MARK: - Navigation
     fileprivate func showCastList() {
-        coordinator?.showCastCreditList(title: MovieString.Cast.localized,
-                                        dataProvider: BasicProvider(models: movie.cast))
+        coordinator?.showCastCreditList(credits: movie.cast)
     }
     
     fileprivate func showCrewList() {
-        coordinator?.showCrewCreditList(title: MovieString.Crew.localized,
-                                        dataProvider: BasicProvider(models: movie.crew))
+        coordinator?.showCrewCreditList(credits: movie.crew)
     }
     
     fileprivate func showRecommended() {
-        coordinator?.showMovieList(title: MovieString.RecommendedMovies.localized, list: .Recommended(movieId: movie.id))
+        coordinator?.showRecommendedMovies(for: movie.id)
     }
     
     fileprivate func showMovieDetail(movie: MovieViewModel) {

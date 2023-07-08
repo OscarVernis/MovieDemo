@@ -65,19 +65,19 @@ struct Home: View {
     
     //MARK: - Navigation
     fileprivate func showNowPlaying() {
-        coordinator?.showMovieList(title: .localized(HomeString.NowPlaying), list: .NowPlaying)
+        coordinator?.showNowPlaying()
     }
     
     fileprivate func showUpcoming() {
-        coordinator?.showMovieList(title: .localized(HomeString.Upcoming), list: .Upcoming)
+        coordinator?.showUpcoming()
     }
     
     fileprivate func showPopular() {
-        coordinator?.showMovieList(title: .localized(HomeString.Popular), list: .Popular)
+        coordinator?.showPopular()
     }
     
     fileprivate func showTopRated() {
-        coordinator?.showMovieList(title: .localized(HomeString.TopRated), list: .TopRated)
+        coordinator?.showTopRated()
     }
     
     fileprivate func showDetail(movie: MovieViewModel) {
