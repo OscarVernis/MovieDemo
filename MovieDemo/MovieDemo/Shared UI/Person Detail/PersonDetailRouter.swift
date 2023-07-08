@@ -1,5 +1,5 @@
 //
-//  HomeRouter.swift
+//  PersonDetailRouter.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 07/07/23.
@@ -8,22 +8,19 @@
 
 import Foundation
 
-protocol HomeRouter {
-    func showUserProfile(animated: Bool)
+protocol PersonDetailRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
-    
-    func showNowPlaying()
-    func showUpcoming()
-    func showPopular()
-    func showTopRated()
+    func handle(error: UserFacingError, shouldDismiss: Bool)
+
 }
 
-extension HomeRouter {
-    func showUserProfile(animated: Bool = true) {
-        showUserProfile(animated: animated)
-    }
-    
+extension PersonDetailRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         showMovieDetail(movie: movie, animated: animated)
     }
+    
+    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
+        handle(error: error, shouldDismiss: shouldDismiss)
+    }
+    
 }

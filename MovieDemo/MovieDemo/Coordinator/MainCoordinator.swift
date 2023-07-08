@@ -297,7 +297,7 @@ class MainCoordinator {
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
         pvc.person = viewModel
-        pvc.mainCoordinator = self
+        pvc.router = self
         
         rootNavigationViewController?.pushViewController(pvc, animated: animated)
     }
@@ -323,4 +323,4 @@ class MainCoordinator {
 
 }
 
-extension MainCoordinator: HomeRouter, MovieDetailRouter { }
+extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter { }

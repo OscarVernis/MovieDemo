@@ -22,7 +22,7 @@ protocol MovieDetailRouter {
 }
 
 extension MovieDetailRouter {
-    func showMovieDetail(movie: MovieViewModel, animated: Bool = false) {
+    func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         showMovieDetail(movie: movie, animated: animated)
     }
     

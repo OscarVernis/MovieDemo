@@ -203,6 +203,7 @@
 		55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */; };
 		55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBC727E02E49007DB4C2 /* MovieCache.swift */; };
 		55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */; };
+		55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548C2A592515009870B2 /* PersonDetailRouter.swift */; };
 		55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB1A95285D5273000BC3A0 /* SectionBackground.swift */; };
 		55BB863E251FA1CB00F17D7F /* MovieRatingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */; };
 		55C350C227F768F1006F4E7C /* Person.json in Resources */ = {isa = PBXBuildFile; fileRef = 55C350C127F768F1006F4E7C /* Person.json */; };
@@ -475,6 +476,7 @@
 		55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreMO.swift; sourceTree = "<group>"; };
 		55B6CBC727E02E49007DB4C2 /* MovieCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCache.swift; sourceTree = "<group>"; };
 		55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		55B8548C2A592515009870B2 /* PersonDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailRouter.swift; sourceTree = "<group>"; };
 		55BB1A95285D5273000BC3A0 /* SectionBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackground.swift; sourceTree = "<group>"; };
 		55BB863F251FA1CB00F17D7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieRatingViewController.storyboard; sourceTree = "<group>"; };
 		55BB8643251FA1CF00F17D7F /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MovieRatingViewController.strings"; sourceTree = "<group>"; };
@@ -1130,6 +1132,14 @@
 			path = LocalStore;
 			sourceTree = "<group>";
 		};
+		55B8548B2A5924FA009870B2 /* Person Detail */ = {
+			isa = PBXGroup;
+			children = (
+				55B8548C2A592515009870B2 /* PersonDetailRouter.swift */,
+			);
+			path = "Person Detail";
+			sourceTree = "<group>";
+		};
 		55E07D7A22D9983C00AF0144 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1252,6 +1262,7 @@
 			children = (
 				55FACCF22A590C8200FB13B5 /* Home */,
 				55FACCF32A590C8A00FB13B5 /* Movie Detail */,
+				55B8548B2A5924FA009870B2 /* Person Detail */,
 			);
 			path = "Shared UI";
 			sourceTree = "<group>";
@@ -1517,6 +1528,7 @@
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
 				556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,
+				55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */,
 				556F01452A588756005B5211 /* Helpers.swift in Sources */,
 				555463ED286E211A0010AEB0 /* VideoItem.swift in Sources */,
 				55DD1B92251FB59500EC8C55 /* YoutubeVideoCell.swift in Sources */,

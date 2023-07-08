@@ -9,7 +9,7 @@
 import UIKit
 
 class PersonDetailViewController: UIViewController {
-    weak var mainCoordinator: MainCoordinator?
+    var router: PersonDetailRouter?
 
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
@@ -118,7 +118,7 @@ class PersonDetailViewController: UIViewController {
             guard let self = self else { return }
             
             if error != nil {
-                self.mainCoordinator?.handle(error: .refreshError, shouldDismiss: true)
+                self.router?.handle(error: .refreshError, shouldDismiss: true)
             }
             
             self.dataSource.reload()
@@ -180,16 +180,16 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         switch section {
         case .popular:
             let movie = person.popularMovies[indexPath.row]
-            mainCoordinator?.showMovieDetail(movie: movie)
+            router?.showMovieDetail(movie: movie)
         case .castCredits:
             let castCredit = person.castCredits[indexPath.row]
             if let movie = castCredit.movie {
-                mainCoordinator?.showMovieDetail(movie: movie)
+                router?.showMovieDetail(movie: movie)
             }
         case .crewCredits:
             if let crewCredit = dataSource.crewCredit(at: indexPath),
                let movie = crewCredit.movie {
-                mainCoordinator?.showMovieDetail(movie: movie)
+                router?.showMovieDetail(movie: movie)
             }
         default:
             break
