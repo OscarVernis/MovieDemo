@@ -18,9 +18,21 @@ class HomeDataSource: SectionedCollectionDataSource {
     unowned var collectionView: UICollectionView
 
     var providers: [MoviesProvider] = []
+    var nowPlayingProvider: MoviesProvider
+    var upcomingProvider: MoviesProvider
+    var popularProvider: MoviesProvider
+    var topRatedProvider: MoviesProvider
     
-    init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView,
+         nowPlayingProvider: MoviesProvider,
+         upcomingProvider: MoviesProvider,
+         popularProvider: MoviesProvider,
+         topRatedProvider: MoviesProvider) {
         self.collectionView = collectionView
+        self.nowPlayingProvider = nowPlayingProvider
+        self.upcomingProvider = upcomingProvider
+        self.popularProvider = popularProvider
+        self.topRatedProvider = topRatedProvider
         super.init()
         
         registerReusableViews()
@@ -62,29 +74,29 @@ class HomeDataSource: SectionedCollectionDataSource {
         
     //MARK: - Data Sources
     func makeNowPlaying() -> UICollectionViewDataSource {
-        makeSection(.NowPlaying,
+        makeSection(provider: nowPlayingProvider,
                     title: .localized(HomeString.NowPlaying),
                     reuseIdentifier: MovieBannerCell.reuseIdentifier,
                     cellConfigurator: MovieBannerCell.configure)
     }
     
     func makeUpcoming() -> UICollectionViewDataSource {
-        makeSection(.Upcoming,
+        makeSection(provider: upcomingProvider,
                     title: .localized(HomeString.Upcoming),
                     reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
                     cellConfigurator: MoviePosterInfoCell.configureWithDate)
     }
     
     func makePopular() -> UICollectionViewDataSource {
-        makeSection(.Popular,
+        makeSection(provider: popularProvider,
                     title: .localized(HomeString.Popular),
                     reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                     cellConfigurator: MovieInfoListCell.configure)
     }
     
     func makeTopRated() -> UICollectionViewDataSource {
-        let dataSource = TopRatedDataSource()
-        providers.append(dataSource.dataProvider)
+        let dataSource = TopRatedDataSource(provider: topRatedProvider)
+        providers.append(topRatedProvider)
         
         let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.TopRated),
                                                           dataSource: dataSource)
@@ -93,9 +105,8 @@ class HomeDataSource: SectionedCollectionDataSource {
     }
     
     //MARK: Helper
-    func makeSection<Cell: UICollectionViewCell>(_ movieList: MovieList, title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, MovieViewModel) -> Void) -> UICollectionViewDataSource {
+    func makeSection<Cell: UICollectionViewCell>(provider: MoviesProvider, title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, MovieViewModel) -> Void) -> UICollectionViewDataSource {
         
-        let provider = MoviesProvider(movieList)
         providers.append(provider)
         
         let dataSource = ProviderDataSource(dataProvider: provider,

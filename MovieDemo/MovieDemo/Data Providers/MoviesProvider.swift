@@ -10,20 +10,11 @@ import Foundation
 import Combine
 
 class MoviesProvider: PaginatedProvider<MovieViewModel> {
-    let movieLoader: MovieLoader
+    let movieLoader: MoviesLoader
     let cache: MovieCache?
     var serviceCancellable: AnyCancellable?
-    
-    var currentService: MovieList = .NowPlaying {
-        didSet {
-           refresh()
-        }
-    }
 
-    init(_ service: MovieList = .NowPlaying,
-         movieLoader: MovieLoader = RemoteMoviesLoader(),
-         cache: MovieCache? = MovieCache()) {
-        self.currentService = service
+    init(movieLoader: MoviesLoader, cache: MovieCache? = nil) {
         self.movieLoader = movieLoader
         self.cache = cache
     }
@@ -35,14 +26,14 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
                 items.count == 0
         else { return }
         
-        items = cache.fetchMovies(movieList: currentService).map { MovieViewModel(movie: $0) }
+        items = cache.fetchMovies().map { MovieViewModel(movie: $0) }
     }
     
     override func getItems() {
         let page = currentPage + 1
         loadFromCache()
         
-        serviceCancellable = movieLoader.getMovies(movieList: currentService, page: page)
+        serviceCancellable = movieLoader.getMovies(page: page)
             .sink { [weak self] completion in
                 guard let self = self else { return }
                 
@@ -58,11 +49,11 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
                 
                 if self.currentPage == 0 {
                     self.items.removeAll()
-                    self.cache?.delete(movieList: self.currentService)
+                    self.cache?.delete()
                 }
                 
                 self.totalPages = result.totalPages
-                self.cache?.save(movies: result.movies, movieList: self.currentService)
+                self.cache?.save(movies: result.movies)
                 self.items.append(contentsOf: result.movies.map { MovieViewModel(movie: $0) })
             }
     }

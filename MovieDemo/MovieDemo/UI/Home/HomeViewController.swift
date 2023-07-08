@@ -15,14 +15,29 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     weak var mainCoordinator: MainCoordinator!
     
     var didSelectItem: ((Movie) -> ())?
+    
+    var nowPlayingProvider: MoviesProvider
+    var upcomingProvider: MoviesProvider
+    var popularProvider: MoviesProvider
+    var topRatedProvider: MoviesProvider
         
     //MARK: - Setup
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init(mainCoordinator: MainCoordinator?,
+                  nowPlayingProvider: MoviesProvider,
+                  upcomingProvider: MoviesProvider,
+                  popularProvider: MoviesProvider,
+                  topRatedProvider: MoviesProvider) {
+        self.mainCoordinator = mainCoordinator
+        self.nowPlayingProvider = nowPlayingProvider
+        self.upcomingProvider = upcomingProvider
+        self.popularProvider = popularProvider
+        self.topRatedProvider = topRatedProvider
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required init() {
-        super.init(nibName: nil, bundle: nil)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -75,7 +90,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupDataSource() {
-        self.dataSource = HomeDataSource(collectionView: self.collectionView)
+        self.dataSource = HomeDataSource(collectionView: self.collectionView,
+        nowPlayingProvider: nowPlayingProvider,
+        upcomingProvider: upcomingProvider,
+        popularProvider: popularProvider,
+        topRatedProvider: topRatedProvider)
+        
         dataSource.didUpdate = { [weak self] section, _ in
             self?.collectionView.refreshControl?.endRefreshing()
         }

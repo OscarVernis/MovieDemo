@@ -52,10 +52,10 @@ struct Home: View {
     
     //MARK: - Init
     init(coordinator: MainCoordinator? = nil,
-         nowPlayingProvider: MoviesProvider = MoviesProvider(.NowPlaying),
-         upcomingProvider: MoviesProvider = MoviesProvider(.Upcoming),
-         popularProvider: MoviesProvider = MoviesProvider(.Popular),
-         topRatedProvider: MoviesProvider = MoviesProvider(.TopRated)) {
+         nowPlayingProvider: MoviesProvider,
+         upcomingProvider: MoviesProvider,
+         popularProvider: MoviesProvider,
+         topRatedProvider: MoviesProvider) {
         self.coordinator = coordinator
         self.nowPlayingProvider = nowPlayingProvider
         self.upcomingProvider = upcomingProvider

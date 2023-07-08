@@ -194,8 +194,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
-        let provider = MoviesProvider(.Recommended(movieId: movie.id))
-        mainCoordinator?.showMovieList(title: .localized(MovieString.RecommendedMovies), dataProvider: provider)
+        mainCoordinator?.showRecommendedMovies(for: movie.id)
     }
     
     @objc fileprivate func playYoutubeTrailer() {

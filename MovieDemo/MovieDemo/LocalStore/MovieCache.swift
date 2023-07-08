@@ -11,13 +11,26 @@ import Combine
 import CoreData
 
 struct MovieCache {
+    enum CacheList {
+        case NowPlaying
+        case Popular
+        case TopRated
+        case Upcoming
+    }
+    
     private var store = CoreDataStore.shared
     
-    func fetchMovies(movieList: MovieList) -> [Movie] {
+    var cacheList: CacheList
+    
+    init(cacheList: CacheList) {
+        self.cacheList = cacheList
+    }
+    
+    func fetchMovies() -> [Movie] {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         var managedMovies: [MovieMO]?
         
-        switch movieList {
+        switch cacheList {
         case .NowPlaying:
             managedMovies = cache.nowPlaying?.array as? [MovieMO]
         case .Popular:
@@ -26,18 +39,16 @@ struct MovieCache {
             managedMovies = cache.topRated?.array as? [MovieMO]
         case .Upcoming:
             managedMovies = cache.upcoming?.array as? [MovieMO]
-        default:
-            break
         }
                 
         return managedMovies?.compactMap { $0.toMovie() } ?? []
     }
         
-    func save(movies: [Movie], movieList: MovieList) {
+    func save(movies: [Movie]) {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         let managedMovies = NSOrderedSet(array: movies.compactMap { MovieMO(withMovie: $0, context: store.context) })
                 
-        switch movieList {
+        switch cacheList {
         case .NowPlaying:
             cache.addToNowPlaying(managedMovies)
         case .Popular:
@@ -46,17 +57,15 @@ struct MovieCache {
             cache.addToTopRated(managedMovies)
         case .Upcoming:
             cache.addToUpcoming(managedMovies)
-        default:
-            break
         }
         
         store.save()
     }
     
-    func delete(movieList: MovieList) {
+    func delete() {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         
-        switch movieList {
+        switch cacheList {
         case .NowPlaying:
             let managedMovies = cache.nowPlaying ?? NSOrderedSet()
             cache.removeFromNowPlaying(managedMovies)
@@ -69,8 +78,6 @@ struct MovieCache {
         case .Upcoming:
             let managedMovies = cache.upcoming ?? NSOrderedSet()
             cache.removeFromUpcoming(managedMovies)
-        default:
-            break
         }
         
         store.save()
@@ -78,10 +85,10 @@ struct MovieCache {
     
 }
 
-extension MovieCache: MovieLoader {
-    func getMovies(movieList: MovieList, page: Int = 1) -> AnyPublisher<MoviesResult, Error> {
+extension MovieCache: MoviesLoader {
+    func getMovies(page: Int = 1) -> AnyPublisher<MoviesResult, Error> {
         let totalPages = 1
-        let movies = fetchMovies(movieList: movieList)
+        let movies = fetchMovies()
         return Just((movies, totalPages))
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()

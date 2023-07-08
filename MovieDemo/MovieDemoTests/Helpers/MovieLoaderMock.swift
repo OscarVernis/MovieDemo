@@ -10,7 +10,7 @@ import Foundation
 import Combine
 @testable import MovieDemo
 
-class MovieLoaderMock: MovieLoader {
+class MovieLoaderMock: MoviesLoader {
     var pageCount: Int
     var movies: [Movie]
     var error: Error?

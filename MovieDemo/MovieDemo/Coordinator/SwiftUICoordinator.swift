@@ -13,7 +13,11 @@ class SwiftUICoordinator: MainCoordinator {
     private var sessionManager = SessionManager.shared
 
     override func showHome() {
-        let homeView = Home(coordinator: self)
+        let homeView = Home(coordinator: self,
+                            nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
+                            upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
+                            popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
+                            topRatedProvider: moviesProvider(for: .TopRated, cacheList: .TopRated))
             .tint(Color(asset: .AppTintColor))
         let hvc = UIHostingController(rootView: homeView)
 

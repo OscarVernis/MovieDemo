@@ -47,6 +47,17 @@ class MainCoordinator {
                                     completion: completion)
     }
     
+    func moviesProvider(for movieList: MoviesEndpoint, cacheList: MovieCache.CacheList? = nil) -> MoviesProvider {
+        let loader = RemoteMoviesLoader(movieList: movieList, sessionId: sessionManager.sessionId)
+        
+        var cache: MovieCache? = nil
+        if let cacheList {
+            cache = MovieCache(cacheList: cacheList)
+        }
+        
+        return MoviesProvider(movieLoader: loader, cache: cache)
+    }
+    
     func start() {
         rootNavigationViewController = UINavigationController()
         rootNavigationViewController?.navigationBar.prefersLargeTitles = true
@@ -160,8 +171,11 @@ class MainCoordinator {
     }
     
     func showHome() {
-        let hvc = HomeViewController()
-        hvc.mainCoordinator = self
+        let hvc = HomeViewController(mainCoordinator: self,
+                                     nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
+                                     upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
+                                     popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
+                                     topRatedProvider: moviesProvider(for: .TopRated, cacheList: .NowPlaying))
         
         rootNavigationViewController?.viewControllers = [hvc]
     }
@@ -196,11 +210,16 @@ class MainCoordinator {
 
     }
     
-    func showMovieList(title: String, list: MovieList, animated: Bool = true)  {
+    func showMovieList(title: String, list: MoviesEndpoint, animated: Bool = true)  {
         let sessionId = sessionManager.sessionId
-        let dataProvider = MoviesProvider(list, movieLoader: RemoteMoviesLoader(sessionId: sessionId))
+        let dataProvider = MoviesProvider(movieLoader: RemoteMoviesLoader(movieList: list, sessionId: sessionId))
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
+    }
+    
+    func showRecommendedMovies(for movieId: Int) {
+        let provider = moviesProvider(for: .Recommended(movieId: movieId))
+        showMovieList(title: .localized(MovieString.RecommendedMovies), dataProvider: provider)
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {

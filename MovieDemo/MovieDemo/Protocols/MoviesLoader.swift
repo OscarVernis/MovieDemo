@@ -9,10 +9,8 @@
 import Foundation
 import Combine
 
-
-typealias MovieList = MoviesEndpoint
 typealias MoviesResult = (movies: [Movie], totalPages: Int)
 
-protocol MovieLoader {    
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResult, Error>
+protocol MoviesLoader {    
+    func getMovies(page: Int) -> AnyPublisher<MoviesResult, Error>
 }

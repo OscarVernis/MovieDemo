@@ -9,14 +9,16 @@
 import Foundation
 import Combine
 
-struct RemoteMoviesLoader: MovieLoader {
+struct RemoteMoviesLoader: MoviesLoader {
     let service: MovieService
+    let movieList: MoviesEndpoint
     
-    init(sessionId: String? = nil) {
+    init(movieList: MoviesEndpoint, sessionId: String? = nil) {
         self.service = MovieService(sessionId: sessionId)
+        self.movieList = movieList
     }
     
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResult, Error> {
+    func getMovies(page: Int) -> AnyPublisher<MoviesResult, Error> {
         let publisher: AnyPublisher<ServiceModelsResult<Movie>, Error> = service.getModels(endpoint: .movies(movieList), page: page)
         
         return publisher

@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct JSONMoviesLoader: MovieLoader {
+struct JSONMoviesLoader: MoviesLoader {
     var movies: [Movie] = []
     var jsonDecoder = MovieDecoder()
     
@@ -34,7 +34,7 @@ struct JSONMoviesLoader: MovieLoader {
         }
     }
     
-    func getMovies(movieList: MovieList, page: Int) -> AnyPublisher<MoviesResult, Error> {
+    func getMovies(page: Int) -> AnyPublisher<MoviesResult, Error> {
         if let error = error {
             return Fail(outputType: MoviesResult.self, failure: error)
                 .eraseToAnyPublisher()

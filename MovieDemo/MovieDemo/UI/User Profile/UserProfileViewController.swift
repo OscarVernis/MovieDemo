@@ -112,7 +112,7 @@ extension UserProfileViewController {
         mainCoordinator?.showMovieDetail(movie: movie)
     }
     
-    func configureTitleHeader(_ header: UICollectionReusableView, list: MovieList) {
+    func configureTitleHeader(_ header: UICollectionReusableView, list: MoviesEndpoint) {
         guard let titleHeader = header as? SectionTitleView else { return }
         
         let title = titleHeader.titleLabel.text ?? ""
