@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct Home: View {
-    weak var coordinator: MainCoordinator?
+    var router: HomeRouter?
     @ObservedObject var nowPlayingProvider: MoviesProvider
     @ObservedObject var upcomingProvider: MoviesProvider
     @ObservedObject var popularProvider: MoviesProvider
@@ -51,12 +51,12 @@ struct Home: View {
     }
     
     //MARK: - Init
-    init(coordinator: MainCoordinator? = nil,
+    init(router: HomeRouter? = nil,
          nowPlayingProvider: MoviesProvider,
          upcomingProvider: MoviesProvider,
          popularProvider: MoviesProvider,
          topRatedProvider: MoviesProvider) {
-        self.coordinator = coordinator
+        self.router = router
         self.nowPlayingProvider = nowPlayingProvider
         self.upcomingProvider = upcomingProvider
         self.popularProvider = popularProvider
@@ -65,23 +65,23 @@ struct Home: View {
     
     //MARK: - Navigation
     fileprivate func showNowPlaying() {
-        coordinator?.showNowPlaying()
+        router?.showNowPlaying()
     }
     
     fileprivate func showUpcoming() {
-        coordinator?.showUpcoming()
+        router?.showUpcoming()
     }
     
     fileprivate func showPopular() {
-        coordinator?.showPopular()
+        router?.showPopular()
     }
     
     fileprivate func showTopRated() {
-        coordinator?.showTopRated()
+        router?.showTopRated()
     }
     
     fileprivate func showDetail(movie: MovieViewModel) {
-        coordinator?.showMovieDetail(movie: movie)
+        router?.showMovieDetail(movie: movie)
     }
     
     //MARK: - Helpers
@@ -95,7 +95,7 @@ struct Home: View {
     fileprivate func navigationItems() -> ToolbarItem<Void, Button<Image>> {
         ToolbarItem(placement: .primaryAction) {
             Button(action: {
-                coordinator?.showUserProfile()
+                router?.showUserProfile()
             }, label: {
                 Image(asset: .person)
             })
@@ -121,7 +121,7 @@ struct Home_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView{
-            Home(coordinator: nil,
+            Home(router: nil,
                  nowPlayingProvider: provider,
                  upcomingProvider: provider,
                  popularProvider: provider,

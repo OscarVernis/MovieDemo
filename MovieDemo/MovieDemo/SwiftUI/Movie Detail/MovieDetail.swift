@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MovieDetail: View {
-    weak var coordinator: MainCoordinator?
+    var router: MovieDetailRouter?
 
     @ObservedObject var store: MovieDetailStore
     
@@ -151,27 +151,27 @@ struct MovieDetail: View {
     
     //MARK: - Navigation
     fileprivate func showCastList() {
-        coordinator?.showCastCreditList(credits: movie.cast)
+        router?.showCastCreditList(credits: movie.cast)
     }
     
     fileprivate func showCrewList() {
-        coordinator?.showCrewCreditList(credits: movie.crew)
+        router?.showCrewCreditList(credits: movie.crew)
     }
     
     fileprivate func showRecommended() {
-        coordinator?.showRecommendedMovies(for: movie.id)
+        router?.showRecommendedMovies(for: movie.id)
     }
     
     fileprivate func showMovieDetail(movie: MovieViewModel) {
-        coordinator?.showMovieDetail(movie: movie)
+        router?.showMovieDetail(movie: movie)
     }
     
     fileprivate func showCastDetail(credit: CastCreditViewModel) {
-        coordinator?.showPersonProfile(credit.person())
+        router?.showPersonProfile(credit.person())
     }
     
     fileprivate func showCrewDetail(credit: CrewCreditViewModel) {
-        coordinator?.showPersonProfile(credit.person())
+        router?.showPersonProfile(credit.person())
     }
     
     func playVideo(video: MovieVideoViewModel) {

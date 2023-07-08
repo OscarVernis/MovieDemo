@@ -20,7 +20,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     var upcomingProvider: MoviesProvider
     var popularProvider: MoviesProvider
     var topRatedProvider: MoviesProvider
-        
+    
     //MARK: - Setup
     required init(router: HomeRouter?,
                   nowPlayingProvider: MoviesProvider,
@@ -42,7 +42,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                        
+        
         setupCollectionView()
         setupDataSource()
         setupViewController()
@@ -52,21 +52,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         return .portrait
     }
     
-    func setupCollectionView() {
+    fileprivate func setupCollectionView() {
         let layout = UICollectionViewCompositionalLayout(sectionProvider: HomeLayoutProvider().createLayout)
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        collectionView.dataSource = dataSource
         collectionView.delegate = self
         
         //Setup
         collectionView.backgroundColor = .asset(.AppBackgroundColor)
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
-
+        
         view.addSubview(collectionView)
     }
     
@@ -84,11 +83,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupDataSource() {
-        self.dataSource = HomeDataSource(collectionView: self.collectionView,
-        nowPlayingProvider: nowPlayingProvider,
-        upcomingProvider: upcomingProvider,
-        popularProvider: popularProvider,
-        topRatedProvider: topRatedProvider)
+        dataSource = HomeDataSource(collectionView: self.collectionView,
+                                         nowPlayingProvider: nowPlayingProvider,
+                                         upcomingProvider: upcomingProvider,
+                                         popularProvider: popularProvider,
+                                         topRatedProvider: topRatedProvider)
         
         dataSource.didUpdate = { [weak self] section, _ in
             self?.collectionView.refreshControl?.endRefreshing()
@@ -99,15 +98,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     //MARK: - Actions
-    @objc func showUser() {
+    @objc fileprivate func showUser() {
         router.showUserProfile()
     }
     
-    @objc func refresh() {
+    @objc fileprivate func refresh() {
         dataSource.refresh()
     }
     
-    func showMovieList(section: HomeDataSource.Section) {
+    fileprivate func showMovieList(section: HomeDataSource.Section) {
         switch section {
         case .nowPlaying:
             router.showNowPlaying()

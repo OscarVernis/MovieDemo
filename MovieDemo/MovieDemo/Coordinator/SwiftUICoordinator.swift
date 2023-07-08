@@ -15,7 +15,7 @@ class SwiftUICoordinator: MainCoordinator {
         sessionManager.sessionId
     }
     override func showHome() {
-        let homeView = Home(coordinator: self,
+        let homeView = Home(router: self,
                             nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
                             upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
                             popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
@@ -35,7 +35,7 @@ class SwiftUICoordinator: MainCoordinator {
                                      movieService: RemoteMovieDetailsLoader(sessionId: sessionId),
                                      userStateService: userStateService)
         
-        let movieDetail = MovieDetail(coordinator: self, store: store)
+        let movieDetail = MovieDetail(router: self, store: store)
         let mdvc = UIHostingController(rootView: movieDetail)
         mdvc.navigationItem.largeTitleDisplayMode = .never
 
@@ -45,7 +45,7 @@ class SwiftUICoordinator: MainCoordinator {
     override func showUserProfile(animated: Bool = true) {
         if let sessionId {
             let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
-            let userProfile = UserProfile(user: user, coordinator: self)
+            let userProfile = UserProfile(user: user, router: self)
             let upvc = UIHostingController(rootView: userProfile)
             upvc.navigationItem.largeTitleDisplayMode = .never
 

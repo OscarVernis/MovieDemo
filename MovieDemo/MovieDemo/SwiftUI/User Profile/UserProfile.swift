@@ -10,7 +10,7 @@ import SwiftUI
 
 struct UserProfile: View {
     @ObservedObject var user: UserViewModel
-    weak var coordinator: MainCoordinator?
+    var router: UserProfileRouter?
     
     var body: some View {
         Group {
@@ -71,7 +71,7 @@ struct UserProfile: View {
             RoundedButton(title: "Logout",
                           image: Image(asset: .person),
                           action: {
-                coordinator?.logout()
+                router?.logout()
             })
             .padding()
         }
@@ -83,19 +83,19 @@ struct UserProfile: View {
     
     //MARK: - Navigation
     fileprivate func showFavorites() {
-        coordinator?.showUserFavorites()
+        router?.showUserFavorites()
     }
     
     fileprivate func showWatchlist() {
-        coordinator?.showUserWatchlist()
+        router?.showUserWatchlist()
     }
     
     fileprivate func showRated() {
-        coordinator?.showUserRated()
+        router?.showUserRated()
     }
     
     fileprivate func showDetail(movie: MovieViewModel) {
-        coordinator?.showMovieDetail(movie: movie)
+        router?.showMovieDetail(movie: movie)
     }
     
 }
