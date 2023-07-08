@@ -29,7 +29,7 @@ class DataProvidersTests: XCTestCase {
     func test_MovieDataProvider_success() throws {
         let movies = anyMovies(count: 20)
         let movieLoaderMock = MovieLoaderMock(movies: movies, pageCount: 3)
-        let dataProvider = MoviesProvider(.NowPlaying, movieLoader: movieLoaderMock)
+        let dataProvider = MoviesProvider(movieLoader: movieLoaderMock)
         
         assertDataProviderPaging(dataProvider: dataProvider)
     }
@@ -37,7 +37,7 @@ class DataProvidersTests: XCTestCase {
     func test_MovieDataProvider_failure() throws {
         let movies = anyMovies(count: 20)
         let movieLoaderMock = MovieLoaderMock(movies: movies, pageCount: 3, error: MovieService.ServiceError.RequestError)
-        let dataProvider = MoviesProvider(.NowPlaying, movieLoader: movieLoaderMock, cache: nil)
+        let dataProvider = MoviesProvider(movieLoader: movieLoaderMock, cache: nil)
         
         //First try should fail
         assertDataProviderPagingFailure(dataProvider: dataProvider)
