@@ -17,12 +17,12 @@ class ListViewController<Provider: DataProvider, Cell: UICollectionViewCell>: UI
     var dataSource: ListDataSource
     var provider: Provider
     
-    weak var coordinator: MainCoordinator?
+    var router: MainCoordinator?
 
     var didSelectedItem: ((Int) -> ())?
     
     init(dataSource: ProviderDataSource<Provider, Cell>, coordinator: MainCoordinator? = nil) {
-        self.coordinator = coordinator
+        self.router = coordinator
         self.dataSource = ListDataSource(dataSource: dataSource)
         self.provider = dataSource.dataProvider
                 
@@ -80,7 +80,7 @@ class ListViewController<Provider: DataProvider, Cell: UICollectionViewCell>: UI
             guard let self = self else { return }
             
             if error != nil {
-                self.coordinator?.handle(error: .refreshError)
+                self.router?.handle(error: .refreshError)
             }
             
             self.dataSource.loadingDataSource.isLoading = !self.provider.isLastPage

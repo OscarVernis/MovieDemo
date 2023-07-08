@@ -8,23 +8,16 @@
 
 import Foundation
 
-protocol UserProfileRouter {
+protocol UserProfileRouter: ErrorHandlingRouter {
     func logout()
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
     func showUserFavorites()
     func showUserWatchlist()
     func showUserRated()
-
-    func handle(error: UserFacingError, shouldDismiss: Bool)
 }
 
 extension UserProfileRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         showMovieDetail(movie: movie, animated: animated)
     }
-    
-    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
-        handle(error: error, shouldDismiss: shouldDismiss)
-    }
-    
 }

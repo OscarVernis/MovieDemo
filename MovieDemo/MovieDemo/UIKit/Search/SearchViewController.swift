@@ -49,9 +49,9 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
             
             switch item {
             case let movie as MovieViewModel:
-                self.coordinator?.showMovieDetail(movie: movie)
+                self.router?.showMovieDetail(movie: movie)
             case let person as PersonViewModel:
-                self.coordinator?.showPersonProfile(person)
+                self.router?.showPersonProfile(person)
             default:
                 break
             }

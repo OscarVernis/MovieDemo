@@ -8,19 +8,12 @@
 
 import Foundation
 
-protocol PersonDetailRouter {
+protocol PersonDetailRouter: ErrorHandlingRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
-    func handle(error: UserFacingError, shouldDismiss: Bool)
-
 }
 
 extension PersonDetailRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         showMovieDetail(movie: movie, animated: animated)
     }
-    
-    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
-        handle(error: error, shouldDismiss: shouldDismiss)
-    }
-    
 }

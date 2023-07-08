@@ -8,14 +8,6 @@
 
 import Foundation
 
-protocol LoginRouter {
-    func handle(error: UserFacingError, shouldDismiss: Bool)
+protocol LoginRouter: ErrorHandlingRouter {
     func didFinishLoginProcess()
-}
-
-extension LoginRouter {
-    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
-        handle(error: error, shouldDismiss: shouldDismiss)
-    }
-    
 }
