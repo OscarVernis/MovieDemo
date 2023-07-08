@@ -124,7 +124,7 @@ class MovieDetailViewController: UIViewController {
                 
         headerView.imageTapHandler = showImage
         
-        headerView.showUserActions = store.hasUserStates
+        headerView.showUserActions = store.showUserActions
         
         //Preload Poster Image for Image Viewer transition.
         if let url = self.movie.posterImageURL(size: .original) {

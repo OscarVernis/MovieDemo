@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Combine
 
 class PersonDetailViewController: UIViewController {
     var router: PersonDetailRouter?
-
+    
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -21,8 +22,13 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var titleNameLabel: UILabel!
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var backButton: BlurButton!
-        
-    var person: PersonViewModel!
+    
+    var store: PersonDetailStore!
+    var person: PersonViewModel! {
+        store.person
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private var gradient: CAGradientLayer!
     private var blurAnimator: UIViewPropertyAnimator!
@@ -33,7 +39,7 @@ class PersonDetailViewController: UIViewController {
         
         setupAnimations()
         setup()
-        setupDataProvider()
+        setupStore()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +76,7 @@ class PersonDetailViewController: UIViewController {
     
     fileprivate func setup() {
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-                
+        
         //Gradient
         gradient = CAGradientLayer()
         gradient.frame = personImageView.bounds
@@ -88,7 +94,7 @@ class PersonDetailViewController: UIViewController {
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.delegate = self
-
+        
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
@@ -96,7 +102,7 @@ class PersonDetailViewController: UIViewController {
         let topInset = UIWindow.mainWindow.topInset
         let bottomInset = UIWindow.mainWindow.bottomInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
-
+        
         
         //setup Person
         self.title = person.name
@@ -113,24 +119,36 @@ class PersonDetailViewController: UIViewController {
         collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
     }
     
-    fileprivate func setupDataProvider()  {
-        let updateCollectionView:(Error?) -> () = { [weak self] error in
-            guard let self = self else { return }
-            
-            if error != nil {
-                self.router?.handle(error: .refreshError, shouldDismiss: true)
-            }
-            
-            self.dataSource.reload()
-            self.collectionView.reloadData()
+    fileprivate func setupStore()  {
+        store.$person.sink { [weak self] person in
+            self?.didUpdate(person: person)
         }
+        .store(in: &cancellables)
         
-        person.didUpdate = updateCollectionView
-        person.refresh()
+        store.$error.sink { [weak self] error in
+            if error != nil {
+                self?.handleError()
+                self?.store?.error = nil
+            }
+        }
+        .store(in: &cancellables)
+
+        store.refresh()
+    }
+    
+    //MARK: - Actions
+    func didUpdate(person: PersonViewModel) {
+        dataSource.person = person
+        self.dataSource.reload()
+        self.collectionView.reloadData()
+    }
+    
+    func handleError() {
+        router?.handle(error: .refreshError, shouldDismiss: true)
     }
     
 }
-    
+
 //MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func setupAnimations() {

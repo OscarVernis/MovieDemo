@@ -76,7 +76,7 @@ struct MovieDetail: View {
                         .foregroundColor(Color.secondary)
                 }
             }
-            if store.hasUserStates {
+            if store.showUserActions {
                 actionButtons()
             }
             HStack {

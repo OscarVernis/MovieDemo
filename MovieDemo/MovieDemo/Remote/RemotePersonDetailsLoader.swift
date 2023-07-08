@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemotePersonDetailsLoader {
+struct RemotePersonDetailsLoader: PersonDetailsLoader {
     let service = MovieService()
     
     func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {

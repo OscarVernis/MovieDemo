@@ -288,8 +288,10 @@ class MainCoordinator {
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
+        let store = PersonDetailStore(person: viewModel, service: RemotePersonDetailsLoader())
+        
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
-        pvc.person = viewModel
+        pvc.store = store
         pvc.router = self
         
         rootNavigationViewController?.pushViewController(pvc, animated: animated)

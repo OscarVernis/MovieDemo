@@ -11,55 +11,21 @@ import Combine
 
 class PersonViewModel {
     private var person: Person
-        
-    private let personService = RemotePersonDetailsLoader()
-    private var isLoading = false
-    var didUpdate: ((Error?) -> Void)?
-    
+
     var castCredits = [PersonCastCreditViewModel]()
     var crewCredits = [PersonCrewCreditViewModel]()
 
     var popularMovies = [MovieViewModel]()
-    
-    var cancellables = Set<AnyCancellable>()
-    
+        
     init(person: Person) {
         self.person = person
         updateInfo()
     }
-    
-    func updatePerson(_ person: Person) {
-        self.person = person
-        updateInfo()
-    }
-    
+
     func updateInfo() {
         updateCastCredits()
         updateCrewCredits()
         updatePopularMovies()
-    }
-    
-}
-
-//MARK: - Load Person Details
-extension PersonViewModel {
-    func refresh() {
-        loadPersonDetails()
-    }
-    
-    private func loadPersonDetails() {
-        personService.getPersonDetails(personId: person.id)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    self?.didUpdate?(nil)
-                case .failure(let error):
-                    self?.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] person in
-                self?.updatePerson(person)
-            }
-            .store(in: &cancellables)
     }
     
 }

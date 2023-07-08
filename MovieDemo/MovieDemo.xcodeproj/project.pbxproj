@@ -102,6 +102,8 @@
 		555072CB285B9EAD00C15EF4 /* MovieListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555072CA285B9EAD00C15EF4 /* MovieListItem.swift */; };
 		555072CD285BA3B200C15EF4 /* MoviePosterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555072CC285BA3B200C15EF4 /* MoviePosterList.swift */; };
 		55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55518D422511292E00DAEB7F /* SectionTitleView.swift */; };
+		5553B3A52A59E95D00969AE7 /* PersonDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553B3A42A59E95D00969AE7 /* PersonDetailStore.swift */; };
+		5553B3A72A59E99600969AE7 /* PersonDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5553B3A62A59E99600969AE7 /* PersonDetailsLoader.swift */; };
 		555463ED286E211A0010AEB0 /* VideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555463EC286E211A0010AEB0 /* VideoItem.swift */; };
 		555463EF286E271A0010AEB0 /* VideoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555463EE286E271A0010AEB0 /* VideoRow.swift */; };
 		555498F9282217D700E89119 /* CoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498F8282217D700E89119 /* CoordinatorTests.swift */; };
@@ -370,6 +372,8 @@
 		555072CA285B9EAD00C15EF4 /* MovieListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListItem.swift; sourceTree = "<group>"; };
 		555072CC285BA3B200C15EF4 /* MoviePosterList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterList.swift; sourceTree = "<group>"; };
 		55518D422511292E00DAEB7F /* SectionTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTitleView.swift; sourceTree = "<group>"; };
+		5553B3A42A59E95D00969AE7 /* PersonDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailStore.swift; sourceTree = "<group>"; };
+		5553B3A62A59E99600969AE7 /* PersonDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailsLoader.swift; sourceTree = "<group>"; };
 		555463EC286E211A0010AEB0 /* VideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoItem.swift; sourceTree = "<group>"; };
 		555463EE286E271A0010AEB0 /* VideoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRow.swift; sourceTree = "<group>"; };
 		555498F8282217D700E89119 /* CoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorTests.swift; sourceTree = "<group>"; };
@@ -878,6 +882,7 @@
 				55D317FC284EF6A40090CF34 /* UserLoader.swift */,
 				5511FF99285A90E800B9C12A /* MovieDetailsLoader.swift */,
 				558B87542A58B44500416FBB /* UserStateService.swift */,
+				5553B3A62A59E99600969AE7 /* PersonDetailsLoader.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1166,6 +1171,7 @@
 		55B8548B2A5924FA009870B2 /* Person Detail */ = {
 			isa = PBXGroup;
 			children = (
+				5553B3A42A59E95D00969AE7 /* PersonDetailStore.swift */,
 				5576FB682531415B00C91479 /* PersonViewModel.swift */,
 				5576FB702531465700C91479 /* PersonCastCreditViewModel.swift */,
 				555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */,
@@ -1638,9 +1644,11 @@
 				556AB1942514680A0023D278 /* DotRatingsView.swift in Sources */,
 				55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */,
 				550577A6284DAA4D007ED892 /* HomeString.swift in Sources */,
+				5553B3A72A59E99600969AE7 /* PersonDetailsLoader.swift in Sources */,
 				550577A0284DAA1E007ED892 /* PersonString.swift in Sources */,
 				55893B6E2513F56D00233677 /* DataProvider.swift in Sources */,
 				55A60DE12527B32F0082810C /* UINavigationController+Orientation.swift in Sources */,
+				5553B3A52A59E95D00969AE7 /* PersonDetailStore.swift in Sources */,
 				550577A4284DAA3E007ED892 /* CreditString.swift in Sources */,
 				555A144B2523D97B0024AFAA /* HomeViewController.swift in Sources */,
 				5511FF8F285A8CBE00B9C12A /* Color+Utils.swift in Sources */,

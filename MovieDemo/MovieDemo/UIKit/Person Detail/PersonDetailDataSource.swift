@@ -17,7 +17,7 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
     }
     
     unowned var collectionView: UICollectionView
-    let person: PersonViewModel
+    var person: PersonViewModel
     
     var sections: [Section] = []
     

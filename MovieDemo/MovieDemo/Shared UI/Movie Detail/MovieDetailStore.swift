@@ -43,7 +43,7 @@ class MovieDetailStore: ObservableObject {
     }
     
     //MARK: - User Actions
-    var hasUserStates: Bool {
+    var showUserActions: Bool {
         return userStateService != nil
     }
     
