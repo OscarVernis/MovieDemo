@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
     var showsCloseButton: Bool = true
     var didFinishLoginProcess: (() -> Void)? = nil
     
-    var loginViewModel: LoginViewStore!
+    var store: LoginViewStore!
     var cancellables: Set<AnyCancellable> = []
     
     //MARK: - Setup
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
 //MARK: - View Model
 extension LoginViewController {
     fileprivate func subscribeToPublishers() {
-        loginViewModel.$loggedIn
+        store.$loggedIn
             .sink { [weak self] loggedIn in
                 if loggedIn {
                     self?.didFinishLoginProcess?()
@@ -63,19 +63,19 @@ extension LoginViewController {
             }
             .store(in: &cancellables)
         
-        loginViewModel.$isLoading
+        store.$isLoading
             .sink { [weak self] isLoading in
                 self?.updateUI(isLoading)
             }
             .store(in: &cancellables)
         
-        loginViewModel.$errorString
+        store.$errorString
             .sink { [weak self] errorString in
                 self?.handleError(errorString)
             }
             .store(in: &cancellables)
         
-        loginViewModel.$validInput
+        store.$validInput
             .assign(to: \.isEnabled, on: loginButton!)
             .store(in: &cancellables)
     }
@@ -103,13 +103,13 @@ extension LoginViewController {
     }
     
     fileprivate func validateInput() {
-        loginViewModel.validateInput(username: userTextField.text, password: passwordTextField.text)
+        store.validateInput(username: userTextField.text, password: passwordTextField.text)
     }
     
     fileprivate func handlelogin() {
-        guard loginViewModel.validInput else { return }
+        guard store.validInput else { return }
         
-        loginViewModel.login(username: userTextField.text!, password: passwordTextField.text!)
+        store.login(username: userTextField.text!, password: passwordTextField.text!)
     }
     
 }
@@ -121,7 +121,7 @@ extension LoginViewController {
     }
     
     @IBAction func textFieldUpdated(_ sender: Any) {
-        loginViewModel.resetError()
+        store.resetError()
         validateInput()
     }
     

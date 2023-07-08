@@ -93,7 +93,7 @@ class MainCoordinator {
     
     func showDefaultLogin(animated: Bool = true) {
         let lvc = LoginViewController.instantiateFromStoryboard()
-        lvc.loginViewModel = LoginViewStore(sessionManager: sessionManager)
+        lvc.store = LoginViewStore(sessionManager: sessionManager)
         
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
@@ -184,7 +184,7 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
     
-    fileprivate func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
+    func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let dataSource = ProviderDataSource(dataProvider: dataProvider,
                                             reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                             cellConfigurator: MovieInfoListCell.configure)
