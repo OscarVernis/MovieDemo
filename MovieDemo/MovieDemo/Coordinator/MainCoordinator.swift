@@ -211,7 +211,6 @@ class MainCoordinator {
     }
     
     fileprivate func showMovieList(title: String, list: MoviesEndpoint, animated: Bool = true)  {
-        let sessionId = sessionManager.sessionId
         let dataProvider = moviesProvider(for: list)
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
