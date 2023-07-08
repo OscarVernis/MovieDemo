@@ -13,7 +13,7 @@ class HomeViewControllerTests: XCTestCase {
 
     func test_deallocation() throws {
         assertDeallocation {
-            HomeViewController(mainCoordinator: nil,
+            HomeViewController(router: nil,
                                nowPlayingProvider: MoviesProvider(movieLoader: MovieLoaderMock()),
                                upcomingProvider: MoviesProvider(movieLoader: MovieLoaderMock()),
                                popularProvider: MoviesProvider(movieLoader: MovieLoaderMock()),

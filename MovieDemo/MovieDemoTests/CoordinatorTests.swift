@@ -95,8 +95,7 @@ class CoordinatorTests: XCTestCase {
         coordinator.start()
         
         let movie = anyMovieVM()
-        coordinator.showCastCreditList(title: "Cast",
-                                       dataProvider: BasicProvider(models: movie.cast),
+        coordinator.showCastCreditList(credits: movie.cast,
                                        animated: false)
         
         let castList = navCont?.visibleViewController
@@ -108,8 +107,7 @@ class CoordinatorTests: XCTestCase {
         coordinator.start()
         
         let movie = anyMovieVM()
-        coordinator.showCrewCreditList(title: "Crew",
-                                       dataProvider: BasicProvider(models: movie.crew),
+        coordinator.showCrewCreditList(credits: movie.crew,
                                        animated: false)
         
         let castList = navCont?.visibleViewController
