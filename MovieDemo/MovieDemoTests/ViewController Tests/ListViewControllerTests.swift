@@ -47,7 +47,7 @@ class ListViewControllerTests: XCTestCase {
                                                 reuseIdentifier: MovieInfoListCell.reuseIdentifier,
                                                 cellConfigurator: MovieInfoListCell.configure)
             
-            let sut = ListViewController(dataSource: dataSource, coordinator: nil)
+            let sut = ListViewController(dataSource: dataSource, router: nil)
             sut.loadViewIfNeeded()
             
             return sut
