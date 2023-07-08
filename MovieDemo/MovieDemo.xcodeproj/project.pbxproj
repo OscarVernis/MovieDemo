@@ -584,6 +584,14 @@
 			path = HTTPClient;
 			sourceTree = "<group>";
 		};
+		550DA06B2A59D91C00541312 /* User Profile */ = {
+			isa = PBXGroup;
+			children = (
+				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
+			);
+			path = "User Profile";
+			sourceTree = "<group>";
+		};
 		5511FF82285A702300B9C12A /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,21 +787,6 @@
 				555463EE286E271A0010AEB0 /* VideoRow.swift */,
 			);
 			path = "Movie Detail";
-			sourceTree = "<group>";
-		};
-		554DE184251F0C23000286D2 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				558A63AE2512AD5D0064438D /* MovieViewModel.swift */,
-				55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */,
-				55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */,
-				55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */,
-				5576FB682531415B00C91479 /* PersonViewModel.swift */,
-				5576FB702531465700C91479 /* PersonCastCreditViewModel.swift */,
-				555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */,
-				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		5550409A251E707900D919FF /* User Profile */ = {
@@ -1052,7 +1045,6 @@
 				555498FF2822329600E89119 /* Protocols */,
 				5562461A2515611A005E63AB /* Remote */,
 				55B6CB8727E0201B007DB4C2 /* LocalStore */,
-				554DE184251F0C23000286D2 /* ViewModels */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
 				55FACCF12A590C7100FB13B5 /* Shared UI */,
 				5511FF82285A702300B9C12A /* SwiftUI */,
@@ -1136,6 +1128,9 @@
 		55B8548B2A5924FA009870B2 /* Person Detail */ = {
 			isa = PBXGroup;
 			children = (
+				5576FB682531415B00C91479 /* PersonViewModel.swift */,
+				5576FB702531465700C91479 /* PersonCastCreditViewModel.swift */,
+				555725AA2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift */,
 				55B8548C2A592515009870B2 /* PersonDetailRouter.swift */,
 			);
 			path = "Person Detail";
@@ -1273,6 +1268,7 @@
 				55FACCF22A590C8200FB13B5 /* Home */,
 				55FACCF32A590C8A00FB13B5 /* Movie Detail */,
 				55B8548B2A5924FA009870B2 /* Person Detail */,
+				550DA06B2A59D91C00541312 /* User Profile */,
 				55B854902A5928A5009870B2 /* Login */,
 			);
 			path = "Shared UI";
@@ -1290,6 +1286,10 @@
 			isa = PBXGroup;
 			children = (
 				556F01462A58941F005B5211 /* MovieDetailStore.swift */,
+				558A63AE2512AD5D0064438D /* MovieViewModel.swift */,
+				55C4F40625180E9F002B73A9 /* CrewCreditViewModel.swift */,
+				55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */,
+				55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */,
 				55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */,
 			);
 			path = "Movie Detail";

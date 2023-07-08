@@ -216,7 +216,7 @@ class MainCoordinator {
         rootNavigationViewController?.dismiss(animated: true)
     }
     
-    //MARK: - Home Router
+    //MARK: - Home
     func showUserProfile(animated: Bool = true) {
         if let sessionId {
             let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
@@ -244,7 +244,7 @@ class MainCoordinator {
         showMovieList(title: .localized(HomeString.TopRated), endpoint: .TopRated)
     }
     
-    //MARK: - Movie Detail Router
+    //MARK: - Movie Detail
     func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
         let provider = BasicProvider(models: credits)
         let dataSource = ProviderDataSource(dataProvider: provider,
@@ -316,7 +316,7 @@ class MainCoordinator {
         rootNavigationViewController?.visibleViewController?.present(mrvc, animated: true)
     }
 
-    //MARK: - User Detail Router
+    //MARK: - User Detail
     func showUserFavorites() {
         showMovieList(title: .localized(UserString.Favorites), endpoint: .UserFavorites)
     }
