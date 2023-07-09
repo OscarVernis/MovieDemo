@@ -9,15 +9,10 @@
 import Foundation
 import Combine
 
-struct RemoteMovieDetailsLoader: MovieDetailsLoader {
-    let service: MovieService
-    
-    init(sessionId: String? = nil) {
-        self.service = MovieService(sessionId: sessionId)
-    }
-    
-    func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
+struct RemoteMovieDetailsLoader {
+    static func getMovieDetails(movieId: Int, sessionId: String?) -> AnyPublisher<Movie, Error> {
         let params = ["append_to_response" : "credits,recommendations,account_states,videos"]
+        let service = MovieService(sessionId: sessionId)
         
         return service.getModel(endpoint: .movieDetails(movieId: movieId), parameters: params)
     }

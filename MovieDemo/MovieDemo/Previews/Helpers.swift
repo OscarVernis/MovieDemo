@@ -14,7 +14,7 @@ extension MoviesLoader where Self == JSONMoviesLoader {
     }
 }
 
-extension MovieDetailsLoader where Self == JSONMovieDetailsLoader {
+extension JSONMovieDetailsLoader {
     static var mock: JSONMovieDetailsLoader {
         JSONMovieDetailsLoader(filename: "movie")
     }

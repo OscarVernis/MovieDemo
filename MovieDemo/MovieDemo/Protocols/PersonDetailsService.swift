@@ -9,4 +9,4 @@
 import Foundation
 import Combine
 
-typealias PersonDetailsService = (Int) -> AnyPublisher<Person, Error>
+typealias PersonDetailsService = () -> AnyPublisher<Person, Error>

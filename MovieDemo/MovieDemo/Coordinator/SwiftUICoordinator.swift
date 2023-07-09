@@ -30,9 +30,10 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
+        let movieService = { RemoteMovieDetailsLoader.getMovieDetails(movieId: movie.id, sessionId: self.sessionId) }
         let userStateService: RemoteUserStateService? = sessionId != nil ? RemoteUserStateService(sessionId: sessionId!) : nil
         let store = MovieDetailStore(movie: movie,
-                                     movieService: RemoteMovieDetailsLoader(sessionId: sessionId),
+                                     movieService: movieService,
                                      userStateService: userStateService)
         
         let movieDetail = MovieDetail(router: self, store: store)

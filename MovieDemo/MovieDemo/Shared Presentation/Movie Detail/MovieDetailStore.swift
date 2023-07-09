@@ -11,10 +11,10 @@ import Combine
 
 class MovieDetailStore: ObservableObject {
     @Published var movie: MovieViewModel
-    private var movieService: MovieDetailsLoader?
+    private var movieService: MovieDetailsService?
     private let userStateService: UserStateService?
         
-    init(movie: MovieViewModel, movieService: MovieDetailsLoader? = nil, userStateService: UserStateService? = nil) {
+    init(movie: MovieViewModel, movieService: MovieDetailsService? = nil, userStateService: UserStateService? = nil) {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService
@@ -29,8 +29,8 @@ class MovieDetailStore: ObservableObject {
         guard let movieService else { return }
         
         isLoading = true
-        
-        movieService.getMovieDetails(movieId: movie.id)
+                
+        movieService()
             .assignError(to: \.error, on: self)
             .onCompletion { [weak self] in
                 self?.isLoading = false

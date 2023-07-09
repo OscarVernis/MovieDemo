@@ -1,5 +1,5 @@
 //
-//  MovieDetailsLoader.swift
+//  MovieDetailsService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 15/06/22.
@@ -9,7 +9,4 @@
 import Foundation
 import Combine
 
-protocol MovieDetailsLoader {
-    func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error>
-    
-}
+typealias MovieDetailsService = () -> AnyPublisher<Movie, Error>

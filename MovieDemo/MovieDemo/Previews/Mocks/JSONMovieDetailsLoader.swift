@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct JSONMovieDetailsLoader: MovieDetailsLoader {
+struct JSONMovieDetailsLoader {
     var movie: Movie = Movie()
     var jsonDecoder = MovieDecoder()
     

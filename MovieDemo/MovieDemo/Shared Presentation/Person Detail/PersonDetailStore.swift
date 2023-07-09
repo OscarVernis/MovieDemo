@@ -23,7 +23,7 @@ class PersonDetailStore: ObservableObject {
     func refresh() {
         guard let service else { return }
          
-        service(person.id)
+        service()
             .assignError(to: \.error, on: self)
             .map(PersonViewModel.init(person:))
             .assign(to: &$person)
