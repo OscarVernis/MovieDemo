@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class PersonDetailStore: ObservableObject {
     @Published var person: PersonViewModel
@@ -14,7 +15,7 @@ class PersonDetailStore: ObservableObject {
     
     private(set) var isLoading = false
     @Published var error: Error? = nil
-    
+        
     init(person: PersonViewModel, service: PersonDetailsLoader? = nil) {
         self.person = person
         self.service = service
@@ -23,14 +24,25 @@ class PersonDetailStore: ObservableObject {
     func refresh() {
         guard let service else { return }
         
-        service.getPersonDetails(personId: person.id).completion { [weak self] result in
-            switch result {
-            case .success(let person):
-                self?.person = PersonViewModel(person: person)
-            case .failure(let error):
+        service.getPersonDetails(personId: person.id)
+            .handleError { [weak self] error in
                 self?.error = error
             }
-        }
+            .map(PersonViewModel.init(person:))
+            .assign(to: &$person)
     }
     
+}
+
+extension Publisher {
+    func handleError(_ handler: @escaping (Error) -> Void) -> AnyPublisher<Output, Never> {
+        self
+            .catch { error in
+                handler(error)
+                
+                return Empty<Output, Never>(completeImmediately: true)
+            }
+            .eraseToAnyPublisher()
+        
+    }
 }
