@@ -38,9 +38,9 @@ extension Collection where Element == MovieViewModel {
     }
 }
 
-extension UserViewModel {
-    static var preview: UserViewModel {
-        UserViewModel()
+extension UserProfileStore {
+    static var preview: UserProfileStore {
+        UserProfileStore()
     }
 }
 

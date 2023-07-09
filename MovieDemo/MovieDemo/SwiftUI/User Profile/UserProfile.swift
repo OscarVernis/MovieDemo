@@ -9,7 +9,10 @@
 import SwiftUI
 
 struct UserProfile: View {
-    @ObservedObject var user: UserViewModel
+    @ObservedObject var store: UserProfileStore
+    var user: UserViewModel {
+        store.user
+    }
     var router: UserProfileRouter?
     
     var body: some View {
@@ -78,7 +81,7 @@ struct UserProfile: View {
     }
     
     fileprivate func refresh() {
-//        user.updateUser()
+        store.updateUser()
     }
     
     //MARK: - Navigation
@@ -102,7 +105,7 @@ struct UserProfile: View {
 
 struct UserProfile_Previews: PreviewProvider {    
     static var previews: some View {
-        UserProfile(user: .preview)
+        UserProfile(store: .preview)
                 .preferredColorScheme(.dark)
         }
 }
