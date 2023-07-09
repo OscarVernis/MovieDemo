@@ -19,7 +19,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
         self.cache = cache
     }
     
-    func loadFromCache() {
+    fileprivate func loadFromCache() {
         //Only load from Cache on first page and when items are empty.
         guard let cache = cache,
                 currentPage == 0,
@@ -53,7 +53,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
                 }
                 
                 self.totalPages = result.totalPages
-                self.cache?.save(movies: result.movies)
+                self.cache?.save(result.movies)
                 self.items.append(contentsOf: result.movies.map { MovieViewModel(movie: $0) })
             }
     }

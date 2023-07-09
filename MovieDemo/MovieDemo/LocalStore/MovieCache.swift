@@ -40,11 +40,16 @@ struct MovieCache {
         case .Upcoming:
             managedMovies = cache.upcoming?.array as? [MovieMO]
         }
-                
-        return managedMovies?.compactMap { $0.toMovie() } ?? []
-    }
         
-    func save(movies: [Movie]) {
+        return managedMovies?.compactMap { $0.toMovie() } ?? []
+        
+    }
+}
+
+extension MovieCache: ModelCache {
+    typealias Model = [Movie]
+        
+    func save(_ movies: [Movie]) {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         let managedMovies = NSOrderedSet(array: movies.compactMap { MovieMO(withMovie: $0, context: store.context) })
                 
