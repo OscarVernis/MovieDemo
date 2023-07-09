@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import Combine
 
 class UserProfileViewController: UIViewController {
     var router: UserProfileRouter?
     
     var collectionView: UICollectionView!
     var dataSource: UserProfileDataSource!
+    var layoutProvider: UserProfileLayoutProvider!
             
-    private var user: UserViewModel
+    private var store: UserProfileStore
+    private var user: UserViewModel! {
+        store.user
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
 
     //MARK: - View Controller
-    init(user: UserViewModel, router: UserProfileRouter? = nil) {
+    init(store: UserProfileStore, router: UserProfileRouter? = nil) {
         self.router = router
-        self.user = user
+        self.store = store
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,12 +40,12 @@ class UserProfileViewController: UIViewController {
                 
         createCollectionView()
         setupCollectionView()
-        setupDataProvider()
+        setupStore()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        user.updateUser()
+        store.updateUser()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -47,7 +54,10 @@ class UserProfileViewController: UIViewController {
     
     //MARK: - Setup
     func createCollectionView() {
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: UserProfileLayoutProvider(user: user).createLayout)
+        layoutProvider = UserProfileLayoutProvider(user: user)
+        let layout = UICollectionViewCompositionalLayout { [weak self] section, enviroment in
+            self?.layoutProvider.createLayout(sectionIndex: section, layoutEnvironment: enviroment)
+        }
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -68,40 +78,52 @@ class UserProfileViewController: UIViewController {
         let topInset = UIWindow.mainWindow.topInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         
-        dataSource = UserProfileDataSource(collectionView: collectionView, user: user)
+        dataSource = UserProfileDataSource(collectionView: collectionView, user: user, isLoading: store.isLoading)
         collectionView.dataSource = dataSource
     }
     
-    fileprivate func setupDataProvider()  {
-        let updateCollectionView:(Error?) -> () = { [weak self] error in
-            guard let self = self else { return }
-            
-            
-            //Load Blur Background
-            if let imageURL = self.user.avatarURL {
-                self.collectionView.backgroundColor = .clear
-
-                let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
-
-                bgView.imageView.setRemoteImage(withURL: imageURL)
-                self.collectionView.backgroundView = bgView
-            }
-            
-            if error != nil {
-                self.router?.handle(error: .refreshError, shouldDismiss: true)
-            }
-            
-            self.dataSource.reload()
-            self.collectionView.reloadData()
+    fileprivate func setupStore()  {
+        store.$user.sink { [weak self] user in
+            self?.didUpdate(user: user)
         }
+        .store(in: &cancellables)
         
-        user.didUpdate = updateCollectionView
+        store.$error.sink { [weak self] error in
+            if error != nil {
+                self?.handleError()
+                self?.store.error = nil
+            }
+        }
+        .store(in: &cancellables)
+
+        store.updateUser()
     }
     
 }
 
 //MARK: - Actions
 extension UserProfileViewController {
+    fileprivate func didUpdate(user: UserViewModel) {
+        //Load Blur Background
+        if let imageURL = user.avatarURL {
+            collectionView.backgroundColor = .clear
+
+            let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
+
+            bgView.imageView.setRemoteImage(withURL: imageURL)
+            collectionView.backgroundView = bgView
+        }
+        
+        layoutProvider.user = user
+        dataSource.user = user
+        dataSource.reload()
+        collectionView.reloadData()
+    }
+    
+    fileprivate func handleError() {
+        router?.handle(error: .refreshError, shouldDismiss: true)
+    }
+    
     @objc fileprivate func logout() {
         router?.logout()
     }

@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 class PersonDetailStore: ObservableObject {
-    @Published var person: PersonViewModel
+    @Published private(set) var person: PersonViewModel
     private let service: PersonDetailsLoader?
     
     private(set) var isLoading = false
@@ -23,26 +23,11 @@ class PersonDetailStore: ObservableObject {
     
     func refresh() {
         guard let service else { return }
-        
+         
         service.getPersonDetails(personId: person.id)
-            .handleError { [weak self] error in
-                self?.error = error
-            }
+            .assignError(to: \.error, on: self)
             .map(PersonViewModel.init(person:))
             .assign(to: &$person)
     }
     
-}
-
-extension Publisher {
-    func handleError(_ handler: @escaping (Error) -> Void) -> AnyPublisher<Output, Never> {
-        self
-            .catch { error in
-                handler(error)
-                
-                return Empty<Output, Never>(completeImmediately: true)
-            }
-            .eraseToAnyPublisher()
-        
-    }
 }

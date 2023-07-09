@@ -137,13 +137,13 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Actions
-    func didUpdate(person: PersonViewModel) {
+    fileprivate func didUpdate(person: PersonViewModel) {
         dataSource.person = person
         self.dataSource.reload()
         self.collectionView.reloadData()
     }
     
-    func handleError() {
+    fileprivate func handleError() {
         router?.handle(error: .refreshError, shouldDismiss: true)
     }
     

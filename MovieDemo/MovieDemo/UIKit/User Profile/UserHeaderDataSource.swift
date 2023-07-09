@@ -12,9 +12,12 @@ import UIKit
 class UserHeaderDataSource: NSObject, UICollectionViewDataSource {
     let user: UserViewModel
     
-    init(user: UserViewModel) {
+    init(user: UserViewModel, isLoading: Bool) {
         self.user = user
+        self.isLoading = isLoading
     }
+    
+    var isLoading: Bool
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
@@ -28,7 +31,7 @@ class UserHeaderDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        (user.isLoading == true) ? 1 : 0
+        (isLoading == true) ? 1 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

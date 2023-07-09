@@ -145,6 +145,7 @@
 		556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */; };
 		556807C72530E87A00F8DF16 /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556807C52530E87A00F8DF16 /* PersonDetailViewController.swift */; };
 		556807CC2530EB0600F8DF16 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556807CB2530EB0600F8DF16 /* Person.swift */; };
+		556976CA2A5A39140097F5DB /* UserProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556976C92A5A39140097F5DB /* UserProfileStore.swift */; };
 		556AB1942514680A0023D278 /* DotRatingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556AB1932514680A0023D278 /* DotRatingsView.swift */; };
 		556F01452A588756005B5211 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556F01432A588679005B5211 /* Helpers.swift */; };
 		556F01472A58941F005B5211 /* MovieDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556F01462A58941F005B5211 /* MovieDetailStore.swift */; };
@@ -184,6 +185,7 @@
 		5592766F285508030063743C /* UserHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5592766E285508030063743C /* UserHeaderDataSource.swift */; };
 		559276712855095B0063743C /* UserProfileDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559276702855095B0063743C /* UserProfileDataSource.swift */; };
 		5592767328550DCD0063743C /* UserMoviesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5592767228550DCD0063743C /* UserMoviesDataSource.swift */; };
+		559674562A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559674552A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift */; };
 		559B08D3283D4EBF002DA8DF /* AnyPublisher+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559B08D2283D4EBF002DA8DF /* AnyPublisher+Async.swift */; };
 		559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D132022D98E4800C96FC8 /* AppDelegate.swift */; };
 		559D132822D98E4B00C96FC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 559D132722D98E4B00C96FC8 /* Assets.xcassets */; };
@@ -424,6 +426,7 @@
 		556774642517385F0066B6E4 /* UICollectionReusableView+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Register.swift"; sourceTree = "<group>"; };
 		556807C52530E87A00F8DF16 /* PersonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
 		556807CB2530EB0600F8DF16 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		556976C92A5A39140097F5DB /* UserProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileStore.swift; sourceTree = "<group>"; };
 		556AB1932514680A0023D278 /* DotRatingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotRatingsView.swift; sourceTree = "<group>"; };
 		556F01432A588679005B5211 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		556F01462A58941F005B5211 /* MovieDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailStore.swift; sourceTree = "<group>"; };
@@ -462,6 +465,7 @@
 		5592766E285508030063743C /* UserHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserHeaderDataSource.swift; sourceTree = "<group>"; };
 		559276702855095B0063743C /* UserProfileDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDataSource.swift; sourceTree = "<group>"; };
 		5592767228550DCD0063743C /* UserMoviesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMoviesDataSource.swift; sourceTree = "<group>"; };
+		559674552A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+ErrorHandling.swift"; sourceTree = "<group>"; };
 		559B08D2283D4EBF002DA8DF /* AnyPublisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Async.swift"; sourceTree = "<group>"; };
 		559D131D22D98E4800C96FC8 /* MovieDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		559D132022D98E4800C96FC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -600,6 +604,7 @@
 			isa = PBXGroup;
 			children = (
 				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
+				556976C92A5A39140097F5DB /* UserProfileStore.swift */,
 				550DA06D2A59DB0000541312 /* UserProfileRouter.swift */,
 			);
 			path = "User Profile";
@@ -1305,6 +1310,7 @@
 			children = (
 				55741CE1251CFCAC00A6281B /* Double+Math.swift */,
 				559B08D2283D4EBF002DA8DF /* AnyPublisher+Async.swift */,
+				559674552A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1553,6 +1559,7 @@
 				55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */,
 				555EAF6527DC465D000B6525 /* ServiceGenre.swift in Sources */,
 				5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */,
+				559674562A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift in Sources */,
 				550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */,
 				55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */,
 				55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */,
@@ -1666,6 +1673,7 @@
 				55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */,
 				557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */,
 				55ABEB79283365AF009DCE7C /* LoginViewStore.swift in Sources */,
+				556976CA2A5A39140097F5DB /* UserProfileStore.swift in Sources */,
 				5508D76B2A50F2B500B22A96 /* URLSessionHTTPClient.swift in Sources */,
 				5511FF8C285A7AFD00B9C12A /* MovieBannerRow.swift in Sources */,
 				554DDE1D286239D100DD864A /* AttributedStringAsset.swift in Sources */,

@@ -10,11 +10,11 @@ import UIKit
 
 struct UserProfileLayoutProvider {
     fileprivate let sectionBuilder = MoviesCompositionalLayoutBuilder()
-    let user: UserViewModel
+    var user: UserViewModel
 
     func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = UserProfileDataSource.Section(rawValue: sectionIndex)!
-        
+                
         switch section {
         case .header:
             return makeHeaderSection()

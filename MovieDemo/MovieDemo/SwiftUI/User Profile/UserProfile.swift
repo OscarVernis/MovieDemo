@@ -78,7 +78,7 @@ struct UserProfile: View {
     }
     
     fileprivate func refresh() {
-        user.updateUser()
+//        user.updateUser()
     }
     
     //MARK: - Navigation

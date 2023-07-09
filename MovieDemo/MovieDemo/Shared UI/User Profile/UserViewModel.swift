@@ -11,19 +11,13 @@ import Combine
 
 class UserViewModel: ObservableObject {
     @Published private(set) var user: User?
-    private let service: UserLoader
-    private let cache: UserCache?
-    private(set) var isLoading = false
     
-    private var cancellables = Set<AnyCancellable>()
+    init() { }
     
-    init(service: UserLoader, cache: UserCache? = UserCache()) {
-        self.service = service
-        self.cache = cache
+    init(user: User) {
+        self.user = user
     }
-    
-    var didUpdate: ((Error?) -> Void)?
-    
+        
     var username: String? {
         return user?.username
     }
@@ -46,38 +40,6 @@ class UserViewModel: ObservableObject {
         }
         
         return nil
-    }
-    
-    func updateUser() {
-        if isLoading { return }
-        isLoading = true
-                
-        //Load from Cache
-        loadCache()
-        
-        service.getUserDetails()
-            .sink { [weak self] completion in
-                self?.isLoading = false
-
-                switch completion {
-                case .finished:
-                    self?.didUpdate?(nil)
-                case .failure(let error):
-                    self?.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] user in
-                self?.user = user
-                self?.cache?.save(user: user)
-            }
-            .store(in: &cancellables)
-    }
-    
-    func loadCache() {
-        let user = cache?.load()
-        if let user = user {
-            self.user = user
-            didUpdate?(nil)
-        }
     }
     
 }

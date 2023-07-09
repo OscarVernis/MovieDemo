@@ -40,7 +40,7 @@ extension Collection where Element == MovieViewModel {
 
 extension UserViewModel {
     static var preview: UserViewModel {
-        UserViewModel(service: .mock, cache: nil)
+        UserViewModel()
     }
 }
 

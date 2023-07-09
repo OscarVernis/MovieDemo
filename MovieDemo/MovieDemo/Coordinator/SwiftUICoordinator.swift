@@ -43,16 +43,17 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showUserProfile(animated: Bool = true) {
-        if let sessionId {
-            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
-            let userProfile = UserProfile(user: user, router: self)
-            let upvc = UIHostingController(rootView: userProfile)
-            upvc.navigationItem.largeTitleDisplayMode = .never
-
-            rootNavigationViewController?.pushViewController(upvc, animated: animated)
-        } else {
-            showLogin(animated: animated)
-        }
+        #warning("Fix User Profile SwiftUI")
+//        if let sessionId {
+//            let user = UserViewModel(service: RemoteUserLoader(sessionId: sessionId))
+//            let userProfile = UserProfile(user: user, router: self)
+//            let upvc = UIHostingController(rootView: userProfile)
+//            upvc.navigationItem.largeTitleDisplayMode = .never
+//
+//            rootNavigationViewController?.pushViewController(upvc, animated: animated)
+//        } else {
+//            showLogin(animated: animated)
+//        }
     }
     
 }

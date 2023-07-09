@@ -14,11 +14,14 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     }
     
     unowned var collectionView: UICollectionView
-    let user: UserViewModel
+    var user: UserViewModel
     
-    init(collectionView: UICollectionView, user: UserViewModel) {
+    var isLoading: Bool
+    
+    init(collectionView: UICollectionView, user: UserViewModel, isLoading: Bool) {
         self.collectionView = collectionView
         self.user = user
+        self.isLoading = isLoading
         
         super.init()
         
@@ -50,7 +53,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     
     //MARK: - Data Sources
     fileprivate func makeUserHeader() -> UICollectionViewDataSource {
-        UserHeaderDataSource(user: user)
+        UserHeaderDataSource(user: user, isLoading: isLoading)
     }
     
     fileprivate func makeFavorites() -> UICollectionViewDataSource {
