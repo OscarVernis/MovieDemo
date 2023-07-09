@@ -603,8 +603,8 @@
 		550DA06B2A59D91C00541312 /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
-				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
 				556976C92A5A39140097F5DB /* UserProfileStore.swift */,
+				55D05CC1251AED9300FD5F8C /* UserViewModel.swift */,
 				550DA06D2A59DB0000541312 /* UserProfileRouter.swift */,
 			);
 			path = "User Profile";

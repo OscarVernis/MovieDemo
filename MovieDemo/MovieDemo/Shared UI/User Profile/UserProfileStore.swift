@@ -16,10 +16,7 @@ class UserProfileStore: ObservableObject {
 
     private(set) var isLoading = false
     @Published var error: Error? = nil
- 
-    var didUpdate: ((Error?) -> Void)?
-    private var cancellables = Set<AnyCancellable>()
-    
+     
     internal init(service: UserLoader? = nil, cache: UserCache? = nil) {
         self.service = service
         self.cache = cache
@@ -34,27 +31,19 @@ class UserProfileStore: ObservableObject {
         loadCache()
         
         service.getUserDetails()
-            .sink { [weak self] completion in
+            .assignError(to: \.error, on: self)
+            .handleEvents(receiveOutput: { [weak self] user in
                 self?.isLoading = false
-
-                switch completion {
-                case .finished:
-                    self?.didUpdate?(nil)
-                case .failure(let error):
-                    self?.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] user in
-                self?.user = UserViewModel(user: user)
                 self?.cache?.save(user: user)
-            }
-            .store(in: &cancellables)
+            })
+            .map(UserViewModel.init)
+            .assign(to: &$user)
     }
     
     func loadCache() {
         let user = cache?.load()
-        if let user = user {
+        if let user {
             self.user = UserViewModel(user: user)
-            didUpdate?(nil)
         }
     }
     

@@ -22,24 +22,21 @@ class MovieDetailStore: ObservableObject {
     }
 
     //MARK: - Get Movie Details
-    private(set) var isLoading = false
     @Published var error: Error? = nil
+    private(set) var isLoading = false
     
     func refresh() {
         guard let movieService else { return }
         
         isLoading = true
         
-        movieService.getMovieDetails(movieId: movie.id).completion { [weak self] result in
-            self?.isLoading = false
-            
-            switch result {
-            case .success(let movie):
-                self?.movie = MovieViewModel(movie: movie)
-            case .failure(let error):
-                self?.error = error
-            }
-        }
+        movieService.getMovieDetails(movieId: movie.id)
+            .assignError(to: \.error, on: self)
+            .handleEvents(receiveCompletion: { [weak self] _ in
+                self?.isLoading = false
+            })
+            .map(MovieViewModel.init)
+            .assign(to: &$movie)
     }
     
     //MARK: - User Actions

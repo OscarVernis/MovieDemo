@@ -11,10 +11,10 @@ import Combine
 
 class PersonDetailStore: ObservableObject {
     @Published private(set) var person: PersonViewModel
+    @Published var error: Error? = nil
+
     private let service: PersonDetailsLoader?
     
-    private(set) var isLoading = false
-    @Published var error: Error? = nil
         
     init(person: PersonViewModel, service: PersonDetailsLoader? = nil) {
         self.person = person
