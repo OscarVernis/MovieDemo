@@ -44,40 +44,34 @@ class MovieDetailStore: ObservableObject {
         return userStateService != nil
     }
     
-    @MainActor
-    func markAsFavorite(_ favorite: Bool, completionHandler: @escaping (Bool) -> Void) {
-        guard let userStateService else { return }
+    func markAsFavorite(_ favorite: Bool) async -> Bool {
+        guard let userStateService else { return false }
         
-        Task {
-            do {
-                try await userStateService.markAsFavorite(favorite, movieId: movie.id)
-                movie.setFavorite(favorite)
-                completionHandler(true)
-            } catch {
-                completionHandler(false)
-            }
+        do {
+            try await userStateService.markAsFavorite(favorite, movieId: movie.id)
+            movie.setFavorite(favorite)
+            return true
+        } catch {
+            return false
         }
         
     }
     
-    @MainActor
-    func addToWatchlist(_ watchlist: Bool, completionHandler: @escaping (Bool) -> Void) {
-        guard let userStateService else { return }
+    func addToWatchlist(_ watchlist: Bool) async -> Bool {
+        guard let userStateService else { return false }
 
-        Task {
-            do {
-                try await userStateService.addToWatchlist(watchlist, movieId: movie.id)
-                movie.setWatchlist(watchlist)
-                completionHandler(true)
-            } catch {
-                completionHandler(false)
-            }
+        do {
+            try await userStateService.addToWatchlist(watchlist, movieId: movie.id)
+            movie.setWatchlist(watchlist)
+            return true
+        } catch {
+            return false
         }
+        
     }
     
-    @MainActor
-    func rate(_ rating: Int, completionHandler: @escaping (Bool) -> Void) {
-        guard let userStateService else { return }
+    func rate(_ rating: Int) async -> Bool {
+        guard let userStateService else { return false }
 
         //ViewModel receives rating as 0 to 100, but service receives 0.5 to 10 in multiples of 0.5
         var adjustedRating:Float = Float(rating) / 10
@@ -90,31 +84,26 @@ class MovieDetailStore: ObservableObject {
             adjustedRating = 0.5
         }
         
-        Task {
-            do {
-                try await userStateService.rateMovie(adjustedRating, movieId: movie.id)
-                movie.setUserRating(adjustedRating)
-                movie.setWatchlist(false) //Server removes movie from watchlist when rating
-                completionHandler(true)
-            } catch {
-                completionHandler(false)
-            }
+        do {
+            try await userStateService.rateMovie(adjustedRating, movieId: movie.id)
+            movie.setUserRating(adjustedRating)
+            movie.setWatchlist(false) //Server removes movie from watchlist when rating
+            return true
+        } catch {
+            return false
         }
         
     }
     
-    @MainActor
-    func deleteRate(completionHandler: @escaping (Bool) -> Void) {
-        guard let userStateService else { return }
+    func deleteRate() async -> Bool {
+        guard let userStateService else { return false }
         
-        Task {
-            do {
-                try await userStateService.deleteRate(movieId: movie.id)
-                movie.setUserRating(nil)
-                completionHandler(true)
-            } catch {
-                completionHandler(false)
-            }
+        do {
+            try await userStateService.deleteRate(movieId: movie.id)
+            movie.setUserRating(nil)
+            return true
+        } catch {
+            return false
         }
     }
     

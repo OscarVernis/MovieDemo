@@ -300,7 +300,7 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(pvc, animated: animated)
     }
     
-    func showMovieRatingView(store: MovieDetailStore, updateHandler: @escaping () -> ()) {
+    func showMovieRatingView(store: MovieDetailStore, successHandler: @escaping () -> ()) {
         let mrvc = MovieRatingViewController.instantiateFromStoryboard()
         mrvc.errorHandler = { [weak self] error in
             self?.handle(error: error)
@@ -314,7 +314,7 @@ class MainCoordinator {
         transitionDelegate.customHeight = 450
         transitionDelegate.showIndicator = false
         
-        mrvc.didUpdateRating = updateHandler
+        mrvc.didUpdateRating = successHandler
         
         rootNavigationViewController?.visibleViewController?.present(mrvc, animated: true)
     }

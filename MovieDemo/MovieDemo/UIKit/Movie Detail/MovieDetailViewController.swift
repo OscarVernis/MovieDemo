@@ -108,10 +108,10 @@ class MovieDetailViewController: UIViewController {
         
         headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
         
-        headerView.favoriteButton?.addTarget(self, action: #selector(markAsFavorite), for: .touchUpInside)
-        headerView.watchlistButton?.addTarget(self, action: #selector(addToWatchlist), for: .touchUpInside)
+        headerView.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
+        headerView.watchlistButton?.addTarget(self, action: #selector(watchlistTapped), for: .touchUpInside)
         headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-                
+                        
         headerView.imageTapHandler = showImage
         
         headerView.showUserActions = store.showUserActions
@@ -197,7 +197,12 @@ class MovieDetailViewController: UIViewController {
         UIApplication.shared.open(youtubeURL)
     }
     
-    @objc fileprivate func markAsFavorite() {
+    //MARK: User Actions
+    @objc fileprivate func favoriteTapped() {
+        Task { await markAsFavorite() }
+    }
+    
+    fileprivate func markAsFavorite() async {
         guard let favoriteButton = headerView?.favoriteButton else {
             return
         }
@@ -211,20 +216,24 @@ class MovieDetailViewController: UIViewController {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        store.markAsFavorite(!movie.favorite) { [weak self] success in
-            guard let self = self else { return }
+        let success = await store.markAsFavorite(!movie.favorite)
+        
+        favoriteButton.isUserInteractionEnabled = true
+        
+        if !success  {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            favoriteButton.setIsSelected(movie.favorite, animated: false)
+            show(error: .favoriteError)
             
-            favoriteButton.isUserInteractionEnabled = true
-
-            if !success  {
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                favoriteButton.setIsSelected(self.movie.favorite, animated: false)
-                show(error: .favoriteError)
-            }
         }
+        
     }
     
-    @objc fileprivate func addToWatchlist() {
+    @objc fileprivate func watchlistTapped() {
+        Task { await addToWatchlist() }
+    }
+    
+    fileprivate func addToWatchlist() async {
         guard let watchlistButton = headerView?.watchlistButton else {
             return
         }
@@ -238,17 +247,15 @@ class MovieDetailViewController: UIViewController {
             UINotificationFeedbackGenerator().notificationOccurred(.success)
         }
         
-        store.addToWatchlist(!movie.watchlist) { [weak self] success in
-            guard let self = self else { return }
-
-            watchlistButton.isUserInteractionEnabled = true
-
-            if !success {
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
-                self.show(error: .watchlistError)
-            }
+        let success = await store.addToWatchlist(!movie.watchlist)
+        watchlistButton.isUserInteractionEnabled = true
+        
+        if !success {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            watchlistButton.setIsSelected(movie.watchlist, animated: false)
+            show(error: .watchlistError)
         }
+        
     }
     
     @objc fileprivate func addRating() {
@@ -256,7 +263,9 @@ class MovieDetailViewController: UIViewController {
               let rateButton = headerView?.rateButton
         else { return }
         
-        router?.showMovieRatingView(store: store, updateHandler: {
+        router?.showMovieRatingView(store: store, successHandler: { [weak self] in
+            guard let self else { return }
+            
             rateButton.setIsSelected(self.movie.rated, animated: false)
             watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
         })

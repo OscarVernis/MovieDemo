@@ -69,11 +69,11 @@ class MovieRatingViewController: UIViewController {
     }
     
     //MARK: - Actions
-    @IBAction func close(_ sender: Any) {
+    @IBAction fileprivate func close(_ sender: Any) {
         dismiss(animated: true)
     }
     
-    @objc func ratingsViewValueChanged() {
+    @objc fileprivate func ratingsViewValueChanged() {
         var rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
         if rating < 5 {
             rating = 5
@@ -84,47 +84,48 @@ class MovieRatingViewController: UIViewController {
         ratingButton.isEnabled = true
     }
 
-    @IBAction func rateButtonTapped(_ sender: Any) {
+    @IBAction fileprivate func rateButtonTapped(_ sender: Any) {
+        Task { await rate() }
+    }
+    
+    fileprivate func rate() async {
         isLoading = true
         let rating = (Double(ratingsView.rating) / 5).rounded(.down) * 5
 
-        store.rate(Int(rating)) { [weak self] success in
-            guard let self = self else { return }
-            
-            self.isLoading = false
-            
-            if success {
-                self.didUpdateRating?()
-                
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
-                self.presentingViewController?.dismiss(animated: true)
-            } else {
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                errorHandler?(.ratingError)
-            }
-        }
+        let success = await store.rate(Int(rating))
+        self.isLoading = false
         
+        if success {
+            self.didUpdateRating?()
+            
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            self.presentingViewController?.dismiss(animated: true)
+        } else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            errorHandler?(.ratingError)
+        }
     }
     
-    @IBAction func deleteButtonTapped(_ sender: Any) {
+    @IBAction fileprivate func deleteButtonTapped(_ sender: Any) {
+        Task { await deleteRate() }
+    }
+    
+    fileprivate func deleteRate() async {
         isLoading = true
         
-        store.deleteRate { [weak self] success in
-            guard let self = self else { return }
-    
-            self.isLoading = false
-            
-            if success {
-                self.didUpdateRating?()
-                
-                UISelectionFeedbackGenerator().selectionChanged()
-                self.presentingViewController?.dismiss(animated: true)
-            } else {
-                UINotificationFeedbackGenerator().notificationOccurred(.error)
-                errorHandler?(.deleteRatingError)
-            }
-        }
+        let success = await store.deleteRate()
         
+        self.isLoading = false
+        
+        if success {
+            self.didUpdateRating?()
+            
+            UISelectionFeedbackGenerator().selectionChanged()
+            self.presentingViewController?.dismiss(animated: true)
+        } else {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            errorHandler?(.deleteRatingError)
+        }
     }
     
 }

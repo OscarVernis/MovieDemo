@@ -15,7 +15,7 @@ protocol MovieDetailRouter: ErrorHandlingRouter {
     func showCastCreditList(credits: [CastCreditViewModel], animated: Bool)
     func showRecommendedMovies(for: Int)
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool)
-    func showMovieRatingView(store: MovieDetailStore, updateHandler: @escaping () -> ())
+    func showMovieRatingView(store: MovieDetailStore, successHandler: @escaping () -> ())
 }
 
 extension MovieDetailRouter {
