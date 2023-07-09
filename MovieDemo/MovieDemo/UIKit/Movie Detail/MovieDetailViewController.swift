@@ -8,7 +8,6 @@
 
 import UIKit
 import Combine
-import SPStorkController
 
 class MovieDetailViewController: UIViewController {
     var router: MovieDetailRouter?
@@ -45,15 +44,6 @@ class MovieDetailViewController: UIViewController {
         createCollectionView()
         setup()
         setupStore()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        //Update Rating View if appeareance changes
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            SPStorkController.updatePresentingController(parent: self)
-        }
     }
     
     override var shouldAutorotate: Bool {
@@ -148,25 +138,29 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupStore()  {
-        store.$movie.sink { [weak self] movie in
-            self?.didUpdate(movie: movie)
-        }
-        .store(in: &cancellables)
-        
-        store.$error.sink { [weak self] error in
-            if error != nil {
-                self?.show(error: .refreshError, shouldDismiss: true)
-                self?.store.error = nil
+        store.$movie
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] movie in
+                self?.storeDidUpdate()
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
+        
+        store.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                if error != nil {
+                    self?.show(error: .refreshError, shouldDismiss: true)
+                    self?.store.error = nil
+                }
+            }
+            .store(in: &cancellables)
         
         store.refresh()
     }
 
     //MARK: - Actions
-    fileprivate func didUpdate(movie: MovieViewModel) {
-        dataSource.movie = movie
+    fileprivate func storeDidUpdate() {
+        dataSource.movie = store.movie
         dataSource.isLoading = store.isLoading
         dataSource.reload()
         collectionView.reloadData()

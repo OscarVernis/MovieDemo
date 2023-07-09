@@ -1097,7 +1097,7 @@
 				5562461A2515611A005E63AB /* Remote */,
 				55B6CB8727E0201B007DB4C2 /* LocalStore */,
 				55EECCD825117C3B0041EAE7 /* Data Providers */,
-				55FACCF12A590C7100FB13B5 /* Shared UI */,
+				55FACCF12A590C7100FB13B5 /* Shared Presentation */,
 				5511FF82285A702300B9C12A /* SwiftUI */,
 				5518200327DFE3FB00237F39 /* UIKit */,
 				55614008252008D100F1AA5B /* Assets */,
@@ -1315,7 +1315,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		55FACCF12A590C7100FB13B5 /* Shared UI */ = {
+		55FACCF12A590C7100FB13B5 /* Shared Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				550DA0722A59DF3C00541312 /* Common */,
@@ -1327,7 +1327,7 @@
 				55B854902A5928A5009870B2 /* Login */,
 				550DA06F2A59DDDC00541312 /* Lists */,
 			);
-			path = "Shared UI";
+			path = "Shared Presentation";
 			sourceTree = "<group>";
 		};
 		55FACCF22A590C8200FB13B5 /* Home */ = {

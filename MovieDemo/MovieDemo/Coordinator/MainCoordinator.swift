@@ -174,7 +174,8 @@ class MainCoordinator {
     
     //MARK: - Common
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let userStateService: RemoteUserStateService? = sessionId != nil ? RemoteUserStateService(sessionId: sessionId!) : nil
+        let userStateService = (sessionId != nil) ? RemoteUserStateService(sessionId: sessionId!) : nil
+
         let store = MovieDetailStore(movie: movie,
                                      movieService: RemoteMovieDetailsLoader(sessionId: sessionId),
                                      userStateService: userStateService)

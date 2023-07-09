@@ -28,7 +28,6 @@ struct UserLoaderWithCache: UserLoader {
     func getUserDetails() -> AnyPublisher<User, Error> {
         return main.getUserDetails()
             .handleEvents(receiveOutput: { user in
-                print("saving cache")
                 cache.save(user)
             })
             .merge(with: cache.getUserDetails()
