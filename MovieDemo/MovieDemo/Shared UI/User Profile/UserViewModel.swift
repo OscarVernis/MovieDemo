@@ -10,32 +10,34 @@ import Foundation
 import Combine
 
 class UserViewModel: ObservableObject {
-    @Published private(set) var user: User?
+    @Published private(set) var user: User
     
-    init() { }
+    init() {
+        self.user = User()
+    }
     
     init(user: User) {
         self.user = user
     }
         
-    var username: String? {
-        return user?.username
+    var username: String {
+        return user.username ?? ""
     }
     
     var favorites: [MovieViewModel] {
-        return user?.favorites.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
+        return user.favorites.map { MovieViewModel(movie: $0) }
     }
     
     var watchlist: [MovieViewModel] {
-        return user?.watchlist.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
+        return user.watchlist.map { MovieViewModel(movie: $0) }
     }
     
     var rated: [MovieViewModel] {
-        return user?.rated.map { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
+        return user.rated.map { MovieViewModel(movie: $0) }
     }
     
     var avatarURL: URL? {
-        if let avatarHash = user?.avatar {
+        if let avatarHash = user.avatar {
             return MovieServiceImageUtils.userImageURL(forHash: avatarHash)
         }
         

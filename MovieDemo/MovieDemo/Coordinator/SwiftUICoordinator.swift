@@ -44,7 +44,9 @@ class SwiftUICoordinator: MainCoordinator {
     
     override func showUserProfile(animated: Bool = true) {
         if let sessionId {
-            let store = UserProfileStore(service: RemoteUserLoader(sessionId: sessionId), cache: UserCache())
+            let service = RemoteUserLoader(sessionId: sessionId)
+                .with(cache: UserCache())
+            let store = UserProfileStore(service: service)
             let userProfile = UserProfile(store: store, router: self)
             let upvc = UIHostingController(rootView: userProfile)
             upvc.navigationItem.largeTitleDisplayMode = .never

@@ -217,7 +217,9 @@ class MainCoordinator {
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
         if let sessionId {
-            let store = UserProfileStore(service: RemoteUserLoader(sessionId: sessionId), cache: UserCache())
+            let service = RemoteUserLoader(sessionId: sessionId)
+                .with(cache: UserCache())
+            let store = UserProfileStore(service: service)
             let upvc = UserProfileViewController(store: store, router: self)
             
             rootNavigationViewController?.pushViewController(upvc, animated: animated)

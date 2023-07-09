@@ -12,39 +12,26 @@ import Combine
 class UserProfileStore: ObservableObject {
     @Published private(set) var user: UserViewModel = UserViewModel()
     private let service: UserLoader?
-    private let cache: UserCache?
 
     private(set) var isLoading = false
     @Published var error: Error? = nil
      
-    internal init(service: UserLoader? = nil, cache: UserCache? = nil) {
+    internal init(service: UserLoader? = nil) {
         self.service = service
-        self.cache = cache
     }
 
     func updateUser() {
         guard let service, isLoading == false else { return }
         
         isLoading = true
-                
-        //Load from Cache
-        loadCache()
-        
+
         service.getUserDetails()
             .assignError(to: \.error, on: self)
-            .handleEvents(receiveOutput: { [weak self] user in
+            .onCompletion { [weak self] in
                 self?.isLoading = false
-                self?.cache?.save(user: user)
-            })
+            }
             .map(UserViewModel.init)
             .assign(to: &$user)
-    }
-    
-    func loadCache() {
-        let user = cache?.load()
-        if let user {
-            self.user = UserViewModel(user: user)
-        }
     }
     
 }

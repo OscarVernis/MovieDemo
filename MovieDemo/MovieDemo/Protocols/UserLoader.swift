@@ -13,18 +13,41 @@ protocol UserLoader {
     func getUserDetails() -> AnyPublisher<User, Error>
 }
 
-typealias UserCacheLoader = ModelCache<User> & UserLoader
+extension UserLoader {
+    func with(cache: UserCache) -> UserLoader {
+        UserLoaderWithCache(main: self, cache: cache)
+    }
+}
 
 struct UserLoaderWithCache: UserLoader {
     let main: UserLoader
-    let cache: any UserCacheLoader
+    let cache: UserCache
     
     func getUserDetails() -> AnyPublisher<User, Error> {
         return main.getUserDetails()
-            .merge(with: cache.getUserDetails())
-            .handleEvents(receiveOutput:  { user in
-                cache.save(user)
+            .handleEvents(receiveOutput: { user in
+                print("saving cache")
+                cache.save(user: user)
             })
+            .merge(with: cache.getUserDetails()
+                .replaceEmpty(with: User())
+            )
             .eraseToAnyPublisher()
     }
 }
+
+//typealias UserCacheLoader = ModelCache<User> & UserLoader
+//
+//struct UserLoaderWithCache: UserLoader {
+//    let main: UserLoader
+//    let cache: any UserCacheLoader
+//
+//    func getUserDetails() -> AnyPublisher<User, Error> {
+//        return main.getUserDetails()
+//            .handleEvents(receiveOutput: { user in
+//                cache.save(user)
+//            })
+//            .merge(with: cache.getUserDetails())
+//            .eraseToAnyPublisher()
+//    }
+//}

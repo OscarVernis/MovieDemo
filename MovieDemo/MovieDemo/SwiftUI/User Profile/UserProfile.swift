@@ -17,40 +17,38 @@ struct UserProfile: View {
     
     var body: some View {
         Group {
-            if user.user != nil {
+            if !user.username.isEmpty {
                 ZStack(alignment: .center) {
                     if let url = user.avatarURL {
                         BlurBackground(url: url)
                     }
-                    if let username = user.username, let url = user.avatarURL {
-                        ScrollView(.vertical, showsIndicators: true) {
-                            VStack(alignment: .center, spacing: 0) {
-                                userHeader(username, url)
-                                    .padding(.bottom, 20)
-                                SectionTitle(title: UserString.Favorites.localized,
-                                             font: .detailSectionTitle,
-                                             tapAction: user.favorites.isEmpty ? nil : showFavorites)
-                                PosterRow(movies: user.favorites,
-                                               tapAction: showDetail(movie:),
-                                               emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
-                                .padding(.bottom, 10)
-                                SectionTitle(title: UserString.Watchlist.localized,
-                                             font: .detailSectionTitle,
-                                             tapAction: user.watchlist.isEmpty ? nil : showWatchlist)
-                                PosterRow(movies: user.watchlist,
-                                               tapAction: showDetail(movie:),
-                                               emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
-                                .padding(.bottom, 10)
-                                SectionTitle(title: UserString.Favorites.localized,
-                                             font: .detailSectionTitle,
-                                             tapAction: user.rated.isEmpty ? nil : showRated)
-                                PosterRow(movies: user.rated,
-                                               tapAction: showDetail(movie:),
-                                               emptyMessage: AttributedStringAsset.emptyRatedMessage)
-                                .padding(.bottom, 10)
-                            }
-                            .padding(.top, 16)
+                    ScrollView(.vertical, showsIndicators: true) {
+                        VStack(alignment: .center, spacing: 0) {
+                            userHeader(user.username, user.avatarURL)
+                                .padding(.bottom, 20)
+                            SectionTitle(title: UserString.Favorites.localized,
+                                         font: .detailSectionTitle,
+                                         tapAction: user.favorites.isEmpty ? nil : showFavorites)
+                            PosterRow(movies: user.favorites,
+                                      tapAction: showDetail(movie:),
+                                      emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
+                            .padding(.bottom, 10)
+                            SectionTitle(title: UserString.Watchlist.localized,
+                                         font: .detailSectionTitle,
+                                         tapAction: user.watchlist.isEmpty ? nil : showWatchlist)
+                            PosterRow(movies: user.watchlist,
+                                      tapAction: showDetail(movie:),
+                                      emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
+                            .padding(.bottom, 10)
+                            SectionTitle(title: UserString.Favorites.localized,
+                                         font: .detailSectionTitle,
+                                         tapAction: user.rated.isEmpty ? nil : showRated)
+                            PosterRow(movies: user.rated,
+                                      tapAction: showDetail(movie:),
+                                      emptyMessage: AttributedStringAsset.emptyRatedMessage)
+                            .padding(.bottom, 10)
                         }
+                        .padding(.top, 16)
                     }
                 }
             } else {
@@ -62,7 +60,7 @@ struct UserProfile: View {
         }
     }
     
-    fileprivate func userHeader( _ username: String, _ url: URL) -> some View {
+    fileprivate func userHeader( _ username: String, _ url: URL?) -> some View {
         VStack(spacing: 0) {
             RemoteImage(url: url)
                 .frame(width: 142, height: 142)
@@ -106,6 +104,6 @@ struct UserProfile: View {
 struct UserProfile_Previews: PreviewProvider {    
     static var previews: some View {
         UserProfile(store: .preview)
-                .preferredColorScheme(.dark)
-        }
+            .preferredColorScheme(.dark)
+    }
 }

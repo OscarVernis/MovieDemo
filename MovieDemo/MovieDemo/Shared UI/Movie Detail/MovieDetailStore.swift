@@ -32,9 +32,9 @@ class MovieDetailStore: ObservableObject {
         
         movieService.getMovieDetails(movieId: movie.id)
             .assignError(to: \.error, on: self)
-            .handleEvents(receiveCompletion: { [weak self] _ in
+            .onCompletion { [weak self] in
                 self?.isLoading = false
-            })
+            }
             .map(MovieViewModel.init)
             .assign(to: &$movie)
     }
