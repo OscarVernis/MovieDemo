@@ -9,10 +9,10 @@
 import Foundation
 import Combine
 
-struct RemotePersonDetailsLoader: PersonDetailsLoader {
-    let service = MovieService()
+struct RemotePersonDetailsLoader {
+    static let service = MovieService()
     
-    func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
+    static func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
         let params = ["append_to_response": "movie_credits"]
         
         return service.getModel(endpoint: .personDetails(personId: personId), parameters: params)

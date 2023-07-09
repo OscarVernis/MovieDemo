@@ -1,5 +1,5 @@
 //
-//  PersonDetailsLoader.swift
+//  PersonDetailsService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 08/07/23.
@@ -9,6 +9,4 @@
 import Foundation
 import Combine
 
-protocol PersonDetailsLoader {
-    func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error>
-}
+typealias PersonDetailsService = (Int) -> AnyPublisher<Person, Error>

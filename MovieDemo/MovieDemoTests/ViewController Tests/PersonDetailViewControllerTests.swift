@@ -14,7 +14,7 @@ class PersonDetailViewControllerTests: XCTestCase {
     func test_deallocation() throws {
         assertDeallocation {
             let pvc = PersonDetailViewController.instantiateFromStoryboard()
-            pvc.person = anyPersonVM()
+            pvc.store = PersonDetailStore(person: anyPersonVM())
             
             return pvc
         }

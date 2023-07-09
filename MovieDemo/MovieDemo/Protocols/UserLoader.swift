@@ -24,7 +24,7 @@ typealias UserCacheLoader = ModelCache<User> & UserLoader
 struct UserLoaderWithCache: UserLoader {
     let main: UserLoader
     let cache: any UserCacheLoader
-
+    
     func getUserDetails() -> AnyPublisher<User, Error> {
         return main.getUserDetails()
             .handleEvents(receiveOutput: { user in

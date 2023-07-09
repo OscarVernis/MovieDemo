@@ -26,7 +26,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
                 items.count == 0
         else { return }
         
-        items = cache.fetchMovies().map { MovieViewModel(movie: $0) }
+        items = cache.fetchMovies().map(MovieViewModel.init)
     }
     
     override func getItems() {
@@ -54,7 +54,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
                 
                 self.totalPages = result.totalPages
                 self.cache?.save(result.movies)
-                self.items.append(contentsOf: result.movies.map { MovieViewModel(movie: $0) })
+                self.items.append(contentsOf: result.movies.map(MovieViewModel.init))
             }
     }
     

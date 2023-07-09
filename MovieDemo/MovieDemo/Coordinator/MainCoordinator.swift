@@ -218,8 +218,7 @@ class MainCoordinator {
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
         if let sessionId {
-            let service = RemoteUserLoader(sessionId: sessionId)
-                .with(cache: UserCache())
+            let service = RemoteUserLoader(sessionId: sessionId).with(cache: UserCache())
             let store = UserProfileStore(service: service)
             let upvc = UserProfileViewController(store: store, router: self)
             
@@ -291,7 +290,7 @@ class MainCoordinator {
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
-        let store = PersonDetailStore(person: viewModel, service: RemotePersonDetailsLoader())
+        let store = PersonDetailStore(person: viewModel, service: RemotePersonDetailsLoader.getPersonDetails(personId:))
         
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
         pvc.store = store
