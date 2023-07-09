@@ -19,35 +19,23 @@ extension UserLoader {
     }
 }
 
+typealias UserCacheLoader = ModelCache<User> & UserLoader
+
 struct UserLoaderWithCache: UserLoader {
     let main: UserLoader
-    let cache: UserCache
-    
+    let cache: any UserCacheLoader
+
     func getUserDetails() -> AnyPublisher<User, Error> {
         return main.getUserDetails()
             .handleEvents(receiveOutput: { user in
                 print("saving cache")
-                cache.save(user: user)
+                cache.save(user)
             })
             .merge(with: cache.getUserDetails()
-                .replaceEmpty(with: User())
+                .catch { _ in
+                    Empty(completeImmediately: true)
+                }
             )
             .eraseToAnyPublisher()
     }
 }
-
-//typealias UserCacheLoader = ModelCache<User> & UserLoader
-//
-//struct UserLoaderWithCache: UserLoader {
-//    let main: UserLoader
-//    let cache: any UserCacheLoader
-//
-//    func getUserDetails() -> AnyPublisher<User, Error> {
-//        return main.getUserDetails()
-//            .handleEvents(receiveOutput: { user in
-//                cache.save(user)
-//            })
-//            .merge(with: cache.getUserDetails())
-//            .eraseToAnyPublisher()
-//    }
-//}

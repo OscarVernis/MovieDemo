@@ -10,23 +10,29 @@ import Foundation
 import CoreData
 import Combine
 
-struct UserCache {
-    let store = CoreDataStore.shared
+struct UserCache{
     
-    func save(user: User) {
-        //Delete previous user cache
-        delete()
-        
-        //Save new user cache
-        let _ = UserMO(withUser: user, context: store.context)
-        store.save()
-    }
+    let store = CoreDataStore.shared
     
     func load() -> User? {
         let fetchRequest = UserMO.fetchRequest()
         let user = try? store.context.fetch(fetchRequest).last
         
         return user?.toUser()
+    }
+    
+}
+
+extension UserCache: ModelCache  {
+    typealias Model = User
+    
+    func save(_ user: User) {
+        //Delete previous user cache
+        delete()
+        
+        //Save new user cache
+        let _ = UserMO(withUser: user, context: store.context)
+        store.save()
     }
     
     func delete() {
