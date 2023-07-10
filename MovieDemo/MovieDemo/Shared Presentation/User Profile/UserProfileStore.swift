@@ -27,9 +27,7 @@ class UserProfileStore: ObservableObject {
 
         service.getUserDetails()
             .assignError(to: \.error, on: self)
-            .onCompletion { [weak self] in
-                self?.isLoading = false
-            }
+            .onCompletion { self.isLoading = false }
             .map(UserViewModel.init)
             .assign(to: &$user)
     }

@@ -120,12 +120,16 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func setupStore()  {
-        store.$person.sink { [weak self] person in
-            self?.didUpdate(person: person)
+        store.$person
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+            self?.storeDidUpdate()
         }
         .store(in: &cancellables)
         
-        store.$error.sink { [weak self] error in
+        store.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
             if error != nil {
                 self?.handleError()
                 self?.store?.error = nil
@@ -137,8 +141,8 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Actions
-    fileprivate func didUpdate(person: PersonViewModel) {
-        dataSource.person = person
+    fileprivate func storeDidUpdate() {
+        dataSource.person = store.person
         self.dataSource.reload()
         self.collectionView.reloadData()
     }

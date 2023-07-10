@@ -189,8 +189,7 @@ class MainCoordinator {
                                      movieService: movieService,
                                      userStateService: userStateService)
         
-        let mdvc = MovieDetailViewController(store: store)
-        mdvc.router = self
+        let mdvc = MovieDetailViewController(store: store, router: self)
         
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }

@@ -41,7 +41,7 @@ class SessionServiceMock: SessionService {
         }
         
         loginCount += 1
-        print("login completed")
+        
         return "sessionId"
     }
     

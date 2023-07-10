@@ -29,12 +29,10 @@ class MovieDetailStore: ObservableObject {
         guard let movieService else { return }
         
         isLoading = true
-                
+        
         movieService()
             .assignError(to: \.error, on: self)
-            .onCompletion { [weak self] in
-                self?.isLoading = false
-            }
+            .onCompletion { self.isLoading = false }
             .map(MovieViewModel.init)
             .assign(to: &$movie)
     }
@@ -73,7 +71,7 @@ class MovieDetailStore: ObservableObject {
     func rate(_ rating: Int) async -> Bool {
         guard let userStateService else { return false }
 
-        //ViewModel receives rating as 0 to 100, but service receives 0.5 to 10 in multiples of 0.5
+        //Store receives rating as 0 to 100, but service receives 0.5 to 10 in multiples of 0.5
         var adjustedRating:Float = Float(rating) / 10
         adjustedRating = (adjustedRating / 0.5).rounded(.down) * 0.5
         

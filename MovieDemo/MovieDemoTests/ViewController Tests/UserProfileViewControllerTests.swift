@@ -17,4 +17,10 @@ class UserProfileViewControllerTests: XCTestCase {
         }
     }
 
+    func test_store_deallocation() throws {
+        let service = JSONUserLoader(filename: "user")
+        let store = UserProfileStore(service: service)
+        store.updateUser()
+        trackForMemoryLeaks(store)
+    }
 }

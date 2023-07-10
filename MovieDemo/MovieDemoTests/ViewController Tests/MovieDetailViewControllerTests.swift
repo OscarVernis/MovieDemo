@@ -7,14 +7,24 @@
 //
 
 import XCTest
+import Combine
 @testable import MovieDemo
 
 class MovieDetailViewControllerTests: XCTestCase {
 
     func test_deallocation() throws {
         assertDeallocation {
-            MovieDetailViewController(store: .preview(showUserActions: false))
+            let service = { Just(self.anyMovie()).setFailureType(to: Error.self).eraseToAnyPublisher() }
+            let store = MovieDetailStore(movie: anyMovieVM(), movieService: service)
+            return MovieDetailViewController(store: store)
         }
+    }
+    
+    func test_store_deallocation() throws {
+        let service = { Just(self.anyMovie()).setFailureType(to: Error.self).eraseToAnyPublisher() }
+        let store = MovieDetailStore(movie: anyMovieVM(), movieService: service)
+        store.refresh()
+        trackForMemoryLeaks(store)
     }
 
 }

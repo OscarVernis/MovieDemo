@@ -83,12 +83,16 @@ class UserProfileViewController: UIViewController {
     }
     
     fileprivate func setupStore()  {
-        store.$user.sink { [weak self] user in
-            self?.didUpdate(user: user)
+        store.$user
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+            self?.storeDidUpdate()
         }
         .store(in: &cancellables)
         
-        store.$error.sink { [weak self] error in
+        store.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
             if error != nil {
                 self?.handleError()
                 self?.store.error = nil
@@ -103,7 +107,7 @@ class UserProfileViewController: UIViewController {
 
 //MARK: - Actions
 extension UserProfileViewController {
-    fileprivate func didUpdate(user: UserViewModel) {
+    fileprivate func storeDidUpdate() {
         //Load Blur Background
         if let imageURL = user.avatarURL {
             collectionView.backgroundColor = .clear

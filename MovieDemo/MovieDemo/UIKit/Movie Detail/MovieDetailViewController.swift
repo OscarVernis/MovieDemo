@@ -23,8 +23,9 @@ class MovieDetailViewController: UIViewController {
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
     
-    required init(store: MovieDetailStore) {
+    required init(store: MovieDetailStore, router: MovieDetailRouter?) {
         self.store = store
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -263,9 +264,7 @@ class MovieDetailViewController: UIViewController {
               let rateButton = headerView?.rateButton
         else { return }
         
-        router?.showMovieRatingView(store: store, successHandler: { [weak self] in
-            guard let self else { return }
-            
+        router?.showMovieRatingView(store: store, successHandler: {
             rateButton.setIsSelected(self.movie.rated, animated: false)
             watchlistButton.setIsSelected(self.movie.watchlist, animated: false)
         })
