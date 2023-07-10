@@ -29,14 +29,6 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
         fatalError("init(coder:) has not been implemented")
     }
     
-    lazy var searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: self)
-        searchController.searchResultsUpdater = self
-        searchController.delegate = self
-    
-        return searchController
-    }()
-    
     fileprivate func setupCollectionView() {
         MovieInfoListCell.register(to: collectionView)
         CreditPhotoListCell.register(to: collectionView)
@@ -47,7 +39,7 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
             guard let self = self else { return }
             
             //Avoid the navigation bar showing after the Person Detail is shown
-            self.searchController.hidesNavigationBarDuringPresentation = false
+            self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
 
             let item = self.provider.item(atIndex: index)
             

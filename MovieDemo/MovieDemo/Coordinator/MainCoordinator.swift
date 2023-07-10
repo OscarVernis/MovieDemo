@@ -159,6 +159,15 @@ class MainCoordinator {
         }
     }
     
+    var homeSearchController: UISearchController {
+        let searchViewController = SearchViewController(router: self)
+        let searchController = UISearchController(searchResultsController: searchViewController)
+        searchController.searchResultsUpdater = searchViewController
+        searchController.delegate = searchViewController
+        
+        return searchController
+    }
+    
     func showHome() {
         let hvc = HomeViewController(router: self,
                                      nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
@@ -166,8 +175,7 @@ class MainCoordinator {
                                      popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
                                      topRatedProvider: moviesProvider(for: .TopRated, cacheList: .TopRated))
         
-        let searchViewController = SearchViewController(router: self)
-        hvc.navigationItem.searchController = searchViewController.searchController
+        hvc.navigationItem.searchController = homeSearchController
         
         rootNavigationViewController?.viewControllers = [hvc]
     }
