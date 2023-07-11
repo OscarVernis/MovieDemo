@@ -31,7 +31,7 @@ extension TMDBClient {
     
 }
 
-//MARK: - Search
+//MARK: - SearchLoader
 extension TMDBClient: SearchLoader {
     func search(query: String, page: Int = 1) -> AnyPublisher<SearchResult, Error>  {
         let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = getModels(endpoint: .search, parameters: ["query" : query], page: page)
@@ -54,4 +54,72 @@ extension TMDBClient: SearchLoader {
             .eraseToAnyPublisher()
     }
     
+}
+
+//MARK: - UserStateService
+extension TMDBClient: UserStateService {
+    func markAsFavorite(_ favorite: Bool, movieId: Int) async throws {
+        let body = FavoriteRequestBody(media_id: movieId, favorite: favorite)
+        
+        let _ = try await successAction(endpoint: .markAsFavorite, body: body, method: .post).async()
+    }
+    
+    func addToWatchlist(_ watchlist: Bool, movieId: Int) async throws {
+        let body = WatchlistRequestBody(media_id: movieId, watchlist: watchlist)
+        
+        let _ = try await successAction(endpoint: .addToWatchlist, body: body, method: .post).async()
+    }
+    
+    func rateMovie(_ rating: Float, movieId: Int) async throws {
+        let body = ["value": rating]
+        
+        let _ = try await successAction(endpoint: .rateMovie(movieId), body: body, method: .post).async()
+    }
+    
+    func deleteRate(movieId: Int) async throws {
+        let _ = try await successAction(endpoint: .deleteRate(movieId), method: .delete).async()
+    }
+    
+}
+
+//MARK: - SessionService
+extension TMDBClient: SessionService {
+    func requestToken() async throws -> String {
+        let serviceResult: ServiceSuccessResult = try await successAction(endpoint: .requestToken).async()
+        guard let token: String = serviceResult.requestToken else { throw TMDBClient.ServiceError.JsonError }
+        
+        return token
+    }
+    
+    func validateToken(username: String, password: String, requestToken: String) async throws {
+        let body = [
+            "username": username,
+            "password": password,
+            "request_token": requestToken
+        ]
+        
+        let _: ServiceSuccessResult = try await successAction(endpoint: .validateToken, body: body, method: .post).async()
+    }
+    
+    
+    func createSession(requestToken: String) async throws -> String  {
+        let body = ["request_token": requestToken]
+        let serviceResult: ServiceSuccessResult = try await successAction(endpoint: .createSession, body: body, method: .post).async()
+        
+        guard let sessionId: String = serviceResult.sessionId else { throw TMDBClient.ServiceError.JsonError }
+        
+        return sessionId
+    }
+    
+    func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
+        let body = ["session_id": sessionId]
+        
+        let result = try await successAction(endpoint: .deleteSession, body: body, method: .delete).async()
+        if let success = result.success, success == true {
+            return .success(())
+        } else {
+            return .failure(TMDBClient.ServiceError.NoSuccess)
+        }
+    }
+
 }
