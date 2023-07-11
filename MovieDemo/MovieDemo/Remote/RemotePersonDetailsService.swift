@@ -1,5 +1,5 @@
 //
-//  RemotePersonDetailsLoader.swift
+//  RemotePersonDetailsService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/03/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemotePersonDetailsLoader {
+struct RemotePersonDetailsService {
     static let service = MovieService()
     
     static func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {

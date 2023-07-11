@@ -13,7 +13,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
     let movieLoader: MoviesLoader
     let cache: MovieCache?
     var serviceCancellable: AnyCancellable?
-
+    
     init(movieLoader: MoviesLoader, cache: MovieCache? = nil) {
         self.movieLoader = movieLoader
         self.cache = cache
@@ -22,29 +22,36 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
     fileprivate func loadFromCache() {
         //Only load from Cache on first page and when items are empty.
         guard let cache = cache,
-                currentPage == 0,
-                items.count == 0
+              currentPage == 0,
+              items.count == 0
         else { return }
         
         items = cache.fetchMovies().map(MovieViewModel.init)
     }
     
+    fileprivate func cachePublisher() -> AnyPublisher<MoviesResult, Error> {
+        //Only load from Cache on first page and when items are empty.
+        if let cache, currentPage == 0, items.count == 0 {
+            return cache.getMovies()
+        } else {
+            return Empty(completeImmediately: true).eraseToAnyPublisher()
+        }
+    }
+    
     override func getItems() {
         let page = currentPage + 1
-        loadFromCache()
         
-        serviceCancellable = movieLoader.getMovies(page: page)
-            .sink { [weak self] completion in
-                guard let self = self else { return }
-                
-                switch completion {
-                case .finished:
-                    self.currentPage += 1
-                    self.didUpdate?(nil)
-                case .failure(let error):
-                    self.didUpdate?(error)
-                }
-            } receiveValue: { [weak self] result in
+        serviceCancellable =
+        cachePublisher()
+            .merge(with: movieLoader.getMovies(page: page))
+            .onCompletion {
+                self.currentPage += 1
+                self.didUpdate?(nil)
+            }
+            .handleError { error in
+                self.didUpdate?(error)
+            }
+            .sink { [weak self] result in
                 guard let self = self else { return }
                 
                 if self.currentPage == 0 {
@@ -56,6 +63,31 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
                 self.cache?.save(result.movies)
                 self.items.append(contentsOf: result.movies.map(MovieViewModel.init))
             }
+        
+        
+//        serviceCancellable = movieLoader.getMovies(page: page)
+//            .sink { [weak self] completion in
+//                guard let self = self else { return }
+//                
+//                switch completion {
+//                case .finished:
+//                    self.currentPage += 1
+//                    self.didUpdate?(nil)
+//                case .failure(let error):
+//                    self.didUpdate?(error)
+//                }
+//            } receiveValue: { [weak self] result in
+//                guard let self = self else { return }
+//                
+//                if self.currentPage == 0 {
+//                    self.items.removeAll()
+//                    self.cache?.delete()
+//                }
+//                
+//                self.totalPages = result.totalPages
+//                self.cache?.save(result.movies)
+//                self.items.append(contentsOf: result.movies.map(MovieViewModel.init))
+//            }
     }
     
 }

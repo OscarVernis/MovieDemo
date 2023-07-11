@@ -228,7 +228,7 @@
 		55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D309DB281325D0004F2725 /* URLSession+Extensions.swift */; };
 		55D317F8284EF44D0090CF34 /* UserMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317F6284EF44D0090CF34 /* UserMO.swift */; };
 		55D317FB284EF6090090CF34 /* UserCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317FA284EF6090090CF34 /* UserCache.swift */; };
-		55D317FD284EF6A40090CF34 /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317FC284EF6A40090CF34 /* UserLoader.swift */; };
+		55D317FD284EF6A40090CF34 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317FC284EF6A40090CF34 /* UserService.swift */; };
 		55D35E1C2517DE0D00114602 /* Loaf in Frameworks */ = {isa = PBXBuildFile; productRef = 55D35E1B2517DE0D00114602 /* Loaf */; };
 		55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D35E1E2517DE1D00114602 /* AlertManager.swift */; };
 		55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */; };
@@ -240,8 +240,8 @@
 		55E8A7D0285CF61200588D62 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 55E8A7CF285CF5BC00588D62 /* user.json */; };
 		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
 		55EB72A627D19FD100B98342 /* RemoteUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserService.swift */; };
-		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
-		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */; };
+		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsService.swift */; };
+		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsService.swift */; };
 		55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */; };
 		55EDA71628111CC80055696F /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDA71528111CC80055696F /* ImageAsset.swift */; };
 		55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3512513E346004F8117 /* LoadingCell.swift */; };
@@ -511,7 +511,7 @@
 		55D309DB281325D0004F2725 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
 		55D317F6284EF44D0090CF34 /* UserMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMO.swift; sourceTree = "<group>"; };
 		55D317FA284EF6090090CF34 /* UserCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
-		55D317FC284EF6A40090CF34 /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
+		55D317FC284EF6A40090CF34 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		55D35E1E2517DE1D00114602 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieVideoViewModel.swift; sourceTree = "<group>"; };
 		55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeVideoCell.swift; sourceTree = "<group>"; };
@@ -522,8 +522,8 @@
 		55E8A7CF285CF5BC00588D62 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
 		55EB72A527D19FD100B98342 /* RemoteUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserService.swift; sourceTree = "<group>"; };
-		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
-		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsLoader.swift; sourceTree = "<group>"; };
+		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsService.swift; sourceTree = "<group>"; };
+		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsService.swift; sourceTree = "<group>"; };
 		55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedProvider.swift; sourceTree = "<group>"; };
 		55EDA71528111CC80055696F /* ImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAsset.swift; sourceTree = "<group>"; };
 		55EDD3512513E346004F8117 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
@@ -886,7 +886,7 @@
 				5523970227D17F6100E4C18F /* MoviesLoader.swift */,
 				5570994B282485780028ED44 /* SearchLoader.swift */,
 				55549900282232BF00E89119 /* SessionService.swift */,
-				55D317FC284EF6A40090CF34 /* UserLoader.swift */,
+				55D317FC284EF6A40090CF34 /* UserService.swift */,
 				5511FF99285A90E800B9C12A /* MovieDetailsService.swift */,
 				558B87542A58B44500416FBB /* UserStateService.swift */,
 				5553B3A62A59E99600969AE7 /* PersonDetailsService.swift */,
@@ -925,9 +925,9 @@
 				554970C72902389000E5A8B3 /* MovieServiceImageUtils.swift */,
 				5565DDEC27E969CD00D7F4EB /* Endpoint.swift */,
 				5523970727D19B6700E4C18F /* RemoteMoviesLoader.swift */,
-				55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */,
+				55EB72A827D1A13F00B98342 /* RemoteMovieDetailsService.swift */,
 				5523970C27D19C2C00E4C18F /* RemoteSearchLoader.swift */,
-				55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */,
+				55EB72AB27D1A19B00B98342 /* RemotePersonDetailsService.swift */,
 				55EB72A527D19FD100B98342 /* RemoteUserService.swift */,
 				558B87562A58B4B700416FBB /* RemoteUserStateService.swift */,
 				55EB72A227D19EC800B98342 /* RemoteSessionService.swift */,
@@ -1586,7 +1586,7 @@
 				55CEAF07286E016300FEF613 /* PosterItem.swift in Sources */,
 				5511FF95285A900500B9C12A /* MovieBannerItem.swift in Sources */,
 				5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */,
-				55D317FD284EF6A40090CF34 /* UserLoader.swift in Sources */,
+				55D317FD284EF6A40090CF34 /* UserService.swift in Sources */,
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
@@ -1632,7 +1632,7 @@
 				5592767328550DCD0063743C /* UserMoviesDataSource.swift in Sources */,
 				5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */,
 				557ACF8A285BAEC800FFA4CD /* RatedMovieItem.swift in Sources */,
-				55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */,
+				55EB72AC27D1A19B00B98342 /* RemotePersonDetailsService.swift in Sources */,
 				55823C632857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift in Sources */,
 				5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */,
 				555CF12527DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift in Sources */,
@@ -1666,7 +1666,7 @@
 				5570356E251ED37A0083089C /* MovieVideo.swift in Sources */,
 				555072CD285BA3B200C15EF4 /* MoviePosterList.swift in Sources */,
 				5572C04F2A5A115A00F164EA /* ModelCache.swift in Sources */,
-				55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */,
+				55EB72A927D1A13F00B98342 /* RemoteMovieDetailsService.swift in Sources */,
 				55EE573F284D949D00C6A170 /* GenreString.swift in Sources */,
 				55FACCF72A591ACE00FB13B5 /* MovieDetailRouter.swift in Sources */,
 				55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */,

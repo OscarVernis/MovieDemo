@@ -182,7 +182,7 @@ class MainCoordinator {
     
     //MARK: - Common
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = RemoteMovieDetailsLoader.getMovieDetails(movieId: movie.id, sessionId: self.sessionId)
+        let movieService = RemoteMovieDetailsService.getMovieDetails(movieId: movie.id, sessionId: self.sessionId)
         let userStateService = (sessionId != nil) ? RemoteUserStateService(sessionId: sessionId!) : nil
         
         let store = MovieDetailStore(movie: movie,
@@ -302,7 +302,7 @@ class MainCoordinator {
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
-        let service = RemotePersonDetailsLoader.getPersonDetails(personId: viewModel.id)
+        let service = RemotePersonDetailsService.getPersonDetails(personId: viewModel.id)
         let store = PersonDetailStore(person: viewModel, service: service)
         
         let pvc = PersonDetailViewController.instantiateFromStoryboard()

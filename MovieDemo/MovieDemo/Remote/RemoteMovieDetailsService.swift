@@ -1,5 +1,5 @@
 //
-//  RemoteMovieInfoLoader.swift
+//  RemoteMovieDetailsService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/03/22.
@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct RemoteMovieDetailsLoader {
+struct RemoteMovieDetailsService {
     static func getMovieDetails(movieId: Int, sessionId: String?) -> AnyPublisher<Movie, Error> {
         let params = ["append_to_response" : "credits,recommendations,account_states,videos"]
         let service = MovieService(sessionId: sessionId)

@@ -15,3 +15,4 @@ protocol ModelCache<Model> {
     func save(_ model: Model)
     func delete()
 }
+
