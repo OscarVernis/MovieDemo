@@ -240,8 +240,6 @@
 		55E8A7CE285CF54400588D62 /* JSONUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */; };
 		55E8A7D0285CF61200588D62 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 55E8A7CF285CF5BC00588D62 /* user.json */; };
 		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
-		55EB72A627D19FD100B98342 /* RemoteUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserService.swift */; };
-		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsService.swift */; };
 		55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */; };
 		55EDA71628111CC80055696F /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDA71528111CC80055696F /* ImageAsset.swift */; };
 		55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3512513E346004F8117 /* LoadingCell.swift */; };
@@ -522,8 +520,6 @@
 		55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUserLoader.swift; sourceTree = "<group>"; };
 		55E8A7CF285CF5BC00588D62 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
-		55EB72A527D19FD100B98342 /* RemoteUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserService.swift; sourceTree = "<group>"; };
-		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsService.swift; sourceTree = "<group>"; };
 		55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedProvider.swift; sourceTree = "<group>"; };
 		55EDA71528111CC80055696F /* ImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAsset.swift; sourceTree = "<group>"; };
 		55EDD3512513E346004F8117 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
@@ -927,8 +923,6 @@
 				554970C72902389000E5A8B3 /* MovieServiceImageUtils.swift */,
 				5523970727D19B6700E4C18F /* RemoteMoviesLoader.swift */,
 				5523970C27D19C2C00E4C18F /* RemoteSearchLoader.swift */,
-				55EB72AB27D1A19B00B98342 /* RemotePersonDetailsService.swift */,
-				55EB72A527D19FD100B98342 /* RemoteUserService.swift */,
 				558B87562A58B4B700416FBB /* RemoteUserStateService.swift */,
 				55EB72A227D19EC800B98342 /* RemoteSessionService.swift */,
 			);
@@ -1595,7 +1589,6 @@
 				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,
 				55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */,
-				55EB72A627D19FD100B98342 /* RemoteUserService.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
 				556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,
@@ -1633,7 +1626,6 @@
 				5592767328550DCD0063743C /* UserMoviesDataSource.swift in Sources */,
 				5550409C251E70A400D919FF /* UserProfileViewController.swift in Sources */,
 				557ACF8A285BAEC800FFA4CD /* RatedMovieItem.swift in Sources */,
-				55EB72AC27D1A19B00B98342 /* RemotePersonDetailsService.swift in Sources */,
 				55823C632857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift in Sources */,
 				5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */,
 				555CF12527DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift in Sources */,

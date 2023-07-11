@@ -47,9 +47,9 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showUserProfile(animated: Bool = true) {
-        if let sessionId {
+        if sessionId != nil {
             let cache = UserCache()
-            let service = RemoteUserService.getUserDetails(sessionId: sessionId)
+            let service = remoteClient.getUserDetails()
                 .cache(with: cache)
                 .placeholder(with: cache.publisher)
             let store = UserProfileStore(service: service)

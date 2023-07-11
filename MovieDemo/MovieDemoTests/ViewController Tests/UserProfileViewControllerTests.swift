@@ -15,7 +15,7 @@ class UserProfileViewControllerTests: XCTestCase {
         assertDeallocation {
             let service = JSONUserLoader(filename: "user").getUserDetails()
             let store = UserProfileStore(service: service)
-            return UserProfileViewController(store: UserProfileStore(service: service))
+            return UserProfileViewController(store: store)
         }
     }
 

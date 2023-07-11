@@ -228,9 +228,9 @@ class MainCoordinator {
     
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
-        if let sessionId {
+        if sessionId != nil {
             let cache = UserCache()
-            let service = RemoteUserService.getUserDetails(sessionId: sessionId)
+            let service = remoteClient.getUserDetails()
                 .cache(with: cache)
                 .placeholder(with: cache.publisher)
             
@@ -305,7 +305,7 @@ class MainCoordinator {
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
-        let service = RemotePersonDetailsService.getPersonDetails(personId: viewModel.id)
+        let service = remoteClient.getPersonDetails(personId: viewModel.id)
         let store = PersonDetailStore(person: viewModel, service: service)
         
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
