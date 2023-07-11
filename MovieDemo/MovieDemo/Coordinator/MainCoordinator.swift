@@ -19,16 +19,13 @@ class MainCoordinator {
     private var window: UIWindow
     private(set) var rootNavigationViewController: UINavigationController?
     
-    private var sessionManager =  SessionManager(service: TMDBClient(), store: KeychainSessionStore())
-    private var sessionId: String? {
-        sessionManager.sessionId
+    var dependencies: AppDependencyContainer = AppDependencyContainer()
+    
+    var isLoggedIn: Bool {
+        dependencies.isLoggedIn
     }
     
-    private var remoteClient: TMDBClient {
-        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
-    }
-    
-    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = true, sessionManager: SessionManager? = nil) {
+    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = true, dependencyContainer: AppDependencyContainer? = nil) {
         self.window = window
         
         if let isLoginRequired {
@@ -39,8 +36,8 @@ class MainCoordinator {
             self.usesWebLogin = usesWebLogin
         }
         
-        if let sessionManager {
-            self.sessionManager = sessionManager
+        if let dependencyContainer {
+            self.dependencies = dependencyContainer
         }
     }
     
@@ -60,17 +57,6 @@ class MainCoordinator {
                                     completion: completion)
     }
     
-    func moviesProvider(for movieList: MoviesEndpoint, cacheList: MovieCache.CacheList? = nil) -> MoviesProvider {
-        let loader = RemoteMoviesLoader(movieList: movieList, sessionId: sessionId)
-        
-        var cache: MovieCache? = nil
-        if let cacheList {
-            cache = MovieCache(cacheList: cacheList)
-        }
-        
-        return MoviesProvider(movieLoader: loader, cache: cache)
-    }
-    
     //MARK: - App Start
     func start() {
         rootNavigationViewController = UINavigationController()
@@ -86,7 +72,7 @@ class MainCoordinator {
         window.rootViewController = rootNavigationViewController
         window.makeKeyAndVisible()
         
-        if isLoginRequired && sessionManager.isLoggedIn == false {
+        if isLoginRequired && isLoggedIn == false {
             showLogin(animated: false)
         } else {
             showHome()
@@ -104,7 +90,7 @@ class MainCoordinator {
     
     func showDefaultLogin(animated: Bool = true) {
         let lvc = LoginViewController.instantiateFromStoryboard()
-        lvc.store = LoginViewStore(sessionManager: sessionManager)
+        lvc.store = dependencies.loginViewStore
         
         lvc.showsCloseButton = !isLoginRequired
         if isLoginRequired {
@@ -126,8 +112,8 @@ class MainCoordinator {
     
     func showWebLogin(animated: Bool = true) {
         let lvc = WebLoginViewController.instantiateFromStoryboard()
-        lvc.sessionManager = sessionManager
-        lvc.service = remoteClient
+        lvc.sessionManager = dependencies.sessionManager
+        lvc.service = dependencies.sessionService
         lvc.router = self
         
         lvc.showsCloseButton = !isLoginRequired
@@ -147,7 +133,7 @@ class MainCoordinator {
     
     func logout() {
         Task { @MainActor in
-            let result = await sessionManager.logout()
+            let result = await dependencies.sessionManager.logout()
             
             switch result {
             case .success():
@@ -156,7 +142,7 @@ class MainCoordinator {
                 }
                 
                 //Delete cache
-                let cache = UserCache()
+                let cache = dependencies.userCache
                 cache.delete()
                 
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
@@ -169,7 +155,7 @@ class MainCoordinator {
     }
     
     var homeSearchController: UISearchController {
-        let dataSource = SearchDataSource(searchProvider: SearchProvider(searchLoader: remoteClient))
+        let dataSource = SearchDataSource(searchProvider: dependencies.searchProvider)
         let searchViewController = SearchViewController(searchDataSource: dataSource, router: self)
         let searchController = UISearchController(searchResultsController: searchViewController)
         searchController.searchResultsUpdater = searchViewController
@@ -180,10 +166,10 @@ class MainCoordinator {
     
     func showHome() {
         let hvc = HomeViewController(router: self,
-                                     nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
-                                     upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
-                                     popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
-                                     topRatedProvider: moviesProvider(for: .TopRated, cacheList: .TopRated))
+                                     nowPlayingProvider: dependencies.moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
+                                     upcomingProvider: dependencies.moviesProvider(for: .Upcoming, cacheList: .Upcoming),
+                                     popularProvider: dependencies.moviesProvider(for: .Popular, cacheList: .Popular),
+                                     topRatedProvider: dependencies.moviesProvider(for: .TopRated, cacheList: .TopRated))
         
         hvc.navigationItem.searchController = homeSearchController
         
@@ -192,13 +178,7 @@ class MainCoordinator {
     
     //MARK: - Common
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = remoteClient.getMovieDetails(movieId: movie.id)
-        let userStateService: UserStateService? = sessionId != nil ? remoteClient : nil
-
-        let store = MovieDetailStore(movie: movie,
-                                     movieService: movieService,
-                                     userStateService: userStateService)
-        
+        let store = dependencies.movieDetailsStore(movie: movie)
         let mdvc = MovieDetailViewController(store: store, router: self)
         
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
@@ -223,7 +203,7 @@ class MainCoordinator {
     }
     
     fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
-        let dataProvider = moviesProvider(for: endpoint)
+        let dataProvider = dependencies.moviesProvider(for: endpoint)
         
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
@@ -235,14 +215,8 @@ class MainCoordinator {
     
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
-        if sessionId != nil {
-            let cache = UserCache()
-            let service = remoteClient.getUserDetails()
-                .cache(with: cache)
-                .placeholder(with: cache.publisher)
-            
-            let store = UserProfileStore(service: service)
-            let upvc = UserProfileViewController(store: store, router: self)
+        if isLoggedIn {
+            let upvc = UserProfileViewController(store: dependencies.userProfileStore, router: self)
             
             rootNavigationViewController?.pushViewController(upvc, animated: animated)
         } else {
@@ -312,11 +286,8 @@ class MainCoordinator {
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
-        let service = remoteClient.getPersonDetails(personId: viewModel.id)
-        let store = PersonDetailStore(person: viewModel, service: service)
-        
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
-        pvc.store = store
+        pvc.store = dependencies.personDetailStore(viewModel)
         pvc.router = self
         
         rootNavigationViewController?.pushViewController(pvc, animated: animated)

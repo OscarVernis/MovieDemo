@@ -10,21 +10,13 @@ import UIKit
 import SwiftUI
 
 class SwiftUICoordinator: MainCoordinator {
-    private var sessionManager =  SessionManager(service: TMDBClient(), store: KeychainSessionStore())
-    private var sessionId: String? {
-        sessionManager.sessionId
-    }
-    
-    private var remoteClient: TMDBClient {
-        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
-    }
 
     override func showHome() {
         let homeView = Home(router: self,
-                            nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
-                            upcomingProvider: moviesProvider(for: .Upcoming, cacheList: .Upcoming),
-                            popularProvider: moviesProvider(for: .Popular, cacheList: .Popular),
-                            topRatedProvider: moviesProvider(for: .TopRated, cacheList: .TopRated))
+                            nowPlayingProvider: dependencies.moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
+                            upcomingProvider: dependencies.moviesProvider(for: .Upcoming, cacheList: .Upcoming),
+                            popularProvider: dependencies.moviesProvider(for: .Popular, cacheList: .Popular),
+                            topRatedProvider: dependencies.moviesProvider(for: .TopRated, cacheList: .TopRated))
             .tint(Color(asset: .AppTintColor))
         let hvc = UIHostingController(rootView: homeView)
 
@@ -34,12 +26,7 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = remoteClient.getMovieDetails(movieId: movie.id)
-        let userStateService: UserStateService? = sessionId != nil ? remoteClient : nil
-        let store = MovieDetailStore(movie: movie,
-                                     movieService: movieService,
-                                     userStateService: userStateService)
-        
+        let store = dependencies.movieDetailsStore(movie: movie)
         let movieDetail = MovieDetail(router: self, store: store)
         let mdvc = UIHostingController(rootView: movieDetail)
         mdvc.navigationItem.largeTitleDisplayMode = .never
@@ -48,13 +35,8 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showUserProfile(animated: Bool = true) {
-        if sessionId != nil {
-            let cache = UserCache()
-            let service = remoteClient.getUserDetails()
-                .cache(with: cache)
-                .placeholder(with: cache.publisher)
-            let store = UserProfileStore(service: service)
-            let userProfile = UserProfile(store: store, router: self)
+        if isLoggedIn {
+            let userProfile = UserProfile(store: dependencies.userProfileStore, router: self)
             let upvc = UIHostingController(rootView: userProfile)
             upvc.navigationItem.largeTitleDisplayMode = .never
 
