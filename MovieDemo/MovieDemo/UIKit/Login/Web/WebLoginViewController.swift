@@ -10,8 +10,8 @@ import UIKit
 import AuthenticationServices
 
 class WebLoginViewController: UIViewController {
-    let service = RemoteSessionService()
     var sessionManager: SessionManager!
+    var service: SessionService! = nil
     var router: LoginRouter? = nil
     
     @IBOutlet weak var closeButton: UIButton!

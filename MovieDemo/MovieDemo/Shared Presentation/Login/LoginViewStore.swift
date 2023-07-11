@@ -15,7 +15,7 @@ class LoginViewStore {
     @Published var isLoading: Bool = false
     @Published var validInput: Bool = false
     
-    let sessionManager: SessionManager
+    var sessionManager: SessionManager
     
     init(sessionManager: SessionManager) {
         self.sessionManager = sessionManager

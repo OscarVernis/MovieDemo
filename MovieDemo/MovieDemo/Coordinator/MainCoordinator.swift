@@ -10,32 +10,37 @@ import UIKit
 import SPStorkController
 
 class MainCoordinator {
-    private var window: UIWindow
-    private(set) var rootNavigationViewController: UINavigationController?
-    
-    private var sessionManager = SessionManager.shared
-    private var sessionId: String? {
-        sessionManager.sessionId
-    }
-    private var remoteClient: TMDBClient {
-        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
-    }
-    
     //If set to true, it will force you to login before showing Home
     private var isLoginRequired: Bool = false
     
     //Set to true uses Web Auth, false uses username and password.
     private var usesWebLogin: Bool = false
     
-    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = true) {
+    private var window: UIWindow
+    private(set) var rootNavigationViewController: UINavigationController?
+    
+    private var sessionManager =  SessionManager(service: TMDBClient(), store: KeychainSessionStore())
+    private var sessionId: String? {
+        sessionManager.sessionId
+    }
+    
+    private var remoteClient: TMDBClient {
+        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
+    }
+    
+    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = true, sessionManager: SessionManager? = nil) {
         self.window = window
         
-        if let isLoginRequired = isLoginRequired {
+        if let isLoginRequired {
             self.isLoginRequired = isLoginRequired
         }
         
-        if let usesWebLogin = usesWebLogin {
+        if let usesWebLogin {
             self.usesWebLogin = usesWebLogin
+        }
+        
+        if let sessionManager {
+            self.sessionManager = sessionManager
         }
     }
     
@@ -122,6 +127,7 @@ class MainCoordinator {
     func showWebLogin(animated: Bool = true) {
         let lvc = WebLoginViewController.instantiateFromStoryboard()
         lvc.sessionManager = sessionManager
+        lvc.service = remoteClient
         lvc.router = self
         
         lvc.showsCloseButton = !isLoginRequired

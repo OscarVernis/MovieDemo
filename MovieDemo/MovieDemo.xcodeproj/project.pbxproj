@@ -237,7 +237,6 @@
 		55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CB285CF14800588D62 /* UserProfile.swift */; };
 		55E8A7CE285CF54400588D62 /* JSONUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */; };
 		55E8A7D0285CF61200588D62 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 55E8A7CF285CF5BC00588D62 /* user.json */; };
-		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
 		55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */; };
 		55EDA71628111CC80055696F /* ImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDA71528111CC80055696F /* ImageAsset.swift */; };
 		55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EDD3512513E346004F8117 /* LoadingCell.swift */; };
@@ -515,7 +514,6 @@
 		55E8A7CB285CF14800588D62 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUserLoader.swift; sourceTree = "<group>"; };
 		55E8A7CF285CF5BC00588D62 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
-		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
 		55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedProvider.swift; sourceTree = "<group>"; };
 		55EDA71528111CC80055696F /* ImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAsset.swift; sourceTree = "<group>"; };
 		55EDD3512513E346004F8117 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
@@ -918,7 +916,6 @@
 				5565DDEC27E969CD00D7F4EB /* Endpoint.swift */,
 				554970C72902389000E5A8B3 /* MovieServiceImageUtils.swift */,
 				5523970727D19B6700E4C18F /* RemoteMoviesLoader.swift */,
-				55EB72A227D19EC800B98342 /* RemoteSessionService.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -1693,7 +1690,6 @@
 				550577A2284DAA2C007ED892 /* UserString.swift in Sources */,
 				55CEAF09286E03F000FEF613 /* PosterRow.swift in Sources */,
 				5545203B22D99D8F004B7924 /* TMDBClient.swift in Sources */,
-				55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */,
 				5511FFA3285ADE8700B9C12A /* Rating.swift in Sources */,
 				55EE519D251E8CF800915AB3 /* UserProfileHeaderView.swift in Sources */,
 				550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */,

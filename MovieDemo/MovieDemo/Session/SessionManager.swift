@@ -15,9 +15,8 @@ class SessionManager {
         case IncorrectCredentials
     }
     
-    static let shared = SessionManager()
-    var service: SessionService = RemoteSessionService()
-    var store: SessionStore = KeychainSessionStore()
+    var service: SessionService
+    var store: SessionStore
     
     var isLoggedIn: Bool { sessionId != nil }
 
@@ -25,6 +24,10 @@ class SessionManager {
         return store.sessionId
     }
     
+    init(service: SessionService, store: SessionStore) {
+        self.service = service
+        self.store = store
+    }
 }
 
 //MARK: - Login

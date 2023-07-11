@@ -10,14 +10,15 @@ import UIKit
 import SwiftUI
 
 class SwiftUICoordinator: MainCoordinator {
-    private var sessionManager = SessionManager.shared
+    private var sessionManager =  SessionManager(service: TMDBClient(), store: KeychainSessionStore())
     private var sessionId: String? {
         sessionManager.sessionId
     }
+    
     private var remoteClient: TMDBClient {
         TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
     }
-    
+
     override func showHome() {
         let homeView = Home(router: self,
                             nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
