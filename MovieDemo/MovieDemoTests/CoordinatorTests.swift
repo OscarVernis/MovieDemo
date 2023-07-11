@@ -142,6 +142,7 @@ class CoordinatorTests: XCTestCase {
         let service = SessionServiceMock()
         let store = UserStoreMock(isLoggedIn: isLoggedIn)
         let sessionManager = SessionManager(service: service, store: store)
-        return MainCoordinator(window: window, isLoginRequired: isLoginRequired, usesWebLogin: usesWebLogin, sessionManager: sessionManager)
+        let dependencies = AppDependencyContainer(sessionManager: sessionManager)
+        return MainCoordinator(window: window, isLoginRequired: isLoginRequired, usesWebLogin: usesWebLogin, dependencyContainer: dependencies)
     }
 }

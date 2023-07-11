@@ -9,6 +9,12 @@
 import Foundation
 
 class AppDependencyContainer {
+    init(sessionManager: SessionManager? = nil) {
+        if let sessionManager {
+            self.sessionManager = sessionManager
+        }
+    }
+    
     //MARK: - Global dependencies
     var sessionManager =  SessionManager(service: TMDBClient(), store: KeychainSessionStore())
     private var sessionId: String? {
