@@ -20,59 +20,52 @@ class CoordinatorTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        SessionManager.shared.store = KeychainSessionStore()
         navCont?.viewControllers = []
         window = nil
     }
     
     func test_Coordinator_Loads_Home() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false)
+        sut.start()
         
         let home = navCont?.visibleViewController
         XCTAssert(home is HomeViewController)
     }
     
     func test_Coordinator_Loads_Login() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: true, usesWebLogin: false)
+        let sut = makeSUT(isLoginRequired: true, isLoggedIn: false, usesWebLogin: false)
         
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        
-        coordinator.start()
+        sut.start()
         
         let login = navCont?.visibleViewController
         XCTAssert(login is LoginViewController)
     }
     
     func test_Coordinator_Loads_WebLogin() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: true, usesWebLogin: true)
+        let sut = makeSUT(isLoginRequired: true, isLoggedIn: false, usesWebLogin: true)
         
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        
-        coordinator.start()
+        sut.start()
         
         let login = navCont?.visibleViewController
         XCTAssert(login is WebLoginViewController)
     }
     
     func test_Coordinator_Shows_MovieDetail() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false)
+        sut.start()
         
-        coordinator.showMovieDetail(movie: anyMovieVM(), animated: false)
+        sut.showMovieDetail(movie: anyMovieVM(), animated: false)
         
         let movieDetail = navCont?.visibleViewController
         XCTAssert(movieDetail is MovieDetailViewController)
     }
     
     func test_Coordinator_Shows_MovieList() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false)
+        sut.start()
         
         let movie = anyMovieVM()
-        coordinator.showMovieList(title: "Movies",
+        sut.showMovieList(title: "Movies",
                                   dataProvider: BasicProvider(models: movie.recommendedMovies),
                                   animated: false)
         
@@ -81,21 +74,21 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_PersonDetail() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false)
+        sut.start()
         
-        coordinator.showPersonProfile(anyPersonVM(), animated: false)
+        sut.showPersonProfile(anyPersonVM(), animated: false)
         
         let personDetail = navCont?.visibleViewController
         XCTAssert(personDetail is PersonDetailViewController)
     }
     
     func test_Coordinator_Shows_CastList() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false)
+        sut.start()
         
         let movie = anyMovieVM()
-        coordinator.showCastCreditList(credits: movie.cast,
+        sut.showCastCreditList(credits: movie.cast,
                                        animated: false)
         
         let castList = navCont?.visibleViewController
@@ -103,11 +96,11 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_CrewList() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false)
+        sut.start()
         
         let movie = anyMovieVM()
-        coordinator.showCrewCreditList(credits: movie.crew,
+        sut.showCrewCreditList(credits: movie.crew,
                                        animated: false)
         
         let castList = navCont?.visibleViewController
@@ -115,41 +108,40 @@ class CoordinatorTests: XCTestCase {
     }
     
     func test_Coordinator_Shows_UserProfile_IfLoggedIn() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false, isLoggedIn: true, usesWebLogin: false)
+        sut.start()
         
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: true)
-        
-        coordinator.showUserProfile(animated: false)
+        sut.showUserProfile(animated: false)
         
         let userProfile = navCont?.visibleViewController
         XCTAssert(userProfile is UserProfileViewController)
     }
     
     func test_Coordinator_Shows_UserLogin_IfNotLoggedIn() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false, usesWebLogin: false)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false, isLoggedIn: false, usesWebLogin: false)
+        sut.start()
         
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        
-        coordinator.showUserProfile(animated: false)
+        sut.showUserProfile(animated: false)
         
         let login = navCont?.visibleViewController
         XCTAssert(login is LoginViewController)
     }
     
     func test_Coordinator_Shows_WebLogin_IfNotLoggedIn() throws {
-        let coordinator = MainCoordinator(window: window, isLoginRequired: false, usesWebLogin: true)
-        coordinator.start()
+        let sut = makeSUT(isLoginRequired: false, isLoggedIn: false, usesWebLogin: true)
+
+        sut.start()
         
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        
-        coordinator.showUserProfile(animated: false)
+        sut.showUserProfile(animated: false)
         
         let login = navCont?.visibleViewController
         XCTAssert(login is WebLoginViewController)
+    }
+    
+    fileprivate func makeSUT(isLoginRequired: Bool = false, isLoggedIn: Bool = false, usesWebLogin: Bool = false) -> MainCoordinator {
+        let service = SessionServiceMock()
+        let store = UserStoreMock(isLoggedIn: isLoggedIn)
+        let sessionManager = SessionManager(service: service, store: store)
+        return MainCoordinator(window: window, isLoginRequired: isLoginRequired, usesWebLogin: usesWebLogin, sessionManager: sessionManager)
     }
 }

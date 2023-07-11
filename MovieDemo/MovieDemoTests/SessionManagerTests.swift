@@ -12,9 +12,10 @@ import XCTest
 class SessionManagerTests: XCTestCase {
 
     func test_login_success() async throws {
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        sessionManager.service = SessionServiceMock()
+        let store = UserStoreMock(isLoggedIn: false)
+        let service = SessionServiceMock()
+        let sessionManager = SessionManager(service: service, store: store)
+
         
         let result = await sessionManager.login(withUsername:"username", password: "password")
         switch result {
@@ -29,9 +30,9 @@ class SessionManagerTests: XCTestCase {
     }
     
     func test_login_fails() async throws {
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        sessionManager.service = SessionServiceMock(fails: true)
+        let store = UserStoreMock(isLoggedIn: false)
+        let service = SessionServiceMock(fails: true)
+        let sessionManager = SessionManager(service: service, store: store)
         
         let result = await sessionManager.login(withUsername:"username", password: "password")
         switch result {
@@ -45,9 +46,10 @@ class SessionManagerTests: XCTestCase {
     }
     
     func test_login_fails_on401() async throws {
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(isLoggedIn: false)
-        sessionManager.service = SessionServiceMock(fails: true, error: .IncorrectCredentials)
+        let store = UserStoreMock(isLoggedIn: false)
+        let service = SessionServiceMock(fails: true, error: .IncorrectCredentials)
+        let sessionManager = SessionManager(service: service, store: store)
+
         
         let result = await sessionManager.login(withUsername:"username", password: "password")
         switch result {
@@ -61,10 +63,10 @@ class SessionManagerTests: XCTestCase {
     }
     
     func test_logout_success() async throws {
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(sessionId: "sessionid")
-        sessionManager.service = SessionServiceMock()
-        
+        let store = UserStoreMock(sessionId: "sessionid")
+        let service = SessionServiceMock()
+        let sessionManager = SessionManager(service: service, store: store)
+
         let result = await sessionManager.logout()
         switch result {
         case .failure(_):
@@ -77,9 +79,9 @@ class SessionManagerTests: XCTestCase {
     }
     
     func test_logout_fails() async throws {
-        let sessionManager = SessionManager.shared
-        sessionManager.store = UserStoreMock(sessionId: "sessionid")
-        sessionManager.service = SessionServiceMock(fails: true)
+        let store = UserStoreMock(sessionId: "sessionid")
+        let service = SessionServiceMock(fails: true)
+        let sessionManager = SessionManager(service: service, store: store)
         
         let result = await sessionManager.logout()
         switch result {

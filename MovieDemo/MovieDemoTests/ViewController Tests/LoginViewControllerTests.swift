@@ -13,7 +13,7 @@ class LoginViewControllerTests: XCTestCase {
     var sut: LoginViewController!
     var coordinator: MainCoordinator!
     let window = UIWindow()
-
+    
     override func setUpWithError() throws {
         coordinator = MainCoordinator(window: window, isLoginRequired: true, usesWebLogin: false)
         coordinator.start()
@@ -21,14 +21,14 @@ class LoginViewControllerTests: XCTestCase {
         coordinator.showLogin(animated: false)
         let topVC = coordinator?.rootNavigationViewController?.visibleViewController
         let sut = topVC as? LoginViewController
-
+        
         self.sut = try XCTUnwrap(sut, "Expected LoginViewController, " + "but was \(String(describing: topVC))")
     }
     
     override func tearDownWithError() throws {
         coordinator.rootNavigationViewController?.dismiss(animated: false)
         coordinator.rootNavigationViewController?.viewControllers = []
-    
+        
         sut = nil
         coordinator = nil
     }
@@ -36,7 +36,10 @@ class LoginViewControllerTests: XCTestCase {
     func test_deallocation() throws {
         assertDeallocation {
             let lvc = LoginViewController.instantiateFromStoryboard()
-            lvc.store = LoginViewStore(sessionManager: SessionManager.shared)
+            let store = UserStoreMock(isLoggedIn: false)
+            let service = SessionServiceMock(fails: true)
+            let sessionManager = SessionManager(service: service, store: store)
+            lvc.store = LoginViewStore(sessionManager: sessionManager)
             
             return lvc
         }
@@ -44,7 +47,7 @@ class LoginViewControllerTests: XCTestCase {
     
     func test_userTextField_attributesShouldBeSet() {
         sut.loadViewIfNeeded()
-
+        
         let textField = sut.userTextField!
         XCTAssertEqual(textField.textContentType, .username)
         XCTAssertTrue(textField.enablesReturnKeyAutomatically)
@@ -52,13 +55,13 @@ class LoginViewControllerTests: XCTestCase {
     
     func test_passwordTextField_attributesShouldBeSet() {
         sut.loadViewIfNeeded()
-
+        
         let textField = sut.passwordTextField!
         XCTAssertEqual(textField.textContentType, .password)
         XCTAssertTrue(textField.isSecureTextEntry)
         XCTAssertTrue(textField.enablesReturnKeyAutomatically)
     }
-
+    
     func test_emptyUsername_shouldDisableButton() {
         sut.loadViewIfNeeded()
         
@@ -67,7 +70,7 @@ class LoginViewControllerTests: XCTestCase {
         
         sut.userTextField.sendActions(for: .editingChanged)
         sut.passwordTextField.sendActions(for: .editingChanged)
-
+        
         XCTAssertEqual(sut.loginButton.isEnabled, false)
     }
     
@@ -76,7 +79,7 @@ class LoginViewControllerTests: XCTestCase {
         
         sut.userTextField.text = "username"
         sut.passwordTextField.text = ""
-    
+        
         sut.userTextField.sendActions(for: .editingChanged)
         sut.passwordTextField.sendActions(for: .editingChanged)
         
@@ -91,16 +94,16 @@ class LoginViewControllerTests: XCTestCase {
         
         sut.userTextField.sendActions(for: .editingChanged)
         sut.passwordTextField.sendActions(for: .editingChanged)
-                
+        
         XCTAssertEqual(sut.loginButton.isEnabled, true)
     }
     
     func test_returnOnUsername_shouldMoveFocusToPassword() {
         sut.loadViewIfNeeded()
-
+        
         sut.userTextField.becomeFirstResponder()
         executeRunLoop()
-
+        
         let _ = sut.userTextField.delegate?.textFieldShouldReturn?(sut.userTextField)
         
         XCTAssertTrue(sut.passwordTextField.isFirstResponder)
@@ -108,8 +111,9 @@ class LoginViewControllerTests: XCTestCase {
     
     func test_returnOnPassword_shouldLogin() {
         let sessionService = SessionServiceMock()
-        SessionManager.shared.store = UserStoreMock(isLoggedIn: false)
-        SessionManager.shared.service = sessionService
+        sut.store.sessionManager.store = UserStoreMock(isLoggedIn: false)
+        sut.store.sessionManager.service = sessionService
+        
         
         sut.loadViewIfNeeded()
         
