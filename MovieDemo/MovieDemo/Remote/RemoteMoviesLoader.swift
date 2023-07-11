@@ -10,11 +10,11 @@ import Foundation
 import Combine
 
 struct RemoteMoviesLoader: MoviesLoader {
-    let service: MovieService
+    let service: TMDBClient
     let movieList: MoviesEndpoint
     
     init(movieList: MoviesEndpoint, sessionId: String? = nil) {
-        self.service = MovieService(sessionId: sessionId)
+        self.service = TMDBClient(sessionId: sessionId)
         self.movieList = movieList
     }
     

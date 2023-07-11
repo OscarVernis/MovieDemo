@@ -12,7 +12,7 @@ import Combine
 struct RemoteUserService {
    static func getUserDetails(sessionId: String?) -> AnyPublisher<User, Error> {
         let params = ["append_to_response": "favorite/movies,rated/movies,watchlist/movies"]
-        let service = MovieService(sessionId: sessionId)
+        let service = TMDBClient(sessionId: sessionId)
 
         return service.getModel(endpoint: .userDetails, parameters: params)
     }

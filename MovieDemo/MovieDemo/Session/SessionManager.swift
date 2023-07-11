@@ -41,7 +41,7 @@ extension SessionManager {
             try await service.validateToken(username: username, password: password, requestToken: token)
             sessionId = try await service.createSession(requestToken: token)
         } catch {
-            if error as? MovieService.ServiceError == .IncorrectCredentials {
+            if error as? TMDBClient.ServiceError == .IncorrectCredentials {
                 return .failure(LoginError.IncorrectCredentials)
             } else {
                 return .failure(LoginError.Default)

@@ -16,7 +16,7 @@ class MovieServiceTests: XCTestCase {
         let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)")!
         let mockClient = MockHTTPClient(jsonFile: "Movie", url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
         var movie = Movie()
         
         movie = try awaitPublisher(
@@ -31,7 +31,7 @@ class MovieServiceTests: XCTestCase {
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
         var results: ServiceModelsResult<Movie>?
         
         results = try awaitPublisher(
@@ -47,7 +47,7 @@ class MovieServiceTests: XCTestCase {
         let emptyResult = [String:String]()
         let mockClient = MockHTTPClient(jsonObject: emptyResult, url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
         var results: ServiceModelsResult<Movie>?
 
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
@@ -58,7 +58,7 @@ class MovieServiceTests: XCTestCase {
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url, statusCode: 401)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
         var results: ServiceModelsResult<Movie>?
         
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
@@ -69,7 +69,7 @@ class MovieServiceTests: XCTestCase {
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing")!
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url, statusCode: 404)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
         var results: ServiceModelsResult<Movie>?
         
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
@@ -81,7 +81,7 @@ class MovieServiceTests: XCTestCase {
         let data = ServiceSuccessResult(success: true, sessionId: "sessionId", requestToken: "requestToken")
         let mockClient = MockHTTPClient(jsonObject: data, url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
 
         var result: ServiceSuccessResult?
         
@@ -99,10 +99,10 @@ class MovieServiceTests: XCTestCase {
         let data = ServiceSuccessResult(success: false)
         let mockClient = MockHTTPClient(jsonObject: data, url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
 
         XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) ) { error in
-            XCTAssertEqual(error as? MovieService.ServiceError, MovieService.ServiceError.NoSuccess)
+            XCTAssertEqual(error as? TMDBClient.ServiceError, TMDBClient.ServiceError.NoSuccess)
         }
     }
     
@@ -110,7 +110,7 @@ class MovieServiceTests: XCTestCase {
         let url = URL(string: "https://api.themoviedb.org/3/account/id/favorite")!
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
 
         XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) )
     }
@@ -120,7 +120,7 @@ class MovieServiceTests: XCTestCase {
         let data = ServiceSuccessResult(success: true)
         let mockClient = MockHTTPClient(jsonObject: data, url: url, statusCode: 404)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
 
         XCTAssertThrowsError(try awaitPublisher( sut.successAction(endpoint: .markAsFavorite)) )
     }
@@ -130,7 +130,7 @@ class MovieServiceTests: XCTestCase {
         let data = ServiceSuccessResult(success: true, sessionId: "session_Id", requestToken: "reques_token")
         let mockClient = MockHTTPClient(jsonObject: data, url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
 
         var result: ServiceSuccessResult?
         do {
@@ -149,7 +149,7 @@ class MovieServiceTests: XCTestCase {
         let data = ServiceSuccessResult(success: false, sessionId: "sessionId", requestToken: "requestToken")
         let mockClient = MockHTTPClient(jsonObject: data, url: url)
         
-        let sut = MovieService(httpClient: mockClient)
+        let sut = TMDBClient(httpClient: mockClient)
 
         var resultError: Error? = nil
         do {

@@ -11,13 +11,13 @@ import Foundation
 
 class SessionServiceMock: SessionService {
     let fails: Bool
-    let error: MovieService.ServiceError?
+    let error: TMDBClient.ServiceError?
     
     var username = ""
     var password = ""
     var loginCount = 0
     
-    init(fails: Bool = false, error: MovieService.ServiceError? = .RequestError) {
+    init(fails: Bool = false, error: TMDBClient.ServiceError? = .RequestError) {
         self.fails = fails
         self.error = error
     }
@@ -36,7 +36,7 @@ class SessionServiceMock: SessionService {
             if let error = error {
                 throw error
             } else {
-                throw MovieService.ServiceError.RequestError
+                throw TMDBClient.ServiceError.RequestError
             }
         }
         
@@ -46,7 +46,7 @@ class SessionServiceMock: SessionService {
     }
     
     func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
-        return fails ? .failure(MovieService.ServiceError.RequestError) : .success(())
+        return fails ? .failure(TMDBClient.ServiceError.RequestError) : .success(())
     }
     
 }

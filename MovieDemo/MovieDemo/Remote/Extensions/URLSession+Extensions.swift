@@ -19,13 +19,13 @@ extension Publisher where Output == DataTaskResult {
                     if statusCode.contains(response.statusCode) { //Check Status Code is in validation range
                         return output.data
                     } else if response.statusCode == 401 { // Check for 401 if not in validation range
-                        throw MovieService.ServiceError.IncorrectCredentials
+                        throw TMDBClient.ServiceError.IncorrectCredentials
                     } else { //Throw status code error
-                        throw MovieService.ServiceError.StatusCodeError(code: response.statusCode)
+                        throw TMDBClient.ServiceError.StatusCodeError(code: response.statusCode)
                     }
                 }
                 
-                throw MovieService.ServiceError.RequestError
+                throw TMDBClient.ServiceError.RequestError
             }
             .eraseToAnyPublisher()
     }

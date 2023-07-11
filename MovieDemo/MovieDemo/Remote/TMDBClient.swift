@@ -1,5 +1,5 @@
 //
-//  MovieService.swift
+//  TMDBClient.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 7/13/19.
@@ -9,8 +9,8 @@
 import Foundation
 import Combine
 
-//MARK: - MovieService
-struct MovieService {
+//MARK: - TMDBClient
+struct TMDBClient {
     enum ServiceError: Error, Equatable {
         case RequestError
         case StatusCodeError(code: Int)
@@ -30,7 +30,7 @@ struct MovieService {
 }
 
 //MARK: - Generic Functions
-extension MovieService {
+extension TMDBClient {
     func getModel<Model: Codable>(endpoint: Endpoint, parameters: [String: String]? = nil) -> AnyPublisher<Model, Error> {
         let url = endpoint.url(parameters: parameters, sessionId: self.sessionId)
         

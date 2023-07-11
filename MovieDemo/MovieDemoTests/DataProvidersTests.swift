@@ -36,7 +36,7 @@ class DataProvidersTests: XCTestCase {
     
     func test_MovieDataProvider_failure() throws {
         let movies = anyMovies(count: 20)
-        let movieLoaderMock = MovieLoaderMock(movies: movies, pageCount: 3, error: MovieService.ServiceError.RequestError)
+        let movieLoaderMock = MovieLoaderMock(movies: movies, pageCount: 3, error: TMDBClient.ServiceError.RequestError)
         let dataProvider = MoviesProvider(movieLoader: movieLoaderMock, cache: nil)
         
         //First try should fail
@@ -84,7 +84,7 @@ class DataProvidersTests: XCTestCase {
     
     func test_SearchDataProvider_failure() throws {
         let results: [Any] = anyMovies(count: 10) + anyPersons(count: 10)
-        let searchLoader = SearchLoaderMock(results: results, pageCount: 3, error: MovieService.ServiceError.RequestError)
+        let searchLoader = SearchLoaderMock(results: results, pageCount: 3, error: TMDBClient.ServiceError.RequestError)
         let dataProvider = SearchProvider(searchLoader: searchLoader)
         
         dataProvider.query = "Search"

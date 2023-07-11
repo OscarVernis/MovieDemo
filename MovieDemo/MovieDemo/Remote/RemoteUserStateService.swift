@@ -11,11 +11,11 @@ import Combine
 
 struct RemoteUserStateService {
     let sessionId: String
-    let service: MovieService
+    let service: TMDBClient
     
     init(sessionId: String) {
         self.sessionId = sessionId
-        self.service = MovieService(sessionId: sessionId)
+        self.service = TMDBClient(sessionId: sessionId)
     }
 }
 

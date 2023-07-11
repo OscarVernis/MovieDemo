@@ -10,9 +10,9 @@ import Foundation
 import Combine
 
 struct RemoteSearchLoader: SearchLoader {
-    let service: MovieService
+    let service: TMDBClient
     
-    init(service: MovieService = MovieService()) {
+    init(service: TMDBClient = TMDBClient()) {
         self.service = service
     }
     

@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 struct RemotePersonDetailsService {
-    static let service = MovieService()
+    static let service = TMDBClient()
     
     static func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
         let params = ["append_to_response": "movie_credits"]

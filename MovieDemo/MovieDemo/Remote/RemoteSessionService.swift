@@ -10,14 +10,14 @@ import Foundation
 import Combine
 
 struct RemoteSessionService: SessionService {
-    let service = MovieService()
+    let service = TMDBClient()
 }
 
 //MARK: - Login
 extension RemoteSessionService {
     func requestToken() async throws -> String {
         let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .requestToken).async()
-        guard let token: String = serviceResult.requestToken else { throw MovieService.ServiceError.JsonError }
+        guard let token: String = serviceResult.requestToken else { throw TMDBClient.ServiceError.JsonError }
         
         return token
     }
@@ -37,7 +37,7 @@ extension RemoteSessionService {
         let body = ["request_token": requestToken]
         let serviceResult: ServiceSuccessResult = try await service.successAction(endpoint: .createSession, body: body, method: .post).async()
         
-        guard let sessionId: String = serviceResult.sessionId else { throw MovieService.ServiceError.JsonError }
+        guard let sessionId: String = serviceResult.sessionId else { throw TMDBClient.ServiceError.JsonError }
         
         return sessionId
     }
@@ -53,7 +53,7 @@ extension RemoteSessionService {
         if let success = result.success, success == true {
             return .success(())
         } else {
-            return .failure(MovieService.ServiceError.NoSuccess)
+            return .failure(TMDBClient.ServiceError.NoSuccess)
         }
     }
 
