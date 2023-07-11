@@ -11,12 +11,16 @@ import Combine
 
 class UserProfileStore: ObservableObject {
     @Published private(set) var user: UserViewModel = UserViewModel()
-    private let service: UserLoader?
+    private let service: UserService?
 
     private(set) var isLoading = false
     @Published var error: Error? = nil
      
-    internal init(service: UserLoader? = nil) {
+    init(service: @autoclosure @escaping UserService) {
+        self.service = service
+    }
+    
+    init(service: UserService? = nil) {
         self.service = service
     }
 
@@ -25,7 +29,7 @@ class UserProfileStore: ObservableObject {
         
         isLoading = true
 
-        service.getUserDetails()
+        service()
             .assignError(to: \.error, on: self)
             .onCompletion { self.isLoading = false }
             .map(UserViewModel.init)

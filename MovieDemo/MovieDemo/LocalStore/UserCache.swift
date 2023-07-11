@@ -46,15 +46,15 @@ extension UserCache: ModelCache  {
     
 }
 
-extension UserCache: UserLoader {
-    func getUserDetails() -> AnyPublisher<User, Error> {
+extension UserCache {
+    var publisher: AnyPublisher<User, Error> {
         let user = load()
         if let user = user {
             return Just(user)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         } else {
-            return Fail(outputType: User.self, failure: NSError())
+            return Empty(completeImmediately: true)
                 .eraseToAnyPublisher()
         }
     }

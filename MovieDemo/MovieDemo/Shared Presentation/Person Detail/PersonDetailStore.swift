@@ -15,7 +15,7 @@ class PersonDetailStore: ObservableObject {
 
     private let service: PersonDetailsService?
         
-    init(person: PersonViewModel, service: PersonDetailsService? = nil) {
+    init(person: PersonViewModel, service: @autoclosure @escaping PersonDetailsService) {
         self.person = person
         self.service = service
     }

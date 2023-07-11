@@ -13,7 +13,7 @@ class UserProfileViewControllerTests: XCTestCase {
 
     func test_deallocation() throws {
         assertDeallocation {
-            UserProfileViewController(store: UserProfileStore(service: RemoteUserLoader(sessionId: "")))
+            UserProfileViewController(store: UserProfileStore(service: RemoteUserService(sessionId: "")))
         }
     }
 

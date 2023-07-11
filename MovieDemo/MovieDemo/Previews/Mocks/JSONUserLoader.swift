@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-struct JSONUserLoader: UserLoader {
+struct JSONUserLoader {
     var user: User = User()
     var jsonDecoder = MovieDecoder()
     

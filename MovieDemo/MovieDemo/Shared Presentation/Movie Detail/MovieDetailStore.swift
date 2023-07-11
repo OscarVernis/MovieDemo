@@ -14,11 +14,16 @@ class MovieDetailStore: ObservableObject {
     private var movieService: MovieDetailsService?
     private let userStateService: UserStateService?
         
+    init(movie: MovieViewModel, movieService: @autoclosure @escaping MovieDetailsService, userStateService: UserStateService? = nil) {
+        self.movie = movie
+        self.movieService = movieService
+        self.userStateService = userStateService
+    }
+    
     init(movie: MovieViewModel, movieService: MovieDetailsService? = nil, userStateService: UserStateService? = nil) {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService
-        self.isLoading = (movieService != nil)
     }
 
     //MARK: - Get Movie Details

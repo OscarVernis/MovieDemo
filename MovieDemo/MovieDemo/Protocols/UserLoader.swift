@@ -9,32 +9,17 @@
 import Foundation
 import Combine
 
-protocol UserLoader {
-    func getUserDetails() -> AnyPublisher<User, Error>
-}
+typealias UserService = () -> AnyPublisher<User, Error>
 
-extension UserLoader {
-    func with(cache: UserCache) -> UserLoader {
-        UserLoaderWithCache(main: self, cache: cache)
+extension Publisher {
+    func cache(with cache: any ModelCache<Output>) -> AnyPublisher<Output, Failure> {
+        handleEvents(receiveOutput: { cache.save($0) }).eraseToAnyPublisher()
     }
-}
-
-typealias UserCacheLoader = ModelCache<User> & UserLoader
-
-struct UserLoaderWithCache: UserLoader {
-    let main: UserLoader
-    let cache: any UserCacheLoader
     
-    func getUserDetails() -> AnyPublisher<User, Error> {
-        return main.getUserDetails()
-            .handleEvents(receiveOutput: { user in
-                cache.save(user)
-            })
-            .merge(with: cache.getUserDetails()
-                .catch { _ in
-                    Empty(completeImmediately: true)
-                }
-            )
+    func placeholder(with placeholder: AnyPublisher<Output, Failure>) -> AnyPublisher<Output, Failure> {
+        placeholder
+            .merge(with: self)
             .eraseToAnyPublisher()
     }
+    
 }

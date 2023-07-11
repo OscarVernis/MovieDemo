@@ -29,7 +29,7 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = { RemoteMovieDetailsLoader.getMovieDetails(movieId: movie.id, sessionId: self.sessionId) }
+        let movieService = RemoteMovieDetailsLoader.getMovieDetails(movieId: movie.id, sessionId: self.sessionId)
         let userStateService: RemoteUserStateService? = sessionId != nil ? RemoteUserStateService(sessionId: sessionId!) : nil
         let store = MovieDetailStore(movie: movie,
                                      movieService: movieService,
@@ -44,8 +44,10 @@ class SwiftUICoordinator: MainCoordinator {
     
     override func showUserProfile(animated: Bool = true) {
         if let sessionId {
-            let service = RemoteUserLoader(sessionId: sessionId)
-                .with(cache: UserCache())
+            let cache = UserCache()
+            let service = RemoteUserService.getUserDetails(sessionId: sessionId)
+                .cache(with: cache)
+                .placeholder(with: cache.publisher)
             let store = UserProfileStore(service: service)
             let userProfile = UserProfile(store: store, router: self)
             let upvc = UIHostingController(rootView: userProfile)

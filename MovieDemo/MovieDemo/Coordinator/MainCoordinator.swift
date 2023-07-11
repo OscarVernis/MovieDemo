@@ -182,9 +182,9 @@ class MainCoordinator {
     
     //MARK: - Common
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = { RemoteMovieDetailsLoader.getMovieDetails(movieId: movie.id, sessionId: self.sessionId) }
+        let movieService = RemoteMovieDetailsLoader.getMovieDetails(movieId: movie.id, sessionId: self.sessionId)
         let userStateService = (sessionId != nil) ? RemoteUserStateService(sessionId: sessionId!) : nil
-
+        
         let store = MovieDetailStore(movie: movie,
                                      movieService: movieService,
                                      userStateService: userStateService)
@@ -226,7 +226,11 @@ class MainCoordinator {
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
         if let sessionId {
-            let service = RemoteUserLoader(sessionId: sessionId).with(cache: UserCache())
+            let cache = UserCache()
+            let service = RemoteUserService.getUserDetails(sessionId: sessionId)
+                .cache(with: cache)
+                .placeholder(with: cache.publisher)
+            
             let store = UserProfileStore(service: service)
             let upvc = UserProfileViewController(store: store, router: self)
             
@@ -298,7 +302,7 @@ class MainCoordinator {
     }
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
-        let service = { RemotePersonDetailsLoader.getPersonDetails(personId: viewModel.id) }
+        let service = RemotePersonDetailsLoader.getPersonDetails(personId: viewModel.id)
         let store = PersonDetailStore(person: viewModel, service: service)
         
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
@@ -326,7 +330,7 @@ class MainCoordinator {
         
         rootNavigationViewController?.visibleViewController?.present(mrvc, animated: true)
     }
-
+    
     //MARK: - User Detail
     func showUserFavorites() {
         showMovieList(title: .localized(UserString.Favorites), endpoint: .UserFavorites)

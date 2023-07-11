@@ -239,7 +239,7 @@
 		55E8A7CE285CF54400588D62 /* JSONUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */; };
 		55E8A7D0285CF61200588D62 /* user.json in Resources */ = {isa = PBXBuildFile; fileRef = 55E8A7CF285CF5BC00588D62 /* user.json */; };
 		55EB72A327D19EC800B98342 /* RemoteSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A227D19EC800B98342 /* RemoteSessionService.swift */; };
-		55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */; };
+		55EB72A627D19FD100B98342 /* RemoteUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A527D19FD100B98342 /* RemoteUserService.swift */; };
 		55EB72A927D1A13F00B98342 /* RemoteMovieDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */; };
 		55EB72AC27D1A19B00B98342 /* RemotePersonDetailsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */; };
 		55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */; };
@@ -521,7 +521,7 @@
 		55E8A7CD285CF54400588D62 /* JSONUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUserLoader.swift; sourceTree = "<group>"; };
 		55E8A7CF285CF5BC00588D62 /* user.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = user.json; sourceTree = "<group>"; };
 		55EB72A227D19EC800B98342 /* RemoteSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSessionService.swift; sourceTree = "<group>"; };
-		55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserLoader.swift; sourceTree = "<group>"; };
+		55EB72A527D19FD100B98342 /* RemoteUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserService.swift; sourceTree = "<group>"; };
 		55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMovieDetailsLoader.swift; sourceTree = "<group>"; };
 		55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePersonDetailsLoader.swift; sourceTree = "<group>"; };
 		55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedProvider.swift; sourceTree = "<group>"; };
@@ -928,7 +928,7 @@
 				55EB72A827D1A13F00B98342 /* RemoteMovieDetailsLoader.swift */,
 				5523970C27D19C2C00E4C18F /* RemoteSearchLoader.swift */,
 				55EB72AB27D1A19B00B98342 /* RemotePersonDetailsLoader.swift */,
-				55EB72A527D19FD100B98342 /* RemoteUserLoader.swift */,
+				55EB72A527D19FD100B98342 /* RemoteUserService.swift */,
 				558B87562A58B4B700416FBB /* RemoteUserStateService.swift */,
 				55EB72A227D19EC800B98342 /* RemoteSessionService.swift */,
 			);
@@ -1594,7 +1594,7 @@
 				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,
 				55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */,
-				55EB72A627D19FD100B98342 /* RemoteUserLoader.swift in Sources */,
+				55EB72A627D19FD100B98342 /* RemoteUserService.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
 				556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,

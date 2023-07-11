@@ -20,7 +20,7 @@ extension JSONMovieDetailsLoader {
     }
 }
 
-extension UserLoader where Self == JSONUserLoader {
+extension JSONUserLoader {
     static var mock: JSONUserLoader {
         JSONUserLoader(filename: "user")
     }
