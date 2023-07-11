@@ -14,6 +14,10 @@ class SwiftUICoordinator: MainCoordinator {
     private var sessionId: String? {
         sessionManager.sessionId
     }
+    private var remoteClient: TMDBClient {
+        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
+    }
+    
     override func showHome() {
         let homeView = Home(router: self,
                             nowPlayingProvider: moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
@@ -29,7 +33,7 @@ class SwiftUICoordinator: MainCoordinator {
     }
     
     override func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = RemoteMovieDetailsService.getMovieDetails(movieId: movie.id, sessionId: self.sessionId)
+        let movieService = remoteClient.getMovieDetails(movieId: movie.id)
         let userStateService: RemoteUserStateService? = sessionId != nil ? RemoteUserStateService(sessionId: sessionId!) : nil
         let store = MovieDetailStore(movie: movie,
                                      movieService: movieService,

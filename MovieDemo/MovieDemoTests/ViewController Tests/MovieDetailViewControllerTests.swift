@@ -16,7 +16,7 @@ class MovieDetailViewControllerTests: XCTestCase {
         assertDeallocation {
             let service = { Just(self.anyMovie()).setFailureType(to: Error.self).eraseToAnyPublisher() }
             let store = MovieDetailStore(movie: anyMovieVM(), movieService: service)
-            return MovieDetailViewController(store: store)
+            return MovieDetailViewController(store: store, router: nil)
         }
     }
     

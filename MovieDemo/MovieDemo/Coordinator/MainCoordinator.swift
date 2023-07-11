@@ -17,6 +17,9 @@ class MainCoordinator {
     private var sessionId: String? {
         sessionManager.sessionId
     }
+    private var remoteClient: TMDBClient {
+        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
+    }
     
     //If set to true, it will force you to login before showing Home
     private var isLoginRequired: Bool = false
@@ -182,7 +185,7 @@ class MainCoordinator {
     
     //MARK: - Common
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
-        let movieService = RemoteMovieDetailsService.getMovieDetails(movieId: movie.id, sessionId: self.sessionId)
+        let movieService = remoteClient.getMovieDetails(movieId: movie.id)
         let userStateService = (sessionId != nil) ? RemoteUserStateService(sessionId: sessionId!) : nil
         
         let store = MovieDetailStore(movie: movie,

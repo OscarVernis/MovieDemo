@@ -20,6 +20,11 @@ class PersonDetailStore: ObservableObject {
         self.service = service
     }
     
+    init(person: PersonViewModel) {
+        self.person = person
+        self.service = nil
+    }
+    
     func refresh() {
         guard let service else { return }
          
