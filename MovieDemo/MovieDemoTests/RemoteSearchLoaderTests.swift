@@ -15,11 +15,10 @@ class RemoteSearchLoaderTests: XCTestCase {
         let url = URL(string: "https://api.themoviedb.org/3/search/multi")!
         let mockClient = MockHTTPClient(jsonFile: "Search", url: url)
         let service = TMDBClient(httpClient: mockClient)
-        let searchLoader = RemoteSearchLoader(service: service)
         
         var results = (items: [Any](), totalPages: 0)
         results = try awaitPublisher(
-            searchLoader.search(query: "search")
+            service.search(query: "search")
         )
         
         XCTAssertEqual(results.items.count, 13)

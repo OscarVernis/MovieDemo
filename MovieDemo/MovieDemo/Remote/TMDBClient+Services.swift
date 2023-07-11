@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+//MARK: - Details
 extension TMDBClient {
     func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
         let params = ["append_to_response" : "credits,recommendations,account_states,videos"]
@@ -27,4 +28,30 @@ extension TMDBClient {
 
          return getModel(endpoint: .userDetails, parameters: params)
      }
+    
+}
+
+//MARK: - Search
+extension TMDBClient: SearchLoader {
+    func search(query: String, page: Int = 1) -> AnyPublisher<SearchResult, Error>  {
+        let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = getModels(endpoint: .search, parameters: ["query" : query], page: page)
+        
+        return publisher
+            .compactMap { result in
+                let searchResults: [Any] = result.items.compactMap { item -> Any? in
+                    switch item {
+                    case .person(let person):
+                        return person
+                    case .movie(let movie):
+                        return movie
+                    case .unknown:
+                        return nil
+                    }
+                }
+                
+                return (searchResults, result.totalPages)
+            }
+            .eraseToAnyPublisher()
+    }
+    
 }

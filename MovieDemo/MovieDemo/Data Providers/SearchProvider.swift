@@ -24,7 +24,7 @@ class SearchProvider: PaginatedProvider<Any> {
     let searchService: SearchLoader
     var queryCancellable: AnyCancellable?
 
-    init(searchLoader: SearchLoader = RemoteSearchLoader()) {
+    init(searchLoader: SearchLoader) {
         self.searchService = searchLoader
         super.init()
         

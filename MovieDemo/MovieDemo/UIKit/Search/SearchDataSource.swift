@@ -9,8 +9,8 @@
 import UIKit
 
 class SearchDataSource: ProviderDataSource<SearchProvider, UICollectionViewCell> {
-    init() {
-        super.init(dataProvider: SearchProvider(), reuseIdentifier: "")
+    init(searchProvider: SearchProvider) {
+        super.init(dataProvider: searchProvider, reuseIdentifier: "")
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

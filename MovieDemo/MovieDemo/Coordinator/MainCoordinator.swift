@@ -163,7 +163,8 @@ class MainCoordinator {
     }
     
     var homeSearchController: UISearchController {
-        let searchViewController = SearchViewController(router: self)
+        let dataSource = SearchDataSource(searchProvider: SearchProvider(searchLoader: remoteClient))
+        let searchViewController = SearchViewController(searchDataSource: dataSource, router: self)
         let searchController = UISearchController(searchResultsController: searchViewController)
         searchController.searchResultsUpdater = searchViewController
         searchController.delegate = searchViewController

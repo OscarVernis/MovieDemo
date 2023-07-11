@@ -19,8 +19,8 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
         router as? SearchViewRouter
     }
     
-    init(router: SearchViewRouter?) {
-        let searchDataSource = SearchDataSource()
+    init(searchDataSource: SearchDataSource, router: SearchViewRouter?) {
+        let searchDataSource = searchDataSource
         super.init(dataSource: searchDataSource, router: router)
         self.provider = searchDataSource.dataProvider
     }
