@@ -287,7 +287,7 @@ class MainCoordinator {
     
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool = true) {
         let pvc = PersonDetailViewController.instantiateFromStoryboard()
-        pvc.store = dependencies.personDetailStore(viewModel)
+        pvc.store = dependencies.personDetailStore(person: viewModel)
         pvc.router = self
         
         rootNavigationViewController?.pushViewController(pvc, animated: animated)

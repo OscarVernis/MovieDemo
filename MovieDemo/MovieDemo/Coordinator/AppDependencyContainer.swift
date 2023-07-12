@@ -17,6 +17,7 @@ class AppDependencyContainer {
     
     //MARK: - Global dependencies
     var sessionManager =  SessionManager(service: TMDBClient(), store: KeychainSessionStore())
+    
     private var sessionId: String? {
         sessionManager.sessionId
     }
@@ -24,13 +25,13 @@ class AppDependencyContainer {
     var remoteClient: TMDBClient {
         TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
     }
+
+    var isLoggedIn: Bool {
+        sessionManager.isLoggedIn
+    }
     
     var sessionService: SessionService {
         remoteClient
-    }
-    
-    var isLoggedIn: Bool {
-        sessionManager.isLoggedIn
     }
     
     var userCache: any ModelCache<User> {
@@ -59,12 +60,16 @@ class AppDependencyContainer {
     }
     
     var userProfileStore: UserProfileStore {
+        //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
         let cache = UserCache()
-        let service = remoteClient.getUserDetails()
+        let remoteService = remoteClient.getUserDetails()
             .cache(with: cache)
-            .placeholder(with: cache.publisher)
         
-        return UserProfileStore(service: service)
+        let remoteWithCache = cache.publisher
+            .merge(with: remoteService)
+            .eraseToAnyPublisher()
+        
+        return UserProfileStore(service: remoteWithCache)
     }
     
     func movieDetailsStore(movie: MovieViewModel) -> MovieDetailStore {
@@ -76,9 +81,9 @@ class AppDependencyContainer {
                                      userStateService: userStateService)
     }
     
-    func personDetailStore(_ viewModel: PersonViewModel) -> PersonDetailStore {
-        let service = remoteClient.getPersonDetails(personId: viewModel.id)
-        return PersonDetailStore(person: viewModel, service: service)
+    func personDetailStore(person: PersonViewModel) -> PersonDetailStore {
+        let service = remoteClient.getPersonDetails(personId: person.id)
+        return PersonDetailStore(person: person, service: service)
     }
     
 }

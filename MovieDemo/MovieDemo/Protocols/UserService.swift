@@ -16,10 +16,4 @@ extension Publisher {
         handleEvents(receiveOutput: { cache.save($0) }).eraseToAnyPublisher()
     }
     
-    func placeholder(with placeholder: AnyPublisher<Output, Failure>) -> AnyPublisher<Output, Failure> {
-        placeholder
-            .merge(with: self)
-            .eraseToAnyPublisher()
-    }
-    
 }

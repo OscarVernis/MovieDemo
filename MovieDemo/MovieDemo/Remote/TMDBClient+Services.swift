@@ -31,7 +31,7 @@ extension TMDBClient {
     
 }
 
-//MARK: - SearchLoader
+//MARK: - Search Loader
 extension TMDBClient: SearchLoader {
     func search(query: String, page: Int = 1) -> AnyPublisher<SearchResult, Error>  {
         let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = getModels(endpoint: .search, parameters: ["query" : query], page: page)
@@ -56,7 +56,7 @@ extension TMDBClient: SearchLoader {
     
 }
 
-//MARK: - UserStateService
+//MARK: - UserState Service
 extension TMDBClient: UserStateService {
     func markAsFavorite(_ favorite: Bool, movieId: Int) async throws {
         let body = FavoriteRequestBody(media_id: movieId, favorite: favorite)
@@ -82,7 +82,7 @@ extension TMDBClient: UserStateService {
     
 }
 
-//MARK: - SessionService
+//MARK: - Session Service
 extension TMDBClient: SessionService {
     func requestToken() async throws -> String {
         let serviceResult: ServiceSuccessResult = try await successAction(endpoint: .requestToken).async()
