@@ -18,7 +18,7 @@ class ListViewControllerTests: XCTestCase {
     override func setUpWithError() throws {
         let movies = anyMovies(count: 20)
         let movieLoader = MovieLoaderMock(movies: movies, pageCount: 3)
-        dataProvider = MoviesDataProviderSpy(movieLoader: movieLoader)
+        dataProvider = MoviesDataProviderSpy(service: movieLoader.getMovies)
         
         let window = UIWindow()
         coordinator = MainCoordinator(window: window)
