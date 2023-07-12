@@ -31,8 +31,8 @@ extension TMDBClient {
     
 }
 
-//MARK: - Search Loader
-extension TMDBClient: SearchLoader {
+//MARK: - Search Service
+extension TMDBClient {
     func search(query: String, page: Int = 1) -> AnyPublisher<SearchResult, Error>  {
         let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = getModels(endpoint: .search, parameters: ["query" : query], page: page)
         

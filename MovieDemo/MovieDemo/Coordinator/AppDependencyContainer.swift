@@ -52,7 +52,7 @@ class AppDependencyContainer {
     
     //MARK: - View Dependencies
     var searchProvider: SearchProvider {
-        SearchProvider(searchLoader: remoteClient)
+        SearchProvider(searchService: remoteClient.search)
     }
     
     var loginViewStore: LoginViewStore {

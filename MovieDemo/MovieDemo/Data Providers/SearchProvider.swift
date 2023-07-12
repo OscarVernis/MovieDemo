@@ -21,11 +21,11 @@ class SearchProvider: PaginatedProvider<Any> {
         }
     }
     
-    let searchService: SearchLoader
+    let searchService: SearchService
     var queryCancellable: AnyCancellable?
 
-    init(searchLoader: SearchLoader) {
-        self.searchService = searchLoader
+    init(searchService: @escaping SearchService) {
+        self.searchService = searchService
         super.init()
         
         queryCancellable = $query
@@ -54,7 +54,7 @@ class SearchProvider: PaginatedProvider<Any> {
         
         let result: SearchResult
         do {
-            result = try await searchService.search(query: query, page: page).async()
+            result = try await searchService(query, page).async()
         } catch {
             didUpdate?(error)
             return

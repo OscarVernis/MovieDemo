@@ -1,5 +1,5 @@
 //
-//  SearchLoader.swift
+//  SearchService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 05/05/22.
@@ -11,6 +11,4 @@ import Combine
 
 typealias SearchResult = (items: [Any], totalPages: Int)
 
-protocol SearchLoader {
-    func search(query: String, page: Int) -> AnyPublisher<SearchResult, Error>
-}
+typealias SearchService = (_ query: String, _ page: Int) -> AnyPublisher<SearchResult, Error>
