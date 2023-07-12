@@ -10,10 +10,3 @@ import Foundation
 import Combine
 
 typealias UserService = () -> AnyPublisher<User, Error>
-
-extension Publisher {
-    func cache(with cache: any ModelCache<Output>) -> AnyPublisher<Output, Failure> {
-        handleEvents(receiveOutput: { cache.save($0) }).eraseToAnyPublisher()
-    }
-    
-}

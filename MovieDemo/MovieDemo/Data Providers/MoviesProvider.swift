@@ -10,12 +10,12 @@ import Foundation
 import Combine
 
 class MoviesProvider: PaginatedProvider<MovieViewModel> {
-    let movieLoader: MoviesLoader
+    let service: MoviesService
     let cache: MovieCache?
     var serviceCancellable: AnyCancellable?
     
-    init(movieLoader: MoviesLoader, cache: MovieCache? = nil) {
-        self.movieLoader = movieLoader
+    init(service: @escaping MoviesService, cache: MovieCache? = nil) {
+        self.service = service
         self.cache = cache
     }
     
@@ -32,7 +32,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
     fileprivate func cachePublisher() -> AnyPublisher<MoviesResult, Error> {
         //Only load from Cache on first page and when items are empty.
         if let cache, currentPage == 0, items.count == 0 {
-            return cache.getMovies()
+            return cache.publisher()
         } else {
             return Empty(completeImmediately: true).eraseToAnyPublisher()
         }
@@ -65,7 +65,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
 //            }
         
         
-        serviceCancellable = movieLoader.getMovies(page: page)
+        serviceCancellable = service(page)
             .sink { [weak self] completion in
                 guard let self = self else { return }
                 

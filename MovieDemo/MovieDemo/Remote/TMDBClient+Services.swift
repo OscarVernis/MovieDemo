@@ -9,6 +9,20 @@
 import Foundation
 import Combine
 
+//MARK: - Movies
+extension TMDBClient {
+    func getMovies(endpoint: MoviesEndpoint,  page: Int) -> AnyPublisher<MoviesResult, Error> {
+        let publisher: AnyPublisher<ServiceModelsResult<Movie>, Error> = getModels(endpoint: .movies(endpoint), page: page)
+        
+        return publisher
+            .map { result in
+                MoviesResult(movies: result.items, totalPages: result.totalPages)
+            }
+            .eraseToAnyPublisher()
+        
+    }
+}
+
 //MARK: - Details
 extension TMDBClient {
     func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {

@@ -1,5 +1,5 @@
 //
-//  MoviesLoader.swift
+//  MoviesService.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 03/03/22.
@@ -11,6 +11,5 @@ import Combine
 
 typealias MoviesResult = (movies: [Movie], totalPages: Int)
 
-protocol MoviesLoader {    
-    func getMovies(page: Int) -> AnyPublisher<MoviesResult, Error>
-}
+typealias MoviesService = (_ page: Int) -> AnyPublisher<MoviesResult, Error>
+

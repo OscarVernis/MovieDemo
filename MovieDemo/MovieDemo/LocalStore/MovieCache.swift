@@ -90,8 +90,8 @@ extension MovieCache: ModelCache {
     
 }
 
-extension MovieCache: MoviesLoader {
-    func getMovies(page: Int = 1) -> AnyPublisher<MoviesResult, Error> {
+extension MovieCache {
+    func publisher(page: Int = 1) -> AnyPublisher<MoviesResult, Error> {
         let totalPages = 1
         let movies = fetchMovies()
         return Just((movies, totalPages))

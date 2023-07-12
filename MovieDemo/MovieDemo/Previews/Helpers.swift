@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension MoviesLoader where Self == JSONMoviesLoader {
+extension JSONMoviesLoader {
     static var mock: JSONMoviesLoader {
         JSONMoviesLoader(filename: "now_playing")
     }

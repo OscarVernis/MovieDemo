@@ -40,14 +40,16 @@ class AppDependencyContainer {
     
     //MARK: - Helpers
     func moviesProvider(for movieList: MoviesEndpoint, cacheList: MovieCache.CacheList? = nil) -> MoviesProvider {
-        let loader = RemoteMoviesLoader(movieList: movieList, sessionId: sessionId)
-        
         var cache: MovieCache? = nil
         if let cacheList {
             cache = MovieCache(cacheList: cacheList)
         }
         
-        return MoviesProvider(movieLoader: loader, cache: cache)
+        let service = { [unowned self] (page: Int) in
+            self.remoteClient.getMovies(endpoint: movieList, page: page)
+        }
+        
+        return MoviesProvider(service: service, cache: cache)
     }
     
     //MARK: - View Dependencies

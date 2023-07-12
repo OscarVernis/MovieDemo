@@ -115,7 +115,7 @@ struct Home: View {
 //MARK: - Previews
 struct Home_Previews: PreviewProvider {
     static let provider = MoviesProvider(
-        movieLoader: .mock,
+        service: JSONMoviesLoader.mock.getMovies,
         cache: nil
     )
     
