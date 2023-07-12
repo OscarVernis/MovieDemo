@@ -51,7 +51,7 @@ extension InfoTable where Model == [String : String] {
 }
 
 struct InfoTable_Previews: PreviewProvider {
-    static let movie: MovieViewModel = .preview
+    static let movie: MovieViewModel = MockData.movieVM
 
     static var previews: some View {
         NavigationView {

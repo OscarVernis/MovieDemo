@@ -55,7 +55,7 @@ struct MovieListItem: View {
 
 struct MoviePosterListItem_Previews: PreviewProvider {    
     static var previews: some View {
-        MovieListItem(movie: .preview)
+        MovieListItem(movie: MockData.movieVM)
             .previewLayout(.fixed(width: 375, height: 150))
             .preferredColorScheme(.dark)
     }

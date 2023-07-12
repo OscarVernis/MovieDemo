@@ -33,7 +33,7 @@ struct MoviePosterList: View {
 struct MovieList_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            MoviePosterList(movies: .preview)
+            MoviePosterList(movies: MockData.movieVMs)
             .previewLayout(.sizeThatFits)
             .preferredColorScheme(.dark)
         }

@@ -32,7 +32,7 @@ struct VideoItem: View {
 }
 
 struct VideoItem_Previews: PreviewProvider {
-    static let movie: MovieViewModel = .preview
+    static let movie: MovieViewModel = MockData.movieVM
     
     static var previews: some View {
         ScrollView(.horizontal, showsIndicators: false) {

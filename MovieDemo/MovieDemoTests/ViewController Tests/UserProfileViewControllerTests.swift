@@ -13,14 +13,13 @@ class UserProfileViewControllerTests: XCTestCase {
 
     func test_deallocation() throws {
         assertDeallocation {
-            let service = JSONUserLoader(filename: "user").getUserDetails()
-            let store = UserProfileStore(service: service)
+            let store = MockData.userProfileStore
             return UserProfileViewController(store: store)
         }
     }
 
     func test_store_deallocation() throws {
-        let service = JSONUserLoader(filename: "user").getUserDetails()
+        let service = MockData.userMock.publisher
         let store = UserProfileStore(service: service)
         store.updateUser()
         trackForMemoryLeaks(store)

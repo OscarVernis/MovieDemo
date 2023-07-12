@@ -186,7 +186,7 @@ struct MovieDetail: View {
 
 struct MovieDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetail(store: .preview(showUserActions: true))
+        MovieDetail(store: MockData.movieDetailStore(showUserActions: true))
             .preferredColorScheme(.dark)
     }
 }

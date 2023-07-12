@@ -34,7 +34,7 @@ struct RatedMovieList: View {
 
 struct RatedMovieList_Previews: PreviewProvider {
     static var previews: some View {
-        RatedMovieList(movies: .preview)
+        RatedMovieList(movies: MockData.movieVMs)
                 .preferredColorScheme(.dark)
         }
 }

@@ -76,8 +76,8 @@ extension PosterRow where Model == CastCreditViewModel {
 }
 
 struct PosterRow_Previews: PreviewProvider {
-    static let movies = JSONMoviesLoader(filename: "now_playing").viewModels
-    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
+    static let movies = MockData.movieVMs
+    static let movie = MockData.movieVM
 
     static var previews: some View {
         PosterRow(cast: movie.topCast)

@@ -103,7 +103,7 @@ struct UserProfile: View {
 
 struct UserProfile_Previews: PreviewProvider {    
     static var previews: some View {
-        UserProfile(store: .preview)
+        UserProfile(store: MockData.userProfileStore)
             .preferredColorScheme(.dark)
     }
 }

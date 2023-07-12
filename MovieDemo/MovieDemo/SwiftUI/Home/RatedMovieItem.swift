@@ -46,7 +46,7 @@ struct RatedMovieItem: View {
 
 struct RatedMovieItem_Previews: PreviewProvider {
     static var previews: some View {
-        RatedMovieItem(movie: .preview)
+        RatedMovieItem(movie: MockData.movieVM)
             .previewLayout(.fixed(width: 375, height: 50))
             .preferredColorScheme(.dark)
     }

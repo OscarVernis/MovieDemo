@@ -34,7 +34,7 @@ struct VideoRow: View {
 }
 
 struct VideoRow_Previews: PreviewProvider {
-    static let movie: MovieViewModel = .preview
+    static let movie: MovieViewModel = MockData.movieVM
 
     static var previews: some View {
         VideoRow(videos: movie.videos)

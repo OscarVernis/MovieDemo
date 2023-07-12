@@ -36,7 +36,7 @@ struct MovieBannerRow: View {
 
 struct MoviesRow_Previews: PreviewProvider {    
     static var previews: some View {
-        MovieBannerRow(movies: .preview)
+        MovieBannerRow(movies: MockData.movieVMs)
         .previewLayout(.device)
         .preferredColorScheme(.dark)
     }

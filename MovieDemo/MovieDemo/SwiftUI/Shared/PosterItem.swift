@@ -37,7 +37,7 @@ struct PosterItem: View {
 }
 
 struct Poster_Previews: PreviewProvider {
-    static let movie = JSONMovieDetailsLoader(filename: "movie").viewModel
+    static let movie = MockData.movieVM
     
     static var previews: some View {
         HStack {
