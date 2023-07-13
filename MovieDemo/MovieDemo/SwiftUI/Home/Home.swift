@@ -114,18 +114,13 @@ struct Home: View {
 
 //MARK: - Previews
 struct Home_Previews: PreviewProvider {
-    static let provider = MoviesProvider(
-        service: MockData.moviesService,
-        cache: nil
-    )
-    
     static var previews: some View {
         NavigationView{
             Home(router: nil,
-                 nowPlayingProvider: provider,
-                 upcomingProvider: provider,
-                 popularProvider: provider,
-                 topRatedProvider: provider)
+                 nowPlayingProvider: MockData.moviesProvider,
+                 upcomingProvider: MockData.moviesProvider,
+                 popularProvider: MockData.moviesProvider,
+                 topRatedProvider: MockData.moviesProvider)
             .tint(Color(asset: .AppTintColor))
             .preferredColorScheme(.dark)
         }

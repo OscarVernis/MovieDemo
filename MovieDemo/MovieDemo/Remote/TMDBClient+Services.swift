@@ -19,8 +19,8 @@ extension TMDBClient {
                 MoviesResult(movies: result.items, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()
-        
     }
+    
 }
 
 //MARK: - Details

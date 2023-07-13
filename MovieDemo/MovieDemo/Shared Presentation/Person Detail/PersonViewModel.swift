@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 class PersonViewModel {
     private var person: Person

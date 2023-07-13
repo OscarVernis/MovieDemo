@@ -9,6 +9,8 @@
 import Foundation
 
 struct MockData {
+    
+    //MARK: - Movies
     static var moviesMock: JSONLoader<ServiceModelsResult<Movie>> {
         JSONLoader<ServiceModelsResult<Movie>>(filename: "now_playing")
     }
@@ -28,6 +30,11 @@ struct MockData {
         }
     }
     
+    static var moviesProvider: MoviesProvider {
+        MoviesProvider(service: moviesService)
+    }
+    
+    //MARK: - Movie
     static var movieMock: JSONLoader<Movie> {
         JSONLoader<Movie>(filename: "movie")
     }
@@ -42,6 +49,7 @@ struct MockData {
         return MovieDetailStore(movie: movieVM, userStateService: service)
     }
     
+    //MARK: - User
     static var userMock: JSONLoader<User> {
         JSONLoader<User>(filename: "user")
     }

@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import Combine
 
-class UserViewModel: ObservableObject {
-    @Published private(set) var user: User
+class UserViewModel {
+    private var user: User
     
     init() {
         self.user = User()

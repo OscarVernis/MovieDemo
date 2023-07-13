@@ -14,7 +14,7 @@ class MainCoordinator {
     private var isLoginRequired: Bool = false
     
     //Set to true uses Web Auth, false uses username and password.
-    private var usesWebLogin: Bool = false
+    private var usesWebLogin: Bool = true
     
     private var window: UIWindow
     private(set) var rootNavigationViewController: UINavigationController?
@@ -25,7 +25,7 @@ class MainCoordinator {
         dependencies.isLoggedIn
     }
     
-    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = true, dependencyContainer: AppDependencyContainer? = nil) {
+    init(window: UIWindow, isLoginRequired: Bool? = nil, usesWebLogin: Bool? = nil, dependencyContainer: AppDependencyContainer? = nil) {
         self.window = window
         
         if let isLoginRequired {
@@ -204,7 +204,6 @@ class MainCoordinator {
     
     fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
         let dataProvider = dependencies.moviesProvider(for: endpoint)
-        
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
     

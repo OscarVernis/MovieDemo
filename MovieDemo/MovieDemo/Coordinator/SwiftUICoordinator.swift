@@ -10,7 +10,6 @@ import UIKit
 import SwiftUI
 
 class SwiftUICoordinator: MainCoordinator {
-
     override func showHome() {
         let homeView = Home(router: self,
                             nowPlayingProvider: dependencies.moviesProvider(for: .NowPlaying, cacheList: .NowPlaying),
