@@ -20,10 +20,15 @@ class MovieDetailViewControllerTests: XCTestCase {
         }
     }
     
-    func test_store_deallocation() throws {
+    func test_store_deallocation() async throws {
         let service = { Just(self.anyMovie()).setFailureType(to: Error.self).eraseToAnyPublisher() }
-        let store = MovieDetailStore(movie: anyMovieVM(), movieService: service)
+        let userService = MockUserStatesService()
+        let store = MovieDetailStore(movie: anyMovieVM(), movieService: service, userStateService: userService)
         store.refresh()
+        let _ = await store.markAsFavorite(true)
+        let _ = await store.addToWatchlist(true)
+        let _ = await store.rate(5)
+        let _ = await store.deleteRate()
         trackForMemoryLeaks(store)
     }
 

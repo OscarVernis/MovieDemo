@@ -64,11 +64,11 @@ class AppDependencyContainer {
     var userProfileStore: UserProfileStore {
         //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
         let cache = UserCache()
-        let remoteService = remoteClient.getUserDetails()
+        let remote = remoteClient.getUserDetails()
             .cache(with: cache)
         
         let remoteWithCache = cache.publisher
-            .merge(with: remoteService)
+            .merge(with: remote)
             .eraseToAnyPublisher()
         
         return UserProfileStore(service: remoteWithCache)
