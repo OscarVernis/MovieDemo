@@ -12,7 +12,6 @@ import Combine
 class URLSessionHTTPClient: HTTPClient {
     private lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.default
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData
         configuration.timeoutIntervalForRequest = 5
         configuration.timeoutIntervalForResource = 5
         return URLSession(configuration: configuration)

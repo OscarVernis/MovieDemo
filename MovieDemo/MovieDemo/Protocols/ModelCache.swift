@@ -12,8 +12,26 @@ import Combine
 protocol ModelCache<Model> {
     associatedtype Model
     
+    func load() throws -> Model
     func save(_ model: Model)
     func delete()
+    
+    var publisher: AnyPublisher<Model, Error> { get }
+}
+
+extension ModelCache {
+    var publisher: AnyPublisher<Model, Error> {
+        let model = try? load()
+        if let model {
+            return Just(model)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        } else {
+            return Empty(completeImmediately: true)
+                .eraseToAnyPublisher()
+        }
+    }
+    
 }
 
 extension Publisher {

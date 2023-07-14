@@ -11,20 +11,18 @@ import CoreData
 import Combine
 
 struct UserCache{
-    
     let store = CoreDataStore.shared
-    
-    func load() -> User? {
-        let fetchRequest = UserMO.fetchRequest()
-        let user = try? store.context.fetch(fetchRequest).last
-        
-        return user?.toUser()
-    }
-    
 }
 
 extension UserCache: ModelCache  {
     typealias Model = User
+    
+    func load() throws -> User {
+        let fetchRequest = UserMO.fetchRequest()
+        let user = try store.context.fetch(fetchRequest).last
+        
+        return user?.toUser() ?? User()
+    }
     
     func save(_ user: User) {
         //Delete previous user cache
@@ -46,17 +44,3 @@ extension UserCache: ModelCache  {
     
 }
 
-extension UserCache {
-    var publisher: AnyPublisher<User, Error> {
-        let user = load()
-        if let user = user {
-            return Just(user)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        } else {
-            return Empty(completeImmediately: true)
-                .eraseToAnyPublisher()
-        }
-    }
-
-}

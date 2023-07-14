@@ -26,7 +26,11 @@ struct MovieCache {
         self.cacheList = cacheList
     }
     
-    func fetchMovies() -> [Movie] {
+}
+
+extension MovieCache: ModelCache {
+    typealias Model = [Movie]
+    func load() -> [Movie] {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         var managedMovies: [MovieMO]?
         
@@ -44,15 +48,11 @@ struct MovieCache {
         return managedMovies?.compactMap { $0.toMovie() } ?? []
         
     }
-}
-
-extension MovieCache: ModelCache {
-    typealias Model = [Movie]
-        
+    
     func save(_ movies: [Movie]) {
         let cache = ManagedCache.uniqueInstance(in: store.context)
         let managedMovies = NSOrderedSet(array: movies.compactMap { MovieMO(withMovie: $0, context: store.context) })
-                
+        
         switch cacheList {
         case .NowPlaying:
             cache.addToNowPlaying(managedMovies)
@@ -86,17 +86,6 @@ extension MovieCache: ModelCache {
         }
         
         store.save()
-    }
-    
-}
-
-extension MovieCache {
-    func publisher(page: Int = 1) -> AnyPublisher<MoviesResult, Error> {
-        let totalPages = 1
-        let movies = fetchMovies()
-        return Just((movies, totalPages))
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
     }
     
 }
