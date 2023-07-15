@@ -19,6 +19,8 @@ struct CrewCredit {
 }
 
 //MARK: - Utils
+extension CrewCredit: Codable {}
+
 extension CrewCredit: Hashable {
    func hash(into hasher: inout Hasher) {
         hasher.combine(job)

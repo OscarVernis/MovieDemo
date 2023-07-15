@@ -13,3 +13,5 @@ struct MovieVideo  {
     var name: String?
     var type: String?
 }
+
+extension MovieVideo: Codable {}

@@ -40,5 +40,4 @@ struct JSONCache<Model: Codable>: ModelCache {
         try? FileManager.default.removeItem(at: filename)
     }
     
-    
 }

@@ -73,3 +73,5 @@ enum MovieGenre: Int {
     }
     
 }
+
+extension MovieGenre: Codable {}

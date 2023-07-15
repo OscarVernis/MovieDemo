@@ -21,6 +21,8 @@ struct CastCredit {
 }
 
 //MARK: - Utils
+extension CastCredit: Codable {}
+
 extension CastCredit: Hashable {
    func hash(into hasher: inout Hasher) {
         hasher.combine(id)

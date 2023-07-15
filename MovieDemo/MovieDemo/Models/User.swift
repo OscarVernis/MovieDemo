@@ -17,3 +17,5 @@ struct User {
     var watchlist = [Movie]()
     var rated = [Movie]()
 }
+
+extension User: Codable {}
