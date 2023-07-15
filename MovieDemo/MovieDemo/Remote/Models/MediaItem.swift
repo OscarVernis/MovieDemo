@@ -9,12 +9,12 @@
 import Foundation
 
 enum MediaItem {
-    case person(Person)
-    case movie(Movie)
+    case person(CodablePerson)
+    case movie(CodableMovie)
     case unknown
 }
     
-extension MediaItem: Codable, Equatable {
+extension MediaItem: Codable {
     enum CodingKeys: String, CodingKey, CaseIterable {
         case mediaType = "media_type"
     }
@@ -23,12 +23,12 @@ extension MediaItem: Codable, Equatable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decodeIfPresent(String.self, forKey: .mediaType)
                 
-        if type == "person", let person = try? Person(from: decoder) {
+        if type == "person", let person = try? CodablePerson(from: decoder) {
             self = MediaItem.person(person)
             return
         }
 
-        if type == "movie", let movie = try? Movie(from: decoder) {
+        if type == "movie", let movie = try? CodableMovie(from: decoder) {
             self = MediaItem.movie(movie)
             return
         }
