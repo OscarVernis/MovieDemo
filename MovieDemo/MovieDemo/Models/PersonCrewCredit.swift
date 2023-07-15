@@ -12,21 +12,6 @@ struct PersonCrewCredit {
     var job: String?
     var movie: Movie?
 }
-    
-//MARK: - Codable
-extension PersonCrewCredit: Codable {
-    enum CodingKeys: String, CodingKey {
-        case job
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        job = try container.decodeIfPresent(String.self, forKey: .job)
-        
-        movie = try? Movie(from: decoder)
-    }
-    
-}
 
 //MARK: - Utils
 extension PersonCrewCredit {

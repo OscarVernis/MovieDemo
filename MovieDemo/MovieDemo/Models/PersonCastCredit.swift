@@ -13,21 +13,6 @@ struct PersonCastCredit {
     var movie: Movie?
 }
 
-//MARK: - Codable
-extension PersonCastCredit: Codable {
-    enum CodingKeys: String, CodingKey {
-        case character
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        character = try container.decodeIfPresent(String.self, forKey: .character)
-        
-        movie = try? Movie(from: decoder)
-    }
-    
-}
-
 //MARK: - Utils
 extension PersonCastCredit {
     static func sortByRelease(lhs: PersonCastCredit, rhs: PersonCastCredit) -> Bool {

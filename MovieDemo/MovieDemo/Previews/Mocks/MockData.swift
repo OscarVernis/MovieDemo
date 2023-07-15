@@ -11,19 +11,20 @@ import Foundation
 struct MockData {
     
     //MARK: - Movies
-    static var moviesMock: JSONLoader<ServiceModelsResult<Movie>> {
-        JSONLoader<ServiceModelsResult<Movie>>(filename: "now_playing")
+    static var moviesMock: JSONLoader<ServiceModelsResult<CodableMovie>> {
+        JSONLoader<ServiceModelsResult<CodableMovie>>(filename: "now_playing")
     }
     
     static var movieVMs: [MovieViewModel] {
-        moviesMock.model!.items.map(MovieViewModel.init)
+        moviesMock.model!.items.map { MovieViewModel(movie: $0.toMovie()) }
     }
     
     static var moviesService: MoviesService {
         { (page: Int) in
             moviesMock.publisher()
                 .map { result in
-                    MoviesResult(movies: result.items, totalPages: result.totalPages)
+                    let movies = result.items.map { $0.toMovie() }
+                    return MoviesResult(movies: movies, totalPages: result.totalPages)
                 }
                 .eraseToAnyPublisher()
             
@@ -35,12 +36,12 @@ struct MockData {
     }
     
     //MARK: - Movie
-    static var movieMock: JSONLoader<Movie> {
-        JSONLoader<Movie>(filename: "movie")
+    static var movieMock: JSONLoader<CodableMovie> {
+        JSONLoader<CodableMovie>(filename: "movie")
     }
     
     static var movieVM: MovieViewModel {
-        MovieViewModel(movie: movieMock.model!)
+        MovieViewModel(movie: movieMock.model!.toMovie())
     }
     
     static func movieDetailStore(showUserActions: Bool) -> MovieDetailStore {
@@ -50,12 +51,13 @@ struct MockData {
     }
     
     //MARK: - User
-    static var userMock: JSONLoader<User> {
-        JSONLoader<User>(filename: "user")
+    static var userMock: JSONLoader<CodableUser> {
+        JSONLoader<CodableUser>(filename: "user")
     }
     
     static var userProfileStore: UserProfileStore {
-        UserProfileStore(service: userMock.publisher)
+        let service = userMock.publisher().map { $0.toUser() }.eraseToAnyPublisher()
+        return UserProfileStore(service: service)
     }
     
 }

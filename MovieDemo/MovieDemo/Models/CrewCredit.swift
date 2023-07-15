@@ -18,19 +18,6 @@ struct CrewCredit {
     var profilePath: String?
 }
 
-//MARK: - Codable
-extension CrewCredit: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case department
-        case gender
-        case job
-        case profilePath = "profile_path"
-    }
-    
-}
-
 //MARK: - Utils
 extension CrewCredit: Hashable {
    func hash(into hasher: inout Hasher) {

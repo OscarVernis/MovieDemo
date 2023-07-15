@@ -24,50 +24,6 @@ struct Person {
     var crewCredits: [PersonCrewCredit]?
 }
 
-//MARK: - Codable
-extension Person: Codable {
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case knownForDepartment = "known_for_department"
-        case birthday
-        case deathday
-        case gender
-        case biography
-        case placeOfBirth = "place_of_birth"
-        case profilePath = "profile_path"
-        case knownForMovies = "known_for"
-        case castCredits = "cast"
-        case crewCredits = "crew"
-    }
-    
-    enum NestedKeys: String, CodingKey {
-        case movieCredits = "movie_credits"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-       
-        id = try container.decode(Int.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
-        do {
-            knownForDepartment = try container.decodeIfPresent(String.self, forKey: .knownForDepartment)
-            birthday = try container.decodeIfPresent(Date.self, forKey: .birthday)
-            deathday = try container.decodeIfPresent(Date.self, forKey: .deathday)
-            biography = try container.decodeIfPresent(String.self, forKey: .biography)
-            placeOfBirth = try container.decodeIfPresent(String.self, forKey: .placeOfBirth)
-            profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
-            knownForMovies = try container.decodeIfPresent([Movie].self, forKey: .knownForMovies)
-        } catch { }
-        
-        let nestedContainer = try decoder.container(keyedBy: NestedKeys.self)
-        
-        let creditsContainer = try? nestedContainer.nestedContainer(keyedBy: CodingKeys.self, forKey: .movieCredits)
-        crewCredits = try? creditsContainer?.decodeIfPresent([PersonCrewCredit].self, forKey: .crewCredits)
-        castCredits = try? creditsContainer?.decodeIfPresent([PersonCastCredit].self, forKey: .castCredits)
-    }
-}
-
 //MARK: - Utils
 extension Person: Equatable {
     static func == (lhs: Person, rhs: Person) -> Bool {

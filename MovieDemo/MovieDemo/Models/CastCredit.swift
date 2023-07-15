@@ -20,19 +20,6 @@ struct CastCredit {
     
 }
 
-//MARK: - Codable
-extension CastCredit: Codable {
-    enum CodingKeys: String, CodingKey {
-        case name
-        case castId = "cast_id"
-        case character
-        case gender
-        case id
-        case order
-        case profilePath = "profile_path"
-    }
-}
-
 //MARK: - Utils
 extension CastCredit: Hashable {
    func hash(into hasher: inout Hasher) {
