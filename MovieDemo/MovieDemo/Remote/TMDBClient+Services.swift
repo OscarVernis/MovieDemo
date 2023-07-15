@@ -12,11 +12,12 @@ import Combine
 //MARK: - Movies
 extension TMDBClient {
     func getMovies(endpoint: MoviesEndpoint,  page: Int) -> AnyPublisher<MoviesResult, Error> {
-        let publisher: AnyPublisher<ServiceModelsResult<Movie>, Error> = getModels(endpoint: .movies(endpoint), page: page)
+        let publisher: AnyPublisher<ServiceModelsResult<CodableMovie>, Error> = getModels(endpoint: .movies(endpoint), page: page)
         
         return publisher
             .map { result in
-                MoviesResult(movies: result.items, totalPages: result.totalPages)
+                let movies = result.items.compactMap { $0.toMovie() }
+                return MoviesResult(movies: movies, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()
     }
@@ -28,19 +29,36 @@ extension TMDBClient {
     func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
         let params = ["append_to_response" : "credits,recommendations,account_states,videos"]
         
-        return getModel(endpoint: .movieDetails(movieId: movieId), parameters: params)
+        let publisher: AnyPublisher<CodableMovie, Error> = getModel(endpoint: .movieDetails(movieId: movieId), parameters: params)
+        
+        return publisher
+            .map { $0.toMovie() }
+            .mapError({ error in
+                print(error)
+                
+                return error
+            })
+            .eraseToAnyPublisher()
     }
     
     func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
         let params = ["append_to_response": "movie_credits"]
         
-        return getModel(endpoint: .personDetails(personId: personId), parameters: params)
+        let publisher: AnyPublisher<CodablePerson, Error> = getModel(endpoint: .personDetails(personId: personId), parameters: params)
+
+        return publisher
+            .map { $0.toPerson() }
+            .eraseToAnyPublisher()
     }
     
     func getUserDetails() -> AnyPublisher<User, Error> {
          let params = ["append_to_response": "favorite/movies,rated/movies,watchlist/movies"]
 
-         return getModel(endpoint: .userDetails, parameters: params)
+        let publisher: AnyPublisher<CodableUser, Error> = getModel(endpoint: .userDetails, parameters: params)
+        
+        return publisher
+            .map { $0.toUser() }
+            .eraseToAnyPublisher()
      }
     
 }
@@ -55,9 +73,9 @@ extension TMDBClient {
                 let searchResults: [Any] = result.items.compactMap { item -> Any? in
                     switch item {
                     case .person(let person):
-                        return person
+                        return person.toPerson()
                     case .movie(let movie):
-                        return movie
+                        return movie.toMovie()
                     case .unknown:
                         return nil
                     }
