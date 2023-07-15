@@ -9,42 +9,69 @@
 import Foundation
 
 struct CodableCache<Model: Codable>: ModelCache {
+    enum CacheType {
+        case json
+        case propertyList
+        
+        var fileExtension: String {
+            switch self {
+            case .json:
+                return "json"
+            case .propertyList:
+                return "bplist"
+            }
+        }
+    }
+    
     private let dir: URL
-    private let filename: String
+    private let filePath: URL
+    private let cacheType: CacheType
     
     static var cacheDir: URL {
         let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
         return cacheDir.appending(path: "cache.oscarvernis.MovieDemo")
     }
     
-    init(filename: String, dir: URL? = cacheDir) {
-        self.filename = filename
-        self.dir = dir!
+    init(filename: String, dir: URL = cacheDir, type: CacheType = .propertyList) {
+        self.filePath = dir.appending(path: filename).appendingPathExtension(type.fileExtension)
+        self.dir = dir
+        self.cacheType = type
     }
-    
+        
     func load() throws -> Model {
-        let filename = dir.appending(path: filename)
-        let data = try Data(contentsOf: filename)
-        let model = try JSONDecoder().decode(Model.self, from: data)
+        let data = try Data(contentsOf: filePath)
+        
+        let model: Model
+        switch cacheType {
+        case .json:
+            model = try JSONDecoder().decode(Model.self, from: data)
+        case .propertyList:
+            model = try PropertyListDecoder().decode(Model.self, from: data)
+        }
         
         return model
     }
     
     func save(_ model: Model) {
-        let filename = dir.appending(path: filename)
         do {
             try FileManager.default.createDirectory(at: CodableCache.cacheDir, withIntermediateDirectories: true)
+
+            let data: Data
+            switch cacheType {
+            case .json:
+                data = try JSONEncoder().encode(model)
+            case .propertyList:
+                data = try PropertyListEncoder().encode(model)
+            }
             
-            let data = try JSONEncoder().encode(model)
-            try data.write(to: filename)
+            try data.write(to: filePath)
         } catch {
             print(error)
         }
     }
     
     func delete() {
-        let filename = dir.appending(path: filename)
-        try? FileManager.default.removeItem(at: filename)
+        try? FileManager.default.removeItem(at: filePath)
     }
     
 }

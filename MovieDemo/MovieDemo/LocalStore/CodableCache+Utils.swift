@@ -19,20 +19,20 @@ extension CodableCache<[Movie]> {
     static func cache(for list: CacheList) -> any ModelCache<[Movie]> {
         switch list {
         case .NowPlaying:
-            return CodableCache<[Movie]>(filename: "nowplaying-cache.json")
+            return CodableCache<[Movie]>(filename: "nowplaying-cache")
         case .Popular:
-            return CodableCache<[Movie]>(filename: "popular-cache.json")
+            return CodableCache<[Movie]>(filename: "popular-cache")
         case .TopRated:
-            return CodableCache<[Movie]>(filename: "toprated-cache.json")
+            return CodableCache<[Movie]>(filename: "toprated-cache")
         case .Upcoming:
-            return CodableCache<[Movie]>(filename: "upcoming-cache.json")
+            return CodableCache<[Movie]>(filename: "upcoming-cache")
         }
     }
 }
     
 extension CodableCache<User> {
     static var userCache: any ModelCache<User> {
-        CodableCache<User>(filename: "user-cache.json")
+        CodableCache<User>(filename: "user-cache")
     }
 }
 
