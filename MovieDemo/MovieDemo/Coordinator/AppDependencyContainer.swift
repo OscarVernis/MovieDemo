@@ -63,7 +63,7 @@ class AppDependencyContainer {
     
     var userProfileStore: UserProfileStore {
         //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
-        let cache = JSONCache<User>(filename: "user-cache.json")
+        let cache = JSONCache.userCache
         let remote = remoteClient.getUserDetails()
             .cache(with: cache)
         
