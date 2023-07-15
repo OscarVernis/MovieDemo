@@ -58,15 +58,8 @@ class MainCoordinator {
     }
     
     func deleteCache() {
-        do {
-            let files = try FileManager.default.contentsOfDirectory(at: JSONCache<Movie>.cacheDir, includingPropertiesForKeys: nil)
-            for file in files {
-                try FileManager.default.removeItem(at: file)
-            }
-//            try CoreDataStore.shared.resetStore()
-        } catch {
-            print(error)
-        }
+        CodableCache<User>.deleteCache()
+        //try CoreDataStore.shared.resetStore()
     }
     
     //MARK: - App Start

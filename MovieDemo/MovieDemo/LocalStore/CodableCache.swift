@@ -1,5 +1,5 @@
 //
-//  JSONCache.swift
+//  CodableCache.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 14/07/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct JSONCache<Model: Codable>: ModelCache {
+struct CodableCache<Model: Codable>: ModelCache {
     private let dir: URL
     private let filename: String
     
@@ -33,8 +33,7 @@ struct JSONCache<Model: Codable>: ModelCache {
     func save(_ model: Model) {
         let filename = dir.appending(path: filename)
         do {
-            var isDirectory = ObjCBool(true)
-            try FileManager.default.createDirectory(at: JSONCache.cacheDir, withIntermediateDirectories: true)
+            try FileManager.default.createDirectory(at: CodableCache.cacheDir, withIntermediateDirectories: true)
             
             let data = try JSONEncoder().encode(model)
             try data.write(to: filename)
