@@ -58,16 +58,12 @@ class MainCoordinator {
     }
     
     func deleteCache() {
-        let cache = dependencies.userCache
-        cache.delete()
-        
-        let fileManager = FileManager.default
-        let dir = fileManager.temporaryDirectory
         do {
-            let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+            let files = try FileManager.default.contentsOfDirectory(at: JSONCache<Movie>.cacheDir, includingPropertiesForKeys: nil)
             for file in files {
-                try fileManager.removeItem(at: file)
+                try FileManager.default.removeItem(at: file)
             }
+//            try CoreDataStore.shared.resetStore()
         } catch {
             print(error)
         }
@@ -157,7 +153,6 @@ class MainCoordinator {
                     self.showLogin(animated: true)
                 }
                 
-                //Delete cache
                 deleteCache()
                 
                 UINotificationFeedbackGenerator().notificationOccurred(.success)

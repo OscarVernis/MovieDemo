@@ -11,16 +11,28 @@ import CoreData
 
 struct CoreDataStore {
     static let shared = CoreDataStore()
-    let persistentContainer: NSPersistentContainer
+    
+    private var persistentContainer: NSPersistentContainer
+    private var storeURL: URL {
+        var cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        cacheDir.append(component: "cdcache.oscarvernis.MovieDemo")
+        return cacheDir.appending(component: "moviedemo_cache.sqlite")
+    }
     
     var context: NSManagedObjectContext {
         get {
             return persistentContainer.viewContext
         }
     }
-    
+        
     private init() {
         persistentContainer = NSPersistentContainer(name: "MovieDemo")
+        let description = NSPersistentStoreDescription(url: storeURL)
+        persistentContainer.persistentStoreDescriptions = [description]
+        loadStore()
+    }
+    
+    func loadStore() {
         persistentContainer.loadPersistentStores { description, error in
             if let error = error {
                 print("Failed to initialize Core Data: \(error)")
@@ -28,6 +40,10 @@ struct CoreDataStore {
         }
     }
     
+    func resetStore() throws {
+        try persistentContainer.persistentStoreCoordinator.destroyPersistentStore(at: storeURL, type: .sqlite)
+        loadStore()
+    }
     
     func fetchAll<T: NSManagedObject>(entity: T.Type) -> [T] {
         let fetchRequest = NSFetchRequest<T>(entityName: NSStringFromClass(entity))

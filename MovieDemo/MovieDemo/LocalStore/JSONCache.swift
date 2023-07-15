@@ -12,9 +12,14 @@ struct JSONCache<Model: Codable>: ModelCache {
     private let dir: URL
     private let filename: String
     
-    init(filename: String, dir: URL = FileManager.default.temporaryDirectory) {
+    static var cacheDir: URL {
+        let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        return cacheDir.appending(path: "cache.oscarvernis.MovieDemo")
+    }
+    
+    init(filename: String, dir: URL? = cacheDir) {
         self.filename = filename
-        self.dir = dir
+        self.dir = dir!
     }
     
     func load() throws -> Model {
@@ -28,6 +33,9 @@ struct JSONCache<Model: Codable>: ModelCache {
     func save(_ model: Model) {
         let filename = dir.appending(path: filename)
         do {
+            var isDirectory = ObjCBool(true)
+            try FileManager.default.createDirectory(at: JSONCache.cacheDir, withIntermediateDirectories: true)
+            
             let data = try JSONEncoder().encode(model)
             try data.write(to: filename)
         } catch {

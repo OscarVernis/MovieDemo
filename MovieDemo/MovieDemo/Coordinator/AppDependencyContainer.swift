@@ -63,7 +63,7 @@ class AppDependencyContainer {
     
     var userProfileStore: UserProfileStore {
         //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
-        let cache = UserCache()
+        let cache = JSONCache.userCache
         let remote = remoteClient.getUserDetails()
             .cache(with: cache)
         
@@ -71,7 +71,7 @@ class AppDependencyContainer {
             .merge(with: remote)
             .eraseToAnyPublisher()
         
-        return UserProfileStore(service: remote)
+        return UserProfileStore(service: remoteWithCache)
     }
     
     func movieDetailsStore(movie: MovieViewModel) -> MovieDetailStore {
