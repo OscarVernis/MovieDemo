@@ -196,6 +196,8 @@
 		55A909DA2A62021C00AE4253 /* JSONCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A909D92A62021C00AE4253 /* JSONCache.swift */; };
 		55AB8ADC2A62666E00414A6E /* CodableMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AB8ADB2A62666E00414A6E /* CodableMovie.swift */; };
 		55AB8ADE2A626EBA00414A6E /* CodableMovie+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */; };
+		55AB8AE02A6275FB00414A6E /* CodableUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AB8ADF2A6275FB00414A6E /* CodableUser.swift */; };
+		55AB8AE22A6276B100414A6E /* CodableUser+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AB8AE12A6276B100414A6E /* CodableUser+Mapping.swift */; };
 		55ABEB79283365AF009DCE7C /* LoginViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEB78283365AF009DCE7C /* LoginViewStore.swift */; };
 		55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC532028243CD300836A30 /* ViewModelsTests.swift */; };
 		55AC53232824422C00836A30 /* DataProvidersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC53222824422C00836A30 /* DataProvidersTests.swift */; };
@@ -474,6 +476,8 @@
 		55A909D92A62021C00AE4253 /* JSONCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCache.swift; sourceTree = "<group>"; };
 		55AB8ADB2A62666E00414A6E /* CodableMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMovie.swift; sourceTree = "<group>"; };
 		55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableMovie+Mapping.swift"; sourceTree = "<group>"; };
+		55AB8ADF2A6275FB00414A6E /* CodableUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableUser.swift; sourceTree = "<group>"; };
+		55AB8AE12A6276B100414A6E /* CodableUser+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableUser+Mapping.swift"; sourceTree = "<group>"; };
 		55ABEB78283365AF009DCE7C /* LoginViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewStore.swift; sourceTree = "<group>"; };
 		55AC532028243CD300836A30 /* ViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsTests.swift; sourceTree = "<group>"; };
 		55AC53222824422C00836A30 /* DataProvidersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvidersTests.swift; sourceTree = "<group>"; };
@@ -1097,6 +1101,8 @@
 			children = (
 				55AB8ADB2A62666E00414A6E /* CodableMovie.swift */,
 				55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */,
+				55AB8ADF2A6275FB00414A6E /* CodableUser.swift */,
+				55AB8AE12A6276B100414A6E /* CodableUser+Mapping.swift */,
 				553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */,
 				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
 				555EAF6427DC465D000B6525 /* ServiceGenre.swift */,
@@ -1575,6 +1581,7 @@
 				55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */,
 				55AB8ADC2A62666E00414A6E /* CodableMovie.swift in Sources */,
 				55CEAF07286E016300FEF613 /* PosterItem.swift in Sources */,
+				55AB8AE02A6275FB00414A6E /* CodableUser.swift in Sources */,
 				5511FF95285A900500B9C12A /* MovieBannerItem.swift in Sources */,
 				5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */,
 				55D317FD284EF6A40090CF34 /* UserService.swift in Sources */,
@@ -1634,6 +1641,7 @@
 				558E57142870BE8900B5245B /* PosterItemModel.swift in Sources */,
 				55B6CBBA27E024A6007DB4C2 /* MovieMO.swift in Sources */,
 				556F01472A58941F005B5211 /* MovieDetailStore.swift in Sources */,
+				55AB8AE22A6276B100414A6E /* CodableUser+Mapping.swift in Sources */,
 				55FEF45025141A40009363F8 /* CreditPhotoListCell.swift in Sources */,
 				5570994C282485780028ED44 /* SearchService.swift in Sources */,
 				5554DA4B2813482500845F9E /* UIImage+RemoteLoading.swift in Sources */,
