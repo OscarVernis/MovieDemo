@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: - User
+//MARK: - User
 struct CodableUser: Codable {
     let avatar: Avatar?
     let id: Int?
@@ -24,12 +24,12 @@ struct CodableUser: Codable {
     }
 }
 
-// MARK: - Avatar
+//MARK: - Avatar
 struct Avatar: Codable {
     let gravatar: Gravatar?
 }
 
-// MARK: - Gravatar
+//MARK: - Gravatar
 struct Gravatar: Codable {
     let hash: String?
 }

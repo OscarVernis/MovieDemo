@@ -23,8 +23,9 @@ extension CodableMovie {
         movie.voteCount = voteCount
         movie.cast = credits?.cast?.compactMap { $0.toCastCredit() }
         movie.crew = credits?.crew?.compactMap { $0.toCrewtCredit() }
-        movie.recommendedMovies = recommendations?.items
+        movie.recommendedMovies = recommendations?.results?.compactMap { $0.toMovie() }
         movie.genres = genres?.compactMap { MovieGenre(rawValue: $0.id ?? 0) }
+        movie.genres = genreIds?.compactMap { MovieGenre(rawValue: $0 ) }
         movie.status = status
         movie.popularity = popularity
         movie.originalLanguage = originalLanguage
@@ -34,13 +35,13 @@ extension CodableMovie {
         movie.productionCountries = productionCountries?.compactMap { $0.iso3166_1 }
         
         movie.videos = videos?.results?.compactMap { $0.toMovieVideo() }
+        
         movie.favorite = accountStates?.favorite
         movie.userRating = accountStates?.rated?.value
         movie.watchlist = accountStates?.watchlist
         
         return movie
     }
-    
 }
 
 extension CodableCast {
@@ -84,5 +85,4 @@ extension CodableVideo {
         
         return video
     }
-    
 }
