@@ -11,10 +11,10 @@ import Combine
 
 class MoviesProvider: PaginatedProvider<MovieViewModel> {
     let service: MoviesService
-    let cache: MovieCache?
+    let cache: (any ModelCache<[Movie]>)?
     var serviceCancellable: AnyCancellable?
     
-    init(service: @escaping MoviesService, cache: MovieCache? = nil) {
+    init(service: @escaping MoviesService, cache: (any ModelCache<[Movie]>)? = nil) {
         self.service = service
         self.cache = cache
     }
@@ -26,11 +26,16 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
               items.count == 0
         else { return }
         
-        items = cache.load().map(MovieViewModel.init)
+        let cacheItems = try? cache.load().map(MovieViewModel.init)
+
+        if let cacheItems {
+            items = cacheItems
+        }
     }
     
     override func getItems() {
         let page = currentPage + 1
+        loadFromCache()
         
         serviceCancellable = service(page)
             .sink { [weak self] completion in

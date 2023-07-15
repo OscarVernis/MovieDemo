@@ -57,6 +57,22 @@ class MainCoordinator {
                                     completion: completion)
     }
     
+    func deleteCache() {
+        let cache = dependencies.userCache
+        cache.delete()
+        
+        let fileManager = FileManager.default
+        let dir = fileManager.temporaryDirectory
+        do {
+            let files = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+            for file in files {
+                try fileManager.removeItem(at: file)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
     //MARK: - App Start
     func start() {
         rootNavigationViewController = UINavigationController()
@@ -142,8 +158,7 @@ class MainCoordinator {
                 }
                 
                 //Delete cache
-                let cache = dependencies.userCache
-                cache.delete()
+                deleteCache()
                 
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 

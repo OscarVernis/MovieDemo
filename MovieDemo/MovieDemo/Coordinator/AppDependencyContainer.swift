@@ -39,10 +39,10 @@ class AppDependencyContainer {
     }
     
     //MARK: - Helpers
-    func moviesProvider(for movieList: MoviesEndpoint, cacheList: MovieCache.CacheList? = nil) -> MoviesProvider {
-        var cache: MovieCache? = nil
+    func moviesProvider(for movieList: MoviesEndpoint, cacheList: JSONCache<[Movie]>.CacheList? = nil) -> MoviesProvider {
+        var cache: (any ModelCache<[Movie]>)? = nil
         if let cacheList {
-            cache = MovieCache(cacheList: cacheList)
+            cache = JSONCache.cache(for: cacheList)
         }
         
         let service = { [unowned self] (page: Int) in
@@ -63,7 +63,7 @@ class AppDependencyContainer {
     
     var userProfileStore: UserProfileStore {
         //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
-        let cache = JSONCache.userCache
+        let cache = UserCache()
         let remote = remoteClient.getUserDetails()
             .cache(with: cache)
         
@@ -71,7 +71,7 @@ class AppDependencyContainer {
             .merge(with: remote)
             .eraseToAnyPublisher()
         
-        return UserProfileStore(service: remoteWithCache)
+        return UserProfileStore(service: remote)
     }
     
     func movieDetailsStore(movie: MovieViewModel) -> MovieDetailStore {
