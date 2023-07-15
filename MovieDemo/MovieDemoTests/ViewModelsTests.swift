@@ -17,7 +17,7 @@ class ViewModelsTests: XCTestCase {
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        movie = try decoder.decode(Movie.self, from: movieData)
+        movie = try decoder.decode(CodableMovie.self, from: movieData).toMovie()
         
         let viewModel = MovieViewModel(movie: movie)
         
@@ -45,7 +45,7 @@ class ViewModelsTests: XCTestCase {
         
         let decoder = jsonDecoder()
         var person = Person()
-        person = try decoder.decode(Person.self, from: personData)
+        person = try decoder.decode(CodablePerson.self, from: personData).toPerson()
         
         let viewModel = PersonViewModel(person: person)
         

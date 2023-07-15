@@ -19,7 +19,7 @@ class UserProfileViewControllerTests: XCTestCase {
     }
 
     func test_store_deallocation() throws {
-        let service = MockData.userMock.publisher
+        let service = MockData.userMock.publisher().map { $0.toUser() }.eraseToAnyPublisher()
         let store = UserProfileStore(service: service)
         store.updateUser()
         trackForMemoryLeaks(store)

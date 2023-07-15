@@ -24,8 +24,6 @@ extension CodableMovie {
         movie.cast = credits?.cast?.compactMap { $0.toCastCredit() }
         movie.crew = credits?.crew?.compactMap { $0.toCrewtCredit() }
         movie.recommendedMovies = recommendations?.items.compactMap { $0.toMovie() }
-        movie.genres = genres?.compactMap { MovieGenre(rawValue: $0.id ?? 0) }
-        movie.genres = genreIds?.compactMap { MovieGenre(rawValue: $0 ) }
         movie.status = status
         movie.popularity = popularity
         movie.originalLanguage = originalLanguage
@@ -33,6 +31,12 @@ extension CodableMovie {
         movie.revenue = revenue
         movie.originalTitle = originalTitle
         movie.productionCountries = productionCountries?.compactMap { $0.iso3166_1 }
+        
+        if let genres {
+            movie.genres = genres.compactMap { MovieGenre(rawValue: $0.id ?? 0) }
+        } else if let genreIds {
+            movie.genres = genreIds.compactMap { MovieGenre(rawValue: $0 ) }
+        }
         
         movie.videos = videos?.results?.compactMap { $0.toMovieVideo() }
         

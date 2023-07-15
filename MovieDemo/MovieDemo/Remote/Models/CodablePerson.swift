@@ -10,8 +10,8 @@ import Foundation
 
 // MARK: - CodablePerson
 struct CodablePerson: Codable {
-    let id: Int?
-    let name: String?
+    let id: Int!
+    let name: String!
     let knownForDepartment: String?
     let birthday: Date?
     let deathday: Date?
@@ -39,14 +39,14 @@ struct CodablePerson: Codable {
        
         id = try container.decode(Int.self, forKey: .id)
         name = try container.decode(String.self, forKey: .name)
-        knownForDepartment = try container.decodeIfPresent(String.self, forKey: .knownForDepartment)
-        birthday = try container.decodeIfPresent(Date.self, forKey: .birthday)
-        deathday = try container.decodeIfPresent(Date.self, forKey: .deathday)
-        biography = try container.decodeIfPresent(String.self, forKey: .biography)
-        placeOfBirth = try container.decodeIfPresent(String.self, forKey: .placeOfBirth)
-        profilePath = try container.decodeIfPresent(String.self, forKey: .profilePath)
-        knownForMovies = try container.decodeIfPresent([CodableMovie].self, forKey: .knownForMovies)
-        movieCredits = try container.decodeIfPresent(CodablePersonCredits.self, forKey: .movieCredits)
+        knownForDepartment = try? container.decodeIfPresent(String.self, forKey: .knownForDepartment)
+        birthday = try? container.decodeIfPresent(Date.self, forKey: .birthday)
+        deathday = try? container.decodeIfPresent(Date.self, forKey: .deathday)
+        biography = try? container.decodeIfPresent(String.self, forKey: .biography)
+        placeOfBirth = try? container.decodeIfPresent(String.self, forKey: .placeOfBirth)
+        profilePath = try? container.decodeIfPresent(String.self, forKey: .profilePath)
+        knownForMovies = try? container.decodeIfPresent([CodableMovie].self, forKey: .knownForMovies)
+        movieCredits = try? container.decodeIfPresent(CodablePersonCredits.self, forKey: .movieCredits)
     }
 }
 

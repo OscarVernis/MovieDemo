@@ -25,8 +25,8 @@ extension XCTestCase {
         
         let decoder = jsonDecoder()
         var movie = Movie()
-        XCTAssertNoThrow( movie = try decoder.decode(Movie.self, from: movieData) )
-        
+        XCTAssertNoThrow( movie = try decoder.decode(CodableMovie.self, from: movieData).toMovie() )
+
         return movie
     }
     
@@ -40,8 +40,9 @@ extension XCTestCase {
         
         let decoder = jsonDecoder()
         var person = Person()
-        XCTAssertNoThrow( person = try decoder.decode(Person.self, from: personData) )
-        
+        XCTAssertNoThrow( person = try decoder.decode(CodablePerson.self, from: personData).toPerson() )
+
+        print(person)
         return person
     }
     

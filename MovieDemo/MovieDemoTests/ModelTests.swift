@@ -15,8 +15,8 @@ class MovieModelTests: XCTestCase {
         movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie", withExtension: "json")!)
         
         let decoder = jsonDecoder()
-        var movie = Movie()
-        movie = try decoder.decode(Movie.self, from: movieData)
+        let codableMovie = try decoder.decode(CodableMovie.self, from: movieData)
+        let movie = codableMovie.toMovie()
         
         XCTAssertEqual(movie.id, 155)
         XCTAssertEqual(movie.title, "The Dark Knight")
@@ -36,8 +36,8 @@ class MovieModelTests: XCTestCase {
         movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movie_NoRating", withExtension: "json")!)
         
         let decoder = jsonDecoder()
-        var movie = Movie()
-        movie = try decoder.decode(Movie.self, from: movieData)
+        let codableMovie = try decoder.decode(CodableMovie.self, from: movieData)
+        let movie = codableMovie.toMovie()
         
         XCTAssertEqual(movie.id, 414906)
         XCTAssertEqual(movie.title, "The Batman")
@@ -49,8 +49,8 @@ class MovieModelTests: XCTestCase {
         movieData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Movies", withExtension: "json")!)
         
         let decoder = jsonDecoder()
-        var movie = Movie()
-        movie = try decoder.decode(ServiceModelsResult<Movie>.self, from: movieData).items.first!
+        let codableMovie = try decoder.decode(ServiceModelsResult<CodableMovie>.self, from: movieData).items.first!
+        let movie = codableMovie.toMovie()
         
         XCTAssertEqual(movie.id, 297761)
         XCTAssertEqual(movie.title, "Suicide Squad")
@@ -65,8 +65,8 @@ class PersonModelTests: XCTestCase {
         personData = try Data(contentsOf: Bundle(for: type(of: self)).url(forResource: "Person", withExtension: "json")!)
         
         let decoder = jsonDecoder()
-        var person = Person()
-        person = try decoder.decode(Person.self, from: personData)
+        let codablePerson = try decoder.decode(CodablePerson.self, from: personData)
+        let person = codablePerson.toPerson()
         
         XCTAssertNotNil(person)
         XCTAssertEqual(person.id, 10859)

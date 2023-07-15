@@ -17,9 +17,8 @@ class MovieServiceTests: XCTestCase {
         let mockClient = MockHTTPClient(jsonFile: "Movie", url: url)
         
         let sut = TMDBClient(httpClient: mockClient)
-        var movie = Movie()
         
-        movie = try awaitPublisher(
+        let movie: CodableMovie = try awaitPublisher(
             sut.getModel(endpoint: .movieDetails(movieId: movieId))
         )
         
@@ -32,7 +31,7 @@ class MovieServiceTests: XCTestCase {
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url)
         
         let sut = TMDBClient(httpClient: mockClient)
-        var results: ServiceModelsResult<Movie>?
+        var results: ServiceModelsResult<CodableMovie>?
         
         results = try awaitPublisher(
             sut.getModels(endpoint: .movies(.NowPlaying))
@@ -48,7 +47,7 @@ class MovieServiceTests: XCTestCase {
         let mockClient = MockHTTPClient(jsonObject: emptyResult, url: url)
         
         let sut = TMDBClient(httpClient: mockClient)
-        var results: ServiceModelsResult<Movie>?
+        var results: ServiceModelsResult<CodableMovie>?
 
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
@@ -59,7 +58,7 @@ class MovieServiceTests: XCTestCase {
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url, statusCode: 401)
         
         let sut = TMDBClient(httpClient: mockClient)
-        var results: ServiceModelsResult<Movie>?
+        var results: ServiceModelsResult<CodableMovie>?
         
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
@@ -70,7 +69,7 @@ class MovieServiceTests: XCTestCase {
         let mockClient = MockHTTPClient(jsonFile: "Movies", url: url, statusCode: 404)
         
         let sut = TMDBClient(httpClient: mockClient)
-        var results: ServiceModelsResult<Movie>?
+        var results: ServiceModelsResult<CodableMovie>?
         
         XCTAssertThrowsError(results = try awaitPublisher( sut.getModels(endpoint: .movies(.NowPlaying)) ))
         XCTAssertNil(results)
