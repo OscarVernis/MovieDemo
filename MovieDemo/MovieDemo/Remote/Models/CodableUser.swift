@@ -22,6 +22,17 @@ struct CodableUser: Codable {
         case ratedMovies = "rated/movies"
         case watchlistMovies = "watchlist/movies"
     }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(Int.self, forKey: .id)
+        username = try container.decode(String.self, forKey: .username)
+        avatar = try? container.decode(Avatar.self, forKey: .avatar)
+        favoriteMovies = try? container.decode( ServiceModelsResult<CodableMovie>.self, forKey: .favoriteMovies)
+        ratedMovies = try? container.decode( ServiceModelsResult<CodableMovie>.self, forKey: .ratedMovies)
+        watchlistMovies = try? container.decode( ServiceModelsResult<CodableMovie>.self, forKey: .watchlistMovies)
+    }
 }
 
 //MARK: - Avatar

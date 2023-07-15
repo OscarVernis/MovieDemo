@@ -23,7 +23,7 @@ extension CodableMovie {
         movie.voteCount = voteCount
         movie.cast = credits?.cast?.compactMap { $0.toCastCredit() }
         movie.crew = credits?.crew?.compactMap { $0.toCrewtCredit() }
-        movie.recommendedMovies = recommendations?.results?.compactMap { $0.toMovie() }
+        movie.recommendedMovies = recommendations?.items.compactMap { $0.toMovie() }
         movie.genres = genres?.compactMap { MovieGenre(rawValue: $0.id ?? 0) }
         movie.genres = genreIds?.compactMap { MovieGenre(rawValue: $0 ) }
         movie.status = status

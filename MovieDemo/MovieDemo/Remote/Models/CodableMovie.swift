@@ -25,7 +25,7 @@ struct CodableMovie: Codable {
     let voteAverage: Float?
     let voteCount: Int?
     let credits: CodableCredits?
-    let recommendations: CodableMovieResults?
+    let recommendations:  ServiceModelsResult<CodableMovie>?
     let genres: [CodableGenre]?
     let genreIds: [Int]?
     let status: String?
@@ -78,7 +78,7 @@ struct CodableMovie: Codable {
         voteAverage = try? container.decodeIfPresent(Float.self, forKey: .voteAverage)
         voteCount = try? container.decodeIfPresent(Int.self, forKey: .voteCount)
         credits = try? container.decodeIfPresent(CodableCredits.self, forKey: .credits)
-        recommendations = try? container.decodeIfPresent(CodableMovieResults.self, forKey: .recommendations)
+        recommendations = try? container.decodeIfPresent(ServiceModelsResult<CodableMovie>.self, forKey: .recommendations)
         genres = try? container.decodeIfPresent([CodableGenre].self, forKey: .genres)
         genreIds = try? container.decodeIfPresent([Int].self, forKey: .genreIds)
         status = try? container.decodeIfPresent(String.self, forKey: .status)
