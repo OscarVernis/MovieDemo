@@ -161,6 +161,8 @@
 		557FFA8F251A65B700D79F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 557FFA8E251A65B700D79F68 /* KeychainAccess */; };
 		557FFA97251A6D7100D79F68 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557FFA96251A6D7100D79F68 /* LoginViewController.swift */; };
 		55823C632857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55823C622857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift */; };
+		5584ADE22A6300C700F0907E /* CodablePerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584ADE12A6300C700F0907E /* CodablePerson.swift */; };
+		5584ADE42A63074800F0907E /* CodablePerson+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5584ADE32A63074800F0907E /* CodablePerson+Mapping.swift */; };
 		5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587114825108079005A0975 /* MovieInfoListCell.swift */; };
 		5587114B25108079005A0975 /* MovieInfoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5587114925108079005A0975 /* MovieInfoListCell.xib */; };
 		55893B6E2513F56D00233677 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55893B6D2513F56D00233677 /* DataProvider.swift */; };
@@ -439,6 +441,8 @@
 		557FFA8A251A625900D79F68 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		557FFA96251A6D7100D79F68 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		55823C622857E9C9009254E3 /* MovieDetailDataSource.Section+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieDetailDataSource.Section+Layout.swift"; sourceTree = "<group>"; };
+		5584ADE12A6300C700F0907E /* CodablePerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodablePerson.swift; sourceTree = "<group>"; };
+		5584ADE32A63074800F0907E /* CodablePerson+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodablePerson+Mapping.swift"; sourceTree = "<group>"; };
 		5587114825108079005A0975 /* MovieInfoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoListCell.swift; sourceTree = "<group>"; };
 		5587114925108079005A0975 /* MovieInfoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieInfoListCell.xib; sourceTree = "<group>"; };
 		55893B6D2513F56D00233677 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
@@ -1101,6 +1105,8 @@
 			children = (
 				55AB8ADB2A62666E00414A6E /* CodableMovie.swift */,
 				55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */,
+				5584ADE12A6300C700F0907E /* CodablePerson.swift */,
+				5584ADE32A63074800F0907E /* CodablePerson+Mapping.swift */,
 				55AB8ADF2A6275FB00414A6E /* CodableUser.swift */,
 				55AB8AE12A6276B100414A6E /* CodableUser+Mapping.swift */,
 				553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */,
@@ -1543,6 +1549,7 @@
 				556807C72530E87A00F8DF16 /* PersonDetailViewController.swift in Sources */,
 				55164AFB25154A6500D219BC /* MoviePosterInfoCell.swift in Sources */,
 				55D05CBF251AE48100FD5F8C /* User.swift in Sources */,
+				5584ADE42A63074800F0907E /* CodablePerson+Mapping.swift in Sources */,
 				558A5A9825106C1400E5FB40 /* SectionBackgroundDecorationView.swift in Sources */,
 				551693132857C93900FD147F /* PersonDetailDataSource.swift in Sources */,
 				554DDE21286254F200DD864A /* ActivityIndicator.swift in Sources */,
@@ -1689,6 +1696,7 @@
 				559B08D3283D4EBF002DA8DF /* AnyPublisher+Async.swift in Sources */,
 				55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */,
 				550577AA284DAA8E007ED892 /* ServiceString.swift in Sources */,
+				5584ADE22A6300C700F0907E /* CodablePerson.swift in Sources */,
 				55A60DDA2527AAB30082810C /* MediaViewerViewController.swift in Sources */,
 				5545203822D99CB0004B7924 /* Movie.swift in Sources */,
 				5576FB692531415B00C91479 /* PersonViewModel.swift in Sources */,
