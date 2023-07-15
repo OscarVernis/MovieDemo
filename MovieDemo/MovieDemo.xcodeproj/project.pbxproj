@@ -194,6 +194,8 @@
 		55A60DE12527B32F0082810C /* UINavigationController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */; };
 		55A6A98F2511A6C400305C29 /* MovieGenre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A6A98E2511A6C400305C29 /* MovieGenre.swift */; };
 		55A909DA2A62021C00AE4253 /* JSONCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A909D92A62021C00AE4253 /* JSONCache.swift */; };
+		55AB8ADC2A62666E00414A6E /* CodableMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AB8ADB2A62666E00414A6E /* CodableMovie.swift */; };
+		55AB8ADE2A626EBA00414A6E /* CodableMovie+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */; };
 		55ABEB79283365AF009DCE7C /* LoginViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEB78283365AF009DCE7C /* LoginViewStore.swift */; };
 		55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC532028243CD300836A30 /* ViewModelsTests.swift */; };
 		55AC53232824422C00836A30 /* DataProvidersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC53222824422C00836A30 /* DataProvidersTests.swift */; };
@@ -470,6 +472,8 @@
 		55A60DE02527B32F0082810C /* UINavigationController+Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Orientation.swift"; sourceTree = "<group>"; };
 		55A6A98E2511A6C400305C29 /* MovieGenre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenre.swift; sourceTree = "<group>"; };
 		55A909D92A62021C00AE4253 /* JSONCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCache.swift; sourceTree = "<group>"; };
+		55AB8ADB2A62666E00414A6E /* CodableMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMovie.swift; sourceTree = "<group>"; };
+		55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableMovie+Mapping.swift"; sourceTree = "<group>"; };
 		55ABEB78283365AF009DCE7C /* LoginViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewStore.swift; sourceTree = "<group>"; };
 		55AC532028243CD300836A30 /* ViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsTests.swift; sourceTree = "<group>"; };
 		55AC53222824422C00836A30 /* DataProvidersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvidersTests.swift; sourceTree = "<group>"; };
@@ -1091,6 +1095,8 @@
 		55A21C8A27DFBD9C00A7E538 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				55AB8ADB2A62666E00414A6E /* CodableMovie.swift */,
+				55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */,
 				553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */,
 				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
 				555EAF6427DC465D000B6525 /* ServiceGenre.swift */,
@@ -1547,6 +1553,7 @@
 				55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */,
 				55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */,
 				5505779E284DAA0F007ED892 /* MovieString.swift in Sources */,
+				55AB8ADE2A626EBA00414A6E /* CodableMovie+Mapping.swift in Sources */,
 				553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */,
 				554DE177251EF83C000286D2 /* OverviewCell.swift in Sources */,
 				55A909DA2A62021C00AE4253 /* JSONCache.swift in Sources */,
@@ -1566,6 +1573,7 @@
 				554970C82902389000E5A8B3 /* MovieServiceImageUtils.swift in Sources */,
 				55EE573D284D948400C6A170 /* ErrorString.swift in Sources */,
 				55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */,
+				55AB8ADC2A62666E00414A6E /* CodableMovie.swift in Sources */,
 				55CEAF07286E016300FEF613 /* PosterItem.swift in Sources */,
 				5511FF95285A900500B9C12A /* MovieBannerItem.swift in Sources */,
 				5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */,
