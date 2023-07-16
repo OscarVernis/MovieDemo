@@ -58,7 +58,7 @@ class MainCoordinator {
     }
     
     func deleteCache() {
-        CodableCache<User>.deleteCache()
+        CodableCache.deleteCache()
         //try CoreDataStore.shared.resetStore()
     }
     

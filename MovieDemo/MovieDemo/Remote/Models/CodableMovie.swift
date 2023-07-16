@@ -94,11 +94,6 @@ struct CodableMovie: Codable {
 
 }
 
-//MARK: - CodableMovieResults
-struct CodableMovieResults: Codable {
-    let results: [CodableMovie]?
-}
-
 //MARK: - AccountStates
 struct CodableAccountStates: Codable {
     let favorite: Bool?

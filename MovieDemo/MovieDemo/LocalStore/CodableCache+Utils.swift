@@ -36,7 +36,7 @@ extension CodableCache<User> {
     }
 }
 
-extension CodableCache {
+extension CodableCache<String> {
     static func deleteCache() {
         do {
             let files = try FileManager.default.contentsOfDirectory(at: CodableCache<Movie>.cacheDir, includingPropertiesForKeys: nil)

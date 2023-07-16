@@ -32,7 +32,6 @@ public class UserMO: NSManagedObject {
         let watchlist = (self.watchlist?.array as? [MovieMO])?.compactMap { $0.toMovie() } ?? []
         let rated = (self.rated?.array as? [MovieMO])?.compactMap { $0.toMovie() } ?? []
 
-        
         let user = User(avatar: self.avatar,
                         username: self.username,
                         favorites: favorites,
