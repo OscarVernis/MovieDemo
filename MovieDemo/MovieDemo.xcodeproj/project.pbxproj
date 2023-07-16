@@ -39,7 +39,6 @@
 		5511FF95285A900500B9C12A /* MovieBannerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF94285A900500B9C12A /* MovieBannerItem.swift */; };
 		5511FF9A285A90E800B9C12A /* MovieDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF99285A90E800B9C12A /* MovieDetailsService.swift */; };
 		5511FF9B285AA74D00B9C12A /* movie.json in Resources */ = {isa = PBXBuildFile; fileRef = 5511FF96285A90A300B9C12A /* movie.json */; };
-		5511FFA1285AAFA900B9C12A /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5511FFA0285AAFA900B9C12A /* SDWebImageSwiftUI */; };
 		5511FFA3285ADE8700B9C12A /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FFA2285ADE8700B9C12A /* Rating.swift */; };
 		5511FFA8285AF40900B9C12A /* Font+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FFA7285AF40900B9C12A /* Font+Utils.swift */; };
 		5511FFAC285AFD8D00B9C12A /* SectionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FFAB285AFD8D00B9C12A /* SectionTitle.swift */; };
@@ -76,6 +75,7 @@
 		553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */; };
 		553D6AF12853C2E5001491CB /* HomeDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AF02853C2E5001491CB /* HomeDataSource.swift */; };
 		553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AF22853C5BC001491CB /* ProviderDataSource.swift */; };
+		553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 553EE5852A6386D400750793 /* SDWebImageSwiftUI */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
 		5545203822D99CB0004B7924 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203622D99CB0004B7924 /* Movie.swift */; };
 		5545203B22D99D8F004B7924 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203A22D99D8F004B7924 /* TMDBClient.swift */; };
@@ -558,7 +558,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5511FFA1285AAFA900B9C12A /* SDWebImageSwiftUI in Frameworks */,
+				553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */,
 				5554DA49281343C900845F9E /* SDWebImage in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
 				55604684251BCC320037D08B /* SPStorkController in Frameworks */,
@@ -1400,7 +1400,7 @@
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55604683251BCC320037D08B /* SPStorkController */,
 				5554DA48281343C900845F9E /* SDWebImage */,
-				5511FFA0285AAFA900B9C12A /* SDWebImageSwiftUI */,
+				553EE5852A6386D400750793 /* SDWebImageSwiftUI */,
 			);
 			productName = MovieDemo;
 			productReference = 559D131D22D98E4800C96FC8 /* MovieDemo.app */;
@@ -1442,7 +1442,7 @@
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
 				5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				5511FF9F285AAFA900B9C12A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				553EE5842A6386D400750793 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 559D131E22D98E4800C96FC8 /* Products */;
 			projectDirPath = "";
@@ -2118,12 +2118,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5511FF9F285AAFA900B9C12A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+		553EE5842A6386D400750793 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.3;
 			};
 		};
 		5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
@@ -2131,7 +2131,7 @@
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
+				minimumVersion = 5.17.0;
 			};
 		};
 		55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */ = {
@@ -2139,7 +2139,7 @@
 			repositoryURL = "https://github.com/ivanvorobei/SPStorkController";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.2;
+				minimumVersion = 1.8.5;
 			};
 		};
 		557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
@@ -2147,7 +2147,7 @@
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.1;
+				minimumVersion = 4.2.2;
 			};
 		};
 		55D35E1A2517DE0D00114602 /* XCRemoteSwiftPackageReference "Loaf" */ = {
@@ -2155,15 +2155,15 @@
 			repositoryURL = "https://github.com/schmidyy/Loaf";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.0;
+				minimumVersion = 0.7.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5511FFA0285AAFA900B9C12A /* SDWebImageSwiftUI */ = {
+		553EE5852A6386D400750793 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5511FF9F285AAFA900B9C12A /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			package = 553EE5842A6386D400750793 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
 		};
 		5554DA48281343C900845F9E /* SDWebImage */ = {
