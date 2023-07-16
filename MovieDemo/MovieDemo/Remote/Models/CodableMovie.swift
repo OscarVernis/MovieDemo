@@ -91,6 +91,7 @@ struct CodableMovie: Codable {
         videos = try? container.decodeIfPresent(CodableVideos.self, forKey: .videos)
         accountStates = try? container.decodeIfPresent(CodableAccountStates.self, forKey: .accountStates)
     }
+    
 
 }
 

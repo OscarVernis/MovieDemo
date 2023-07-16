@@ -16,7 +16,7 @@ extension TMDBClient {
         
         return publisher
             .map { result in
-                let movies = result.items.compactMap { $0.toMovie() }
+                let movies = result.items.toMovies()
                 return MoviesResult(movies: movies, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()

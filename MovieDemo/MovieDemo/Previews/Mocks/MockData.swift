@@ -16,14 +16,14 @@ struct MockData {
     }
     
     static var movieVMs: [MovieViewModel] {
-        moviesMock.model!.items.map { MovieViewModel(movie: $0.toMovie()) }
+        moviesMock.model!.items.toMovies().map(MovieViewModel.init)
     }
     
     static var moviesService: MoviesService {
         { (page: Int) in
             moviesMock.publisher()
                 .map { result in
-                    let movies = result.items.map { $0.toMovie() }
+                    let movies = result.items.toMovies()
                     return MoviesResult(movies: movies, totalPages: result.totalPages)
                 }
                 .eraseToAnyPublisher()

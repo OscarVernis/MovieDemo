@@ -16,9 +16,9 @@ extension CodableUser {
         user.id = id
         user.username = username
         
-        user.favorites = favoriteMovies?.items.compactMap { $0.toMovie() } ?? []
-        user.watchlist = watchlistMovies?.items.compactMap { $0.toMovie() } ?? []
-        user.rated = ratedMovies?.items.compactMap { $0.toMovie() } ?? []
+        user.favorites = favoriteMovies?.items.toMovies() ?? []
+        user.watchlist = watchlistMovies?.items.toMovies() ?? []
+        user.rated = ratedMovies?.items.toMovies() ?? []
         
         return user
     }

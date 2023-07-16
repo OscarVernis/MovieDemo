@@ -20,7 +20,7 @@ extension CodablePerson {
         person.biography = biography
         person.placeOfBirth = placeOfBirth
         person.profilePath = profilePath
-        person.knownForMovies = knownForMovies?.compactMap { $0.toMovie() }
+        person.knownForMovies = knownForMovies?.toMovies()
         person.castCredits = movieCredits?.cast?.compactMap { $0.toPersonCastCredit() }
         person.crewCredits = movieCredits?.crew?.compactMap { $0.toPersonCrewCredit() }
         

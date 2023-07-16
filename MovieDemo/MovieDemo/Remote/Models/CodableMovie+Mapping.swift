@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension Collection where Element == CodableMovie {
+    func toMovies() -> [Movie] {
+        map { $0.toMovie() }
+    }
+}
+
 extension CodableMovie {
     func toMovie() -> Movie {
         var movie = Movie()
@@ -23,7 +29,7 @@ extension CodableMovie {
         movie.voteCount = voteCount
         movie.cast = credits?.cast?.compactMap { $0.toCastCredit() }
         movie.crew = credits?.crew?.compactMap { $0.toCrewtCredit() }
-        movie.recommendedMovies = recommendations?.items.compactMap { $0.toMovie() }
+        movie.recommendedMovies = recommendations?.items.toMovies()
         movie.status = status
         movie.popularity = popularity
         movie.originalLanguage = originalLanguage
