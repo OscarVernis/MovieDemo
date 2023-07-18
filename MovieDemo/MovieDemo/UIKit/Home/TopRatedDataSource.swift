@@ -21,4 +21,13 @@ class TopRatedDataSource: ProviderDataSource<MoviesProvider, MovieRatingListCell
         return min(maxTopRated, dataProvider.itemCount)
     }
     
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! MovieRatingListCell
+        
+        let lastCellRow = min(maxTopRated, dataProvider.itemCount) - 1
+        cell.separator.isHidden = (indexPath.row == lastCellRow)
+        
+        return cell
+    }
+    
 }

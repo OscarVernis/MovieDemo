@@ -16,17 +16,10 @@ class MovieRatingListCell: UICollectionViewCell {
     
     //MARK: - Configure
     static func configure(cell: MovieRatingListCell, withMovie movie: MovieViewModel) {
-        configure(cell: cell, withMovie: movie, showSeparator: true)
-    }
-    
-    static func configure(cell: MovieRatingListCell, withMovie movie: MovieViewModel, showSeparator: Bool = true) {
         cell.titleLabel.text = movie.title
-        
         cell.ratingsLabel.text = movie.ratingString
-        
         cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
         cell.ratingsView.rating = CGFloat(movie.percentRating)
-        
-        cell.separator.isHidden = !showSeparator
     }
+    
 }
