@@ -9,12 +9,7 @@
 import Foundation
 import KeychainAccess
 
-class SessionManager {
-    enum LoginError: Error {
-        case Default
-        case IncorrectCredentials
-    }
-    
+class SessionManager {    
     var service: SessionService
     var store: SessionStore
     
@@ -31,7 +26,7 @@ class SessionManager {
 }
 
 //MARK: - Login
-extension SessionManager {
+extension SessionManager: LoginService {
     func save(sessionId: String) {
         store.save(sessionId: sessionId)
     }

@@ -54,7 +54,7 @@ class AppDependencyContainer {
     }
     
     var loginViewStore: LoginViewStore {
-        LoginViewStore(sessionManager: sessionManager)
+        LoginViewStore(loginService: sessionManager)
     }
     
     var userProfileStore: UserProfileStore {

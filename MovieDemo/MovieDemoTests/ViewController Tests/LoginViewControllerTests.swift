@@ -111,8 +111,8 @@ class LoginViewControllerTests: XCTestCase {
     
     func test_returnOnPassword_shouldLogin() {
         let sessionService = SessionServiceMock()
-        sut.store.sessionManager.store = UserStoreMock(isLoggedIn: false)
-        sut.store.sessionManager.service = sessionService
+        sut.store.loginService.store = UserStoreMock(isLoggedIn: false)
+        sut.store.loginService.service = sessionService
         
         
         sut.loadViewIfNeeded()

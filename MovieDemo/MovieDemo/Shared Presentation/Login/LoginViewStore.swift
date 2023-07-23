@@ -15,10 +15,10 @@ class LoginViewStore {
     @Published var isLoading: Bool = false
     @Published var validInput: Bool = false
     
-    var sessionManager: SessionManager
+    var loginService: LoginService
     
-    init(sessionManager: SessionManager) {
-        self.sessionManager = sessionManager
+    init(loginService: LoginService) {
+        self.loginService = loginService
     }
     
     func validateInput(username: String?, password: String?) {
@@ -30,7 +30,7 @@ class LoginViewStore {
         isLoading = true
         
         Task {
-            let result = await sessionManager.login(withUsername: username, password: password)
+            let result = await loginService.login(withUsername: username, password: password)
             
             isLoading = false
             
@@ -38,7 +38,7 @@ class LoginViewStore {
             case .success():
                 loggedIn = true
             case .failure(let error):
-                if error as? SessionManager.LoginError == SessionManager.LoginError.IncorrectCredentials {
+                if error as? LoginError == .IncorrectCredentials {
                     errorString = .localized(ErrorString.LoginCredentialsError)
                 } else {
                     errorString = .localized(ErrorString.LoginError)
