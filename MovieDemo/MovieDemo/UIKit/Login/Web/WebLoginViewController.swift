@@ -10,8 +10,7 @@ import UIKit
 import AuthenticationServices
 
 class WebLoginViewController: UIViewController {
-    var sessionManager: SessionManager!
-    var service: SessionService! = nil
+    var service: WebLoginService! = nil
     var router: LoginRouter? = nil
     
     @IBOutlet weak var closeButton: UIButton!
@@ -43,7 +42,7 @@ class WebLoginViewController: UIViewController {
     
     //MARK: - Login
     func startWebLogin() async {
-        var token: String = ""
+        var token: String
         do {
             token = try await service.requestToken()
         } catch {
@@ -67,13 +66,13 @@ class WebLoginViewController: UIViewController {
             }
             
             Task {
-                let sessionId = try? await self.service.createSession(requestToken: token)
-                guard let sessionId = sessionId else {
+                do {
+                    try await self.service.login(withRequestToken: token)
+                } catch {
                     self.router?.handle(error: .loginError)
                     return
                 }
                 
-                self.sessionManager.save(sessionId: sessionId)
                 self.router?.didFinishLoginProcess()
             }
         }

@@ -117,8 +117,7 @@ class MainCoordinator {
     
     func showWebLogin(animated: Bool = true) {
         let lvc = WebLoginViewController.instantiateFromStoryboard()
-        lvc.sessionManager = dependencies.sessionManager
-        lvc.service = dependencies.sessionService
+        lvc.service = dependencies.sessionManager
         lvc.router = self
         
         lvc.showsCloseButton = !isLoginRequired

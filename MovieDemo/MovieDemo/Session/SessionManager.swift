@@ -53,6 +53,27 @@ extension SessionManager: LoginService {
     
 }
 
+//MARK: - Web Login
+extension SessionManager: WebLoginService {
+    func requestToken() async throws -> String {
+        do {
+            return try await service.requestToken()
+        } catch {
+            throw LoginError.Default
+        }
+    }
+    
+    func login(withRequestToken token: String) async throws {
+        do {
+            let sessionId = try await service.createSession(requestToken: token)
+            save(sessionId: sessionId)
+        } catch {
+            throw LoginError.Default
+        }
+    }
+    
+}
+
 //MARK: - Logout
 extension SessionManager {
     func logout() async -> Result<Void, UserFacingError> {

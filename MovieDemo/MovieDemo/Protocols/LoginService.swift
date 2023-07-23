@@ -16,3 +16,8 @@ enum LoginError: Error {
 protocol LoginService {
     func login(withUsername username: String, password: String) async -> Result<Void, Error>
 }
+
+protocol WebLoginService {
+    func requestToken() async throws -> String
+    func login(withRequestToken: String) async throws
+}

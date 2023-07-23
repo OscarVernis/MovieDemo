@@ -30,10 +30,6 @@ class AppDependencyContainer {
         sessionManager.isLoggedIn
     }
     
-    var sessionService: SessionService {
-        remoteClient
-    }
-    
     //MARK: - Helpers
     func moviesProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> MoviesProvider {
         var cache: (any ModelCache<[Movie]>)? = nil
