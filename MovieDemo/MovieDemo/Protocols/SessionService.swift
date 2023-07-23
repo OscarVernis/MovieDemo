@@ -15,5 +15,5 @@ protocol SessionService {
     
     func createSession(requestToken: String) async throws -> String
     
-    func deleteSession(sessionId: String) async throws -> Result<Void, Error>
+    func deleteSession(sessionId: String) async throws
 }

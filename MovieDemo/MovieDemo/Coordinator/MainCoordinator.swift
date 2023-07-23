@@ -137,10 +137,9 @@ class MainCoordinator {
     
     func logout() {
         Task { @MainActor in
-            let result = await dependencies.sessionManager.logout()
             
-            switch result {
-            case .success():
+            do {
+                try await dependencies.logoutService()
                 if self.isLoginRequired {
                     self.showLogin(animated: true)
                 }
@@ -150,10 +149,11 @@ class MainCoordinator {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 
                 let _ = self.rootNavigationViewController?.popToRootViewController(animated: true)
-            case .failure(let error):
-                handle(error: error)
+            } catch {
+                handle(error: UserFacingError.logoutError)
             }
         }
+        
     }
     
     var homeSearchController: UISearchController {

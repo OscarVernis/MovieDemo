@@ -76,22 +76,14 @@ extension SessionManager: WebLoginService {
 
 //MARK: - Logout
 extension SessionManager {
-    func logout() async -> Result<Void, UserFacingError> {
-        guard let sessionId = sessionId else { return .success(()) }
-        var result: Result<Void, Error>?
-                
-        do {
-            result = try await service.deleteSession(sessionId: sessionId)
-        } catch {
-            return .failure(.logoutError)
-        }
+    func logout() async throws {
+        guard let sessionId = sessionId else { return }
         
-        switch result {
-        case .success():
+        do {
+            try await service.deleteSession(sessionId: sessionId)
             store.delete()
-            return .success(())
-        case .failure(_), .none:
-            return .failure(.logoutError)
+        } catch {
+            throw error
         }
     }
     

@@ -216,6 +216,7 @@
 		55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548C2A592515009870B2 /* PersonDetailRouter.swift */; };
 		55B8548F2A59289B009870B2 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548E2A59289B009870B2 /* LoginRouter.swift */; };
 		55BA58E42A6CAD2D00375F95 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BA58E32A6CAD2D00375F95 /* LoginService.swift */; };
+		55BA58E62A6CB2EF00375F95 /* LogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BA58E52A6CB2EF00375F95 /* LogoutService.swift */; };
 		55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB1A95285D5273000BC3A0 /* SectionBackground.swift */; };
 		55BB863E251FA1CB00F17D7F /* MovieRatingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */; };
 		55C350C227F768F1006F4E7C /* Person.json in Resources */ = {isa = PBXBuildFile; fileRef = 55C350C127F768F1006F4E7C /* Person.json */; };
@@ -499,6 +500,7 @@
 		55B8548C2A592515009870B2 /* PersonDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailRouter.swift; sourceTree = "<group>"; };
 		55B8548E2A59289B009870B2 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		55BA58E32A6CAD2D00375F95 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		55BA58E52A6CB2EF00375F95 /* LogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutService.swift; sourceTree = "<group>"; };
 		55BB1A95285D5273000BC3A0 /* SectionBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackground.swift; sourceTree = "<group>"; };
 		55BB863F251FA1CB00F17D7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MovieRatingViewController.storyboard; sourceTree = "<group>"; };
 		55BB8643251FA1CF00F17D7F /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MovieRatingViewController.strings"; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				558B87542A58B44500416FBB /* UserStateService.swift */,
 				55549900282232BF00E89119 /* SessionService.swift */,
 				55BA58E32A6CAD2D00375F95 /* LoginService.swift */,
+				55BA58E52A6CB2EF00375F95 /* LogoutService.swift */,
 				5572C04E2A5A115A00F164EA /* ModelCache.swift */,
 			);
 			path = Protocols;
@@ -1667,6 +1670,7 @@
 				55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */,
 				550577A6284DAA4D007ED892 /* HomeString.swift in Sources */,
 				5553B3A72A59E99600969AE7 /* PersonDetailsService.swift in Sources */,
+				55BA58E62A6CB2EF00375F95 /* LogoutService.swift in Sources */,
 				550577A0284DAA1E007ED892 /* PersonString.swift in Sources */,
 				55893B6E2513F56D00233677 /* DataProvider.swift in Sources */,
 				55A60DE12527B32F0082810C /* UINavigationController+Orientation.swift in Sources */,

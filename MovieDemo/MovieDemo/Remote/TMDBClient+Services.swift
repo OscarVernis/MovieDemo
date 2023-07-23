@@ -138,15 +138,10 @@ extension TMDBClient: SessionService {
         return sessionId
     }
     
-    func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
+    func deleteSession(sessionId: String) async throws {
         let body = ["session_id": sessionId]
         
-        let result = try await successAction(endpoint: .deleteSession, body: body, method: .delete).async()
-        if let success = result.success, success == true {
-            return .success(())
-        } else {
-            return .failure(TMDBClient.ServiceError.NoSuccess)
-        }
+        let _: ServiceSuccessResult = try await successAction(endpoint: .deleteSession, body: body, method: .delete).async()
     }
 
 }
