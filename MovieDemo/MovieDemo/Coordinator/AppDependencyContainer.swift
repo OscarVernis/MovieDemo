@@ -34,10 +34,6 @@ class AppDependencyContainer {
         remoteClient
     }
     
-    var userCache: any ModelCache<User> {
-        UserCache()
-    }
-    
     //MARK: - Helpers
     func moviesProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> MoviesProvider {
         var cache: (any ModelCache<[Movie]>)? = nil
@@ -64,14 +60,14 @@ class AppDependencyContainer {
     var userProfileStore: UserProfileStore {
         //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
         let cache = CodableCache.userCache
-        let remote = remoteClient.getUserDetails()
+        let remoteWithCache = remoteClient.getUserDetails()
             .cache(with: cache)
         
-        let remoteWithCache = cache.publisher
-            .merge(with: remote)
+        let cacheThenRemote = cache.publisher
+            .merge(with: remoteWithCache)
             .eraseToAnyPublisher()
         
-        return UserProfileStore(service: remoteWithCache)
+        return UserProfileStore(service: cacheThenRemote)
     }
     
     func movieDetailsStore(movie: MovieViewModel) -> MovieDetailStore {

@@ -11,6 +11,10 @@ import UIKit
 class TopRatedDataSource: ProviderDataSource<MoviesProvider, MovieRatingListCell> {
     var maxTopRated = 10
     
+    fileprivate var totalItems: Int {
+        min(maxTopRated, dataProvider.itemCount)
+    }
+    
     init(provider: MoviesProvider) {
         super.init(dataProvider: provider,
                    reuseIdentifier: MovieRatingListCell.reuseIdentifier,
@@ -18,14 +22,14 @@ class TopRatedDataSource: ProviderDataSource<MoviesProvider, MovieRatingListCell
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return min(maxTopRated, dataProvider.itemCount)
+        return totalItems
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! MovieRatingListCell
         
-        let lastCellRow = min(maxTopRated, dataProvider.itemCount) - 1
-        cell.separator.isHidden = (indexPath.row == lastCellRow)
+        //Hide last separator
+        cell.separator.isHidden = (indexPath.row == totalItems - 1)
         
         return cell
     }

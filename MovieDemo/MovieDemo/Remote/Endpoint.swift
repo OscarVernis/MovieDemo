@@ -19,7 +19,7 @@ struct Endpoint {
 //MARK: - Helpers
 extension Endpoint {
     private func defaultParameters(with additionalParameters: [String: String]? = nil, sessionId: String? = nil) -> [String: String] {
-        let language = String.localized(ServiceString.ServiceLocale)
+        let language = ServiceString.ServiceLocale.localized
         var params: [String: String] = ["language": language, "api_key": apiKey]
         
         if let sessionId = sessionId {

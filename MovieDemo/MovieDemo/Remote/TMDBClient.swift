@@ -32,7 +32,7 @@ struct TMDBClient {
 //MARK: - Generic Functions
 extension TMDBClient {
     func getModel<Model: Codable>(endpoint: Endpoint, parameters: [String: String]? = nil) -> AnyPublisher<Model, Error> {
-        let url = endpoint.url(parameters: parameters, sessionId: self.sessionId)
+        let url = endpoint.url(parameters: parameters, sessionId: sessionId)
         
         return httpClient
             .requestPublisher(with: url)
@@ -50,7 +50,7 @@ extension TMDBClient {
     }
     
     func successAction(endpoint: Endpoint, body: (any Encodable)? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
-        let url = endpoint.url(sessionId: self.sessionId)
+        let url = endpoint.url(sessionId: sessionId)
 
         return httpClient
             .requestPublisher(with: url, body: body, method: method)

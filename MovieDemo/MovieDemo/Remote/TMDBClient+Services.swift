@@ -33,11 +33,6 @@ extension TMDBClient {
         
         return publisher
             .map { $0.toMovie() }
-            .mapError({ error in
-                print(error)
-                
-                return error
-            })
             .eraseToAnyPublisher()
     }
     
