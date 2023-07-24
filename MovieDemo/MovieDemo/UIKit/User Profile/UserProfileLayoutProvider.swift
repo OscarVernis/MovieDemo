@@ -23,7 +23,7 @@ struct UserProfileLayoutProvider {
         case .watchlist:
             return (user.watchlist.count > 0) ? makeMoviesSection() : makeEmptySection()
         case .rated:
-            return (user.rated.count > 0) ? makeMoviesSection() : makeEmptySection()
+            return (user.rated.count > 0) ? makeMoviesSection(addBottomInset: true) : makeEmptySection()
         }
     }
     
@@ -36,11 +36,11 @@ struct UserProfileLayoutProvider {
         return section
     }
     
-    fileprivate func makeMoviesSection() -> NSCollectionLayoutSection {
+    fileprivate func makeMoviesSection(addBottomInset: Bool = false) -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let section = sectionBuilder.createHorizontalPosterSection()
         
-        return makeTitleSection(with: section)
+        return makeTitleSection(with: section, addBottomInset: addBottomInset)
     }
     
     fileprivate func makeEmptySection() -> NSCollectionLayoutSection {
@@ -51,11 +51,11 @@ struct UserProfileLayoutProvider {
         return makeTitleSection(with: section)
     }
     
-    fileprivate func makeTitleSection(with section: NSCollectionLayoutSection) -> NSCollectionLayoutSection {
+    fileprivate func makeTitleSection(with section: NSCollectionLayoutSection, addBottomInset: Bool = false) -> NSCollectionLayoutSection {
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         section.contentInsets.top = 12
-        section.contentInsets.bottom = 10
+        section.contentInsets.bottom = addBottomInset ? UIWindow.mainWindow.safeAreaInsets.bottom + 20 : 10
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
