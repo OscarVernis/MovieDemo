@@ -60,4 +60,14 @@ struct MockData {
         return UserProfileStore(service: service)
     }
     
+    //MARK: - Person
+    static var personMock: JSONLoader<CodablePerson> {
+        JSONLoader<CodablePerson>(filename: "person")
+    }
+    
+    static var personDetailStore: PersonDetailStore {
+        let person = personMock.model!.toPerson()
+        return PersonDetailStore(person: PersonViewModel(person: person))
+    }
+    
 }
