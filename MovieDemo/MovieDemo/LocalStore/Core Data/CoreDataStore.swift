@@ -14,7 +14,7 @@ struct CoreDataStore {
     
     private var persistentContainer: NSPersistentContainer
     private var storeURL: URL {
-        var cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        var cacheDir = URL.cachesDirectory
         cacheDir.append(component: "cdcache.oscarvernis.MovieDemo")
         return cacheDir.appending(component: "moviedemo_cache.sqlite")
     }

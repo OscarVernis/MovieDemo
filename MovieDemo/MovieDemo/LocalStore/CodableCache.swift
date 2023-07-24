@@ -28,7 +28,7 @@ struct CodableCache<Model: Codable>: ModelCache {
     private let cacheType: CacheType
     
     static var cacheDir: URL {
-        let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let cacheDir = URL.cachesDirectory
         return cacheDir.appending(path: "cache.oscarvernis.MovieDemo")
     }
     
