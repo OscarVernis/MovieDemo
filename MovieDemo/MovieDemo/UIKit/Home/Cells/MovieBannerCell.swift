@@ -26,7 +26,7 @@ class MovieBannerCell: UICollectionViewCell {
         cell.ratingsView.isRatingAvailable = movie.isRatingAvailable
         
         if let url = movie.backdropImageURL(size: .w780) {
-            cell.bannerImageView.setRemoteImage(withURL: url)
+            cell.bannerImageView.setRemoteImage(withURL: url, placeholder: .asset(.BackdropPlaceholder))
         }
     }
     

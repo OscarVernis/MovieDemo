@@ -8,6 +8,7 @@
 
 import UIKit
 import SPStorkController
+import SDWebImage
 
 class MainCoordinator {
     //If set to true, it will force you to login before showing Home
@@ -59,6 +60,8 @@ class MainCoordinator {
     
     func deleteCache() {
         CodableCache.deleteCache()
+        SDImageCache.shared.clearMemory()
+        SDImageCache.shared.clearDisk()
         //try CoreDataStore.shared.resetStore()
     }
     

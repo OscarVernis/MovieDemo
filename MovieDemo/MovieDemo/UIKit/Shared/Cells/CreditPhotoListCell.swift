@@ -28,7 +28,7 @@ extension CreditPhotoListCell {
         cell.roleLabel.text = castCredit.character
         
         if let url = castCredit.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url)
+            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
         }
     }
     
@@ -39,7 +39,7 @@ extension CreditPhotoListCell {
         cell.roleLabel.text = crewCredit.job
         
         if let url = crewCredit.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url)
+            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
         }
     }
     
@@ -50,7 +50,7 @@ extension CreditPhotoListCell {
         cell.roleLabel.text = person.knownForMovies
         
         if let url = person.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url)
+            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
         }
     }
     

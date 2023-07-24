@@ -23,7 +23,7 @@ extension MovieInfoListCell {
         cell.posterImageView.image = .asset(.PosterPlaceholder)
         
         if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.setRemoteImage(withURL: url)
+            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
         }
         
         cell.titleLabel.text = movie.title

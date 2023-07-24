@@ -25,7 +25,7 @@ class CreditCell: UICollectionViewCell {
         cell.roleLabel.text = castCredit.character
         
         if let url = castCredit.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url)
+            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
         }
     }
 }

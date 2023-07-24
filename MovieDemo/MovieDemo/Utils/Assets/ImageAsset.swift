@@ -20,6 +20,7 @@ enum ImageAsset: String, CaseIterable {
     case bookmark = "bookmark.fill"
     case star = "star.fill"
     case person = "person.crop.circle"
+    case user = "person.circle"
     case play = "play.fill"
     case pause = "pause.fill"
     case trailer = "play.circle.fill"
