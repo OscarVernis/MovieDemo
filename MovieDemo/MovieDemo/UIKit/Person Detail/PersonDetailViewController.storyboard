@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -65,39 +63,6 @@
                                     <constraint firstItem="EQL-lg-OUs" firstAttribute="leading" secondItem="Xps-7A-Ndl" secondAttribute="leading" id="zmM-xZ-XW7"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBx-fO-Ss7">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="os0-6T-BKI" customClass="BlurButton" customModule="MovieDemo" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="3" width="35" height="35"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="hPA-hU-qaj"/>
-                                            <constraint firstAttribute="width" constant="35" id="p5Y-RD-Iho"/>
-                                        </constraints>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal">
-                                            <imageReference key="image" image="arrow.left" catalog="system" symbolScale="medium" renderingMode="template"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="close:" destination="AMx-Ea-Npm" eventType="touchUpInside" id="IiW-LT-NDW"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jessica Chastain" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5x-Vo-R5Q">
-                                        <rect key="frame" x="142" y="7" width="130.5" height="27.5"/>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="20"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="os0-6T-BKI" firstAttribute="top" secondItem="oBx-fO-Ss7" secondAttribute="top" constant="3" id="6t6-S9-xm3"/>
-                                    <constraint firstAttribute="height" constant="44" id="9Mk-e2-GNe"/>
-                                    <constraint firstItem="e5x-Vo-R5Q" firstAttribute="centerY" secondItem="os0-6T-BKI" secondAttribute="centerY" id="OE3-F4-Kgi"/>
-                                    <constraint firstItem="os0-6T-BKI" firstAttribute="leading" secondItem="oBx-fO-Ss7" secondAttribute="leading" constant="20" id="X9Y-yx-AfH"/>
-                                    <constraint firstItem="e5x-Vo-R5Q" firstAttribute="centerX" secondItem="oBx-fO-Ss7" secondAttribute="centerX" id="t8M-iY-VUU"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jG1-iu-11L"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -106,22 +71,18 @@
                             <constraint firstItem="Xps-7A-Ndl" firstAttribute="top" secondItem="yMK-kS-e0a" secondAttribute="top" id="1ri-PT-njS"/>
                             <constraint firstItem="oIV-9j-g1f" firstAttribute="leading" secondItem="jG1-iu-11L" secondAttribute="leading" id="SsE-bI-hUf"/>
                             <constraint firstItem="Xps-7A-Ndl" firstAttribute="trailing" secondItem="jG1-iu-11L" secondAttribute="trailing" id="T6r-Kv-N4c"/>
-                            <constraint firstItem="oBx-fO-Ss7" firstAttribute="leading" secondItem="jG1-iu-11L" secondAttribute="leading" id="Ysz-xy-2bx"/>
-                            <constraint firstItem="oBx-fO-Ss7" firstAttribute="top" secondItem="jG1-iu-11L" secondAttribute="top" id="ofT-5p-tHd"/>
                             <constraint firstItem="oIV-9j-g1f" firstAttribute="trailing" secondItem="jG1-iu-11L" secondAttribute="trailing" id="qsS-KT-XWS"/>
                             <constraint firstAttribute="bottom" secondItem="oIV-9j-g1f" secondAttribute="bottom" id="rvc-SS-IS3"/>
-                            <constraint firstItem="jG1-iu-11L" firstAttribute="trailing" secondItem="oBx-fO-Ss7" secondAttribute="trailing" id="uKd-Ko-kJ9"/>
                             <constraint firstItem="Xps-7A-Ndl" firstAttribute="leading" secondItem="jG1-iu-11L" secondAttribute="leading" id="wmz-zh-Acf"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="os0-6T-BKI" id="meE-YD-WKc"/>
                         <outlet property="blurView" destination="ZRM-5W-GbK" id="Kde-FW-6RW"/>
                         <outlet property="collectionView" destination="oIV-9j-g1f" id="wlL-uh-6fi"/>
                         <outlet property="headerHeightConstraint" destination="gIN-5G-NyQ" id="U8H-fI-lxu"/>
                         <outlet property="nameLabel" destination="0hI-zV-8sC" id="6wO-pl-vde"/>
+                        <outlet property="nameLabelBottomConstraint" destination="F6F-J7-Z9H" id="oML-PD-pRR"/>
                         <outlet property="personImageView" destination="EQL-lg-OUs" id="Mom-nC-adu"/>
-                        <outlet property="titleNameLabel" destination="e5x-Vo-R5Q" id="uMq-fL-pUC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B4x-vA-jPk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -131,7 +92,6 @@
     </scenes>
     <resources>
         <image name="PersonPlaceholder" width="240" height="360"/>
-        <image name="arrow.left" catalog="system" width="128" height="98"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

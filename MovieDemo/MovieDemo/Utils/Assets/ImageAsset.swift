@@ -24,6 +24,7 @@ enum ImageAsset: String, CaseIterable {
     case play = "play.fill"
     case pause = "pause.fill"
     case trailer = "play.circle.fill"
+    case back = "arrow.left"
     
     var image: UIImage {
         switch self {

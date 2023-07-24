@@ -12,7 +12,20 @@ class BlurButton: UIButton {
     var blurView = UIVisualEffectView(effect: nil) 
     let blurStyle: UIBlurEffect.Style = .dark
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func awakeFromNib() {
+        setup()
+    }
+    
+    fileprivate func setup() {
         layer.masksToBounds = true
         blurView.effect = UIBlurEffect(style: blurStyle)
         blurView.isUserInteractionEnabled = false
