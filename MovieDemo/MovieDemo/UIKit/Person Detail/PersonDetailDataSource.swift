@@ -87,7 +87,7 @@ class PersonDetailDataSource: SectionedCollectionDataSource {
     
     func makeCrew(title: String, credits: [PersonCrewCreditViewModel]) -> UICollectionViewDataSource {
         makeSection(models: credits,
-                    title: .localized(PersonString.KnownFor),
+                    title: title,
                     reuseIdentifier: PersonCreditCell.reuseIdentifier,
                     cellConfigurator: PersonCreditCell.configure)
     }

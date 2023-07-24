@@ -74,7 +74,7 @@ extension PersonViewModel {
     }
     
     var crewJobs: [String] {
-        crewCredits.compactMap(\.job)
+        NSOrderedSet(array: crewCredits.compactMap(\.job)).array as! [String]
     }
     
     func credits(for job: String) -> [PersonCrewCreditViewModel] {
