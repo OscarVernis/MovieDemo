@@ -15,6 +15,10 @@ class MovieInfoListCell: UICollectionViewCell {
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
+    
+    override func awakeFromNib() {
+        posterImageView.setupBorder()
+    }
 }
 
 extension MovieInfoListCell {

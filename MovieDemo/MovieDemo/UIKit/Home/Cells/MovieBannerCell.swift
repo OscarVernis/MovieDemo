@@ -13,6 +13,10 @@ class MovieBannerCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!
     @IBOutlet weak var infoLabel: UILabel!
+    
+    override func awakeFromNib() {
+        bannerImageView.setupBorder()
+    }
 
     static func configure(cell: MovieBannerCell, with movie: MovieViewModel) {
         cell.bannerImageView.cancelImageRequest()

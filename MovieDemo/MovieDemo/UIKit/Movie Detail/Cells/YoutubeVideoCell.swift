@@ -11,6 +11,10 @@ import UIKit
 class YoutubeVideoCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var videoImageView: UIImageView!
+    
+    override func awakeFromNib() {
+        videoImageView.setupBorder()
+    }
 }
 
 //MARK: - Configure

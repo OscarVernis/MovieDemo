@@ -13,6 +13,10 @@ class CreditPhotoListCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!
     
+    override func awakeFromNib() {
+        creditImageView.setupBorder()
+    }
+    
     override func prepareForReuse() {
         creditImageView.image = .asset(.PersonPlaceholder)
     }
