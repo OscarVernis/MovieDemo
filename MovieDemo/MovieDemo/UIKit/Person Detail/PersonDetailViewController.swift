@@ -21,6 +21,7 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameLabelBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var blurView: UIVisualEffectView!
+    @IBOutlet weak var separator: UIView!
     
     fileprivate var showingNavBarTitle = false {
         didSet {
@@ -191,20 +192,24 @@ class PersonDetailViewController: UIViewController {
 //MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func animateTitleView(show: Bool) {
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2, delay: show ? 0.1 : 0) {
             if show {
                 self.titleView.alpha = 1
                 self.titleViewTopConstraint.constant = 0
                 self.titleView.superview?.layoutIfNeeded()
-                
-                self.nameLabel.alpha = 0
-                self.nameLabelBottomConstraint.constant = 10
-                self.nameLabel.superview?.layoutIfNeeded()
             } else {
                 self.titleView.alpha = 0
                 self.titleViewTopConstraint.constant = 20
                 self.titleView.superview?.layoutIfNeeded()
-                
+            }
+        }
+        
+        UIView.animate(withDuration: 0.2, delay: show ? 0 : 0.1) {
+            if show {
+                self.nameLabel.alpha = 0
+                self.nameLabelBottomConstraint.constant = 10
+                self.nameLabel.superview?.layoutIfNeeded()
+            } else {
                 self.nameLabel.alpha = 1
                 self.nameLabelBottomConstraint.constant = 0
                 self.nameLabel.superview?.layoutIfNeeded()
@@ -217,6 +222,7 @@ extension PersonDetailViewController {
         blurView.effect = nil
         blurAnimator = UIViewPropertyAnimator(duration: 1, curve: .easeIn) {
             self.blurView.effect = UIBlurEffect(style: .light)
+            self.separator.alpha = 1
         }
 
         blurAnimator.pausesOnCompletion = true
@@ -235,9 +241,9 @@ extension PersonDetailViewController {
             headerHeight = view.safeAreaInsets.top
         }
 
-        if collectionView.contentOffset.y + navBarHeight + titleHeight < 0 {
+        if collectionView.contentOffset.y + navBarHeight + titleHeight < 30 {
             showingNavBarTitle = false
-        } else {
+        } else if collectionView.contentOffset.y + navBarHeight + titleHeight > -40 {
             showingNavBarTitle = true
         }
 

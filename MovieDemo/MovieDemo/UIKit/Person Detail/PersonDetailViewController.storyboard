@@ -46,15 +46,25 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eaV-hk-nyS">
+                                        <rect key="frame" x="0.0" y="620" width="414" height="1"/>
+                                        <color key="backgroundColor" white="1" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="Pho-HF-5Y8"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="ZRM-5W-GbK" firstAttribute="top" secondItem="Xps-7A-Ndl" secondAttribute="top" id="2k4-v4-LLf"/>
+                                    <constraint firstAttribute="trailing" secondItem="eaV-hk-nyS" secondAttribute="trailing" id="4EH-Xo-dfQ"/>
                                     <constraint firstAttribute="trailing" secondItem="ZRM-5W-GbK" secondAttribute="trailing" id="4fd-Nx-jWy"/>
                                     <constraint firstItem="EQL-lg-OUs" firstAttribute="top" secondItem="Xps-7A-Ndl" secondAttribute="top" id="Doi-Ob-Vjf"/>
                                     <constraint firstAttribute="bottom" secondItem="0hI-zV-8sC" secondAttribute="bottom" id="F6F-J7-Z9H"/>
+                                    <constraint firstAttribute="bottom" secondItem="eaV-hk-nyS" secondAttribute="bottom" id="Ij0-jj-ps9"/>
                                     <constraint firstItem="ZRM-5W-GbK" firstAttribute="leading" secondItem="Xps-7A-Ndl" secondAttribute="leading" id="Lhr-dE-MBk"/>
                                     <constraint firstAttribute="trailing" secondItem="EQL-lg-OUs" secondAttribute="trailing" id="N3I-aU-7RK"/>
+                                    <constraint firstItem="eaV-hk-nyS" firstAttribute="leading" secondItem="Xps-7A-Ndl" secondAttribute="leading" id="dCo-50-luq"/>
                                     <constraint firstAttribute="height" constant="621" id="gIN-5G-NyQ"/>
                                     <constraint firstAttribute="trailing" secondItem="0hI-zV-8sC" secondAttribute="trailing" constant="20" id="gn4-8d-4Km"/>
                                     <constraint firstItem="0hI-zV-8sC" firstAttribute="leading" secondItem="Xps-7A-Ndl" secondAttribute="leading" constant="20" id="jhS-qb-Z4v"/>
@@ -83,6 +93,7 @@
                         <outlet property="nameLabel" destination="0hI-zV-8sC" id="6wO-pl-vde"/>
                         <outlet property="nameLabelBottomConstraint" destination="F6F-J7-Z9H" id="oML-PD-pRR"/>
                         <outlet property="personImageView" destination="EQL-lg-OUs" id="Mom-nC-adu"/>
+                        <outlet property="separator" destination="eaV-hk-nyS" id="c7w-AW-G6U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B4x-vA-jPk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
