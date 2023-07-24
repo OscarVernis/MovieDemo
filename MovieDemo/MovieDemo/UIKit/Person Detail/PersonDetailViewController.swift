@@ -192,7 +192,7 @@ class PersonDetailViewController: UIViewController {
 //MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func animateTitleView(show: Bool) {
-        UIView.animate(withDuration: 0.2, delay: show ? 0.1 : 0) {
+        UIView.animate(withDuration: 0.2, delay: show ? 0.05 : 0) {
             if show {
                 self.titleView.alpha = 1
                 self.titleViewTopConstraint.constant = 0
@@ -241,9 +241,9 @@ extension PersonDetailViewController {
             headerHeight = view.safeAreaInsets.top
         }
 
-        if collectionView.contentOffset.y + navBarHeight + titleHeight < 30 {
+        if collectionView.contentOffset.y + navBarHeight + titleHeight < 40 {
             showingNavBarTitle = false
-        } else if collectionView.contentOffset.y + navBarHeight + titleHeight > -40 {
+        } else if collectionView.contentOffset.y + navBarHeight + titleHeight > -90 {
             showingNavBarTitle = true
         }
 
