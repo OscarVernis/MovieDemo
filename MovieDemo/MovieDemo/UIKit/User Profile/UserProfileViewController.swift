@@ -71,6 +71,8 @@ class UserProfileViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.delegate = self
         
+        collectionView.backgroundColor = .asset(.AppBackgroundColor)
+        
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
@@ -108,16 +110,6 @@ class UserProfileViewController: UIViewController {
 //MARK: - Actions
 extension UserProfileViewController {
     fileprivate func storeDidUpdate() {
-        //Load Blur Background
-        if let imageURL = user.avatarURL {
-            collectionView.backgroundColor = .clear
-
-            let bgView = BlurBackgroundView.namedNib().instantiate(withOwner: nil, options: nil).first as! BlurBackgroundView
-
-            bgView.imageView.setRemoteImage(withURL: imageURL)
-            collectionView.backgroundView = bgView
-        }
-        
         layoutProvider.user = user
         dataSource.user = user
         dataSource.reload()
