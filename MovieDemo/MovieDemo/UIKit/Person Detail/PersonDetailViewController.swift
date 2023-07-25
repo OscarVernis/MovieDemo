@@ -200,7 +200,7 @@ class PersonDetailViewController: UIViewController {
 //MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func animateTitleView(show: Bool) {
-        UIView.animate(withDuration: 0.2, delay: show ? 0.05 : 0) {
+        UIView.animate(withDuration: 0.15, delay: show ? 0.05 : 0) {
             if show {
                 self.titleView.alpha = 1
                 self.titleViewTopConstraint.constant = 0
@@ -212,7 +212,7 @@ extension PersonDetailViewController {
             }
         }
         
-        UIView.animate(withDuration: 0.2, delay: show ? 0 : 0.1) {
+        UIView.animate(withDuration: 0.15, delay: show ? 0 : 0.1) {
             if show {
                 self.nameLabel.alpha = 0
                 self.nameLabelBottomConstraint.constant = 10
@@ -237,32 +237,39 @@ extension PersonDetailViewController {
     }
 
     fileprivate func updateHeader() {
-        let width = UIWindow.mainWindow.frame.width
-        let height = width * 1.5
         let titleHeight: CGFloat = 60
-        let navBarHeight = view.safeAreaInsets.top
+        let headerHeight = collectionView.contentInset.top
+        let threshold = -view.safeAreaInsets.top
+        let topInset = view.safeAreaInsets.top
+        let offset = collectionView.contentOffset.y
 
-        var headerHeight = height
-        if collectionView.contentOffset.y <= 0 {
-            headerHeight = max(abs(collectionView.contentOffset.y), view.safeAreaInsets.top)
+        //Adjust header size
+        var newHeight = headerHeight
+        if offset <= threshold {
+            newHeight = abs(offset)
         } else {
-            headerHeight = view.safeAreaInsets.top
+            newHeight = topInset
         }
 
-        if collectionView.contentOffset.y + navBarHeight + titleHeight < 40 {
-            showingNavBarTitle = false
-        } else if collectionView.contentOffset.y + navBarHeight + titleHeight > -90 {
+        //Animate title
+        if offset > threshold - 15 {
             showingNavBarTitle = true
+        } else if offset < threshold + titleHeight + 40 {
+            showingNavBarTitle = false
         }
 
-        let ratio = 1 - (headerHeight - navBarHeight) / (height * 0.6)
+        //Set blur animation progress
+        let ratio: CGFloat
+        ratio = 1 - newHeight / (headerHeight * 0.6)
         blurAnimator.fractionComplete = ratio
 
-        if collectionView.contentOffset.y < -navBarHeight {
-            headerHeightConstraint.constant = headerHeight
+        //Adjust header size
+        if offset < -threshold {
+            headerHeightConstraint.constant = newHeight
 
+            //Adjust gradient
             var gradientFrame = personImageView.bounds
-            gradientFrame.size.height = headerHeight
+            gradientFrame.size.height = newHeight
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             gradient.frame = gradientFrame
