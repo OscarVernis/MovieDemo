@@ -31,8 +31,8 @@ class PersonCastCreditViewModel {
         return movie.title
     }
     
-    var year: String {
-        guard let movie = movie, movie.releaseYear.isEmpty == false else { return "-" }
+    var year: String? {
+        guard let movie = movie, !movie.releaseYear.isEmpty else { return nil }
         
         return movie.releaseYear
     }

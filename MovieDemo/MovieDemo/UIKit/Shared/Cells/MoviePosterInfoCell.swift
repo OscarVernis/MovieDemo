@@ -100,7 +100,7 @@ extension MoviePosterInfoCell {
         cell.posterImageView.image = .asset(.PersonPlaceholder)
         
         if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
+            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
         }
         
         cell.setPosterRatio((3/2))

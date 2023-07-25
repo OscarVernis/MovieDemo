@@ -41,7 +41,7 @@ extension PersonDetailDataSource.Section {
     
     fileprivate func makeCredits() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        let section = sectionBuilder.createListSection(height: 50)
+        let section = sectionBuilder.createListSection(height: 100)
         
         section.contentInsets.top = 5
         

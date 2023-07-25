@@ -149,7 +149,7 @@ class PersonDetailViewController: UIViewController {
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
         
         
-        //setup Person
+        //Setup Person
         self.title = person.name
         nameLabel.text = person.name
         
@@ -312,32 +312,4 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         updateHeader()
     }
     
-}
-
-import SwiftUI
-struct UIViewControllerPreview<ViewController: UIViewController>: UIViewControllerRepresentable {
-    func updateUIViewController(_ uiViewController: ViewController, context: Context) {
-    }
-    
-    let viewController: ViewController
-
-    init(_ builder: @escaping () -> ViewController) {
-        viewController = builder()
-    }
-
-    // MARK: - UIViewControllerRepresentable
-    func makeUIViewController(context: Context) -> ViewController {
-        viewController
-    }
-}
-
-struct PersonDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        UIViewControllerPreview {
-            let vc = PersonDetailViewController.instantiateFromStoryboard()
-            let navCont = UINavigationController(rootViewController: vc)
-            vc.store = MockData.personDetailStore
-            return navCont
-        }
-    }
 }
