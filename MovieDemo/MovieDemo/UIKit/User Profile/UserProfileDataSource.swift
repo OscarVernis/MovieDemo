@@ -59,26 +59,30 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     fileprivate func makeFavorites() -> UICollectionViewDataSource {
         makeSection(models: user.favorites,
                     title: .localized(UserString.Favorites),
+                    image: UIImage.asset(.heart).withTintColor(.systemPink, renderingMode: .alwaysOriginal),
                     emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
     }
     
     fileprivate func makeWatchlist() -> UICollectionViewDataSource {
         makeSection(models: user.watchlist,
                     title: .localized(UserString.Watchlist),
+                    image: UIImage.asset(.bookmark).withTintColor(.systemOrange, renderingMode: .alwaysOriginal),
                     emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
     }
     
     fileprivate func makeRated() -> UICollectionViewDataSource {
         makeSection(models: user.rated,
                     title: .localized(UserString.Rated),
+                    image: UIImage.asset(.star).withTintColor(.systemGreen, renderingMode: .alwaysOriginal),
                     emptyMessage: AttributedStringAsset.emptyRatedMessage)
     }
     
     //MARK: Helper
-    fileprivate func makeSection(models: [MovieViewModel], title: String, emptyMessage: NSAttributedString) -> UICollectionViewDataSource {
+    fileprivate func makeSection(models: [MovieViewModel], title: String, image: UIImage? = nil, emptyMessage: NSAttributedString) -> UICollectionViewDataSource {
         let dataSource = UserMoviesDataSource(models: models, emptyMessage: emptyMessage)
         
         let titleDataSource = TitleHeaderDataSource(title: title,
+                                                    image: image,
                                                     dataSource: dataSource,
                                                     headerConfigurator: SectionTitleView.configureForDetail)
         return titleDataSource
@@ -89,7 +93,7 @@ class UserProfileDataSource: SectionedCollectionDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let dataSource = dataSources[indexPath.section]
         let indexPath = IndexPath(row: indexPath.row, section: 0)
-
+        
         return dataSource.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at:indexPath)
     }
     

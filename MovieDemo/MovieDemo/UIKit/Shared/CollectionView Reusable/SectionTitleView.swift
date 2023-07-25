@@ -11,10 +11,15 @@ import UIKit
 class SectionTitleView: UICollectionReusableView {        
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         actionButton.isHidden = true
+    }
+    
+    override func prepareForReuse() {
+        imageView.superview?.isHidden = true
     }
 
     var tapHandler: (() -> ())? = nil {
@@ -31,14 +36,17 @@ class SectionTitleView: UICollectionReusableView {
 
 //MARK: - Configure
 extension SectionTitleView {
-    static func configureForHome(headerView: SectionTitleView, title: String) {
+    static func configureForHome(headerView: SectionTitleView, title: String, image: UIImage? = nil) {
         headerView.titleLabel.text = title
+        
+        headerView.imageView.image = image
+        headerView.imageView.superview?.isHidden = (image == nil)
     }
     
-    static func configureForDetail(headerView: SectionTitleView, title: String) {
+    static func configureForDetail(headerView: SectionTitleView, title: String, image: UIImage? = nil) {
         headerView.titleLabel.font = UIFont(name: "AvenirNext-Medium", size: 20)!
         
-        headerView.titleLabel.text = title
+        configureForHome(headerView: headerView, title: title, image: image)
     }
     
 }
