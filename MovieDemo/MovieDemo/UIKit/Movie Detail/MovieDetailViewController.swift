@@ -84,6 +84,13 @@ class MovieDetailViewController: UIViewController {
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .always
         
+        //Setup Back Button
+        let backButton = BlurButton(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
+        backButton.setImage(.asset(.back), for: .normal)
+        backButton.tintColor = .white
+        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        
         //Set so the scrollIndicator stops before the status bar
         let topInset = UIWindow.mainWindow.topInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
@@ -165,6 +172,10 @@ class MovieDetailViewController: UIViewController {
         dataSource.isLoading = store.isLoading
         dataSource.reload()
         collectionView.reloadData()
+    }
+    
+    @IBAction func close(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
     
     fileprivate func show(error: UserFacingError, shouldDismiss: Bool = false) {
