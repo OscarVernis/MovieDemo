@@ -37,7 +37,8 @@ class UserProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+               
+        setupCustomBackButton()
         createCollectionView()
         setupCollectionView()
         setupStore()

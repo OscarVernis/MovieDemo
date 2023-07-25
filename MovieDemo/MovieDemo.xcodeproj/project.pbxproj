@@ -227,6 +227,7 @@
 		55C6753428223356007FB18C /* SessionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C6753328223356007FB18C /* SessionManagerTests.swift */; };
 		55C6753628223396007FB18C /* UserManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C6753528223396007FB18C /* UserManagerMock.swift */; };
 		55CC3AA328637F0800EF6A1C /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CC3AA228637F0800EF6A1C /* RoundedButton.swift */; };
+		55CC59842A7040900093EB42 /* UIViewController+CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CC59832A7040900093EB42 /* UIViewController+CustomBackButton.swift */; };
 		55CEAF07286E016300FEF613 /* PosterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CEAF06286E016300FEF613 /* PosterItem.swift */; };
 		55CEAF09286E03F000FEF613 /* PosterRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CEAF08286E03F000FEF613 /* PosterRow.swift */; };
 		55CFB26A2A5DFA4400A5D4E6 /* AppDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CFB2692A5DFA4400A5D4E6 /* AppDependencyContainer.swift */; };
@@ -514,6 +515,7 @@
 		55C6753328223356007FB18C /* SessionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManagerTests.swift; sourceTree = "<group>"; };
 		55C6753528223396007FB18C /* UserManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManagerMock.swift; sourceTree = "<group>"; };
 		55CC3AA228637F0800EF6A1C /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		55CC59832A7040900093EB42 /* UIViewController+CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+CustomBackButton.swift"; sourceTree = "<group>"; };
 		55CEAF06286E016300FEF613 /* PosterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterItem.swift; sourceTree = "<group>"; };
 		55CEAF08286E03F000FEF613 /* PosterRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterRow.swift; sourceTree = "<group>"; };
 		55CFB2692A5DFA4400A5D4E6 /* AppDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencyContainer.swift; sourceTree = "<group>"; };
@@ -706,6 +708,7 @@
 				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
 				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
 				550869B12855765700465008 /* UIWindow+Utils.swift */,
+				55CC59832A7040900093EB42 /* UIViewController+CustomBackButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1590,6 +1593,7 @@
 				553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */,
 				554DE177251EF83C000286D2 /* OverviewCell.swift in Sources */,
 				55A909DA2A62021C00AE4253 /* CodableCache.swift in Sources */,
+				55CC59842A7040900093EB42 /* UIViewController+CustomBackButton.swift in Sources */,
 				557ACF88285BAC7000FFA4CD /* TextStyles.swift in Sources */,
 				551693172857CBBC00FD147F /* PersonDetailDataSource.Section+Layout.swift in Sources */,
 				55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */,

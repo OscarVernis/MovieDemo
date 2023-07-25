@@ -48,6 +48,7 @@ class PersonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCustomBackButton()
         setupNavigationBar()
         setupAnimations()
         setup()
@@ -57,7 +58,6 @@ class PersonDetailViewController: UIViewController {
     fileprivate func setupNavigationBar() {
         //Create Title
         let titleViewContainer = UIView()
-        titleView.text = person.name
         titleView.font = UIFont(name: "Avenir Next Medium", size: 20)
         titleView.textColor = .label
         titleView.alpha = 0
@@ -73,13 +73,6 @@ class PersonDetailViewController: UIViewController {
             titleView.bottomAnchor.constraint(equalTo: titleViewContainer.bottomAnchor, constant: 0)
         ])
         navigationItem.titleView = titleViewContainer
-        
-        //Setup Back Button
-        let backButton = BlurButton(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
-        backButton.setImage(.asset(.back), for: .normal)
-        backButton.tintColor = .white
-        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,10 +97,6 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Setup
-    @IBAction func close(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-    }
-    
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
@@ -151,6 +140,7 @@ class PersonDetailViewController: UIViewController {
         
         //Setup Person
         self.title = person.name
+        titleView.text = person.name
         nameLabel.text = person.name
         
         if let imageURL = self.person.profileImageURL {
