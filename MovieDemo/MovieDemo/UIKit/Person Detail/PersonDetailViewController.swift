@@ -74,17 +74,25 @@ class PersonDetailViewController: UIViewController {
         ])
         navigationItem.titleView = titleViewContainer
         
-        //Setup Navigation Bar Appereance
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
-        
         //Setup Back Button
         let backButton = BlurButton(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
         backButton.setImage(.asset(.back), for: .normal)
         backButton.tintColor = .white
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        //Setup Navigation Bar Appereance
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
