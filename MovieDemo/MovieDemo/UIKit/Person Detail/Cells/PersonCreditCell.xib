@@ -30,6 +30,13 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dJ3-xD-sBs" userLabel="Separator">
+                        <rect key="frame" x="0.0" y="102.5" width="508" height="0.5"/>
+                        <color key="backgroundColor" systemColor="separatorColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="DtD-RY-L4p"/>
+                        </constraints>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="hRa-qG-WJ4">
                         <rect key="frame" x="72.5" y="19.5" width="435.5" height="64.5"/>
                         <subviews>
@@ -59,9 +66,12 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="hRa-qG-WJ4" secondAttribute="trailing" id="8rT-Vz-uLG"/>
                 <constraint firstAttribute="bottom" secondItem="3wW-4Z-dQ9" secondAttribute="bottom" constant="9" id="FSf-sL-rBD"/>
+                <constraint firstItem="dJ3-xD-sBs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="N61-Qr-e50"/>
                 <constraint firstItem="hRa-qG-WJ4" firstAttribute="leading" secondItem="3wW-4Z-dQ9" secondAttribute="trailing" constant="16" id="TjU-8x-BNV"/>
                 <constraint firstItem="3wW-4Z-dQ9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Vh0-iC-T29"/>
                 <constraint firstItem="3wW-4Z-dQ9" firstAttribute="width" secondItem="3wW-4Z-dQ9" secondAttribute="height" multiplier="2:3" id="cZi-83-XNM"/>
+                <constraint firstAttribute="trailing" secondItem="dJ3-xD-sBs" secondAttribute="trailing" id="jq1-Ex-Xts"/>
+                <constraint firstAttribute="bottom" secondItem="dJ3-xD-sBs" secondAttribute="bottom" id="mcw-Mb-jNu"/>
                 <constraint firstItem="3wW-4Z-dQ9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="9" id="prg-Qo-XEB"/>
                 <constraint firstItem="hRa-qG-WJ4" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="yDh-aC-Yfi"/>
             </constraints>

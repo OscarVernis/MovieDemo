@@ -14,6 +14,10 @@ class PersonCreditCell: UICollectionViewCell {
     @IBOutlet weak var creditLabel: UILabel!
     @IBOutlet weak var posterImageView: RoundImageView!
     
+    override func prepareForReuse() {
+        posterImageView.cancelImageRequest()
+        posterImageView.image = .asset(.PosterPlaceholder)
+    }
 }
 
 extension PersonCreditCell {
@@ -26,7 +30,7 @@ extension PersonCreditCell {
         cell.creditLabel.text = castCredit.character
         cell.creditLabel.isHidden = castCredit.character == nil
         
-        if let url = castCredit.movie?.posterImageURL(size: .w342) {
+        if let url = castCredit.movie?.posterImageURL(size: .w185) {
             cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
         }
     }
@@ -40,7 +44,7 @@ extension PersonCreditCell {
         cell.creditLabel.text = crewCredit.job
         cell.creditLabel.isHidden = crewCredit.job == nil
         
-        if let url = crewCredit.movie?.posterImageURL(size: .w342) {
+        if let url = crewCredit.movie?.posterImageURL(size: .w185) {
             cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
         }
     }
