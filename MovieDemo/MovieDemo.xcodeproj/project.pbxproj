@@ -672,8 +672,8 @@
 			isa = PBXGroup;
 			children = (
 				5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */,
-				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
 				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
+				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
 			);
 			path = "User Lists";
 			sourceTree = "<group>";

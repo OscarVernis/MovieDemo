@@ -12,10 +12,10 @@ import Combine
 class UserListsStore {
     @Published var lists: [UserList] = []
     @Published var error: Error? = nil
-    
+    @Published private(set) var isLoading = false
+
     let service: UserListsService
     let actionsService: UserListActionsService
-    private(set) var isLoading = false
     
     init(service: @escaping UserListsService, actionsService: UserListActionsService) {
         self.service = service
@@ -23,9 +23,12 @@ class UserListsStore {
     }
     
     func update() {
+        isLoading = true
+        
         service(1)
             .assignError(to: \.error, on: self)
             .map(\.lists)
+            .onCompletion { self.isLoading = false }
             .assign(to: &$lists)
     }
     

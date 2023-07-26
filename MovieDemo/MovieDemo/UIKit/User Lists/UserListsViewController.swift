@@ -18,6 +18,8 @@ class UserListsViewController: UITableViewController {
         super.init(style: .plain)
     }
     
+    var cancellables = Set<AnyCancellable>()
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -33,13 +35,41 @@ class UserListsViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(updateUserLists), for: .valueChanged)
         
         let action = UIAction { _ in
-            self.dataSource?.addList()
+            self.showAddListAlert()
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: action)
         
         dataSource = dataSourceProvider(tableView)
         
+        dataSource?.$isLoading
+            .sink(receiveValue: { isLoading in
+                if !isLoading {
+                    self.tableView.refreshControl?.endRefreshing()
+                }
+            })
+            .store(in: &cancellables)
+        
         updateUserLists()
+    }
+    
+    func showAddListAlert() {
+        let ac = UIAlertController(title: "Create List", message: nil, preferredStyle: .alert)
+        ac.addTextField()
+
+           let submitAction = UIAlertAction(title: "Create", style: .default) { [unowned ac] _ in
+               let answer = ac.textFields![0]
+               if let name = answer.text {
+                   self.addList(name: name)
+               }
+           }
+
+           ac.addAction(submitAction)
+
+           present(ac, animated: true)
+    }
+    
+    func addList(name: String) {
+        dataSource?.addList(name: name)
     }
     
     @objc
