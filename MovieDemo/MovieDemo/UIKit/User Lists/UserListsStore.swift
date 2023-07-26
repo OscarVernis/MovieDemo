@@ -47,9 +47,10 @@ class UserListsStore {
         do {
             try await actionsService.delete(listId: list.id)
         } catch {
-            if let removedList, let idx {
-                lists.insert(removedList, at: idx)
-            }
+            print(error)
+//            if let removedList, let idx {
+//                lists.insert(removedList, at: idx)
+//            }
         }
     }
     

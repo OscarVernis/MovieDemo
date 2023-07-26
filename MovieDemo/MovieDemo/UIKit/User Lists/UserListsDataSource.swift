@@ -47,11 +47,11 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
             .assign(to: &$isLoading)
     }
     
-    fileprivate func updateDataSource(lists: [UserList]) {
+    fileprivate func updateDataSource(lists: [UserList], animated: Bool = true) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UserList>()
         snapshot.appendSections([.main])
         snapshot.appendItems(lists, toSection: .main)
-        apply(snapshot, animatingDifferences: true)
+        apply(snapshot, animatingDifferences: animated)
     }
     
     //MARK: - Actions

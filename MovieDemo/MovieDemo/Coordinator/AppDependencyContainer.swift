@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import Combine
 
 class AppDependencyContainer {
     init(sessionManager: SessionManager? = nil) {
@@ -48,6 +50,18 @@ class AppDependencyContainer {
         return MoviesProvider(service: service, cache: cache)
     }
     
+    func publisher<Model: Codable>(_ main: AnyPublisher<Model, Error>, withCache cache: any ModelCache<Model>) -> AnyPublisher<Model, Error> {
+        //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
+        let mainWithCache = main
+            .cache(with: cache)
+        
+        let cacheThenMain = cache.publisher
+            .merge(with: mainWithCache)
+            .eraseToAnyPublisher()
+        
+        return cacheThenMain
+    }
+    
     //MARK: - View Dependencies
     var searchProvider: SearchProvider {
         SearchProvider(searchService: remoteClient.search)
@@ -58,16 +72,9 @@ class AppDependencyContainer {
     }
     
     var userProfileStore: UserProfileStore {
-        //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
-        let cache = CodableCache.userCache
-        let remoteWithCache = remoteClient.getUserDetails()
-            .cache(with: cache)
+        let service = publisher(remoteClient.getUserDetails(), withCache: CodableCache.userCache)
         
-        let cacheThenRemote = cache.publisher
-            .merge(with: remoteWithCache)
-            .eraseToAnyPublisher()
-        
-        return UserProfileStore(service: cacheThenRemote)
+        return UserProfileStore(service: service)
     }
     
     func movieDetailsStore(movie: MovieViewModel) -> MovieDetailStore {
@@ -84,10 +91,10 @@ class AppDependencyContainer {
         return PersonDetailStore(person: person, service: service)
     }
     
-    var userListsService: UserListsService {
-        { page in
-            self.remoteClient.getUserLists(userId: 8555334, page: page)
-        }
+    func userListsDataSource() -> (UITableView) -> UserListsDataSource {
+        let service = { self.remoteClient.getUserLists(userId: 8555334, page: $0)  }
+        let store = UserListsStore(service: service, actionsService: remoteClient)
+        return { UserListsDataSource(store: store, tableView: $0) }
     }
     
 }
