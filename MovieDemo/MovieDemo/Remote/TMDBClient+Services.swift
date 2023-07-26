@@ -145,3 +145,18 @@ extension TMDBClient: SessionService {
     }
 
 }
+
+//MARK: - UserLists Service
+extension TMDBClient {
+    func getUserLists(userId: Int, page: Int) -> AnyPublisher<UserListsResult, Error> {
+        let publisher: AnyPublisher<ServiceModelsResult<CodableUserList>, Error> = getModels(endpoint: .userLists(userId: userId), page: page)
+        
+        return publisher
+            .map { result in
+                let lists = result.items.toUserLists()
+                return UserListsResult(movies: lists, totalPages: result.totalPages)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+}

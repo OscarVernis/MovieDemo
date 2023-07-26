@@ -159,3 +159,11 @@ extension Endpoint {
     }
     
 }
+
+//MARK: - Lists
+extension Endpoint {
+    static func userLists(userId: Int) -> Endpoint {
+        Endpoint(path: "/account/\(userId)/lists")
+    }
+    
+}

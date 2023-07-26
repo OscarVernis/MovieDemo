@@ -31,6 +31,7 @@
 		5511CD2C2A70D96600A9CCDD /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2B2A70D96600A9CCDD /* UserList.swift */; };
 		5511CD2E2A70DA9C00A9CCDD /* CodableUserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2D2A70DA9C00A9CCDD /* CodableUserList.swift */; };
 		5511CD302A70DB3600A9CCDD /* CodableUserList+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */; };
+		5511CD322A70DC4900A9CCDD /* UserListsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD312A70DC4900A9CCDD /* UserListsServices.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */; };
@@ -307,6 +308,7 @@
 		5511CD2B2A70D96600A9CCDD /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		5511CD2D2A70DA9C00A9CCDD /* CodableUserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableUserList.swift; sourceTree = "<group>"; };
 		5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableUserList+Mapping.swift"; sourceTree = "<group>"; };
+		5511CD312A70DC4900A9CCDD /* UserListsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsServices.swift; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoordinator.swift; sourceTree = "<group>"; };
@@ -910,6 +912,7 @@
 				55BA58E32A6CAD2D00375F95 /* LoginService.swift */,
 				55BA58E52A6CB2EF00375F95 /* LogoutService.swift */,
 				5572C04E2A5A115A00F164EA /* ModelCache.swift */,
+				5511CD312A70DC4900A9CCDD /* UserListsServices.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1628,6 +1631,7 @@
 				550045EF2A5DDABA00DF4790 /* TMDBClient+Services.swift in Sources */,
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
+				5511CD322A70DC4900A9CCDD /* UserListsServices.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
 				5516930F28579F4F00FD147F /* LoadingDataSource.swift in Sources */,
 				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,

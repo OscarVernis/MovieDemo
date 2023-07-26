@@ -21,7 +21,7 @@ extension CodableUserList {
 }
 
 extension Collection where Element == CodableUserList {
-    func toMovies() -> [UserList] {
+    func toUserLists() -> [UserList] {
         map { $0.toUserList() }
     }
 }
