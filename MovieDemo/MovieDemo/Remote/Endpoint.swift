@@ -166,4 +166,12 @@ extension Endpoint {
         Endpoint(path: "/account/\(userId)/lists")
     }
     
+    static var createList: Endpoint {
+        Endpoint(path: "/list")
+    }
+    
+    static func deleteList(_ listId: Int) -> Endpoint {
+        Endpoint(path: "/list/\(listId)")
+    }
+    
 }

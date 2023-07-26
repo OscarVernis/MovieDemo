@@ -83,6 +83,7 @@
 		553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 553EE5852A6386D400750793 /* SDWebImageSwiftUI */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
 		5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5541467E2A71834200BF1B16 /* UserListsStore.swift */; };
+		554146812A718C2400BF1B16 /* CreateListRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554146802A718C2400BF1B16 /* CreateListRequestBody.swift */; };
 		5545203822D99CB0004B7924 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203622D99CB0004B7924 /* Movie.swift */; };
 		5545203B22D99D8F004B7924 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203A22D99D8F004B7924 /* TMDBClient.swift */; };
 		55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55477A6E27E26DDA00131179 /* ManagedCache.swift */; };
@@ -367,6 +368,7 @@
 		553D6AF22853C5BC001491CB /* ProviderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDataSource.swift; sourceTree = "<group>"; };
 		553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSuccessResult.swift; sourceTree = "<group>"; };
 		5541467E2A71834200BF1B16 /* UserListsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsStore.swift; sourceTree = "<group>"; };
+		554146802A718C2400BF1B16 /* CreateListRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListRequestBody.swift; sourceTree = "<group>"; };
 		5545203622D99CB0004B7924 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		5545203A22D99D8F004B7924 /* TMDBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
 		55477A6E27E26DDA00131179 /* ManagedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
@@ -1172,6 +1174,7 @@
 				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
 				5562D7402539291900E4FD42 /* MediaItem.swift */,
 				5565DDEF27E96D0800D7F4EB /* FavoriteRequestBody.swift */,
+				554146802A718C2400BF1B16 /* CreateListRequestBody.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1669,6 +1672,7 @@
 				55206B81253291D100AD13AE /* PersonCreditCell.swift in Sources */,
 				551E79272513CBD700EE2FCA /* InfoListCell.swift in Sources */,
 				5519CB2827F78FC000AAE38E /* MoviesProvider.swift in Sources */,
+				554146812A718C2400BF1B16 /* CreateListRequestBody.swift in Sources */,
 				55EE51AB251ECF5800915AB3 /* RoundImageView.swift in Sources */,
 				554DDE232862578100DD864A /* BlurBackground.swift in Sources */,
 				551693112857A23C00FD147F /* SearchDataSource.swift in Sources */,

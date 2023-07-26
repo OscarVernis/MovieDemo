@@ -12,4 +12,5 @@ struct ServiceSuccessResult: Codable {
     var success: Bool?
     var sessionId: String?
     var requestToken: String?
+    var listId: Int?
 }

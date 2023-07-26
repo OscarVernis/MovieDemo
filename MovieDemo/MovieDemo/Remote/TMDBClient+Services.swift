@@ -147,7 +147,7 @@ extension TMDBClient: SessionService {
 }
 
 //MARK: - UserLists Service
-extension TMDBClient {
+extension TMDBClient: UserListActionsService {
     func getUserLists(userId: Int, page: Int) -> AnyPublisher<UserListsResult, Error> {
         let publisher: AnyPublisher<ServiceModelsResult<CodableUserList>, Error> = getModels(endpoint: .userLists(userId: userId), page: page)
         
@@ -157,6 +157,21 @@ extension TMDBClient {
                 return UserListsResult(lists: lists, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()
+    }
+    
+    func createList(name: String, description: String) async throws -> UserList {
+        let body = CreateListRequestBody(name: name, description: description)
+        let result = try await successAction(endpoint: .createList, body: body, method: .post).async()
+        
+        if let listId = result.listId {
+            return UserList(id: listId, name: name, description: description, favoriteCount: 0, itemCount: 0, posterPath: nil)
+        } else {
+            throw ServiceError.JsonError
+        }
+    }
+    
+    func delete(listId: Int) async throws {
+        let _ = try await successAction(endpoint: .deleteList(listId), method: .delete).async()
     }
     
 }
