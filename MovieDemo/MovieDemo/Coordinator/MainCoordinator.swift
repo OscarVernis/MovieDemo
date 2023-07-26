@@ -220,7 +220,8 @@ class MainCoordinator {
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
         if isLoggedIn {
-            let upvc = UserProfileViewController(store: dependencies.userProfileStore, router: self)
+//            let upvc = UserProfileViewController(store: dependencies.userProfileStore, router: self)
+            let upvc = UserListsViewController(service: dependencies.userListsService)
             
             rootNavigationViewController?.pushViewController(upvc, animated: animated)
         } else {

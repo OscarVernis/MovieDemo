@@ -154,7 +154,7 @@ extension TMDBClient {
         return publisher
             .map { result in
                 let lists = result.items.toUserLists()
-                return UserListsResult(movies: lists, totalPages: result.totalPages)
+                return UserListsResult(lists: lists, totalPages: result.totalPages)
             }
             .eraseToAnyPublisher()
     }

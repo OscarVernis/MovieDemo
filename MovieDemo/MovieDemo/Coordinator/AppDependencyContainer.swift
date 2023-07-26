@@ -84,4 +84,10 @@ class AppDependencyContainer {
         return PersonDetailStore(person: person, service: service)
     }
     
+    var userListsService: UserListsService {
+        { page in
+            self.remoteClient.getUserLists(userId: 8555334, page: page)
+        }
+    }
+    
 }

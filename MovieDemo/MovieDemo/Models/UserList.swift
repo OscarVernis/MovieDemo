@@ -17,4 +17,4 @@ struct UserList {
     let posterPath: String?
 }
 
-extension UserList: Equatable { }
+extension UserList: Equatable, Hashable { }

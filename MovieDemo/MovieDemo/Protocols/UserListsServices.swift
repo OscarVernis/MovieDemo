@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-typealias UserListsResult = (movies: [UserList], totalPages: Int)
+typealias UserListsResult = (lists: [UserList], totalPages: Int)
 
-typealias UserListsService = (_ page: Int) -> UserListsResult
+typealias UserListsService = (_ page: Int) -> AnyPublisher<UserListsResult, Error>
