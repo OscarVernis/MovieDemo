@@ -10,13 +10,11 @@ import UIKit
 import Combine
 
 class UserListsViewController: UITableViewController {
-    let service: UserListsService?
     var dataSource: UserListsDataSource?
-
+    var dataSourceProvider: (UITableView) -> UserListsDataSource
     
-    init(service: UserListsService?) {
-        self.service = service
-        
+    init(dataSourceProvider: @escaping (UITableView) -> UserListsDataSource) {
+        self.dataSourceProvider = dataSourceProvider
         super.init(style: .plain)
     }
     
@@ -31,11 +29,10 @@ class UserListsViewController: UITableViewController {
     }
     
     func setup() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(updateUserLists), for: .valueChanged)
         
-        dataSource = UserListsDataSource(service: service, tableView: tableView)
+        dataSource = dataSourceProvider(tableView)
         
         updateUserLists()
     }

@@ -82,6 +82,7 @@
 		553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AF22853C5BC001491CB /* ProviderDataSource.swift */; };
 		553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 553EE5852A6386D400750793 /* SDWebImageSwiftUI */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
+		5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5541467E2A71834200BF1B16 /* UserListsStore.swift */; };
 		5545203822D99CB0004B7924 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203622D99CB0004B7924 /* Movie.swift */; };
 		5545203B22D99D8F004B7924 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5545203A22D99D8F004B7924 /* TMDBClient.swift */; };
 		55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55477A6E27E26DDA00131179 /* ManagedCache.swift */; };
@@ -365,6 +366,7 @@
 		553D6AF02853C2E5001491CB /* HomeDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSource.swift; sourceTree = "<group>"; };
 		553D6AF22853C5BC001491CB /* ProviderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDataSource.swift; sourceTree = "<group>"; };
 		553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSuccessResult.swift; sourceTree = "<group>"; };
+		5541467E2A71834200BF1B16 /* UserListsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsStore.swift; sourceTree = "<group>"; };
 		5545203622D99CB0004B7924 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		5545203A22D99D8F004B7924 /* TMDBClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
 		55477A6E27E26DDA00131179 /* ManagedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCache.swift; sourceTree = "<group>"; };
@@ -668,6 +670,7 @@
 			isa = PBXGroup;
 			children = (
 				5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */,
+				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
 				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
 			);
 			path = "User Lists";
@@ -1673,6 +1676,7 @@
 				55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */,
 				55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
+				5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */,
 				55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */,
 				5511CD302A70DB3600A9CCDD /* CodableUserList+Mapping.swift in Sources */,
 				555463EF286E271A0010AEB0 /* VideoRow.swift in Sources */,
