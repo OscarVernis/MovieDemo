@@ -33,6 +33,7 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
         update()
     }
     
+    //MARK: - Setup
     fileprivate func setupStore() {
         store.$lists
             .sink { lists in
@@ -49,18 +50,32 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
         apply(snapshot, animatingDifferences: true)
     }
     
+    //MARK: - Actions
     func update() {
         store.update()
     }
     
+    func addList() {
+        Task {
+            try await store.addList(name: "Test", description: "Test description")
+        }
+    }
+    
+    func delete(list: UserList) {
+        Task {
+            try await store.delete(list: list)
+        }
+    }
+    
+    //MARK: - Table View
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-//            lists.remove(at: indexPath.row)
-//            updateDataSource()
+            let list = store.lists[indexPath.row]
+            delete(list: list)
         }
     }
     

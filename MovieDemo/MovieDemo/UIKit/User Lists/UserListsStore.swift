@@ -14,10 +14,12 @@ class UserListsStore {
     @Published var error: Error? = nil
     
     let service: UserListsService
+    let actionsService: UserListActionsService
     private(set) var isLoading = false
     
-    init(service: @escaping UserListsService) {
+    init(service: @escaping UserListsService, actionsService: UserListActionsService) {
         self.service = service
+        self.actionsService = actionsService
     }
     
     func update() {
@@ -26,4 +28,26 @@ class UserListsStore {
             .map(\.lists)
             .assign(to: &$lists)
     }
+    
+    func addList(name: String, description: String) async throws {
+        let list = try await actionsService.createList(name: name, description: description)
+        lists.insert(list, at: 0)
+    }
+    
+    func delete(list: UserList) async throws {
+        let idx = lists.firstIndex(of: list)
+        var removedList: UserList? = nil
+        if let idx {
+            removedList = lists.remove(at: idx)
+        }
+        
+        do {
+            try await actionsService.delete(listId: list.id)
+        } catch {
+            if let removedList, let idx {
+                lists.insert(removedList, at: idx)
+            }
+        }
+    }
+    
 }

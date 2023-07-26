@@ -32,6 +32,11 @@ class UserListsViewController: UITableViewController {
         tableView.refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(updateUserLists), for: .valueChanged)
         
+        let action = UIAction { _ in
+            self.dataSource?.addList()
+        }
+        navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: action)
+        
         dataSource = dataSourceProvider(tableView)
         
         updateUserLists()
