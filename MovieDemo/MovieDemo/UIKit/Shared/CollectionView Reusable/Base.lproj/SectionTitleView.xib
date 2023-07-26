@@ -14,14 +14,14 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J4z-UZ-0g7">
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="J4z-UZ-0g7">
                     <rect key="frame" x="0.0" y="14" width="334" height="30"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v3i-Vq-6C9">
-                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="20" height="30"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lXK-d2-vvG">
-                                    <rect key="frame" x="5" y="4" width="20" height="20"/>
+                                    <rect key="frame" x="0.0" y="4" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="20" id="1lz-o2-Q04"/>
                                         <constraint firstAttribute="height" constant="20" id="2Wp-vr-ugB"/>
@@ -33,11 +33,11 @@
                                 <constraint firstItem="lXK-d2-vvG" firstAttribute="centerX" secondItem="v3i-Vq-6C9" secondAttribute="centerX" id="IXe-Aa-kFw"/>
                                 <constraint firstAttribute="height" constant="30" id="PfA-TD-PzQ"/>
                                 <constraint firstItem="lXK-d2-vvG" firstAttribute="centerY" secondItem="v3i-Vq-6C9" secondAttribute="centerY" constant="-1" id="TBm-Hi-0sm"/>
-                                <constraint firstAttribute="width" constant="30" id="roj-em-mUB"/>
+                                <constraint firstAttribute="width" constant="20" id="roj-em-mUB"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Now Playing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3c-lq-fnQ">
-                            <rect key="frame" x="30" y="0.0" width="304" height="30"/>
+                            <rect key="frame" x="24" y="0.0" width="310" height="30"/>
                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="22"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
