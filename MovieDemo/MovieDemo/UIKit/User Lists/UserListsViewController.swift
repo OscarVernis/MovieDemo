@@ -10,14 +10,8 @@ import UIKit
 import Combine
 
 class UserListsViewController: UITableViewController {
-    enum Section {
-        case main
-    }
-    
-    var lists: [UserList] = []
     let service: UserListsService?
-    var cancellable: AnyCancellable?
-    var dataSource: UITableViewDiffableDataSource<Section, UserList>?
+    var dataSource: UserListsDataSource?
 
     
     init(service: UserListsService?) {
@@ -41,37 +35,14 @@ class UserListsViewController: UITableViewController {
         tableView.refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(updateUserLists), for: .valueChanged)
         
-        dataSource = UITableViewDiffableDataSource<Section, UserList>(tableView: tableView, cellProvider: { (tableView, indexPath, userList) -> UITableViewCell? in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = userList.name
-            cell.detailTextLabel?.text = userList.description
-            
-            return cell
-        })
+        dataSource = UserListsDataSource(service: service, tableView: tableView)
         
         updateUserLists()
     }
     
-    private func updateDatasource() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, UserList>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(lists, toSection: .main)
-        dataSource?.apply(snapshot, animatingDifferences: true)
-    }
-    
     @objc
     func updateUserLists() {
-        guard let service else { return }
-        
-        cancellable = service(1)
-            .sink(receiveCompletion: { completion in
-                
-            }, receiveValue: { result in
-                self.lists = result.lists
-                self.updateDatasource()
-                self.tableView.refreshControl?.endRefreshing()
-                print("Done")
-            })
+        dataSource?.update()
     }
 
 }
