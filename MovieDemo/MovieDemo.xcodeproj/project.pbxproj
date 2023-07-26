@@ -28,6 +28,9 @@
 		550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA06D2A59DB0000541312 /* UserProfileRouter.swift */; };
 		550DA0712A59DDF700541312 /* ErrorHandlingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */; };
 		550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA0742A59E0DE00541312 /* SearchViewRouter.swift */; };
+		5511CD2C2A70D96600A9CCDD /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2B2A70D96600A9CCDD /* UserList.swift */; };
+		5511CD2E2A70DA9C00A9CCDD /* CodableUserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2D2A70DA9C00A9CCDD /* CodableUserList.swift */; };
+		5511CD302A70DB3600A9CCDD /* CodableUserList+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */; };
 		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */; };
@@ -301,6 +304,9 @@
 		550DA06D2A59DB0000541312 /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingRouter.swift; sourceTree = "<group>"; };
 		550DA0742A59E0DE00541312 /* SearchViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewRouter.swift; sourceTree = "<group>"; };
+		5511CD2B2A70D96600A9CCDD /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
+		5511CD2D2A70DA9C00A9CCDD /* CodableUserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableUserList.swift; sourceTree = "<group>"; };
+		5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableUserList+Mapping.swift"; sourceTree = "<group>"; };
 		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoordinator.swift; sourceTree = "<group>"; };
@@ -1139,11 +1145,13 @@
 				5584ADE32A63074800F0907E /* CodablePerson+Mapping.swift */,
 				55AB8ADF2A6275FB00414A6E /* CodableUser.swift */,
 				55AB8AE12A6276B100414A6E /* CodableUser+Mapping.swift */,
+				5511CD2D2A70DA9C00A9CCDD /* CodableUserList.swift */,
+				5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */,
+				5565DDF227E96D2700D7F4EB /* WatchlistRequestBody.swift */,
 				553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */,
 				55E5871D27DBC66000159201 /* ServiceModelsResult.swift */,
 				5562D7402539291900E4FD42 /* MediaItem.swift */,
 				5565DDEF27E96D0800D7F4EB /* FavoriteRequestBody.swift */,
-				5565DDF227E96D2700D7F4EB /* WatchlistRequestBody.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1232,6 +1240,7 @@
 				556807CB2530EB0600F8DF16 /* Person.swift */,
 				5560523A2531246A00023BD9 /* PersonCastCredit.swift */,
 				555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */,
+				5511CD2B2A70D96600A9CCDD /* UserList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1640,10 +1649,12 @@
 				55EE51AB251ECF5800915AB3 /* RoundImageView.swift in Sources */,
 				554DDE232862578100DD864A /* BlurBackground.swift in Sources */,
 				551693112857A23C00FD147F /* SearchDataSource.swift in Sources */,
+				5511CD2E2A70DA9C00A9CCDD /* CodableUserList.swift in Sources */,
 				55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */,
 				55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
 				55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */,
+				5511CD302A70DB3600A9CCDD /* CodableUserList+Mapping.swift in Sources */,
 				555463EF286E271A0010AEB0 /* VideoRow.swift in Sources */,
 				551693192857CF8200FD147F /* OverviewDataSource.swift in Sources */,
 				55EE573A284D826400C6A170 /* UserFacingError.swift in Sources */,
@@ -1732,6 +1743,7 @@
 				55A60DDB2527AAB30082810C /* MediaViewerPlayerControls.swift in Sources */,
 				55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */,
 				55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */,
+				5511CD2C2A70D96600A9CCDD /* UserList.swift in Sources */,
 				555725AB2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift in Sources */,
 				550577A2284DAA2C007ED892 /* UserString.swift in Sources */,
 				55CEAF09286E03F000FEF613 /* PosterRow.swift in Sources */,
