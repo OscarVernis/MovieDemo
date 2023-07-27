@@ -12,11 +12,13 @@ import Combine
 class UserListDetailViewController: UITableViewController {
     var dataSource: UserListDetailDataSource?
     var dataSourceProvider: (UITableView) -> UserListDetailDataSource
+    var router: UserListDetailRouter?
     
     var cancellables = Set<AnyCancellable>()
     
-    init(dataSourceProvider: @escaping (UITableView) -> UserListDetailDataSource) {
+    init(dataSourceProvider: @escaping (UITableView) -> UserListDetailDataSource, router: UserListDetailRouter? = nil) {
         self.dataSourceProvider = dataSourceProvider
+        self.router = router
         super.init(style: .plain)
     }
     
@@ -90,6 +92,15 @@ class UserListDetailViewController: UITableViewController {
                 print(error)
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = dataSource?.movie(at: indexPath.row)
+        
+        if let movie {
+            router?.showMovieDetail(movie: movie)
+        }
+        
     }
     
 }

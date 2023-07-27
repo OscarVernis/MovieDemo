@@ -72,4 +72,8 @@ class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailData
         try await store.clearList()
     }
     
+    func movie(at index: Int) -> MovieViewModel {
+        MovieViewModel(movie: store.userList.movies[index])
+    }
+    
 }

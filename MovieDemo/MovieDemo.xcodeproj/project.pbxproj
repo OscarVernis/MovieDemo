@@ -275,6 +275,7 @@
 		55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */; };
 		55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F06CE22A5E3DE900DB8348 /* JSONLoader.swift */; };
 		55F06CE52A5E41EB00DB8348 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F06CE42A5E41EB00DB8348 /* MockData.swift */; };
+		55F4E43E2A7232EA004CACCC /* UserListDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */; };
 		55FACCF52A590CD800FB13B5 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FACCF42A590CD800FB13B5 /* HomeRouter.swift */; };
 		55FACCF72A591ACE00FB13B5 /* MovieDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */; };
 		55FEF45025141A40009363F8 /* CreditPhotoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */; };
@@ -574,6 +575,7 @@
 		55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		55F06CE22A5E3DE900DB8348 /* JSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLoader.swift; sourceTree = "<group>"; };
 		55F06CE42A5E41EB00DB8348 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailRouter.swift; sourceTree = "<group>"; };
 		55FACCF42A590CD800FB13B5 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailRouter.swift; sourceTree = "<group>"; };
 		55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPhotoListCell.swift; sourceTree = "<group>"; };
@@ -686,6 +688,7 @@
 				55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */,
 				55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */,
 				55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */,
+				55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */,
 			);
 			path = "User Lists";
 			sourceTree = "<group>";
@@ -1798,6 +1801,7 @@
 				550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */,
 				553AF9AD2856BE93007D1B20 /* MovieHeaderDataSource.swift in Sources */,
 				55C4F40A251814AF002B73A9 /* CastCreditViewModel.swift in Sources */,
+				55F4E43E2A7232EA004CACCC /* UserListDetailRouter.swift in Sources */,
 				55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */,
 				557ACF8C285BB05300FFA4CD /* RatedMovieList.swift in Sources */,
 				55EECCE525119A1A0041EAE7 /* MainCoordinator.swift in Sources */,

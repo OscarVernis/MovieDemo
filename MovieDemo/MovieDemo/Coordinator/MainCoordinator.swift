@@ -237,7 +237,7 @@ class MainCoordinator {
     }
     
     func showUserListDetail(list: UserList, animated: Bool = true) {
-        let uldvc = UserListDetailViewController(dataSourceProvider: dependencies.userListDetailDataSource(list: list))
+        let uldvc = UserListDetailViewController(dataSourceProvider: dependencies.userListDetailDataSource(list: list), router: self)
         uldvc.title = list.name
         
         rootNavigationViewController?.pushViewController(uldvc, animated: animated)
@@ -352,5 +352,6 @@ extension MainCoordinator: HomeRouter,
                            LoginRouter,
                            UserProfileRouter,
                            SearchViewRouter,
-                           UserListsRouter
-{}
+                           UserListsRouter,
+                           UserListDetailRouter
+{ }
