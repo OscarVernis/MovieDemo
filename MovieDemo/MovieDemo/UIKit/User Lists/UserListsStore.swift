@@ -45,9 +45,10 @@ class UserListsStore {
     
     func delete(list: UserList) async {
         let idx = lists.firstIndex(of: list)
-        var removedList: UserList? = nil
+//        var removedList: UserList? = nil
         if let idx {
-            removedList = lists.remove(at: idx)
+//            removedList =
+            lists.remove(at: idx)
         }
         
         do {

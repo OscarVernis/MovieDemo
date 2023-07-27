@@ -223,6 +223,9 @@
 		55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */; };
 		55B6CBC827E02E49007DB4C2 /* MovieCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBC727E02E49007DB4C2 /* MovieCache.swift */; };
 		55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */; };
+		55B739572A720E7A003BB6F5 /* UserListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */; };
+		55B739592A720F12003BB6F5 /* UserListDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */; };
+		55B7395B2A720F7F003BB6F5 /* UserListDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */; };
 		55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548C2A592515009870B2 /* PersonDetailRouter.swift */; };
 		55B8548F2A59289B009870B2 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548E2A59289B009870B2 /* LoginRouter.swift */; };
 		55BA58E42A6CAD2D00375F95 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BA58E32A6CAD2D00375F95 /* LoginService.swift */; };
@@ -518,6 +521,9 @@
 		55B6CBBF27E02708007DB4C2 /* MovieGenreMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGenreMO.swift; sourceTree = "<group>"; };
 		55B6CBC727E02E49007DB4C2 /* MovieCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCache.swift; sourceTree = "<group>"; };
 		55B6CBD727E043C4007DB4C2 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
+		55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailViewController.swift; sourceTree = "<group>"; };
+		55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailDataSource.swift; sourceTree = "<group>"; };
+		55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailStore.swift; sourceTree = "<group>"; };
 		55B8548C2A592515009870B2 /* PersonDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailRouter.swift; sourceTree = "<group>"; };
 		55B8548E2A59289B009870B2 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		55BA58E32A6CAD2D00375F95 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -674,6 +680,9 @@
 				5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */,
 				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
 				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
+				55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */,
+				55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */,
+				55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */,
 			);
 			path = "User Lists";
 			sourceTree = "<group>";
@@ -1601,6 +1610,7 @@
 				5511FFA8285AF40900B9C12A /* Font+Utils.swift in Sources */,
 				55EDA71628111CC80055696F /* ImageAsset.swift in Sources */,
 				557FFA8B251A625900D79F68 /* SessionManager.swift in Sources */,
+				55B7395B2A720F7F003BB6F5 /* UserListDetailStore.swift in Sources */,
 				553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */,
 				556807C72530E87A00F8DF16 /* PersonDetailViewController.swift in Sources */,
 				55164AFB25154A6500D219BC /* MoviePosterInfoCell.swift in Sources */,
@@ -1678,6 +1688,7 @@
 				551693112857A23C00FD147F /* SearchDataSource.swift in Sources */,
 				5511CD2E2A70DA9C00A9CCDD /* CodableUserList.swift in Sources */,
 				55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */,
+				55B739572A720E7A003BB6F5 /* UserListDetailViewController.swift in Sources */,
 				55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
 				5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */,
@@ -1756,6 +1767,7 @@
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
 				5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */,
 				555498FD282228D000E89119 /* KeychainSessionStore.swift in Sources */,
+				55B739592A720F12003BB6F5 /* UserListDetailDataSource.swift in Sources */,
 				55B6CBD827E043C4007DB4C2 /* CoreDataStore.swift in Sources */,
 				553AF9B32856CD58007D1B20 /* UserProfileLayoutProvider.swift in Sources */,
 				559B08D3283D4EBF002DA8DF /* AnyPublisher+Async.swift in Sources */,

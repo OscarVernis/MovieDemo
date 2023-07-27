@@ -13,12 +13,12 @@ class UserListsViewController: UITableViewController {
     var dataSource: UserListsDataSource?
     var dataSourceProvider: (UITableView) -> UserListsDataSource
     
+    var cancellables = Set<AnyCancellable>()
+    
     init(dataSourceProvider: @escaping (UITableView) -> UserListsDataSource) {
         self.dataSourceProvider = dataSourceProvider
         super.init(style: .plain)
     }
-    
-    var cancellables = Set<AnyCancellable>()
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -51,7 +51,7 @@ class UserListsViewController: UITableViewController {
         
         dataSource?.$error
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
+            .sink { error in
                 if error != nil {
                     print(error!)
 //                    self?.show(error: .refreshError, shouldDismiss: true)
@@ -92,6 +92,9 @@ class UserListsViewController: UITableViewController {
         let list = dataSource!.store.lists[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
 
+        let vc = UserListDetailViewController(userList: list)
+        vc.title = list.name
+        show(vc, sender: self)
     }
     
 }
