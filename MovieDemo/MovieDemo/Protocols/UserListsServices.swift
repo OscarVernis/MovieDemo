@@ -25,4 +25,6 @@ protocol UserDetailActionsService {
     func clearList(listId: Int) async throws
     
     func addMovie(movieId: Int, toList listId: Int) async throws
+    
+    func removeMovie(movieId: Int, fromList listId: Int) async throws
 }

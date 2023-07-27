@@ -681,14 +681,8 @@
 		5511CD332A70DDEB00A9CCDD /* User Lists */ = {
 			isa = PBXGroup;
 			children = (
-				5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */,
-				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
-				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
-				55B7395C2A7218FC003BB6F5 /* UserListsRouter.swift */,
-				55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */,
-				55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */,
-				55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */,
-				55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */,
+				55F4E43F2A723807004CACCC /* Lists */,
+				55F4E4402A723812004CACCC /* Detail */,
 			);
 			path = "User Lists";
 			sourceTree = "<group>";
@@ -1383,6 +1377,28 @@
 				559674552A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		55F4E43F2A723807004CACCC /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */,
+				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
+				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
+				55B7395C2A7218FC003BB6F5 /* UserListsRouter.swift */,
+			);
+			path = Lists;
+			sourceTree = "<group>";
+		};
+		55F4E4402A723812004CACCC /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */,
+				55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */,
+				55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */,
+				55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		55FACCF12A590C7100FB13B5 /* Shared Presentation */ = {

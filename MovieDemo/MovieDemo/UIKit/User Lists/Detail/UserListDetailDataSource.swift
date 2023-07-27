@@ -68,12 +68,27 @@ class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailData
         try await store.addMovie(movieId: movieId)
     }
     
+    func removeMovie(at index: Int) {
+        Task { try await store.removeMovie(at: index) }
+    }
+    
     func clearList() async throws {
         try await store.clearList()
     }
     
     func movie(at index: Int) -> MovieViewModel {
         MovieViewModel(movie: store.userList.movies[index])
+    }
+    
+    //MARK: - Table View
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {            
+            removeMovie(at: indexPath.row)
+        }
     }
     
 }

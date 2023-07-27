@@ -196,4 +196,9 @@ extension TMDBClient: UserDetailActionsService {
         let _ = try await successAction(endpoint: .addMovie(toList: listId), method: .post, parameters: params).async()
     }
     
+    func removeMovie(movieId: Int, fromList listId: Int) async throws {
+        let params = ["media_id": "\(movieId)"]
+        
+        let _ = try await successAction(endpoint: .removeMovie(toList: listId), method: .post, parameters: params).async()
+    }
 }

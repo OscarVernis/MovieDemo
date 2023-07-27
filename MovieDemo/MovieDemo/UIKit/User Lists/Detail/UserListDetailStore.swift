@@ -26,6 +26,18 @@ class UserListDetailStore {
         try await actionsService.addMovie(movieId: movieId, toList: userList.id)
     }
     
+    func removeMovie(at index: Int) async throws {
+        let removedMovie = userList.movies.remove(at: index)
+        
+        do {
+            try await actionsService.removeMovie(movieId: removedMovie.id, fromList: userList.id)
+        } catch {
+            self.error = error
+            userList.movies.insert(removedMovie, at: index)
+        }
+    }
+    
+    
     func clearList() async throws {
         try await actionsService.clearList(listId: userList.id)
         userList.movies = []

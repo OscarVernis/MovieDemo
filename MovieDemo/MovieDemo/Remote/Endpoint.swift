@@ -186,4 +186,7 @@ extension Endpoint {
         Endpoint(path: "/list/\(listId)/add_item")
     }
     
+    static func removeMovie(toList listId: Int) -> Endpoint {
+        Endpoint(path: "/list/\(listId)/remove_item")
+    }
 }
