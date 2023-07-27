@@ -185,7 +185,9 @@ extension TMDBClient: UserListActionsService {
 
 extension TMDBClient: UserDetailActionsService {
     func clearList(listId: Int) async throws {
-        let _ = try await successAction(endpoint: .clearList(listId), method: .post).async()
+        let params = ["confirm": "true"]
+
+        let _ = try await successAction(endpoint: .clearList(listId), method: .post, parameters: params).async()
     }
     
     func addMovie(movieId: Int, toList listId: Int) async throws {

@@ -22,6 +22,15 @@ class UserListDetailStore {
         self.actionsService = actionsService
     }
     
+    func addMovie(movieId: Int) async throws {
+        try await actionsService.addMovie(movieId: movieId, toList: userList.id)
+    }
+    
+    func clearList() async throws {
+        try await actionsService.clearList(listId: userList.id)
+        userList.movies = []
+    }
+    
     func update() {
         isLoading = true
         

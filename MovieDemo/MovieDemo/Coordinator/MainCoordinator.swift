@@ -219,14 +219,28 @@ class MainCoordinator {
     
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
-        if isLoggedIn {
+        showUserLists()
+//        if isLoggedIn {
 //            let upvc = UserProfileViewController(store: dependencies.userProfileStore, router: self)
-            let upvc = UserListsViewController(dataSourceProvider: dependencies.userListsDataSource())
-            
-            rootNavigationViewController?.pushViewController(upvc, animated: animated)
-        } else {
-            showLogin(animated: animated)
-        }
+//
+//            rootNavigationViewController?.pushViewController(upvc, animated: animated)
+//        } else {
+//            showLogin(animated: animated)
+//        }
+    }
+    
+    func showUserLists(animated: Bool = true) {
+        let ulvc = UserListsViewController(dataSourceProvider: dependencies.userListsDataSource(), router: self)
+        ulvc.title = "Lists"
+
+        rootNavigationViewController?.pushViewController(ulvc, animated: animated)
+    }
+    
+    func showUserListDetail(list: UserList, animated: Bool = true) {
+        let uldvc = UserListDetailViewController(dataSourceProvider: dependencies.userListDetailDataSource(list: list))
+        uldvc.title = list.name
+        
+        rootNavigationViewController?.pushViewController(uldvc, animated: animated)
     }
     
     func showNowPlaying() {
@@ -332,4 +346,11 @@ class MainCoordinator {
     
 }
 
-extension MainCoordinator: HomeRouter, MovieDetailRouter, PersonDetailRouter, LoginRouter, UserProfileRouter, SearchViewRouter {}
+extension MainCoordinator: HomeRouter,
+                           MovieDetailRouter,
+                           PersonDetailRouter,
+                           LoginRouter,
+                           UserProfileRouter,
+                           SearchViewRouter,
+                           UserListsRouter
+{}

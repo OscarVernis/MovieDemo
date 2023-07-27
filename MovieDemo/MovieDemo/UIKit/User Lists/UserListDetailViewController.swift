@@ -28,9 +28,9 @@ class UserListDetailViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clearList)),
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMovie)),
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(clearList)),
-            ]
+        ]
         
         setup()
     }
@@ -54,7 +54,7 @@ class UserListDetailViewController: UITableViewController {
             .sink {  error in
                 if error != nil {
                     print(error!)
-//                    self?.show(error: .refreshError, shouldDismiss: true)
+                    //                    self?.show(error: .refreshError, shouldDismiss: true)
                 }
             }
             .store(in: &cancellables)
@@ -68,7 +68,28 @@ class UserListDetailViewController: UITableViewController {
     }
     
     @objc
+    func addMovie() {
+        let movieId = Int.random(in: 0...600000)
+        print(movieId)
+        Task {
+            do {
+                try await dataSource?.addMovie(movieId: movieId)
+                self.dataSource?.update()
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    @objc
     func clearList() {
+        Task {
+            do {
+                try await dataSource?.clearList()
+            } catch {
+                print(error)
+            }
+        }
     }
     
 }

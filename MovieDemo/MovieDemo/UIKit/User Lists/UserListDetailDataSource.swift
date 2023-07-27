@@ -52,7 +52,7 @@ class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailData
             .assign(to: &$error)
     }
     
-    fileprivate func updateDataSource(movies: [MovieViewModel], animated: Bool = true) {
+    fileprivate func updateDataSource(movies: [MovieViewModel], animated: Bool = false) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(movies, toSection: .main)
@@ -62,6 +62,14 @@ class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailData
     //MARK: - Actions
     func update() {
         store.update()
+    }
+    
+    func addMovie(movieId: Int) async throws {
+        try await store.addMovie(movieId: movieId)
+    }
+    
+    func clearList() async throws {
+        try await store.clearList()
     }
     
 }

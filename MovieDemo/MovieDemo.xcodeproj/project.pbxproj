@@ -226,6 +226,7 @@
 		55B739572A720E7A003BB6F5 /* UserListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */; };
 		55B739592A720F12003BB6F5 /* UserListDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */; };
 		55B7395B2A720F7F003BB6F5 /* UserListDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */; };
+		55B7395D2A7218FC003BB6F5 /* UserListsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B7395C2A7218FC003BB6F5 /* UserListsRouter.swift */; };
 		55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548C2A592515009870B2 /* PersonDetailRouter.swift */; };
 		55B8548F2A59289B009870B2 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B8548E2A59289B009870B2 /* LoginRouter.swift */; };
 		55BA58E42A6CAD2D00375F95 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BA58E32A6CAD2D00375F95 /* LoginService.swift */; };
@@ -524,6 +525,7 @@
 		55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailViewController.swift; sourceTree = "<group>"; };
 		55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailDataSource.swift; sourceTree = "<group>"; };
 		55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailStore.swift; sourceTree = "<group>"; };
+		55B7395C2A7218FC003BB6F5 /* UserListsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsRouter.swift; sourceTree = "<group>"; };
 		55B8548C2A592515009870B2 /* PersonDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailRouter.swift; sourceTree = "<group>"; };
 		55B8548E2A59289B009870B2 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
 		55BA58E32A6CAD2D00375F95 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
@@ -680,6 +682,7 @@
 				5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */,
 				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
 				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
+				55B7395C2A7218FC003BB6F5 /* UserListsRouter.swift */,
 				55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */,
 				55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */,
 				55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */,
@@ -1787,6 +1790,7 @@
 				555725AB2538C8B9007F2EDB /* PersonCrewCreditViewModel.swift in Sources */,
 				550577A2284DAA2C007ED892 /* UserString.swift in Sources */,
 				55CEAF09286E03F000FEF613 /* PosterRow.swift in Sources */,
+				55B7395D2A7218FC003BB6F5 /* UserListsRouter.swift in Sources */,
 				5545203B22D99D8F004B7924 /* TMDBClient.swift in Sources */,
 				5511FFA3285ADE8700B9C12A /* Rating.swift in Sources */,
 				55EE519D251E8CF800915AB3 /* UserProfileHeaderView.swift in Sources */,

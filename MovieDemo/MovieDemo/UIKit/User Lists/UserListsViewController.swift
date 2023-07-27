@@ -12,11 +12,13 @@ import Combine
 class UserListsViewController: UITableViewController {
     var dataSource: UserListsDataSource?
     var dataSourceProvider: (UITableView) -> UserListsDataSource
+    var router: UserListsRouter?
     
     var cancellables = Set<AnyCancellable>()
     
-    init(dataSourceProvider: @escaping (UITableView) -> UserListsDataSource) {
+    init(dataSourceProvider: @escaping (UITableView) -> UserListsDataSource, router: UserListsRouter? = nil) {
         self.dataSourceProvider = dataSourceProvider
+        self.router = router
         super.init(style: .plain)
     }
     
@@ -91,6 +93,8 @@ class UserListsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = dataSource!.store.lists[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        router?.showUserListDetail(list: list)
     }
     
 }
