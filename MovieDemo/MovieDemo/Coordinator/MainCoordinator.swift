@@ -178,6 +178,18 @@ class MainCoordinator {
         
         hvc.navigationItem.searchController = homeSearchController
         
+        let userAction = UIAction { _ in self.showUserProfile() }
+        let listsAction = UIAction { _ in self.showUserLists() }
+        
+        if isLoggedIn {
+            hvc.navigationItem.rightBarButtonItems = [
+                UIBarButtonItem(image: .asset(.person), primaryAction: userAction),
+                UIBarButtonItem(image: UIImage(systemName: "list.and.film"), primaryAction: listsAction),
+            ]
+        } else {
+            hvc.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: .asset(.person), primaryAction: userAction)]
+        }
+        
         rootNavigationViewController?.viewControllers = [hvc]
     }
     
@@ -219,14 +231,13 @@ class MainCoordinator {
     
     //MARK: - Home
     func showUserProfile(animated: Bool = true) {
-        showUserLists()
-//        if isLoggedIn {
-//            let upvc = UserProfileViewController(store: dependencies.userProfileStore, router: self)
-//
-//            rootNavigationViewController?.pushViewController(upvc, animated: animated)
-//        } else {
-//            showLogin(animated: animated)
-//        }
+        if isLoggedIn {
+            let upvc = UserProfileViewController(store: dependencies.userProfileStore, router: self)
+
+            rootNavigationViewController?.pushViewController(upvc, animated: animated)
+        } else {
+            showLogin(animated: animated)
+        }
     }
     
     func showUserLists(animated: Bool = true) {

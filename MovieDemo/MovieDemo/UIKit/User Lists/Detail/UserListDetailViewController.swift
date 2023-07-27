@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 class UserListDetailViewController: UITableViewController {
-    var dataSource: UserListDetailDataSource?
+    var dataSource: UserListDetailDataSource!
     var dataSourceProvider: (UITableView) -> UserListDetailDataSource
     var router: UserListDetailRouter?
     
@@ -32,6 +32,7 @@ class UserListDetailViewController: UITableViewController {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMovie)),
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(clearList)),
+            UIBarButtonItem(title: nil, image: UIImage(systemName: "dice"), target: self, action: #selector(addRandomMovie))
         ]
         
         setup()
@@ -70,7 +71,7 @@ class UserListDetailViewController: UITableViewController {
     }
     
     @objc
-    func addMovie() {
+    func addRandomMovie() {
         let movieId = Int.random(in: 0...600000)
         print(movieId)
         Task {
@@ -81,6 +82,31 @@ class UserListDetailViewController: UITableViewController {
                 print(error)
             }
         }
+    }
+    
+    @objc
+    func addMovie() {
+        let vc = AddMoviesToListViewController(recentMovies: dataSource.store.userList.movies.map(MovieViewModel.init),
+                                               service: dataSource.store.actionsService,
+                                               listId: dataSource.store.userList.id)
+        vc.title = "\(dataSource.store.userList.name)"
+        vc.navigationItem.largeTitleDisplayMode = .always
+        
+        let navCont = UINavigationController(rootViewController: vc)
+        
+        let search = UISearchController()
+        vc.navigationItem.searchController = search
+        vc.navigationItem.hidesSearchBarWhenScrolling = false
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeModal))
+        vc.navigationItem.rightBarButtonItem = doneButton
+
+        present(navCont, animated: true)
+    }
+    
+    @objc
+    func closeModal() {
+        presentedViewController?.dismiss(animated: true)
     }
     
     @objc

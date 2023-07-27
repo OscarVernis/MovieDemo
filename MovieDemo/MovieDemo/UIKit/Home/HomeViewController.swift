@@ -73,8 +73,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         title = .localized(HomeString.Movies)
         navigationController?.delegate = self
         
-        //User Profile NavBar Button
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .asset(.person), style: .plain, target: self, action: #selector(showUser))
+//        //User Profile NavBar Button
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .asset(.person), style: .plain, target: self, action: #selector(showUser))
     }
     
     override func viewWillAppear(_ animated: Bool) {
