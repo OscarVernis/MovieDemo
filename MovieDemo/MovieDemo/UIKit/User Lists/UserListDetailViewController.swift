@@ -15,19 +15,8 @@ class UserListDetailViewController: UITableViewController {
     
     var cancellables = Set<AnyCancellable>()
     
-//    init(dataSourceProvider: @escaping (UITableView) -> UserListDetailDataSource) {
-//        self.dataSourceProvider = dataSourceProvider
-//        super.init(style: .plain)
-//    }
-        
-    init(userList: UserList) {
-        self.dataSourceProvider = {
-            UserListDetailDataSource(tableView: $0,
-                                     store: UserListDetailStore(
-                                        userList: userList,
-                                        service: { TMDBClient().getUserListDetails(listId: userList.id) })
-            )
-        }
+    init(dataSourceProvider: @escaping (UITableView) -> UserListDetailDataSource) {
+        self.dataSourceProvider = dataSourceProvider
         super.init(style: .plain)
     }
     
@@ -37,6 +26,11 @@ class UserListDetailViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clearList)),
+            UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(clearList)),
+            ]
         
         setup()
     }
@@ -71,6 +65,10 @@ class UserListDetailViewController: UITableViewController {
     @objc
     func updateListDetail() {
         dataSource?.update()
+    }
+    
+    @objc
+    func clearList() {
     }
     
 }

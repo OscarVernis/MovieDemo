@@ -19,6 +19,10 @@ protocol UserListActionsService {
     func createList(name: String, description: String) async throws -> UserList
 
     func deleteList(listId: Int) async throws
-    
+}
+
+protocol UserDetailActionsService {
     func clearList(listId: Int) async throws
+    
+    func addMovie(movieId: Int, toList listId: Int) async throws
 }

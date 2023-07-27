@@ -174,16 +174,24 @@ extension TMDBClient: UserListActionsService {
         let _ = try await successAction(endpoint: .deleteList(listId), method: .delete).async()
     }
     
-    func clearList(listId: Int) async throws {
-        let _ = try await successAction(endpoint: .clearList(listId), method: .post).async()
-    }
-    
     func getUserListDetails(listId: Int) -> AnyPublisher<UserList, Error> {
         let publisher: AnyPublisher<CodableUserList, Error> = getModel(endpoint: .userListDetails(listId))
         
         return publisher
             .map { $0.toUserList() }
             .eraseToAnyPublisher()
+    }
+}
+
+extension TMDBClient: UserDetailActionsService {
+    func clearList(listId: Int) async throws {
+        let _ = try await successAction(endpoint: .clearList(listId), method: .post).async()
+    }
+    
+    func addMovie(movieId: Int, toList listId: Int) async throws {
+        let params = ["media_id": "\(movieId)"]
+        
+        let _ = try await successAction(endpoint: .addMovie(toList: listId), method: .post, parameters: params).async()
     }
     
 }

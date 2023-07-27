@@ -91,10 +91,6 @@ class UserListsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = dataSource!.store.lists[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
-
-        let vc = UserListDetailViewController(userList: list)
-        vc.title = list.name
-        show(vc, sender: self)
     }
     
 }

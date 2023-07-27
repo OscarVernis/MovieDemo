@@ -49,8 +49,8 @@ extension TMDBClient {
         return getModel(endpoint: endpoint, parameters: params)
     }
     
-    func successAction(endpoint: Endpoint, body: (any Encodable)? = nil, method: HTTPMethod = .get) -> AnyPublisher<ServiceSuccessResult, Error>  {
-        let url = endpoint.url(sessionId: sessionId)
+    func successAction(endpoint: Endpoint, body: (any Encodable)? = nil, method: HTTPMethod = .get, parameters: [String: String]? = nil) -> AnyPublisher<ServiceSuccessResult, Error>  {
+        let url = endpoint.url(parameters: parameters, sessionId: sessionId)
 
         return httpClient
             .requestPublisher(with: url, body: body, method: method)

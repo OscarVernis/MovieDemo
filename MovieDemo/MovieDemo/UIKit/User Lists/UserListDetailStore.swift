@@ -14,10 +14,12 @@ class UserListDetailStore {
     @Published private(set) var isLoading = false
     
     let service: UserListDetailsService
-    
-    init(userList: UserList, service: @escaping UserListDetailsService) {
+    let actionsService: UserDetailActionsService
+
+    init(userList: UserList, service: @escaping UserListDetailsService, actionsService: UserDetailActionsService) {
         self.userList = userList
         self.service = service
+        self.actionsService = actionsService
     }
     
     func update() {
