@@ -23,14 +23,15 @@ class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailData
     init(tableView: UITableView, store: UserListDetailStore) {
         self.store = store
         super.init(tableView: tableView) { tableView, indexPath, movie in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-            cell.textLabel?.text = movie.title
-            cell.detailTextLabel?.text = movie.overview
+            let cell = tableView.dequeueReusableCell(withIdentifier: ListMovieCell.reuseIdentifier, for: indexPath) as! ListMovieCell
+            
+            ListMovieCell.configure(cell: cell, with: movie)
             
             return cell
         }
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        ListMovieCell.register(to: tableView)
+        tableView.rowHeight = 150
         
         setupStore()
         update()
