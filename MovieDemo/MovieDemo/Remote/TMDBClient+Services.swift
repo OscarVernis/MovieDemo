@@ -170,8 +170,12 @@ extension TMDBClient: UserListActionsService {
         }
     }
     
-    func delete(listId: Int) async throws {
+    func deleteList(listId: Int) async throws {
         let _ = try await successAction(endpoint: .deleteList(listId), method: .delete).async()
+    }
+    
+    func clearList(listId: Int) async throws {
+        let _ = try await successAction(endpoint: .clearList(listId), method: .post).async()
     }
     
 }

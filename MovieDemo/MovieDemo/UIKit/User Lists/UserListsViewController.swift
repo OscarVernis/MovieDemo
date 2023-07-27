@@ -49,6 +49,16 @@ class UserListsViewController: UITableViewController {
             })
             .store(in: &cancellables)
         
+        dataSource?.$error
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                if error != nil {
+                    print(error!)
+//                    self?.show(error: .refreshError, shouldDismiss: true)
+                }
+            }
+            .store(in: &cancellables)
+        
         updateUserLists()
     }
     
@@ -69,7 +79,7 @@ class UserListsViewController: UITableViewController {
     }
     
     func addList(name: String) {
-        dataSource?.addList(name: name)
+        Task { await dataSource?.addList(name: name) }
     }
     
     @objc

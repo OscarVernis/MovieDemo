@@ -15,7 +15,8 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
     }
     
     @Published private(set) var isLoading = false
-    
+    @Published var error: Error? = nil
+
     let store: UserListsStore
     var cancellables: Set<AnyCancellable> = []
     
@@ -45,6 +46,10 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
         
         store.$isLoading
             .assign(to: &$isLoading)
+        
+        store.$error
+            .onCompletion { self.error = nil }
+            .assign(to: &$error)
     }
     
     fileprivate func updateDataSource(lists: [UserList], animated: Bool = true) {
@@ -59,16 +64,12 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
         store.update()
     }
     
-    func addList(name: String, description: String? = nil) {
-        Task {
-            try await store.addList(name: name, description: description ?? "")
-        }
+    func addList(name: String, description: String? = nil) async {
+        await store.addList(name: name, description: description ?? "")
     }
     
     func delete(list: UserList) {
-        Task {
-            try await store.delete(list: list)
-        }
+        Task { await store.delete(list: list) }
     }
     
     //MARK: - Table View

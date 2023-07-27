@@ -174,4 +174,8 @@ extension Endpoint {
         Endpoint(path: "/list/\(listId)")
     }
     
+    static func clearList(_ listId: Int) -> Endpoint {
+        Endpoint(path: "/list/\(listId)/clear")
+    }
+    
 }

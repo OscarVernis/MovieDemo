@@ -32,12 +32,18 @@ class UserListsStore {
             .assign(to: &$lists)
     }
     
-    func addList(name: String, description: String) async throws {
-        let list = try await actionsService.createList(name: name, description: description)
-        lists.insert(list, at: 0)
+    func addList(name: String, description: String) async {
+        do {
+            let list = try await actionsService.createList(name: name, description: description)
+            lists.insert(list, at: 0)
+        }
+        catch {
+            self.error = error
+        }
     }
+
     
-    func delete(list: UserList) async throws {
+    func delete(list: UserList) async {
         let idx = lists.firstIndex(of: list)
         var removedList: UserList? = nil
         if let idx {
@@ -45,12 +51,12 @@ class UserListsStore {
         }
         
         do {
-            try await actionsService.delete(listId: list.id)
+            try await actionsService.deleteList(listId: list.id)
         } catch {
-            print(error)
-//            if let removedList, let idx {
-//                lists.insert(removedList, at: idx)
-//            }
+            self.error = error
+            //            if let removedList, let idx {
+            //                lists.insert(removedList, at: idx)
+            //            }
         }
     }
     

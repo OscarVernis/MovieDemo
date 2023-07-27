@@ -16,5 +16,7 @@ typealias UserListsService = (_ page: Int) -> AnyPublisher<UserListsResult, Erro
 protocol UserListActionsService {
     func createList(name: String, description: String) async throws -> UserList
 
-    func delete(listId: Int) async throws
+    func deleteList(listId: Int) async throws
+    
+    func clearList(listId: Int) async throws
 }
