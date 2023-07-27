@@ -13,6 +13,8 @@ typealias UserListsResult = (lists: [UserList], totalPages: Int)
 
 typealias UserListsService = (_ page: Int) -> AnyPublisher<UserListsResult, Error>
 
+typealias UserListDetailsService = () -> AnyPublisher<UserList, Error>
+
 protocol UserListActionsService {
     func createList(name: String, description: String) async throws -> UserList
 

@@ -164,7 +164,7 @@ extension TMDBClient: UserListActionsService {
         let result = try await successAction(endpoint: .createList, body: body, method: .post).async()
         
         if let listId = result.listId {
-            return UserList(id: listId, name: name, description: description, favoriteCount: 0, itemCount: 0, posterPath: nil)
+            return UserList(id: listId, name: name, description: description)
         } else {
             throw ServiceError.JsonError
         }
@@ -176,6 +176,14 @@ extension TMDBClient: UserListActionsService {
     
     func clearList(listId: Int) async throws {
         let _ = try await successAction(endpoint: .clearList(listId), method: .post).async()
+    }
+    
+    func getUserListDetails(listId: Int) -> AnyPublisher<UserList, Error> {
+        let publisher: AnyPublisher<CodableUserList, Error> = getModel(endpoint: .userListDetails(listId))
+        
+        return publisher
+            .map { $0.toUserList() }
+            .eraseToAnyPublisher()
     }
     
 }

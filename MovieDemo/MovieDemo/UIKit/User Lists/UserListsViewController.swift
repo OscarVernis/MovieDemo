@@ -66,7 +66,7 @@ class UserListsViewController: UITableViewController {
         let ac = UIAlertController(title: "Create List", message: nil, preferredStyle: .alert)
         ac.addTextField()
 
-           let submitAction = UIAlertAction(title: "Create", style: .default) { [unowned ac] _ in
+        let submitAction = UIAlertAction(title: "Create", style: .default) { [unowned ac] _ in
                let answer = ac.textFields![0]
                if let name = answer.text {
                    self.addList(name: name)
@@ -87,4 +87,11 @@ class UserListsViewController: UITableViewController {
         dataSource?.update()
     }
 
+    //MARK: - Table View Delegate
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let list = dataSource!.store.lists[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
+
+    }
+    
 }

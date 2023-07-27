@@ -15,6 +15,17 @@ struct UserList {
     let favoriteCount: Int
     let itemCount: Int
     let posterPath: String?
+    let movies: [Movie]
+    
+    init(id: Int, name: String, description: String = "", favoriteCount: Int = 0, itemCount: Int = 0, posterPath: String? = nil, movies: [Movie] = []) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.favoriteCount = favoriteCount
+        self.itemCount = itemCount
+        self.posterPath = posterPath
+        self.movies = movies
+    }
 }
 
 extension UserList: Codable, Equatable, Hashable { }

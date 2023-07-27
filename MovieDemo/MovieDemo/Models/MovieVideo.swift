@@ -14,4 +14,4 @@ struct MovieVideo  {
     var type: String?
 }
 
-extension MovieVideo: Codable {}
+extension MovieVideo: Codable, Hashable {}

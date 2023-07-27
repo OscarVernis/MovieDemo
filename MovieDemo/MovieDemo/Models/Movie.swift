@@ -41,7 +41,7 @@ struct Movie {
 //MARK: - Utils
 extension Movie: Codable {}
 
-extension Movie: Equatable {
+extension Movie: Equatable, Hashable {
     static func == (lhs: Movie, rhs: Movie) -> Bool {
         return
             lhs.id == rhs.id

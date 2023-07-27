@@ -10,12 +10,15 @@ import Foundation
 
 extension CodableUserList {
     func toUserList() -> UserList {
-        return UserList(id: id,
-                                name: name ?? "",
-                                description: description ?? "",
-                                favoriteCount: favoriteCount ?? 0,
-                                itemCount: itemCount ?? 0,
-                                posterPath: posterPath)
+        UserList(
+            id: id,
+            name: name ?? "",
+            description: description ?? "",
+            favoriteCount: favoriteCount ?? 0,
+            itemCount: itemCount ?? 0,
+            posterPath: posterPath,
+            movies: items?.toMovies() ?? []
+        )
     }
     
 }
