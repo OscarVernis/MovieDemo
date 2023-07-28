@@ -81,6 +81,16 @@ extension TMDBClient {
             .eraseToAnyPublisher()
     }
     
+    func movieSearch(query: String, page: Int = 1) -> AnyPublisher<MoviesResult, Error>  {
+        let publisher: AnyPublisher<ServiceModelsResult<CodableMovie>, Error> = getModels(endpoint: .movieSearch, parameters: ["query" : query], page: page)
+        
+        return publisher
+            .map { result in
+                let movies = result.items.toMovies()
+                return MoviesResult(movies: movies, totalPages: result.totalPages)
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 //MARK: - UserState Service

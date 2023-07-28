@@ -32,7 +32,6 @@ class UserListDetailViewController: UITableViewController {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMovie)),
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(clearList)),
-            UIBarButtonItem(title: nil, image: UIImage(systemName: "dice"), target: self, action: #selector(addRandomMovie))
         ]
         
         setup()
@@ -71,25 +70,12 @@ class UserListDetailViewController: UITableViewController {
     }
     
     @objc
-    func addRandomMovie() {
-        let movieId = Int.random(in: 0...600000)
-        print(movieId)
-        Task {
-            do {
-                try await dataSource?.addMovie(movieId: movieId)
-                self.dataSource?.update()
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    @objc
     func addMovie() {
         let movies = MockData.movieVMs
         
         let vc = AddMoviesToListViewController(recentMovies: movies,
                                                service: dataSource.store.actionsService,
+                                               searchService: TMDBClient().movieSearch(query:page:),
                                                listId: dataSource.store.userList.id)
         vc.title = "\(dataSource.store.userList.name)"
         vc.navigationItem.largeTitleDisplayMode = .always
@@ -99,6 +85,7 @@ class UserListDetailViewController: UITableViewController {
         let search = UISearchController()
         vc.navigationItem.searchController = search
         vc.navigationItem.hidesSearchBarWhenScrolling = false
+        search.searchResultsUpdater = vc
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeModal))
         vc.navigationItem.rightBarButtonItem = doneButton

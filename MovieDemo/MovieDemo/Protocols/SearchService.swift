@@ -12,3 +12,5 @@ import Combine
 typealias SearchResult = (items: [Any], totalPages: Int)
 
 typealias SearchService = (_ query: String, _ page: Int) -> AnyPublisher<SearchResult, Error>
+
+typealias MovieSearchService = (_ query: String, _ page: Int) -> AnyPublisher<MoviesResult, Error>

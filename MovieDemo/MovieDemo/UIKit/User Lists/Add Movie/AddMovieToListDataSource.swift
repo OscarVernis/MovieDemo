@@ -12,21 +12,18 @@ class AddMovieToListDataSource: UITableViewDiffableDataSource<AddMovieToListData
     enum Section {
         case main
     }
+    
+    var showSectionHeader = true
 
-    func update(movies: [MovieViewModel], reload: MovieViewModel? = nil, animated: Bool = false) {
+    func update(movies: [MovieViewModel], animated: Bool = false) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(movies, toSection: .main)
-        
-        if let reload {
-            snapshot.reloadItems([reload])
-        }
-        
         apply(snapshot, animatingDifferences: animated)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        "RECENT"
+        showSectionHeader ? "RECENT" : nil
     }
     
 }

@@ -191,6 +191,7 @@ class MainCoordinator {
         }
         
         rootNavigationViewController?.viewControllers = [hvc]
+        showUserLists()
     }
     
     //MARK: - Common

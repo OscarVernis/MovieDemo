@@ -102,6 +102,9 @@ extension Endpoint {
         Endpoint(path: "/search/multi")
     }
     
+    static var movieSearch: Endpoint {
+        Endpoint(path: "/search/movie")
+    }
 }
 
 //MARK: - Details

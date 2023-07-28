@@ -66,7 +66,7 @@ class ListMovieCell: UITableViewCell {
     }
     
     private var loadingAccessoryView: UIActivityIndicatorView {
-        let actInd = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        let actInd = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         actInd.startAnimating()
         return actInd
     }
@@ -77,7 +77,7 @@ class ListMovieCell: UITableViewCell {
         let configuration = UIImage.SymbolConfiguration(font: largeFont)
         let addImage = UIImage(systemName: "checkmark", withConfiguration: configuration)?.withRenderingMode(.alwaysTemplate)
         checkmarkButton.setImage(addImage, for: .normal)
-        checkmarkButton.tintColor = .asset(.RatingColor)
+        checkmarkButton.imageView?.tintColor = .asset(.RatingColor)
         
         let addAction = UIAction { [unowned self] _ in
             self.deleteHandler?()
