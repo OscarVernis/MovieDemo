@@ -133,18 +133,13 @@ class AddMoviesToListViewController: UITableViewController {
     
     func setupSearchService() {
         $query
-            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .debounce(for: 0.2, scheduler: DispatchQueue.main)
             .removeDuplicates()
-            .compactMap { query -> String? in
-                if query.isEmpty {
-                    return nil
-                }
-                
-                return query
-            }
-            .flatMap { [unowned self] query in
+            .filter { !$0.isEmpty }
+            .map() { [unowned self] query in
                 self.searchService(query)
             }
+            .switchToLatest()
             .handleError { print($0) }
             .sink { [weak self] movies in
                 self?.searchResults = movies

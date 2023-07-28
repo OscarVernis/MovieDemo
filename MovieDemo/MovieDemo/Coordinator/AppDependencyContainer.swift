@@ -99,7 +99,7 @@ class AppDependencyContainer {
     
     func userListDetailStore(list: UserList) -> UserListDetailStore {
         let service = { self.remoteClient.getUserListDetails(listId: list.id) }
-        return UserListDetailStore(userList: list, service: service, actionsService: remoteClient)
+        return UserListDetailStore(userList: UserListViewModel(userList: list), service: service, actionsService: remoteClient)
     }
     
     //MARK: - Lists

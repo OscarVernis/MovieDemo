@@ -60,10 +60,10 @@ class UserListDetailViewController: UITableViewController {
     }
     
     fileprivate func setupStore() {
-        store.$userList
+        store.$movies
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] list in
-                self.updateDataSource(movies: list.movies.map(MovieViewModel.init))
+            .sink { [unowned self] movies in
+                self.updateDataSource(movies: movies)
             }
             .store(in: &cancellables)
         
@@ -121,8 +121,7 @@ class UserListDetailViewController: UITableViewController {
 
 extension UserListDetailViewController: AddMoviesToListViewControllerDelegate {
     func add(movie: MovieViewModel) async throws {
-        try await store.addMovie(movieId: movie.id)
-        update()
+        try await store.add(movie: movie)
     }
     
     func remove(movie: MovieViewModel) async throws {
