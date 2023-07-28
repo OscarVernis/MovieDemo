@@ -108,7 +108,7 @@ extension MovieViewModel {
         
         return genresString
     }
-    
+        
     var runtime: String? {
         guard let runtime = movie.runtime, runtime > 0 else { return nil }
         

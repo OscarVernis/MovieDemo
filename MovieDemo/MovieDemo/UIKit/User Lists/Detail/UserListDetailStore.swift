@@ -9,7 +9,7 @@
 import Foundation
 
 class UserListDetailStore {
-    @Published var userList: UserListViewModel
+    @Published var userList: UserList
     @Published var movies: [MovieViewModel]
     @Published var error: Error? = nil
     @Published private(set) var isLoading = false
@@ -17,11 +17,11 @@ class UserListDetailStore {
     let service: UserListDetailsService
     let actionsService: UserDetailActionsService
 
-    init(userList: UserListViewModel, service: @escaping UserListDetailsService, actionsService: UserDetailActionsService) {
+    init(userList: UserList, service: @escaping UserListDetailsService, actionsService: UserDetailActionsService) {
         self.userList = userList
+        self.movies = userList.movies.map(MovieViewModel.init)
         self.service = service
         self.actionsService = actionsService
-        self.movies = userList.movies
     }
     
     func movie(at index: Int) -> MovieViewModel {
@@ -30,7 +30,7 @@ class UserListDetailStore {
     
     func add(movie: MovieViewModel) async throws {
         try await actionsService.addMovie(movieId: movie.id, toList: userList.id)
-        movies.insert(movie, at: 0)
+        movies.append(movie)
     }
     
     func removeMovie(at index: Int) async throws {
@@ -56,12 +56,25 @@ class UserListDetailStore {
         service()
             .assignError(to: \.error, on: self)
             .onCompletion { self.isLoading = false }
-            .map { [unowned self] userList in
-                let vm = UserListViewModel(userList: userList)
-                self.movies = vm.movies
-                return vm
-            }
+            .handleEvents(receiveOutput: { userList in
+                self.movies = userList.movies.map(MovieViewModel.init)
+            })
             .assign(to: &$userList)
+    }
+    
+    //MARK: - Data Formatting
+    var movieCount: Int {
+        movies.count
+    }
+    
+    var averageRating: UInt {
+        let total = movies.compactMap { $0.percentRating }.reduce(0, +)
+        
+        if total == 0 {
+            return 0
+        } else {
+            return total / UInt(movieCount)
+        }
     }
     
 }

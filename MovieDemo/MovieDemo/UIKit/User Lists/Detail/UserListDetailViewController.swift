@@ -31,6 +31,15 @@ class UserListDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.largeTitleDisplayMode = .never
+        
+        view.backgroundColor = .asset(.AppBackgroundColor)
+        tableView.backgroundColor = .asset(.AppBackgroundColor)
+        
+        let header = UserListHeaderView.instantiateFromNib()
+        header?.sizeToFit()
+        tableView.tableHeaderView = header
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMovie)),
             UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(clearList)),
@@ -64,6 +73,7 @@ class UserListDetailViewController: UITableViewController {
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] movies in
                 self.updateDataSource(movies: movies)
+                self.setupHeaderView()
             }
             .store(in: &cancellables)
         
@@ -83,6 +93,20 @@ class UserListDetailViewController: UITableViewController {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    fileprivate func setupHeaderView() {
+        guard let headerView = tableView.tableHeaderView as? UserListHeaderView else { return }
+        
+        headerView.titleLable.text = store.userList.name
+        headerView.descriptionLabel.text = store.userList.description
+        headerView.descriptionLabel.isHidden = store.userList.description.isEmpty
+        headerView.countLabel.text = "\(store.movieCount)"
+        headerView.ratingLabel.text = "\(store.averageRating)"
+        headerView.ratingView.rating = CGFloat(store.averageRating)
+        
+        headerView.sizeToFit()
+        tableView.tableHeaderView = headerView
     }
     
     //MARK: - Actions
@@ -129,7 +153,7 @@ extension UserListDetailViewController: AddMoviesToListViewControllerDelegate {
     }
     
     func isMovieAdded(movie: MovieViewModel) -> Bool {
-        let movie = store.userList.movies.first { $0.id == movie.id }
+        let movie = store.movies.first { $0.id == movie.id }
         return movie != nil
     }
     
