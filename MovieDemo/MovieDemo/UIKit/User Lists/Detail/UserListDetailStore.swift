@@ -22,6 +22,10 @@ class UserListDetailStore {
         self.actionsService = actionsService
     }
     
+    func movie(at index: Int) -> MovieViewModel {
+        MovieViewModel(movie: userList.movies[index])
+    }
+    
     func addMovie(movieId: Int) async throws {
         try await actionsService.addMovie(movieId: movieId, toList: userList.id)
     }

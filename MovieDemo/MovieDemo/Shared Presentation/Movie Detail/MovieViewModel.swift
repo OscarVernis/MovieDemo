@@ -303,10 +303,11 @@ extension MovieViewModel {
 //MARK: - Hashable
 extension MovieViewModel: Hashable {
     static func == (lhs: MovieViewModel, rhs: MovieViewModel) -> Bool {
-        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+        lhs.id == rhs.id
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
+        hasher.combine(id)
+        hasher.combine(title)
     }
 }
