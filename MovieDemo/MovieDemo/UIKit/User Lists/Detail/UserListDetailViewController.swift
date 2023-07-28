@@ -86,7 +86,9 @@ class UserListDetailViewController: UITableViewController {
     
     @objc
     func addMovie() {
-        let vc = AddMoviesToListViewController(recentMovies: dataSource.store.userList.movies.map(MovieViewModel.init),
+        let movies = MockData.movieVMs
+        
+        let vc = AddMoviesToListViewController(recentMovies: movies,
                                                service: dataSource.store.actionsService,
                                                listId: dataSource.store.userList.id)
         vc.title = "\(dataSource.store.userList.name)"

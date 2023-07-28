@@ -14,6 +14,9 @@ class AddMoviesToListViewController: UITableViewController {
     var recentMovies: [MovieViewModel]
     var service: UserDetailActionsService
     
+    var addedMovieIds = IndexSet()
+    var loadingMovies = IndexSet()
+    
     init(recentMovies: [MovieViewModel], service: UserDetailActionsService, listId: Int) {
         self.recentMovies = recentMovies
         self.service = service
@@ -35,13 +38,19 @@ class AddMoviesToListViewController: UITableViewController {
             
             ListMovieCell.configure(cell: cell, with: movie)
             cell.addHandler = {
-                print(movie.title)
-                cell.accessoryMode = .checkmark
+                self.addMovie(movie: movie)
             }
             cell.deleteHandler = {
-                cell.accessoryMode = .loading
+                self.removeMovie(movie: movie)
             }
-            cell.accessoryMode = .add
+            
+            if self.addedMovieIds.contains(movie.id) {
+                cell.accessoryMode = .checkmark
+            } else if self.loadingMovies.contains(movie.id) {
+                cell.accessoryMode = .loading
+            } else {
+                cell.accessoryMode = .add
+            }
             
             return cell
         })
@@ -49,11 +58,45 @@ class AddMoviesToListViewController: UITableViewController {
         ListMovieCell.register(to: tableView)
         tableView.rowHeight = 150
         
-        dataSource.update(movies: recentMovies, animated: false)
+        updateDataSource()
     }
     
+    func updateDataSource(animated: Bool = false) {
+        dataSource.update(movies: recentMovies, animated: animated)
+    }
+    
+    func reload(movie: MovieViewModel) {
+        dataSource.update(movies: recentMovies, reload: movie, animated: false)
+    }
+        
     func addMovie(movie: MovieViewModel) {
-        Task { try await service.addMovie(movieId:movie.id, toList: listId) }
+        Task {
+            loadingMovies.insert(movie.id)
+            reload(movie: movie)
+            do {
+                try await service.addMovie(movieId:movie.id, toList: listId)
+                loadingMovies.remove(movie.id)
+                addedMovieIds.insert(movie.id)
+            } catch {
+                loadingMovies.remove(movie.id)
+            }
+            reload(movie: movie)
+        }
+    }
+    
+    func removeMovie(movie: MovieViewModel) {
+        Task {
+            loadingMovies.insert(movie.id)
+            reload(movie: movie)
+            do {
+                try await service.removeMovie(movieId:movie.id, fromList: listId)
+                loadingMovies.remove(movie.id)
+                addedMovieIds.remove(movie.id)
+            } catch {
+                loadingMovies.insert(movie.id)
+            }
+            reload(movie: movie)
+        }
     }
     
 }

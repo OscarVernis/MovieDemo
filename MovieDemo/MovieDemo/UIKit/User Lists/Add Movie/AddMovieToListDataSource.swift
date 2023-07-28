@@ -13,10 +13,15 @@ class AddMovieToListDataSource: UITableViewDiffableDataSource<AddMovieToListData
         case main
     }
 
-    func update(movies: [MovieViewModel], animated: Bool = false) {
+    func update(movies: [MovieViewModel], reload: MovieViewModel? = nil, animated: Bool = false) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
         snapshot.appendSections([.main])
         snapshot.appendItems(movies, toSection: .main)
+        
+        if let reload {
+            snapshot.reloadItems([reload])
+        }
+        
         apply(snapshot, animatingDifferences: animated)
     }
     
