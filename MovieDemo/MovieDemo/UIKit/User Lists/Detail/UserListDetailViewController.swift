@@ -71,31 +71,7 @@ class UserListDetailViewController: UITableViewController {
     
     @objc
     func addMovie() {
-        let movies = MockData.movieVMs
-        
-        let vc = AddMoviesToListViewController(recentMovies: movies,
-                                               service: dataSource.store.actionsService,
-                                               searchService: TMDBClient().movieSearch(query:page:),
-                                               listId: dataSource.store.userList.id)
-        vc.title = "\(dataSource.store.userList.name)"
-        vc.navigationItem.largeTitleDisplayMode = .always
-        
-        let navCont = UINavigationController(rootViewController: vc)
-        
-        let search = UISearchController()
-        vc.navigationItem.searchController = search
-        vc.navigationItem.hidesSearchBarWhenScrolling = false
-        search.searchResultsUpdater = vc
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(closeModal))
-        vc.navigationItem.rightBarButtonItem = doneButton
-
-        present(navCont, animated: true)
-    }
-    
-    @objc
-    func closeModal() {
-        presentedViewController?.dismiss(animated: true)
+        router?.showAddMovieToList(title: dataSource.store.userList.name, delegate: self)
     }
     
     @objc
@@ -117,5 +93,23 @@ class UserListDetailViewController: UITableViewController {
         }
         
     }
+    
+}
+
+extension UserListDetailViewController: AddMoviesToListViewControllerDelegate {
+    func add(movie: MovieViewModel) async throws {
+        try await dataSource.addMovie(movieId: movie.id)
+        dataSource.update()
+    }
+    
+    func remove(movie: MovieViewModel) async throws {
+        //async throw dataSource.removeMovie(at:
+    }
+    
+    func isMovieAdded(movie: MovieViewModel) -> Bool {
+        let movie = dataSource.store.userList.movies.first { $0.id == movie.id }
+        return movie != nil
+    }
+    
     
 }

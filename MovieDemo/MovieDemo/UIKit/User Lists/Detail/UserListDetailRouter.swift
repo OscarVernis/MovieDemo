@@ -10,10 +10,15 @@ import Foundation
 
 protocol UserListDetailRouter: ErrorHandlingRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
+    func showAddMovieToList(title: String, delegate: AddMoviesToListViewControllerDelegate, animated: Bool)
 }
 
 extension UserListDetailRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         showMovieDetail(movie: movie, animated: animated)
+    }
+    
+    func showAddMovieToList(title: String, delegate: AddMoviesToListViewControllerDelegate, animated: Bool = true) {
+        showAddMovieToList(title: title, delegate: delegate, animated: animated)
     }
 }

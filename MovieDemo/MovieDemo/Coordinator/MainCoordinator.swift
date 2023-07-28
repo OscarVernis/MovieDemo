@@ -241,13 +241,6 @@ class MainCoordinator {
         }
     }
     
-    func showUserLists(animated: Bool = true) {
-        let ulvc = UserListsViewController(dataSourceProvider: dependencies.userListsDataSource(), router: self)
-        ulvc.title = "Lists"
-
-        rootNavigationViewController?.pushViewController(ulvc, animated: animated)
-    }
-    
     func showUserListDetail(list: UserList, animated: Bool = true) {
         let uldvc = UserListDetailViewController(dataSourceProvider: dependencies.userListDetailDataSource(list: list), router: self)
         uldvc.title = list.name
@@ -354,6 +347,33 @@ class MainCoordinator {
     
     func showUserRated() {
         showMovieList(title: .localized(UserString.Rated), endpoint: .UserRated)
+    }
+    
+    //MARK: - User Detail
+    func showUserLists(animated: Bool = true) {
+        let ulvc = UserListsViewController(dataSourceProvider: dependencies.userListsDataSource(), router: self)
+        ulvc.title = "Lists"
+
+        rootNavigationViewController?.pushViewController(ulvc, animated: animated)
+    }
+    
+    func showAddMovieToList(title: String, delegate: AddMoviesToListViewControllerDelegate, animated: Bool = true) {
+        let movies = MockData.movieVMs
+        
+        let service = { self.dependencies.remoteClient.movieSearch(query: $0, page: 1)
+            .map { $0.movies.map(MovieViewModel.init) }
+            .eraseToAnyPublisher()
+        }
+        
+        let vc = AddMoviesToListViewController(recentMovies: movies,
+                                               searchService: service,
+                                               delegate: delegate)
+        vc.title = title
+        vc.navigationItem.largeTitleDisplayMode = .always
+        
+        let navCont = UINavigationController(rootViewController: vc)
+
+        rootNavigationViewController?.present(navCont, animated: true)
     }
     
 }

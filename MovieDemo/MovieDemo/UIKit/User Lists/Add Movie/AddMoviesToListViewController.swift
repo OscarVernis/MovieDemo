@@ -9,20 +9,28 @@
 import UIKit
 import Combine
 
+protocol AddMoviesToListViewControllerDelegate: AnyObject {
+    func add(movie: MovieViewModel) async throws
+    func remove(movie: MovieViewModel) async throws
+    func isMovieAdded(movie: MovieViewModel) -> Bool
+}
+
 class AddMoviesToListViewController: UITableViewController {
-    var dataSource: AddMovieToListDataSource!
-    var listId: Int
-    var recentMovies: [MovieViewModel]
-    var service: UserDetailActionsService
-    var searchService: MovieSearchService
+    typealias SearchService = (String) -> AnyPublisher<[MovieViewModel], Error>
     
-    var addedMovieIds = IndexSet()
+    var dataSource: AddMovieToListDataSource!
+    var recentMovies: [MovieViewModel]
+    var searchService: SearchService
+    
     var loadingMovies = IndexSet()
+    
+    weak var delegate: AddMoviesToListViewControllerDelegate!
     
     enum DisplayMode {
         case search
         case recent
     }
+    
     var displayMode: DisplayMode = .recent {
         didSet {
             if oldValue != displayMode {
@@ -31,11 +39,10 @@ class AddMoviesToListViewController: UITableViewController {
         }
     }
     
-    init(recentMovies: [MovieViewModel], service: UserDetailActionsService, searchService: @escaping MovieSearchService, listId: Int) {
+    init(recentMovies: [MovieViewModel], searchService: @escaping SearchService, delegate: AddMoviesToListViewControllerDelegate) {
         self.recentMovies = recentMovies
-        self.service = service
-        self.listId = listId
         self.searchService = searchService
+        self.delegate = delegate
         
         super.init(style: .grouped)
     }
@@ -47,18 +54,22 @@ class AddMoviesToListViewController: UITableViewController {
     //MARK :- Setup
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupTableView()
+        setupSearchBar()
+        setupSearchService()
+        updateDataSource()
+    }
+    
+    func setupTableView() {
+        ListMovieCell.register(to: tableView)
+        tableView.rowHeight = 150
+        tableView.allowsSelection = false
         
         dataSource = AddMovieToListDataSource(tableView: tableView, cellProvider: { [unowned self] tableView, indexPath, movie in
             self.cellProvider(indexPath: indexPath, movie: movie)
         })
-        
-        ListMovieCell.register(to: tableView)
-        tableView.rowHeight = 150
-        tableView.allowsSelection = false
         dataSource.defaultRowAnimation = .fade
-                
-        setupSearch()
-        updateDataSource()
     }
     
     func cellProvider(indexPath: IndexPath, movie: MovieViewModel) -> UITableViewCell {
@@ -72,15 +83,19 @@ class AddMoviesToListViewController: UITableViewController {
             self.removeMovie(movie: movie)
         }
         
-        if self.addedMovieIds.contains(movie.id) {
-            cell.accessoryMode = .checkmark
-        } else if self.loadingMovies.contains(movie.id) {
-            cell.accessoryMode = .loading
-        } else {
-            cell.accessoryMode = .add
-        }
+        self.updateCellAccesory(cell: cell, movie: movie)
         
         return cell
+    }
+    
+    func setupSearchBar() {
+        let searchController = UISearchController()
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchResultsUpdater = self
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
+        navigationItem.rightBarButtonItem = doneButton
     }
     
     func updateDataSource(animated: Bool = true) {
@@ -93,12 +108,22 @@ class AddMoviesToListViewController: UITableViewController {
         }
     }
     
+    func updateCellAccesory(cell: ListMovieCell, movie: MovieViewModel) {
+        if delegate.isMovieAdded(movie: movie) {
+            cell.accessoryMode = .checkmark
+        } else if loadingMovies.contains(movie.id) {
+            cell.accessoryMode = .loading
+        } else {
+            cell.accessoryMode = .add
+        }
+    }
+    
     //MARK: - Search
     @Published var query: String = ""
     @Published var searchResults: [MovieViewModel] = []
     var cancellables = Set<AnyCancellable>()
     
-    func setupSearch() {
+    func setupSearchService() {
         $query
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .removeDuplicates()
@@ -110,10 +135,9 @@ class AddMoviesToListViewController: UITableViewController {
                 return query
             }
             .flatMap { [unowned self] query in
-                self.searchService(query, 1)
+                self.searchService(query)
             }
             .handleError { print($0) }
-            .map { $0.movies.map(MovieViewModel.init) }
             .sink { movies in
                 self.dataSource.update(movies: movies, animated: true)
             }
@@ -122,18 +146,22 @@ class AddMoviesToListViewController: UITableViewController {
     
 
     //MARK: - Actions
+    @objc
+    func close() {
+        dismiss(animated: true)
+    }
+    
     func addMovie(movie: MovieViewModel, from cell: ListMovieCell) {
         Task {
             loadingMovies.insert(movie.id)
             cell.accessoryMode = .loading
             do {
-                try await service.addMovie(movieId:movie.id, toList: listId)
+                try await delegate.add(movie: movie)
                 loadingMovies.remove(movie.id)
-                addedMovieIds.insert(movie.id)
                 cell.accessoryMode = .checkmark
             } catch {
                 loadingMovies.remove(movie.id)
-                cell.accessoryMode = .add
+                updateCellAccesory(cell: cell, movie: movie)
             }
         }
     }
@@ -142,9 +170,8 @@ class AddMoviesToListViewController: UITableViewController {
         Task {
             loadingMovies.insert(movie.id)
             do {
-                try await service.removeMovie(movieId:movie.id, fromList: listId)
+                try await delegate.remove(movie: movie)
                 loadingMovies.remove(movie.id)
-                addedMovieIds.remove(movie.id)
             } catch {
                 loadingMovies.insert(movie.id)
             }
