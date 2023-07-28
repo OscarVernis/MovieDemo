@@ -358,15 +358,8 @@ class MainCoordinator {
     }
     
     func showAddMovieToList(title: String, delegate: AddMoviesToListViewControllerDelegate, animated: Bool = true) {
-        let movies = MockData.movieVMs
-        
-        let service = { self.dependencies.remoteClient.movieSearch(query: $0, page: 1)
-            .map { $0.movies.map(MovieViewModel.init) }
-            .eraseToAnyPublisher()
-        }
-        
-        let vc = AddMoviesToListViewController(recentMovies: movies,
-                                               searchService: service,
+        let vc = AddMoviesToListViewController(recentMovies: dependencies.recentMovies,
+                                               searchService: dependencies.movieSearchService,
                                                delegate: delegate)
         vc.title = title
         vc.navigationItem.largeTitleDisplayMode = .always

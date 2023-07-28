@@ -103,4 +103,15 @@ class AppDependencyContainer {
         return { UserListDetailDataSource(tableView: $0, store: store) }
     }
     
+    //MARK: - Lists
+    var recentMovies: [MovieViewModel] {
+        MockData.movieVMs
+    }
+    
+    var movieSearchService: (String) -> AnyPublisher<[MovieViewModel], Error> {
+        { self.remoteClient.movieSearch(query: $0, page: 1)
+            .map { $0.movies.map(MovieViewModel.init) }
+            .eraseToAnyPublisher()
+        }
+    }
 }

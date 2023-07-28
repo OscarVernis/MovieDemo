@@ -120,7 +120,7 @@ class AddMoviesToListViewController: UITableViewController {
     
     //MARK: - Search
     @Published var query: String = ""
-    @Published var searchResults: [MovieViewModel] = []
+    var searchResults: [MovieViewModel] = []
     var cancellables = Set<AnyCancellable>()
     
     func setupSearchService() {
@@ -138,8 +138,9 @@ class AddMoviesToListViewController: UITableViewController {
                 self.searchService(query)
             }
             .handleError { print($0) }
-            .sink { movies in
-                self.dataSource.update(movies: movies, animated: true)
+            .sink { [weak self] movies in
+                self?.searchResults = movies
+                self?.updateDataSource()
             }
             .store(in: &cancellables)
     }
@@ -155,11 +156,13 @@ class AddMoviesToListViewController: UITableViewController {
         Task {
             loadingMovies.insert(movie.id)
             cell.accessoryMode = .loading
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
             do {
                 try await delegate.add(movie: movie)
                 loadingMovies.remove(movie.id)
                 cell.accessoryMode = .checkmark
             } catch {
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
                 loadingMovies.remove(movie.id)
                 updateCellAccesory(cell: cell, movie: movie)
             }
@@ -176,10 +179,6 @@ class AddMoviesToListViewController: UITableViewController {
                 loadingMovies.insert(movie.id)
             }
         }
-    }
-    
-    deinit {
-        print("Deinit")
     }
     
 }
