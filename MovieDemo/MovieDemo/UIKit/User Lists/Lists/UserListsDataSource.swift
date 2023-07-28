@@ -39,8 +39,10 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
     //MARK: - Setup
     fileprivate func setupStore() {
         store.$lists
+            .receive(on: DispatchQueue.main)
             .sink { lists in
-                self.updateDataSource(lists: lists)
+                let animated = self.snapshot().numberOfItems != 0
+                self.updateDataSource(lists: lists, animated: animated)
             }
             .store(in: &cancellables)
         

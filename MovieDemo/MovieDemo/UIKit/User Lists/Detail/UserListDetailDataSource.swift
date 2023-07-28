@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailDataSource.Section, MovieViewModel> {
+class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailDataSource.Section, MovieViewModel.ID> {
     enum Section {
         case main
     }
@@ -17,15 +17,12 @@ class UserListDetailDataSource: UITableViewDiffableDataSource<UserListDetailData
     var removeMovie: ((Int) -> ())? = nil
     
     func updateDataSource(movies: [MovieViewModel], animated: Bool = true) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
+        let movieIds = movies.map { $0.id }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel.ID>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(movies, toSection: .main)
-        apply(snapshot, animatingDifferences: false)
-    }
-    
-    func remove(movie: MovieViewModel) {
-        var snapshot = snapshot()
-        snapshot.deleteItems([movie])
+        snapshot.appendItems(movieIds, toSection: .main)
+        apply(snapshot, animatingDifferences: animated)
     }
     
     //MARK: - Table View

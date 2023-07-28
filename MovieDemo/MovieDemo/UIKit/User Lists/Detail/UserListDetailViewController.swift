@@ -42,8 +42,9 @@ class UserListDetailViewController: UITableViewController {
     }
     
     func setupTableView() {
-        dataSource = UserListDetailDataSource(tableView: tableView) { tableView, indexPath, movie in
+        dataSource = UserListDetailDataSource(tableView: tableView) { tableView, indexPath, movieId in
             let cell = tableView.dequeueReusableCell(withIdentifier: ListMovieCell.reuseIdentifier, for: indexPath) as! ListMovieCell
+            let movie = self.store.movie(at: indexPath.row)
             ListMovieCell.configure(cell: cell, with: movie)
             return cell
         }
@@ -60,8 +61,9 @@ class UserListDetailViewController: UITableViewController {
     
     fileprivate func setupStore() {
         store.$userList
-            .sink { list in
-                self.dataSource.updateDataSource(movies: list.movies.map(MovieViewModel.init))
+            .receive(on: DispatchQueue.main)
+            .sink { [unowned self] list in
+                self.updateDataSource(movies: list.movies.map(MovieViewModel.init))
             }
             .store(in: &cancellables)
         
@@ -84,6 +86,11 @@ class UserListDetailViewController: UITableViewController {
     }
     
     //MARK: - Actions
+    func updateDataSource(movies: [MovieViewModel]) {
+        let animated = dataSource.snapshot().numberOfItems != 0
+        dataSource.updateDataSource(movies: movies, animated: animated)
+    }
+    
     @objc
     func update() {
         store.update()

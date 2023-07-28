@@ -8,18 +8,20 @@
 
 import UIKit
 
-class AddMovieToListDataSource: UITableViewDiffableDataSource<AddMovieToListDataSource.Section, MovieViewModel> {
+class AddMovieToListDataSource: UITableViewDiffableDataSource<AddMovieToListDataSource.Section, MovieViewModel.ID> {
     enum Section {
         case main
     }
     
     var showSectionHeader = true
 
-    func update(movies: [MovieViewModel], animated: Bool = false) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
+    func update(movies: [MovieViewModel], animated: Bool = true) {
+        let movieIds = movies.map { $0.id }
+
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel.ID>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(movies, toSection: .main)
-        apply(snapshot, animatingDifferences: animated)
+        snapshot.appendItems(movieIds, toSection: .main)
+        apply(snapshot, animatingDifferences: true)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

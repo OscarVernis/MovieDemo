@@ -21,6 +21,13 @@ class AddMoviesToListViewController: UITableViewController {
     var dataSource: AddMovieToListDataSource!
     var recentMovies: [MovieViewModel]
     var searchService: SearchService
+    var movies: [MovieViewModel] {
+        if displayMode == .search {
+            return searchResults
+        } else {
+            return recentMovies
+        }
+    }
     
     var loadingMovies = IndexSet()
     
@@ -66,8 +73,9 @@ class AddMoviesToListViewController: UITableViewController {
         tableView.rowHeight = 150
         tableView.allowsSelection = false
         
-        dataSource = AddMovieToListDataSource(tableView: tableView, cellProvider: { [unowned self] tableView, indexPath, movie in
-            self.cellProvider(indexPath: indexPath, movie: movie)
+        dataSource = AddMovieToListDataSource(tableView: tableView, cellProvider: { [unowned self] tableView, indexPath, _ in
+            let movie = movies[indexPath.row]
+            return self.cellProvider(indexPath: indexPath, movie: movie)
         })
         dataSource.defaultRowAnimation = .fade
     }

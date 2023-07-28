@@ -28,11 +28,6 @@ class MovieViewModel {
         updateInfo()
     }
     
-    func updateMovie(_ movie: Movie) {
-        self.movie = movie
-        updateInfo()
-    }
-    
     func updateInfo() {
         updateTopCrew()
         updateTopCast()
@@ -301,13 +296,12 @@ extension MovieViewModel {
 }
 
 //MARK: - Hashable
-extension MovieViewModel: Hashable {
+extension MovieViewModel: Identifiable, Hashable {
     static func == (lhs: MovieViewModel, rhs: MovieViewModel) -> Bool {
-        lhs.id == rhs.id
+        lhs.movie.id == rhs.movie.id
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(title)
+        hasher.combine(movie.id)
     }
 }
