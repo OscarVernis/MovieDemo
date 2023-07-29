@@ -39,7 +39,7 @@ class LoginViewControllerTests: XCTestCase {
             let store = UserStoreMock(isLoggedIn: false)
             let service = SessionServiceMock(fails: true)
             let sessionManager = SessionManager(service: service, store: store)
-            lvc.store = LoginViewStore(sessionManager: sessionManager)
+            lvc.store = LoginViewStore(loginService: sessionManager)
             
             return lvc
         }
@@ -110,10 +110,10 @@ class LoginViewControllerTests: XCTestCase {
     }
     
     func test_returnOnPassword_shouldLogin() {
-        let sessionService = SessionServiceMock()
-        sut.store.loginService.store = UserStoreMock(isLoggedIn: false)
-        sut.store.loginService.service = sessionService
-        
+        let service = SessionServiceMock()
+        let store = UserStoreMock(isLoggedIn: false)
+        let sessionManager = SessionManager(service: service, store: store)
+        sut.store.loginService = sessionManager
         
         sut.loadViewIfNeeded()
         
@@ -134,9 +134,9 @@ class LoginViewControllerTests: XCTestCase {
         let _ = sut.passwordTextField.delegate?.textFieldShouldReturn?(sut.passwordTextField)
         wait(for: [exp], timeout: 1)
         
-        XCTAssertEqual(sessionService.loginCount, 1)
-        XCTAssertEqual(sessionService.username, "username")
-        XCTAssertEqual(sessionService.password, "password")
+        XCTAssertEqual(service.loginCount, 1)
+        XCTAssertEqual(service.username, "username")
+        XCTAssertEqual(service.password, "password")
     }
     
 }

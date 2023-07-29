@@ -37,7 +37,7 @@ class SessionManagerTests: XCTestCase {
         let result = await sessionManager.login(withUsername:"username", password: "password")
         switch result {
         case .failure(let error):
-            XCTAssertEqual(error as? SessionManager.LoginError, SessionManager.LoginError.Default)
+            XCTAssertEqual(error as? LoginError, LoginError.Default)
         default:
             XCTFail()
             break
@@ -54,7 +54,7 @@ class SessionManagerTests: XCTestCase {
         let result = await sessionManager.login(withUsername:"username", password: "password")
         switch result {
         case .failure(let error):
-            XCTAssertEqual(error as? SessionManager.LoginError, SessionManager.LoginError.IncorrectCredentials)
+            XCTAssertEqual(error as? LoginError, LoginError.IncorrectCredentials)
         default:
             XCTFail()
             break
@@ -67,15 +67,10 @@ class SessionManagerTests: XCTestCase {
         let service = SessionServiceMock()
         let sessionManager = SessionManager(service: service, store: store)
 
-        let result = await sessionManager.logout()
-        switch result {
-        case .failure(_):
-            XCTFail()
-        default:
-            XCTAssertEqual(sessionManager.isLoggedIn, false)
-            XCTAssertNil(sessionManager.sessionId)
-        }
-        
+        try await sessionManager.logout()
+    
+        XCTAssertEqual(sessionManager.isLoggedIn, false)
+        XCTAssertNil(sessionManager.sessionId)
     }
     
     func test_logout_fails() async throws {
@@ -83,16 +78,12 @@ class SessionManagerTests: XCTestCase {
         let service = SessionServiceMock(fails: true)
         let sessionManager = SessionManager(service: service, store: store)
         
-        let result = await sessionManager.logout()
-        switch result {
-        case .failure(_):
+        do {
+            try await sessionManager.logout()
+        } catch {
             XCTAssertEqual(sessionManager.isLoggedIn, true)
             XCTAssertNotNil(sessionManager.sessionId)
-            break
-        default:
-            XCTFail()
         }
-        
     }
-    
+
 }
