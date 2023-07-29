@@ -181,7 +181,8 @@ extension TMDBClient: UserListActionsService {
     }
     
     func deleteList(listId: Int) async throws {
-        let _ = try await successAction(endpoint: .deleteList(listId), method: .delete).async()
+        //API sends error 500 but does delete the list
+        let _ = try? await successAction(endpoint: .deleteList(listId), method: .delete).async()
     }
     
     func getUserListDetails(listId: Int) -> AnyPublisher<UserList, Error> {

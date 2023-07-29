@@ -44,17 +44,12 @@ class UserListsStore {
 
     
     func removeList(at index: Int) async {
-        let removedList: UserList = lists[index]
-//            removedList =
-            lists.remove(at: index)
-        
+        let removedList = lists.remove(at: index)
         do {
             try await actionsService.deleteList(listId: removedList.id)
         } catch {
             self.error = error
-            //            if let removedList, let idx {
-            //                lists.insert(removedList, at: idx)
-            //            }
+            lists.insert(removedList, at: index)
         }
     }
     

@@ -87,10 +87,9 @@ class UserListDetailViewController: UITableViewController {
         
         store.$error
             .receive(on: DispatchQueue.main)
-            .sink { [weak self]  error in
-                if error != nil {
-                    self?.router?.handle(error: .refreshError)
-                }
+            .compactMap { $0 }
+            .sink { [router]  error in
+                router?.handle(error: .refreshError)
             }
             .store(in: &cancellables)
     }

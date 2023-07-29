@@ -41,7 +41,7 @@ class UserListsViewController: UITableViewController {
         tableView.refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(update), for: .valueChanged)
         
-        let action = UIAction { _ in
+        let action = UIAction { [unowned self] _ in
             self.showAddListAlert()
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: action)
@@ -52,7 +52,7 @@ class UserListsViewController: UITableViewController {
         tableView.rowHeight = 111
         tableView.separatorStyle = .none
         
-        dataSource = UserListsDataSource(tableView: tableView, cellProvider: { tableView, indexPath, _ in
+        dataSource = UserListsDataSource(tableView: tableView, cellProvider: { [unowned self] tableView, indexPath, _ in
             let cell = tableView.dequeueReusableCell(withIdentifier: UserListCell.reuseIdentifier, for: indexPath) as! UserListCell
             
             let userList = self.store.lists[indexPath.row]
@@ -74,27 +74,25 @@ class UserListsViewController: UITableViewController {
     fileprivate func setupStore() {
         store.$lists
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] lists in
-                let animated = self?.dataSource.snapshot().numberOfItems != 0
-                self?.dataSource.updateDataSource(lists: lists, animated: animated)
+            .sink { [dataSource] lists in
+                let animated = dataSource?.snapshot().numberOfItems != 0
+                dataSource?.updateDataSource(lists: lists, animated: animated)
             }
             .store(in: &cancellables)
         
         store.$isLoading
-            .sink(receiveValue: { [weak self] isLoading in
+            .sink(receiveValue: { [tableView] isLoading in
                 if !isLoading {
-                    self?.tableView.refreshControl?.endRefreshing()
+                    tableView?.refreshControl?.endRefreshing()
                 }
             })
             .store(in: &cancellables)
         
         store.$error
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                if error != nil {
-                    print(error!)
-//                    self?.show(error: .refreshError, shouldDismiss: true)
-                }
+            .compactMap { $0 }
+            .sink { [router] error in
+                router?.handle(error: .refreshError)
             }
             .store(in: &cancellables)
     }
@@ -109,7 +107,7 @@ class UserListsViewController: UITableViewController {
         let ac = UIAlertController(title: "Create List", message: nil, preferredStyle: .alert)
         ac.addTextField()
 
-        let submitAction = UIAlertAction(title: "Create", style: .default) { [unowned ac] _ in
+        let submitAction = UIAlertAction(title: "Create", style: .default) { _ in
                let answer = ac.textFields![0]
                if let name = answer.text {
                    self.addList(name: name)

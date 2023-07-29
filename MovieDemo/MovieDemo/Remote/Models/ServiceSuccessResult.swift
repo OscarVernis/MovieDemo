@@ -10,6 +10,7 @@ import Foundation
 
 struct ServiceSuccessResult: Codable {
     var success: Bool?
+    var statusCode: Int?
     var sessionId: String?
     var requestToken: String?
     var listId: Int?

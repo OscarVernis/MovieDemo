@@ -42,7 +42,6 @@ extension XCTestCase {
         var person = Person()
         XCTAssertNoThrow( person = try decoder.decode(CodablePerson.self, from: personData).toPerson() )
 
-        print(person)
         return person
     }
     
