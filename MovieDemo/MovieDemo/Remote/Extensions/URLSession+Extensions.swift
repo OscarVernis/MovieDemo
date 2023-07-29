@@ -12,7 +12,15 @@ import Combine
 typealias DataTaskResult = (data: Data, response: URLResponse)
 
 extension Publisher where Output == DataTaskResult {
-    func validate(statusCode: Range<Int> = 200..<300) -> AnyPublisher<Data, Error> {
+    func validate(statusCode: Int) -> AnyPublisher<Data, Error> {
+        validate(statusCode: statusCode...statusCode)
+    }
+
+    func validate(statusCode: any RangeExpression<Int> = 200..<300) -> AnyPublisher<Data, Error> {
+        if let range = statusCode as? ClosedRange<Int> {
+            Swift.print(range.lowerBound, range.upperBound)
+        }
+        
         return self
             .tryMap { output -> Data in
                 if let response = output.response as? HTTPURLResponse {

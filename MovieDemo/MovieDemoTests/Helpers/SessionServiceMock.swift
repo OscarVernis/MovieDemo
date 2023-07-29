@@ -45,8 +45,10 @@ class SessionServiceMock: SessionService {
         return "sessionId"
     }
     
-    func deleteSession(sessionId: String) async throws -> Result<Void, Error> {
-        return fails ? .failure(TMDBClient.ServiceError.RequestError) : .success(())
+    func deleteSession(sessionId: String) async throws {
+        if fails {
+            throw TMDBClient.ServiceError.RequestError
+        }
     }
     
 }
