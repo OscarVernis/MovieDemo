@@ -28,4 +28,4 @@ struct UserList {
     }
 }
 
-extension UserList: Codable, Equatable, Hashable { }
+extension UserList: Codable, Identifiable, Equatable, Hashable { }

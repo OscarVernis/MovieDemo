@@ -10,14 +10,15 @@ import UIKit
 import Combine
 
 class UserListsViewController: UITableViewController {
-    var dataSource: UserListsDataSource?
-    var dataSourceProvider: (UITableView) -> UserListsDataSource
+    let store: UserListsStore
     var router: UserListsRouter?
     
-    var cancellables = Set<AnyCancellable>()
+    var dataSource: UserListsDataSource!
     
-    init(dataSourceProvider: @escaping (UITableView) -> UserListsDataSource, router: UserListsRouter? = nil) {
-        self.dataSourceProvider = dataSourceProvider
+    var cancellables = Set<AnyCancellable>()
+
+    init(store: UserListsStore, router: UserListsRouter? = nil) {
+        self.store = store
         self.router = router
         super.init(style: .plain)
     }
@@ -26,32 +27,62 @@ class UserListsViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setup()
+        setupDataSource()
+        setupStore()
+        update()
     }
     
     func setup() {
         tableView.refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(updateUserLists), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(update), for: .valueChanged)
         
         let action = UIAction { _ in
             self.showAddListAlert()
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: action)
+    }
+    
+    func setupDataSource() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        dataSource = dataSourceProvider(tableView)
+        dataSource = UserListsDataSource(tableView: tableView, cellProvider: { tableView, indexPath, _ in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            
+            let userList = self.store.lists[indexPath.row]
+            cell.textLabel?.text = userList.name
+            cell.detailTextLabel?.text = userList.description
+
+            return cell
+        })
         
-        dataSource?.$isLoading
-            .sink(receiveValue: { isLoading in
+        dataSource.removeList = { [weak self] idx in
+            self?.removeList(at: idx)
+        }
+    }
+                                         
+    fileprivate func setupStore() {
+        store.$lists
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] lists in
+                let animated = self?.dataSource.snapshot().numberOfItems != 0
+                self?.dataSource.updateDataSource(lists: lists, animated: animated)
+            }
+            .store(in: &cancellables)
+        
+        store.$isLoading
+            .sink(receiveValue: { [weak self] isLoading in
                 if !isLoading {
-                    self.tableView.refreshControl?.endRefreshing()
+                    self?.tableView.refreshControl?.endRefreshing()
                 }
             })
             .store(in: &cancellables)
         
-        dataSource?.$error
+        store.$error
             .receive(on: DispatchQueue.main)
             .sink { error in
                 if error != nil {
@@ -60,8 +91,12 @@ class UserListsViewController: UITableViewController {
                 }
             }
             .store(in: &cancellables)
-        
-        updateUserLists()
+    }
+    
+    //MARK: - Actions
+    @objc
+    func update() {
+        store.update()
     }
     
     func showAddListAlert() {
@@ -81,17 +116,16 @@ class UserListsViewController: UITableViewController {
     }
     
     func addList(name: String) {
-        Task { await dataSource?.addList(name: name) }
+        Task { await store.addList(name: name, description: "") }
     }
     
-    @objc
-    func updateUserLists() {
-        dataSource?.update()
+    func removeList(at idx: Int) {
+        Task { await store.removeList(at: idx) }
     }
 
     //MARK: - Table View Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let list = dataSource!.store.lists[indexPath.row]
+        let list = store.lists[indexPath.row]
         tableView.deselectRow(at: indexPath, animated: true)
         
         router?.showUserListDetail(list: list)

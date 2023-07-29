@@ -97,10 +97,9 @@ class AddMoviesToListViewController: UITableViewController {
     }
     
     func setupSearchBar() {
-        let searchController = UISearchController()
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.searchResultsUpdater = self
+        let searchBar = UISearchBar()
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
         navigationItem.rightBarButtonItem = doneButton
@@ -124,6 +123,12 @@ class AddMoviesToListViewController: UITableViewController {
         } else {
             cell.accessoryMode = .add
         }
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let searchBar = navigationItem.titleView as? UISearchBar else { return }
+        
+        searchBar.resignFirstResponder()
     }
     
     //MARK: - Search
@@ -186,10 +191,10 @@ class AddMoviesToListViewController: UITableViewController {
     
 }
 
-extension AddMoviesToListViewController: UISearchResultsUpdating, UISearchControllerDelegate {
-    func updateSearchResults(for searchController: UISearchController) {
-        query = searchController.searchBar.text ?? ""
+extension AddMoviesToListViewController: UISearchBarDelegate  {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        query = searchText
         displayMode = query.isEmpty ? .recent : .search
     }
-    
+        
 }

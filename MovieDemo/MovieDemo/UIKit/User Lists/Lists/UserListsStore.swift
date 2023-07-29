@@ -43,16 +43,13 @@ class UserListsStore {
     }
 
     
-    func delete(list: UserList) async {
-        let idx = lists.firstIndex(of: list)
-//        var removedList: UserList? = nil
-        if let idx {
+    func removeList(at index: Int) async {
+        let removedList: UserList = lists[index]
 //            removedList =
-            lists.remove(at: idx)
-        }
+            lists.remove(at: index)
         
         do {
-            try await actionsService.deleteList(listId: list.id)
+            try await actionsService.deleteList(listId: removedList.id)
         } catch {
             self.error = error
             //            if let removedList, let idx {

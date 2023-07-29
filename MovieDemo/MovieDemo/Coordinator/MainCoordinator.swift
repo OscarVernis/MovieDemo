@@ -243,7 +243,6 @@ class MainCoordinator {
     
     func showUserListDetail(list: UserList, animated: Bool = true) {
         let uldvc = UserListDetailViewController(store: dependencies.userListDetailStore(list: list), router: self)
-        uldvc.title = list.name
         
         rootNavigationViewController?.pushViewController(uldvc, animated: animated)
     }
@@ -351,7 +350,7 @@ class MainCoordinator {
     
     //MARK: - User Detail
     func showUserLists(animated: Bool = true) {
-        let ulvc = UserListsViewController(dataSourceProvider: dependencies.userListsDataSource(), router: self)
+        let ulvc = UserListsViewController(store: dependencies.userListsDataStore, router: self)
         ulvc.title = "Lists"
 
         rootNavigationViewController?.pushViewController(ulvc, animated: animated)

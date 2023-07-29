@@ -91,10 +91,9 @@ class AppDependencyContainer {
         return PersonDetailStore(person: person, service: service)
     }
     
-    func userListsDataSource() -> (UITableView) -> UserListsDataSource {
+    var userListsDataStore: UserListsStore {
         let service = { self.remoteClient.getUserLists(userId: 8555334, page: $0)  }
-        let store = UserListsStore(service: service, actionsService: remoteClient)
-        return { UserListsDataSource(store: store, tableView: $0) }
+        return UserListsStore(service: service, actionsService: remoteClient)
     }
     
     func userListDetailStore(list: UserList) -> UserListDetailStore {
