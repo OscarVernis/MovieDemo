@@ -97,6 +97,8 @@
 		5547ED5F282594A60079BD14 /* ListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */; };
 		5547ED6128259EDE0079BD14 /* MovieLoaderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */; };
 		554970C82902389000E5A8B3 /* MovieServiceImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554970C72902389000E5A8B3 /* MovieServiceImageUtils.swift */; };
+		554BB8CB2A75837400762F44 /* UserListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554BB8C92A75837400762F44 /* UserListCell.swift */; };
+		554BB8CC2A75837400762F44 /* UserListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 554BB8CA2A75837400762F44 /* UserListCell.xib */; };
 		554DDE1D286239D100DD864A /* AttributedStringAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DDE1C286239D100DD864A /* AttributedStringAsset.swift */; };
 		554DDE21286254F200DD864A /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DDE20286254F200DD864A /* ActivityIndicator.swift */; };
 		554DDE232862578100DD864A /* BlurBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554DDE222862578100DD864A /* BlurBackground.swift */; };
@@ -396,6 +398,8 @@
 		5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerTests.swift; sourceTree = "<group>"; };
 		5547ED6028259EDE0079BD14 /* MovieLoaderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieLoaderMock.swift; sourceTree = "<group>"; };
 		554970C72902389000E5A8B3 /* MovieServiceImageUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServiceImageUtils.swift; sourceTree = "<group>"; };
+		554BB8C92A75837400762F44 /* UserListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListCell.swift; sourceTree = "<group>"; };
+		554BB8CA2A75837400762F44 /* UserListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserListCell.xib; sourceTree = "<group>"; };
 		554DDE1C286239D100DD864A /* AttributedStringAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringAsset.swift; sourceTree = "<group>"; };
 		554DDE20286254F200DD864A /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		554DDE222862578100DD864A /* BlurBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurBackground.swift; sourceTree = "<group>"; };
@@ -895,6 +899,17 @@
 				5547ED5E282594A60079BD14 /* ListViewControllerTests.swift */,
 			);
 			path = "ViewController Tests";
+			sourceTree = "<group>";
+		};
+		554BB8CD2A75838B00762F44 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5563A5E62A745027004528EA /* UserListHeaderView.swift */,
+				5563A5E72A745027004528EA /* UserListHeaderView.xib */,
+				55F4E4412A723BEC004CACCC /* ListMovieCell.swift */,
+				55F4E4422A723BEC004CACCC /* ListMovieCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		554DDE19286234B800DD864A /* User Profile */ = {
@@ -1417,6 +1432,8 @@
 				559263312A70E95D002E6014 /* UserListsDataSource.swift */,
 				5541467E2A71834200BF1B16 /* UserListsStore.swift */,
 				55B7395C2A7218FC003BB6F5 /* UserListsRouter.swift */,
+				554BB8C92A75837400762F44 /* UserListCell.swift */,
+				554BB8CA2A75837400762F44 /* UserListCell.xib */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -1424,14 +1441,11 @@
 		55F4E4402A723812004CACCC /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				554BB8CD2A75838B00762F44 /* Views */,
 				55B739562A720E7A003BB6F5 /* UserListDetailViewController.swift */,
-				5563A5E62A745027004528EA /* UserListHeaderView.swift */,
-				5563A5E72A745027004528EA /* UserListHeaderView.xib */,
 				55B739582A720F12003BB6F5 /* UserListDetailDataSource.swift */,
 				55B7395A2A720F7F003BB6F5 /* UserListDetailStore.swift */,
 				55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */,
-				55F4E4412A723BEC004CACCC /* ListMovieCell.swift */,
-				55F4E4422A723BEC004CACCC /* ListMovieCell.xib */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -1593,6 +1607,7 @@
 				5563A5E92A745027004528EA /* UserListHeaderView.xib in Resources */,
 				55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */,
 				55664850284DC4ED000BE2F3 /* Movie.strings in Resources */,
+				554BB8CC2A75837400762F44 /* UserListCell.xib in Resources */,
 				5566483E284DC4B5000BE2F3 /* Error.strings in Resources */,
 				55D006BC2A74B4950089E8B1 /* EmptyView.xib in Resources */,
 				559D132B22D98E4B00C96FC8 /* LaunchScreen.storyboard in Resources */,
@@ -1704,6 +1719,7 @@
 				55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */,
 				550DA0712A59DDF700541312 /* ErrorHandlingRouter.swift in Sources */,
 				5563A5E82A745027004528EA /* UserListHeaderView.swift in Sources */,
+				554BB8CB2A75837400762F44 /* UserListCell.swift in Sources */,
 				553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				557E0DCB285BF6D800D21D93 /* RemoteImage.swift in Sources */,

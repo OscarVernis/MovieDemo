@@ -48,14 +48,20 @@ class UserListsViewController: UITableViewController {
     }
     
     func setupDataSource() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        UserListCell.register(to: tableView)
+        tableView.rowHeight = 111
+        tableView.separatorStyle = .none
         
         dataSource = UserListsDataSource(tableView: tableView, cellProvider: { tableView, indexPath, _ in
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserListCell.reuseIdentifier, for: indexPath) as! UserListCell
             
             let userList = self.store.lists[indexPath.row]
-            cell.textLabel?.text = userList.name
-            cell.detailTextLabel?.text = userList.description
+            cell.titleLabel.text = userList.name
+            cell.descriptionLabel.text = userList.description
+            cell.descriptionLabel.isHidden = userList.description.isEmpty
+            cell.countLabel.text = "\(userList.itemCount) ITEMS"
+            
+            cell.selectionStyle = .none
 
             return cell
         })

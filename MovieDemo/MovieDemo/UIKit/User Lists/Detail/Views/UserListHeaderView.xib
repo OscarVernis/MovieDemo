@@ -174,13 +174,12 @@
             </connections>
             <point key="canvasLocation" x="-1081.679389312977" y="-275.35211267605638"/>
         </view>
-        <stackView opaque="NO" contentMode="scaleToFill" id="93t-b2-YIK">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="110"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <viewLayoutGuide key="safeArea" id="zPj-0T-DJi"/>
-            <point key="canvasLocation" x="-652" y="-178"/>
-        </stackView>
     </objects>
+    <designables>
+        <designable name="1g6-Nv-t4I">
+            <size key="intrinsicContentSize" width="38" height="38"/>
+        </designable>
+    </designables>
     <resources>
         <namedColor name="AppTintColor">
             <color red="0.68599998950958252" green="0.32199999690055847" blue="0.87100005149841309" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

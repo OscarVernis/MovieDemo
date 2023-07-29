@@ -24,7 +24,7 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
         snapshot.appendItems(listIds, toSection: .main)
         apply(snapshot, animatingDifferences: animated)
     }
-    
+        
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
