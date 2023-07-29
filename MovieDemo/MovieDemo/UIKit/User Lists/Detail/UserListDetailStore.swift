@@ -10,7 +10,11 @@ import Foundation
 
 class UserListDetailStore {
     @Published var userList: UserList
-    @Published var movies: [MovieViewModel]
+    @Published var movies: [MovieViewModel] {
+        didSet {
+            updateRating()
+        }
+    }
     @Published var error: Error? = nil
     @Published private(set) var isLoading = false
     
@@ -63,17 +67,19 @@ class UserListDetailStore {
     }
     
     //MARK: - Data Formatting
-    var movieCount: Int {
-        movies.count
-    }
+    var ratingString: String = MovieString.NR.localized
+    var percentRating = 0
     
-    var averageRating: UInt {
-        let total = movies.compactMap { $0.percentRating }.reduce(0, +)
+    func updateRating() {
+        let ratings = movies.filter(\.isRatingAvailable).map(\.percentRating)
+        let total = ratings.reduce(0, +)
         
         if total == 0 {
-            return 0
+            percentRating = 0
+            ratingString = MovieString.NR.localized
         } else {
-            return total / UInt(movieCount)
+            percentRating = Int(total) / ratings.count
+            ratingString = "\(percentRating)"
         }
     }
     

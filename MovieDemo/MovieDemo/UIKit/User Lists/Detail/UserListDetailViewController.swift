@@ -101,9 +101,10 @@ class UserListDetailViewController: UITableViewController {
         headerView.titleLable.text = store.userList.name
         headerView.descriptionLabel.text = store.userList.description
         headerView.descriptionLabel.isHidden = store.userList.description.isEmpty
-        headerView.countLabel.text = "\(store.movieCount)"
-        headerView.ratingLabel.text = "\(store.averageRating)"
-        headerView.ratingView.rating = CGFloat(store.averageRating)
+        headerView.countLabel.text = "\(store.movies.count)"
+        headerView.ratingLabel.text = store.ratingString
+        headerView.ratingView.rating = CGFloat(store.percentRating)
+        headerView.ratingView.isRatingAvailable = store.percentRating != 0
         
         headerView.sizeToFit()
         tableView.tableHeaderView = headerView
