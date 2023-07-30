@@ -15,6 +15,8 @@ extension PersonDetailDiffableDataSource.Section {
             return makeOverview()
         case .popular:
             return makePopular()
+        case .creditCategories:
+            return makeCreditCategories()
         case .castCredits, .crewCredits:
             return makeCredits()
         }
@@ -44,6 +46,19 @@ extension PersonDetailDiffableDataSource.Section {
         let section = sectionBuilder.createListSection(height: 121)
         
         section.contentInsets.top = 5
+        
+//        let sectionHeader = sectionBuilder.createTitleSectionHeader()
+//        section.boundarySupplementaryItems = [sectionHeader]
+        
+        return section
+    }
+    
+    fileprivate func makeCreditCategories() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        let section = sectionBuilder.createHorizontalCategorySection()
+        
+        section.contentInsets.top = 4
+        section.contentInsets.bottom = 4
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]

@@ -11,10 +11,4 @@ import UIKit
 class OverviewCell: UICollectionViewCell {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var expandButton: UIButton!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
 }

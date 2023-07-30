@@ -183,8 +183,8 @@ class PersonDetailViewController: UIViewController {
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
         dataSource.person = store.person
-        self.dataSource.reload()
-        self.collectionView.reloadData()
+        dataSource.reload()
+        collectionView.reloadData()
     }
     
     fileprivate func handleError() {
@@ -294,23 +294,39 @@ extension PersonDetailViewController: UICollectionViewDelegate {
                let movie = crewCredit.movie {
                 router?.showMovieDetail(movie: movie)
             }
+        case .creditCategories:
+            if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
+                cell.setSelection(true)
+                dataSource.selectedCreditSection = dataSource.creditSections[indexPath.row]
+            }
         default:
             break
         }
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard dataSource.sections[indexPath.section] == .overview,
-              let overviewCell = cell as? OverviewCell
-        else { return }
-        
-        let action = UIAction { _ in
-            overviewCell.textLabel.numberOfLines = 0
-            collectionView.collectionViewLayout.invalidateLayout()
-            collectionView.reloadItems(at: [indexPath])
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
+            cell.setSelection(false)
         }
-        overviewCell.expandButton.addAction(action, for: .touchUpInside)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        guard dataSource.sections[indexPath.section] == .overview,
+//              let overviewCell = cell as? OverviewCell
+//        else { return }
+//        
+//        let action = UIAction { _ in
+//            overviewCell.textLabel.numberOfLines = 0
+//            collectionView.collectionViewLayout.invalidateLayout()
+//            collectionView.reloadItems(at: [indexPath])
+//        }
+//        overviewCell.expandButton.addAction(action, for: .touchUpInside)
+        
+        if let cell = cell as? CategoryCell {
+            let selected = dataSource.selectedCreditSection == dataSource.creditSections[indexPath.row]
+            cell.setSelection(selected)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

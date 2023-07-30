@@ -129,4 +129,13 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    func createHorizontalCategorySection() ->  NSCollectionLayoutSection {
+        let section = createSection(itemWidth: .estimated(1), itemHeight: .absolute(32), groupWidth: .estimated(1), groupHeight: .absolute(32))
+
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = 12
+        
+        return section
+    }
+    
 }

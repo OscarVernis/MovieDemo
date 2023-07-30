@@ -12,6 +12,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     enum Section: Hashable {
         case overview
         case popular
+        case creditCategories
         case castCredits
         case crewCredits(job: String)
         
@@ -21,6 +22,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
                 return ""
             case .popular:
                 return .localized(PersonString.KnownFor)
+            case .creditCategories:
+                return "Credits"
             case .castCredits:
                 return .localized(PersonString.Acting)
             case .crewCredits(job: let job):
@@ -34,12 +37,16 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     var person: PersonViewModel!
     var sections: [Section] = []
     
+    var creditSections: [Section] = []
+    var selectedCreditSection: Section = .castCredits
+    
     func registerReusableViews(collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         OverviewCell.register(to: collectionView)
         PersonCreditCell.register(to: collectionView)
         PersonCreditCell.register(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
+        CategoryCell.register(to: collectionView)
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -56,6 +63,12 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             let popularCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
             MoviePosterInfoCell.configureWithRating(cell: popularCell, with: movie)
             cell = popularCell
+        case .creditCategories:
+            let credit = identifier as! Section
+            let title = credit.sectionTitle
+            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+            categoryCell.titleLabel.text = title
+            cell = categoryCell
         case .castCredits:
             let castCredit = identifier as! PersonCastCreditViewModel
             let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
@@ -73,6 +86,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     
     func setupSections() {
         sections.removeAll()
+        creditSections.removeAll()
         
         if let bio = person.biography, !bio.isEmpty {
             sections.append(.overview)
@@ -82,12 +96,20 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             sections.append(.popular)
         }
         
+        sections.append(.creditCategories)
+                
         if !person.castCredits.isEmpty {
             sections.append(.castCredits)
+            creditSections.append(.castCredits)
         }
         
         for job in person.crewJobs {
+            creditSections.append(.crewCredits(job: job))
             sections.append(.crewCredits(job: job))
+        }
+        
+        if creditSections.count > 0 {
+            selectedCreditSection = creditSections.first!
         }
     }
     
@@ -103,6 +125,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
                 snapshot.appendItems([overviewSectionID], toSection: .overview)
             case .popular:
                 snapshot.appendItems(person.popularMovies, toSection: .popular)
+            case .creditCategories:
+                snapshot.appendItems(creditSections, toSection: .creditCategories)
             case .castCredits:
                 snapshot.appendItems(person.castCredits, toSection: .castCredits)
             case .crewCredits(job: let job):
