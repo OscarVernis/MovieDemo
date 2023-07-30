@@ -70,4 +70,8 @@ struct MockData {
         return PersonDetailStore(person: PersonViewModel(person: person))
     }
     
+    static var personVM: PersonViewModel {
+        PersonViewModel(person: personMock.model!.toPerson())
+    }
+    
 }

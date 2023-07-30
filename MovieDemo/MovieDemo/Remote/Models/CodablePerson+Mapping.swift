@@ -30,7 +30,7 @@ extension CodablePerson {
 
 extension CodableCastCredit {
     func toPersonCastCredit() -> PersonCastCredit {
-        var credit = PersonCastCredit()
+        var credit = PersonCastCredit(id: id)
         
         credit.character = character
         credit.movie = movie?.toMovie()
@@ -41,7 +41,7 @@ extension CodableCastCredit {
 
 extension CodableCrewCredit {
     func toPersonCrewCredit() -> PersonCrewCredit {
-        var credit = PersonCrewCredit()
+        var credit = PersonCrewCredit(id: id)
         
         credit.job = job
         credit.movie = movie?.toMovie()

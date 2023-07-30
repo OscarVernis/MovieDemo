@@ -294,8 +294,17 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard dataSource.sections[indexPath.section] == .overview,
+              let overviewCell = cell as? OverviewCell
+        else { return }
+        
+        let action = UIAction { _ in
+            overviewCell.textLabel.numberOfLines = 0
+            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView.reloadItems(at: [indexPath])
+        }
+        overviewCell.expandButton.addAction(action, for: .touchUpInside)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

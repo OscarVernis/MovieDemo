@@ -12,11 +12,15 @@ class PersonCastCreditViewModel {
     private var castCredit: PersonCastCredit!
 
     init(personCastCredit: PersonCastCredit) {
-        self.castCredit = personCastCredit
+        castCredit = personCastCredit
+    }
+    
+    var id: Int {
+        castCredit.id
     }
     
     var character: String? {
-        return castCredit.character
+        castCredit.character
     }
     
     var movie: MovieViewModel? {
@@ -37,4 +41,14 @@ class PersonCastCreditViewModel {
         return movie.releaseYear
     }
     
+}
+
+extension PersonCastCreditViewModel: Hashable {
+    static func == (lhs: PersonCastCreditViewModel, rhs: PersonCastCreditViewModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

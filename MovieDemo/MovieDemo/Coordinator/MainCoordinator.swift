@@ -191,7 +191,8 @@ class MainCoordinator {
         }
         
         rootNavigationViewController?.viewControllers = [hvc]
-        showUserLists()
+//        showUserLists()
+        showPersonProfile(MockData.personVM)
     }
     
     //MARK: - Common

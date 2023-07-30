@@ -58,34 +58,38 @@ struct CodablePersonCredits: Codable {
 
 // MARK: - Cast
 struct CodableCastCredit: Codable {
+    var id: Int!
     var character: String?
     var movie: CodableMovie?
 
     enum CodingKeys: String, CodingKey {
+        case id
         case character
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(Int.self, forKey: .id)
         character = try container.decodeIfPresent(String.self, forKey: .character)
-        
         movie = try? CodableMovie(from: decoder)
     }
 }
 
 // MARK: - Cast
 struct CodableCrewCredit: Codable {
+    var id: Int!
     var job: String?
     var movie: CodableMovie?
 
     enum CodingKeys: String, CodingKey {
+        case id
         case job
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decodeIfPresent(Int.self, forKey: .id)
         job = try container.decodeIfPresent(String.self, forKey: .job)
-        
         movie = try? CodableMovie(from: decoder)
     }
 }

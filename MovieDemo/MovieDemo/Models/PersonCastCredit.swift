@@ -9,6 +9,7 @@
 import Foundation
 
 struct PersonCastCredit {
+    var id: Int
     var character: String?
     var movie: Movie?
 }

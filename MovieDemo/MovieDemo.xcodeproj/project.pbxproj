@@ -289,6 +289,7 @@
 		55F4E4462A723F17004CACCC /* UITableViewCell+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4E4452A723F17004CACCC /* UITableViewCell+Register.swift */; };
 		55FACCF52A590CD800FB13B5 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FACCF42A590CD800FB13B5 /* HomeRouter.swift */; };
 		55FACCF72A591ACE00FB13B5 /* MovieDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */; };
+		55FBFC002A762CB2002FC9FE /* PersonDetailDiffableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBFBFF2A762CB2002FC9FE /* PersonDetailDiffableDataSource.swift */; };
 		55FEF45025141A40009363F8 /* CreditPhotoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */; };
 		55FEF45125141A40009363F8 /* CreditPhotoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF44F25141A40009363F8 /* CreditPhotoListCell.xib */; };
 /* End PBXBuildFile section */
@@ -600,6 +601,7 @@
 		55F4E4452A723F17004CACCC /* UITableViewCell+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Register.swift"; sourceTree = "<group>"; };
 		55FACCF42A590CD800FB13B5 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailRouter.swift; sourceTree = "<group>"; };
+		55FBFBFF2A762CB2002FC9FE /* PersonDetailDiffableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailDiffableDataSource.swift; sourceTree = "<group>"; };
 		55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPhotoListCell.swift; sourceTree = "<group>"; };
 		55FEF44F25141A40009363F8 /* CreditPhotoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditPhotoListCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1100,6 +1102,7 @@
 				5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */,
 				551693162857CBBC00FD147F /* PersonDetailDataSource.Section+Layout.swift */,
 				551693122857C93900FD147F /* PersonDetailDataSource.swift */,
+				55FBFBFF2A762CB2002FC9FE /* PersonDetailDiffableDataSource.swift */,
 				551693182857CF8200FD147F /* OverviewDataSource.swift */,
 			);
 			path = "Person Detail";
@@ -1709,6 +1712,7 @@
 				559263322A70E95D002E6014 /* UserListsDataSource.swift in Sources */,
 				5505779E284DAA0F007ED892 /* MovieString.swift in Sources */,
 				55AB8ADE2A626EBA00414A6E /* CodableMovie+Mapping.swift in Sources */,
+				55FBFC002A762CB2002FC9FE /* PersonDetailDiffableDataSource.swift in Sources */,
 				553660FB22DAFC0B00BE03BB /* CastCredit.swift in Sources */,
 				554DE177251EF83C000286D2 /* OverviewCell.swift in Sources */,
 				55A909DA2A62021C00AE4253 /* CodableCache.swift in Sources */,
