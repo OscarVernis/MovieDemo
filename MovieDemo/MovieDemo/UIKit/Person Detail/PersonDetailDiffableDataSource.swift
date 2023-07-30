@@ -30,6 +30,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
                 return job
             }
         }
+        
     }
     
     var overviewSectionID = UUID().uuidString
@@ -68,6 +69,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             let title = credit.sectionTitle
             let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
             categoryCell.titleLabel.text = title
+            let selected = selectedCreditSection == creditSections[indexPath.row]
+            categoryCell.setSelection(selected)
             cell = categoryCell
         case .castCredits:
             let castCredit = identifier as! PersonCastCreditViewModel
@@ -82,6 +85,36 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         }
         
         return cell
+    }
+    
+    var indexPathForSelectedCreditSection: IndexPath? {
+        let section = sections.firstIndex(of: .creditCategories)
+        let row = creditSections.firstIndex(of: selectedCreditSection)
+        
+        if let section, let row {
+            return IndexPath(row: row, section: section)
+        } else {
+            return nil
+        }
+    }
+    
+    var sectionForCredits: Int? {
+        sections.firstIndex(of: selectedCreditSection)
+    }
+    
+    func itemCount(for section: Section) -> Int {
+        switch section {
+        case .overview:
+            return person.biography?.isEmpty ?? true ? 0 : 1
+        case .popular:
+            return person.popularMovies.isEmpty ? 0 : person.popularMovies.count
+        case .creditCategories:
+            return creditSections.count
+        case .castCredits:
+            return person.castCredits.isEmpty ? 0 : person.castCredits.count
+        case .crewCredits(job: let job):
+            return person.credits(for: job).count
+        }
     }
     
     func setupSections() {
@@ -99,23 +132,23 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         sections.append(.creditCategories)
                 
         if !person.castCredits.isEmpty {
-            sections.append(.castCredits)
             creditSections.append(.castCredits)
         }
         
         for job in person.crewJobs {
             creditSections.append(.crewCredits(job: job))
-            sections.append(.crewCredits(job: job))
         }
         
-        if creditSections.count > 0 {
-            selectedCreditSection = creditSections.first!
-        }
     }
     
-    func reload(animated: Bool = true) {
+    func reload(force: Bool = false, animated: Bool = true) {
         setupSections()
         
+        if force && creditSections.count > 0 {
+            selectedCreditSection = creditSections.first!
+        }
+        sections.append(selectedCreditSection)
+
         var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDiffableDataSource.Section, AnyHashable>()
         snapshot.appendSections(sections)
         
@@ -134,7 +167,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
                 snapshot.appendItems(credits, toSection: .crewCredits(job: job))
             }
         }
-        
+    
         apply(snapshot, animatingDifferences: animated)
     }
     

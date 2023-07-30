@@ -47,7 +47,7 @@ class PersonDetailViewController: UIViewController {
     //MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         setupCustomBackButton()
         setupNavigationBar()
         setupAnimations()
@@ -183,8 +183,12 @@ class PersonDetailViewController: UIViewController {
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
         dataSource.person = store.person
-        dataSource.reload()
+        dataSource.reload(force: true)
         collectionView.reloadData()
+        
+        if let indexPath = dataSource.indexPathForSelectedCreditSection {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+        }
     }
     
     fileprivate func handleError() {
@@ -295,20 +299,39 @@ extension PersonDetailViewController: UICollectionViewDelegate {
                 router?.showMovieDetail(movie: movie)
             }
         case .creditCategories:
-            if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
-                cell.setSelection(true)
-                dataSource.selectedCreditSection = dataSource.creditSections[indexPath.row]
-            }
+            selectCategory(at: indexPath)
         default:
             break
         }
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
-            cell.setSelection(false)
+    fileprivate func selectCategory(at newIndexPath: IndexPath) {
+        //Deselect other cells
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems.filter { $0.section == newIndexPath.section }
+        for indexPath in visibleIndexPaths {
+            if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
+                cell.setSelection(false)
+            }
         }
+        
+        //Select new cell
+        let cell = collectionView.cellForItem(at: newIndexPath) as? CategoryCell
+        cell?.setSelection(true)
+        
+        //Scroll to last item of new section if current section has more items
+        if let creditsSection = dataSource.sectionForCredits,
+           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
+            let newCount = dataSource.itemCount(for: dataSource.creditSections[newIndexPath.row])
+            if lasVisibleIndexPath.row > newCount {
+                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
+                                            at: .bottom,
+                                            animated: true)
+            }
+        }
+        
+        dataSource.selectedCreditSection = dataSource.creditSections[newIndexPath.row]
+        dataSource.reload()
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -323,10 +346,6 @@ extension PersonDetailViewController: UICollectionViewDelegate {
 //        }
 //        overviewCell.expandButton.addAction(action, for: .touchUpInside)
         
-        if let cell = cell as? CategoryCell {
-            let selected = dataSource.selectedCreditSection == dataSource.creditSections[indexPath.row]
-            cell.setSelection(selected)
-        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
