@@ -42,37 +42,33 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         MoviePosterInfoCell.register(to: collectionView)
     }
     
-    func cellRegistration() -> UICollectionViewDiffableDataSource<PersonDetailDiffableDataSource.Section, AnyHashable>.CellProvider {
-        return { [weak self] collectionView, indexPath, identifier in
-            guard let self else { fatalError() }
-            
-            let cell: UICollectionViewCell
-            let section = self.sections[indexPath.section]
-            
-            switch section {
-            case .overview:
-                let overviewCell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
-                overviewCell.textLabel.text = person.biography
-                cell = overviewCell
-            case .popular:
-                let movie = identifier as! MovieViewModel
-                let popularCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-                MoviePosterInfoCell.configureWithRating(cell: popularCell, with: movie)
-                cell = popularCell
-            case .castCredits:
-                let castCredit = identifier as! PersonCastCreditViewModel
-                let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
-                PersonCreditCell.configure(cell: castCell, castCredit: castCredit)
-                cell = castCell
-            case .crewCredits(job: _):
-                let crewCredit = identifier as! PersonCrewCreditViewModel
-                let crewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
-                PersonCreditCell.configure(cell: crewCell, crewCredit: crewCredit)
-                cell = crewCell
-            }
-            
-            return cell
+    func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
+        let cell: UICollectionViewCell
+        let section = sections[indexPath.section]
+        
+        switch section {
+        case .overview:
+            let overviewCell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
+            overviewCell.textLabel.text = person.biography
+            cell = overviewCell
+        case .popular:
+            let movie = identifier as! MovieViewModel
+            let popularCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
+            MoviePosterInfoCell.configureWithRating(cell: popularCell, with: movie)
+            cell = popularCell
+        case .castCredits:
+            let castCredit = identifier as! PersonCastCreditViewModel
+            let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
+            PersonCreditCell.configure(cell: castCell, castCredit: castCredit)
+            cell = castCell
+        case .crewCredits(job: _):
+            let crewCredit = identifier as! PersonCrewCreditViewModel
+            let crewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
+            PersonCreditCell.configure(cell: crewCell, crewCredit: crewCredit)
+            cell = crewCell
         }
+        
+        return cell
     }
     
     func setupSections() {

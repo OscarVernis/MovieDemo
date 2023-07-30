@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension PersonDetailDataSource.Section {
+extension PersonDetailDiffableDataSource.Section {
     func sectionLayout() -> NSCollectionLayoutSection {
         switch self {
         case .overview:

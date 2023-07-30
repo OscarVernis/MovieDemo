@@ -15,7 +15,7 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var dataSource: PersonDetailDataSource!
+    var dataSource: PersonDetailDiffableDataSource!
     
     @IBOutlet weak var personImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -52,6 +52,7 @@ class PersonDetailViewController: UIViewController {
         setupNavigationBar()
         setupAnimations()
         setup()
+        setupDataSource()
         setupStore()
     }
     
@@ -109,8 +110,6 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func setup() {
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         //Gradient
         gradient = CAGradientLayer()
         gradient.frame = personImageView.bounds
@@ -122,8 +121,6 @@ class PersonDetailViewController: UIViewController {
         //Setup CollectionView
         collectionView.delegate = self
         collectionView.collectionViewLayout = createLayout()
-        dataSource = PersonDetailDataSource(collectionView: collectionView, person: person)
-        collectionView.dataSource = dataSource
         
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .never
@@ -136,7 +133,6 @@ class PersonDetailViewController: UIViewController {
         let topInset = UIWindow.mainWindow.topInset
         let bottomInset = UIWindow.mainWindow.bottomInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
-        
         
         //Setup Person
         self.title = person.name
@@ -151,6 +147,16 @@ class PersonDetailViewController: UIViewController {
         let height = width * 1.5
         headerHeightConstraint.constant = height
         collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
+    }
+    
+    fileprivate func setupDataSource() {
+        dataSource = PersonDetailDiffableDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
+            guard let self else { fatalError() }
+
+            return self.dataSource.cell(for: collectionView, with: indexPath, identifier: item)
+        })
+        
+        dataSource.registerReusableViews(collectionView: collectionView)
     }
     
     fileprivate func setupStore()  {
