@@ -85,6 +85,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="containerView" destination="dcS-vU-iUa" id="d1d-aD-BUC"/>
                 <outlet property="countLabel" destination="B2X-jI-ycU" id="Oc3-V8-3fy"/>
                 <outlet property="descriptionLabel" destination="3Y7-zu-RG8" id="5nn-aw-rTq"/>
                 <outlet property="titleLabel" destination="qVb-Gp-9S9" id="EdY-ca-NmZ"/>

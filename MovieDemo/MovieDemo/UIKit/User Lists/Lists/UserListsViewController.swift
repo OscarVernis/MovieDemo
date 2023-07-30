@@ -130,7 +130,6 @@ class UserListsViewController: UITableViewController {
     //MARK: - Table View Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = store.lists[indexPath.row]
-        tableView.deselectRow(at: indexPath, animated: true)
         
         router?.showUserListDetail(list: list)
     }

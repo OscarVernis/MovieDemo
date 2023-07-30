@@ -116,7 +116,7 @@ class PersonDetailViewController: UIViewController {
         gradient.frame = personImageView.bounds
         gradient.colors = [UIColor.black.cgColor,
                            UIColor.clear.cgColor]
-        gradient.locations = [0.85, 1]
+        gradient.locations = [0.7, 1]
         personImageView.layer.mask = gradient
         
         //Setup CollectionView

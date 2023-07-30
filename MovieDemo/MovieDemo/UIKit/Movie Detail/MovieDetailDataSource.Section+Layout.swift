@@ -76,7 +76,7 @@ extension MovieDetailDataSource.Section {
     }
     
     fileprivate func makeVideos() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createBannerSection()
+        let section = sectionBuilder.createVideoBannerSection()
         
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets.top = 10

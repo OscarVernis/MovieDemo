@@ -120,4 +120,13 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
+    func createVideoBannerSection() ->  NSCollectionLayoutSection {
+        let section = createSection(itemWidth: .absolute(300), itemHeight: .absolute(190), groupWidth: .estimated(1), groupHeight: .estimated(1))
+
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.interGroupSpacing = 20
+                        
+        return section
+    }
+    
 }
