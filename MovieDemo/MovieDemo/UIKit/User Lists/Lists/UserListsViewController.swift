@@ -34,7 +34,10 @@ class UserListsViewController: UITableViewController {
         setup()
         setupDataSource()
         setupStore()
-        update()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.update()
     }
     
     func setup() {
@@ -66,6 +69,8 @@ class UserListsViewController: UITableViewController {
             return cell
         })
         
+        dataSource.defaultRowAnimation = .fade
+        
         dataSource.removeList = { [weak self] idx in
             self?.removeList(at: idx)
         }
@@ -74,9 +79,8 @@ class UserListsViewController: UITableViewController {
     fileprivate func setupStore() {
         store.$lists
             .receive(on: DispatchQueue.main)
-            .sink { [dataSource] lists in
-                let animated = dataSource?.snapshot().numberOfItems != 0
-                dataSource?.updateDataSource(lists: lists, animated: animated)
+            .sink { [weak self] lists in
+                self?.updateDataSource(lists: lists)
             }
             .store(in: &cancellables)
         
@@ -95,6 +99,12 @@ class UserListsViewController: UITableViewController {
                 router?.handle(error: .refreshError)
             }
             .store(in: &cancellables)
+    }
+    
+    func updateDataSource(lists: [UserList]) {
+        let animated = dataSource?.snapshot().numberOfItems != 0
+        
+        dataSource?.updateDataSource(lists: lists, animated: animated, forceReload: store.shouldReload)
     }
     
     //MARK: - Actions

@@ -125,7 +125,7 @@ class AddMoviesToListViewController: UITableViewController {
         }
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         guard let searchBar = navigationItem.titleView as? UISearchBar else { return }
         
         searchBar.resignFirstResponder()

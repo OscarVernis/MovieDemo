@@ -16,12 +16,17 @@ class UserListsDataSource: UITableViewDiffableDataSource<UserListsDataSource.Sec
     
     var removeList: ((Int) -> ())? = nil
     
-    func updateDataSource(lists: [UserList], animated: Bool = true) {
+    func updateDataSource(lists: [UserList], animated: Bool = true, forceReload: Bool = false) {
         let listIds = lists.map { $0.id }
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, UserList.ID>()
         snapshot.appendSections([.main])
         snapshot.appendItems(listIds, toSection: .main)
+        
+        if forceReload {
+            snapshot.reloadItems(listIds)
+        }
+        
         apply(snapshot, animatingDifferences: animated)
     }
         

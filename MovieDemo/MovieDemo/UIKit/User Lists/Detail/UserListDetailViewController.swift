@@ -57,6 +57,9 @@ class UserListDetailViewController: UITableViewController {
             ListMovieCell.configure(cell: cell, with: movie)
             return cell
         }
+        
+        dataSource.defaultRowAnimation = .fade
+        
         dataSource.removeMovie = { [weak self] index in
             Task { try await self?.store.removeMovie(at: index) }
         }
