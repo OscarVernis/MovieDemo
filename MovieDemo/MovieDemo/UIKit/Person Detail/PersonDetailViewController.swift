@@ -185,7 +185,7 @@ class PersonDetailViewController: UIViewController {
         dataSource.person = store.person
         dataSource.reload(force: true)
         collectionView.reloadData()
-        
+
         if let indexPath = dataSource.indexPathForSelectedCreditSection {
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
@@ -335,6 +335,9 @@ extension PersonDetailViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let categoryCell = cell as? CategoryCell {
+            categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedCreditSection)
+        }
 //        guard dataSource.sections[indexPath.section] == .overview,
 //              let overviewCell = cell as? OverviewCell
 //        else { return }

@@ -44,6 +44,7 @@ extension CodableCrewCredit {
         var credit = PersonCrewCredit(id: id)
         
         credit.job = job
+        credit.department = department
         credit.movie = movie?.toMovie()
         
         return credit

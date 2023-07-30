@@ -14,7 +14,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         case popular
         case creditCategories
         case castCredits
-        case crewCredits(job: String)
+        case crewCredits(department: String)
         
         var sectionTitle: String {
             switch self {
@@ -26,8 +26,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
                 return "Credits"
             case .castCredits:
                 return .localized(PersonString.Acting)
-            case .crewCredits(job: let job):
-                return job
+            case .crewCredits(department: let department):
+                return department
             }
         }
         
@@ -77,7 +77,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
             PersonCreditCell.configure(cell: castCell, castCredit: castCredit)
             cell = castCell
-        case .crewCredits(job: _):
+        case .crewCredits:
             let crewCredit = identifier as! PersonCrewCreditViewModel
             let crewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
             PersonCreditCell.configure(cell: crewCell, crewCredit: crewCredit)
@@ -112,8 +112,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             return creditSections.count
         case .castCredits:
             return person.castCredits.isEmpty ? 0 : person.castCredits.count
-        case .crewCredits(job: let job):
-            return person.credits(for: job).count
+        case .crewCredits(department: let department):
+            return person.credits(for: department).count
         }
     }
     
@@ -135,8 +135,15 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             creditSections.append(.castCredits)
         }
         
-        for job in person.crewJobs {
-            creditSections.append(.crewCredits(job: job))
+        for job in person.departments {
+            creditSections.append(.crewCredits(department: job))
+        }
+        
+        //Send acting to the end if person is know for crew department
+        if person.departments.first == person.knownForDepartment,
+           creditSections.first == .castCredits {
+            let section = creditSections.remove(at: 0)
+            creditSections.append(section)
         }
         
     }
@@ -162,9 +169,9 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
                 snapshot.appendItems(creditSections, toSection: .creditCategories)
             case .castCredits:
                 snapshot.appendItems(person.castCredits, toSection: .castCredits)
-            case .crewCredits(job: let job):
-                let credits = person.credits(for: job)
-                snapshot.appendItems(credits, toSection: .crewCredits(job: job))
+            case .crewCredits(department: let department):
+                let credits = person.credits(for: department)
+                snapshot.appendItems(credits, toSection: .crewCredits(department: department))
             }
         }
     

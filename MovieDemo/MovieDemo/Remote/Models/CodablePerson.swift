@@ -60,17 +60,20 @@ struct CodablePersonCredits: Codable {
 struct CodableCastCredit: Codable {
     var id: Int!
     var character: String?
+    var order: Int?
     var movie: CodableMovie?
 
     enum CodingKeys: String, CodingKey {
         case id
         case character
+        case order
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decodeIfPresent(Int.self, forKey: .id)
         character = try container.decodeIfPresent(String.self, forKey: .character)
+        order = try container.decodeIfPresent(Int.self, forKey: .order)
         movie = try? CodableMovie(from: decoder)
     }
 }
@@ -79,17 +82,20 @@ struct CodableCastCredit: Codable {
 struct CodableCrewCredit: Codable {
     var id: Int!
     var job: String?
+    var department: String?
     var movie: CodableMovie?
 
     enum CodingKeys: String, CodingKey {
         case id
         case job
+        case department
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decodeIfPresent(Int.self, forKey: .id)
         job = try container.decodeIfPresent(String.self, forKey: .job)
+        department = try? container.decodeIfPresent(String.self, forKey: .department)
         movie = try? CodableMovie(from: decoder)
     }
 }

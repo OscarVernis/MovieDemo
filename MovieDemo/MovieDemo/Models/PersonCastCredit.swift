@@ -11,7 +11,13 @@ import Foundation
 struct PersonCastCredit {
     var id: Int
     var character: String?
+    var order: Int
     var movie: Movie?
+    
+    init(id: Int, order: Int = .max) {
+        self.id = id
+        self.order = order
+    }
 }
 
 //MARK: - Utils

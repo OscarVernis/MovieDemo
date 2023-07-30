@@ -11,6 +11,7 @@ import Foundation
 struct PersonCrewCredit {
     var id: Int
     var job: String?
+    var department: String?
     var movie: Movie?
 }
 

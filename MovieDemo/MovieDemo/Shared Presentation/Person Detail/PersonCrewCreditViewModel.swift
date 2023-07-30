@@ -23,6 +23,10 @@ class PersonCrewCreditViewModel {
         crewCredit.job
     }
     
+    var department: String? {
+        crewCredit.department
+    }
+    
     var movie: MovieViewModel? {
         guard let movie = crewCredit.movie else { return nil }
         

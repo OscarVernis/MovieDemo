@@ -13,6 +13,9 @@ class PersonViewModel {
 
     var castCredits = [PersonCastCreditViewModel]()
     var crewCredits = [PersonCrewCreditViewModel]()
+    
+    var departments: [String] = []
+    var departmentCrewCredits: [String: [PersonCrewCreditViewModel]] = [:]
 
     var popularMovies = [MovieViewModel]()
         
@@ -72,13 +75,9 @@ extension PersonViewModel {
             .compactMap(\.title)
             .joined(separator: ", ")
     }
-    
-    var crewJobs: [String] {
-        NSOrderedSet(array: crewCredits.compactMap(\.job)).array as! [String]
-    }
-    
-    func credits(for job: String) -> [PersonCrewCreditViewModel] {
-        return crewCredits.filter { $0.job == job }
+
+    func credits(for department: String) -> [PersonCrewCreditViewModel] {
+        departmentCrewCredits[department] ?? []
     }
     
     fileprivate func updateCastCredits() {
@@ -95,17 +94,35 @@ extension PersonViewModel {
         crewCredits = credits
             .sorted(by: PersonCrewCredit.sortByRelease)
             .compactMap { PersonCrewCreditViewModel(personCrewCredit: $0) }
+        
+        departments = NSOrderedSet(array: crewCredits.compactMap(\.department)).array as! [String]
+        //Put known for department first
+        if let knownFor = knownForDepartment,
+           let index = departments.firstIndex(of: knownFor),
+           index != 0
+        {
+            let d = departments.remove(at: index)
+            departments.insert(d, at: 0)
+        }
+        
+        departmentCrewCredits = [:]
+        for department in departments {
+            let credits = crewCredits.filter { $0.department == department }
+            departmentCrewCredits[department] = credits
+        }
     }
     
     fileprivate func updatePopularMovies() {
-        var credits = [Movie]()
+        var credits: [Movie] = []
         
-        if let castCredits = person.castCredits {
-            credits.append(contentsOf: castCredits.compactMap { $0.movie } )
-        }
-        
-        if let crewCredits = person.crewCredits {
-            credits.append(contentsOf: crewCredits.compactMap { $0.movie } )
+        if departments.contains(knownForDepartment ?? "") {
+            if let crewCredits = person.crewCredits {
+                credits.append(contentsOf: crewCredits.filter({ $0.department == knownForDepartment }).compactMap { $0.movie } )
+            }
+        } else {
+            if let castCredits = person.castCredits {
+                credits.append(contentsOf: castCredits.compactMap { $0.movie } )
+            }
         }
         
         var filteredMovies = [Movie]()
