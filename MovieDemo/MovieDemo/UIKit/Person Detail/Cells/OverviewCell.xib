@@ -18,22 +18,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="468" height="205"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR1-Zi-yIS">
-                        <rect key="frame" x="0.0" y="6" width="468" height="199"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pR1-Zi-yIS">
+                        <rect key="frame" x="0.0" y="6" width="468" height="195"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <string key="text">As the gang return to Jumanji to rescue one of their own, they discover that nothing is as they expect. The players will have to brave parts unknown and unexplored in order to escape the world’s most dangerous game.</string>
                         <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="15"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JiC-Bl-905">
-                        <rect key="frame" x="369" y="175" width="99" height="30"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3f-NN-WuW">
+                        <rect key="frame" x="372" y="175.5" width="25" height="22"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="hxC-TU-odG"/>
-                            <constraint firstAttribute="width" constant="99" id="s8u-lo-Pc1"/>
+                            <constraint firstAttribute="width" constant="25" id="M1C-Nx-EnF"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="13"/>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JiC-Bl-905">
+                        <rect key="frame" x="397" y="175.5" width="71" height="22"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="hxC-TU-odG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="14"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" title="SHOW MORE">
+                        <state key="normal" title="SEE MORE">
                             <color key="titleColor" name="AppTintColor"/>
                         </state>
                     </button>
@@ -41,19 +49,23 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="pR1-Zi-yIS" secondAttribute="bottom" id="1kL-kX-Cu3"/>
+                <constraint firstAttribute="bottom" secondItem="pR1-Zi-yIS" secondAttribute="bottom" constant="4" id="1kL-kX-Cu3"/>
                 <constraint firstItem="pR1-Zi-yIS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="7ra-cq-Jfs"/>
                 <constraint firstItem="pR1-Zi-yIS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="GSE-eu-hZ6"/>
-                <constraint firstItem="JiC-Bl-905" firstAttribute="bottom" secondItem="pR1-Zi-yIS" secondAttribute="bottom" id="dz0-W9-iak"/>
+                <constraint firstItem="m3f-NN-WuW" firstAttribute="bottom" secondItem="JiC-Bl-905" secondAttribute="bottom" id="Wnd-Vo-Tui"/>
+                <constraint firstItem="m3f-NN-WuW" firstAttribute="top" secondItem="JiC-Bl-905" secondAttribute="top" id="Xlp-Gn-8uj"/>
+                <constraint firstItem="pR1-Zi-yIS" firstAttribute="baseline" secondItem="JiC-Bl-905" secondAttribute="firstBaseline" id="asZ-TK-zrq"/>
+                <constraint firstItem="JiC-Bl-905" firstAttribute="leading" secondItem="m3f-NN-WuW" secondAttribute="trailing" id="p73-gW-7Ac"/>
                 <constraint firstAttribute="trailing" secondItem="pR1-Zi-yIS" secondAttribute="trailing" id="rpb-0P-IKq"/>
                 <constraint firstItem="JiC-Bl-905" firstAttribute="trailing" secondItem="pR1-Zi-yIS" secondAttribute="trailing" id="v6M-ed-er2"/>
             </constraints>
             <size key="customSize" width="468" height="205"/>
             <connections>
                 <outlet property="expandButton" destination="JiC-Bl-905" id="Mx4-vp-W6V"/>
+                <outlet property="gradientView" destination="m3f-NN-WuW" id="WTf-8X-Zra"/>
                 <outlet property="textLabel" destination="pR1-Zi-yIS" id="UMA-lu-2lF"/>
             </connections>
-            <point key="canvasLocation" x="-168.11594202898553" y="63.28125"/>
+            <point key="canvasLocation" x="-294" y="30"/>
         </collectionViewCell>
     </objects>
     <resources>
@@ -62,6 +74,9 @@
         </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

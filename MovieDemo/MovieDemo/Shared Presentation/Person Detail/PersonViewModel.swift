@@ -35,31 +35,31 @@ class PersonViewModel {
 //MARK: - Properties
 extension PersonViewModel {
     var id: Int {
-        return person.id
+        person.id
     }
     
     var name: String {
-        return person.name
+        person.name
     }
     
     var knownForDepartment: String? {
-        return person.knownForDepartment
+        person.knownForDepartment
     }
     
     var birthday: Date? {
-        return person.birthday
+        person.birthday
     }
     
     var deathday: Date? {
-        return person.deathday
+        person.deathday
     }
     
     var biography: String? {
-        return person.biography
+        person.biography
     }
     
     var placeOfBirth: String? {
-        return person.placeOfBirth
+        person.placeOfBirth
     }
 
     var profileImageURL: URL? {

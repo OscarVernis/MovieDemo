@@ -153,10 +153,10 @@ class PersonDetailViewController: UIViewController {
     fileprivate func setupDataSource() {
         dataSource = PersonDetailDiffableDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
             guard let self else { fatalError() }
-
+            
             return self.dataSource.cell(for: collectionView, with: indexPath, identifier: item)
         })
-        
+    
         dataSource.registerReusableViews(collectionView: collectionView)
     }
     
@@ -169,14 +169,12 @@ class PersonDetailViewController: UIViewController {
         .store(in: &cancellables)
         
         store.$error
+            .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
-            if error != nil {
                 self?.handleError()
-                self?.store?.error = nil
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
 
         store.refresh()
     }
@@ -184,8 +182,7 @@ class PersonDetailViewController: UIViewController {
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
         dataSource.person = store.person
-        dataSource.reload(force: true)
-        collectionView.reloadData()
+        dataSource.reload(force: true, animated: false)
 
         if let indexPath = dataSource.indexPathForSelectedCreditSection {
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
@@ -201,7 +198,7 @@ class PersonDetailViewController: UIViewController {
 //MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func animateTitleView(show: Bool) {
-        UIView.animate(withDuration: 0.15, delay: show ? 0.05 : 0) {
+        UIView.animate(withDuration: show ? 0.15 : 0.2, delay: 0, options: .curveEaseIn) {
             if show {
                 self.titleView.alpha = 1
                 self.titleViewTopConstraint.constant = 0
@@ -212,19 +209,6 @@ extension PersonDetailViewController {
                 self.titleView.superview?.layoutIfNeeded()
             }
         }
-        
-        UIView.animate(withDuration: 0.15, delay: show ? 0 : 0.1) {
-            if show {
-                self.nameLabel.alpha = 0
-                self.nameLabelBottomConstraint.constant = 10
-                self.nameLabel.superview?.layoutIfNeeded()
-            } else {
-                self.nameLabel.alpha = 1
-                self.nameLabelBottomConstraint.constant = 0
-                self.nameLabel.superview?.layoutIfNeeded()
-            }
-        }
-        
     }
     
     fileprivate func setupAnimations() {
@@ -253,16 +237,19 @@ extension PersonDetailViewController {
         }
 
         //Animate title
-        if offset > threshold - 15 {
+        if offset > threshold - 10 {
             showingNavBarTitle = true
-        } else if offset < threshold + titleHeight + 40 {
+        } else if offset < threshold + titleHeight + 30 {
             showingNavBarTitle = false
         }
 
         //Set blur animation progress
-        let ratio: CGFloat
-        ratio = 1 - newHeight / (headerHeight * 0.6)
+        var ratio: CGFloat
+        ratio = 1 - newHeight / (headerHeight * 0.75)
         blurAnimator.fractionComplete = ratio
+        
+        let alpha = (newHeight - topInset - 5) / (headerHeight * 0.5)
+        nameLabel.alpha = alpha
 
         //Adjust header size
         if offset < -threshold {
@@ -321,15 +308,15 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         cell?.setSelection(true)
         
         //Scroll to last item of new section if current section has more items
-//        if let creditsSection = dataSource.sectionForCredits,
-//           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
-//            let newCount = dataSource.itemCount(for: dataSource.creditSections[newIndexPath.row])
-//            if lasVisibleIndexPath.row > newCount {
-//                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
-//                                            at: .bottom,
-//                                            animated: true)
-//            }
-//        }
+        if let creditsSection = dataSource.sectionForCredits,
+           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
+            let newCount = dataSource.itemCount(for: dataSource.creditSections[newIndexPath.row])
+            if lasVisibleIndexPath.row > newCount {
+                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
+                                            at: .bottom,
+                                            animated: true)
+            }
+        }
         
         dataSource.selectedCreditSection = dataSource.creditSections[newIndexPath.row]
         dataSource.reload()
@@ -339,17 +326,6 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         if let categoryCell = cell as? CategoryCell {
             categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedCreditSection)
         }
-//        guard dataSource.sections[indexPath.section] == .overview,
-//              let overviewCell = cell as? OverviewCell
-//        else { return }
-//        
-//        let action = UIAction { _ in
-//            overviewCell.textLabel.numberOfLines = 0
-//            collectionView.collectionViewLayout.invalidateLayout()
-//            collectionView.reloadItems(at: [indexPath])
-//        }
-//        overviewCell.expandButton.addAction(action, for: .touchUpInside)
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -357,3 +333,4 @@ extension PersonDetailViewController: UICollectionViewDelegate {
     }
     
 }
+

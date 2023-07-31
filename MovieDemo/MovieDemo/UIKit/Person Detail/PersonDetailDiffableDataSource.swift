@@ -34,6 +34,11 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     }
     
     var overviewSectionID = UUID().uuidString
+    var isOverviewExpanded: Bool = false {
+        didSet {
+            reloadOverviewSection()
+        }
+    }
     
     var person: PersonViewModel!
     var sections: [Section] = []
@@ -44,7 +49,6 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     func registerReusableViews(collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         OverviewCell.register(to: collectionView)
-        PersonCreditCell.register(to: collectionView)
         PersonCreditCell.register(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         CategoryCell.register(to: collectionView)
@@ -58,6 +62,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         case .overview:
             let overviewCell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
             overviewCell.textLabel.text = person.biography
+            overviewCell.isExpanded = isOverviewExpanded
+            overviewCell.expandButton.addTarget(self, action: #selector(expandOverview), for: .touchUpInside)
             cell = overviewCell
         case .popular:
             let movie = identifier as! MovieViewModel
@@ -85,6 +91,11 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         }
         
         return cell
+    }
+    
+    @objc
+    func expandOverview() {
+        isOverviewExpanded = true
     }
     
     var indexPathForSelectedCreditSection: IndexPath? {
@@ -146,6 +157,11 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             creditSections.append(section)
         }
         
+    }
+    
+    func reloadOverviewSection() {
+        overviewSectionID = UUID().uuidString
+        reload(animated: false)
     }
     
     func reload(force: Bool = false, animated: Bool = true) {

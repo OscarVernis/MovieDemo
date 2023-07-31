@@ -86,6 +86,9 @@ class MoviePosterInfoCell: UICollectionViewCell {
     override func prepareForReuse() {
         removeViews()
         
+        posterImageView.cancelImageRequest()
+        posterImageView.image = .asset(.PosterPlaceholder)
+                
         title = nil
         rating = nil
         info = nil
