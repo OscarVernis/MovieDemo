@@ -47,9 +47,6 @@ extension PersonDetailDiffableDataSource.Section {
         
         section.contentInsets.top = 5
         
-//        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-//        section.boundarySupplementaryItems = [sectionHeader]
-        
         return section
     }
     

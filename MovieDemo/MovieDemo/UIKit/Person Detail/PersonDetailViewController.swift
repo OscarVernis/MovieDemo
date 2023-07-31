@@ -56,6 +56,29 @@ class PersonDetailViewController: UIViewController {
         setupStore()
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    deinit {
+        blurAnimator?.stopAnimation(true)
+    }
+    
+    //MARK: - Bar Appearance
+    var defaultBarAppearance: UINavigationBarAppearance?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        defaultBarAppearance = navigationController?.navigationBar.standardAppearance
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.standardAppearance = defaultBarAppearance!
+    }
+    
+    //MARK: - Setup
     fileprivate func setupNavigationBar() {
         //Create Title
         let titleViewContainer = UIView()
@@ -76,29 +99,7 @@ class PersonDetailViewController: UIViewController {
         navigationItem.titleView = titleViewContainer
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        //Setup Navigation Bar Appereance
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
-    deinit {
-        blurAnimator?.stopAnimation(true)
-    }
-    
-    //MARK: - Setup
-    func createLayout() -> UICollectionViewLayout {
+    fileprivate func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
             
@@ -320,15 +321,15 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         cell?.setSelection(true)
         
         //Scroll to last item of new section if current section has more items
-        if let creditsSection = dataSource.sectionForCredits,
-           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
-            let newCount = dataSource.itemCount(for: dataSource.creditSections[newIndexPath.row])
-            if lasVisibleIndexPath.row > newCount {
-                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
-                                            at: .bottom,
-                                            animated: true)
-            }
-        }
+//        if let creditsSection = dataSource.sectionForCredits,
+//           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
+//            let newCount = dataSource.itemCount(for: dataSource.creditSections[newIndexPath.row])
+//            if lasVisibleIndexPath.row > newCount {
+//                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
+//                                            at: .bottom,
+//                                            animated: true)
+//            }
+//        }
         
         dataSource.selectedCreditSection = dataSource.creditSections[newIndexPath.row]
         dataSource.reload()

@@ -25,7 +25,7 @@ class CategoryCell: UICollectionViewCell {
             titleLabel.textColor = .label
             containerView.backgroundColor = .clear
             containerView.layer.borderColor = UIColor.label.cgColor
-            containerView.layer.borderWidth = 2
+            containerView.layer.borderWidth = 1
         }
     }
 
