@@ -108,6 +108,8 @@ class PersonDetailViewController: UIViewController {
             return section.sectionLayout()
         }
         
+        layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
+
         return layout
     }
     
@@ -189,9 +191,9 @@ class PersonDetailViewController: UIViewController {
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
         dataSource.person = store.person
-        UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
+//        UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
             self.dataSource.reload(force: true, animated: false)
-        }
+//        }
 
         if let indexPath = dataSource.indexPathForSelectedCreditSection {
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])

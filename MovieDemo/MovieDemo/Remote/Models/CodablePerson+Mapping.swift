@@ -24,6 +24,10 @@ extension CodablePerson {
         person.castCredits = movieCredits?.cast?.compactMap { $0.toPersonCastCredit() }
         person.crewCredits = movieCredits?.crew?.compactMap { $0.toPersonCrewCredit() }
         
+        if let gender {
+            person.gender = Person.Gender(rawValue: gender)
+        }
+        
         return person
     }
 }

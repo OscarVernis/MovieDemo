@@ -16,18 +16,21 @@ class PersonViewModel {
     
     var departments: [String] = []
     var departmentCrewCredits: [String: [PersonCrewCreditViewModel]] = [:]
-
+    
+    var information: [[String: String]] = []
+    
     var popularMovies = [MovieViewModel]()
         
     init(person: Person) {
         self.person = person
-        updateInfo()
+        updateDetails()
     }
 
-    func updateInfo() {
+    func updateDetails() {
         updateCastCredits()
         updateCrewCredits()
         updatePopularMovies()
+        updateInformation()
     }
     
 }
@@ -134,6 +137,39 @@ extension PersonViewModel {
             .sorted(by: Movie.sortByPopularity)
             .prefix(8)
             .compactMap { MovieViewModel(movie: $0) }
+    }
+    
+    func updateInformation() {
+        information.removeAll()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateStyle = .long
+        
+        if let knownForDepartment, !knownForDepartment.isEmpty {
+            information.append(["Known For": knownForDepartment])
+        }
+        
+        let creditsCount = crewCredits.count + castCredits.count
+        if creditsCount > 0 {
+            information.append(["Credits": "\(creditsCount)"])
+        }
+        
+        if let gender = person.gender {
+            information.append(["Gender": gender.string])
+        }
+        
+        if let birthday {
+            information.append(["Birthday": dateFormatter.string(from: birthday)])
+        }
+        
+        if let deathday {
+            information.append(["Day of Death": dateFormatter.string(from: deathday)])
+        }
+        
+        if let placeOfBirth {
+            information.append(["Place of Birth": placeOfBirth])
+        }
     }
     
 }

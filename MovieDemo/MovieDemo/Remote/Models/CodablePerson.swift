@@ -15,6 +15,7 @@ struct CodablePerson: Codable {
     let knownForDepartment: String?
     let birthday: Date?
     let deathday: Date?
+    let gender: Int?
     let biography: String?
     let placeOfBirth: String?
     let profilePath: String?
@@ -27,6 +28,7 @@ struct CodablePerson: Codable {
         case knownForDepartment = "known_for_department"
         case birthday
         case deathday
+        case gender
         case biography
         case placeOfBirth = "place_of_birth"
         case profilePath = "profile_path"
@@ -42,6 +44,7 @@ struct CodablePerson: Codable {
         knownForDepartment = try? container.decodeIfPresent(String.self, forKey: .knownForDepartment)
         birthday = try? container.decodeIfPresent(Date.self, forKey: .birthday)
         deathday = try? container.decodeIfPresent(Date.self, forKey: .deathday)
+        gender = try? container.decodeIfPresent(Int.self, forKey: .gender)
         biography = try? container.decodeIfPresent(String.self, forKey: .biography)
         placeOfBirth = try? container.decodeIfPresent(String.self, forKey: .placeOfBirth)
         profilePath = try? container.decodeIfPresent(String.self, forKey: .profilePath)

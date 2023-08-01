@@ -19,6 +19,8 @@ extension PersonDetailDataSource.Section {
             return makeCreditCategories()
         case .castCredits, .crewCredits:
             return makeCredits()
+        case .info:
+            return makeInfo()
         }
         
     }
@@ -49,6 +51,7 @@ extension PersonDetailDataSource.Section {
         let section = sectionBuilder.createListSection(height: 121)
         
         section.contentInsets.top = 5
+        section.contentInsets.bottom = 0
         
         return section
     }
@@ -63,6 +66,16 @@ extension PersonDetailDataSource.Section {
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
         
+        return section
+    }
+    
+    fileprivate func makeInfo() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+        let section: NSCollectionLayoutSection
+        
+        section = sectionBuilder.createDecoratedListSection(height: 52, topSpacing: 16)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 36, bottom: 24, trailing: 36)
+
         return section
     }
     

@@ -15,10 +15,11 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         case creditCategories
         case castCredits
         case crewCredits(department: String)
+        case info
         
         var sectionTitle: String {
             switch self {
-            case .overview:
+            case .overview, .info:
                 return ""
             case .popular:
                 return .localized(PersonString.KnownFor)
@@ -50,6 +51,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         PersonCreditCell.register(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         CategoryCell.register(to: collectionView)
+        InfoListCell.register(to: collectionView)
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -86,6 +88,12 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             let crewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
             PersonCreditCell.configure(cell: crewCell, crewCredit: crewCredit)
             cell = crewCell
+        case .info:
+            let infoItem = identifier as! [String: String]
+            let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
+            InfoListCell.configure(cell: infoCell, info: infoItem)
+            infoCell.separator.isHidden = true
+            cell = infoCell
         }
         
         return cell
@@ -124,6 +132,8 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             return person.castCredits.isEmpty ? 0 : person.castCredits.count
         case .crewCredits(department: let department):
             return person.credits(for: department).count
+        case .info:
+            return person.information.count
         }
     }
     
@@ -178,6 +188,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             selectedCreditSection = creditSections.first!
         }
         sections.append(selectedCreditSection)
+        
+        if !person.information.isEmpty {
+            sections.append(.info)
+        }
 
         var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDataSource.Section, AnyHashable>()
         snapshot.appendSections(sections)
@@ -195,6 +209,9 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             case .crewCredits(department: let department):
                 let credits = person.credits(for: department)
                 snapshot.appendItems(credits, toSection: .crewCredits(department: department))
+            case .info:
+                let info = person.information
+                snapshot.appendItems(info, toSection: .info)
             }
         }
     

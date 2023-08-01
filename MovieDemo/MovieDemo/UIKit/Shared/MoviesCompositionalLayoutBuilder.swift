@@ -69,13 +69,13 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //List with background decorator
-    func createDecoratedListSection(height: CGFloat = 50) ->  NSCollectionLayoutSection {
+    func createDecoratedListSection(height: CGFloat = 50, topSpacing: CGFloat = 0) ->  NSCollectionLayoutSection {
         let section = createListSection(height: height)
         section.interGroupSpacing = 5
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: spacing, bottom: 20, trailing: spacing)
         
         let sectionBackgroundDecoration = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundDecorationView.elementKind)
-        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 15, trailing: spacing)
+        sectionBackgroundDecoration.contentInsets = NSDirectionalEdgeInsets(top: topSpacing, leading: spacing, bottom: 15, trailing: spacing)
         section.decorationItems = [sectionBackgroundDecoration]
                 
         return section
