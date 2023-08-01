@@ -11,15 +11,15 @@ import UIKit
 class DiffableListViewController: UIViewController, UICollectionViewDelegate {
     var collectionView: UICollectionView!
     
-    var dataSource: PagingDataSource!
-    var dataSourceProvider: (UICollectionView) -> PagingDataSource
+    var dataSource: (any PagingDataSource)!
+    var dataSourceProvider: (UICollectionView) -> any PagingDataSource
     var layout: UICollectionViewCompositionalLayout
     
     var router: ErrorHandlingRouter?
 
-    var didSelectedItem: ((Int) -> ())?
+    var didSelectedItem: ((Any) -> ())?
     
-    init(dataSourceProvider: @escaping (UICollectionView) -> PagingDataSource,
+    init(dataSourceProvider: @escaping (UICollectionView) -> any PagingDataSource,
          layout: UICollectionViewCompositionalLayout = DiffableListViewController.defaultLayout(),
          router: ErrorHandlingRouter? = nil) {
         self.dataSourceProvider = dataSourceProvider
@@ -95,18 +95,15 @@ class DiffableListViewController: UIViewController, UICollectionViewDelegate {
     
     //MARK: - CollectionView Delegate
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath)
         if indexPath.section == 1 { //Loads next page when Loading Cell is showing
             dataSource.loadMore()
         }
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section > 0 {
-            return
+        if let model = dataSource.model(at: indexPath) {
+            didSelectedItem?(model)
         }
-
-        didSelectedItem?(indexPath.row)
     }
     
 }

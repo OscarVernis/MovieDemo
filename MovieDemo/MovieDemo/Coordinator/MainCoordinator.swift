@@ -215,11 +215,10 @@ class MainCoordinator {
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
         
-        lvc.didSelectedItem = { [weak self] index in
-            guard index < dataProvider.itemCount else { return }
-            
-            let movie = dataProvider.item(atIndex: index)
-            self?.showMovieDetail(movie: movie)
+        lvc.didSelectedItem = { [weak self] model in
+            if let movie = model as? MovieViewModel {
+                self?.showMovieDetail(movie: movie)
+            }
         }
         
     }
@@ -273,13 +272,11 @@ class MainCoordinator {
         let lvc = DiffableListViewController(dataSourceProvider: provider, router: self)
         lvc.title =  MovieString.Crew.localized
         
-        lvc.didSelectedItem = { index in
-            if index >= credits.count { return }
-
-            let crewCredit = credits[index]
-            
-            let person = crewCredit.person()
-            self.showPersonProfile(person)
+        lvc.didSelectedItem = { [weak self] model in
+            if let crewCredit = model as? CrewCreditViewModel {
+                let person = crewCredit.person()
+                self?.showPersonProfile(person)
+            }
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
@@ -290,13 +287,11 @@ class MainCoordinator {
         let lvc = DiffableListViewController(dataSourceProvider: provider, router: self)
         lvc.title = MovieString.Cast.localized
         
-        lvc.didSelectedItem = { index in
-            if index >= credits.count { return }
-            
-            let castCredit = credits[index]
-            
-            let person = castCredit.person()
-            self.showPersonProfile(person)
+        lvc.didSelectedItem = { [weak self] model in
+            if let castCredit = model as? CastCreditViewModel {
+                let person = castCredit.person()
+                self?.showPersonProfile(person)
+            }
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)

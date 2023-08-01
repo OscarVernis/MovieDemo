@@ -8,13 +8,16 @@
 
 import UIKit
 
-protocol PagingDataSource: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> {
+protocol PagingDataSource<Model>: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> {
+    associatedtype Model
+    
     var didUpdate: ((Error?) -> ())? { get set }
     var isLoading: Bool { get }
     var isRefreshable: Bool { get }
     
     func refresh()
     func loadMore()
+    func model(at: IndexPath) -> Model?
 }
 
 class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>, PagingDataSource {
@@ -63,9 +66,15 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UIColl
     
     func loadMore() {}
     
+    func model(at indexPath: IndexPath) -> Model? {
+        return itemIdentifier(for: indexPath) as? Model
+    }
+    
 }
 
 class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCell>: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>, PagingDataSource {
+    typealias Model = Provider.Model
+    
     enum Section: Int, CaseIterable {
         case main
         case loading
@@ -140,4 +149,9 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
         isLoading = true
         dataProvider.loadMore()
     }
+    
+    func model(at indexPath: IndexPath) -> Model? {
+        return itemIdentifier(for: indexPath) as? Model
+    }
+    
 }
