@@ -28,6 +28,33 @@ extension CodablePerson {
             person.gender = Person.Gender(rawValue: gender)
         }
         
+        if let homepage {
+            person.homepage = URL(string: homepage)
+        }
+        
+        var socialLinks = [Person.SocialLinks]()
+        if let instagramID = externalIds?.instagramID, !instagramID.isEmpty {
+            socialLinks.append(.instagram(username: instagramID))
+        }
+        
+        if let twitterID = externalIds?.twitterID, !twitterID.isEmpty {
+            socialLinks.append(.twitter(username: twitterID))
+        }
+        
+        if let facebookID = externalIds?.facebookID, !facebookID.isEmpty {
+            socialLinks.append(.facebook(username: facebookID))
+        }
+        
+        if let tiktokID = externalIds?.tiktokID, !tiktokID.isEmpty {
+            socialLinks.append(.tiktok(username: tiktokID))
+        }
+        
+        if let youtubeID = externalIds?.youtubeID, !youtubeID.isEmpty {
+            socialLinks.append(.youtube(username: youtubeID))
+        }
+        
+        person.socialLinks = socialLinks
+        
         return person
     }
 }

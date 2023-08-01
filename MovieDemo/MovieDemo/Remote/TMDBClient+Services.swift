@@ -37,7 +37,7 @@ extension TMDBClient {
     }
     
     func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
-        let params = ["append_to_response": "movie_credits"]
+        let params = ["append_to_response": "movie_credits,external_ids"]
         
         let publisher: AnyPublisher<CodablePerson, Error> = getModel(endpoint: .personDetails(personId: personId), parameters: params)
 

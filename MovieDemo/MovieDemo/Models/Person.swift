@@ -26,6 +26,15 @@ struct Person {
         }
     }
     
+    enum SocialLinks: Hashable {
+        case imdb(id: String)
+        case facebook(username: String)
+        case instagram(username: String)
+        case tiktok(username: String)
+        case twitter(username: String)
+        case youtube(username: String)
+    }
+    
     var id: Int!
     var name: String!
     var knownForDepartment: String?
@@ -36,6 +45,9 @@ struct Person {
     var placeOfBirth: String?
     var profilePath: String?
     var knownForMovies: [Movie]?
+    
+    var homepage: URL?
+    var socialLinks: [SocialLinks] = []
     
     var castCredits: [PersonCastCredit]?
     var crewCredits: [PersonCrewCredit]?

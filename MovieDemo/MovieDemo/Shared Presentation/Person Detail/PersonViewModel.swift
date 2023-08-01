@@ -64,6 +64,14 @@ extension PersonViewModel {
     var placeOfBirth: String? {
         person.placeOfBirth
     }
+    
+    var homepage: URL? {
+        person.homepage
+    }
+    
+    var socialLinks: [Person.SocialLinks] {
+        person.socialLinks
+    }
 
     var profileImageURL: URL? {
         guard let pathString = person.profilePath else { return nil }

@@ -21,6 +21,8 @@ struct CodablePerson: Codable {
     let profilePath: String?
     var knownForMovies: [CodableMovie]?
     let movieCredits: CodablePersonCredits?
+    let externalIds: ExternalIds?
+    let homepage: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -34,6 +36,8 @@ struct CodablePerson: Codable {
         case profilePath = "profile_path"
         case knownForMovies = "known_for"
         case movieCredits = "movie_credits"
+        case externalIds = "external_ids"
+        case homepage
     }
     
     init(from decoder: Decoder) throws {
@@ -50,6 +54,8 @@ struct CodablePerson: Codable {
         profilePath = try? container.decodeIfPresent(String.self, forKey: .profilePath)
         knownForMovies = try? container.decodeIfPresent([CodableMovie].self, forKey: .knownForMovies)
         movieCredits = try? container.decodeIfPresent(CodablePersonCredits.self, forKey: .movieCredits)
+        externalIds = try? container.decodeIfPresent(ExternalIds.self, forKey: .externalIds)
+        homepage = try? container.decodeIfPresent(String.self, forKey: .homepage)
     }
 }
 
@@ -81,7 +87,7 @@ struct CodableCastCredit: Codable {
     }
 }
 
-// MARK: - Cast
+// MARK: - Crew
 struct CodableCrewCredit: Codable {
     var id: Int!
     var job: String?
@@ -101,4 +107,25 @@ struct CodableCrewCredit: Codable {
         department = try? container.decodeIfPresent(String.self, forKey: .department)
         movie = try? CodableMovie(from: decoder)
     }
+    
+}
+
+// MARK: - ExternalIds
+struct ExternalIds: Codable {
+    let imdbID: String?
+    let facebookID: String?
+    let instagramID: String?
+    let tiktokID: String?
+    let twitterID: String?
+    let youtubeID: String?
+
+    enum CodingKeys: String, CodingKey {
+        case imdbID = "imdb_id"
+        case facebookID = "facebook_id"
+        case instagramID = "instagram_id"
+        case tiktokID = "tiktok_id"
+        case twitterID = "twitter_id"
+        case youtubeID = "youtube_id"
+    }
+    
 }
