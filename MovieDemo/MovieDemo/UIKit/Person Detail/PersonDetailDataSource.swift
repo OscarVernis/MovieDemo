@@ -1,5 +1,5 @@
 //
-//  PersonDetailDiffableDataSource.swift
+//  PersonDetailDataSource.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 29/07/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonDetailDiffableDataSource.Section, AnyHashable> {
+class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDataSource.Section, AnyHashable> {
     enum Section: Hashable {
         case overview
         case popular
@@ -33,16 +33,17 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         
     }
     
+    var person: PersonViewModel!
+    
     var overviewSectionID = UUID().uuidString
     var isOverviewExpanded: Bool = false
     var overviewExpandAction: (() -> ())? = nil
     
-    var person: PersonViewModel!
     var sections: [Section] = []
-    
     var creditSections: [Section] = []
     var selectedCreditSection: Section = .castCredits
     
+    //MARK: - Setup
     func registerReusableViews(collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         OverviewCell.register(to: collectionView)
@@ -95,6 +96,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         overviewExpandAction?()
     }
     
+    //MARK: - Helpers
     var indexPathForSelectedCreditSection: IndexPath? {
         let section = sections.firstIndex(of: .creditCategories)
         let row = creditSections.firstIndex(of: selectedCreditSection)
@@ -125,6 +127,11 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         }
     }
     
+    func crewCredit(at indexPath: IndexPath) -> PersonCrewCreditViewModel? {
+        itemIdentifier(for: indexPath) as? PersonCrewCreditViewModel
+    }
+    
+    //MARK: - Reload
     func setupSections() {
         sections.removeAll()
         creditSections.removeAll()
@@ -149,7 +156,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             sections.append(.creditCategories)
         }
         
-        //Send acting to the end if person is know for crew department
+        //Send Acting to the end if person is know for crew department
         if person.departments.first == person.knownForDepartment,
            creditSections.first == .castCredits {
             let section = creditSections.remove(at: 0)
@@ -172,7 +179,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         }
         sections.append(selectedCreditSection)
 
-        var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDiffableDataSource.Section, AnyHashable>()
+        var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDataSource.Section, AnyHashable>()
         snapshot.appendSections(sections)
         
         for section in sections {
@@ -194,6 +201,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         self.apply(snapshot, animatingDifferences: animated)
     }
     
+    //MARK: - Collection View
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let section = self.sections[indexPath.section]
         
@@ -203,10 +211,6 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         SectionTitleView.configureForDetail(headerView: sectionTitleView, title: title)
         
         return sectionTitleView
-    }
-    
-    func crewCredit(at indexPath: IndexPath) -> PersonCrewCreditViewModel? {
-        itemIdentifier(for: indexPath) as? PersonCrewCreditViewModel
     }
     
 }

@@ -15,7 +15,7 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var dataSource: PersonDetailDiffableDataSource!
+    var dataSource: PersonDetailDataSource!
     
     @IBOutlet weak var personImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -49,8 +49,8 @@ class PersonDetailViewController: UIViewController {
         super.viewDidLoad()
                 
         setupCustomBackButton()
-        setupNavigationBar()
-        setupAnimations()
+        setupTitleView()
+        setupBlurAnimator()
         setup()
         setupDataSource()
         setupStore()
@@ -79,7 +79,7 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Setup
-    fileprivate func setupNavigationBar() {
+    fileprivate func setupTitleView() {
         //Create Title
         let titleViewContainer = UIView()
         titleViewContainer.clipsToBounds = false
@@ -131,7 +131,6 @@ class PersonDetailViewController: UIViewController {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
-        
         let width = UIWindow.mainWindow.frame.width
         let height = width * 1.5
         let bottomInset = UIWindow.mainWindow.bottomInset
@@ -153,7 +152,7 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataSource() {
-        dataSource = PersonDetailDiffableDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
+        dataSource = PersonDetailDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
             guard let self else { fatalError() }
             
             return self.dataSource.cell(for: collectionView, with: indexPath, identifier: item)
@@ -221,7 +220,7 @@ extension PersonDetailViewController {
         }
     }
     
-    fileprivate func setupAnimations() {
+    fileprivate func setupBlurAnimator() {
         blurView.effect = nil
         blurAnimator = UIViewPropertyAnimator(duration: 1, curve: .easeIn) {
             self.blurView.effect = UIBlurEffect(style: .light)

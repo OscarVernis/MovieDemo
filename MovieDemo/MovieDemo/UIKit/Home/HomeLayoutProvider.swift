@@ -10,7 +10,7 @@ import UIKit
 
 struct HomeLayoutProvider {
     let sectionBuilder = MoviesCompositionalLayoutBuilder()
-
+    
     func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = HomeDataSource.Section(rawValue: sectionIndex)
         
@@ -32,7 +32,7 @@ struct HomeLayoutProvider {
     func makeBannerSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
+        
         let section: NSCollectionLayoutSection
         section = sectionBuilder.createBannerSection()
         section.contentInsets.top = 10
@@ -46,7 +46,7 @@ struct HomeLayoutProvider {
     func makeHorizontalPosterSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
+        
         let section: NSCollectionLayoutSection
         section = sectionBuilder.createHorizontalPosterSection()
         section.contentInsets.top = 10
@@ -60,7 +60,7 @@ struct HomeLayoutProvider {
     func makeListSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
+        
         let section: NSCollectionLayoutSection
         section = sectionBuilder.createListSection()
         section.contentInsets.bottom = 30
@@ -69,11 +69,11 @@ struct HomeLayoutProvider {
         
         return section
     }
-
+    
     func makeDecoratedListSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
-
+        
         let section: NSCollectionLayoutSection
         section = sectionBuilder.createDecoratedListSection()
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)

@@ -71,10 +71,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     
     fileprivate func setupViewController() {
         title = .localized(HomeString.Movies)
-        navigationController?.delegate = self
-        
-//        //User Profile NavBar Button
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .asset(.person), style: .plain, target: self, action: #selector(showUser))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,10 +94,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     //MARK: - Actions
-    @objc fileprivate func showUser() {
-        router.showUserProfile()
-    }
-    
     @objc fileprivate func refresh() {
         dataSource.refresh()
     }

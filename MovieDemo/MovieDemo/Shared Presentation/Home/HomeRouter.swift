@@ -9,7 +9,6 @@
 import Foundation
 
 protocol HomeRouter {
-    func showUserProfile(animated: Bool)
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
     
     func showNowPlaying()
@@ -19,10 +18,6 @@ protocol HomeRouter {
 }
 
 extension HomeRouter {
-    func showUserProfile(animated: Bool = true) {
-        showUserProfile(animated: animated)
-    }
-    
     func showMovieDetail(movie: MovieViewModel, animated: Bool = true) {
         showMovieDetail(movie: movie, animated: animated)
     }

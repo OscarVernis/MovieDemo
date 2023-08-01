@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension PersonDetailDiffableDataSource.Section {
+extension PersonDetailDataSource.Section {
     func sectionLayout() -> NSCollectionLayoutSection {
         switch self {
         case .overview:
@@ -26,7 +26,10 @@ extension PersonDetailDiffableDataSource.Section {
     fileprivate func makeOverview() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         
-        return sectionBuilder.createEstimatedSection(height: 50)
+        let section = sectionBuilder.createEstimatedSection(height: 50)
+        section.contentInsets.top = 6
+        
+        return section
     }
     
     fileprivate func makePopular() -> NSCollectionLayoutSection {

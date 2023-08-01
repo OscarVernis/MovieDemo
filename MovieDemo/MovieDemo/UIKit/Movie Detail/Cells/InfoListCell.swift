@@ -19,10 +19,12 @@ extension InfoListCell {
     static func configure(cell: InfoListCell, with crewCredit: CrewCreditViewModel) {
         cell.titleLabel.text = crewCredit.name
         cell.infoLabel.text = crewCredit.jobs
+        cell.infoLabel.font = cell.infoLabel.font.withSize(15)
     }
     
     static func configure(cell: InfoListCell, info: [String : String]) {
         cell.titleLabel.text = info.first?.key
         cell.infoLabel.text = info.first?.value
+        cell.infoLabel.font = cell.infoLabel.font.withSize(16)
     }
 }

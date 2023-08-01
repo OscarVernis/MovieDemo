@@ -95,7 +95,6 @@ struct Home: View {
     fileprivate func navigationItems() -> ToolbarItem<Void, Button<Image>> {
         ToolbarItem(placement: .primaryAction) {
             Button(action: {
-                router?.showUserProfile()
             }, label: {
                 Image(asset: .person)
             })
