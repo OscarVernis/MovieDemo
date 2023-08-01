@@ -17,22 +17,13 @@ struct Person {
         var string: String {
             switch self {
             case .female:
-                return "Female"
+                return PersonString.Female.localized
             case .male:
-                return "Male"
+                return PersonString.Male.localized
             case .nonBinary:
-                return "Non Binary"
+                return PersonString.NonBinary.localized
             }
         }
-    }
-    
-    enum SocialLinks: Hashable {
-        case imdb(id: String)
-        case facebook(username: String)
-        case instagram(username: String)
-        case tiktok(username: String)
-        case twitter(username: String)
-        case youtube(username: String)
     }
     
     var id: Int!
@@ -47,7 +38,7 @@ struct Person {
     var knownForMovies: [Movie]?
     
     var homepage: URL?
-    var socialLinks: [SocialLinks] = []
+    var socialLinks: [SocialLink] = []
     
     var castCredits: [PersonCastCredit]?
     var crewCredits: [PersonCrewCredit]?

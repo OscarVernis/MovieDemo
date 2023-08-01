@@ -69,7 +69,7 @@ extension PersonViewModel {
         person.homepage
     }
     
-    var socialLinks: [Person.SocialLinks] {
+    var socialLinks: [SocialLink] {
         person.socialLinks
     }
 
@@ -155,28 +155,40 @@ extension PersonViewModel {
         dateFormatter.dateStyle = .long
         
         if let knownForDepartment, !knownForDepartment.isEmpty {
-            information.append(["Known For": knownForDepartment])
+            information.append([PersonString.KnownFor.localized: knownForDepartment])
         }
         
         let creditsCount = crewCredits.count + castCredits.count
         if creditsCount > 0 {
-            information.append(["Credits": "\(creditsCount)"])
+            information.append([PersonString.Credits.localized: "\(creditsCount)"])
         }
         
         if let gender = person.gender {
-            information.append(["Gender": gender.string])
+            information.append([PersonString.Gender.localized: gender.string])
         }
         
         if let birthday {
-            information.append(["Birthday": dateFormatter.string(from: birthday)])
+            var birthdayString = dateFormatter.string(from: birthday)
+            if deathday == nil {
+                let age = birthday.distanceInYears(to: .now)
+                birthdayString += " (\(age) " + PersonString.YearsOld.localized + ")"
+            }
+        
+            information.append([PersonString.Birthday.localized: birthdayString])
         }
         
         if let deathday {
-            information.append(["Day of Death": dateFormatter.string(from: deathday)])
+            var deathdayString = dateFormatter.string(from: deathday)
+            if let birthday {
+                let age = birthday.distanceInYears(to: deathday)
+                deathdayString += " (\(age) " + PersonString.YearsOld.localized + ")"
+            }
+            
+            information.append([PersonString.Deathday.localized: deathdayString])
         }
         
         if let placeOfBirth {
-            information.append(["Place of Birth": placeOfBirth])
+            information.append([PersonString.PlaceOfBirth.localized: placeOfBirth])
         }
     }
     

@@ -165,6 +165,10 @@ class PersonDetailViewController: UIViewController {
                 self.dataSource.reloadOverviewSection()
             }
         }
+        
+        dataSource.openSocialLink = { socialLink in
+            UIApplication.shared.open(socialLink.url)
+        }
     
         dataSource.registerReusableViews(collectionView: collectionView)
     }
@@ -193,7 +197,6 @@ class PersonDetailViewController: UIViewController {
         dataSource.person = store.person
         UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
             self.dataSource.reload(force: true, animated: false)
-            print(self.person.socialLinks)
         }
 
         if let indexPath = dataSource.indexPathForSelectedCreditSection {

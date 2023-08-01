@@ -73,8 +73,8 @@ extension PersonDetailDataSource.Section {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let section: NSCollectionLayoutSection
         
-        section = sectionBuilder.createDecoratedListSection(height: 52, topSpacing: 16)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 36, bottom: 24, trailing: 36)
+        section = sectionBuilder.createDecoratedListSection(height: 52, topSpacing: 20, bottomSpacing: 0, itemSpacing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 36, bottom: 8, trailing: 36)
 
         return section
     }

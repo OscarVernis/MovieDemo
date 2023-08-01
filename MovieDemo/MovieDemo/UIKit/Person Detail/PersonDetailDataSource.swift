@@ -38,7 +38,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     
     var overviewSectionID = UUID().uuidString
     var isOverviewExpanded: Bool = false
-    var overviewExpandAction: (() -> ())? = nil
+    var overviewExpandAction: (() -> ())?
+    
+    var socialItemId = UUID().uuidString
+    var openSocialLink: ((SocialLink) -> ())?
     
     var sections: [Section] = []
     var creditSections: [Section] = []
@@ -52,6 +55,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         MoviePosterInfoCell.register(to: collectionView)
         CategoryCell.register(to: collectionView)
         InfoListCell.register(to: collectionView)
+        SocialCell.register(to: collectionView)
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -89,11 +93,18 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             PersonCreditCell.configure(cell: crewCell, crewCredit: crewCredit)
             cell = crewCell
         case .info:
-            let infoItem = identifier as! [String: String]
-            let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
-            InfoListCell.configure(cell: infoCell, info: infoItem)
-            infoCell.separator.isHidden = true
-            cell = infoCell
+            if identifier as? String == socialItemId {
+                let socialCell = collectionView.dequeueReusableCell(withReuseIdentifier: SocialCell.reuseIdentifier, for: indexPath) as! SocialCell
+                socialCell.socialLinks = person.socialLinks
+                socialCell.didSelect = openSocialLink
+                cell = socialCell
+            } else {
+                let infoItem = identifier as! [String: String]
+                let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
+                InfoListCell.configure(cell: infoCell, info: infoItem)
+                infoCell.separator.isHidden = true
+                cell = infoCell
+            }
         }
         
         return cell
@@ -142,12 +153,16 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     }
     
     //MARK: - Reload
-    func setupSections() {
+    func setupSections(refresh: Bool = false) {
         sections.removeAll()
         creditSections.removeAll()
         
         if let bio = person.biography, !bio.isEmpty {
             sections.append(.overview)
+        }
+        
+        if !person.information.isEmpty {
+            sections.append(.info)
         }
         
         if !person.popularMovies.isEmpty {
@@ -173,6 +188,12 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             creditSections.append(section)
         }
         
+        if refresh && creditSections.count > 0 {
+            selectedCreditSection = creditSections.first!
+        }
+        sections.append(selectedCreditSection)
+        
+        
     }
     
     func reloadOverviewSection() {
@@ -182,16 +203,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     }
     
     func reload(force: Bool = false, animated: Bool = true) {
-        setupSections()
-        
-        if force && creditSections.count > 0 {
-            selectedCreditSection = creditSections.first!
-        }
-        sections.append(selectedCreditSection)
-        
-        if !person.information.isEmpty {
-            sections.append(.info)
-        }
+        setupSections(refresh: force)
 
         var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDataSource.Section, AnyHashable>()
         snapshot.appendSections(sections)
@@ -210,8 +222,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
                 let credits = person.credits(for: department)
                 snapshot.appendItems(credits, toSection: .crewCredits(department: department))
             case .info:
-                let info = person.information
-                snapshot.appendItems(info, toSection: .info)
+                if !person.socialLinks.isEmpty {
+                    snapshot.appendItems([socialItemId], toSection: .info)
+                }
+                snapshot.appendItems(person.information, toSection: .info)
             }
         }
     

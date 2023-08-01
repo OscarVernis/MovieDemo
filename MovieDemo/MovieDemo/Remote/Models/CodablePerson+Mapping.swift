@@ -32,7 +32,7 @@ extension CodablePerson {
             person.homepage = URL(string: homepage)
         }
         
-        var socialLinks = [Person.SocialLinks]()
+        var socialLinks = [SocialLink]()
         if let instagramID = externalIds?.instagramID, !instagramID.isEmpty {
             socialLinks.append(.instagram(username: instagramID))
         }
@@ -51,6 +51,10 @@ extension CodablePerson {
         
         if let youtubeID = externalIds?.youtubeID, !youtubeID.isEmpty {
             socialLinks.append(.youtube(username: youtubeID))
+        }
+        
+        if let homepage = homepage, let url = URL(string: homepage) {
+            socialLinks.append(.homepage(url: url))
         }
         
         person.socialLinks = socialLinks

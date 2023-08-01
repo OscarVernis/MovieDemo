@@ -13,6 +13,15 @@ enum PersonString: String, Localizable, CaseIterable {
     case KnownFor
     case Credits
     case SeeMore
+    case Gender
+    case Birthday
+    case YearsOld
+    case Deathday
+    case PlaceOfBirth
+    case Female
+    case Male
+    case NonBinary
+
     
     var tableName: String { "Person" }
 }
