@@ -11,6 +11,8 @@ import Foundation
 enum PersonString: String, Localizable, CaseIterable {
     case Acting
     case KnownFor
+    case Credits
+    case SeeMore
     
     var tableName: String { "Person" }
 }

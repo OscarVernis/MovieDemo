@@ -11,12 +11,19 @@ import UIKit
 class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
+    private var selection: Bool = false
     
     override func awakeFromNib() {
         setSelection(false)
+        selection = false
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setSelection(selection)
     }
     
     func setSelection(_ selected: Bool) {
+        selection = selected
         if selected {
             titleLabel.textColor = .systemBackground
             containerView.backgroundColor = .label

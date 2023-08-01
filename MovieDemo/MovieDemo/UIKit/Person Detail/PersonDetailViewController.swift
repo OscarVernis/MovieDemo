@@ -82,6 +82,7 @@ class PersonDetailViewController: UIViewController {
     fileprivate func setupNavigationBar() {
         //Create Title
         let titleViewContainer = UIView()
+        titleViewContainer.clipsToBounds = false
         titleView.font = UIFont(name: "Avenir Next Medium", size: 20)
         titleView.textColor = .label
         titleView.alpha = 0
@@ -89,7 +90,7 @@ class PersonDetailViewController: UIViewController {
         //Setup Title
         titleViewContainer.addSubview(titleView)
         titleView.translatesAutoresizingMaskIntoConstraints =   false
-        titleViewTopConstraint = titleView.topAnchor.constraint(equalTo: titleViewContainer.topAnchor, constant: 30)
+        titleViewTopConstraint = titleView.topAnchor.constraint(equalTo: titleViewContainer.topAnchor, constant: 20)
         NSLayoutConstraint.activate([
             titleView.leadingAnchor.constraint(equalTo: titleViewContainer.leadingAnchor, constant: 0),
             titleView.trailingAnchor.constraint(equalTo:titleViewContainer.trailingAnchor, constant: 0),
@@ -130,10 +131,15 @@ class PersonDetailViewController: UIViewController {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
-        //Set so the scrollIndicator stops before the status bar
-        let topInset = UIWindow.mainWindow.topInset
+        
+        let width = UIWindow.mainWindow.frame.width
+        let height = width * 1.5
         let bottomInset = UIWindow.mainWindow.bottomInset
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+        headerHeightConstraint.constant = height
+        collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
+        
+        //Set so the scrollIndicator stops before the status bar
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
         
         //Setup Person
         self.title = person.name
@@ -144,10 +150,6 @@ class PersonDetailViewController: UIViewController {
             personImageView.setRemoteImage(withURL: imageURL)
         }
         
-        let width = UIWindow.mainWindow.frame.width
-        let height = width * 1.5
-        headerHeightConstraint.constant = height
-        collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
     }
     
     fileprivate func setupDataSource() {
@@ -156,6 +158,12 @@ class PersonDetailViewController: UIViewController {
             
             return self.dataSource.cell(for: collectionView, with: indexPath, identifier: item)
         })
+        
+        dataSource.overviewExpandAction = { [unowned self] in
+            UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
+                self.dataSource.reloadOverviewSection()
+            }
+        }
     
         dataSource.registerReusableViews(collectionView: collectionView)
     }
@@ -182,7 +190,9 @@ class PersonDetailViewController: UIViewController {
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
         dataSource.person = store.person
-        dataSource.reload(force: true, animated: false)
+        UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
+            self.dataSource.reload(force: true, animated: false)
+        }
 
         if let indexPath = dataSource.indexPathForSelectedCreditSection {
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
@@ -198,7 +208,7 @@ class PersonDetailViewController: UIViewController {
 //MARK: - Header Animations
 extension PersonDetailViewController {
     fileprivate func animateTitleView(show: Bool) {
-        UIView.animate(withDuration: show ? 0.15 : 0.2, delay: 0, options: .curveEaseIn) {
+        UIView.animate(withDuration: show ? 0.15 : 0.2, delay: 0) {
             if show {
                 self.titleView.alpha = 1
                 self.titleViewTopConstraint.constant = 0
@@ -254,6 +264,8 @@ extension PersonDetailViewController {
         //Adjust header size
         if offset < -threshold {
             headerHeightConstraint.constant = newHeight
+            let bottomInset = UIWindow.mainWindow.bottomInset
+            collectionView.scrollIndicatorInsets  = UIEdgeInsets(top: newHeight, left: 0, bottom: bottomInset, right: 0)
 
             //Adjust gradient
             var gradientFrame = personImageView.bounds
@@ -326,6 +338,7 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         if let categoryCell = cell as? CategoryCell {
             categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedCreditSection)
         }
+    
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

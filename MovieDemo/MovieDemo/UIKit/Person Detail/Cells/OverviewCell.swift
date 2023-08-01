@@ -12,9 +12,20 @@ class OverviewCell: UICollectionViewCell {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var expandButton: UIButton!
     @IBOutlet weak var gradientView: UIView!
+    private var gradientLayer = CAGradientLayer()
+
+    var minNumberOfLines = 10
     
     override func awakeFromNib() {
-        let gradientLayer = CAGradientLayer()
+        setupGradient()
+        expandButton.setTitle(.localized(PersonString.SeeMore), for: .normal)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setupGradient()
+    }
+    
+    private func setupGradient() {
         gradientLayer.frame = gradientView.bounds
         gradientLayer.colors = [UIColor.systemBackground.withAlphaComponent(0).cgColor, UIColor.systemBackground.cgColor]
         gradientLayer.startPoint = CGPointMake(0, 0.5)
@@ -22,12 +33,19 @@ class OverviewCell: UICollectionViewCell {
         gradientView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    override func layoutSubviews() {
+        setupLabel()
+    }
+    
+    func setupLabel() {
+        textLabel.numberOfLines = isExpanded ? 0 : minNumberOfLines
+        expandButton.isHidden = isExpanded || !textLabel.isTruncated
+        gradientView.isHidden = expandButton.isHidden
+    }
+    
     var isExpanded: Bool = false {
         didSet {
-            textLabel.numberOfLines = isExpanded ? 0 : 10
-            expandButton.isHidden = isExpanded || !textLabel.isTruncated
-            gradientView.isHidden = expandButton.isHidden
-            
+            setupLabel()
         }
     }
     

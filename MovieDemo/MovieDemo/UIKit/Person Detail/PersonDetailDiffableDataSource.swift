@@ -23,7 +23,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             case .popular:
                 return .localized(PersonString.KnownFor)
             case .creditCategories:
-                return "Credits"
+                return .localized(PersonString.Credits)
             case .castCredits:
                 return .localized(PersonString.Acting)
             case .crewCredits(department: let department):
@@ -34,11 +34,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     }
     
     var overviewSectionID = UUID().uuidString
-    var isOverviewExpanded: Bool = false {
-        didSet {
-            reloadOverviewSection()
-        }
-    }
+    var isOverviewExpanded: Bool = false
+    var overviewExpandAction: (() -> ())? = nil
     
     var person: PersonViewModel!
     var sections: [Section] = []
@@ -94,8 +91,8 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     }
     
     @objc
-    func expandOverview() {
-        isOverviewExpanded = true
+    private func expandOverview() {
+        overviewExpandAction?()
     }
     
     var indexPathForSelectedCreditSection: IndexPath? {
@@ -139,8 +136,6 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         if !person.popularMovies.isEmpty {
             sections.append(.popular)
         }
-        
-        sections.append(.creditCategories)
                 
         if !person.castCredits.isEmpty {
             creditSections.append(.castCredits)
@@ -148,6 +143,10 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
         
         for job in person.departments {
             creditSections.append(.crewCredits(department: job))
+        }
+        
+        if !creditSections.isEmpty {
+            sections.append(.creditCategories)
         }
         
         //Send acting to the end if person is know for crew department
@@ -160,6 +159,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
     }
     
     func reloadOverviewSection() {
+        isOverviewExpanded = true
         overviewSectionID = UUID().uuidString
         reload(animated: false)
     }
@@ -191,7 +191,7 @@ class PersonDetailDiffableDataSource: UICollectionViewDiffableDataSource<PersonD
             }
         }
     
-        apply(snapshot, animatingDifferences: animated)
+        self.apply(snapshot, animatingDifferences: animated)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
