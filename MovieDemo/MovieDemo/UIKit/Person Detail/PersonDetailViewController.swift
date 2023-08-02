@@ -270,7 +270,7 @@ extension PersonDetailViewController {
         if offset < -threshold {
             headerHeightConstraint.constant = newHeight
             let bottomInset = UIWindow.mainWindow.bottomInset
-            collectionView.scrollIndicatorInsets  = UIEdgeInsets(top: newHeight, left: 0, bottom: bottomInset, right: 0)
+            collectionView.scrollIndicatorInsets  = UIEdgeInsets(top: max(newHeight, headerHeight), left: 0, bottom: bottomInset, right: 0)
 
             //Adjust gradient
             var gradientFrame = personImageView.bounds
@@ -344,6 +344,12 @@ extension PersonDetailViewController: UICollectionViewDelegate {
             categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedCreditSection)
         }
     
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == SectionBackgroundDecorationView.elementKind, let bgView = view as? SectionBackgroundDecorationView {
+            bgView.backgroundColor = .systemGray6
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

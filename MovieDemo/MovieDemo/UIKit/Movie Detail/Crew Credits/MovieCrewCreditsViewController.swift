@@ -60,6 +60,7 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
                 let title = self.model.departments[indexPath.row]
                 let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
                 categoryCell.titleLabel.text = title
+                categoryCell.unselectedBgColor = .systemGray5
                 
                 return categoryCell
             case .jobs:

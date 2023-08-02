@@ -13,6 +13,9 @@ class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
     private var selection: Bool = false
     
+    var selectedBgColor: UIColor = .label
+    var unselectedBgColor: UIColor = .systemGray6
+    
     override func awakeFromNib() {
         setSelection(false)
         selection = false
@@ -26,13 +29,10 @@ class CategoryCell: UICollectionViewCell {
         selection = selected
         if selected {
             titleLabel.textColor = .systemBackground
-            containerView.backgroundColor = .label
-            containerView.layer.borderWidth = 0
+            containerView.backgroundColor = selectedBgColor
         } else {
-            titleLabel.textColor = .label
-            containerView.backgroundColor = .clear
-            containerView.layer.borderColor = UIColor.label.cgColor
-            containerView.layer.borderWidth = 1
+            titleLabel.textColor = .systemGray
+            containerView.backgroundColor = unselectedBgColor
         }
     }
 
