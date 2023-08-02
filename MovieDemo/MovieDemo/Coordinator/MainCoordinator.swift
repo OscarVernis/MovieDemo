@@ -205,7 +205,7 @@ class MainCoordinator {
     
     func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
         let provider = { ProviderPagingDataSource(collectionView: $0, dataProvider: dataProvider, cellConfigurator: MovieInfoListCell.configure) }
-        let lvc = DiffableListViewController(dataSourceProvider: provider, router: self)
+        let lvc = ListViewController(dataSourceProvider: provider, router: self)
         
         lvc.title = title
         
@@ -278,7 +278,7 @@ class MainCoordinator {
     
     func showCastCreditList(credits: [CastCreditViewModel], animated: Bool = true) {
         let provider = { ArrayPagingDataSource(collectionView: $0, models: credits, cellConfigurator: CreditPhotoListCell.configure) }
-        let lvc = DiffableListViewController(dataSourceProvider: provider, router: self)
+        let lvc = ListViewController(dataSourceProvider: provider, router: self)
         lvc.title = MovieString.Cast.localized
         
         lvc.didSelectedItem = { [weak self] model in

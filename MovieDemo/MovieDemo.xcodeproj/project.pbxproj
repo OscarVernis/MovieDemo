@@ -265,7 +265,7 @@
 		55D317FD284EF6A40090CF34 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D317FC284EF6A40090CF34 /* UserService.swift */; };
 		55D35E1C2517DE0D00114602 /* Loaf in Frameworks */ = {isa = PBXBuildFile; productRef = 55D35E1B2517DE0D00114602 /* Loaf */; };
 		55D35E1F2517DE1D00114602 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D35E1E2517DE1D00114602 /* AlertManager.swift */; };
-		55D6D9DD2A79789500DEB798 /* DiffableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6D9DC2A79789500DEB798 /* DiffableListViewController.swift */; };
+		55D6D9DD2A79789500DEB798 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6D9DC2A79789500DEB798 /* ListViewController.swift */; };
 		55D6D9DF2A79872100DEB798 /* ProviderPagingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6D9DE2A79872100DEB798 /* ProviderPagingDataSource.swift */; };
 		55D6D9E12A79A04C00DEB798 /* SearchDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D6D9E02A79A04C00DEB798 /* SearchDataSource.swift */; };
 		55DD1B8E251FB1B000EC8C55 /* MovieVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */; };
@@ -586,7 +586,7 @@
 		55D317FA284EF6090090CF34 /* UserCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCache.swift; sourceTree = "<group>"; };
 		55D317FC284EF6A40090CF34 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		55D35E1E2517DE1D00114602 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
-		55D6D9DC2A79789500DEB798 /* DiffableListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffableListViewController.swift; sourceTree = "<group>"; };
+		55D6D9DC2A79789500DEB798 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		55D6D9DE2A79872100DEB798 /* ProviderPagingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderPagingDataSource.swift; sourceTree = "<group>"; };
 		55D6D9E02A79A04C00DEB798 /* SearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataSource.swift; sourceTree = "<group>"; };
 		55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieVideoViewModel.swift; sourceTree = "<group>"; };
@@ -676,17 +676,6 @@
 				5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */,
 			);
 			path = HTTPClient;
-			sourceTree = "<group>";
-		};
-		550C685A2A79A86D00C64C87 /* Diffable */ = {
-			isa = PBXGroup;
-			children = (
-				55D6D9DC2A79789500DEB798 /* DiffableListViewController.swift */,
-				550C685B2A79A87B00C64C87 /* PagingDataSource.swift */,
-				550C685D2A79A88D00C64C87 /* ArrayPagingDataSource.swift */,
-				55D6D9DE2A79872100DEB798 /* ProviderPagingDataSource.swift */,
-			);
-			path = Diffable;
 			sourceTree = "<group>";
 		};
 		550C68612A79B09D00C64C87 /* Crew Credits */ = {
@@ -1292,7 +1281,10 @@
 		55AA47102506B13A00E25C59 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
-				550C685A2A79A86D00C64C87 /* Diffable */,
+				55D6D9DC2A79789500DEB798 /* ListViewController.swift */,
+				550C685B2A79A87B00C64C87 /* PagingDataSource.swift */,
+				550C685D2A79A88D00C64C87 /* ArrayPagingDataSource.swift */,
+				55D6D9DE2A79872100DEB798 /* ProviderPagingDataSource.swift */,
 			);
 			path = Lists;
 			sourceTree = "<group>";
@@ -1891,7 +1883,7 @@
 				55CFB26A2A5DFA4400A5D4E6 /* AppDependencyContainer.swift in Sources */,
 				553D6AF12853C2E5001491CB /* HomeDataSource.swift in Sources */,
 				55EE51A2251E99B100915AB3 /* EmptyMovieCell.swift in Sources */,
-				55D6D9DD2A79789500DEB798 /* DiffableListViewController.swift in Sources */,
+				55D6D9DD2A79789500DEB798 /* ListViewController.swift in Sources */,
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,
 				5511D95525317056004B3697 /* BlurButton.swift in Sources */,
 				55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */,

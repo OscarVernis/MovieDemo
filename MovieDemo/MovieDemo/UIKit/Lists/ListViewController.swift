@@ -1,5 +1,5 @@
 //
-//  DiffableListViewController.swift
+//  ListViewController.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 01/08/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiffableListViewController: UIViewController, UICollectionViewDelegate {
+class ListViewController: UIViewController, UICollectionViewDelegate {
     var collectionView: UICollectionView!
     
     var dataSource: (any PagingDataSource)!
@@ -20,7 +20,7 @@ class DiffableListViewController: UIViewController, UICollectionViewDelegate {
     var didSelectedItem: ((Any) -> ())?
     
     init(dataSourceProvider: @escaping (UICollectionView) -> any PagingDataSource,
-         layout: UICollectionViewCompositionalLayout = DiffableListViewController.defaultLayout(),
+         layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(),
          router: ErrorHandlingRouter? = nil) {
         self.dataSourceProvider = dataSourceProvider
         self.layout = layout

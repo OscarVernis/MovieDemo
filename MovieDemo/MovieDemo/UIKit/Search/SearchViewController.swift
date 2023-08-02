@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: DiffableListViewController {
+class SearchViewController: ListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearch()
