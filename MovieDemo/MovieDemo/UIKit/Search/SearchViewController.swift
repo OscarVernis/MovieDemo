@@ -8,10 +8,9 @@
 
 import UIKit
 
-class SearchViewController: ListViewController<SearchProvider, UICollectionViewCell> {
+class SearchViewController: DiffableListViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
         setupSearch()
     }
     
@@ -19,29 +18,20 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
         router as? SearchViewRouter
     }
     
-    init(searchDataSource: SearchDataSource, router: SearchViewRouter?) {
-        let searchDataSource = searchDataSource
-        super.init(dataSource: searchDataSource, router: router)
-        self.provider = searchDataSource.dataProvider
+    init(dataSourceProvider: @escaping (UICollectionView) -> any PagingDataSource, router: SearchViewRouter?) {
+        super.init(dataSourceProvider: dataSourceProvider, router: router)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupCollectionView() {
-        MovieInfoListCell.register(to: collectionView)
-        CreditPhotoListCell.register(to: collectionView)
-    }
-    
     fileprivate func setupSearch() {
-        didSelectedItem = { [weak self] index in
+        didSelectedItem = { [weak self] item in
             guard let self = self else { return }
             
             //Avoid the navigation bar showing after the Person Detail is shown
             self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-
-            let item = self.provider.item(atIndex: index)
             
             switch item {
             case let movie as MovieViewModel:
@@ -52,15 +42,6 @@ class SearchViewController: ListViewController<SearchProvider, UICollectionViewC
                 break
             }
         }
-    }
-    
-    override func sectionLayout() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        
-        let section = sectionBuilder.createListSection()
-        section.contentInsets.bottom = 30
-        
-        return section
     }
     
 }
@@ -80,8 +61,8 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchQuery = searchController.searchBar.text {
-            provider.query = searchQuery
+        if let searchQuery = searchController.searchBar.text, let searchDataSource = dataSource as? SearchDataSource {
+            searchDataSource.query = searchQuery
         } else {
             scrollListViewControllerToTop()
         }
