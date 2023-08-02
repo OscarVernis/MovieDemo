@@ -60,6 +60,10 @@ extension CrewCreditViewModel {
         crewCredit.job ?? ""
     }
     
+    var department: String? {
+        crewCredit.department
+    }
+    
     var profileImageURL: URL? {
         guard let pathString = crewCredit.profilePath else { return nil }
         
@@ -73,11 +77,10 @@ extension CrewCreditViewModel {
         case Director
         case Writer
         case Story
-        case Characters
         case Screenplay
         case DOP = "Director of Photography"
         case Composer = "Original Music Composer"
-        case Editor = "Editor"
+        case Editor
         
         var creditTitle: String {
             switch self {
@@ -95,8 +98,6 @@ extension CrewCreditViewModel {
                 return .localized(CreditString.Music)
             case .Editor:
                 return .localized(CreditString.Editor)
-            case .Characters:
-                return .localized(CreditString.Characters)
             }
         }
     }

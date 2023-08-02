@@ -207,10 +207,6 @@ class MainCoordinator {
         let provider = { ProviderPagingDataSource(collectionView: $0, dataProvider: dataProvider, cellConfigurator: MovieInfoListCell.configure) }
         let lvc = DiffableListViewController(dataSourceProvider: provider, router: self)
         
-//        let dataSource = ProviderDataSource(dataProvider: dataProvider,
-//                                            reuseIdentifier: MovieInfoListCell.reuseIdentifier,
-//                                            cellConfigurator: MovieInfoListCell.configure)
-//        let lvc = ListViewController(dataSource: dataSource, router: self)
         lvc.title = title
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
@@ -268,15 +264,13 @@ class MainCoordinator {
     
     //MARK: - Movie Detail
     func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
-        let provider = { ArrayPagingDataSource(collectionView: $0, models: credits, cellConfigurator: CreditPhotoListCell.configure) }
-        let lvc = DiffableListViewController(dataSourceProvider: provider, router: self)
-        lvc.title =  MovieString.Crew.localized
+        let model = MovieCrewCreditsViewModel(crewCredits: credits)
+        let lvc = MovieCrewCreditsViewController(model: model)
+        lvc.title = MovieString.Crew.localized
         
-        lvc.didSelectedItem = { [weak self] model in
-            if let crewCredit = model as? CrewCreditViewModel {
-                let person = crewCredit.person()
-                self?.showPersonProfile(person)
-            }
+        lvc.didSelectedItem = { [weak self] crewCredit in
+            let person = crewCredit.person()
+            self?.showPersonProfile(person)
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
