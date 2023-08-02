@@ -55,7 +55,6 @@
 		55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55135E712512C866004C4361 /* MovieDetailHeaderView.swift */; };
 		55164AFB25154A6500D219BC /* MoviePosterInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55164AF925154A6400D219BC /* MoviePosterInfoCell.swift */; };
 		55164AFC25154A6500D219BC /* MoviePosterInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55164AFA25154A6500D219BC /* MoviePosterInfoCell.xib */; };
-		5516930F28579F4F00FD147F /* LoadingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5516930E28579F4F00FD147F /* LoadingDataSource.swift */; };
 		551693172857CBBC00FD147F /* PersonDetailDataSource.Section+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551693162857CBBC00FD147F /* PersonDetailDataSource.Section+Layout.swift */; };
 		5517D0382A72EA9500CFF094 /* AddMoviesToListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517D0372A72EA9500CFF094 /* AddMoviesToListViewController.swift */; };
 		5517D03A2A72F4AB00CFF094 /* AddMovieToListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517D0392A72F4AB00CFF094 /* AddMovieToListDataSource.swift */; };
@@ -76,8 +75,6 @@
 		553AF9AD2856BE93007D1B20 /* MovieHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9AC2856BE93007D1B20 /* MovieHeaderDataSource.swift */; };
 		553AF9B12856CC88007D1B20 /* HomeLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9B02856CC88007D1B20 /* HomeLayoutProvider.swift */; };
 		553AF9B32856CD58007D1B20 /* UserProfileLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */; };
-		553AF9B52856F003007D1B20 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9B42856F003007D1B20 /* ListViewController.swift */; };
-		553AF9B72856F058007D1B20 /* ListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9B62856F058007D1B20 /* ListDataSource.swift */; };
 		553CD314286D33C30022F72E /* InfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD313286D33C30022F72E /* InfoItem.swift */; };
 		553CD316286D35780022F72E /* InfoTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD315286D35780022F72E /* InfoTable.swift */; };
 		553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */; };
@@ -366,7 +363,6 @@
 		55164AF925154A6400D219BC /* MoviePosterInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterInfoCell.swift; sourceTree = "<group>"; };
 		55164AFA25154A6500D219BC /* MoviePosterInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoviePosterInfoCell.xib; sourceTree = "<group>"; };
 		55164AFE25154AD200D219BC /* ExampleImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ExampleImages.xcassets; sourceTree = "<group>"; };
-		5516930E28579F4F00FD147F /* LoadingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDataSource.swift; sourceTree = "<group>"; };
 		551693162857CBBC00FD147F /* PersonDetailDataSource.Section+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersonDetailDataSource.Section+Layout.swift"; sourceTree = "<group>"; };
 		5517D0372A72EA9500CFF094 /* AddMoviesToListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoviesToListViewController.swift; sourceTree = "<group>"; };
 		5517D0392A72F4AB00CFF094 /* AddMovieToListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMovieToListDataSource.swift; sourceTree = "<group>"; };
@@ -391,8 +387,6 @@
 		553AF9AC2856BE93007D1B20 /* MovieHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHeaderDataSource.swift; sourceTree = "<group>"; };
 		553AF9B02856CC88007D1B20 /* HomeLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLayoutProvider.swift; sourceTree = "<group>"; };
 		553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileLayoutProvider.swift; sourceTree = "<group>"; };
-		553AF9B42856F003007D1B20 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		553AF9B62856F058007D1B20 /* ListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataSource.swift; sourceTree = "<group>"; };
 		553CD313286D33C30022F72E /* InfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoItem.swift; sourceTree = "<group>"; };
 		553CD315286D35780022F72E /* InfoTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTable.swift; sourceTree = "<group>"; };
 		553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayCollectionDataSource.swift; sourceTree = "<group>"; };
@@ -1298,9 +1292,6 @@
 		55AA47102506B13A00E25C59 /* Lists */ = {
 			isa = PBXGroup;
 			children = (
-				553AF9B42856F003007D1B20 /* ListViewController.swift */,
-				553AF9B62856F058007D1B20 /* ListDataSource.swift */,
-				5516930E28579F4F00FD147F /* LoadingDataSource.swift */,
 				550C685A2A79A86D00C64C87 /* Diffable */,
 			);
 			path = Lists;
@@ -1804,7 +1795,6 @@
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				5511CD322A70DC4900A9CCDD /* UserListsServices.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
-				5516930F28579F4F00FD147F /* LoadingDataSource.swift in Sources */,
 				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,
 				55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */,
@@ -1854,7 +1844,6 @@
 				5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */,
 				555CF12527DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift in Sources */,
 				554DDE2628625AEE00DD864A /* MovieDetail.swift in Sources */,
-				553AF9B52856F003007D1B20 /* ListViewController.swift in Sources */,
 				558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */,
 				5565DDED27E969CD00D7F4EB /* Endpoint.swift in Sources */,
 				555498FB2822284B00E89119 /* SessionStore.swift in Sources */,
@@ -1905,7 +1894,6 @@
 				55D6D9DD2A79789500DEB798 /* DiffableListViewController.swift in Sources */,
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,
 				5511D95525317056004B3697 /* BlurButton.swift in Sources */,
-				553AF9B72856F058007D1B20 /* ListDataSource.swift in Sources */,
 				55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */,
 				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
