@@ -9,11 +9,11 @@
 import UIKit
  
 struct MoviesCompositionalLayoutBuilder {
-    var spacing: CGFloat = 20
+    static var spacing: CGFloat = 20
     
     init() {
         if UIWindow.mainWindow.bounds.width > 500 {
-            spacing = 50
+            MoviesCompositionalLayoutBuilder.spacing = 50
         }
     }
     
@@ -34,6 +34,7 @@ struct MoviesCompositionalLayoutBuilder {
                        groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
                        groupHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
                        interItemSpacing: NSCollectionLayoutSpacing? = nil,
+                       margin: CGFloat = MoviesCompositionalLayoutBuilder.spacing,
                        columns: Int = 1
     ) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidth, heightDimension: itemHeight)
@@ -44,7 +45,7 @@ struct MoviesCompositionalLayoutBuilder {
         group.interItemSpacing = interItemSpacing
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: spacing, bottom: 0, trailing: spacing)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: margin, bottom: 0, trailing: margin)
                         
         return section
     }
@@ -60,10 +61,13 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //MARK: - Lists
-    
     //Regular List
-    func createListSection(height: CGFloat = 150, columns: Int = 1) ->  NSCollectionLayoutSection {
-        let section = createSection(groupWidth: .fractionalWidth(1.0/CGFloat(columns)), groupHeight: .absolute(height), interItemSpacing: .fixed(8), columns: columns)
+    func createListSection(height: CGFloat = 150, margin: CGFloat = MoviesCompositionalLayoutBuilder.spacing, columns: Int = 1) ->  NSCollectionLayoutSection {
+        let section = createSection(groupWidth: .fractionalWidth(1.0/CGFloat(columns)),
+                                    groupHeight: .absolute(height),
+                                    interItemSpacing: .fixed(8),
+                                    margin: margin,
+                                    columns: columns)
                         
         return section
     }
@@ -71,6 +75,8 @@ struct MoviesCompositionalLayoutBuilder {
     //List with background decorator
     func createDecoratedListSection(height: CGFloat = 50, topSpacing: CGFloat = 0, bottomSpacing: CGFloat = 15, itemSpacing: CGFloat = 5) ->  NSCollectionLayoutSection {
         let section = createListSection(height: height)
+        let spacing = MoviesCompositionalLayoutBuilder.spacing
+
         section.interGroupSpacing = itemSpacing
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: spacing, bottom: 20, trailing: spacing)
         
@@ -82,7 +88,6 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //MARK: - Other
-    
     //Horizontal scroll with no paging, several items at a time
     func createHorizontalPosterSection() ->  NSCollectionLayoutSection {
         let section = createSection(groupWidth: .estimated(140), groupHeight: .absolute(260))

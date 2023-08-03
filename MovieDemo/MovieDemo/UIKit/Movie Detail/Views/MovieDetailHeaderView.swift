@@ -9,9 +9,6 @@
 import UIKit
 
 class MovieDetailHeaderView: UICollectionReusableView {
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
-
-    @IBOutlet weak var container: UIStackView!
     @IBOutlet weak var userActionsView: UIView!
     @IBOutlet weak var overviewView: UIView!
     @IBOutlet weak var trailerView: UIView!
@@ -61,7 +58,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         self.movie = movie
         
         //Load Poster image
-        if let url = movie.posterImageURL(size: .w342) {
+        if let url = movie.posterImageURL(size: .original) {
             posterImageView.contentMode = .scaleAspectFill
             posterImageView.setRemoteImage(withURL: url)
         }

@@ -31,7 +31,7 @@ extension MovieDetailDataSource.Section {
     }
 
     fileprivate func makeHeader() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createListSection(height: 100)
+        let section = sectionBuilder.createListSection(height: 100, margin: 0)
 
         let sectionHeader = sectionBuilder.createDetailSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]

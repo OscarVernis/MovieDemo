@@ -21,6 +21,7 @@ class MovieDetailViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
         
     private weak var headerView: MovieDetailHeaderView?
+    private var gradient: CAGradientLayer!
     var collectionView: UICollectionView!
     
     required init(store: MovieDetailStore, router: MovieDetailRouter?) {
@@ -105,8 +106,14 @@ class MovieDetailViewController: UIViewController {
     fileprivate func setupHeaderView() {
         guard let headerView = headerView else { return }
         
-        //Adjust the top of the Poster Image so it doesn't go unde the bar
-        headerView.topConstraint.constant = UIWindow.mainWindow.topInset + 55
+        //Gradient
+        gradient = CAGradientLayer()
+        gradient.frame = headerView.posterImageView.frame
+        gradient.colors = [UIColor.black.cgColor,
+                           UIColor.black.withAlphaComponent(0.27).cgColor,
+                           UIColor.clear.cgColor]
+        gradient.locations = [0, 0.7, 1]
+        headerView.posterImageView.layer.mask = gradient
         
         headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
         
@@ -176,7 +183,7 @@ class MovieDetailViewController: UIViewController {
         guard let url = movie.posterImageURL(size: .original), let headerView = headerView else { return }
         let mvvc = MediaViewerViewController(imageURL: url,
                                              image: headerView.posterImageView.image,
-                                             presentFromView: headerView.posterImageView
+                                             presentFromView: nil
         )
         present(mvvc, animated: true)
     }
@@ -278,9 +285,13 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
 
         //Configure Movie Header
-        if let reusableView = view as? MovieDetailHeaderView, reusableView != headerView {
-            headerView = reusableView
-            setupHeaderView()
+        if let reusableView = view as? MovieDetailHeaderView {
+            if reusableView != headerView {
+                headerView = reusableView
+                setupHeaderView()
+            }
+            
+            gradient.frame = reusableView.posterImageView.frame
         }
         
         //Configure TitleHeader
@@ -312,4 +323,8 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         }
     }
 
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        
+    }
+    
 }
