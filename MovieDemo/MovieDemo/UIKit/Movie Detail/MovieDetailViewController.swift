@@ -24,6 +24,8 @@ class MovieDetailViewController: UIViewController {
     private var gradient: CAGradientLayer!
     var collectionView: UICollectionView!
     
+    var isBarHidden = true
+    
     required init(store: MovieDetailStore, router: MovieDetailRouter?) {
         self.store = store
         self.router = router
@@ -55,6 +57,29 @@ class MovieDetailViewController: UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+    
+    //MARK: - Bar Appearance
+    var previousBarAppearance: UINavigationBarAppearance?
+    var transparentBarAppearance: UINavigationBarAppearance = {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        return appearance
+    }()
+    
+    var defaultBarAppearance: UINavigationBarAppearance = {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        return appearance
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        previousBarAppearance = navigationController?.navigationBar.standardAppearance
+        navigationController?.navigationBar.standardAppearance = transparentBarAppearance
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.standardAppearance = previousBarAppearance!
     }
     
     //MARK: - Setup
@@ -110,9 +135,9 @@ class MovieDetailViewController: UIViewController {
         gradient = CAGradientLayer()
         gradient.frame = headerView.posterImageView.frame
         gradient.colors = [UIColor.black.cgColor,
-                           UIColor.black.withAlphaComponent(0.27).cgColor,
+                           UIColor.black.withAlphaComponent(0.07).cgColor,
                            UIColor.clear.cgColor]
-        gradient.locations = [0, 0.7, 1]
+        gradient.locations = [0, 0.77, 1]
         headerView.posterImageView.layer.mask = gradient
         
         headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
@@ -322,9 +347,68 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             break
         }
     }
-
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+    
+    //MARK: - Header Animations
+    func setNavigationBar(hidden: Bool) {
+        guard isBarHidden != hidden, let navBar = navigationController?.navigationBar else { return }
         
+        isBarHidden = hidden
+        UIView.transition(with: navBar, duration: 0.3, options: .transitionCrossDissolve) {
+            if self.isBarHidden {
+                self.title = ""
+                self.navigationController?.navigationBar.standardAppearance = self.transparentBarAppearance
+            } else {
+                self.title = self.movie.title
+                self.navigationController?.navigationBar.standardAppearance = self.defaultBarAppearance
+            }
+        }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let headerView else { return }
+                
+        let offset = scrollView.contentOffset.y
+//        let threshold = headerView.posterImageView.frame.height - view.safeAreaInsets.top
+        let infoViewFrame = headerView.infoView.superview!.convert(headerView.infoView.frame, to: scrollView)
+        let threshold = infoViewFrame.maxY - view.safeAreaInsets.top
+
+        //Sticky Header
+        if offset < 0 {
+            headerView.contentMode = .scaleAspectFill
+            headerView.topImageConstraint.constant = offset < 0 ? offset : 0
+            headerView.updateConstraintsIfNeeded()
+            return
+        }
+        
+        //Poster image alpha
+        let imageStartingOffset: CGFloat = threshold * 0.5
+        let imageOffset = offset - imageStartingOffset
+        let imageThreshold = (threshold * 0.95) - imageStartingOffset
+        var imageRatio = min(1, imageOffset / imageThreshold)
+        headerView.posterImageView.alpha = 1 - imageRatio
+        
+        //Info alpha
+        let startingOffset: CGFloat = threshold * 0.7
+        let infoRatio = min(1, (offset - startingOffset) / (threshold - startingOffset))
+        headerView.infoView.alpha = 1 - infoRatio
+        
+        //Show/Hide NavigationBar
+        if infoRatio >= 1 {
+            setNavigationBar(hidden: false)
+        } else {
+            setNavigationBar(hidden: true)
+        }
+
+//        //Poster parallax scrolling
+//        if offset < threshold, offset >= 0 {
+//            headerView.topImageConstraint.constant = offset * 0.2
+//            headerView.updateConstraintsIfNeeded()
+//        } else {
+//            headerView.topImageConstraint.constant = 0
+//            headerView.updateConstraintsIfNeeded()
+//        }
+        
+        gradient.frame = headerView.posterImageView.frame
     }
     
 }

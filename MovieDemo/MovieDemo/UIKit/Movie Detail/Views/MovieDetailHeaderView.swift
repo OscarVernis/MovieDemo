@@ -9,6 +9,9 @@
 import UIKit
 
 class MovieDetailHeaderView: UICollectionReusableView {
+    @IBOutlet weak var topImageConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var userActionsView: UIView!
     @IBOutlet weak var overviewView: UIView!
     @IBOutlet weak var trailerView: UIView!
@@ -59,7 +62,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
         
         //Load Poster image
         if let url = movie.posterImageURL(size: .original) {
-            posterImageView.contentMode = .scaleAspectFill
             posterImageView.setRemoteImage(withURL: url)
         }
         
@@ -73,7 +75,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         
         releaseDateLabel.text = "\(movie.releaseYear)"
         if let runtime = movie.runtime {
-            releaseDateLabel.text?.append(contentsOf:"   •  \(runtime)")
+            releaseDateLabel.text?.append(contentsOf:"  •  \(runtime)")
         }
         
         //Hiding Header Sections
