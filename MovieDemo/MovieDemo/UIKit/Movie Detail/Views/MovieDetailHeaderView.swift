@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import Combine
 
 class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var topImageConstraint: NSLayoutConstraint!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var containerStackView: UIStackView!
     
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var userActionsView: UIView!
@@ -33,6 +36,9 @@ class MovieDetailHeaderView: UICollectionReusableView {
                 
     var imageTapHandler: (()->Void)? = nil
     
+    var gradient: CAGradientLayer!
+    private var gradientCancellable: AnyCancellable?
+    
     var movie: MovieViewModel!
     var showUserActions = false {
         didSet {
@@ -43,6 +49,22 @@ class MovieDetailHeaderView: UICollectionReusableView {
     override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         posterImageView.addGestureRecognizer(tapRecognizer)
+        
+        //Gradient
+        gradient = CAGradientLayer()
+        gradient.frame = posterImageView.bounds
+        gradient.colors = [UIColor.black.cgColor,
+                           UIColor.clear.cgColor]
+        gradient.locations = [0.35, 0.85]
+        posterImageView.layer.mask = gradient
+        
+        gradientCancellable = posterImageView.publisher(for: \.bounds)
+            .sink { [weak self] bounds in
+                CATransaction.begin()
+                CATransaction.setDisableActions(true)
+                self?.gradient.frame = bounds
+                CATransaction.commit()
+            }
     }
         
     @objc func imageTapped(_ sender: Any) {

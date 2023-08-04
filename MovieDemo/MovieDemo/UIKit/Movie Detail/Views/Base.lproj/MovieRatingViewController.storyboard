@@ -143,6 +143,11 @@
             <point key="canvasLocation" x="-82.400000000000006" y="90.854572713643179"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="nH3-Od-3FQ">
+            <size key="intrinsicContentSize" width="200" height="200"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

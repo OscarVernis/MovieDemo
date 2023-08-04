@@ -21,7 +21,6 @@ class MovieDetailViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
         
     private weak var headerView: MovieDetailHeaderView?
-    private var gradient: CAGradientLayer!
     var collectionView: UICollectionView!
     
     var isBarHidden = true
@@ -131,15 +130,6 @@ class MovieDetailViewController: UIViewController {
     fileprivate func setupHeaderView() {
         guard let headerView = headerView else { return }
         
-        //Gradient
-        gradient = CAGradientLayer()
-        gradient.frame = headerView.posterImageView.frame
-        gradient.colors = [UIColor.black.cgColor,
-                           UIColor.black.withAlphaComponent(0.07).cgColor,
-                           UIColor.clear.cgColor]
-        gradient.locations = [0, 0.77, 1]
-        headerView.posterImageView.layer.mask = gradient
-        
         headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
         
         headerView.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
@@ -150,11 +140,9 @@ class MovieDetailViewController: UIViewController {
         
         headerView.showUserActions = store.showUserActions
         
-        //Preload Poster Image for Image Viewer transition.
-        if let url = self.movie.posterImageURL(size: .original) {
-            UIImage.loadRemoteImage(url: url)
-        }
-        
+        let width = UIWindow.mainWindow.frame.width
+        let height = width * 1.5
+        headerView.heightConstraint.constant = height
     }
     
     fileprivate func setupTitleHeader(header: SectionTitleView, indexPath: IndexPath) {
@@ -315,8 +303,6 @@ extension MovieDetailViewController: UICollectionViewDelegate {
                 headerView = reusableView
                 setupHeaderView()
             }
-            
-            gradient.frame = reusableView.posterImageView.frame
         }
         
         //Configure TitleHeader
@@ -368,23 +354,39 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         guard let headerView else { return }
                 
         let offset = scrollView.contentOffset.y
-//        let threshold = headerView.posterImageView.frame.height - view.safeAreaInsets.top
         let infoViewFrame = headerView.infoView.superview!.convert(headerView.infoView.frame, to: scrollView)
         let threshold = infoViewFrame.maxY - view.safeAreaInsets.top
 
         //Sticky Header
+        let height = UIWindow.mainWindow.frame.width * 1.5
         if offset < 0 {
-            headerView.contentMode = .scaleAspectFill
-            headerView.topImageConstraint.constant = offset < 0 ? offset : 0
+            //Adjust Image size and position
+            headerView.topImageConstraint.constant = offset
+            headerView.heightConstraint.constant = height + abs(offset * 0.5)
             headerView.updateConstraintsIfNeeded()
+            
+            //Fade out Header Info
+            let ratio = -offset / (height * 0.3)
+            headerView.containerStackView.alpha = 1 - ratio
+            
+            //Fade out gradient
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            headerView.gradient.colors = [UIColor.black.cgColor,
+                                          UIColor.black.withAlphaComponent(ratio * 0.2).cgColor]
+            CATransaction.commit()
+
             return
         }
+        
+        headerView.heightConstraint.constant = height
+        headerView.updateConstraintsIfNeeded()
         
         //Poster image alpha
         let imageStartingOffset: CGFloat = threshold * 0.5
         let imageOffset = offset - imageStartingOffset
         let imageThreshold = (threshold * 0.95) - imageStartingOffset
-        var imageRatio = min(1, imageOffset / imageThreshold)
+        let imageRatio = min(1, imageOffset / imageThreshold)
         headerView.posterImageView.alpha = 1 - imageRatio
         
         //Info alpha
@@ -399,16 +401,15 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             setNavigationBar(hidden: true)
         }
 
-//        //Poster parallax scrolling
-//        if offset < threshold, offset >= 0 {
-//            headerView.topImageConstraint.constant = offset * 0.2
-//            headerView.updateConstraintsIfNeeded()
-//        } else {
-//            headerView.topImageConstraint.constant = 0
-//            headerView.updateConstraintsIfNeeded()
-//        }
-        
-        gradient.frame = headerView.posterImageView.frame
+        //Poster parallax scrolling
+        if offset < threshold, offset >= 0 {
+            headerView.topImageConstraint.constant = offset * 0.4
+            headerView.updateConstraintsIfNeeded()
+        } else {
+            headerView.topImageConstraint.constant = 0
+            headerView.updateConstraintsIfNeeded()
+        }
+
     }
     
 }
