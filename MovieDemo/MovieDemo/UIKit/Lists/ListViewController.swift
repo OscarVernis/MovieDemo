@@ -40,6 +40,10 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
         setup()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        configureWithDefaultNavigationBarAppearance()
+    }
+    
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }

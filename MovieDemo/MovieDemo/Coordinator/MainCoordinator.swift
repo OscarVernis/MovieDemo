@@ -68,14 +68,6 @@ class MainCoordinator {
     //MARK: - App Start
     func start() {
         rootNavigationViewController = UINavigationController()
-        rootNavigationViewController?.navigationBar.prefersLargeTitles = true
-        rootNavigationViewController?.navigationBar.tintColor = .asset(.AppTintColor)
-        rootNavigationViewController?.navigationBar.standardAppearance.titleTextAttributes = [
-            .font: UIFont(name: "AvenirNextCondensed-DemiBold", size: 22)!
-        ]
-        rootNavigationViewController?.navigationBar.standardAppearance.largeTitleTextAttributes = [
-            .font: UIFont(name: "AvenirNextCondensed-Bold", size: 34)!,
-        ]
         
         window.rootViewController = rootNavigationViewController
         window.makeKeyAndVisible()

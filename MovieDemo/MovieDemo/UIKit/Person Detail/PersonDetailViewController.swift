@@ -65,17 +65,15 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Bar Appearance
-    var defaultBarAppearance: UINavigationBarAppearance?
+    var previousBarAppearance: UINavigationBarAppearance?
     
     override func viewWillAppear(_ animated: Bool) {
-        defaultBarAppearance = navigationController?.navigationBar.standardAppearance
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        navigationController?.navigationBar.standardAppearance = appearance
+        previousBarAppearance = navigationController?.navigationBar.standardAppearance
+        configureWithTransparentNavigationBarAppearance()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.navigationBar.standardAppearance = defaultBarAppearance!
+        navigationController?.navigationBar.standardAppearance = previousBarAppearance!
     }
     
     //MARK: - Setup

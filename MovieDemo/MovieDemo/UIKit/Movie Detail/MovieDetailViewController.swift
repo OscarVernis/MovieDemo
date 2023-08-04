@@ -60,24 +60,18 @@ class MovieDetailViewController: UIViewController {
     
     //MARK: - Bar Appearance
     var previousBarAppearance: UINavigationBarAppearance?
-    var transparentBarAppearance: UINavigationBarAppearance = {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        return appearance
-    }()
-    
-    var defaultBarAppearance: UINavigationBarAppearance = {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithDefaultBackground()
-        return appearance
-    }()
+    var currentBarAppearance: UINavigationBarAppearance?
     
     override func viewWillAppear(_ animated: Bool) {
-        previousBarAppearance = navigationController?.navigationBar.standardAppearance
-        navigationController?.navigationBar.standardAppearance = transparentBarAppearance
+        if let currentBarAppearance {
+            navigationController?.navigationBar.standardAppearance = currentBarAppearance
+        } else {
+            configureWithTransparentNavigationBarAppearance()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        currentBarAppearance = navigationController?.navigationBar.standardAppearance
         navigationController?.navigationBar.standardAppearance = previousBarAppearance!
     }
     
@@ -121,6 +115,8 @@ class MovieDetailViewController: UIViewController {
             bgView.imageView.setRemoteImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
+        
+        previousBarAppearance = navigationController?.navigationBar.standardAppearance
         
         dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie, isLoading: store.isLoading)
         dataSource.isLoading = store.isLoading
@@ -342,10 +338,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         UIView.transition(with: navBar, duration: 0.3, options: .transitionCrossDissolve) {
             if self.isBarHidden {
                 self.title = ""
-                self.navigationController?.navigationBar.standardAppearance = self.transparentBarAppearance
+                self.configureWithTransparentNavigationBarAppearance()
             } else {
                 self.title = self.movie.title
-                self.navigationController?.navigationBar.standardAppearance = self.defaultBarAppearance
+                self.configureWithDefaultNavigationBarAppearance()
             }
         }
     }
