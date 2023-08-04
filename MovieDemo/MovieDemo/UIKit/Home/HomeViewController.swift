@@ -74,6 +74,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupNavigationBar() {
+        configureWithDefaultNavigationBarAppearance()
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .asset(.AppTintColor)
         navigationController?.navigationBar.standardAppearance.titleTextAttributes = [

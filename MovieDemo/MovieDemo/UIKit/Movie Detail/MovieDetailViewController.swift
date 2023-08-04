@@ -31,10 +31,6 @@ class MovieDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init() {
-        fatalError("init() has not been implemented")
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -59,7 +55,6 @@ class MovieDetailViewController: UIViewController {
     }
     
     //MARK: - Bar Appearance
-    var previousBarAppearance: UINavigationBarAppearance?
     var currentBarAppearance: UINavigationBarAppearance?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +67,6 @@ class MovieDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         currentBarAppearance = navigationController?.navigationBar.standardAppearance
-        navigationController?.navigationBar.standardAppearance = previousBarAppearance!
     }
     
     //MARK: - Setup
@@ -80,7 +74,6 @@ class MovieDetailViewController: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        collectionView.dataSource = dataSource
         collectionView.delegate = self
 
         view.addSubview(collectionView)
@@ -101,9 +94,6 @@ class MovieDetailViewController: UIViewController {
         view.backgroundColor = .asset(.AppBackgroundColor)
         collectionView.backgroundColor = .clear
         
-        //Set NavigationBar/ScrollView settings for design
-        navigationItem.largeTitleDisplayMode = .always
-        
         //Set so the scrollIndicator stops before the status bar
         let topInset = UIWindow.mainWindow.topInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
@@ -115,8 +105,6 @@ class MovieDetailViewController: UIViewController {
             bgView.imageView.setRemoteImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
-        
-        previousBarAppearance = navigationController?.navigationBar.standardAppearance
         
         dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie, isLoading: store.isLoading)
         dataSource.isLoading = store.isLoading
@@ -136,9 +124,7 @@ class MovieDetailViewController: UIViewController {
         
         headerView.showUserActions = store.showUserActions
         
-        let width = UIWindow.mainWindow.frame.width
-        let height = width * 1.5
-        headerView.heightConstraint.constant = height
+        headerView.heightConstraint.constant = UIWindow.mainWindow.frame.width * 1.5
     }
     
     fileprivate func setupTitleHeader(header: SectionTitleView, indexPath: IndexPath) {
@@ -189,10 +175,9 @@ class MovieDetailViewController: UIViewController {
     }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
-        guard let url = movie.posterImageURL(size: .original), let headerView = headerView else { return }
-        let mvvc = MediaViewerViewController(imageURL: url,
-                                             image: headerView.posterImageView.image,
-                                             presentFromView: nil
+        guard let image = headerView?.posterImageView.image, let headerView = headerView else { return }
+        let mvvc = MediaViewerViewController(image: image,
+                                             presentFromView: headerView.posterImageView
         )
         present(mvvc, animated: true)
     }
@@ -294,11 +279,9 @@ extension MovieDetailViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
 
         //Configure Movie Header
-        if let reusableView = view as? MovieDetailHeaderView {
-            if reusableView != headerView {
-                headerView = reusableView
-                setupHeaderView()
-            }
+        if let reusableView = view as? MovieDetailHeaderView, reusableView != headerView {
+            headerView = reusableView
+            setupHeaderView()
         }
         
         //Configure TitleHeader
@@ -405,7 +388,6 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             headerView.topImageConstraint.constant = 0
             headerView.updateConstraintsIfNeeded()
         }
-
     }
     
 }

@@ -9,7 +9,7 @@ import UIKit
 
 class MediaViewerAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let isPresenting: Bool
-    let transitionDuration = 0.6
+    let transitionDuration = 0.8
     var originView: UIView?
     
     init(isPresenting: Bool, presentFrom view: UIView? = nil) {
@@ -65,7 +65,7 @@ class MediaViewerAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 mediaViewer.imageView.center = mediaViewer.view.center
             }
             
-            UIView.animate(withDuration: transitionDuration, delay: 0, usingSpringWithDamping: 0.95, initialSpringVelocity: 20, options: []) {
+            UIView.animate(withDuration: transitionDuration, delay: 0, usingSpringWithDamping: 0.95, initialSpringVelocity: 17, options: []) {
                 mediaViewer.imageView.frame = originalFrame
             } completion: { finished in
                 transitionContext.completeTransition(true)
@@ -84,19 +84,23 @@ class MediaViewerAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(mediaViewer.view!)
         
         let animateContentView: Bool = mediaViewer.contentView != nil
-        
+
+    
         //Fade out Background
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             mediaViewer.view.backgroundColor = .clear
         } completion: { finished in
             if !animateContentView {
                 transitionContext.completeTransition(true)
-                self.originView?.alpha = 1
             }
         }
         
         if animateContentView { //Animate ContentView
             let transformToOrigingView: Bool = originView != nil
+            
+            UIView.animate(withDuration: 0.2, delay: 0) {
+                self.originView?.alpha = 1
+            }
             
             UIView.animate(withDuration: transitionDuration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 20, options: []) {
                 if transformToOrigingView {
@@ -107,9 +111,10 @@ class MediaViewerAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                     mediaViewer.contentView?.layer.cornerRadius = self.originView!.layer.cornerRadius
                     
                     if mediaViewer.contentView is MediaViewerPlayerView {
-                        mediaViewer.contentView?.alpha = 0
                         self.originView?.alpha = 1
                     }
+                    
+                    mediaViewer.contentView?.alpha = 0
                 } else {
                     mediaViewer.contentView?.transform = mediaViewer.imageView.transform.scaledBy(x: 0.2, y: 0.2)
                     mediaViewer.contentView?.alpha = 0

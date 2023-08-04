@@ -33,6 +33,10 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
         setupDataSource()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        configureWithDefaultNavigationBarAppearance()
+    }
+    
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }

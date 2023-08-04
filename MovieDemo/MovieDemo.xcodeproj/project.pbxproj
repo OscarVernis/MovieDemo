@@ -683,9 +683,9 @@
 		550C68612A79B09D00C64C87 /* Crew Credits */ = {
 			isa = PBXGroup;
 			children = (
+				550C68662A79E94A00C64C87 /* MovieCrewCreditsViewController.swift */,
 				550C685F2A79A9C800C64C87 /* CrewCreditDataSource.swift */,
 				550C68622A79B0B300C64C87 /* MovieCrewCreditsViewModel.swift */,
-				550C68662A79E94A00C64C87 /* MovieCrewCreditsViewController.swift */,
 			);
 			path = "Crew Credits";
 			sourceTree = "<group>";
