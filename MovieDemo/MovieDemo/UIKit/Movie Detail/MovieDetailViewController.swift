@@ -19,6 +19,8 @@ class MovieDetailViewController: UIViewController {
     }
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private var backgroundView: BlurBackgroundView?
         
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
@@ -92,7 +94,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setup() {
-        view.backgroundColor = .asset(.AppBackgroundColor)
+        view.backgroundColor = .black
         collectionView.backgroundColor = .clear
         
         //Set so the scrollIndicator stops before the status bar
@@ -103,8 +105,9 @@ class MovieDetailViewController: UIViewController {
         
         //Load Background Blur View
         if let imageURL = movie.posterImageURL(size: .w342), let bgView = BlurBackgroundView.instantiateFromNib() {
-            bgView.imageView.setRemoteImage(withURL: imageURL)
-            collectionView.backgroundView = bgView
+            backgroundView = bgView
+            backgroundView?.imageView.setRemoteImage(withURL: imageURL)
+            collectionView.backgroundView = backgroundView
         }
     }
     
@@ -355,7 +358,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             let threshold: CGFloat = 180
             let ratio = (offset - startingOffset) / (threshold - startingOffset)
             headerView.containerStackView.alpha = 1 - ratio
-            headerView.backgroundColor = .black.withAlphaComponent(ratio * 0.9)
+            backgroundView?.alpha = (1 - ratio) * 0.9
             self.navigationItem.leftBarButtonItem?.customView?.alpha = 1 - ratio
             
             //Fade out gradient

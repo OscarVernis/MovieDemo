@@ -35,10 +35,10 @@ struct CodableMovie: Codable {
     let revenue: Int?
     let originalTitle: String?
     let productionCountries: [CodableProductionCountry]?
-    
     let videos: CodableVideos?
-
     let accountStates: CodableAccountStates?
+    let homepage: String?
+    let externalIds: ExternalIDS?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -63,6 +63,8 @@ struct CodableMovie: Codable {
         case productionCountries = "production_countries"
         case videos
         case accountStates = "account_states"
+        case homepage
+        case externalIds = "external_ids"
     }
     
     init(from decoder: Decoder) throws {
@@ -90,6 +92,8 @@ struct CodableMovie: Codable {
         productionCountries = try? container.decodeIfPresent([CodableProductionCountry].self, forKey: .productionCountries)
         videos = try? container.decodeIfPresent(CodableVideos.self, forKey: .videos)
         accountStates = try? container.decodeIfPresent(CodableAccountStates.self, forKey: .accountStates)
+        homepage = try? container.decodeIfPresent(String.self, forKey: .homepage)
+        externalIds = try? container.decodeIfPresent(ExternalIDS.self, forKey: .externalIds)
     }
     
 
@@ -195,4 +199,17 @@ struct CodableVideo: Codable {
     let name: String?
     let key: String?
     let type: String?
+}
+
+//MARK: - ExternalIDS
+struct ExternalIDS: Codable {
+    let facebookID: String?
+    let instagramID: String?
+    let twitterID: String?
+
+    enum CodingKeys: String, CodingKey {
+        case facebookID = "facebook_id"
+        case instagramID = "instagram_id"
+        case twitterID = "twitter_id"
+    }
 }

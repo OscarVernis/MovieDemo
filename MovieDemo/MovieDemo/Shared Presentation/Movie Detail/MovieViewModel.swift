@@ -48,15 +48,15 @@ extension MovieViewModel {
     }
     
     var userRating: UInt {
-        return UInt(movie.userRating ?? 0)
+        UInt(movie.userRating ?? 0)
     }
     
     var percentUserRating: UInt {
-        return UInt((movie.userRating ?? 0) * 10)
+        UInt((movie.userRating ?? 0) * 10)
     }
     
     var userRatingString: String {
-        return movie.userRating != nil ? "\(percentUserRating)" : .localized(MovieString.NR)
+        movie.userRating != nil ? "\(percentUserRating)" : .localized(MovieString.NR)
     }
     
     var rated: Bool {
@@ -79,27 +79,27 @@ extension MovieViewModel {
 //MARK: - Properties
 extension MovieViewModel {
     var id: Int {
-        return movie.id
+        movie.id
     }
     
     var title: String {
-        return movie.title
+        movie.title
     }
     
     var overview: String {
-        return movie.overview ?? ""
+        movie.overview ?? ""
     }
     
     var isRatingAvailable: Bool {
-        return !(movie.voteCount == nil || movie.voteCount == 0 || movie.voteAverage == nil)
+        !(movie.voteCount == nil || movie.voteCount == 0 || movie.voteAverage == nil)
     }
     
     var ratingString: String {
-        return isRatingAvailable ? "\(percentRating)" : .localized(MovieString.NR)
+        isRatingAvailable ? "\(percentRating)" : .localized(MovieString.NR)
     }
     
     var percentRating: UInt {
-        return  UInt((movie.voteAverage ?? 0) * 10)
+        UInt((movie.voteAverage ?? 0) * 10)
     }
         
     func genres(separatedBy separator: String = ", ") -> String {
@@ -178,7 +178,7 @@ extension MovieViewModel {
     }
     
     var status: String? {
-        return movie.status
+        movie.status
     }
     
     var originalLanguage: String? {
@@ -220,20 +220,24 @@ extension MovieViewModel {
     }
     
     var originalTitle: String? {
-        return movie.originalTitle
+        movie.originalTitle
     }
     
     var cast: [CastCreditViewModel] {
-        return movie.cast?.compactMap { CastCreditViewModel(castCredit: $0) } ?? [CastCreditViewModel]()
+        movie.cast?.compactMap { CastCreditViewModel(castCredit: $0) } ?? [CastCreditViewModel]()
 
     }
     
     var crew: [CrewCreditViewModel] {
-        return movie.crew?.compactMap { CrewCreditViewModel(crewCredit: $0) } ?? [CrewCreditViewModel]()
+        movie.crew?.compactMap { CrewCreditViewModel(crewCredit: $0) } ?? [CrewCreditViewModel]()
     }
     
     var recommendedMovies: [MovieViewModel] {
-        return movie.recommendedMovies?.compactMap { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
+        movie.recommendedMovies?.compactMap { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
+    }
+    
+    var socialLinks: [SocialLink] {
+        movie.socialLinks
     }
     
 }

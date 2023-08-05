@@ -50,6 +50,25 @@ extension CodableMovie {
         movie.userRating = accountStates?.rated?.value
         movie.watchlist = accountStates?.watchlist
         
+        var socialLinks = [SocialLink]()
+        if let instagramID = externalIds?.instagramID, !instagramID.isEmpty {
+            socialLinks.append(.instagram(username: instagramID))
+        }
+        
+        if let twitterID = externalIds?.twitterID, !twitterID.isEmpty {
+            socialLinks.append(.twitter(username: twitterID))
+        }
+        
+        if let facebookID = externalIds?.facebookID, !facebookID.isEmpty {
+            socialLinks.append(.facebook(username: facebookID))
+        }
+        
+        if let homepage = homepage, let url = URL(string: homepage) {
+            socialLinks.append(.homepage(url: url))
+        }
+        
+        movie.socialLinks = socialLinks
+        
         return movie
     }
 }

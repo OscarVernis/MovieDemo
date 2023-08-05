@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SocialLink: Hashable {
+enum SocialLink: Hashable, Codable {
     case imdb(id: String)
     case facebook(username: String)
     case instagram(username: String)

@@ -36,6 +36,8 @@ struct Movie {
     var favorite: Bool? = false
     var userRating: Float? = nil
     var watchlist: Bool? = false
+    
+    var socialLinks: [SocialLink] = []
 }
 
 //MARK: - Utils
