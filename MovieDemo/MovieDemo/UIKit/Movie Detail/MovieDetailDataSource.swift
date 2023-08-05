@@ -165,8 +165,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
             }
         }
         
-        snapshot.reloadSections([.header])
-        apply(snapshot, animatingDifferences: false)
+        applySnapshotUsingReloadData(snapshot)
     }
     
     //MARK: - Headers
@@ -183,6 +182,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
            return sectionTitleView
         }
     }
+    
     
     private func sectionTitle(for section: Section) -> String {
         switch section {

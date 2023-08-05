@@ -127,7 +127,7 @@ class MovieDetailViewController: UIViewController {
     
     fileprivate func setupHeaderView() {
         guard let headerView = headerView else { return }
-        
+                
         headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
         
         headerView.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
@@ -164,12 +164,10 @@ class MovieDetailViewController: UIViewController {
             .store(in: &cancellables)
         
         store.$error
+            .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
-                if error != nil {
-                    self?.show(error: .refreshError, shouldDismiss: true)
-                    self?.store.error = nil
-                }
+                self?.show(error: .refreshError, shouldDismiss: true)
             }
             .store(in: &cancellables)
         

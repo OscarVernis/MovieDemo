@@ -84,14 +84,14 @@ class MovieDetailHeaderView: UICollectionReusableView {
     
     func configure(movie: MovieViewModel) {
         self.movie = movie
-                
+
         //Load Poster image
-        let url = movie.posterImageURL(size: .original)
-        print(posterImageView.sd_imageProgress.fractionCompleted)
-        posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder)) {
-            self.isShowingPlaceholder = false
+        if isShowingPlaceholder, !posterImageView.isLoadingRemoteImage {
+            let url = movie.posterImageURL(size: .original)
+            posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder)) {
+                self.isShowingPlaceholder = false
+            }
         }
-        
         
         //Movie Info
         titleLabel.text = movie.title

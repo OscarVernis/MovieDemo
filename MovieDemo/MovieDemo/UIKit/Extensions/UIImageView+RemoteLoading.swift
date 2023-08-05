@@ -19,6 +19,10 @@ extension UIImageView {
         }
     }
     
+    var isLoadingRemoteImage: Bool {
+        sd_imageLoadOperation(forKey: sd_latestOperationKey) != nil
+    }
+    
     func cancelImageRequest() {
         self.sd_cancelCurrentImageLoad()
     }

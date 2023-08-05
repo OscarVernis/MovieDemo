@@ -10,17 +10,10 @@ import Foundation
 import Combine
 
 class URLSessionHTTPClient: HTTPClient {
-    private lazy var session: URLSession = {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 5
-        configuration.timeoutIntervalForResource = 5
-        return URLSession(configuration: configuration)
-    }()
+    var session: URLSession
     
-    init(session: URLSession? = nil) {
-        if let session = session {
-            self.session = session
-        }
+    init(session: URLSession = .shared) {
+        self.session = session
     }
     
     func requestPublisher(with url: URL, body: (any Encodable)?, method: HTTPMethod) -> AnyPublisher<(DataTaskResult), Error> {
