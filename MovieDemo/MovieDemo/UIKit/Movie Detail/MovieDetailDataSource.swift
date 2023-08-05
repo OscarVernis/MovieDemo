@@ -2,13 +2,13 @@
 //  MovieDetailDataSource.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 12/06/22.
-//  Copyright © 2022 Oscar Vernis. All rights reserved.
+//  Created by Oscar Vernis on 04/08/23.
+//  Copyright © 2023 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-class MovieDetailDataSource: SectionedCollectionDataSource {
+class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataSource.Section, AnyHashable> {
     enum Section: Int, CaseIterable {
         case header
         case cast
@@ -18,29 +18,13 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         case info
     }
     
-    unowned var collectionView: UICollectionView
-    var movie: MovieViewModel
-    var isLoading: Bool
+    var movie: MovieViewModel!
+    var isLoading: Bool = false
     
     var sections: [Section] = []
     
-    init(collectionView: UICollectionView, movie: MovieViewModel, isLoading: Bool) {
-        self.collectionView = collectionView
-        self.movie = movie
-        self.isLoading = isLoading
-        
-        super.init()
-        
-        registerReusableViews()
-        setupSections()
-    }
-    
-    func reload() {
-        setupSections()
-    }
-    
-    //MARK: - Setup
-    fileprivate func registerReusableViews() {
+    //MARK: - Cell Setup
+    func registerReusableViews(collectionView: UICollectionView) {
         MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         LoadingCell.register(to: collectionView)
@@ -50,6 +34,65 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         MoviePosterInfoCell.register(to: collectionView)
     }
     
+    func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
+        let section = sections[indexPath.section]
+        switch section {
+        case .header:
+            return loadingCell(at: indexPath, with: collectionView)
+        case .cast:
+           return castCell(at: indexPath, with: collectionView)
+        case .crew:
+           return crewCell(at: indexPath, with: collectionView)
+        case .videos:
+           return videoCell(at: indexPath, with: collectionView)
+        case .recommended:
+          return recommendedCell(at: indexPath, with: collectionView)
+        case .info:
+            return infoCell(at: indexPath, with: collectionView)
+        }
+        
+    }
+    
+    private func loadingCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
+        collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
+    }
+    
+    private func castCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
+        let model = movie.topCast[indexPath.row]
+        CreditCell.configure(cell: cell, with: model)
+        return cell
+    }
+    
+    private func crewCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
+        let model = movie.topCrew[indexPath.row]
+        InfoListCell.configure(cell: cell, with: model)
+        return cell
+    }
+    
+    private func videoCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeVideoCell.reuseIdentifier, for: indexPath) as! YoutubeVideoCell
+        let model = movie.videos[indexPath.row]
+        YoutubeVideoCell.configure(cell: cell, video: model)
+        return cell
+    }
+    
+    private func recommendedCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
+        let model = movie.recommendedMovies[indexPath.row]
+        MoviePosterInfoCell.configureWithDate(cell: cell, with: model)
+        return cell
+    }
+    
+    private func infoCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
+        let model = movie.infoArray[indexPath.row]
+        InfoListCell.configure(cell: cell, info: model)
+        return cell
+    }
+    
+    //MARK: - Reload    
     fileprivate func setupSections() {
         sections = [
             .header,
@@ -61,7 +104,6 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         ]
                 
         sections = sections.filter(validate(section:))
-        dataSources = sections.map(dataSource(for:))
     }
     
     fileprivate func validate(section: Section) -> Bool {
@@ -83,82 +125,65 @@ class MovieDetailDataSource: SectionedCollectionDataSource {
         return false
     }
     
-    fileprivate func dataSource(for section: Section) -> UICollectionViewDataSource {
+    func reload(animated: Bool = true) {
+        setupSections()
+        
+        var snapshot = NSDiffableDataSourceSnapshot<MovieDetailDataSource.Section, AnyHashable>()
+        snapshot.appendSections(sections)
+        
+        for section in sections {
+            switch section {
+            case .header:
+                if isLoading {
+                    snapshot.appendItems([UUID().uuidString], toSection: .header)
+                }
+            case .cast:
+                snapshot.appendItems(movie.topCast, toSection: .cast)
+            case .crew:
+                snapshot.appendItems(movie.topCrew, toSection: .crew)
+            case .videos:
+                snapshot.appendItems(movie.videos, toSection: .videos)
+            case .recommended:
+                snapshot.appendItems(movie.recommendedMovies, toSection: .recommended)
+            case .info:
+                snapshot.appendItems(movie.infoArray, toSection: .info)
+            }
+        }
+        
+        self.apply(snapshot, animatingDifferences: animated)
+
+    }
+    
+    //MARK: - Headers
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let section = sections[indexPath.section]
         switch section {
         case .header:
-            return makeMovieHeader()
-        case .cast:
-            return makeCast()
-        case .crew:
-            return makeCrew()
-        case .videos:
-            return makeVideos()
-        case .recommended:
-            return makeRecommended()
-        case .info:
-            return makeInfo()
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
+            headerView.configure(movie: movie)
+            return headerView
+        case .cast, .crew, .videos, .recommended, .info:
+            let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
+            SectionTitleView.configureForDetail(headerView: sectionTitleView, title: sectionTitle(for: section))
+           return sectionTitleView
         }
     }
     
-    //MARK: - Data Sources
-    fileprivate func makeMovieHeader() -> UICollectionViewDataSource {
-        return MovieHeaderDataSource(movie: movie, isLoading: isLoading)
-    }
-    
-    fileprivate func makeCast() -> UICollectionViewDataSource {
-        makeSection(models: movie.topCast,
-                    title: .localized(MovieString.Cast),
-                    reuseIdentifier: CreditCell.reuseIdentifier,
-                    cellConfigurator: CreditCell.configure)
-    }
-    
-    fileprivate func makeCrew() -> UICollectionViewDataSource {
-        makeSection(models: movie.topCrew,
-                    title: .localized(MovieString.Crew),
-                    reuseIdentifier: InfoListCell.reuseIdentifier,
-                    cellConfigurator: InfoListCell.configure)
-    }
-    
-    fileprivate func makeVideos() -> UICollectionViewDataSource {
-        makeSection(models: movie.videos,
-                    title: .localized(MovieString.Videos),
-                    reuseIdentifier: YoutubeVideoCell.reuseIdentifier,
-                    cellConfigurator: YoutubeVideoCell.configure)
-    }
-    
-    fileprivate func makeRecommended() -> UICollectionViewDataSource {
-        makeSection(models: movie.recommendedMovies,
-                    title: .localized(MovieString.RecommendedMovies),
-                    reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
-                    cellConfigurator: MoviePosterInfoCell.configureWithRating)
-    }
-    
-    fileprivate func makeInfo() -> UICollectionViewDataSource {
-        makeSection(models: movie.infoArray,
-                    title: .localized(MovieString.Info),
-                    reuseIdentifier: InfoListCell.reuseIdentifier,
-                    cellConfigurator: InfoListCell.configure)
-    }
-    
-    //MARK: Helper
-    fileprivate func makeSection<Model, Cell: UICollectionViewCell>(models: [Model], title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, Model) -> Void) -> UICollectionViewDataSource {
-        let dataSource = ArrayCollectionDataSource(models: models,
-                                                   reuseIdentifier: reuseIdentifier,
-                                                   cellConfigurator: cellConfigurator)
-        
-        let titleDataSource = TitleHeaderDataSource(title: title,
-                                                    dataSource: dataSource,
-                                                    headerConfigurator: SectionTitleView.configureForDetail)
-        
-        return titleDataSource
-    }
-    
-    //MARK: - Header Data Source
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let dataSource = dataSources[indexPath.section]
-        let indexPath = IndexPath(row: indexPath.row, section: 0)
-
-        return dataSource.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at:indexPath)
+    private func sectionTitle(for section: Section) -> String {
+        switch section {
+        case .header:
+            return ""
+        case .cast:
+            return .localized(MovieString.Cast)
+        case .crew:
+            return .localized(MovieString.Crew)
+        case .videos:
+            return .localized(MovieString.Videos)
+        case .recommended:
+            return .localized(MovieString.RecommendedMovies)
+        case .info:
+            return .localized(MovieString.Info)
+        }
     }
     
 }

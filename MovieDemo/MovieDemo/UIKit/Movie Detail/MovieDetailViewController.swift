@@ -43,6 +43,7 @@ class MovieDetailViewController: UIViewController {
         setupCustomBackButton()
         createCollectionView()
         setup()
+        setupDataSource()
         setupStore()
     }
     
@@ -105,10 +106,18 @@ class MovieDetailViewController: UIViewController {
             bgView.imageView.setRemoteImage(withURL: imageURL)
             collectionView.backgroundView = bgView
         }
+    }
+    
+    fileprivate func setupDataSource() {
+        dataSource = MovieDetailDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        })
         
-        dataSource = MovieDetailDataSource(collectionView: collectionView, movie: movie, isLoading: store.isLoading)
-        dataSource.isLoading = store.isLoading
-        collectionView.dataSource = dataSource
+        dataSource.registerReusableViews(collectionView: collectionView)
+        
+        dataSource.movie = movie
+        dataSource.isLoading = true
+        dataSource.reload()
     }
     
     fileprivate func setupHeaderView() {
@@ -164,10 +173,9 @@ class MovieDetailViewController: UIViewController {
 
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
-        dataSource.movie = store.movie
+        dataSource.movie = movie
         dataSource.isLoading = store.isLoading
         dataSource.reload()
-        collectionView.reloadData()
     }
     
     fileprivate func show(error: UserFacingError, shouldDismiss: Bool = false) {
