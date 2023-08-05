@@ -331,40 +331,43 @@ extension MovieDetailViewController: UICollectionViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let headerView else { return }
-                
-        let offset = scrollView.contentOffset.y
-        let infoViewFrame = headerView.infoView.superview!.convert(headerView.infoView.frame, to: scrollView)
-        let threshold = infoViewFrame.maxY - view.safeAreaInsets.top
 
         //Sticky Header
         let height = UIWindow.mainWindow.frame.width * 1.5
-        if offset < 0 {
+        if scrollView.contentOffset.y < 0 {
+            let offset = abs(scrollView.contentOffset.y)
+            
             //Adjust Image size and position
-            headerView.topImageConstraint.constant = offset
+            headerView.topImageConstraint.constant = -offset
             headerView.heightConstraint.constant = height + abs(offset * 0.5)
             headerView.updateConstraintsIfNeeded()
             
             //Fade out Header Info
-            let ratio = -offset / (height * 0.3)
+            let startingOffset: CGFloat = 50
+            let threshold: CGFloat = 180
+            let ratio = (offset - startingOffset) / (threshold - startingOffset)
             headerView.containerStackView.alpha = 1 - ratio
+            headerView.backgroundColor = .black.withAlphaComponent(ratio * 0.9)
+            self.navigationItem.leftBarButtonItem?.customView?.alpha = 1 - ratio
             
             //Fade out gradient
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             headerView.gradient.colors = [UIColor.black.cgColor,
-                                          UIColor.black.withAlphaComponent(ratio * 0.2).cgColor]
+                                          UIColor.black.withAlphaComponent(ratio * 0.7).cgColor]
             CATransaction.commit()
 
             return
         }
         
-        headerView.heightConstraint.constant = height
-        headerView.updateConstraintsIfNeeded()
+        let offset = scrollView.contentOffset.y
+        let infoViewFrame = headerView.infoView.superview!.convert(headerView.infoView.frame, to: scrollView)
+        let threshold = infoViewFrame.maxY - view.safeAreaInsets.top
         
         //Poster image alpha
         let imageStartingOffset: CGFloat = threshold * 0.5
         let imageOffset = offset - imageStartingOffset
-        let imageThreshold = (threshold * 0.95) - imageStartingOffset
+        let imageThreshold = threshold - imageStartingOffset
         let imageRatio = min(1, imageOffset / imageThreshold)
         headerView.posterImageView.alpha = 1 - imageRatio
         
@@ -382,7 +385,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
 
         //Poster parallax scrolling
         if offset < threshold, offset >= 0 {
-            headerView.topImageConstraint.constant = offset * 0.4
+            headerView.topImageConstraint.constant = offset * 0.1
             headerView.updateConstraintsIfNeeded()
         } else {
             headerView.topImageConstraint.constant = 0

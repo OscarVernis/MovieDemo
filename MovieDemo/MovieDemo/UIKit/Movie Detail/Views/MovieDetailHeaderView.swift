@@ -49,7 +49,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         posterImageView.addGestureRecognizer(tapRecognizer)
-        
+                
         //Gradient
         gradient = CAGradientLayer()
         gradient.frame = posterImageView.bounds
