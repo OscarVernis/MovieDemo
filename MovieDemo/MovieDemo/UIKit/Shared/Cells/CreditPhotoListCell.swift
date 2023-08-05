@@ -13,12 +13,10 @@ class CreditPhotoListCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!
     
-    override func awakeFromNib() {
-        creditImageView.setupBorder()
-    }
-    
     override func prepareForReuse() {
+        creditImageView.cancelImageRequest()
         creditImageView.image = .asset(.PersonPlaceholder)
+        creditImageView.removeBorder()
     }
 
 }
@@ -26,35 +24,32 @@ class CreditPhotoListCell: UICollectionViewCell {
 //MARK: - Configure
 extension CreditPhotoListCell {
     static func configure(cell: CreditPhotoListCell, with castCredit: CastCreditViewModel) {
-        cell.creditImageView.cancelImageRequest()
-        
         cell.nameLabel.text = castCredit.name
         cell.roleLabel.text = castCredit.character
         
-        if let url = castCredit.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
+        let url = castCredit.profileImageURL
+        cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder)) {
+            cell.creditImageView.setupBorder()
         }
     }
     
     static func configure(cell: CreditPhotoListCell, with crewCredit: CrewCreditViewModel) {
-        cell.creditImageView.cancelImageRequest()
-        
         cell.nameLabel.text = crewCredit.name
         cell.roleLabel.text = crewCredit.job
         
-        if let url = crewCredit.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
+        let url = crewCredit.profileImageURL
+        cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder)) {
+            cell.creditImageView.setupBorder()
         }
     }
     
-    static func configure(cell: CreditPhotoListCell, person: PersonViewModel) {
-        cell.creditImageView.cancelImageRequest()
-        
+    static func configure(cell: CreditPhotoListCell, person: PersonViewModel) {        
         cell.nameLabel.text = person.name
         cell.roleLabel.text = person.knownForMovies
         
-        if let url = person.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
+        let url = person.profileImageURL
+        cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder)) {
+            cell.creditImageView.setupBorder()
         }
     }
     

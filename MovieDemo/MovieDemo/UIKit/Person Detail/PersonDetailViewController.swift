@@ -138,9 +138,8 @@ class PersonDetailViewController: UIViewController {
         titleView.text = person.name
         nameLabel.text = person.name
         
-        if let imageURL = self.person.profileImageURL {
-            personImageView.setRemoteImage(withURL: imageURL)
-        }
+        let imageURL = self.person.profileImageURL
+        personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
         
     }
     

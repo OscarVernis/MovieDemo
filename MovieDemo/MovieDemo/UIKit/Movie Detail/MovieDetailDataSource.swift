@@ -21,6 +21,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
     var movie: MovieViewModel!
     var isLoading: Bool = false
     
+    var loadingCellId = UUID().uuidString
     var socialItemId = UUID().uuidString
     var openSocialLink: ((SocialLink) -> ())?
     
@@ -146,7 +147,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
             switch section {
             case .header:
                 if isLoading {
-                    snapshot.appendItems([UUID().uuidString], toSection: .header)
+                    snapshot.appendItems([loadingCellId], toSection: .header)
                 }
             case .cast:
                 snapshot.appendItems(movie.topCast, toSection: .cast)
@@ -164,8 +165,8 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
             }
         }
         
-        self.apply(snapshot, animatingDifferences: animated)
-
+        snapshot.reloadSections([.header])
+        apply(snapshot, animatingDifferences: false)
     }
     
     //MARK: - Headers

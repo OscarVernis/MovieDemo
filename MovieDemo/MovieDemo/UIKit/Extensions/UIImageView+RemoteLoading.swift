@@ -10,7 +10,9 @@ import UIKit
 import SDWebImage
 
 extension UIImageView {
-    func setRemoteImage(withURL url: URL, placeholder: UIImage? = nil, animated: Bool = true, completion: (() -> ())? = nil) {
+    func setRemoteImage(withURL url: URL?, placeholder: UIImage? = nil, animated: Bool = true, completion: (() -> ())? = nil) {
+        guard let url else { return }
+        
         self.sd_imageTransition = animated ? .fade(duration: 0.2) : .none
         self.sd_setImage(with: url, placeholderImage: placeholder) { _,_,_,_ in
             completion?()

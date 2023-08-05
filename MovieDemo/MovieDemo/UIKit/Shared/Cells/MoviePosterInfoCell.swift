@@ -20,7 +20,6 @@ class MoviePosterInfoCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         stackView.spacing = 0
-        posterImageView.setupBorder()
     }
     
     func setPosterRatio(_ ratio: CGFloat) {
@@ -88,6 +87,7 @@ class MoviePosterInfoCell: UICollectionViewCell {
         
         posterImageView.cancelImageRequest()
         posterImageView.image = .asset(.PosterPlaceholder)
+        posterImageView.removeBorder()
                 
         title = nil
         rating = nil
@@ -98,13 +98,12 @@ class MoviePosterInfoCell: UICollectionViewCell {
 
 //MARK: - Configure
 extension MoviePosterInfoCell {
-    static func configureWithDate(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
-        cell.posterImageView.cancelImageRequest()
-        cell.posterImageView.image = .asset(.PersonPlaceholder)
-        
-        if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
+    static func configureWithDate(cell: MoviePosterInfoCell, with movie: MovieViewModel) {        
+        let url = movie.posterImageURL(size: .w342)
+        cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder)) {
+            cell.posterImageView.setupBorder()
         }
+        
         
         cell.setPosterRatio((3/2))
         
@@ -115,13 +114,11 @@ extension MoviePosterInfoCell {
     }
     
     static func configureWithRating(cell: MoviePosterInfoCell, with movie: MovieViewModel) {
-        cell.posterImageView.cancelImageRequest()
-        cell.posterImageView.image = .asset(.PosterPlaceholder)
-        
-        if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
+        let url = movie.posterImageURL(size: .w342) 
+        cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder)) {
+            cell.posterImageView.setupBorder()
         }
-        
+            
         cell.setPosterRatio((3/2))
         
         cell.title = movie.title

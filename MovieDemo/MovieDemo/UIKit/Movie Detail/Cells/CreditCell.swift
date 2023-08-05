@@ -13,23 +13,23 @@ class CreditCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var roleLabel: UILabel!
     
-    override func awakeFromNib() {
-        creditImageView.setupBorder()
-    }
-    
     override func prepareForReuse() {
+        creditImageView.cancelImageRequest()
+
+        creditImageView.layer.borderWidth = 0
         creditImageView.image = .asset(.PersonPlaceholder)
+        creditImageView.removeBorder()
     }
     
     //MARK: - Configure
     static func configure(cell: CreditCell, with castCredit: CastCreditViewModel) {
-        cell.creditImageView.cancelImageRequest()
-
         cell.nameLabel.text = castCredit.name
         cell.roleLabel.text = castCredit.character
         
-        if let url = castCredit.profileImageURL {
-            cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder))
+        let url = castCredit.profileImageURL
+        cell.creditImageView.setRemoteImage(withURL: url, placeholder: .asset(.PersonPlaceholder)) {
+            cell.creditImageView.setupBorder()
         }
+        
     }
 }

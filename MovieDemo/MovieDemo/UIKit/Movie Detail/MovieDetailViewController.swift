@@ -104,10 +104,12 @@ class MovieDetailViewController: UIViewController {
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
         //Load Background Blur View
-        if let imageURL = movie.posterImageURL(size: .w342), let bgView = BlurBackgroundView.instantiateFromNib() {
-            backgroundView = bgView
+        backgroundView =  BlurBackgroundView.instantiateFromNib()
+        collectionView.backgroundView = backgroundView
+        if let imageURL = movie.posterImageURL(size: .w342) {
             backgroundView?.imageView.setRemoteImage(withURL: imageURL)
-            collectionView.backgroundView = backgroundView
+        } else {
+            backgroundView?.imageView.image = .asset(.PosterPlaceholder)
         }
     }
     
@@ -190,7 +192,9 @@ class MovieDetailViewController: UIViewController {
     }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
-        guard let image = headerView?.posterImageView.image, let headerView = headerView else { return }
+        guard movie.posterImageURL(size: .original) != nil,
+                let image = headerView?.posterImageView.image,
+                let headerView = headerView else { return }
         let mvvc = MediaViewerViewController(image: image,
                                              presentFromView: headerView.posterImageView
         )
@@ -356,6 +360,10 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             headerView.topImageConstraint.constant = -offset
             headerView.heightConstraint.constant = height + abs(offset * 0.5)
             headerView.updateConstraintsIfNeeded()
+            
+            if movie.posterImageURL(size: .original) == nil {
+                return
+            }
             
             //Fade out Header Info
             let startingOffset: CGFloat = 50

@@ -84,7 +84,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         
         //Load Poster image
         if let url = movie.posterImageURL(size: .original) {
-            posterImageView.setRemoteImage(withURL: url)
+            posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
         }
         
         //Movie Info

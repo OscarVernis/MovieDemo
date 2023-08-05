@@ -16,18 +16,17 @@ class MovieInfoListCell: UICollectionViewCell {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     
-    override func awakeFromNib() {
-        posterImageView.setupBorder()
+    override func prepareForReuse() {
+        posterImageView.cancelImageRequest()
+        posterImageView.removeBorder()
     }
 }
 
 extension MovieInfoListCell {
     static func configure(cell: MovieInfoListCell, with movie: MovieViewModel) {
-        cell.posterImageView.cancelImageRequest()
-        cell.posterImageView.image = .asset(.PosterPlaceholder)
-        
-        if let url = movie.posterImageURL(size: .w342) {
-            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
+        let url = movie.posterImageURL(size: .w342)
+        cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder)) {
+            cell.posterImageView.setupBorder()
         }
         
         cell.titleLabel.text = movie.title
