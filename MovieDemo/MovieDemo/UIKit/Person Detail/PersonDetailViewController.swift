@@ -140,7 +140,6 @@ class PersonDetailViewController: UIViewController {
         
         let imageURL = self.person.profileImageURL
         personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
-        
     }
     
     fileprivate func setupDataSource() {
@@ -185,6 +184,7 @@ class PersonDetailViewController: UIViewController {
     //MARK: - Actions
     fileprivate func storeDidUpdate() {
         dataSource.person = store.person
+        dataSource.isLoading = store.isLoading
         UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
             self.dataSource.reload(force: true, animated: false)
         }

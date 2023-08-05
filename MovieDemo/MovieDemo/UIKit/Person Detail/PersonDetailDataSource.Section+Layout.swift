@@ -11,6 +11,8 @@ import UIKit
 extension PersonDetailDataSource.Section {
     func sectionLayout() -> NSCollectionLayoutSection {
         switch self {
+        case .loading:
+            return makeLoading()
         case .overview:
             return makeOverview()
         case .popular:
@@ -22,7 +24,15 @@ extension PersonDetailDataSource.Section {
         case .info:
             return makeInfo()
         }
+    }
+    
+    fileprivate func makeLoading() -> NSCollectionLayoutSection {
+        let sectionBuilder = MoviesCompositionalLayoutBuilder()
         
+        let section = sectionBuilder.createSection(itemHeight: .absolute(44))
+        section.contentInsets.top = 50
+        
+        return section
     }
     
     fileprivate func makeOverview() -> NSCollectionLayoutSection {

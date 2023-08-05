@@ -10,6 +10,7 @@ import UIKit
 
 class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDataSource.Section, AnyHashable> {
     enum Section: Hashable {
+        case loading
         case overview
         case popular
         case creditCategories
@@ -19,7 +20,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         
         var sectionTitle: String {
             switch self {
-            case .overview, .info:
+            case .overview, .info, .loading:
                 return ""
             case .popular:
                 return .localized(PersonString.KnownFor)
@@ -35,6 +36,8 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     }
     
     var person: PersonViewModel!
+    var isLoading = false
+    let loadingItemId = UUID().uuidString
     
     var overviewSectionID = UUID().uuidString
     var isOverviewExpanded: Bool = false
@@ -56,6 +59,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         CategoryCell.register(to: collectionView)
         InfoListCell.register(to: collectionView)
         SocialCell.register(to: collectionView)
+        LoadingCell.register(to: collectionView)
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -63,6 +67,8 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         let section = sections[indexPath.section]
         
         switch section {
+        case .loading:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         case .overview:
             let overviewCell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
             overviewCell.textLabel.text = person.biography
@@ -133,6 +139,8 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     
     func itemCount(for section: Section) -> Int {
         switch section {
+        case .loading:
+            return isLoading ? 1 : 0
         case .overview:
             return person.biography?.isEmpty ?? true ? 0 : 1
         case .popular:
@@ -157,6 +165,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         sections.removeAll()
         creditSections.removeAll()
         
+        if isLoading {
+            sections.append(.loading)
+        }
+        
         if let bio = person.biography, !bio.isEmpty {
             sections.append(.overview)
         }
@@ -168,6 +180,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         if !person.popularMovies.isEmpty {
             sections.append(.popular)
         }
+        
+        if !creditSections.isEmpty {
+            sections.append(.creditCategories)
+        }
                 
         if !person.castCredits.isEmpty {
             creditSections.append(.castCredits)
@@ -175,10 +191,6 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         
         for job in person.departments {
             creditSections.append(.crewCredits(department: job))
-        }
-        
-        if !creditSections.isEmpty {
-            sections.append(.creditCategories)
         }
         
         //Send Acting to the end if person is know for crew department
@@ -191,9 +203,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         if refresh && creditSections.count > 0 {
             selectedCreditSection = creditSections.first!
         }
-        sections.append(selectedCreditSection)
         
-        
+        if !creditSections.isEmpty {
+            sections.append(selectedCreditSection)
+        }
     }
     
     func reloadOverviewSection() {
@@ -207,9 +220,11 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
 
         var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDataSource.Section, AnyHashable>()
         snapshot.appendSections(sections)
-        
+                
         for section in sections {
             switch section {
+            case .loading:
+                snapshot.appendItems([loadingItemId], toSection: .loading)
             case .overview:
                 snapshot.appendItems([overviewSectionID], toSection: .overview)
             case .popular:
