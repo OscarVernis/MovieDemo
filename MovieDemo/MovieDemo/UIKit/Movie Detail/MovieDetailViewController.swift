@@ -25,7 +25,7 @@ class MovieDetailViewController: UIViewController {
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
     
-    var isBarHidden = true
+    private var isBarHidden = true
     
     required init(store: MovieDetailStore, router: MovieDetailRouter?) {
         self.store = store
@@ -114,7 +114,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataSource() {
-        dataSource = MovieDetailDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = MovieDetailDataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
             self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
         })
         
@@ -123,10 +123,6 @@ class MovieDetailViewController: UIViewController {
         dataSource.openSocialLink = { socialLink in
             UIApplication.shared.open(socialLink.url)
         }
-        
-        dataSource.movie = movie
-        dataSource.isLoading = true
-        dataSource.reload()
     }
     
     fileprivate func setupHeaderView() {
@@ -192,7 +188,7 @@ class MovieDetailViewController: UIViewController {
     }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in
-        guard movie.posterImageURL(size: .original) != nil,
+        guard headerView?.isShowingPlaceholder == false,
                 let image = headerView?.posterImageView.image,
                 let headerView = headerView else { return }
         let mvvc = MediaViewerViewController(image: image,
@@ -361,7 +357,7 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             headerView.heightConstraint.constant = height + abs(offset * 0.5)
             headerView.updateConstraintsIfNeeded()
             
-            if movie.posterImageURL(size: .original) == nil {
+            if headerView.isShowingPlaceholder {
                 return
             }
             

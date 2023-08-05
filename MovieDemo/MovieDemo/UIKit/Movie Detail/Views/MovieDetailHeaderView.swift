@@ -39,6 +39,8 @@ class MovieDetailHeaderView: UICollectionReusableView {
     var gradient: CAGradientLayer!
     private var gradientCancellable: AnyCancellable?
     
+    var isShowingPlaceholder = true
+    
     var movie: MovieViewModel!
     var showUserActions = false {
         didSet {
@@ -72,6 +74,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     }
     
     fileprivate func updateUserActionButtons(animated: Bool = false) {
+        userActionsView.isHidden = !showUserActions
         if !showUserActions { return }
         
         favoriteButton?.setIsSelected(movie.favorite, animated: animated)
@@ -81,11 +84,14 @@ class MovieDetailHeaderView: UICollectionReusableView {
     
     func configure(movie: MovieViewModel) {
         self.movie = movie
-        
+                
         //Load Poster image
-        if let url = movie.posterImageURL(size: .original) {
-            posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
+        let url = movie.posterImageURL(size: .original)
+        print(posterImageView.sd_imageProgress.fractionCompleted)
+        posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder)) {
+            self.isShowingPlaceholder = false
         }
+        
         
         //Movie Info
         titleLabel.text = movie.title
