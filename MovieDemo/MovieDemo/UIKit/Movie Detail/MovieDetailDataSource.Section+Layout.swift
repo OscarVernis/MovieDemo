@@ -91,7 +91,7 @@ extension MovieDetailDataSource.Section {
     fileprivate func makeInfo() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 52)
         
-        section.contentInsets.top = 5
+        section.contentInsets.top = 0
         section.contentInsets.bottom = UIWindow.mainWindow.safeAreaInsets.bottom + 30
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()

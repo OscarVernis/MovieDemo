@@ -118,6 +118,10 @@ class MovieDetailViewController: UIViewController {
         
         dataSource.registerReusableViews(collectionView: collectionView)
         
+        dataSource.openSocialLink = { socialLink in
+            UIApplication.shared.open(socialLink.url)
+        }
+        
         dataSource.movie = movie
         dataSource.isLoading = true
         dataSource.reload()

@@ -21,6 +21,9 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
     var movie: MovieViewModel!
     var isLoading: Bool = false
     
+    var socialItemId = UUID().uuidString
+    var openSocialLink: ((SocialLink) -> ())?
+    
     var sections: [Section] = []
     
     //MARK: - Cell Setup
@@ -32,6 +35,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
         InfoListCell.register(to: collectionView)
         YoutubeVideoCell.register(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
+        SocialCell.register(to: collectionView)
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -48,7 +52,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
         case .recommended:
           return recommendedCell(at: indexPath, with: collectionView)
         case .info:
-            return infoCell(at: indexPath, with: collectionView)
+            return infoCell(at: indexPath, with: collectionView, identifier: identifier)
         }
         
     }
@@ -85,11 +89,18 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
         return cell
     }
     
-    private func infoCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
-        let model = movie.infoArray[indexPath.row]
-        InfoListCell.configure(cell: cell, info: model)
-        return cell
+    private func infoCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
+        if identifier as? String == socialItemId {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SocialCell.reuseIdentifier, for: indexPath) as! SocialCell
+            cell.socialLinks = movie.socialLinks
+            cell.didSelect = openSocialLink
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
+            let model = identifier as! [String : String]
+            InfoListCell.configure(cell: cell, info: model)
+            return cell
+        }
     }
     
     //MARK: - Reload    
@@ -146,6 +157,9 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
             case .recommended:
                 snapshot.appendItems(movie.recommendedMovies, toSection: .recommended)
             case .info:
+                if !movie.socialLinks.isEmpty {
+                    snapshot.appendItems([socialItemId], toSection: .info)
+                }
                 snapshot.appendItems(movie.infoArray, toSection: .info)
             }
         }

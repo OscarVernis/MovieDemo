@@ -38,7 +38,7 @@ struct CodableMovie: Codable {
     let videos: CodableVideos?
     let accountStates: CodableAccountStates?
     let homepage: String?
-    let externalIds: ExternalIDS?
+    let externalIds: ExternalIds?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -93,10 +93,9 @@ struct CodableMovie: Codable {
         videos = try? container.decodeIfPresent(CodableVideos.self, forKey: .videos)
         accountStates = try? container.decodeIfPresent(CodableAccountStates.self, forKey: .accountStates)
         homepage = try? container.decodeIfPresent(String.self, forKey: .homepage)
-        externalIds = try? container.decodeIfPresent(ExternalIDS.self, forKey: .externalIds)
+        externalIds = try? container.decodeIfPresent(ExternalIds.self, forKey: .externalIds)
     }
     
-
 }
 
 //MARK: - AccountStates
@@ -199,17 +198,4 @@ struct CodableVideo: Codable {
     let name: String?
     let key: String?
     let type: String?
-}
-
-//MARK: - ExternalIDS
-struct ExternalIDS: Codable {
-    let facebookID: String?
-    let instagramID: String?
-    let twitterID: String?
-
-    enum CodingKeys: String, CodingKey {
-        case facebookID = "facebook_id"
-        case instagramID = "instagram_id"
-        case twitterID = "twitter_id"
-    }
 }
