@@ -76,6 +76,8 @@
 		553AF9B32856CD58007D1B20 /* UserProfileLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */; };
 		553CD314286D33C30022F72E /* InfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD313286D33C30022F72E /* InfoItem.swift */; };
 		553CD316286D35780022F72E /* InfoTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD315286D35780022F72E /* InfoTable.swift */; };
+		553CECCD2A801E7D00F6D37A /* CrewDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CECCC2A801E7D00F6D37A /* CrewDepartment.swift */; };
+		553CECD02A801F9200F6D37A /* Department.strings in Resources */ = {isa = PBXBuildFile; fileRef = 553CECD22A801F9200F6D37A /* Department.strings */; };
 		553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 553EE5852A6386D400750793 /* SDWebImageSwiftUI */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
 		5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5541467E2A71834200BF1B16 /* UserListsStore.swift */; };
@@ -381,6 +383,9 @@
 		553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileLayoutProvider.swift; sourceTree = "<group>"; };
 		553CD313286D33C30022F72E /* InfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoItem.swift; sourceTree = "<group>"; };
 		553CD315286D35780022F72E /* InfoTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTable.swift; sourceTree = "<group>"; };
+		553CECCC2A801E7D00F6D37A /* CrewDepartment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewDepartment.swift; sourceTree = "<group>"; };
+		553CECD12A801F9200F6D37A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Department.strings; sourceTree = "<group>"; };
+		553CECD32A801F9400F6D37A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Department.strings"; sourceTree = "<group>"; };
 		553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSuccessResult.swift; sourceTree = "<group>"; };
 		5541467E2A71834200BF1B16 /* UserListsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsStore.swift; sourceTree = "<group>"; };
 		554146802A718C2400BF1B16 /* CreateListRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListRequestBody.swift; sourceTree = "<group>"; };
@@ -1092,6 +1097,7 @@
 				55664858284DC4FB000BE2F3 /* Person.strings */,
 				5566485E284DC507000BE2F3 /* Service.strings */,
 				55664864284DC517000BE2F3 /* User.strings */,
+				553CECD22A801F9200F6D37A /* Department.strings */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -1406,6 +1412,7 @@
 				5505779D284DAA0F007ED892 /* MovieString.swift */,
 				5505779F284DAA1E007ED892 /* PersonString.swift */,
 				550577A9284DAA8E007ED892 /* ServiceString.swift */,
+				553CECCC2A801E7D00F6D37A /* CrewDepartment.swift */,
 				550577A1284DAA2C007ED892 /* UserString.swift */,
 			);
 			path = Localizable;
@@ -1635,6 +1642,7 @@
 				5566484A284DC4D9000BE2F3 /* Home.strings in Resources */,
 				554DE178251EF83C000286D2 /* OverviewCell.xib in Resources */,
 				55F4E4442A723BEC004CACCC /* ListMovieCell.xib in Resources */,
+				553CECD02A801F9200F6D37A /* Department.strings in Resources */,
 				55EDD3542513E346004F8117 /* LoadingCell.xib in Resources */,
 				559547BF2A6F191500AC03E3 /* person.json in Resources */,
 				5566483A284DC4AF000BE2F3 /* Credit.strings in Resources */,
@@ -1706,6 +1714,7 @@
 				5584ADE42A63074800F0907E /* CodablePerson+Mapping.swift in Sources */,
 				558A5A9825106C1400E5FB40 /* SectionBackgroundDecorationView.swift in Sources */,
 				554DDE21286254F200DD864A /* ActivityIndicator.swift in Sources */,
+				553CECCD2A801E7D00F6D37A /* CrewDepartment.swift in Sources */,
 				5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */,
 				558F7B7C286E809E00926749 /* MovieDecoder.swift in Sources */,
 				55EE51A7251EC5DE00915AB3 /* ColorAsset.swift in Sources */,
@@ -1940,6 +1949,15 @@
 				551A2934251F195C003746EE /* es-419 */,
 			);
 			name = UserProfileHeaderView.xib;
+			sourceTree = "<group>";
+		};
+		553CECD22A801F9200F6D37A /* Department.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				553CECD12A801F9200F6D37A /* en */,
+				553CECD32A801F9400F6D37A /* es-419 */,
+			);
+			name = Department.strings;
 			sourceTree = "<group>";
 		};
 		554F691228125D9500B6BBDF /* MovieDetailHeaderView.xib */ = {

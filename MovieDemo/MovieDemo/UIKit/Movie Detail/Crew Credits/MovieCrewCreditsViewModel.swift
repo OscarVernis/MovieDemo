@@ -13,15 +13,20 @@ struct MovieCrewCreditsViewModel {
     let departmentJobs: [String: [CrewCreditViewModel]]
 
     init(crewCredits: [CrewCreditViewModel]) {
-        let uniqueDeparments = Set(Array(crewCredits.compactMap(\.department)))
-        departments = uniqueDeparments.sorted()
+        let uniqueDepartments = Set(Array(crewCredits.compactMap(\.department)))
+        departments = uniqueDepartments.sorted().map(MovieCrewCreditsViewModel.localizedDepartment)
         
         var departmentJobs = [String: [CrewCreditViewModel]]()
         for department in departments {
-            let jobs = crewCredits.filter { $0.department == department }
+            let jobs = crewCredits.filter { MovieCrewCreditsViewModel.localizedDepartment($0.department) == department }
             departmentJobs[department] = jobs.sorted { $0.job < $1.job }
         }
         self.departmentJobs = departmentJobs
     }
 
+    private static func localizedDepartment(_ department: String?) -> String {
+        guard let department else { return "" }
+        
+        return CrewDepartment(rawValue: department)?.localized ?? department
+    }
 }

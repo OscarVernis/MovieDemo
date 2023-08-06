@@ -22,6 +22,5 @@ enum PersonString: String, Localizable, CaseIterable {
     case Male
     case NonBinary
 
-    
     var tableName: String { "Person" }
 }

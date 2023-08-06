@@ -106,21 +106,29 @@ extension PersonViewModel {
             .sorted(by: PersonCrewCredit.sortByRelease)
             .compactMap { PersonCrewCreditViewModel(personCrewCredit: $0) }
         
-        departments = NSOrderedSet(array: crewCredits.compactMap(\.department)).array as! [String]
+        var uniqueDepartments = NSOrderedSet(array: crewCredits.compactMap(\.department)).array as! [String]
         //Put known for department first
         if let knownFor = knownForDepartment,
-           let index = departments.firstIndex(of: knownFor),
+           let index = uniqueDepartments.firstIndex(of: knownFor),
            index != 0
         {
-            let d = departments.remove(at: index)
-            departments.insert(d, at: 0)
+            let d = uniqueDepartments.remove(at: index)
+            uniqueDepartments.insert(d, at: 0)
         }
+        
+        departments = uniqueDepartments.map { PersonViewModel.localizedDepartment($0) }
         
         departmentCrewCredits = [:]
         for department in departments {
-            let credits = crewCredits.filter { $0.department == department }
+            let credits = crewCredits.filter { PersonViewModel.localizedDepartment($0.department) == department }
             departmentCrewCredits[department] = credits
         }
+    }
+    
+    private static func localizedDepartment(_ department: String?) -> String {
+        guard let department else { return "" }
+        
+        return CrewDepartment(rawValue: department)?.localized ?? department
     }
     
     fileprivate func updatePopularMovies() {
@@ -155,7 +163,8 @@ extension PersonViewModel {
         dateFormatter.dateStyle = .long
         
         if let knownForDepartment, !knownForDepartment.isEmpty {
-            information.append([PersonString.KnownFor.localized: knownForDepartment])
+            let localizedDepartment = CrewDepartment(rawValue: knownForDepartment)?.localized ?? knownForDepartment
+            information.append([PersonString.KnownFor.localized: localizedDepartment])
         }
         
         let creditsCount = crewCredits.count + castCredits.count
