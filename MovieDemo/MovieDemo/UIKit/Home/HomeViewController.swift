@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class HomeViewController: UIViewController, UICollectionViewDelegate {
     var collectionView: UICollectionView!
@@ -15,6 +16,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     var router: HomeRouter!
     
     var didSelectItem: ((Movie) -> ())?
+    
+    var cancellables = Set<AnyCancellable>()
     
     var nowPlayingProvider: MoviesProvider
     var upcomingProvider: MoviesProvider
@@ -40,12 +43,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Setup
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViewController()
         setupCollectionView()
         setupDataSource()
-        setupViewController()
+        setupProviders()
+        refresh()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -93,26 +99,76 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         setupNavigationBar()
     }
     
+    //MARK: - DataSource
     fileprivate func setupDataSource() {
-        dataSource = HomeDataSource(collectionView: self.collectionView,
-                                         nowPlayingProvider: nowPlayingProvider,
-                                         upcomingProvider: upcomingProvider,
-                                         popularProvider: popularProvider,
-                                         topRatedProvider: topRatedProvider)
+        dataSource = HomeDataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            return self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        })
         
-        dataSource.didUpdate = { [weak self] section, _ in
-            self?.collectionView.refreshControl?.endRefreshing()
-        }
-        collectionView.dataSource = dataSource
+        dataSource.registerReusableViews(collectionView: collectionView)
+    }
+    
+    fileprivate func setupProviders() {
+        nowPlayingProvider.$items
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadDataSource()
+            }
+            .store(in: &cancellables)
         
-        refresh()
+        upcomingProvider.$items
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadDataSource()
+            }
+            .store(in: &cancellables)
+        
+        popularProvider.$items
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadDataSource()
+            }
+            .store(in: &cancellables)
+        
+        topRatedProvider.$items
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.reloadDataSource()
+            }
+            .store(in: &cancellables)
+    }
+    
+    fileprivate func reloadDataSource() {
+        collectionView.refreshControl?.endRefreshing()
+
+        var snapshot = NSDiffableDataSourceSnapshot<HomeDataSource.Section, HomeSectionMovie>()
+        
+        snapshot.appendSections(HomeDataSource.Section.allCases)
+        
+        let nowPlayingItems = nowPlayingProvider.items.map { HomeSectionMovie(section: .nowPlaying, movie: $0) }
+        snapshot.appendItems(nowPlayingItems, toSection: .nowPlaying)
+        
+        let upcomingItems = upcomingProvider.items.map { HomeSectionMovie(section: .upcoming, movie: $0) }
+        snapshot.appendItems(upcomingItems, toSection: .upcoming)
+        
+        let popularItems = popularProvider.items.map { HomeSectionMovie(section: .popular, movie: $0) }
+        snapshot.appendItems(popularItems, toSection: .popular)
+        
+        let maxTopRated = min(dataSource.maxTopRated, topRatedProvider.items.count)
+        let topRatedItems = topRatedProvider.items[0..<maxTopRated].map { HomeSectionMovie(section: .topRated, movie: $0) }
+        snapshot.appendItems(topRatedItems, toSection: .topRated)
+        
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    @objc fileprivate func refresh() {
+        nowPlayingProvider.refresh()
+        upcomingProvider.refresh()
+        popularProvider.refresh()
+        topRatedProvider.refresh()
     }
     
     //MARK: - Actions
-    @objc fileprivate func refresh() {
-        dataSource.refresh()
-    }
-    
     fileprivate func showMovieList(section: HomeDataSource.Section) {
         switch section {
         case .nowPlaying:
@@ -136,10 +192,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let provider = dataSource.providers[indexPath.section]
-        let movie = provider.item(atIndex: indexPath.row)
-        
-        router.showMovieDetail(movie: movie)
+        if let movie = dataSource.itemIdentifier(for: indexPath)?.movie {
+            router.showMovieDetail(movie: movie)
+        }
     }
     
 }

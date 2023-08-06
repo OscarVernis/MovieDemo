@@ -2,48 +2,26 @@
 //  HomeDataSource.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 10/06/22.
-//  Copyright © 2022 Oscar Vernis. All rights reserved.
+//  Created by Oscar Vernis on 05/08/23.
+//  Copyright © 2023 Oscar Vernis. All rights reserved.
 //
 
-import Foundation
 import UIKit
-import SwiftUI
 
-class HomeDataSource: SectionedCollectionDataSource {
-    enum Section: Int {
+struct HomeSectionMovie: Hashable {
+    let section: HomeDataSource.Section
+    let movie: MovieViewModel
+}
+
+class HomeDataSource: UICollectionViewDiffableDataSource<HomeDataSource.Section, HomeSectionMovie> {
+    enum Section: Int, CaseIterable {
         case nowPlaying, upcoming, popular, topRated
     }
-    
-    unowned var collectionView: UICollectionView
 
-    var providers: [MoviesProvider] = []
-    var nowPlayingProvider: MoviesProvider
-    var upcomingProvider: MoviesProvider
-    var popularProvider: MoviesProvider
-    var topRatedProvider: MoviesProvider
+    var maxTopRated = 10
     
-    init(collectionView: UICollectionView,
-         nowPlayingProvider: MoviesProvider,
-         upcomingProvider: MoviesProvider,
-         popularProvider: MoviesProvider,
-         topRatedProvider: MoviesProvider) {
-        self.collectionView = collectionView
-        self.nowPlayingProvider = nowPlayingProvider
-        self.upcomingProvider = upcomingProvider
-        self.popularProvider = popularProvider
-        self.topRatedProvider = topRatedProvider
-        super.init()
-        
-        registerReusableViews()
-        setupDataSources()
-        refresh()
-    }
-    
-    var didUpdate: ((Section, Error?) -> Void)?
-    
-    //MARK: - Setup
-    func registerReusableViews() {
+    //MARK: - Cell Setup
+    func registerReusableViews(collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         MovieBannerCell.register(to: collectionView)
@@ -51,80 +29,73 @@ class HomeDataSource: SectionedCollectionDataSource {
         MovieInfoListCell.register(to: collectionView)
     }
     
-    func setupDataSources() {
-        dataSources = [
-            makeNowPlaying(),
-            makeUpcoming(),
-            makePopular(),
-            makeTopRated()
-        ]
-        
-        for (section, provider) in providers.enumerated() {
-            provider.didUpdate = { [weak self] error in
-                self?.didUpdate?(Section(rawValue: section)!, error)
-                self?.collectionView.reloadData()
-            }
+    func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
+        let section = Section(rawValue: indexPath.section)!
+        switch section {
+        case .nowPlaying:
+            return nowPlayingCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+        case .upcoming:
+            return upcomingCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+        case .popular:
+            return popularCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+        case .topRated:
+            return topRatedCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
         }
-
     }
     
-    func refresh() {
-        providers.forEach { $0.refresh() }
-    }
-        
-    //MARK: - Data Sources
-    func makeNowPlaying() -> UICollectionViewDataSource {
-        makeSection(provider: nowPlayingProvider,
-                    title: .localized(HomeString.NowPlaying),
-                    reuseIdentifier: MovieBannerCell.reuseIdentifier,
-                    cellConfigurator: MovieBannerCell.configure)
+    private func nowPlayingCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieBannerCell.reuseIdentifier, for: indexPath) as! MovieBannerCell
+        let movie = model.movie
+        MovieBannerCell.configure(cell: cell, with: movie)
+        return cell
     }
     
-    func makeUpcoming() -> UICollectionViewDataSource {
-        makeSection(provider: upcomingProvider,
-                    title: .localized(HomeString.Upcoming),
-                    reuseIdentifier: MoviePosterInfoCell.reuseIdentifier,
-                    cellConfigurator: MoviePosterInfoCell.configureWithDate)
+    private func upcomingCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
+        let movie = model.movie
+        MoviePosterInfoCell.configureWithDate(cell: cell, with: movie)
+        return cell
     }
     
-    func makePopular() -> UICollectionViewDataSource {
-        makeSection(provider: popularProvider,
-                    title: .localized(HomeString.Popular),
-                    reuseIdentifier: MovieInfoListCell.reuseIdentifier,
-                    cellConfigurator: MovieInfoListCell.configure)
+    private func popularCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as! MovieInfoListCell
+        let movie = model.movie
+        MovieInfoListCell.configure(cell: cell, with: movie)
+        return cell
     }
     
-    func makeTopRated() -> UICollectionViewDataSource {
-        let dataSource = TopRatedDataSource(provider: topRatedProvider)
-        providers.append(topRatedProvider)
+    private func topRatedCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieRatingListCell.reuseIdentifier, for: indexPath) as! MovieRatingListCell
+        let movie = model.movie
+        MovieRatingListCell.configure(cell: cell, withMovie: movie)
         
-        let titleDataSource = TitleHeaderDataSource(title: .localized(HomeString.TopRated),
-                                                          dataSource: dataSource)
+        //Hide last separator
+        cell.separator.isHidden = (indexPath.row == maxTopRated - 1)
         
-        return titleDataSource
-    }
-    
-    //MARK: Helper
-    func makeSection<Cell: UICollectionViewCell>(provider: MoviesProvider, title: String, reuseIdentifier: String, cellConfigurator: @escaping (Cell, MovieViewModel) -> Void) -> UICollectionViewDataSource {
-        
-        providers.append(provider)
-        
-        let dataSource = ProviderDataSource(dataProvider: provider,
-                                            reuseIdentifier: reuseIdentifier,
-                                            cellConfigurator: cellConfigurator)
-        
-        let titleDataSource = TitleHeaderDataSource(title: title,
-                                                    dataSource: dataSource)
-        
-        return titleDataSource
+        return cell
     }
     
     //MARK: - Header Data Source
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let dataSource = dataSources[indexPath.section]
-        let indexPath = IndexPath(row: indexPath.row, section: 0)
-
-        return dataSource.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at:indexPath)
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+            guard let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as? SectionTitleView  else { fatalError() }
+            
+            let section = Section(rawValue: indexPath.section)!
+            SectionTitleView.configureForHome(headerView: sectionTitleView, title: sectionTitle(for: section))
+            
+            return sectionTitleView
+    }
+    
+    private func sectionTitle(for section: Section) -> String {
+        switch section {
+        case .nowPlaying:
+            return .localized(HomeString.NowPlaying)
+        case .upcoming:
+            return .localized(HomeString.Upcoming)
+        case .popular:
+            return .localized(HomeString.Popular)
+        case .topRated:
+            return .localized(HomeString.TopRated)
+        }
     }
     
 }

@@ -29,7 +29,7 @@ extension PersonDetailDataSource.Section {
     fileprivate func makeLoading() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         
-        let section = sectionBuilder.createSection(itemHeight: .absolute(44))
+        let section = sectionBuilder.createSection(itemHeight: .absolute(44), groupHeight: .absolute(44))
         section.contentInsets.top = 50
         
         return section
