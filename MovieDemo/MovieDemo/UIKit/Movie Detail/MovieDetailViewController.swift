@@ -361,17 +361,20 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             
             //Fade out Header Info
             let startingOffset: CGFloat = 50
-            let threshold: CGFloat = 180
-            let ratio = (offset - startingOffset) / (threshold - startingOffset)
+            var threshold: CGFloat = 180
+            var ratio = (offset - startingOffset) / (threshold - startingOffset)
             headerView.containerStackView.alpha = 1 - ratio
             backgroundView?.alpha = (1 - ratio) * 0.9
             self.navigationItem.leftBarButtonItem?.customView?.alpha = 1 - ratio
             
             //Fade out gradient
+            threshold = 250
+            ratio = (offset - startingOffset) / (threshold - startingOffset)
+
             CATransaction.begin()
             CATransaction.setDisableActions(true)
             headerView.gradient.colors = [UIColor.black.cgColor,
-                                          UIColor.black.withAlphaComponent(ratio * 0.7).cgColor]
+                                          UIColor.black.withAlphaComponent(ratio).cgColor]
             CATransaction.commit()
 
             return
