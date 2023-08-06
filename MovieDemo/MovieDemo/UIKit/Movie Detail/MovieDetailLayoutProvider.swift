@@ -90,7 +90,7 @@ struct MovieDetailLayoutProvider {
         let section = sectionBuilder.createListSection(height: 52)
         
         section.contentInsets.top = 0
-        section.contentInsets.bottom = UIWindow.mainWindow.safeAreaInsets.bottom + 30
+        section.contentInsets.bottom = 0
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]

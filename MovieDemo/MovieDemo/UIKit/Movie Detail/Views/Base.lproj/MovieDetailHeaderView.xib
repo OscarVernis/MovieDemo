@@ -52,7 +52,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="1000" text="2020" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gd-kH-za6">
                                             <rect key="frame" x="0.0" y="60.5" width="330" height="22"/>
                                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
-                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                            <color key="textColor" systemColor="tertiaryLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -200,7 +200,6 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="0DP-e5-lfa" firstAttribute="top" secondItem="d1r-3e-PE6" secondAttribute="top" id="Bya-sX-cgo"/>
                                 <constraint firstAttribute="trailing" secondItem="0DP-e5-lfa" secondAttribute="trailing" id="NI1-1y-WT9"/>
                                 <constraint firstAttribute="bottom" secondItem="yH8-y0-MCs" secondAttribute="bottom" id="SLF-KH-0lv"/>
                                 <constraint firstAttribute="trailing" secondItem="yH8-y0-MCs" secondAttribute="trailing" id="YON-jG-tSi"/>
@@ -316,6 +315,9 @@
         </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

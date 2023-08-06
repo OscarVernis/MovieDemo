@@ -10,23 +10,19 @@ import UIKit
 import Combine
 
 class MovieDetailViewController: UIViewController {
-    var router: MovieDetailRouter?
-    var dataSource: MovieDetailDataSource!
+    private var router: MovieDetailRouter?
+    private var dataSource: MovieDetailDataSource!
       
     private var store: MovieDetailStore
     private var movie: MovieViewModel {
         store.movie
     }
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     private var backgroundView: BlurBackgroundView?
         
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
-    
-    private var isBarHidden = true
-    
+            
     required init(store: MovieDetailStore, router: MovieDetailRouter?) {
         self.store = store
         self.router = router
@@ -40,11 +36,10 @@ class MovieDetailViewController: UIViewController {
     //MARK: - ViewController
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.delegate = self
 
         setupCustomBackButton()
         createCollectionView()
-        setup()
+        setupCollectionView()
         setupDataSource()
         setupStore()
     }
@@ -57,7 +52,7 @@ class MovieDetailViewController: UIViewController {
         return .portrait
     }
     
-    //MARK: - Bar Appearance
+    //MARK: - Setup Bar Appearance
     var currentBarAppearance: UINavigationBarAppearance?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +67,7 @@ class MovieDetailViewController: UIViewController {
         currentBarAppearance = navigationController?.navigationBar.standardAppearance
     }
     
-    //MARK: - Setup
+    //MARK: - Setup CollectionView
     func createCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -93,13 +88,16 @@ class MovieDetailViewController: UIViewController {
         return layout
     }
     
-    fileprivate func setup() {
+    fileprivate func setupCollectionView() {
         view.backgroundColor = .black
         collectionView.backgroundColor = .clear
         
         //Set so the scrollIndicator stops before the status bar
         let topInset = UIWindow.mainWindow.topInset
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        let bottomInset =  UIWindow.mainWindow.safeAreaInsets.bottom
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset + 30, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
@@ -125,6 +123,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    //MARK: - Setup Headers
     fileprivate func setupHeaderView() {
         guard let headerView = headerView else { return }
                 
@@ -155,6 +154,9 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
+    //MARK: - Setup Store
+    private var cancellables = Set<AnyCancellable>()
+
     fileprivate func setupStore()  {
         store.$movie
             .receive(on: DispatchQueue.main)
@@ -173,14 +175,14 @@ class MovieDetailViewController: UIViewController {
         
         store.refresh()
     }
-
-    //MARK: - Actions
+    
     fileprivate func storeDidUpdate() {
         dataSource.movie = movie
         dataSource.isLoading = store.isLoading
         dataSource.reload()
     }
-    
+
+    //MARK: - Actions
     fileprivate func show(error: UserFacingError, shouldDismiss: Bool = false) {
         router?.handle(error: error, shouldDismiss: shouldDismiss)
     }
@@ -213,7 +215,7 @@ class MovieDetailViewController: UIViewController {
         UIApplication.shared.open(youtubeURL)
     }
     
-    //MARK: User Actions
+    //MARK: - User Actions
     @objc fileprivate func favoriteTapped() {
         Task { await markAsFavorite() }
     }
@@ -285,6 +287,95 @@ class MovieDetailViewController: UIViewController {
         })
     }
     
+    //MARK: - Header Animations
+    private var isBarHidden = true
+
+    private func setNavigationBar(hidden: Bool) {
+        guard isBarHidden != hidden, let navBar = navigationController?.navigationBar else { return }
+        
+        isBarHidden = hidden
+        UIView.transition(with: navBar, duration: 0.3, options: .transitionCrossDissolve) {
+            if self.isBarHidden {
+                self.title = ""
+                self.configureWithTransparentNavigationBarAppearance()
+            } else {
+                self.title = self.movie.title
+                self.configureWithDefaultNavigationBarAppearance()
+            }
+        }
+    }
+    
+    private func updateHeader() {
+        guard let headerView else { return }
+
+        //Sticky Header
+        let height = UIWindow.mainWindow.frame.width * 1.5
+        if collectionView.contentOffset.y < 0 {
+            let offset = abs(collectionView.contentOffset.y)
+            
+            //Adjust Image size and position
+            headerView.topImageConstraint.constant = -offset
+            headerView.heightConstraint.constant = height + abs(offset * 0.5)
+            headerView.updateConstraintsIfNeeded()
+            
+            if headerView.isShowingPlaceholder {
+                return
+            }
+            
+            //Fade out Header Info
+            let startingOffset: CGFloat = 50
+            var threshold: CGFloat = 180
+            var ratio = (offset - startingOffset) / (threshold - startingOffset)
+            headerView.containerStackView.alpha = 1 - ratio
+            backgroundView?.alpha = (1 - ratio) * 0.9
+            self.navigationItem.leftBarButtonItem?.customView?.alpha = 1 - ratio
+            
+            //Fade out gradient
+            threshold = 250
+            ratio = (offset - startingOffset) / (threshold - startingOffset)
+
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            headerView.gradient.colors = [UIColor.black.cgColor,
+                                          UIColor.black.withAlphaComponent(ratio).cgColor]
+            CATransaction.commit()
+
+            return
+        }
+        
+        let offset = collectionView.contentOffset.y
+        let infoViewFrame = headerView.infoView.superview!.convert(headerView.infoView.frame, to: collectionView)
+        let threshold = infoViewFrame.maxY - view.safeAreaInsets.top
+        
+        //Poster image alpha
+        let imageStartingOffset: CGFloat = threshold * 0.5
+        let imageOffset = offset - imageStartingOffset
+        let imageThreshold = threshold - imageStartingOffset
+        let imageRatio = min(1, imageOffset / imageThreshold)
+        headerView.posterImageView.alpha = 1 - imageRatio
+        
+        //Info alpha
+        let startingOffset: CGFloat = threshold * 0.7
+        let infoRatio = min(1, (offset - startingOffset) / (threshold - startingOffset))
+        headerView.infoView.alpha = 1 - infoRatio
+        
+        //Show/Hide NavigationBar
+        if infoRatio >= 1 {
+            setNavigationBar(hidden: false)
+        } else {
+            setNavigationBar(hidden: true)
+        }
+
+        //Poster parallax scrolling
+        if offset < threshold, offset >= 0 {
+            headerView.topImageConstraint.constant = offset * 0.1
+            headerView.updateConstraintsIfNeeded()
+        } else {
+            headerView.topImageConstraint.constant = 0
+            headerView.updateConstraintsIfNeeded()
+        }
+    }
+
 }
 
 // MARK: - UICollectionViewDelegate
@@ -325,92 +416,9 @@ extension MovieDetailViewController: UICollectionViewDelegate {
             break
         }
     }
-    
-    //MARK: - Header Animations
-    func setNavigationBar(hidden: Bool) {
-        guard isBarHidden != hidden, let navBar = navigationController?.navigationBar else { return }
-        
-        isBarHidden = hidden
-        UIView.transition(with: navBar, duration: 0.3, options: .transitionCrossDissolve) {
-            if self.isBarHidden {
-                self.title = ""
-                self.configureWithTransparentNavigationBarAppearance()
-            } else {
-                self.title = self.movie.title
-                self.configureWithDefaultNavigationBarAppearance()
-            }
-        }
-    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let headerView else { return }
-
-        //Sticky Header
-        let height = UIWindow.mainWindow.frame.width * 1.5
-        if scrollView.contentOffset.y < 0 {
-            let offset = abs(scrollView.contentOffset.y)
-            
-            //Adjust Image size and position
-            headerView.topImageConstraint.constant = -offset
-            headerView.heightConstraint.constant = height + abs(offset * 0.5)
-            headerView.updateConstraintsIfNeeded()
-            
-            if headerView.isShowingPlaceholder {
-                return
-            }
-            
-            //Fade out Header Info
-            let startingOffset: CGFloat = 50
-            var threshold: CGFloat = 180
-            var ratio = (offset - startingOffset) / (threshold - startingOffset)
-            headerView.containerStackView.alpha = 1 - ratio
-            backgroundView?.alpha = (1 - ratio) * 0.9
-            self.navigationItem.leftBarButtonItem?.customView?.alpha = 1 - ratio
-            
-            //Fade out gradient
-            threshold = 250
-            ratio = (offset - startingOffset) / (threshold - startingOffset)
-
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            headerView.gradient.colors = [UIColor.black.cgColor,
-                                          UIColor.black.withAlphaComponent(ratio).cgColor]
-            CATransaction.commit()
-
-            return
-        }
-        
-        let offset = scrollView.contentOffset.y
-        let infoViewFrame = headerView.infoView.superview!.convert(headerView.infoView.frame, to: scrollView)
-        let threshold = infoViewFrame.maxY - view.safeAreaInsets.top
-        
-        //Poster image alpha
-        let imageStartingOffset: CGFloat = threshold * 0.5
-        let imageOffset = offset - imageStartingOffset
-        let imageThreshold = threshold - imageStartingOffset
-        let imageRatio = min(1, imageOffset / imageThreshold)
-        headerView.posterImageView.alpha = 1 - imageRatio
-        
-        //Info alpha
-        let startingOffset: CGFloat = threshold * 0.7
-        let infoRatio = min(1, (offset - startingOffset) / (threshold - startingOffset))
-        headerView.infoView.alpha = 1 - infoRatio
-        
-        //Show/Hide NavigationBar
-        if infoRatio >= 1 {
-            setNavigationBar(hidden: false)
-        } else {
-            setNavigationBar(hidden: true)
-        }
-
-        //Poster parallax scrolling
-        if offset < threshold, offset >= 0 {
-            headerView.topImageConstraint.constant = offset * 0.1
-            headerView.updateConstraintsIfNeeded()
-        } else {
-            headerView.topImageConstraint.constant = 0
-            headerView.updateConstraintsIfNeeded()
-        }
+        updateHeader()
     }
     
 }
