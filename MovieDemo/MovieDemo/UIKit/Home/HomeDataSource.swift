@@ -31,48 +31,22 @@ class HomeDataSource: UICollectionViewDiffableDataSource<HomeDataSource.Section,
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
         let section = Section(rawValue: indexPath.section)!
+        let model = (identifier as! HomeSectionMovie).movie
         switch section {
         case .nowPlaying:
-            return nowPlayingCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MovieBannerCell.configure)
         case .upcoming:
-            return upcomingCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MoviePosterInfoCell.configureWithDate)
         case .popular:
-            return popularCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MovieInfoListCell.configure)
         case .topRated:
-            return topRatedCell(at: indexPath, model: identifier as! HomeSectionMovie, with: collectionView)
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: { [unowned self] (cell: MovieRatingListCell, movie) in
+                MovieRatingListCell.configure(cell: cell, withMovie: movie)
+                
+                //Hide last separator
+                cell.separator.isHidden = (indexPath.row == self.maxTopRated - 1)
+            })
         }
-    }
-    
-    private func nowPlayingCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieBannerCell.reuseIdentifier, for: indexPath) as! MovieBannerCell
-        let movie = model.movie
-        MovieBannerCell.configure(cell: cell, with: movie)
-        return cell
-    }
-    
-    private func upcomingCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-        let movie = model.movie
-        MoviePosterInfoCell.configureWithDate(cell: cell, with: movie)
-        return cell
-    }
-    
-    private func popularCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieInfoListCell.reuseIdentifier, for: indexPath) as! MovieInfoListCell
-        let movie = model.movie
-        MovieInfoListCell.configure(cell: cell, with: movie)
-        return cell
-    }
-    
-    private func topRatedCell(at indexPath: IndexPath, model: HomeSectionMovie, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieRatingListCell.reuseIdentifier, for: indexPath) as! MovieRatingListCell
-        let movie = model.movie
-        MovieRatingListCell.configure(cell: cell, withMovie: movie)
-        
-        //Hide last separator
-        cell.separator.isHidden = (indexPath.row == maxTopRated - 1)
-        
-        return cell
     }
     
     //MARK: - Header Data Source

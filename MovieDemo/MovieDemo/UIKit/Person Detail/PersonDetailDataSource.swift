@@ -63,57 +63,60 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
-        let cell: UICollectionViewCell
         let section = sections[indexPath.section]
-        
+    
         switch section {
         case .loading:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
+            return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         case .overview:
-            let overviewCell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
-            overviewCell.textLabel.text = person.biography
-            overviewCell.isExpanded = isOverviewExpanded
-            overviewCell.expandButton.addTarget(self, action: #selector(expandOverview), for: .touchUpInside)
-            cell = overviewCell
+            return overviewCell(at: indexPath, with: collectionView, identifier: identifier)
         case .popular:
             let movie = identifier as! MovieViewModel
-            let popularCell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-            MoviePosterInfoCell.configureWithRating(cell: popularCell, with: movie)
-            cell = popularCell
+            return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MoviePosterInfoCell.configureWithRating)
         case .creditCategories:
-            let credit = identifier as! Section
-            let title = credit.sectionTitle
-            let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
-            categoryCell.titleLabel.text = title
-            let selected = selectedCreditSection == creditSections[indexPath.row]
-            categoryCell.setSelection(selected)
-            cell = categoryCell
+            return categoryCell(at: indexPath, with: collectionView, identifier: identifier)
         case .castCredits:
             let castCredit = identifier as! PersonCastCreditViewModel
-            let castCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
-            PersonCreditCell.configure(cell: castCell, castCredit: castCredit)
-            cell = castCell
+            return collectionView.cell(at: indexPath, model: castCredit, cellConfigurator: PersonCreditCell.configure)
         case .crewCredits:
             let crewCredit = identifier as! PersonCrewCreditViewModel
-            let crewCell = collectionView.dequeueReusableCell(withReuseIdentifier: PersonCreditCell.reuseIdentifier, for: indexPath) as! PersonCreditCell
-            PersonCreditCell.configure(cell: crewCell, crewCredit: crewCredit)
-            cell = crewCell
+            return collectionView.cell(at: indexPath, model: crewCredit, cellConfigurator: PersonCreditCell.configure)
         case .info:
-            if identifier as? String == socialItemId {
-                let socialCell = collectionView.dequeueReusableCell(withReuseIdentifier: SocialCell.reuseIdentifier, for: indexPath) as! SocialCell
-                socialCell.socialLinks = person.socialLinks
-                socialCell.didSelect = openSocialLink
-                cell = socialCell
-            } else {
-                let infoItem = identifier as! [String: String]
-                let infoCell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
-                InfoListCell.configure(cell: infoCell, info: infoItem)
-                infoCell.separator.isHidden = true
-                cell = infoCell
-            }
+            return infoCell(at: indexPath, with: collectionView, identifier: identifier)
         }
-        
-        return cell
+    }
+    
+    private func overviewCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
+        let overviewCell = collectionView.dequeueReusableCell(withReuseIdentifier: OverviewCell.reuseIdentifier, for: indexPath) as! OverviewCell
+        overviewCell.textLabel.text = person.biography
+        overviewCell.isExpanded = isOverviewExpanded
+        overviewCell.expandButton.addTarget(self, action: #selector(expandOverview), for: .touchUpInside)
+        return overviewCell
+    }
+
+    private func categoryCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
+        let credit = identifier as! Section
+        let title = credit.sectionTitle
+        let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+        categoryCell.titleLabel.text = title
+        let selected = selectedCreditSection == creditSections[indexPath.row]
+        categoryCell.setSelection(selected)
+        return categoryCell
+    }
+    
+    private func infoCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
+        if identifier as? String == socialItemId {
+            let socialCell = collectionView.dequeueReusableCell(withReuseIdentifier: SocialCell.reuseIdentifier, for: indexPath) as! SocialCell
+            socialCell.socialLinks = person.socialLinks
+            socialCell.didSelect = openSocialLink
+            return socialCell
+        } else {
+            let infoItem = identifier as! [String: String]
+            return collectionView.cell(at: indexPath, model: infoItem, cellConfigurator: { (cell: InfoListCell, infoItem) in
+                InfoListCell.configure(cell: cell, info: infoItem)
+                cell.separator.isHidden = true
+            })
+        }
     }
     
     @objc
@@ -180,10 +183,6 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         if !person.popularMovies.isEmpty {
             sections.append(.popular)
         }
-        
-        if !creditSections.isEmpty {
-            sections.append(.creditCategories)
-        }
                 
         if !person.castCredits.isEmpty {
             creditSections.append(.castCredits)
@@ -191,6 +190,10 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         
         for job in person.departments {
             creditSections.append(.crewCredits(department: job))
+        }
+        
+        if !creditSections.isEmpty {
+            sections.append(.creditCategories)
         }
         
         //Send Acting to the end if person is know for crew department

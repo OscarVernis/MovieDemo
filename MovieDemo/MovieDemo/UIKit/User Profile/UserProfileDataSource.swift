@@ -36,11 +36,23 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
         case .header:
             return loadingCell(at: indexPath, with: collectionView)
         case .favorites:
-            return favoriteCell(at: indexPath, model: identifier, with: collectionView)
+            return emptyOrMovieCell(with: collectionView,
+                                    at: indexPath,
+                                    model: identifier,
+                                    isEmpty: user.favorites.isEmpty,
+                                    emptyMessage: AttributedStringAsset.emptyFavoritesMessage)
         case .watchlist:
-            return watchlistCell(at: indexPath, model: identifier, with: collectionView)
+            return emptyOrMovieCell(with: collectionView,
+                                    at: indexPath,
+                                    model: identifier,
+                                    isEmpty: user.watchlist.isEmpty,
+                                    emptyMessage: AttributedStringAsset.emptyWatchlistMessage)
         case .rated:
-            return ratedCell(at: indexPath, model: identifier, with: collectionView)
+            return emptyOrMovieCell(with: collectionView,
+                                    at: indexPath,
+                                    model: identifier,
+                                    isEmpty: user.rated.isEmpty,
+                                    emptyMessage: AttributedStringAsset.emptyRatedMessage)
         }
     }
     
@@ -48,43 +60,13 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
         collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
     }
     
-    private func favoriteCell(at indexPath: IndexPath, model: AnyHashable, with collectionView: UICollectionView) -> UICollectionViewCell {
-        if user.favorites.isEmpty {
-            return emptyCell(at: indexPath, message: AttributedStringAsset.emptyFavoritesMessage, with: collectionView)
+    private func emptyOrMovieCell(with collectionView: UICollectionView, at indexPath: IndexPath, model: AnyHashable, isEmpty: Bool, emptyMessage: NSAttributedString) -> UICollectionViewCell {
+        if isEmpty {
+            return collectionView.cell(at: indexPath, model: emptyMessage, cellConfigurator: EmptyMovieCell.configure)
         } else {
-            return movieCell(at: indexPath, model: model, with: collectionView)
+            let movie = (model as! UserSectionItem).movie
+            return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MoviePosterInfoCell.configureWithRating)
         }
-    }
-    
-    private func watchlistCell(at indexPath: IndexPath, model: AnyHashable, with collectionView: UICollectionView) -> UICollectionViewCell {
-        if user.watchlist.isEmpty {
-            return emptyCell(at: indexPath, message: AttributedStringAsset.emptyWatchlistMessage, with: collectionView)
-        } else {
-            return movieCell(at: indexPath, model: model, with: collectionView)
-        }
-    }
-    
-    private func ratedCell(at indexPath: IndexPath, model: AnyHashable, with collectionView: UICollectionView) -> UICollectionViewCell {
-        if user.rated.isEmpty {
-            return emptyCell(at: indexPath, message: AttributedStringAsset.emptyRatedMessage, with: collectionView)
-        } else {
-            return movieCell(at: indexPath, model: model, with: collectionView)
-        }
-    }
-    
-    private func emptyCell(at indexPath: IndexPath, message: NSAttributedString, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let emptyCell = collectionView.dequeueReusableCell(withReuseIdentifier: EmptyMovieCell.reuseIdentifier, for: indexPath) as! EmptyMovieCell
-        
-        emptyCell.configure(message: message)
-        
-        return emptyCell
-    }
-    
-    private func movieCell(at indexPath: IndexPath, model: AnyHashable, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-        let movie = (model as! UserSectionItem).movie
-        MoviePosterInfoCell.configureWithRating(cell: cell, with: movie)
-        return cell
     }
     
     //MARK: - Reload
@@ -121,8 +103,7 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
             snapshot.appendItems(ratedItems, toSection: .rated)
         }
         
-        snapshot.reloadSections([.header])
-        apply(snapshot, animatingDifferences: animated)
+        applySnapshotUsingReloadData(snapshot)
     }
     
     //MARK: - Header Data Source

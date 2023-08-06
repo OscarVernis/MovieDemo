@@ -45,11 +45,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
             switch section {
             case .main:
                 let model = dataProvider.item(atIndex: indexPath.row)
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.reuseIdentifier, for: indexPath) as! Cell
-                
-                cellConfigurator(cell, model)
-                
-                return cell
+                return collectionView.cell(at: indexPath, model: model, cellConfigurator: cellConfigurator)
             case .loading:
                 return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
             }

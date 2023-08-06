@@ -11,12 +11,10 @@ import UIKit
 class EmptyMovieCell: UICollectionViewCell {
 
     @IBOutlet weak var messageLabel: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+}
 
-    func configure(message: NSAttributedString) {
-        messageLabel.attributedText = message
+extension EmptyMovieCell {
+    static func configure(cell: EmptyMovieCell, message: NSAttributedString) {
+        cell.messageLabel.attributedText = message
     }
 }

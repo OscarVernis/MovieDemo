@@ -26,11 +26,7 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UIColl
         
         super.init(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             let model = models[indexPath.row]
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.reuseIdentifier, for: indexPath) as! Cell
-            
-            cellConfigurator(cell, model)
-            
-            return cell
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: cellConfigurator)
         }
         
         registerViews(collectionView: collectionView)

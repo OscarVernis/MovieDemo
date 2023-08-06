@@ -24,6 +24,12 @@ class AppDependencyContainer {
         sessionManager.sessionId
     }
     
+    lazy var urlSessionWithoutCache: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringCacheData
+        return URLSession(configuration: config)
+    }()
+    
     var remoteClient: TMDBClient {
         TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
     }
@@ -92,7 +98,7 @@ class AppDependencyContainer {
     }
     
     var userListsDataStore: UserListsStore {
-        let service = { self.remoteClient.getUserLists(userId: 8555334, page: $0)  }
+        let service = { self.remoteClient.getUserLists(page: $0)  }
         return UserListsStore(service: service, actionsService: remoteClient)
     }
     

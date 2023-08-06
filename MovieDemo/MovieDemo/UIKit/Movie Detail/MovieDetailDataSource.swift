@@ -43,51 +43,23 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
         let section = sections[indexPath.section]
         switch section {
         case .header:
-            return loadingCell(at: indexPath, with: collectionView)
+            return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         case .cast:
-           return castCell(at: indexPath, with: collectionView)
+            let model = movie.topCast[indexPath.row]
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: CreditCell.configure)
         case .crew:
-           return crewCell(at: indexPath, with: collectionView)
+            let model = movie.topCrew[indexPath.row]
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: InfoListCell.configure)
         case .videos:
-           return videoCell(at: indexPath, with: collectionView)
+            let model = movie.videos[indexPath.row]
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: YoutubeVideoCell.configure)
         case .recommended:
-          return recommendedCell(at: indexPath, with: collectionView)
+            let model = movie.recommendedMovies[indexPath.row]
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MoviePosterInfoCell.configureWithDate)
         case .info:
             return infoCell(at: indexPath, with: collectionView, identifier: identifier)
         }
         
-    }
-    
-    private func loadingCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
-    }
-    
-    private func castCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditCell.reuseIdentifier, for: indexPath) as! CreditCell
-        let model = movie.topCast[indexPath.row]
-        CreditCell.configure(cell: cell, with: model)
-        return cell
-    }
-    
-    private func crewCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
-        let model = movie.topCrew[indexPath.row]
-        InfoListCell.configure(cell: cell, with: model)
-        return cell
-    }
-    
-    private func videoCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeVideoCell.reuseIdentifier, for: indexPath) as! YoutubeVideoCell
-        let model = movie.videos[indexPath.row]
-        YoutubeVideoCell.configure(cell: cell, video: model)
-        return cell
-    }
-    
-    private func recommendedCell(at indexPath: IndexPath, with collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterInfoCell.reuseIdentifier, for: indexPath) as! MoviePosterInfoCell
-        let model = movie.recommendedMovies[indexPath.row]
-        MoviePosterInfoCell.configureWithDate(cell: cell, with: model)
-        return cell
     }
     
     private func infoCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
@@ -97,10 +69,8 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
             cell.didSelect = openSocialLink
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoListCell.reuseIdentifier, for: indexPath) as! InfoListCell
             let model = identifier as! [String : String]
-            InfoListCell.configure(cell: cell, info: model)
-            return cell
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: InfoListCell.configure)
         }
     }
     

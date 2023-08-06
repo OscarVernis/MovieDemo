@@ -158,8 +158,8 @@ extension TMDBClient: SessionService {
 
 //MARK: - UserLists Service
 extension TMDBClient: UserListActionsService {
-    func getUserLists(userId: Int, page: Int) -> AnyPublisher<UserListsResult, Error> {
-        let publisher: AnyPublisher<ServiceModelsResult<CodableUserList>, Error> = getModels(endpoint: .userLists(userId: userId), page: page)
+    func getUserLists(page: Int) -> AnyPublisher<UserListsResult, Error> {
+        let publisher: AnyPublisher<ServiceModelsResult<CodableUserList>, Error> = getModels(endpoint: .userLists, page: page)
         
         return publisher
             .map { result in

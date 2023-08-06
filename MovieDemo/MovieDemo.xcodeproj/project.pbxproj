@@ -782,9 +782,9 @@
 				559547BC2A6EDBE900AC03E3 /* UIView+Border.swift */,
 				55596E0F251317AC00A2B821 /* UIView+Nib.swift */,
 				55CC59832A7040900093EB42 /* UIViewController+CustomBackButton.swift */,
+				551C64D82A7C8BF7004EE10A /* UIViewController+NavBarAppearance.swift */,
 				55EECCDE251190990041EAE7 /* UIViewController+Storyboard.swift */,
 				550869B12855765700465008 /* UIWindow+Utils.swift */,
-				551C64D82A7C8BF7004EE10A /* UIViewController+NavBarAppearance.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
