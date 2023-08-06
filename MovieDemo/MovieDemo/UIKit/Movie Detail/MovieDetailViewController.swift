@@ -87,7 +87,7 @@ class MovieDetailViewController: UIViewController {
             guard let self = self else { return nil }
             
             let section = self.dataSource.sections[sectionIndex]
-            return section.sectionLayout()
+            return MovieDetailLayoutProvider.layout(for: section)
         }
         
         return layout

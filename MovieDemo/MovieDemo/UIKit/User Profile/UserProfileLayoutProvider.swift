@@ -9,25 +9,18 @@
 import UIKit
 
 struct UserProfileLayoutProvider {
-    fileprivate let sectionBuilder = MoviesCompositionalLayoutBuilder()
-    var user: UserViewModel
-
-    func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
-        let section = UserProfileDataSource.Section(rawValue: sectionIndex)!
-                
+    private static let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    
+    static func layout(for section: UserProfileDataSource.Section, itemCount: Int) -> NSCollectionLayoutSection? {
         switch section {
         case .header:
             return makeHeaderSection()
-        case .favorites:
-            return (user.favorites.count > 0) ? makeMoviesSection() : makeEmptySection()
-        case .watchlist:
-            return (user.watchlist.count > 0) ? makeMoviesSection() : makeEmptySection()
-        case .rated:
-            return (user.rated.count > 0) ? makeMoviesSection(addBottomInset: true) : makeEmptySection()
+        case .favorites, .watchlist, .rated:
+            return (itemCount > 0) ? makeMoviesSection() : makeEmptySection()
         }
     }
     
-    fileprivate func makeHeaderSection() -> NSCollectionLayoutSection {
+    private static func makeHeaderSection() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createSection(groupHeight: .estimated(150))
         
         let sectionHeader = sectionBuilder.createDetailSectionHeader()
@@ -36,14 +29,13 @@ struct UserProfileLayoutProvider {
         return section
     }
     
-    fileprivate func makeMoviesSection(addBottomInset: Bool = false) -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    private static func makeMoviesSection(addBottomInset: Bool = false) -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalPosterSection()
         
-        return makeTitleSection(with: section, addBottomInset: addBottomInset)
+        return makeTitleSection(with: section)
     }
     
-    fileprivate func makeEmptySection() -> NSCollectionLayoutSection {
+    private static func makeEmptySection() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createSection(groupHeight: .estimated(260))
         section.contentInsets.top = 10
         section.contentInsets.bottom = 20
@@ -51,11 +43,11 @@ struct UserProfileLayoutProvider {
         return makeTitleSection(with: section)
     }
     
-    fileprivate func makeTitleSection(with section: NSCollectionLayoutSection, addBottomInset: Bool = false) -> NSCollectionLayoutSection {
+    private static func makeTitleSection(with section: NSCollectionLayoutSection) -> NSCollectionLayoutSection {
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         section.contentInsets.top = 12
-        section.contentInsets.bottom = addBottomInset ? UIWindow.mainWindow.safeAreaInsets.bottom + 20 : 10
+        section.contentInsets.bottom = 10
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section

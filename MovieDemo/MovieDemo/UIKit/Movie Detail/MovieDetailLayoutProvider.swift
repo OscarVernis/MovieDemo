@@ -1,5 +1,5 @@
 //
-//  MovieDetailDataSource.Section+Layout.swift
+//  MovieDetailLayoutProvider.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 13/06/22.
@@ -8,9 +8,11 @@
 
 import UIKit
 
-extension MovieDetailDataSource.Section {
-    func sectionLayout() -> NSCollectionLayoutSection {
-        switch self {
+struct MovieDetailLayoutProvider {
+    private static var sectionBuilder = MoviesCompositionalLayoutBuilder()
+    
+    static func layout(for section: MovieDetailDataSource.Section) -> NSCollectionLayoutSection? {
+        switch section {
         case .header:
             return makeHeader()
         case .cast:
@@ -25,12 +27,8 @@ extension MovieDetailDataSource.Section {
             return makeInfo()
         }
     }
-    
-    fileprivate var sectionBuilder: MoviesCompositionalLayoutBuilder {
-        MoviesCompositionalLayoutBuilder()
-    }
 
-    fileprivate func makeHeader() -> NSCollectionLayoutSection {
+    private static func makeHeader() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 100, margin: 0)
 
         let sectionHeader = sectionBuilder.createDetailSectionHeader()
@@ -39,7 +37,7 @@ extension MovieDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeCast() -> NSCollectionLayoutSection {
+    private static func makeCast() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalCreditSection()
 
         section.contentInsets.top = 8
@@ -51,7 +49,7 @@ extension MovieDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeCrew() -> NSCollectionLayoutSection {
+    private static func makeCrew() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 50, columns: 2)
 
         section.contentInsets.top = 5
@@ -63,7 +61,7 @@ extension MovieDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeRecommended() -> NSCollectionLayoutSection {
+    private static func makeRecommended() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalPosterSection()
         
         section.contentInsets.top = 12
@@ -75,7 +73,7 @@ extension MovieDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeVideos() -> NSCollectionLayoutSection {
+    private static func makeVideos() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createVideoBannerSection()
         
         section.orthogonalScrollingBehavior = .continuous
@@ -88,7 +86,7 @@ extension MovieDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeInfo() -> NSCollectionLayoutSection {
+    private static func makeInfo() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 52)
         
         section.contentInsets.top = 0

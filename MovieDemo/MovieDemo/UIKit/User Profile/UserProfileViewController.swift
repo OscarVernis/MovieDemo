@@ -57,16 +57,35 @@ class UserProfileViewController: UIViewController {
     
     //MARK: - Setup
     func createCollectionView() {
-        layoutProvider = UserProfileLayoutProvider(user: user)
-        let layout = UICollectionViewCompositionalLayout { [weak self] section, enviroment in
-            self?.layoutProvider.createLayout(sectionIndex: section, layoutEnvironment: enviroment)
-        }
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         collectionView.delegate = self
 
         view.addSubview(collectionView)
+    }
+    
+    fileprivate func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            guard let self = self else { return nil }
+
+            let section = UserProfileDataSource.Section(rawValue: sectionIndex)!
+            let itemCount: Int
+            switch section {
+            case .header:
+                itemCount = 0
+            case .favorites:
+                itemCount = user.favorites.count
+            case .watchlist:
+                itemCount = user.watchlist.count
+            case .rated:
+                itemCount = user.rated.count
+            }
+            
+            return UserProfileLayoutProvider.layout(for: section, itemCount: itemCount)
+        }
+
+        return layout
     }
     
     fileprivate func setupCollectionView() {
@@ -79,9 +98,10 @@ class UserProfileViewController: UIViewController {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
-        //Set so the scrollIndicator stops before the status bar
-        let topInset = UIWindow.mainWindow.topInset
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+        let topInset = UIWindow.mainWindow.topInset + 55
+        let bottomInset = UIWindow.mainWindow.safeAreaInsets.bottom + 10
+        collectionView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: bottomInset, right: 0)
     }
     
     fileprivate func setudDataSource() {
@@ -118,7 +138,6 @@ class UserProfileViewController: UIViewController {
 //MARK: - Actions
 extension UserProfileViewController {
     fileprivate func storeDidUpdate() {
-        layoutProvider.user = user
         dataSource.user = user
         
         let showLoading = user.username.isEmpty

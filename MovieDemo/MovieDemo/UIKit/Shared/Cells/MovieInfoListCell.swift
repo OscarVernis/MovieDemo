@@ -19,6 +19,7 @@ class MovieInfoListCell: UICollectionViewCell {
     override func prepareForReuse() {
         posterImageView.cancelImageRequest()
         posterImageView.removeBorder()
+        posterImageView.image = .asset(.PosterPlaceholder)
     }
 }
 

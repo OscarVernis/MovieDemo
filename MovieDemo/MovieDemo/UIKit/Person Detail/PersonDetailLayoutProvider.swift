@@ -1,5 +1,5 @@
 //
-//  PersonDetailDataSource.Section+Layout.swift
+//  PersonDetailLayoutProvider.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 13/06/22.
@@ -8,9 +8,11 @@
 
 import UIKit
 
-extension PersonDetailDataSource.Section {
-    func sectionLayout() -> NSCollectionLayoutSection {
-        switch self {
+struct PersonDetailLayoutProvider {
+    private static var sectionBuilder = MoviesCompositionalLayoutBuilder()
+    
+    static func layout(for section: PersonDetailDataSource.Section) -> NSCollectionLayoutSection? {
+        switch section {
         case .loading:
             return makeLoading()
         case .overview:
@@ -26,26 +28,21 @@ extension PersonDetailDataSource.Section {
         }
     }
     
-    fileprivate func makeLoading() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        
+    fileprivate static func makeLoading() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createSection(itemHeight: .absolute(44), groupHeight: .absolute(44))
         section.contentInsets.top = 50
         
         return section
     }
     
-    fileprivate func makeOverview() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
-        
+    fileprivate static func makeOverview() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createEstimatedSection(height: 50)
         section.contentInsets.top = 6
         
         return section
     }
     
-    fileprivate func makePopular() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    fileprivate static func makePopular() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalPosterSection()
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -56,8 +53,7 @@ extension PersonDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeCredits() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    fileprivate static func makeCredits() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 121)
         
         section.contentInsets.top = 5
@@ -66,8 +62,7 @@ extension PersonDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeCreditCategories() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    fileprivate static func makeCreditCategories() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalCategorySection()
         
         section.contentInsets.top = 4
@@ -79,8 +74,7 @@ extension PersonDetailDataSource.Section {
         return section
     }
     
-    fileprivate func makeInfo() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    fileprivate static func makeInfo() -> NSCollectionLayoutSection {
         let section: NSCollectionLayoutSection
         
         section = sectionBuilder.createDecoratedListSection(height: 52, topSpacing: 20, bottomSpacing: 0, itemSpacing: 0)

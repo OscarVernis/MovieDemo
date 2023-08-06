@@ -59,7 +59,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupCollectionView() {
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: HomeLayoutProvider().createLayout)
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: HomeLayoutProvider.createLayout)
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)

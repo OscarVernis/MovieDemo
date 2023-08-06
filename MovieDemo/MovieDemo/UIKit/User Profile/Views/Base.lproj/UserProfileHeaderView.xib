@@ -62,7 +62,6 @@
             </constraints>
             <connections>
                 <outlet property="logoutButton" destination="lIQ-Qf-1tu" id="Tgc-Db-bTe"/>
-                <outlet property="topConstraint" destination="9tD-0c-OmC" id="SJT-K0-vDJ"/>
                 <outlet property="userImageView" destination="PKG-mo-edJ" id="4ZM-0W-zyk"/>
                 <outlet property="usernameLabel" destination="J5u-Ys-XaA" id="e57-Mh-2wt"/>
             </connections>

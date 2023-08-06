@@ -112,10 +112,7 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
         let header: UICollectionReusableView
         if section == .header {
             let userHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
-            
-            //Adjust the top of the Header so it doesn't go unde the bar
-            userHeaderView.topConstraint.constant = UIWindow.mainWindow.topInset + 55
-            
+                        
             userHeaderView.configure(user: user)
             
             header = userHeaderView

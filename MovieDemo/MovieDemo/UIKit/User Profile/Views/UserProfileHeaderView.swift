@@ -13,9 +13,7 @@ class UserProfileHeaderView: UICollectionReusableView {
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var logoutButton: CustomButton!
-    
-    @IBOutlet weak var topConstraint: NSLayoutConstraint!
-    
+        
     func configure(user: UserViewModel) {
         if let url = user.avatarURL {
             userImageView.setRemoteImage(withURL: url, placeholder: .asset(.user), animated: true)

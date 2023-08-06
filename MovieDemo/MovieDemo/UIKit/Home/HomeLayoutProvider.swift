@@ -9,9 +9,9 @@
 import UIKit
 
 struct HomeLayoutProvider {
-    let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    private static let sectionBuilder = MoviesCompositionalLayoutBuilder()
     
-    func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
+    static func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = HomeDataSource.Section(rawValue: sectionIndex)
         
         switch(section) {
@@ -28,8 +28,7 @@ struct HomeLayoutProvider {
         }
     }
     
-    
-    func makeBannerSection() -> NSCollectionLayoutSection {
+    private static func makeBannerSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
@@ -43,7 +42,7 @@ struct HomeLayoutProvider {
         return section
     }
     
-    func makeHorizontalPosterSection() -> NSCollectionLayoutSection {
+    private static func makeHorizontalPosterSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
@@ -57,7 +56,7 @@ struct HomeLayoutProvider {
         return section
     }
     
-    func makeListSection() -> NSCollectionLayoutSection {
+    private static func makeListSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
@@ -70,7 +69,7 @@ struct HomeLayoutProvider {
         return section
     }
     
-    func makeDecoratedListSection() -> NSCollectionLayoutSection {
+    private static func makeDecoratedListSection() -> NSCollectionLayoutSection {
         let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         

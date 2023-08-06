@@ -96,7 +96,7 @@ class PersonDetailViewController: UIViewController {
             guard let self = self else { return nil }
             
             let section = self.dataSource.sections[sectionIndex]
-            return section.sectionLayout()
+            return PersonDetailLayoutProvider.layout(for: section)
         }
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
