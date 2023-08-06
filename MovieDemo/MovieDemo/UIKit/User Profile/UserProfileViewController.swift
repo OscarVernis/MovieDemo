@@ -41,6 +41,7 @@ class UserProfileViewController: UIViewController {
         setupCustomBackButton()
         createCollectionView()
         setupCollectionView()
+        setudDataSource()
         setupStore()
     }
     
@@ -80,9 +81,14 @@ class UserProfileViewController: UIViewController {
         //Set so the scrollIndicator stops before the status bar
         let topInset = UIWindow.mainWindow.topInset
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+    }
+    
+    fileprivate func setudDataSource() {
+        dataSource = UserProfileDataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        })
         
-        dataSource = UserProfileDataSource(collectionView: collectionView, user: user, isLoading: store.isLoading)
-        collectionView.dataSource = dataSource
+        dataSource.registerReusableViews(collectionView: collectionView)
     }
     
     fileprivate func setupStore()  {
@@ -113,8 +119,10 @@ extension UserProfileViewController {
     fileprivate func storeDidUpdate() {
         layoutProvider.user = user
         dataSource.user = user
+        
+        let showLoading = user.username.isEmpty
+        dataSource.isLoading = showLoading ? store.isLoading : false
         dataSource.reload()
-        collectionView.reloadData()
     }
     
     fileprivate func handleError() {

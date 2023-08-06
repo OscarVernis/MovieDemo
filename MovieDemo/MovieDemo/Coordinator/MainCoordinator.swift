@@ -328,7 +328,7 @@ class MainCoordinator {
         showMovieList(title: .localized(UserString.Rated), endpoint: .UserRated)
     }
     
-    //MARK: - User Detail
+    //MARK: - User Lists
     func showUserLists(animated: Bool = true) {
         let ulvc = UserListsViewController(store: dependencies.userListsDataStore, router: self)
         ulvc.title = "Lists"
