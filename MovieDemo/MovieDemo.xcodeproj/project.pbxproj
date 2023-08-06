@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		550045EF2A5DDABA00DF4790 /* TMDBClient+Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550045EE2A5DDABA00DF4790 /* TMDBClient+Services.swift */; };
 		5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5502F500251C2D38003EEC0A /* CustomButton.swift */; };
-		55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55040587285429890027E1C0 /* SectionedCollectionDataSource.swift */; };
 		5505779E284DAA0F007ED892 /* MovieString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5505779D284DAA0F007ED892 /* MovieString.swift */; };
 		550577A0284DAA1E007ED892 /* PersonString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5505779F284DAA1E007ED892 /* PersonString.swift */; };
 		550577A2284DAA2C007ED892 /* UserString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550577A1284DAA2C007ED892 /* UserString.swift */; };
@@ -77,9 +76,6 @@
 		553AF9B32856CD58007D1B20 /* UserProfileLayoutProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */; };
 		553CD314286D33C30022F72E /* InfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD313286D33C30022F72E /* InfoItem.swift */; };
 		553CD316286D35780022F72E /* InfoTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD315286D35780022F72E /* InfoTable.swift */; };
-		553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */; };
-		553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */; };
-		553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553D6AF22853C5BC001491CB /* ProviderDataSource.swift */; };
 		553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 553EE5852A6386D400750793 /* SDWebImageSwiftUI */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
 		5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5541467E2A71834200BF1B16 /* UserListsStore.swift */; };
@@ -313,7 +309,6 @@
 /* Begin PBXFileReference section */
 		550045EE2A5DDABA00DF4790 /* TMDBClient+Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TMDBClient+Services.swift"; sourceTree = "<group>"; };
 		5502F500251C2D38003EEC0A /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		55040587285429890027E1C0 /* SectionedCollectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedCollectionDataSource.swift; sourceTree = "<group>"; };
 		5505779D284DAA0F007ED892 /* MovieString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieString.swift; sourceTree = "<group>"; };
 		5505779F284DAA1E007ED892 /* PersonString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonString.swift; sourceTree = "<group>"; };
 		550577A1284DAA2C007ED892 /* UserString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserString.swift; sourceTree = "<group>"; };
@@ -386,9 +381,6 @@
 		553AF9B22856CD58007D1B20 /* UserProfileLayoutProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileLayoutProvider.swift; sourceTree = "<group>"; };
 		553CD313286D33C30022F72E /* InfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoItem.swift; sourceTree = "<group>"; };
 		553CD315286D35780022F72E /* InfoTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTable.swift; sourceTree = "<group>"; };
-		553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayCollectionDataSource.swift; sourceTree = "<group>"; };
-		553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderDataSource.swift; sourceTree = "<group>"; };
-		553D6AF22853C5BC001491CB /* ProviderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderDataSource.swift; sourceTree = "<group>"; };
 		553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSuccessResult.swift; sourceTree = "<group>"; };
 		5541467E2A71834200BF1B16 /* UserListsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsStore.swift; sourceTree = "<group>"; };
 		554146802A718C2400BF1B16 /* CreateListRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListRequestBody.swift; sourceTree = "<group>"; };
@@ -901,17 +893,6 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		553D6AEB2853C0BB001491CB /* DataSources */ = {
-			isa = PBXGroup;
-			children = (
-				553D6AEC2853C0CC001491CB /* ArrayCollectionDataSource.swift */,
-				55040587285429890027E1C0 /* SectionedCollectionDataSource.swift */,
-				553D6AEE2853C0FF001491CB /* TitleHeaderDataSource.swift */,
-				553D6AF22853C5BC001491CB /* ProviderDataSource.swift */,
-			);
-			path = DataSources;
-			sourceTree = "<group>";
-		};
 		5547ED57282590BA0079BD14 /* ViewController Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1166,7 +1147,6 @@
 			isa = PBXGroup;
 			children = (
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
-				553D6AEB2853C0BB001491CB /* DataSources */,
 				55893B6A2513F4EA00233677 /* CollectionView Reusable */,
 				552E705A251547D7009CC4CD /* Cells */,
 				552E705F251547F5009CC4CD /* Views */,
@@ -1718,7 +1698,6 @@
 				557FFA8B251A625900D79F68 /* SessionManager.swift in Sources */,
 				552774FA2A7F42FC00BDA342 /* UserProfileDataSource.swift in Sources */,
 				55B7395B2A720F7F003BB6F5 /* UserListDetailStore.swift in Sources */,
-				553D6AF32853C5BC001491CB /* ProviderDataSource.swift in Sources */,
 				55ADD2F52A78C46400A06E6B /* SocialLink.swift in Sources */,
 				556807C72530E87A00F8DF16 /* PersonDetailViewController.swift in Sources */,
 				55D006BA2A74B4830089E8B1 /* EmptyView.swift in Sources */,
@@ -1755,7 +1734,6 @@
 				550DA0712A59DDF700541312 /* ErrorHandlingRouter.swift in Sources */,
 				5563A5E82A745027004528EA /* UserListHeaderView.swift in Sources */,
 				554BB8CB2A75837400762F44 /* UserListCell.swift in Sources */,
-				553D6AED2853C0CC001491CB /* ArrayCollectionDataSource.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				557E0DCB285BF6D800D21D93 /* RemoteImage.swift in Sources */,
 				55549901282232BF00E89119 /* SessionService.swift in Sources */,
@@ -1779,8 +1757,6 @@
 				55EECCDF251190990041EAE7 /* UIViewController+Storyboard.swift in Sources */,
 				5511CD322A70DC4900A9CCDD /* UserListsServices.swift in Sources */,
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
-				553D6AEF2853C0FF001491CB /* TitleHeaderDataSource.swift in Sources */,
-				55040588285429890027E1C0 /* SectionedCollectionDataSource.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
 				550C68602A79A9C800C64C87 /* CrewCreditDataSource.swift in Sources */,
