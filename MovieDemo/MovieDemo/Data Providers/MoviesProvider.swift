@@ -51,14 +51,18 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
             } receiveValue: { [weak self] result in
                 guard let self = self else { return }
                 
+                var movies: [MovieViewModel]
                 if self.currentPage == 0 {
-                    self.items.removeAll()
+                    movies = []
                     self.cache?.delete()
+                } else {
+                    movies = items
                 }
                 
                 self.totalPages = result.totalPages
                 self.cache?.save(result.movies)
-                self.items.append(contentsOf: result.movies.map(MovieViewModel.init))
+                movies.append(contentsOf: result.movies.map(MovieViewModel.init))
+                self.items = movies
             }
     }
     

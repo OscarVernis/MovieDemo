@@ -109,28 +109,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupProviders() {
-        nowPlayingProvider.$items
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.reloadDataSource()
-            }
-            .store(in: &cancellables)
-        
-        upcomingProvider.$items
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.reloadDataSource()
-            }
-            .store(in: &cancellables)
-        
-        popularProvider.$items
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.reloadDataSource()
-            }
-            .store(in: &cancellables)
-        
-        topRatedProvider.$items
+        subscribe(to: nowPlayingProvider.$items)
+        subscribe(to: upcomingProvider.$items)
+        subscribe(to: popularProvider.$items)
+        subscribe(to: topRatedProvider.$items)
+    }
+    
+    fileprivate func subscribe(to publisher: Published<[MovieViewModel]>.Publisher) {
+        publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.reloadDataSource()

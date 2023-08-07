@@ -48,13 +48,13 @@ class MovieDetailHeaderView: UICollectionReusableView {
     private var movie: MovieViewModel!
     private var showUserActions = false
     
-    override func awakeFromNib() {        
+    override func awakeFromNib() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         posterImageView.addGestureRecognizer(tapRecognizer)
         
         containerStackView.setCustomSpacing(24, after: userActionsView)
         overviewView.setCustomSpacing(12, after: taglineLabel)
-                
+        
         //Gradient
         gradient = CAGradientLayer()
         gradient.frame = posterImageView.bounds

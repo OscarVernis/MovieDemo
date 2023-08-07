@@ -143,11 +143,7 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataSource() {
-        dataSource = PersonDetailDataSource(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
-            guard let self else { fatalError() }
-            
-            return self.dataSource.cell(for: collectionView, with: indexPath, identifier: item)
-        })
+        dataSource = PersonDetailDataSource(collectionView: collectionView)
         
         dataSource.overviewExpandAction = { [unowned self] in
             UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
@@ -158,8 +154,6 @@ class PersonDetailViewController: UIViewController {
         dataSource.openSocialLink = { socialLink in
             UIApplication.shared.open(socialLink.url)
         }
-    
-        dataSource.registerReusableViews(collectionView: collectionView)
     }
     
     fileprivate func setupStore()  {

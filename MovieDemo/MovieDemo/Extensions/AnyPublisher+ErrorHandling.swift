@@ -38,4 +38,19 @@ extension Publisher {
         .eraseToAnyPublisher()
     }
     
+    func ignoreError() -> AnyPublisher<Output, Never> {
+        self.catch { error in
+            return Empty<Output, Never>(completeImmediately: true)
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func sinkIgnoringOutput() -> AnyCancellable{
+        self
+            .ignoreOutput()
+            .sink { _ in
+            } receiveValue: { _ in
+            }
+    }
+    
 }

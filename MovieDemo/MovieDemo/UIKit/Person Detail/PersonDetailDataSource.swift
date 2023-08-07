@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDataSource.Section, AnyHashable> {
+class PersonDetailDataSource {
     enum Section: Hashable {
         case loading
         case overview
@@ -46,9 +46,25 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     var socialItemId = UUID().uuidString
     var openSocialLink: ((SocialLink) -> ())?
     
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
     var sections: [Section] = []
     var creditSections: [Section] = []
     var selectedCreditSection: Section = .castCredits
+    
+    init(collectionView: UICollectionView) {
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            
+            self.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        })
+        
+        dataSource.supplementaryViewProvider = { [unowned self] collectionView, elementKind, indexPath in
+            self.sectionTitleView(collectionView: collectionView, at: indexPath)
+        }
+        
+        registerReusableViews(collectionView: collectionView)
+    }
     
     //MARK: - Setup
     func registerReusableViews(collectionView: UICollectionView) {
@@ -60,6 +76,17 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
         InfoListCell.register(to: collectionView)
         SocialCell.register(to: collectionView)
         LoadingCell.register(to: collectionView)
+    }
+    
+    func sectionTitleView(collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+        let section = sections[indexPath.section]
+        
+        let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
+        
+        let title = section.sectionTitle
+        SectionTitleView.configureForDetail(headerView: sectionTitleView, title: title)
+        
+        return sectionTitleView
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -160,7 +187,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
     }
     
     func crewCredit(at indexPath: IndexPath) -> PersonCrewCreditViewModel? {
-        itemIdentifier(for: indexPath) as? PersonCrewCreditViewModel
+        dataSource.itemIdentifier(for: indexPath) as? PersonCrewCreditViewModel
     }
     
     //MARK: - Reload
@@ -247,19 +274,7 @@ class PersonDetailDataSource: UICollectionViewDiffableDataSource<PersonDetailDat
             }
         }
     
-        self.apply(snapshot, animatingDifferences: animated)
-    }
-    
-    //MARK: - Collection View
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let section = self.sections[indexPath.section]
-        
-        guard let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as? SectionTitleView  else { fatalError() }
-        
-        let title = section.sectionTitle
-        SectionTitleView.configureForDetail(headerView: sectionTitleView, title: title)
-        
-        return sectionTitleView
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
 }
