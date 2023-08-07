@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataSource.Section, AnyHashable> {
+class MovieDetailDataSource {
     enum Section: Int, CaseIterable {
         case header
         case cast
@@ -25,7 +25,21 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
     var socialItemId = UUID().uuidString
     var openSocialLink: ((SocialLink) -> ())?
     
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
     var sections: [Section] = []
+    
+    init(collectionView: UICollectionView, supplementaryViewProvider: UICollectionViewDiffableDataSource<Section, AnyHashable>.SupplementaryViewProvider?) {
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            
+            self.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        })
+        
+        dataSource.supplementaryViewProvider = supplementaryViewProvider
+        
+        registerReusableViews(collectionView: collectionView)
+    }
     
     //MARK: - Cell Setup
     func registerReusableViews(collectionView: UICollectionView) {
@@ -135,7 +149,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
             }
         }
         
-        applySnapshotUsingReloadData(snapshot)
+        dataSource.applySnapshotUsingReloadData(snapshot)
     }
     
     //MARK: - Headers

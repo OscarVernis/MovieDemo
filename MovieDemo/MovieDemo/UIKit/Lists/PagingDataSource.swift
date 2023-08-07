@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PagingDataSource<Model>: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable> {
+protocol PagingDataSource<Model> {
     associatedtype Model
     
     var didUpdate: ((Error?) -> ())? { get set }

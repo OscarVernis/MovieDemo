@@ -10,8 +10,8 @@ import UIKit
 
 extension UIView {
     func setupBorder() {
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.white.withAlphaComponent(0.1).cgColor
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.white.withAlphaComponent(0.07).cgColor
     }
     
     func removeBorder() {

@@ -333,7 +333,6 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         if let categoryCell = cell as? CategoryCell {
             categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedCreditSection)
         }
-    
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
@@ -347,4 +346,3 @@ extension PersonDetailViewController: UICollectionViewDelegate {
     }
     
 }
-

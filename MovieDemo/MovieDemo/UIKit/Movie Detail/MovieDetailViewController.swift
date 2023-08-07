@@ -112,18 +112,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataSource() {
-        dataSource = MovieDetailDataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
-            self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
-        })
-        
-        dataSource.registerReusableViews(collectionView: collectionView)
-        
-        dataSource.openSocialLink = { socialLink in
-            UIApplication.shared.open(socialLink.url)
-        }
-        
-        dataSource.supplementaryViewProvider = { [unowned self]
-            (collectionView, kind, indexPath) -> UICollectionReusableView? in
+        dataSource = MovieDetailDataSource(collectionView: collectionView, supplementaryViewProvider: { [unowned self] collectionView, elementKind, indexPath in
             let section = self.dataSource.sections[indexPath.section]
             switch section {
             case .header:
@@ -131,7 +120,12 @@ class MovieDetailViewController: UIViewController {
             default:
                 return sectionTitleHeader(at: indexPath)
             }
+        })
+        
+        dataSource.openSocialLink = { socialLink in
+            UIApplication.shared.open(socialLink.url)
         }
+        
     }
     
     //MARK: - Setup Headers
