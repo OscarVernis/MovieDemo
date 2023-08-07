@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataSource.Section, AnyHashable> {
+class UserProfileDataSource {
     enum Section: Int, CaseIterable {
         case header, favorites, watchlist, rated
     }
@@ -20,6 +20,20 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
     
     var user: UserViewModel!
     var isLoading = false
+    
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
+    init(collectionView: UICollectionView, supplementaryViewProvider: UICollectionViewDiffableDataSource<Section, AnyHashable>.SupplementaryViewProvider?) {
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            
+            self.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        })
+        
+        dataSource.supplementaryViewProvider = supplementaryViewProvider
+        
+        registerReusableViews(collectionView: collectionView)
+    }
     
     //MARK: - Cell Setup
     func registerReusableViews(collectionView: UICollectionView) {
@@ -103,33 +117,28 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
             snapshot.appendItems(ratedItems, toSection: .rated)
         }
         
-        applySnapshotUsingReloadData(snapshot)
+        dataSource.applySnapshotUsingReloadData(snapshot)
     }
     
     //MARK: - Header Data Source
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let section = Section(rawValue: indexPath.section)!
-        let header: UICollectionReusableView
-        if section == .header {
-            let userHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
-                        
-            userHeaderView.configure(user: user)
-            
-            header = userHeaderView
-        } else {
-            let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
-            
-            SectionTitleView.configureForDetail(headerView: sectionTitleView,
-                                                title: title(for: section),
-                                                image: image(for: section))
-            
-            header = sectionTitleView
-        }
+    func userHeader(with collectionView: UICollectionView, at indexPath: IndexPath) -> UserProfileHeaderView {
+        let userHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UserProfileHeaderView.reuseIdentifier, for: indexPath) as! UserProfileHeaderView
+        userHeaderView.configure(user: user)
         
-        return header
+        return userHeaderView
     }
     
-    private func title(for section: Section) -> String {
+    func titleHeader(with collectionView: UICollectionView, section: Section, at indexPath: IndexPath) -> SectionTitleView {
+        let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
+        
+        SectionTitleView.configureForDetail(headerView: sectionTitleView,
+                                            title: title(for: section),
+                                            image: image(for: section))
+        
+        return sectionTitleView
+    }
+    
+    func title(for section: Section) -> String {
         switch section {
         case .header:
             return ""
@@ -142,7 +151,7 @@ class UserProfileDataSource: UICollectionViewDiffableDataSource<UserProfileDataS
         }
     }
     
-    private func image(for section: Section) -> UIImage? {
+    func image(for section: Section) -> UIImage? {
         switch section {
         case .header:
             return nil

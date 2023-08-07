@@ -66,7 +66,7 @@ class PersonDetailDataSource {
         registerReusableViews(collectionView: collectionView)
     }
     
-    //MARK: - Setup
+    //MARK: - Cell Setup
     func registerReusableViews(collectionView: UICollectionView) {
         SectionTitleView.registerHeader(withCollectionView: collectionView)
         OverviewCell.register(to: collectionView)

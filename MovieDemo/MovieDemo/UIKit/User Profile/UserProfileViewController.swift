@@ -105,11 +105,26 @@ class UserProfileViewController: UIViewController {
     }
     
     fileprivate func setudDataSource() {
-        dataSource = UserProfileDataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
-            self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+        dataSource = UserProfileDataSource(collectionView: collectionView, supplementaryViewProvider: { [unowned self] collectionView, elementKind, indexPath in
+            return self.header(with: collectionView, at: indexPath)
         })
         
         dataSource.registerReusableViews(collectionView: collectionView)
+    }
+    
+    fileprivate func header(with collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionReusableView {
+        let section = UserProfileDataSource.Section(rawValue: indexPath.section)!
+        if section == .header {
+            let userHeaderView = dataSource.userHeader(with: collectionView, at: indexPath)
+            userHeaderView.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
+            
+            return userHeaderView
+        } else {
+            let sectionTitleView = dataSource.titleHeader(with: collectionView, section: section, at: indexPath)
+            self.configureTitleHeader(sectionTitleView, section: section)
+            
+            return sectionTitleView
+        }
     }
     
     fileprivate func setupStore()  {
@@ -180,22 +195,6 @@ extension UserProfileViewController {
 
 //MARK: - UICollectionViewDelegate
 extension UserProfileViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        let section = UserProfileDataSource.Section(rawValue: indexPath.section)!
-
-        switch section {
-        case .header:
-            guard let header = view as? UserProfileHeaderView else { return }
-            header.logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        case .favorites:
-            configureTitleHeader(view, section: section)
-        case .watchlist:
-            configureTitleHeader(view, section: section)
-        case .rated:
-            configureTitleHeader(view, section: section)
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = UserProfileDataSource.Section(rawValue: indexPath.section)!
         switch section {
