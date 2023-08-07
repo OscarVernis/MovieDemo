@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCell>: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>, PagingDataSource {
+class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCell>: PagingDataSource {
     typealias Model = Provider.Model
     
     enum Section: Int, CaseIterable {
@@ -19,7 +19,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     typealias CellConfigurator = (Cell, Provider.Model) -> Void
     
     var dataProvider: Provider
-    private let cellConfigurator: CellConfigurator?
+    private var cellConfigurator: CellConfigurator? = nil
     
     var didUpdate: ((Error?) -> ())? = nil
     var isLoading: Bool = false
@@ -27,20 +27,13 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     
     let loadingSectionID = UUID().uuidString
     
-    init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator?, cellProvider: @escaping UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>.CellProvider) {
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
+    init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil) {
         self.dataProvider = dataProvider
         self.cellConfigurator = cellConfigurator
-
-        super.init(collectionView: collectionView, cellProvider: cellProvider)
-
-        registerViews(collectionView: collectionView)
-        self.dataProvider.didUpdate = { [weak self] error in
-            self?.providerDidUpdate(error: error)
-        }
-    }
-    
-    convenience init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: @escaping CellConfigurator) {
-        self.init(collectionView: collectionView, dataProvider: dataProvider, cellConfigurator: cellConfigurator) { collectionView, indexPath, itemIdentifier in
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let section = Section(rawValue: indexPath.section)!
             switch section {
             case .main:
@@ -49,7 +42,12 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
             case .loading:
                 return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
             }
-            
+        })
+        
+        registerViews(collectionView: collectionView)
+        
+        self.dataProvider.didUpdate = { [weak self] error in
+            self?.providerDidUpdate(error: error)
         }
     }
     
@@ -58,7 +56,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
         LoadingCell.register(to: collectionView)
     }
     
-    private func providerDidUpdate(error: Error?) {
+    func providerDidUpdate(error: Error?) {
         isLoading = false
         reload()
         
@@ -66,14 +64,14 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     }
     
     func reload(animated: Bool = true) {
-        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
-        snapshot.appendSections([Section.main])
-        snapshot.appendItems(dataProvider.items as! [AnyHashable], toSection: Section.main)
+        var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(dataProvider.items as! [AnyHashable], toSection: .main)
         if !dataProvider.isLastPage {
-            snapshot.appendSections([Section.loading])
-            snapshot.appendItems([loadingSectionID], toSection: Section.loading)
+            snapshot.appendSections([.loading])
+            snapshot.appendItems([loadingSectionID], toSection: .loading)
         }
-        apply(snapshot, animatingDifferences: animated)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     func refresh() {
@@ -87,7 +85,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     }
     
     func model(at indexPath: IndexPath) -> Model? {
-        return itemIdentifier(for: indexPath) as? Model
+        dataSource.itemIdentifier(for: indexPath) as? Model
     }
     
 }

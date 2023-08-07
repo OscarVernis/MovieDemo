@@ -21,18 +21,20 @@ class SearchDataSource: ProviderPagingDataSource<SearchProvider, UICollectionVie
     }
     
     init(collectionView: UICollectionView, searchProvider: SearchProvider) {
-        super.init(collectionView: collectionView, dataProvider: searchProvider, cellConfigurator: nil) { collectionView, indexPath, item in
+        super.init(collectionView: collectionView, dataProvider: searchProvider)
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, item in
             let section = Section(rawValue: indexPath.section)!
             switch section {
             case .main:
-                return SearchDataSource.mainCell(collectionView: collectionView, for: item, at: indexPath)
+                return self.mainCell(collectionView: collectionView, for: item, at: indexPath)
             case .loading:
                 return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
             }
-        }
+        })
     }
     
-    static func mainCell(collectionView: UICollectionView, for item: AnyHashable, at indexPath: IndexPath) -> UICollectionViewCell {
+    private func mainCell(collectionView: UICollectionView, for item: AnyHashable, at indexPath: IndexPath) -> UICollectionViewCell {
         switch item {
         case let movie as MovieViewModel:
             return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MovieInfoListCell.configure)

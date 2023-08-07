@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>, PagingDataSource {
+class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: PagingDataSource {
     typealias CellConfigurator = (Cell, Model) -> Void
     
     enum Section: Int, CaseIterable {
@@ -21,13 +21,15 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UIColl
     
     var models: [Model]
     
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
     init(collectionView: UICollectionView, models: [Model], cellConfigurator: @escaping CellConfigurator) {
         self.models = models
         
-        super.init(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let model = models[indexPath.row]
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: cellConfigurator)
-        }
+        })
         
         registerViews(collectionView: collectionView)
     }
@@ -37,10 +39,10 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UIColl
     }
     
     func reload(animated: Bool = true) {
-        var snapshot = NSDiffableDataSourceSnapshot<AnyHashable, AnyHashable>()
-        snapshot.appendSections([Section.main])
-        snapshot.appendItems(models, toSection: Section.main)
-        apply(snapshot, animatingDifferences: animated)
+        var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(models, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     func refresh() {
@@ -51,7 +53,7 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: UIColl
     func loadMore() {}
     
     func model(at indexPath: IndexPath) -> Model? {
-        return itemIdentifier(for: indexPath) as? Model
+        dataSource.itemIdentifier(for: indexPath) as? Model
     }
     
 }
