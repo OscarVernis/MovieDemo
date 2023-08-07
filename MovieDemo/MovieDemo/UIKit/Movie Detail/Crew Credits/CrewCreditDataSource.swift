@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CrewCreditDataSource: UICollectionViewDiffableDataSource<CrewCreditDataSource.Section, AnyHashable> {
+class CrewCreditDataSource {
     typealias Model = CrewCreditViewModel
     
     enum Section: Int, CaseIterable {
@@ -16,6 +16,8 @@ class CrewCreditDataSource: UICollectionViewDiffableDataSource<CrewCreditDataSou
         case jobs
     }
         
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
     var model: MovieCrewCreditsViewModel
     var selectedDepartment: String
     var indexPathForSelectedDepartment: IndexPath {
@@ -23,23 +25,54 @@ class CrewCreditDataSource: UICollectionViewDiffableDataSource<CrewCreditDataSou
         return IndexPath(row: row, section: 0)
     }
     
-    init(collectionView: UICollectionView, model: MovieCrewCreditsViewModel, cellProvider: @escaping UICollectionViewDiffableDataSource<AnyHashable, AnyHashable>.CellProvider) {
+    init(collectionView: UICollectionView, model: MovieCrewCreditsViewModel) {
         self.model = model
-        
         self.selectedDepartment = model.departments.first ?? ""
-        super.init(collectionView: collectionView, cellProvider: cellProvider)
+        
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            let section = CrewCreditDataSource.Section(rawValue: indexPath.section)!
+            switch section {
+            case .departments:
+                return self.categoryCell(with: collectionView, indexPath: indexPath)
+            case .jobs:
+                return jobCell(with: collectionView, indexPath: indexPath)
+            }
+        })
+        
+        registerReusableViews(with: collectionView)
     }
     
+    //MARK: - Cell Setup
+    private func categoryCell(with collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        let title = self.model.departments[indexPath.row]
+        let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
+        categoryCell.titleLabel.text = title
+        categoryCell.unselectedBgColor = .systemGray5
+        
+        return categoryCell
+    }
+    
+    private func jobCell(with collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        let model = self.model.departmentJobs[self.selectedDepartment]![indexPath.row]
+        return collectionView.cell(at: indexPath, model: model, cellConfigurator: CreditPhotoListCell.configure)
+    }
+    
+    private func registerReusableViews(with collectionView: UICollectionView) {
+        CategoryCell.register(to: collectionView)
+        CreditPhotoListCell.register(to: collectionView)
+    }
+    
+    //MARK: - Data Source
     func reload(animated: Bool = true) {
         var snapshot = NSDiffableDataSourceSnapshot<CrewCreditDataSource.Section, AnyHashable>()
         snapshot.appendSections([Section.departments, Section.jobs])
         snapshot.appendItems(model.departments, toSection: Section.departments)
         snapshot.appendItems(model.departmentJobs[selectedDepartment]!, toSection: Section.jobs)
-        apply(snapshot, animatingDifferences: animated)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
         
     func model(at indexPath: IndexPath) -> Model? {
-        return itemIdentifier(for: indexPath) as? Model
+        dataSource.itemIdentifier(for: indexPath) as? Model
     }
     
 }

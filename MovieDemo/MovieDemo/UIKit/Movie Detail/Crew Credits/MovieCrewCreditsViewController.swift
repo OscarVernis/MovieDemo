@@ -33,7 +33,7 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
         setupDataSource()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         configureWithDefaultNavigationBarAppearance()
     }
     
@@ -41,6 +41,7 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
         return .portrait
     }
     
+    //MARK: - Setup
     func createCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -48,35 +49,11 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
 
         collectionView.delegate = self
         
-        CategoryCell.register(to: collectionView)
-        CreditPhotoListCell.register(to: collectionView)
-        
         view.addSubview(collectionView)
     }
     
-    
-    //MARK: - Datasource
     func setupDataSource() {
-        dataSource = CrewCreditDataSource(collectionView: collectionView, model: model, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let section = CrewCreditDataSource.Section(rawValue: indexPath.section)!
-            switch section {
-            case .departments:
-                let title = self.model.departments[indexPath.row]
-                let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
-                categoryCell.titleLabel.text = title
-                categoryCell.unselectedBgColor = .systemGray5
-                
-                return categoryCell
-            case .jobs:
-                let model = self.model.departmentJobs[self.dataSource.selectedDepartment]![indexPath.row]
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CreditPhotoListCell.reuseIdentifier, for: indexPath) as! CreditPhotoListCell
-                
-                CreditPhotoListCell.configure(cell: cell, with: model)
-                
-                return cell
-            }
-        })
-        
+        dataSource = CrewCreditDataSource(collectionView: collectionView, model: model)
         dataSource.reload()
     }
     
@@ -137,7 +114,6 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
         if let categoryCell = cell as? CategoryCell {
             categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedDepartment)
         }
-    
     }
     
 }
