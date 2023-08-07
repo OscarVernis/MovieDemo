@@ -121,37 +121,62 @@ class MovieDetailViewController: UIViewController {
         dataSource.openSocialLink = { socialLink in
             UIApplication.shared.open(socialLink.url)
         }
+        
+        dataSource.supplementaryViewProvider = { [unowned self]
+            (collectionView, kind, indexPath) -> UICollectionReusableView? in
+            let section = self.dataSource.sections[indexPath.section]
+            switch section {
+            case .header:
+                return movieHeaderView(at: indexPath)
+            default:
+                return sectionTitleHeader(at: indexPath)
+            }
+        }
     }
     
     //MARK: - Setup Headers
-    fileprivate func setupHeaderView() {
-        guard let headerView = headerView else { return }
-                
-        headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+    fileprivate func movieHeaderView(at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
         
-        headerView.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
-        headerView.watchlistButton?.addTarget(self, action: #selector(watchlistTapped), for: .touchUpInside)
-        headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
-                        
+        headerView.configure(movie: movie,
+                             isLoading: store.isLoading,
+                             showUserActions: store.showUserActions)
+        
+        if !store.isLoading {
+            headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+            
+            headerView.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
+            headerView.watchlistButton?.addTarget(self, action: #selector(watchlistTapped), for: .touchUpInside)
+            headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
+        }
+        
         headerView.imageTapHandler = showImage
-        
-        headerView.showUserActions = store.showUserActions
-        
+                
         headerView.heightConstraint.constant = UIWindow.mainWindow.frame.width * 1.5
+        
+        self.headerView = headerView
+        
+        return headerView
     }
     
-    fileprivate func setupTitleHeader(header: SectionTitleView, indexPath: IndexPath) {
+    fileprivate func sectionTitleHeader(at indexPath: IndexPath) -> UICollectionReusableView {
         let section = dataSource.sections[indexPath.section]
+
+        let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
+        SectionTitleView.configureForDetail(headerView: sectionTitleView, title: self.dataSource.sectionTitle(for: section))
+        
         switch section {
         case .cast:
-            header.tapHandler = showCast
+            sectionTitleView.tapHandler = showCast
         case .crew:
-            header.tapHandler = showCrew
+            sectionTitleView.tapHandler = showCrew
         case .recommended:
-            header.tapHandler = showRecommendedMovies
+            sectionTitleView.tapHandler = showRecommendedMovies
         default:
-            header.tapHandler = nil
+            sectionTitleView.tapHandler = nil
         }
+        
+        return sectionTitleView
     }
     
     //MARK: - Setup Store
@@ -379,22 +404,7 @@ class MovieDetailViewController: UIViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension MovieDetailViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-
-        //Configure Movie Header
-        if let reusableView = view as? MovieDetailHeaderView, reusableView != headerView {
-            headerView = reusableView
-            setupHeaderView()
-        }
-        
-        //Configure TitleHeader
-        if let titleHeader = view as? SectionTitleView {
-            setupTitleHeader(header: titleHeader, indexPath: indexPath)
-        }
-
-    }
-    
+extension MovieDetailViewController: UICollectionViewDelegate {    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = dataSource.sections[indexPath.section]
         switch section {

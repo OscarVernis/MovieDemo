@@ -139,23 +139,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
     }
     
     //MARK: - Headers
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let section = sections[indexPath.section]
-        switch section {
-        case .header:
-            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
-            headerView.isLoading = isLoading
-            headerView.configure(movie: movie)
-            return headerView
-        case .cast, .crew, .videos, .recommended, .info:
-            let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
-            SectionTitleView.configureForDetail(headerView: sectionTitleView, title: sectionTitle(for: section))
-           return sectionTitleView
-        }
-    }
-    
-    
-    private func sectionTitle(for section: Section) -> String {
+    func sectionTitle(for section: Section) -> String {
         switch section {
         case .header:
             return ""

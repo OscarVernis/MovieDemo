@@ -42,11 +42,11 @@ class MovieDetailHeaderView: UICollectionReusableView {
     var gradient: CAGradientLayer!
     private var gradientCancellable: AnyCancellable?
     
-    var isShowingPlaceholder = true
-    var isLoading = false
+    private(set) var isShowingPlaceholder = true
+    private var isLoading = false
     
-    var movie: MovieViewModel!
-    var showUserActions = false
+    private var movie: MovieViewModel!
+    private var showUserActions = false
     
     override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
@@ -88,8 +88,10 @@ class MovieDetailHeaderView: UICollectionReusableView {
         rateButton?.setIsSelected(movie.rated, animated: animated)
     }
     
-    func configure(movie: MovieViewModel) {
+    func configure(movie: MovieViewModel, isLoading: Bool, showUserActions: Bool) {
         self.movie = movie
+        self.isLoading = isLoading
+        self.showUserActions = showUserActions
 
         //Load Poster image
         if isShowingPlaceholder, !posterImageView.isLoadingRemoteImage {
@@ -98,7 +100,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
                 self.isShowingPlaceholder = false
             }
         }
-        
         
         //Movie Info
         titleLabel.text = movie.title
@@ -123,7 +124,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
         trailerView.isHidden = (movie.trailerURL == nil)
         
         //Update User Action State
-        updateUserActionButtons(animated: false)
+        updateUserActionButtons(animated: true)
         
         if isLoading {
             userActionsView.isHidden = true
