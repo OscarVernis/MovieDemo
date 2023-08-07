@@ -144,6 +144,7 @@ class MovieDetailDataSource: UICollectionViewDiffableDataSource<MovieDetailDataS
         switch section {
         case .header:
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
+            headerView.isLoading = isLoading
             headerView.configure(movie: movie)
             return headerView
         case .cast, .crew, .videos, .recommended, .info:

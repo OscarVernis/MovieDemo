@@ -12,6 +12,7 @@ import Foundation
 struct Movie {
     var id: Int!
     var title: String!
+    var tagline: String?
     var overview: String?
     var posterPath: String?
     var backdropPath: String?

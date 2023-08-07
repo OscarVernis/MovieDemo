@@ -86,6 +86,10 @@ extension MovieViewModel {
         movie.title
     }
     
+    var tagline: String {
+        movie.tagline ?? ""
+    }
+    
     var overview: String {
         movie.overview ?? ""
     }

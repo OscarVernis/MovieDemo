@@ -179,7 +179,7 @@ class MovieDetailViewController: UIViewController {
     fileprivate func storeDidUpdate() {
         dataSource.movie = movie
         dataSource.isLoading = store.isLoading
-        dataSource.reload()
+        self.dataSource.reload()
     }
 
     //MARK: - Actions

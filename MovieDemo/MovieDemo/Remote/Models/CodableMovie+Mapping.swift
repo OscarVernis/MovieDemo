@@ -20,6 +20,7 @@ extension CodableMovie {
         
         movie.id = id
         movie.title = title
+        movie.tagline = tagline
         movie.overview = overview
         movie.posterPath = posterPath
         movie.backdropPath = backdropPath

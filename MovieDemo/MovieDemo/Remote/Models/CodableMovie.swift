@@ -17,6 +17,7 @@ import Foundation
 struct CodableMovie: Codable {
     let id: Int!
     let title: String!
+    let tagline: String?
     let overview: String?
     let posterPath: String?
     let backdropPath: String?
@@ -43,6 +44,7 @@ struct CodableMovie: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case title
+        case tagline
         case overview
         case posterPath = "poster_path"
         case backdropPath = "backdrop_path"
@@ -72,6 +74,7 @@ struct CodableMovie: Codable {
 
         id = try container.decode(Int.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
+        tagline = try? container.decodeIfPresent(String.self, forKey: .tagline)
         overview = try? container.decodeIfPresent(String.self, forKey: .overview)
         posterPath = try? container.decodeIfPresent(String.self, forKey: .posterPath)
         backdropPath = try? container.decodeIfPresent(String.self, forKey: .backdropPath)

@@ -16,7 +16,11 @@ class MovieDetailHeaderView: UICollectionReusableView {
     
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var userActionsView: UIView!
-    @IBOutlet weak var overviewView: UIView!
+    @IBOutlet weak var overviewView: UIStackView!
+    @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var taglineLabel: UILabel!
+    @IBOutlet weak var overviewTitleLabel: UILabel!
+    
     @IBOutlet weak var trailerView: UIView!
     
     @IBOutlet weak var posterImageView: UIImageView!
@@ -30,7 +34,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var watchlistButton: CustomButton!
     @IBOutlet weak var rateButton: CustomButton!
     
-    @IBOutlet weak var overviewLabel: UILabel!
     
     @IBOutlet weak var playTrailerButton: CustomButton!
                 
@@ -40,17 +43,17 @@ class MovieDetailHeaderView: UICollectionReusableView {
     private var gradientCancellable: AnyCancellable?
     
     var isShowingPlaceholder = true
+    var isLoading = false
     
     var movie: MovieViewModel!
-    var showUserActions = false {
-        didSet {
-            updateUserActionButtons()
-        }
-    }
+    var showUserActions = false
     
     override func awakeFromNib() {        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         posterImageView.addGestureRecognizer(tapRecognizer)
+        
+        containerStackView.setCustomSpacing(24, after: userActionsView)
+        overviewView.setCustomSpacing(12, after: taglineLabel)
                 
         //Gradient
         gradient = CAGradientLayer()
@@ -74,9 +77,12 @@ class MovieDetailHeaderView: UICollectionReusableView {
     }
     
     fileprivate func updateUserActionButtons(animated: Bool = false) {
-        userActionsView.isHidden = !showUserActions
         if !showUserActions { return }
         
+        favoriteButton.isEnabled = !isLoading
+        watchlistButton.isEnabled = !isLoading
+        rateButton.isEnabled = !isLoading
+
         favoriteButton?.setIsSelected(movie.favorite, animated: animated)
         watchlistButton?.setIsSelected(movie.watchlist, animated: animated)
         rateButton?.setIsSelected(movie.rated, animated: animated)
@@ -93,8 +99,10 @@ class MovieDetailHeaderView: UICollectionReusableView {
             }
         }
         
+        
         //Movie Info
         titleLabel.text = movie.title
+        taglineLabel.text = movie.tagline
         overviewLabel.text = movie.overview
         ratingsView.rating = CGFloat(movie.percentRating)
         ratingsView.isRatingAvailable = movie.isRatingAvailable
@@ -108,11 +116,21 @@ class MovieDetailHeaderView: UICollectionReusableView {
         
         //Hiding Header Sections
         userActionsView.isHidden = !showUserActions
-        overviewView.isHidden = movie.overview.isEmpty
+        taglineLabel.isHidden = movie.tagline.isEmpty
+        overviewTitleLabel.isHidden = movie.overview.isEmpty
+        overviewLabel.isHidden = movie.overview.isEmpty
+        overviewView.isHidden = movie.overview.isEmpty && movie.tagline.isEmpty
         trailerView.isHidden = (movie.trailerURL == nil)
         
         //Update User Action State
-        updateUserActionButtons()
+        updateUserActionButtons(animated: false)
+        
+        if isLoading {
+            userActionsView.isHidden = true
+            taglineLabel.isHidden = true
+            overviewView.isHidden = true
+            trailerView.isHidden = true
+        }
     }
 
 }
