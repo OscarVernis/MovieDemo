@@ -79,14 +79,13 @@ class CrewCreditsViewController: UIViewController {
     private func defaultLayout() -> UICollectionViewCompositionalLayout {
         let layout = ListViewController.defaultLayout()
 
-        let globalHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
-        let globalHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: globalHeaderSize, elementKind: CrewCreditsViewController.globalHeaderKind, alignment: .top)
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
+        let departmentsHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: CrewCreditsViewController.globalHeaderKind, alignment: .top)
 
-        globalHeader.pinToVisibleBounds = true
-        globalHeader.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
+        departmentsHeader.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
 
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.boundarySupplementaryItems = [globalHeader]
+        config.boundarySupplementaryItems = [departmentsHeader]
         layout.configuration = config
         
         return layout

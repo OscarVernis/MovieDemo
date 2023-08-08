@@ -25,9 +25,7 @@
 		550A70F2282B4A4A00A39930 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */; };
 		550C685C2A79A87B00C64C87 /* PagingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C685B2A79A87B00C64C87 /* PagingDataSource.swift */; };
 		550C685E2A79A88D00C64C87 /* ArrayPagingDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C685D2A79A88D00C64C87 /* ArrayPagingDataSource.swift */; };
-		550C68602A79A9C800C64C87 /* CrewCreditDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C685F2A79A9C800C64C87 /* CrewCreditDataSource.swift */; };
 		550C68632A79B0B300C64C87 /* MovieCrewCreditsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C68622A79B0B300C64C87 /* MovieCrewCreditsViewModel.swift */; };
-		550C68672A79E94A00C64C87 /* MovieCrewCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C68662A79E94A00C64C87 /* MovieCrewCreditsViewController.swift */; };
 		550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA06D2A59DB0000541312 /* UserProfileRouter.swift */; };
 		550DA0712A59DDF700541312 /* ErrorHandlingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */; };
 		550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550DA0742A59E0DE00541312 /* SearchViewRouter.swift */; };
@@ -334,9 +332,7 @@
 		550A70F1282B4A4A00A39930 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		550C685B2A79A87B00C64C87 /* PagingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingDataSource.swift; sourceTree = "<group>"; };
 		550C685D2A79A88D00C64C87 /* ArrayPagingDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayPagingDataSource.swift; sourceTree = "<group>"; };
-		550C685F2A79A9C800C64C87 /* CrewCreditDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrewCreditDataSource.swift; sourceTree = "<group>"; };
 		550C68622A79B0B300C64C87 /* MovieCrewCreditsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCrewCreditsViewModel.swift; sourceTree = "<group>"; };
-		550C68662A79E94A00C64C87 /* MovieCrewCreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCrewCreditsViewController.swift; sourceTree = "<group>"; };
 		550DA06D2A59DB0000541312 /* UserProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		550DA0702A59DDF700541312 /* ErrorHandlingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingRouter.swift; sourceTree = "<group>"; };
 		550DA0742A59E0DE00541312 /* SearchViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewRouter.swift; sourceTree = "<group>"; };
@@ -682,16 +678,6 @@
 			path = HTTPClient;
 			sourceTree = "<group>";
 		};
-		550C68612A79B09D00C64C87 /* Crew Credits */ = {
-			isa = PBXGroup;
-			children = (
-				550C68662A79E94A00C64C87 /* MovieCrewCreditsViewController.swift */,
-				550C685F2A79A9C800C64C87 /* CrewCreditDataSource.swift */,
-				550C68622A79B0B300C64C87 /* MovieCrewCreditsViewModel.swift */,
-			);
-			path = "Crew Credits";
-			sourceTree = "<group>";
-		};
 		550DA06B2A59D91C00541312 /* User Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -998,7 +984,6 @@
 			isa = PBXGroup;
 			children = (
 				5584AF342A82F78D00027F1C /* Credits */,
-				550C68612A79B09D00C64C87 /* Crew Credits */,
 				55EDA70C2810F4D70055696F /* Cells */,
 				556B78612524F21700F212D1 /* Views */,
 				55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */,
@@ -1180,6 +1165,7 @@
 			children = (
 				5584AF282A82B3E700027F1C /* CastCreditsViewController.swift */,
 				5584AF2C2A82BA6E00027F1C /* CrewCreditsViewController.swift */,
+				550C68622A79B0B300C64C87 /* MovieCrewCreditsViewModel.swift */,
 			);
 			path = Credits;
 			sourceTree = "<group>";
@@ -1752,7 +1738,6 @@
 				55741D07251D7B9300A6281B /* ProgressLayer.swift in Sources */,
 				5502F501251C2D38003EEC0A /* CustomButton.swift in Sources */,
 				559674562A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift in Sources */,
-				550C68672A79E94A00C64C87 /* MovieCrewCreditsViewController.swift in Sources */,
 				550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */,
 				55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */,
 				55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */,
@@ -1797,7 +1782,6 @@
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
 				55ED2E1927F785BB0067F635 /* PaginatedProvider.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
-				550C68602A79A9C800C64C87 /* CrewCreditDataSource.swift in Sources */,
 				556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */,
 				5511CD352A70DE0C00A9CCDD /* UserListsViewController.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,
