@@ -38,11 +38,11 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: Paging
         Cell.register(to: collectionView)
     }
     
-    func reload(animated: Bool = true) {
+    func reload(animated: Bool = false) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
         snapshot.appendSections([.main])
         snapshot.appendItems(models, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     func refresh() {

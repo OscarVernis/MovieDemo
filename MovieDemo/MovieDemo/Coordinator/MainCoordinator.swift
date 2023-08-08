@@ -281,41 +281,12 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
-    private func castSearchController(viewController: ListViewController, credits: [CastCreditViewModel]) -> UISearchController {
-        let searchController = UpdatingSearchController { query in
-            guard let dataSource = viewController.dataSource as? ArrayPagingDataSource<CastCreditViewModel, CreditPhotoListCell>
-            else { return }
-
-            if query.isEmpty {
-                dataSource.models = credits
-                viewController.refresh()
-                return
-            }
-            
-            let filteredCredits = credits.filter {
-                $0.name.lowercased().contains(query.lowercased()) ||
-                $0.character.lowercased().contains(query.lowercased())
-            }
-            dataSource.models = filteredCredits
-            viewController.refresh()
-        }
-        
-        return searchController
-    }
-    
     func showCastCreditList(credits: [CastCreditViewModel], animated: Bool = true) {
-        let provider = { ArrayPagingDataSource(collectionView: $0, models: credits, cellConfigurator: CreditPhotoListCell.configure) }
-        let lvc = ListViewController(dataSourceProvider: provider, router: self)
-        lvc.title = MovieString.Cast.localized
+        let lvc = CastCreditsViewController(credits: credits)
         
-        lvc.navigationItem.hidesSearchBarWhenScrolling = false
-        lvc.navigationItem.searchController = castSearchController(viewController: lvc, credits: credits)
-
-        lvc.didSelectedItem = { [weak self] model in
-            if let castCredit = model as? CastCreditViewModel {
+        lvc.didSelectedItem = { [weak self] castCredit in
                 let person = castCredit.person()
                 self?.showPersonProfile(person)
-            }
         }
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
