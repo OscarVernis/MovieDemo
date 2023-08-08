@@ -78,5 +78,4 @@ extension CastCreditsViewController: UISearchResultsUpdating {
         let searchQuery = searchController.searchBar.text ?? ""
         updateSearchResults(query: searchQuery)
     }
-
 }

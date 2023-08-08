@@ -9,6 +9,10 @@
 import UIKit
 
 extension UIViewController {
+    var customBackButton: BlurButton? {
+        return navigationItem.leftBarButtonItem?.customView as? BlurButton
+    }
+    
     func setupCustomBackButton() {
         let backButton = BlurButton(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
         backButton.setImage(.asset(.back), for: .normal)

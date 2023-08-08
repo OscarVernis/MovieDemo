@@ -266,13 +266,14 @@ class MainCoordinator {
     }
     
     func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
+//        let model = MovieCrewCreditsViewModel(crewCredits: credits)
+//        let lvc = MovieCrewCreditsViewController(model: model)
+//        lvc.title = MovieString.Crew.localized
+//
+//        lvc.navigationItem.hidesSearchBarWhenScrolling = false
+//        lvc.navigationItem.searchController = crewSearchController(viewController: lvc, viewModel:
         let model = MovieCrewCreditsViewModel(crewCredits: credits)
-        let lvc = MovieCrewCreditsViewController(model: model)
-        lvc.title = MovieString.Crew.localized
-        
-        lvc.navigationItem.hidesSearchBarWhenScrolling = false
-        lvc.navigationItem.searchController = crewSearchController(viewController: lvc, viewModel: model)
-        
+        let lvc = CrewCreditsViewController(viewModel: model)
         lvc.didSelectedItem = { [weak self] crewCredit in
             let person = crewCredit.person()
             self?.showPersonProfile(person)

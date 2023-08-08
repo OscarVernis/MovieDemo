@@ -34,6 +34,10 @@ class MovieCrewCreditsViewModel {
         allDepartmentJobs = MovieCrewCreditsViewModel.departmentsJobs(from: crewCredits, departments: allDepartments)
     }
     
+    func jobs(in department: String) -> [CrewCreditViewModel] {
+        departmentJobs[department] ?? []
+    }
+    
     private func updateSearchResults() {
         let filteredCredits = credits.filter {
             $0.name.lowercased().contains(query.lowercased()) ||
