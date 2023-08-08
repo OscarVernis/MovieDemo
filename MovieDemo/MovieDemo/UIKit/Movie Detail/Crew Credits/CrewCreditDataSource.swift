@@ -9,8 +9,6 @@
 import UIKit
 
 class CrewCreditDataSource {
-    typealias Model = CrewCreditViewModel
-    
     enum Section: Int, CaseIterable {
         case departments
         case jobs
@@ -19,16 +17,17 @@ class CrewCreditDataSource {
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
     
     var model: MovieCrewCreditsViewModel
-    var selectedDepartment: String
-    var indexPathForSelectedDepartment: IndexPath {
-        let row = model.departments.firstIndex(of: selectedDepartment)!
+    var selectedDepartment: String = ""
+    var indexPathForSelectedDepartment: IndexPath? {
+        guard let row = model.departments.firstIndex(of: selectedDepartment) else { return nil }
         return IndexPath(row: row, section: 0)
     }
     
+    var didUpdateSelectedCategory: ((IndexPath) -> Void)? = nil
+    
     init(collectionView: UICollectionView, model: MovieCrewCreditsViewModel) {
         self.model = model
-        self.selectedDepartment = model.departments.first ?? ""
-        
+
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
             let section = CrewCreditDataSource.Section(rawValue: indexPath.section)!
             switch section {
@@ -44,7 +43,7 @@ class CrewCreditDataSource {
     
     //MARK: - Cell Setup
     private func categoryCell(with collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        let title = self.model.departments[indexPath.row]
+        let title = model.departments[indexPath.row]
         let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
         categoryCell.titleLabel.text = title
         categoryCell.unselectedBgColor = .systemGray5
@@ -53,7 +52,7 @@ class CrewCreditDataSource {
     }
     
     private func jobCell(with collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-        let model = self.model.departmentJobs[self.selectedDepartment]![indexPath.row]
+        let model = dataSource.itemIdentifier(for: indexPath) as! CrewCreditViewModel
         return collectionView.cell(at: indexPath, model: model, cellConfigurator: CreditPhotoListCell.configure)
     }
     
@@ -64,15 +63,35 @@ class CrewCreditDataSource {
     
     //MARK: - Data Source
     func reload(animated: Bool = true) {
-        var snapshot = NSDiffableDataSourceSnapshot<CrewCreditDataSource.Section, AnyHashable>()
-        snapshot.appendSections([Section.departments, Section.jobs])
-        snapshot.appendItems(model.departments, toSection: Section.departments)
-        snapshot.appendItems(model.departmentJobs[selectedDepartment]!, toSection: Section.jobs)
+        var updateSelected = false
+        if model.departments.firstIndex(of: selectedDepartment) == nil {
+            selectedDepartment = model.departments.first ?? ""
+            updateSelected = true
+        }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
+        if !model.departments.isEmpty {
+            snapshot.appendSections([.departments])
+            snapshot.appendItems(model.departments, toSection: .departments)
+        }
+        if let selectedJobs = model.departmentJobs[selectedDepartment], !selectedJobs.isEmpty {
+            snapshot.appendSections([.jobs])
+            snapshot.appendItems(selectedJobs, toSection: .jobs)
+        }
+        
         dataSource.apply(snapshot, animatingDifferences: animated)
+        
+        if updateSelected, let indexPath = indexPathForSelectedDepartment {
+            didUpdateSelectedCategory?(indexPath)
+        }
+
     }
         
-    func model(at indexPath: IndexPath) -> Model? {
-        dataSource.itemIdentifier(for: indexPath) as? Model
+    func category(at indexPath: IndexPath) -> String? {
+        dataSource.itemIdentifier(for: indexPath) as? String
+    }
+    func model(at indexPath: IndexPath) -> CrewCreditViewModel? {
+        dataSource.itemIdentifier(for: indexPath) as? CrewCreditViewModel
     }
     
 }

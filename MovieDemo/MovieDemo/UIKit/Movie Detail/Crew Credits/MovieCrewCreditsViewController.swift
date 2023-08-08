@@ -42,7 +42,7 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
     }
     
     //MARK: - Setup
-    func createCollectionView() {
+    private func createCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .asset(.AppBackgroundColor)
@@ -52,13 +52,21 @@ class MovieCrewCreditsViewController: UIViewController, UICollectionViewDelegate
         view.addSubview(collectionView)
     }
     
-    func setupDataSource() {
+    private func setupDataSource() {
         dataSource = CrewCreditDataSource(collectionView: collectionView, model: model)
+        dataSource.reload()
+        
+        dataSource.didUpdateSelectedCategory = { [weak self] indexPath in
+            self?.selectCategory(at: indexPath)
+        }
+    }
+    
+    func refresh() {
         dataSource.reload()
     }
     
     //MARK: - Layout
-    func layout() -> UICollectionViewCompositionalLayout {
+    private func layout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in
             let section = CrewCreditDataSource.Section(rawValue: sectionIndex)!
             switch section {

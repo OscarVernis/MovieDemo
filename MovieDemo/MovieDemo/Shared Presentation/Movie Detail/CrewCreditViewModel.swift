@@ -128,10 +128,10 @@ extension CrewCreditViewModel {
 //MARK: - Hashable
 extension CrewCreditViewModel: Equatable, Hashable {
     static func == (lhs: CrewCreditViewModel, rhs: CrewCreditViewModel) -> Bool {
-        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+        lhs.id == rhs.id
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
+        hasher.combine(id)
     }
 }

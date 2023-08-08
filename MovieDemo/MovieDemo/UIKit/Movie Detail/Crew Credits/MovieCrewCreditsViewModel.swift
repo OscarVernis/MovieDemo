@@ -8,20 +8,54 @@
 
 import Foundation
 
-struct MovieCrewCreditsViewModel {
-    let departments: [String]
-    let departmentJobs: [String: [CrewCreditViewModel]]
+class MovieCrewCreditsViewModel {
+    var departments: [String] {
+        query.isEmpty ? allDepartments : searchDepartments
+    }
+    var departmentJobs: [String: [CrewCreditViewModel]] {
+        query.isEmpty ? allDepartmentJobs : searchDepartmentJobs
+    }
+    
+    private let credits: [CrewCreditViewModel]
+    private let allDepartments: [String]
+    private let allDepartmentJobs: [String: [CrewCreditViewModel]]
+    
+    var query: String = "" {
+        didSet {
+            updateSearchResults()
+        }
+    }
+    private var searchDepartments: [String] = []
+    private var searchDepartmentJobs: [String: [CrewCreditViewModel]] = [:]
 
     init(crewCredits: [CrewCreditViewModel]) {
-        let uniqueDepartments = Set(Array(crewCredits.compactMap(\.department)))
-        departments = uniqueDepartments.sorted().map(MovieCrewCreditsViewModel.localizedDepartment)
-        
+        credits = crewCredits
+        allDepartments = MovieCrewCreditsViewModel.departments(from: crewCredits)
+        allDepartmentJobs = MovieCrewCreditsViewModel.departmentsJobs(from: crewCredits, departments: allDepartments)
+    }
+    
+    private func updateSearchResults() {
+        let filteredCredits = credits.filter {
+            $0.name.lowercased().contains(query.lowercased()) ||
+            $0.job.lowercased().contains(query.lowercased())
+        }
+        searchDepartments = MovieCrewCreditsViewModel.departments(from: filteredCredits)
+        searchDepartmentJobs = MovieCrewCreditsViewModel.departmentsJobs(from: filteredCredits, departments: searchDepartments)
+    }
+    
+    private static func departments(from credits: [CrewCreditViewModel]) -> [String] {
+        let uniqueDepartments = Set(Array(credits.compactMap(\.department)))
+        return uniqueDepartments.sorted().map(MovieCrewCreditsViewModel.localizedDepartment)
+    }
+    
+    private static func departmentsJobs(from credits: [CrewCreditViewModel], departments: [String]) -> [String: [CrewCreditViewModel]] {
         var departmentJobs = [String: [CrewCreditViewModel]]()
         for department in departments {
-            let jobs = crewCredits.filter { MovieCrewCreditsViewModel.localizedDepartment($0.department) == department }
+            let jobs = credits.filter { MovieCrewCreditsViewModel.localizedDepartment($0.department) == department }
             departmentJobs[department] = jobs.sorted { $0.job < $1.job }
         }
-        self.departmentJobs = departmentJobs
+        
+        return departmentJobs
     }
 
     private static func localizedDepartment(_ department: String?) -> String {

@@ -256,10 +256,22 @@ class MainCoordinator {
     }
     
     //MARK: - Movie Detail
+    private func crewSearchController(viewController: MovieCrewCreditsViewController, viewModel: MovieCrewCreditsViewModel) -> UISearchController {
+        let searchController = UpdatingSearchController { query in
+            viewModel.query = query
+            viewController.refresh()
+        }
+        
+        return searchController
+    }
+    
     func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
         let model = MovieCrewCreditsViewModel(crewCredits: credits)
         let lvc = MovieCrewCreditsViewController(model: model)
         lvc.title = MovieString.Crew.localized
+        
+        lvc.navigationItem.hidesSearchBarWhenScrolling = false
+        lvc.navigationItem.searchController = crewSearchController(viewController: lvc, viewModel: model)
         
         lvc.didSelectedItem = { [weak self] crewCredit in
             let person = crewCredit.person()
