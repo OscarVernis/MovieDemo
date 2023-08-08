@@ -832,6 +832,32 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		551583A52A81DA0D00EDE09E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				551583A62A81DA4B00EDE09E /* RatingsView */,
+				55A60DCF2527AAB30082810C /* MediaViewer */,
+				55915772251438390085DB69 /* BlurBackgroundView.swift */,
+				55915775251438450085DB69 /* BlurBackgroundView.xib */,
+				5502F500251C2D38003EEC0A /* CustomButton.swift */,
+				55EE51AA251ECF5800915AB3 /* RoundImageView.swift */,
+				556AB1932514680A0023D278 /* DotRatingsView.swift */,
+				5511D95425317056004B3697 /* BlurButton.swift */,
+				55D006B92A74B4830089E8B1 /* EmptyView.swift */,
+				55D006BB2A74B4950089E8B1 /* EmptyView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		551583A62A81DA4B00EDE09E /* RatingsView */ = {
+			isa = PBXGroup;
+			children = (
+				55B5D7502515D8B700E1076D /* RatingsView.swift */,
+				55741D06251D7B9300A6281B /* ProgressLayer.swift */,
+			);
+			path = RatingsView;
+			sourceTree = "<group>";
+		};
 		5517D0362A72EA2000CFF094 /* Add Movie */ = {
 			isa = PBXGroup;
 			children = (
@@ -881,23 +907,6 @@
 				55164AFA25154A6500D219BC /* MoviePosterInfoCell.xib */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		552E705F251547F5009CC4CD /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5588A0BC251DBC10004B3C6A /* RatingsView */,
-				55A60DCF2527AAB30082810C /* MediaViewer */,
-				55915772251438390085DB69 /* BlurBackgroundView.swift */,
-				55915775251438450085DB69 /* BlurBackgroundView.xib */,
-				5502F500251C2D38003EEC0A /* CustomButton.swift */,
-				55EE51AA251ECF5800915AB3 /* RoundImageView.swift */,
-				556AB1932514680A0023D278 /* DotRatingsView.swift */,
-				5511D95425317056004B3697 /* BlurButton.swift */,
-				55D006B92A74B4830089E8B1 /* EmptyView.swift */,
-				55D006BB2A74B4950089E8B1 /* EmptyView.xib */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		5547ED57282590BA0079BD14 /* ViewController Tests */ = {
@@ -1158,18 +1167,9 @@
 				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
 				55893B6A2513F4EA00233677 /* CollectionView Reusable */,
 				552E705A251547D7009CC4CD /* Cells */,
-				552E705F251547F5009CC4CD /* Views */,
+				551583A52A81DA0D00EDE09E /* Views */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		5588A0BC251DBC10004B3C6A /* RatingsView */ = {
-			isa = PBXGroup;
-			children = (
-				55B5D7502515D8B700E1076D /* RatingsView.swift */,
-				55741D06251D7B9300A6281B /* ProgressLayer.swift */,
-			);
-			name = RatingsView;
 			sourceTree = "<group>";
 		};
 		55893B6A2513F4EA00233677 /* CollectionView Reusable */ = {
