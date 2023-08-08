@@ -102,7 +102,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     //MARK: - DataSource
     fileprivate func setupDataSource() {
         dataSource = HomeDataSource(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
-            return self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+            self.dataSource.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
         })
         
         dataSource.registerReusableViews(collectionView: collectionView)

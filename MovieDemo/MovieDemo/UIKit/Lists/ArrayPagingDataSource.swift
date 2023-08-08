@@ -27,7 +27,7 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: Paging
         self.models = models
         
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            let model = models[indexPath.row]
+            let model = itemIdentifier as! Model
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: cellConfigurator)
         })
         
@@ -42,7 +42,7 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: Paging
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
         snapshot.appendSections([.main])
         snapshot.appendItems(models, toSection: .main)
-        dataSource.apply(snapshot, animatingDifferences: animated)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func refresh() {
