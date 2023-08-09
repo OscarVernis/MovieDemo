@@ -21,30 +21,16 @@ class PersonCreditCell: UICollectionViewCell {
 }
 
 extension PersonCreditCell {
-    static func configure(cell: PersonCreditCell, castCredit: PersonCastCreditViewModel) {
-        cell.titleLabel.text = castCredit.title
+    static func configure(cell: PersonCreditCell, credit: PersonCreditViewModel) {
+        cell.titleLabel.text = credit.title
         
-        cell.yearLabel.text = castCredit.year
-        cell.yearLabel.isHidden = castCredit.year == nil
-
-        cell.creditLabel.text = castCredit.character
-        cell.creditLabel.isHidden = castCredit.character == nil
+        cell.yearLabel.text = credit.year
+        cell.yearLabel.isHidden = credit.year.isEmpty
         
-        if let url = castCredit.movie?.posterImageURL(size: .w185) {
-            cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
-        }
-    }
-    
-    static func configure(cell: PersonCreditCell, crewCredit: PersonCrewCreditViewModel) {
-        cell.titleLabel.text = crewCredit.title
+        cell.creditLabel.text = credit.job
+        cell.creditLabel.isHidden = credit.job == nil
         
-        cell.yearLabel.text = crewCredit.year
-        cell.yearLabel.isHidden = crewCredit.year == nil
-        
-        cell.creditLabel.text = crewCredit.job
-        cell.creditLabel.isHidden = crewCredit.job == nil
-        
-        if let url = crewCredit.movie?.posterImageURL(size: .w185) {
+        if let url = credit.movie?.posterImageURL(size: .w185) {
             cell.posterImageView.setRemoteImage(withURL: url, placeholder: .asset(.PosterPlaceholder))
         }
     }

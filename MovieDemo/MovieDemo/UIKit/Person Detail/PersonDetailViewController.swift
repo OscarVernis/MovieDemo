@@ -155,12 +155,12 @@ class PersonDetailViewController: UIViewController {
             UIApplication.shared.open(socialLink.url)
         }
         
-        dataSource.willChangeSelectedDepartment = { [unowned self] newSection in
-            self.updateScrollPosition(with: newSection)
+        dataSource.willChangeSelectedDepartment = { [unowned self] department in
+            self.updateScrollPosition(with: department)
         }
     }
     
-    fileprivate func updateScrollPosition(with newSection: PersonDetailDataSource.Section) {
+    fileprivate func updateScrollPosition(with department: String) {
         let safeAreaBottom = view.safeAreaInsets.bottom
         let safeAreaTop = view.safeAreaInsets.top
         
@@ -173,7 +173,7 @@ class PersonDetailViewController: UIViewController {
         let targetHeight = view.frame.size.height - safeAreaTop - departmentsSectionHeight
         
         let creditCellHeight: CGFloat = PersonDetailLayoutProvider.creditCellHeight
-        let newCount = dataSource.itemCount(for: newSection)
+        let newCount = person.credits(for: department).count
         let newSectionHeight = creditCellHeight * CGFloat(newCount)
         
         collectionView.showsVerticalScrollIndicator = false //Hide indicator to avoid jump when setting offset and inset
@@ -303,14 +303,9 @@ extension PersonDetailViewController: UICollectionViewDelegate {
         case .popular:
             let movie = person.popularMovies[indexPath.row]
             router?.showMovieDetail(movie: movie)
-        case .castCredits:
-            let castCredit = person.castCredits[indexPath.row]
-            if let movie = castCredit.movie {
-                router?.showMovieDetail(movie: movie)
-            }
-        case .crewCredits:
-            if let crewCredit = dataSource.crewCredit(at: indexPath),
-               let movie = crewCredit.movie {
+        case .credits:
+            if let credit = dataSource.credit(at: indexPath),
+               let movie = credit.movie {
                 router?.showMovieDetail(movie: movie)
             }
         default:

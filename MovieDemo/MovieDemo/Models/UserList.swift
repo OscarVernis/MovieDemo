@@ -28,4 +28,12 @@ struct UserList {
     }
 }
 
-extension UserList: Codable, Identifiable, Equatable, Hashable { }
+extension UserList: Codable, Identifiable, Equatable, Hashable {
+    static func == (lhs: UserList, rhs: UserList) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

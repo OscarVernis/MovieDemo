@@ -20,17 +20,3 @@ struct CrewCredit {
 
 //MARK: - Utils
 extension CrewCredit: Codable {}
-
-extension CrewCredit: Hashable {
-   func hash(into hasher: inout Hasher) {
-        hasher.combine(job)
-        hasher.combine(id)
-    }
-}
-
-extension CrewCredit: Equatable {
-    static func == (lhs: CrewCredit, rhs: CrewCredit) -> Bool {
-        return lhs.id == lhs.id
-    }
-    
-}

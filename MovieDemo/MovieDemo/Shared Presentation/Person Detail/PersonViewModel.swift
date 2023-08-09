@@ -11,11 +11,10 @@ import Foundation
 class PersonViewModel {
     private var person: Person
 
-    var castCredits = [PersonCastCreditViewModel]()
-    var crewCredits = [PersonCrewCreditViewModel]()
+    var credits = [PersonCreditViewModel]()
     
     var departments: [String] = []
-    var departmentCrewCredits: [String: [PersonCrewCreditViewModel]] = [:]
+    var departmentCredits: [String: [PersonCreditViewModel]] = [:]
     
     var information: [[String: String]] = []
     
@@ -27,8 +26,7 @@ class PersonViewModel {
     }
 
     func updateDetails() {
-        updateCastCredits()
-        updateCrewCredits()
+        updateCredits()
         updatePopularMovies()
         updateInformation()
     }
@@ -87,45 +85,34 @@ extension PersonViewModel {
             .joined(separator: ", ")
     }
 
-    func credits(for department: String) -> [PersonCrewCreditViewModel] {
-        departmentCrewCredits[department] ?? []
+    func credits(for department: String) -> [PersonCreditViewModel] {
+        departmentCredits[department] ?? []
     }
     
-    fileprivate func updateCastCredits() {
-        guard let credits = person.castCredits else { return }
+    fileprivate func updateCredits() {
+        var allCredits = [PersonCreditViewModel]()
+        let castCredits = person.castCredits?.compactMap(PersonCreditViewModel.init(castCredit:)) ?? []
+        allCredits.append(contentsOf: castCredits)
+        let crewCredits = person.crewCredits?.compactMap(PersonCreditViewModel.init(crewCredit:)) ?? []
+        allCredits.append(contentsOf: crewCredits)
         
-        castCredits = credits
-            .sorted(by: PersonCastCredit.sortByRelease)
-            .compactMap { PersonCastCreditViewModel(personCastCredit: $0) }
-    }
-    
-    fileprivate func updateCrewCredits() {
-        guard let credits = person.crewCredits else { return }
+        allCredits.sort(by: PersonCreditViewModel.sortByRelease)
         
-        crewCredits = credits
-            .sorted(by: PersonCrewCredit.sortByRelease)
-            .compactMap { PersonCrewCreditViewModel(personCrewCredit: $0) }
-        
-        var uniqueDepartments = NSOrderedSet(array: crewCredits.compactMap(\.department)).array as! [String]
-        //Put known for department first
-        if let knownFor = knownForDepartment,
-           let index = uniqueDepartments.firstIndex(of: knownFor),
-           index != 0
-        {
-            let d = uniqueDepartments.remove(at: index)
-            uniqueDepartments.insert(d, at: 0)
+        let uniqueDepartments = NSOrderedSet(array: allCredits.compactMap(\.department)).array as! [String]
+                
+        departmentCredits = [:]
+        for department in uniqueDepartments {
+            let credits = allCredits.filter { localizedDepartment($0.department) == department }
+            departmentCredits[department] = credits
         }
         
-        departments = uniqueDepartments.map { PersonViewModel.localizedDepartment($0) }
-        
-        departmentCrewCredits = [:]
-        for department in departments {
-            let credits = crewCredits.filter { PersonViewModel.localizedDepartment($0.department) == department }
-            departmentCrewCredits[department] = credits
+        departments = uniqueDepartments.map { localizedDepartment($0) }.sorted {
+            departmentCredits[$0]?.count ?? 0 > departmentCredits[$1]?.count ?? 0
         }
+
     }
     
-    private static func localizedDepartment(_ department: String?) -> String {
+    private func localizedDepartment(_ department: String?) -> String {
         guard let department else { return "" }
         
         return CrewDepartment(rawValue: department)?.localized ?? department
@@ -167,7 +154,7 @@ extension PersonViewModel {
             information.append([PersonString.KnownFor.localized: localizedDepartment])
         }
         
-        let creditsCount = crewCredits.count + castCredits.count
+        let creditsCount = credits.count
         if creditsCount > 0 {
             information.append([PersonString.Credits.localized: "\(creditsCount)"])
         }

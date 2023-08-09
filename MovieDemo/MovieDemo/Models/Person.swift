@@ -43,11 +43,3 @@ struct Person {
     var castCredits: [PersonCastCredit]?
     var crewCredits: [PersonCrewCredit]?
 }
-
-//MARK: - Utils
-extension Person: Equatable {
-    static func == (lhs: Person, rhs: Person) -> Bool {
-        return
-            lhs.id == rhs.id
-    }
-}

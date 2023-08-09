@@ -27,7 +27,7 @@ struct PersonDetailLayoutProvider {
             return makePopular()
         case .departments:
             return makeCreditDepartments()
-        case .castCredits, .crewCredits:
+        case .credits:
             return makeCredits()
         case .info:
             return makeInfo()
