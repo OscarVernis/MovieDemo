@@ -12,6 +12,10 @@ extension UICollectionViewCell {
     static func register(to collectionView: UICollectionView) {
         collectionView.register(namedNib(), forCellWithReuseIdentifier: reuseIdentifier)
     }
+    
+    static func registerClass(to collectionView: UICollectionView) {
+        collectionView.register(self.self, forCellWithReuseIdentifier: reuseIdentifier)
+    }
  
 }
 

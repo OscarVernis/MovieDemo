@@ -257,7 +257,7 @@ class MainCoordinator {
     
     //MARK: - Movie Detail
     func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool = true) {
-        let model = MovieCrewCreditsViewModel(crewCredits: credits)
+        let model = CrewCreditsViewModel(crewCredits: credits)
         let lvc = CrewCreditsViewController(viewModel: model)
         
         lvc.didSelectedItem = { [weak self] crewCredit in

@@ -13,14 +13,14 @@ class CrewCreditsViewController: UIViewController {
     
     private var listViewController: ListViewController!
     private weak var dataSource: ArrayPagingDataSource<CrewCreditViewModel, CreditPhotoListCell>!
-    private let viewModel: MovieCrewCreditsViewModel
+    private let viewModel: CrewCreditsViewModel
     
     private weak var selectionView: CategorySelectionView!
     private var selectedDepartment: String = ""
         
     var didSelectedItem: ((CrewCreditViewModel) -> ())?
     
-    init(viewModel: MovieCrewCreditsViewModel) {
+    init(viewModel: CrewCreditsViewModel) {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
@@ -40,6 +40,8 @@ class CrewCreditsViewController: UIViewController {
     
     private func setupListViewController() {
         let globalHeaderRegistration = UICollectionView.SupplementaryRegistration<CategorySelectionHeaderView>(elementKind: CrewCreditsViewController.globalHeaderKind) { [unowned self] header, elementKind, indexPath in
+            header.selectionView.unselectedBackgroundgColor = .systemGray5
+            
             header.selectionView.items = self.viewModel.departments
             header.selectionView.didSelectItem = { [unowned self] idx in
                 selectedDepartment = self.viewModel.departments[idx]

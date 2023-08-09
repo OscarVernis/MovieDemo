@@ -16,7 +16,7 @@ class CategorySelectionHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         
         addSubview(selectionView)
-        selectionView.anchorTo(view: self)
+        selectionView.anchor(to: self)
     }
     
     @available (*, unavailable)

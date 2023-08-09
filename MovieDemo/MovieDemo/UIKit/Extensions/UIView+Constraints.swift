@@ -9,18 +9,27 @@
 import UIKit
 
 extension UIView {
-    func anchorTo(view: UIView) {
+    func anchor(to view: UIView) {
         translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: view.topAnchor),
             leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor)
+            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
-    func anchor(top: NSLayoutYAxisAnchor? = nil, paddingTop: CGFloat = 0, bottom: NSLayoutYAxisAnchor? = nil, paddingBottom: CGFloat = 0, left: NSLayoutXAxisAnchor? = nil, paddingLeft: CGFloat = 0, right: NSLayoutXAxisAnchor?  = nil, paddingRight: CGFloat = 0, width: CGFloat = 0, height: CGFloat = 0) {
+    func anchor(top: NSLayoutYAxisAnchor? = nil,
+                paddingTop: CGFloat = 0,
+                bottom: NSLayoutYAxisAnchor? = nil,
+                paddingBottom: CGFloat = 0,
+                leading: NSLayoutXAxisAnchor? = nil,
+                paddingLeading: CGFloat = 0,
+                trailing: NSLayoutXAxisAnchor?  = nil,
+                paddingTrailing: CGFloat = 0,
+                width: CGFloat = 0,
+                height: CGFloat = 0) {
         translatesAutoresizingMaskIntoConstraints = false
         
         if let top {
@@ -31,12 +40,12 @@ extension UIView {
             bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
         }
         
-        if let right {
-            rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
+        if let trailing {
+            trailingAnchor.constraint(equalTo: trailing, constant: -paddingTrailing).isActive = true
         }
         
-        if let left {
-            leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+        if let leading {
+            leadingAnchor.constraint(equalTo: leading, constant: paddingLeading).isActive = true
         }
         
         if width != 0 {

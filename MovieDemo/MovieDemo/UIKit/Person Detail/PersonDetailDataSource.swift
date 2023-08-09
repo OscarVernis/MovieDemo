@@ -13,7 +13,7 @@ class PersonDetailDataSource {
         case loading
         case overview
         case popular
-        case creditCategories
+        case departments
         case castCredits
         case crewCredits(department: String)
         case info
@@ -24,7 +24,7 @@ class PersonDetailDataSource {
                 return ""
             case .popular:
                 return .localized(PersonString.KnownFor)
-            case .creditCategories:
+            case .departments:
                 return .localized(PersonString.Credits)
             case .castCredits:
                 return .localized(PersonString.Acting)
@@ -32,7 +32,6 @@ class PersonDetailDataSource {
                 return department
             }
         }
-        
     }
     
     var person: PersonViewModel!
@@ -49,11 +48,14 @@ class PersonDetailDataSource {
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
     
     var sections: [Section] = []
+    
+    var departmentsSectionID = UUID().uuidString
     var creditSections: [Section] = []
     var selectedCreditSection: Section = .castCredits
     
+    var willChangeSelectedDepartment: ((Section) -> Void)? = nil
+    
     init(collectionView: UICollectionView) {
-        
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
             
             self.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
@@ -72,7 +74,7 @@ class PersonDetailDataSource {
         OverviewCell.register(to: collectionView)
         PersonCreditCell.register(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
-        CategoryCell.register(to: collectionView)
+        CategorySelectionCell.registerClass(to: collectionView)
         InfoListCell.register(to: collectionView)
         SocialCell.register(to: collectionView)
         LoadingCell.register(to: collectionView)
@@ -100,7 +102,7 @@ class PersonDetailDataSource {
         case .popular:
             let movie = identifier as! MovieViewModel
             return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MoviePosterInfoCell.configureWithRating)
-        case .creditCategories:
+        case .departments:
             return categoryCell(at: indexPath, with: collectionView, identifier: identifier)
         case .castCredits:
             let castCredit = identifier as! PersonCastCreditViewModel
@@ -122,13 +124,14 @@ class PersonDetailDataSource {
     }
 
     private func categoryCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
-        let credit = identifier as! Section
-        let title = credit.sectionTitle
-        let categoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as! CategoryCell
-        categoryCell.titleLabel.text = title
-        let selected = selectedCreditSection == creditSections[indexPath.row]
-        categoryCell.setSelection(selected)
-        return categoryCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategorySelectionCell.reuseIdentifier, for: indexPath) as! CategorySelectionCell
+        
+        cell.selectionView.items = creditSections.map(\.sectionTitle)
+        cell.selectionView.didSelectItem = { [unowned self] index in
+            self.selectDepartment(at: index)
+        }
+        
+        return cell
     }
     
     private func infoCell(at indexPath: IndexPath, with collectionView: UICollectionView, identifier: AnyHashable) -> UICollectionViewCell {
@@ -153,7 +156,7 @@ class PersonDetailDataSource {
     
     //MARK: - Helpers
     var indexPathForSelectedCreditSection: IndexPath? {
-        let section = sections.firstIndex(of: .creditCategories)
+        let section = sections.firstIndex(of: .departments)
         let row = creditSections.firstIndex(of: selectedCreditSection)
         
         if let section, let row {
@@ -169,20 +172,12 @@ class PersonDetailDataSource {
     
     func itemCount(for section: Section) -> Int {
         switch section {
-        case .loading:
-            return isLoading ? 1 : 0
-        case .overview:
-            return person.biography?.isEmpty ?? true ? 0 : 1
-        case .popular:
-            return person.popularMovies.isEmpty ? 0 : person.popularMovies.count
-        case .creditCategories:
-            return creditSections.count
         case .castCredits:
             return person.castCredits.isEmpty ? 0 : person.castCredits.count
         case .crewCredits(department: let department):
             return person.credits(for: department).count
-        case .info:
-            return person.information.count
+        default:
+            return 0
         }
     }
     
@@ -191,7 +186,14 @@ class PersonDetailDataSource {
     }
     
     //MARK: - Reload
-    func setupSections(refresh: Bool = false) {
+    private func selectDepartment(at index: Int) {
+        let newSelectedSection = creditSections[index]
+        willChangeSelectedDepartment?(newSelectedSection)
+        selectedCreditSection = newSelectedSection
+        reload()
+    }
+    
+    private func setupSections(refresh: Bool = false) {
         sections.removeAll()
         creditSections.removeAll()
         
@@ -220,7 +222,7 @@ class PersonDetailDataSource {
         }
         
         if !creditSections.isEmpty {
-            sections.append(.creditCategories)
+            sections.append(.departments)
         }
         
         //Send Acting to the end if person is know for crew department
@@ -247,7 +249,7 @@ class PersonDetailDataSource {
     
     func reload(force: Bool = false, animated: Bool = true) {
         setupSections(refresh: force)
-
+        
         var snapshot = NSDiffableDataSourceSnapshot<PersonDetailDataSource.Section, AnyHashable>()
         snapshot.appendSections(sections)
                 
@@ -259,8 +261,8 @@ class PersonDetailDataSource {
                 snapshot.appendItems([overviewSectionID], toSection: .overview)
             case .popular:
                 snapshot.appendItems(person.popularMovies, toSection: .popular)
-            case .creditCategories:
-                snapshot.appendItems(creditSections, toSection: .creditCategories)
+            case .departments:
+                snapshot.appendItems([departmentsSectionID], toSection: .departments)
             case .castCredits:
                 snapshot.appendItems(person.castCredits, toSection: .castCredits)
             case .crewCredits(department: let department):
@@ -272,6 +274,10 @@ class PersonDetailDataSource {
                 }
                 snapshot.appendItems(person.information, toSection: .info)
             }
+        }
+        
+        if !creditSections.isEmpty, force {
+            snapshot.reloadSections([.departments])
         }
     
         dataSource.apply(snapshot, animatingDifferences: animated)

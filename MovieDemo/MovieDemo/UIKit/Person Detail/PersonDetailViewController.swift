@@ -154,6 +154,23 @@ class PersonDetailViewController: UIViewController {
         dataSource.openSocialLink = { socialLink in
             UIApplication.shared.open(socialLink.url)
         }
+        
+        dataSource.willChangeSelectedDepartment = { [unowned self] newSection in
+            self.updateScrollPosition(with: newSection)
+        }
+    }
+    
+    fileprivate func updateScrollPosition(with newSection: PersonDetailDataSource.Section) {
+        //Scroll to last item of new section if current section has more items
+        if let creditsSection = dataSource.sectionForCredits,
+           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
+            let newCount = dataSource.itemCount(for: newSection)
+            if lasVisibleIndexPath.row > newCount {
+                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
+                                            at: .bottom,
+                                            animated: true)
+            }
+        }
     }
     
     fileprivate func setupStore()  {
@@ -182,16 +199,11 @@ class PersonDetailViewController: UIViewController {
         UIView.transition(with: self.collectionView, duration: 0.2, options: .transitionCrossDissolve) {
             self.dataSource.reload(force: true, animated: false)
         }
-
-        if let indexPath = dataSource.indexPathForSelectedCreditSection {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-        }
     }
     
     fileprivate func handleError() {
         router?.handle(error: .refreshError, shouldDismiss: true)
     }
-    
 }
 
 //MARK: - Header Animations
@@ -287,45 +299,8 @@ extension PersonDetailViewController: UICollectionViewDelegate {
                let movie = crewCredit.movie {
                 router?.showMovieDetail(movie: movie)
             }
-        case .creditCategories:
-            selectCategory(at: indexPath)
         default:
             break
-        }
-        
-    }
-    
-    fileprivate func selectCategory(at newIndexPath: IndexPath) {
-        //Deselect other cells
-        let visibleIndexPaths = collectionView.indexPathsForVisibleItems.filter { $0.section == newIndexPath.section }
-        for indexPath in visibleIndexPaths {
-            if let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell {
-                cell.setSelection(false)
-            }
-        }
-        
-        //Select new cell
-        let cell = collectionView.cellForItem(at: newIndexPath) as? CategoryCell
-        cell?.setSelection(true)
-        
-        //Scroll to last item of new section if current section has more items
-        if let creditsSection = dataSource.sectionForCredits,
-           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
-            let newCount = dataSource.itemCount(for: dataSource.creditSections[newIndexPath.row])
-            if lasVisibleIndexPath.row > newCount {
-                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
-                                            at: .bottom,
-                                            animated: true)
-            }
-        }
-        
-        dataSource.selectedCreditSection = dataSource.creditSections[newIndexPath.row]
-        dataSource.reload()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let categoryCell = cell as? CategoryCell {
-            categoryCell.setSelection(indexPath == dataSource.indexPathForSelectedCreditSection)
         }
     }
     

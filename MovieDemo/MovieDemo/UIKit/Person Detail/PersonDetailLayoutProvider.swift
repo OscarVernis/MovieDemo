@@ -19,8 +19,8 @@ struct PersonDetailLayoutProvider {
             return makeOverview()
         case .popular:
             return makePopular()
-        case .creditCategories:
-            return makeCreditCategories()
+        case .departments:
+            return makeCreditDepartments()
         case .castCredits, .crewCredits:
             return makeCredits()
         case .info:
@@ -62,14 +62,14 @@ struct PersonDetailLayoutProvider {
         return section
     }
     
-    fileprivate static func makeCreditCategories() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createHorizontalCategorySection()
-        
-        section.contentInsets.top = 4
-        section.contentInsets.bottom = 4
+    fileprivate static func makeCreditDepartments() -> NSCollectionLayoutSection {
+        let section = sectionBuilder.createSection(groupHeight: .absolute(32))
+        section.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
+        let margin = MoviesCompositionalLayoutBuilder.spacing
+        sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: margin, bottom: 0, trailing: margin)
         
         return section
     }

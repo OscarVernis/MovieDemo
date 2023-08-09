@@ -22,6 +22,7 @@ class CategorySelectionView: UIView {
     
     var selectedBackgroundColor: UIColor = .label
     var unselectedBackgroundgColor: UIColor = .systemGray6
+    private var margin: CGFloat = 20
     
     var didSelectItem: ((Int) -> Void)? = nil
     
@@ -44,10 +45,11 @@ class CategorySelectionView: UIView {
         backgroundColor = .clear
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout())
+        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
         addSubview(collectionView)
-        collectionView.anchorTo(view: self)
+        collectionView.anchor(to: self)
         
         CategoryCell.register(to: collectionView)
         
@@ -57,9 +59,16 @@ class CategorySelectionView: UIView {
     }
     
     private func layout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { _, _ in
+        let layout = UICollectionViewCompositionalLayout { [unowned self] _, _ in
             let sectionBuilder = MoviesCompositionalLayoutBuilder()
-            let section = sectionBuilder.createHorizontalCategorySection()
+            let section = sectionBuilder.createSection(itemWidth: .estimated(1),
+                                                       itemHeight: .absolute(32),
+                                                       groupWidth: .estimated(1),
+                                                       groupHeight: .absolute(32),
+                                                       margin: self.margin)
+            
+            section.orthogonalScrollingBehavior = .continuous
+            section.interGroupSpacing = 12
             
             return section
         }
