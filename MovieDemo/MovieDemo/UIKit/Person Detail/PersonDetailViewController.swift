@@ -161,16 +161,30 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func updateScrollPosition(with newSection: PersonDetailDataSource.Section) {
-        //Scroll to last item of new section if current section has more items
-        if let creditsSection = dataSource.sectionForCredits,
-           let lasVisibleIndexPath = collectionView.indexPathsForVisibleItems.filter({ $0.section == creditsSection }).sorted().last {
-            let newCount = dataSource.itemCount(for: newSection)
-            if lasVisibleIndexPath.row > newCount {
-                collectionView.scrollToItem(at: IndexPath(row: newCount, section: creditsSection),
-                                            at: .bottom,
-                                            animated: true)
-            }
+        let safeAreaBottom = view.safeAreaInsets.bottom
+        let safeAreaTop = view.safeAreaInsets.top
+        
+        let departmentsSectionHeight: CGFloat =
+        PersonDetailLayoutProvider.departmentsTitleHeight +
+        PersonDetailLayoutProvider.departmentsCellHeight +
+        PersonDetailLayoutProvider.departmentsTopPadding +
+        PersonDetailLayoutProvider.departmentsBottomPadding
+        
+        let targetHeight = view.frame.size.height - safeAreaTop - departmentsSectionHeight
+        
+        let creditCellHeight: CGFloat = PersonDetailLayoutProvider.creditCellHeight
+        let newCount = dataSource.itemCount(for: newSection)
+        let newSectionHeight = creditCellHeight * CGFloat(newCount)
+        
+        collectionView.showsVerticalScrollIndicator = false //Hide indicator to avoid jump when setting offset and inset
+        let contentOffset = collectionView.contentOffset
+        if newSectionHeight < targetHeight {
+            collectionView.contentInset.bottom = targetHeight - newSectionHeight
+        } else {
+            collectionView.contentInset.bottom = safeAreaBottom
         }
+        collectionView.setContentOffset(contentOffset, animated: false) //Restore offset to avoid jump when setting inset
+        collectionView.showsVerticalScrollIndicator = true //Restore indicators after setting offset
     }
     
     fileprivate func setupStore()  {
@@ -311,6 +325,7 @@ extension PersonDetailViewController: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//       print(collectionView.contentOffset.y)
         updateHeader()
     }
     

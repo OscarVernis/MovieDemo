@@ -155,21 +155,6 @@ class PersonDetailDataSource {
     }
     
     //MARK: - Helpers
-    var indexPathForSelectedCreditSection: IndexPath? {
-        let section = sections.firstIndex(of: .departments)
-        let row = creditSections.firstIndex(of: selectedCreditSection)
-        
-        if let section, let row {
-            return IndexPath(row: row, section: section)
-        } else {
-            return nil
-        }
-    }
-    
-    var sectionForCredits: Int? {
-        sections.firstIndex(of: selectedCreditSection)
-    }
-    
     func itemCount(for section: Section) -> Int {
         switch section {
         case .castCredits:
@@ -187,9 +172,8 @@ class PersonDetailDataSource {
     
     //MARK: - Reload
     private func selectDepartment(at index: Int) {
-        let newSelectedSection = creditSections[index]
-        willChangeSelectedDepartment?(newSelectedSection)
-        selectedCreditSection = newSelectedSection
+        selectedCreditSection = creditSections[index]
+        willChangeSelectedDepartment?(selectedCreditSection)
         reload()
     }
     

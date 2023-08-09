@@ -11,6 +11,12 @@ import UIKit
 struct PersonDetailLayoutProvider {
     private static var sectionBuilder = MoviesCompositionalLayoutBuilder()
     
+    static var creditCellHeight: CGFloat = 121
+    static var departmentsTitleHeight: CGFloat = 48
+    static var departmentsCellHeight: CGFloat = 32
+    static var departmentsTopPadding: CGFloat = 4
+    static var departmentsBottomPadding: CGFloat = 4
+
     static func layout(for section: PersonDetailDataSource.Section) -> NSCollectionLayoutSection? {
         switch section {
         case .loading:
@@ -54,7 +60,7 @@ struct PersonDetailLayoutProvider {
     }
     
     fileprivate static func makeCredits() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createListSection(height: 121)
+        let section = sectionBuilder.createListSection(height: creditCellHeight)
         
         section.contentInsets.top = 5
         section.contentInsets.bottom = 0
@@ -63,8 +69,8 @@ struct PersonDetailLayoutProvider {
     }
     
     fileprivate static func makeCreditDepartments() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createSection(groupHeight: .absolute(32))
-        section.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
+        let section = sectionBuilder.createSection(groupHeight: .absolute(departmentsCellHeight))
+        section.contentInsets = NSDirectionalEdgeInsets(top: departmentsTopPadding, leading: 0, bottom: departmentsBottomPadding, trailing: 0)
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
