@@ -21,8 +21,13 @@ class PersonHeaderView: UIView {
     private var gradientCancellable: AnyCancellable?
 
     var blurAnimator: UIViewPropertyAnimator!
-
+    
     override func awakeFromNib() {
+        setupGradient()
+        setupBlurAnimator()
+    }
+    
+    fileprivate func setupGradient() {
         gradient = CAGradientLayer()
         gradient.frame = personImageView.bounds
         gradient.colors = [UIColor.black.cgColor,
@@ -37,8 +42,6 @@ class PersonHeaderView: UIView {
                 self?.gradient.frame = bounds
                 CATransaction.commit()
             }
-        
-        setupBlurAnimator()
     }
     
     fileprivate func setupBlurAnimator() {

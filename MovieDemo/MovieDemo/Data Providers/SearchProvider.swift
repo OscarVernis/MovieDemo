@@ -9,7 +9,12 @@
 import Foundation
 import Combine
 
-class SearchProvider: PaginatedProvider<Any> {
+enum SearchProviderResultItem: Hashable {
+    case person(PersonViewModel)
+    case movie(MovieViewModel)
+}
+
+class SearchProvider: PaginatedProvider<SearchProviderResultItem> {
     typealias Model = Any
 
     @Published var query: String = "" {
@@ -64,14 +69,12 @@ class SearchProvider: PaginatedProvider<Any> {
             items.removeAll()
         }
             
-        let itemViewModels: [Any] = result.items.compactMap { item in
+        let itemViewModels: [SearchProviderResultItem] = result.items.compactMap { item in
             switch item {
-            case let movie as Movie:
-               return MovieViewModel(movie: movie)
-            case let person as Person:
-                return PersonViewModel(person: person)
-            default:
-                return nil
+            case .movie(let movie):
+                return .movie(MovieViewModel(movie: movie))
+            case .person(let person):
+                return .person(PersonViewModel(person: person))
             }
         }
         

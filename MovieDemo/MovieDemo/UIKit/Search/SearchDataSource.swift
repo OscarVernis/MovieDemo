@@ -35,13 +35,12 @@ class SearchDataSource: ProviderPagingDataSource<SearchProvider, UICollectionVie
     }
     
     private func mainCell(collectionView: UICollectionView, for item: AnyHashable, at indexPath: IndexPath) -> UICollectionViewCell {
-        switch item {
-        case let movie as MovieViewModel:
+        let searchItem = item as! SearchProviderResultItem
+        switch searchItem {
+        case .movie(let movie):
             return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MovieInfoListCell.configure)
-        case let person as PersonViewModel:
+        case .person(let person):
             return collectionView.cell(at: indexPath, model: person, cellConfigurator: CreditPhotoListCell.configure)
-        default:
-            fatalError("Unknown Media Type")
         }
     }
     

@@ -60,9 +60,7 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let self = self else { return nil }
-            
+        let layout = UICollectionViewCompositionalLayout { [unowned self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in            
             let section = self.dataSource.sections[sectionIndex]
             return PersonDetailLayoutProvider.layout(for: section)
         }
@@ -73,13 +71,12 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func setup() {
-        //Setup CollectionView
-        collectionView.delegate = self
-        
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.delegate = self
         
+        //Setup CollectionView
+        collectionView.delegate = self
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
@@ -88,7 +85,7 @@ class PersonDetailViewController: UIViewController {
         let bottomInset = UIWindow.mainWindow.bottomInset
         headerView.headerHeightConstraint.constant = height
         collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
-        
+
         //Set so the scrollIndicator stops before the status bar
         collectionView.scrollIndicatorInsets = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
         
@@ -111,13 +108,13 @@ class PersonDetailViewController: UIViewController {
         
         //Setup Title
         titleViewContainer.addSubview(titleView)
-        titleView.translatesAutoresizingMaskIntoConstraints =   false
+        titleView.translatesAutoresizingMaskIntoConstraints = false
         titleViewTopConstraint = titleView.topAnchor.constraint(equalTo: titleViewContainer.topAnchor, constant: 20)
         NSLayoutConstraint.activate([
-            titleView.leadingAnchor.constraint(equalTo: titleViewContainer.leadingAnchor, constant: 0),
-            titleView.trailingAnchor.constraint(equalTo:titleViewContainer.trailingAnchor, constant: 0),
             titleViewTopConstraint,
-            titleView.bottomAnchor.constraint(equalTo: titleViewContainer.bottomAnchor, constant: 0)
+            titleView.bottomAnchor.constraint(equalTo: titleViewContainer.bottomAnchor, constant: 0),
+            titleView.leadingAnchor.constraint(equalTo: titleViewContainer.leadingAnchor, constant: 0),
+            titleView.trailingAnchor.constraint(equalTo:titleViewContainer.trailingAnchor, constant: 0)
         ])
         navigationItem.titleView = titleViewContainer
     }

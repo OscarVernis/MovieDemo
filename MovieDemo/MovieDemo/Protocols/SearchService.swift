@@ -9,7 +9,12 @@
 import Foundation
 import Combine
 
-typealias SearchResult = (items: [Any], totalPages: Int)
+enum SearchResultItem {
+    case person(Person)
+    case movie(Movie)
+}
+
+typealias SearchResult = (items: [SearchResultItem], totalPages: Int)
 
 typealias SearchService = (_ query: String, _ page: Int) -> AnyPublisher<SearchResult, Error>
 

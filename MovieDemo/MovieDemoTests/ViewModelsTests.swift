@@ -34,7 +34,7 @@ class ViewModelsTests: XCTestCase {
         XCTAssertEqual(viewModel.crew.count, 112)
         XCTAssertEqual(viewModel.recommendedMovies.count, 21)
         XCTAssertEqual(viewModel.topCast.count, 8)
-        XCTAssertEqual(viewModel.topCrew.count, 8)
+        XCTAssertEqual(viewModel.topCrew.count, 7)
         XCTAssertEqual(viewModel.videos.count, 7)
         XCTAssertEqual(viewModel.infoArray.count, 6)
     }
@@ -52,7 +52,6 @@ class ViewModelsTests: XCTestCase {
         XCTAssertEqual(viewModel.id, 10859)
         XCTAssertEqual(viewModel.name, "Ryan Reynolds")
         XCTAssertEqual(viewModel.popularMovies.count, 8)
-        XCTAssertEqual(viewModel.castCredits.count, 84)
-        XCTAssertEqual(viewModel.crewCredits.count, 18)
+        XCTAssertEqual(viewModel.credits.count, 84)
     }
 }

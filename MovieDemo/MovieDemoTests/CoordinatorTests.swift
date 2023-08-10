@@ -70,7 +70,7 @@ class CoordinatorTests: XCTestCase {
                                   animated: false)
         
         let movieList = navCont?.visibleViewController
-        XCTAssert(movieList is ListViewController<BasicProvider<MovieViewModel>, MovieInfoListCell>, "Expected ListViewController, " + "but was \(String(describing: movieList))")
+        XCTAssert(movieList is ListViewController, "Expected ListViewController, " + "but was \(String(describing: movieList))")
     }
     
     func test_Coordinator_Shows_PersonDetail() throws {
@@ -92,7 +92,7 @@ class CoordinatorTests: XCTestCase {
                                        animated: false)
         
         let castList = navCont?.visibleViewController
-        XCTAssert(castList is ListViewController<BasicProvider<CastCreditViewModel>, CreditPhotoListCell>)
+        XCTAssert(castList is CastCreditsViewController)
     }
     
     func test_Coordinator_Shows_CrewList() throws {
@@ -104,7 +104,7 @@ class CoordinatorTests: XCTestCase {
                                        animated: false)
         
         let castList = navCont?.visibleViewController
-        XCTAssert(castList is ListViewController<BasicProvider<CrewCreditViewModel>, CreditPhotoListCell>)
+        XCTAssert(castList is CrewCreditsViewController)
     }
     
     func test_Coordinator_Shows_UserProfile_IfLoggedIn() throws {

@@ -65,12 +65,12 @@ extension TMDBClient {
         
         return publisher
             .compactMap { result in
-                let searchResults: [Any] = result.items.compactMap { item -> Any? in
+                let searchResults: [SearchResultItem] = result.items.compactMap { item -> SearchResultItem? in
                     switch item {
-                    case .person(let person):
-                        return person.toPerson()
-                    case .movie(let movie):
-                        return movie.toMovie()
+                    case .person(let codablePerson):
+                        return .person(codablePerson.toPerson())
+                    case .movie(let codableMovie):
+                        return .movie(codableMovie.toMovie())
                     case .unknown:
                         return nil
                     }

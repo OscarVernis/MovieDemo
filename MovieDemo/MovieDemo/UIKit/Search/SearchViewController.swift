@@ -33,13 +33,12 @@ class SearchViewController: ListViewController {
             //Avoid the navigation bar showing after the Person Detail is shown
             self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
             
-            switch item {
-            case let movie as MovieViewModel:
+            let searchItem = item as! SearchProviderResultItem
+            switch searchItem {
+            case .movie(let movie):
                 self.searchRouter?.showMovieDetail(movie: movie)
-            case let person as PersonViewModel:
+            case .person(let person):
                 self.searchRouter?.showPersonProfile(person)
-            default:
-                break
             }
         }
     }
