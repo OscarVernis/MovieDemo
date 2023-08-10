@@ -9,7 +9,7 @@
 import UIKit
 
 struct HomeLayoutProvider {
-    private static let sectionBuilder = MoviesCompositionalLayoutBuilder.self
+    private static let sectionBuilder = CompositionalLayoutBuilder.self
     
     static func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = HomeDataSource.Section(rawValue: sectionIndex)

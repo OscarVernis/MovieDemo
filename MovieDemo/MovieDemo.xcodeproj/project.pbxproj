@@ -16,7 +16,7 @@
 		550577A6284DAA4D007ED892 /* HomeString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550577A5284DAA4D007ED892 /* HomeString.swift */; };
 		550577A8284DAA7A007ED892 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550577A7284DAA7A007ED892 /* Localizable.swift */; };
 		550577AA284DAA8E007ED892 /* ServiceString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550577A9284DAA8E007ED892 /* ServiceString.swift */; };
-		5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */; };
+		5506BAB02512E2B10052B0F2 /* CompositionalLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAAC2512E2B10052B0F2 /* CompositionalLayoutBuilder.swift */; };
 		5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAB72512EC9F0052B0F2 /* CreditCell.swift */; };
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
 		550869B22855765700465008 /* UIWindow+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550869B12855765700465008 /* UIWindow+Utils.swift */; };
@@ -322,7 +322,7 @@
 		550577A5284DAA4D007ED892 /* HomeString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeString.swift; sourceTree = "<group>"; };
 		550577A7284DAA7A007ED892 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		550577A9284DAA8E007ED892 /* ServiceString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceString.swift; sourceTree = "<group>"; };
-		5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesCompositionalLayoutBuilder.swift; sourceTree = "<group>"; };
+		5506BAAC2512E2B10052B0F2 /* CompositionalLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionalLayoutBuilder.swift; sourceTree = "<group>"; };
 		5506BAB72512EC9F0052B0F2 /* CreditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCell.swift; sourceTree = "<group>"; };
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
 		550869B12855765700465008 /* UIWindow+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Utils.swift"; sourceTree = "<group>"; };
@@ -1172,7 +1172,7 @@
 		5587114C25108082005A0975 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				5506BAAC2512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift */,
+				5506BAAC2512E2B10052B0F2 /* CompositionalLayoutBuilder.swift */,
 				55893B6A2513F4EA00233677 /* CollectionView Reusable */,
 				552E705A251547D7009CC4CD /* Cells */,
 				551583A52A81DA0D00EDE09E /* Views */,
@@ -1874,7 +1874,7 @@
 				55518D442511292E00DAEB7F /* SectionTitleView.swift in Sources */,
 				5511D95525317056004B3697 /* BlurButton.swift in Sources */,
 				55E8A7CC285CF14800588D62 /* UserProfile.swift in Sources */,
-				5506BAB02512E2B10052B0F2 /* MoviesCompositionalLayoutBuilder.swift in Sources */,
+				5506BAB02512E2B10052B0F2 /* CompositionalLayoutBuilder.swift in Sources */,
 				5565DDF027E96D0800D7F4EB /* FavoriteRequestBody.swift in Sources */,
 				5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */,
 				55D6D9DF2A79872100DEB798 /* ProviderPagingDataSource.swift in Sources */,

@@ -80,15 +80,7 @@ class CrewCreditsViewController: UIViewController {
     
     private func defaultLayout() -> UICollectionViewCompositionalLayout {
         let layout = ListViewController.defaultLayout()
-
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
-        let departmentsHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: CrewCreditsViewController.globalHeaderKind, alignment: .top)
-
-        departmentsHeader.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
-
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.boundarySupplementaryItems = [departmentsHeader]
-        layout.configuration = config
+        layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .absolute(40), kind: CrewCreditsViewController.globalHeaderKind)
         
         return layout
     }

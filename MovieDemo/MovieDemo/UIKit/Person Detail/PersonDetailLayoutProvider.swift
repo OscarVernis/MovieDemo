@@ -9,7 +9,7 @@
 import UIKit
 
 struct PersonDetailLayoutProvider {
-    private static var sectionBuilder = MoviesCompositionalLayoutBuilder.self
+    private static var sectionBuilder = CompositionalLayoutBuilder.self
     
     static var creditCellHeight: CGFloat = 121
     static var departmentsTitleHeight: CGFloat = 48
@@ -74,7 +74,7 @@ struct PersonDetailLayoutProvider {
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
-        let margin = MoviesCompositionalLayoutBuilder.spacing
+        let margin = CompositionalLayoutBuilder.spacing
         sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: margin, bottom: 0, trailing: margin)
         
         return section

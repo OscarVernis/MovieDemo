@@ -1,5 +1,5 @@
 //
-//  MoviesCompositionalLayoutBuilder.swift
+//  CompositionalLayoutBuilder.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 15/09/20.
@@ -8,7 +8,7 @@
 
 import UIKit
  
-struct MoviesCompositionalLayoutBuilder {
+struct CompositionalLayoutBuilder {
     static var spacing: CGFloat {
         UIWindow.mainWindow.bounds.width < 500 ? 20 : 50
     }
@@ -42,7 +42,7 @@ struct MoviesCompositionalLayoutBuilder {
                        groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
                        groupHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
                        interItemSpacing: NSCollectionLayoutSpacing? = nil,
-                       margin: CGFloat = MoviesCompositionalLayoutBuilder.spacing,
+                       margin: CGFloat = CompositionalLayoutBuilder.spacing,
                        columns: Int = 1
     ) ->  NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: itemWidth, heightDimension: itemHeight)
@@ -70,7 +70,7 @@ struct MoviesCompositionalLayoutBuilder {
     
     //MARK: - Lists
     //Regular List
-    static func createListSection(height: CGFloat = 150, margin: CGFloat = MoviesCompositionalLayoutBuilder.spacing, columns: Int = 1) ->  NSCollectionLayoutSection {
+    static func createListSection(height: CGFloat = 150, margin: CGFloat = CompositionalLayoutBuilder.spacing, columns: Int = 1) ->  NSCollectionLayoutSection {
         let section = createSection(groupWidth: .fractionalWidth(1.0/CGFloat(columns)),
                                     groupHeight: .absolute(height),
                                     interItemSpacing: .fixed(8),
@@ -83,7 +83,7 @@ struct MoviesCompositionalLayoutBuilder {
     //List with background decorator
     static func createDecoratedListSection(height: CGFloat = 50, topSpacing: CGFloat = 0, bottomSpacing: CGFloat = 15, itemSpacing: CGFloat = 5) ->  NSCollectionLayoutSection {
         let section = createListSection(height: height)
-        let spacing = MoviesCompositionalLayoutBuilder.spacing
+        let spacing = CompositionalLayoutBuilder.spacing
 
         section.interGroupSpacing = itemSpacing
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: spacing, bottom: 20, trailing: spacing)

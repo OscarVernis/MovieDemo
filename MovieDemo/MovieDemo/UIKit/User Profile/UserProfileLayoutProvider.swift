@@ -9,7 +9,7 @@
 import UIKit
 
 struct UserProfileLayoutProvider {
-    private static let sectionBuilder = MoviesCompositionalLayoutBuilder.self
+    private static let sectionBuilder = CompositionalLayoutBuilder.self
     
     static func layout(for section: UserProfileDataSource.Section, itemCount: Int) -> NSCollectionLayoutSection? {
         switch section {
