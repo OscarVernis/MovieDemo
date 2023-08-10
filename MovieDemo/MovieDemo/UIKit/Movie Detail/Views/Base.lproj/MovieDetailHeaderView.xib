@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieDetailHeaderView" id="qol-Ef-Vfl" customClass="MovieDetailHeaderView" customModule="MovieDemo" customModuleProvider="target">
+        <collectionReusableView opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="qol-Ef-Vfl" customClass="MovieDetailHeaderView" customModule="MovieDemo" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="933"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
@@ -275,6 +275,9 @@
         </collectionReusableView>
     </objects>
     <designables>
+        <designable name="1VZ-S8-68h">
+            <size key="intrinsicContentSize" width="40" height="40"/>
+        </designable>
         <designable name="KW3-ni-2DH">
             <size key="intrinsicContentSize" width="80.5" height="21"/>
         </designable>

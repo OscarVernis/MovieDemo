@@ -13,8 +13,8 @@ struct MovieDetailLayoutProvider {
     
     static func layout(for section: MovieDetailDataSource.Section) -> NSCollectionLayoutSection? {
         switch section {
-        case .header:
-            return makeHeader()
+        case .loading:
+            return makeLoading()
         case .cast:
             return makeCast()
         case .crew:
@@ -28,11 +28,8 @@ struct MovieDetailLayoutProvider {
         }
     }
 
-    private static func makeHeader() -> NSCollectionLayoutSection {
+    private static func makeLoading() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 100, margin: 0)
-
-        let sectionHeader = sectionBuilder.createDetailSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }

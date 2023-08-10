@@ -10,6 +10,8 @@ import UIKit
 import Combine
 
 class MovieDetailHeaderView: UICollectionReusableView {
+    static var headerkind = "MovieDetailHeaderView.globalHeader"
+    
     @IBOutlet weak var topImageConstraint: NSLayoutConstraint!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var containerStackView: UIStackView!

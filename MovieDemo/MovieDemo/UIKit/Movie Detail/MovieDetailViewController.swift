@@ -85,6 +85,8 @@ class MovieDetailViewController: UIViewController {
             return MovieDetailLayoutProvider.layout(for: section)
         }
         
+        layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .estimated(500), kind: MovieDetailHeaderView.headerkind)
+        
         return layout
     }
     
@@ -112,13 +114,19 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate func setupDataSource() {
-        dataSource = MovieDetailDataSource(collectionView: collectionView, supplementaryViewProvider: { [unowned self] collectionView, elementKind, indexPath in
-            let section = self.dataSource.sections[indexPath.section]
-            switch section {
-            case .header:
-                return movieHeaderView(at: indexPath)
-            default:
-                return sectionTitleHeader(at: indexPath)
+        let movieHeaderRegistration = UICollectionView.SupplementaryRegistration<MovieDetailHeaderView>(supplementaryNib: MovieDetailHeaderView.namedNib(), elementKind: MovieDetailHeaderView.headerkind) { [unowned self] header, _, _ in
+            self.configureMovieHeader(header: header)
+        }
+        
+        let sectionTitleRegistration = UICollectionView.SupplementaryRegistration<SectionTitleView>(supplementaryNib: SectionTitleView.namedNib(), elementKind: UICollectionView.elementKindSectionHeader) { [unowned self] header, _, indexPath in
+            self.configureTitleHeader(header: header, indexPath: indexPath)
+        }
+        
+        dataSource = MovieDetailDataSource(collectionView: collectionView, supplementaryViewProvider: { collectionView, kind, indexPath in
+            if kind == MovieDetailHeaderView.headerkind {
+                return collectionView.dequeueConfiguredReusableSupplementary(using: movieHeaderRegistration, for: indexPath)
+            } else {
+                return collectionView.dequeueConfiguredReusableSupplementary(using: sectionTitleRegistration, for: indexPath)
             }
         })
         
@@ -129,48 +137,40 @@ class MovieDetailViewController: UIViewController {
     }
     
     //MARK: - Setup Headers
-    fileprivate func movieHeaderView(at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: MovieDetailHeaderView.reuseIdentifier, for: indexPath) as! MovieDetailHeaderView
-        
-        headerView.configure(movie: movie,
+    fileprivate func configureMovieHeader(header: MovieDetailHeaderView) {
+        header.configure(movie: movie,
                              isLoading: store.isLoading,
                              showUserActions: store.showUserActions)
         
         if !store.isLoading {
-            headerView.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
+            header.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
             
-            headerView.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
-            headerView.watchlistButton?.addTarget(self, action: #selector(watchlistTapped), for: .touchUpInside)
-            headerView.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
+            header.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
+            header.watchlistButton?.addTarget(self, action: #selector(watchlistTapped), for: .touchUpInside)
+            header.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
         }
         
-        headerView.imageTapHandler = showImage
+        header.imageTapHandler = showImage
                 
-        headerView.heightConstraint.constant = UIWindow.mainWindow.frame.width * 1.5
+        header.heightConstraint.constant = UIWindow.mainWindow.frame.width * 1.5
         
-        self.headerView = headerView
-        
-        return headerView
+        self.headerView = header
     }
     
-    fileprivate func sectionTitleHeader(at indexPath: IndexPath) -> UICollectionReusableView {
+    fileprivate func configureTitleHeader(header: SectionTitleView, indexPath: IndexPath) {
         let section = dataSource.sections[indexPath.section]
-
-        let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
-        SectionTitleView.configureForDetail(headerView: sectionTitleView, title: self.dataSource.sectionTitle(for: section))
+        SectionTitleView.configureForDetail(headerView: header, title: dataSource.sectionTitle(for: section))
         
         switch section {
         case .cast:
-            sectionTitleView.tapHandler = showCast
+            header.tapHandler = showCast
         case .crew:
-            sectionTitleView.tapHandler = showCrew
+            header.tapHandler = showCrew
         case .recommended:
-            sectionTitleView.tapHandler = showRecommendedMovies
+            header.tapHandler = showRecommendedMovies
         default:
-            sectionTitleView.tapHandler = nil
+            header.tapHandler = nil
         }
-        
-        return sectionTitleView
     }
     
     //MARK: - Setup Store

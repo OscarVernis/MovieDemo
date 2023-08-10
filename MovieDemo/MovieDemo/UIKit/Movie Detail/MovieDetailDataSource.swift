@@ -10,7 +10,7 @@ import UIKit
 
 class MovieDetailDataSource {
     enum Section: Int, CaseIterable {
-        case header
+        case loading
         case cast
         case crew
         case videos
@@ -43,8 +43,6 @@ class MovieDetailDataSource {
     
     //MARK: - Cell Setup
     func registerReusableViews(collectionView: UICollectionView) {
-        MovieDetailHeaderView.registerHeader(withCollectionView: collectionView)
-        SectionTitleView.registerHeader(withCollectionView: collectionView)
         LoadingCell.register(to: collectionView)
         CreditCell.register(to: collectionView)
         InfoListCell.register(to: collectionView)
@@ -56,7 +54,7 @@ class MovieDetailDataSource {
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
         let section = sections[indexPath.section]
         switch section {
-        case .header:
+        case .loading:
             return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         case .cast:
             let model = movie.topCast[indexPath.row]
@@ -91,7 +89,7 @@ class MovieDetailDataSource {
     //MARK: - Reload    
     fileprivate func setupSections() {
         sections = [
-            .header,
+            .loading,
             .cast,
             .crew,
             .videos,
@@ -104,8 +102,8 @@ class MovieDetailDataSource {
     
     fileprivate func validate(section: Section) -> Bool {
         switch section {
-        case .header:
-            return true
+        case .loading:
+            return isLoading
         case .cast:
             if !movie.topCast.isEmpty { return true }
         case .crew:
@@ -129,10 +127,8 @@ class MovieDetailDataSource {
         
         for section in sections {
             switch section {
-            case .header:
-                if isLoading {
-                    snapshot.appendItems([loadingCellId], toSection: .header)
-                }
+            case .loading:
+                snapshot.appendItems([loadingCellId], toSection: .loading)
             case .cast:
                 snapshot.appendItems(movie.topCast, toSection: .cast)
             case .crew:
@@ -155,7 +151,7 @@ class MovieDetailDataSource {
     //MARK: - Headers
     func sectionTitle(for section: Section) -> String {
         switch section {
-        case .header:
+        case .loading:
             return ""
         case .cast:
             return .localized(MovieString.Cast)
