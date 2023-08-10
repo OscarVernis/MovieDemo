@@ -60,7 +60,7 @@ class CategorySelectionView: UIView {
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [unowned self] _, _ in
-            let sectionBuilder = MoviesCompositionalLayoutBuilder()
+            let sectionBuilder = MoviesCompositionalLayoutBuilder.self
             let section = sectionBuilder.createSection(itemWidth: .estimated(1),
                                                        itemHeight: .absolute(32),
                                                        groupWidth: .estimated(1),

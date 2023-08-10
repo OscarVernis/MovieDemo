@@ -9,7 +9,7 @@
 import UIKit
 
 struct PersonDetailLayoutProvider {
-    private static var sectionBuilder = MoviesCompositionalLayoutBuilder()
+    private static var sectionBuilder = MoviesCompositionalLayoutBuilder.self
     
     static var creditCellHeight: CGFloat = 121
     static var departmentsTitleHeight: CGFloat = 48

@@ -9,7 +9,7 @@
 import UIKit
 
 struct HomeLayoutProvider {
-    private static let sectionBuilder = MoviesCompositionalLayoutBuilder()
+    private static let sectionBuilder = MoviesCompositionalLayoutBuilder.self
     
     static func createLayout(sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let section = HomeDataSource.Section(rawValue: sectionIndex)
@@ -29,7 +29,6 @@ struct HomeLayoutProvider {
     }
     
     private static func makeBannerSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         let section: NSCollectionLayoutSection
@@ -43,7 +42,6 @@ struct HomeLayoutProvider {
     }
     
     private static func makeHorizontalPosterSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         let section: NSCollectionLayoutSection
@@ -57,7 +55,6 @@ struct HomeLayoutProvider {
     }
     
     private static func makeListSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         let section: NSCollectionLayoutSection
@@ -70,7 +67,6 @@ struct HomeLayoutProvider {
     }
     
     private static func makeDecoratedListSection() -> NSCollectionLayoutSection {
-        let sectionBuilder = MoviesCompositionalLayoutBuilder()
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
         
         let section: NSCollectionLayoutSection

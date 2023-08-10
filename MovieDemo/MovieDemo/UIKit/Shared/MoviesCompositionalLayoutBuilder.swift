@@ -9,16 +9,24 @@
 import UIKit
  
 struct MoviesCompositionalLayoutBuilder {
-    static var spacing: CGFloat = 20
-    
-    init() {
-        if UIWindow.mainWindow.bounds.width > 500 {
-            MoviesCompositionalLayoutBuilder.spacing = 50
-        }
+    static var spacing: CGFloat {
+        UIWindow.mainWindow.bounds.width < 500 ? 20 : 50
     }
     
     //MARK: - General
-    func createHeader(height: NSCollectionLayoutDimension) -> NSCollectionLayoutBoundarySupplementaryItem {
+    static func createGlobalHeaderConfiguration(height: NSCollectionLayoutDimension, kind: String, contentInsets: NSDirectionalEdgeInsets = .zero) -> UICollectionViewCompositionalLayoutConfiguration {
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: height)
+        let globlarHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: kind, alignment: .top)
+
+        globlarHeader.contentInsets = contentInsets
+
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.boundarySupplementaryItems = [globlarHeader]
+        
+        return config
+    }
+    
+    static func createHeader(height: NSCollectionLayoutDimension) -> NSCollectionLayoutBoundarySupplementaryItem {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                 heightDimension: height)
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
@@ -29,7 +37,7 @@ struct MoviesCompositionalLayoutBuilder {
         return sectionHeader
     }
     
-    func createSection(itemWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
+    static func createSection(itemWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
                        itemHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
                        groupWidth: NSCollectionLayoutDimension = .fractionalWidth(1.0),
                        groupHeight: NSCollectionLayoutDimension = .fractionalHeight(1.0),
@@ -51,18 +59,18 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //MARK: - Headers
-    func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    static func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         return createHeader(height: .absolute(48))
     }
     
     //The Header section for MovieDetailViewController
-    func createDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    static func createDetailSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         return createHeader(height: .estimated(500))
     }
     
     //MARK: - Lists
     //Regular List
-    func createListSection(height: CGFloat = 150, margin: CGFloat = MoviesCompositionalLayoutBuilder.spacing, columns: Int = 1) ->  NSCollectionLayoutSection {
+    static func createListSection(height: CGFloat = 150, margin: CGFloat = MoviesCompositionalLayoutBuilder.spacing, columns: Int = 1) ->  NSCollectionLayoutSection {
         let section = createSection(groupWidth: .fractionalWidth(1.0/CGFloat(columns)),
                                     groupHeight: .absolute(height),
                                     interItemSpacing: .fixed(8),
@@ -73,7 +81,7 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //List with background decorator
-    func createDecoratedListSection(height: CGFloat = 50, topSpacing: CGFloat = 0, bottomSpacing: CGFloat = 15, itemSpacing: CGFloat = 5) ->  NSCollectionLayoutSection {
+    static func createDecoratedListSection(height: CGFloat = 50, topSpacing: CGFloat = 0, bottomSpacing: CGFloat = 15, itemSpacing: CGFloat = 5) ->  NSCollectionLayoutSection {
         let section = createListSection(height: height)
         let spacing = MoviesCompositionalLayoutBuilder.spacing
 
@@ -89,7 +97,7 @@ struct MoviesCompositionalLayoutBuilder {
     
     //MARK: - Other
     //Horizontal scroll with no paging, several items at a time
-    func createHorizontalPosterSection() ->  NSCollectionLayoutSection {
+    static func createHorizontalPosterSection() ->  NSCollectionLayoutSection {
         let section = createSection(groupWidth: .estimated(140), groupHeight: .absolute(260))
 
         section.orthogonalScrollingBehavior = .continuous
@@ -99,7 +107,7 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //Similar to Poster section with a different size
-    func createHorizontalCreditSection() ->  NSCollectionLayoutSection {
+    static func createHorizontalCreditSection() ->  NSCollectionLayoutSection {
         let section = createSection(groupWidth: .absolute(115), groupHeight: .estimated(220))
 
         section.orthogonalScrollingBehavior = .continuous
@@ -109,14 +117,14 @@ struct MoviesCompositionalLayoutBuilder {
     }
     
     //Section with items that are screen wide, usually for showing just one item
-    func createEstimatedSection(height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
+    static func createEstimatedSection(height: CGFloat = 1.0) ->  NSCollectionLayoutSection {
         let section = createSection(itemHeight: .estimated(height), groupHeight: .estimated(height))
                                 
         return section
     }
     
     //Horizontal scroll, shows only one complete item and a peek at the next
-    func createBannerSection() ->  NSCollectionLayoutSection {
+    static func createBannerSection() ->  NSCollectionLayoutSection {
         let section = createSection(itemHeight: .estimated(1.0), groupWidth: .fractionalWidth(0.85), groupHeight: .estimated(500))
         
         section.orthogonalScrollingBehavior = .groupPaging
@@ -125,7 +133,7 @@ struct MoviesCompositionalLayoutBuilder {
         return section
     }
     
-    func createVideoBannerSection() ->  NSCollectionLayoutSection {
+    static func createVideoBannerSection() ->  NSCollectionLayoutSection {
         let section = createSection(itemWidth: .absolute(300), itemHeight: .absolute(190), groupWidth: .estimated(1), groupHeight: .estimated(1))
 
         section.orthogonalScrollingBehavior = .groupPaging

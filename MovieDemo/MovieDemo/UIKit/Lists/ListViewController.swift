@@ -61,7 +61,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
     
     static func defaultLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { _, _ in
-            let sectionBuilder = MoviesCompositionalLayoutBuilder()
+            let sectionBuilder = MoviesCompositionalLayoutBuilder.self
             
             let section = sectionBuilder.createListSection()
             section.contentInsets.bottom = 30

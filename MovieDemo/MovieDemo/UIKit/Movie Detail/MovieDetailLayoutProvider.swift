@@ -9,7 +9,7 @@
 import UIKit
 
 struct MovieDetailLayoutProvider {
-    private static var sectionBuilder = MoviesCompositionalLayoutBuilder()
+    private static var sectionBuilder = MoviesCompositionalLayoutBuilder.self
     
     static func layout(for section: MovieDetailDataSource.Section) -> NSCollectionLayoutSection? {
         switch section {
