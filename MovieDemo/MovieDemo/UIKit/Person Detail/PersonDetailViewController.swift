@@ -11,7 +11,7 @@ import Combine
 
 class PersonDetailViewController: UIViewController {
     var router: PersonDetailRouter?
-        
+    
     var collectionView: UICollectionView!
     var dataSource: PersonDetailDataSource!
     
@@ -30,13 +30,13 @@ class PersonDetailViewController: UIViewController {
     //MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         createViews()
         setup()
+        setupTitleView()
         setupDataSource()
         setupStore()
         setupCustomBackButton()
-        setupTitleView()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -59,27 +59,6 @@ class PersonDetailViewController: UIViewController {
         headerView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
     }
     
-    fileprivate func setupTitleView() {
-        //Create Title
-        let titleViewContainer = UIView()
-        titleViewContainer.clipsToBounds = false
-        titleView.font = UIFont(name: "Avenir Next Medium", size: 20)
-        titleView.textColor = .label
-        titleView.alpha = 0
-        
-        //Setup Title
-        titleViewContainer.addSubview(titleView)
-        titleView.translatesAutoresizingMaskIntoConstraints =   false
-        titleViewTopConstraint = titleView.topAnchor.constraint(equalTo: titleViewContainer.topAnchor, constant: 20)
-        NSLayoutConstraint.activate([
-            titleView.leadingAnchor.constraint(equalTo: titleViewContainer.leadingAnchor, constant: 0),
-            titleView.trailingAnchor.constraint(equalTo:titleViewContainer.trailingAnchor, constant: 0),
-            titleViewTopConstraint,
-            titleView.bottomAnchor.constraint(equalTo: titleViewContainer.bottomAnchor, constant: 0)
-        ])
-        navigationItem.titleView = titleViewContainer
-    }
-    
     fileprivate func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let self = self else { return nil }
@@ -89,7 +68,7 @@ class PersonDetailViewController: UIViewController {
         }
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
-
+        
         return layout
     }
     
@@ -122,6 +101,27 @@ class PersonDetailViewController: UIViewController {
         headerView.personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
     }
     
+    fileprivate func setupTitleView() {
+        //Create Title
+        let titleViewContainer = UIView()
+        titleViewContainer.clipsToBounds = false
+        titleView.font = UIFont(name: "Avenir Next Medium", size: 20)
+        titleView.textColor = .label
+        titleView.alpha = 0
+        
+        //Setup Title
+        titleViewContainer.addSubview(titleView)
+        titleView.translatesAutoresizingMaskIntoConstraints =   false
+        titleViewTopConstraint = titleView.topAnchor.constraint(equalTo: titleViewContainer.topAnchor, constant: 20)
+        NSLayoutConstraint.activate([
+            titleView.leadingAnchor.constraint(equalTo: titleViewContainer.leadingAnchor, constant: 0),
+            titleView.trailingAnchor.constraint(equalTo:titleViewContainer.trailingAnchor, constant: 0),
+            titleViewTopConstraint,
+            titleView.bottomAnchor.constraint(equalTo: titleViewContainer.bottomAnchor, constant: 0)
+        ])
+        navigationItem.titleView = titleViewContainer
+    }
+    
     fileprivate func setupDataSource() {
         dataSource = PersonDetailDataSource(collectionView: collectionView)
         
@@ -136,44 +136,17 @@ class PersonDetailViewController: UIViewController {
         }
         
         dataSource.willChangeSelectedDepartment = { [unowned self] department in
-            self.updateScrollPosition(with: department)
+            self.updateInsets(for: department)
         }
-    }
-    
-    fileprivate func updateScrollPosition(with department: String) {
-        let safeAreaBottom = view.safeAreaInsets.bottom
-        let safeAreaTop = view.safeAreaInsets.top
-        
-        let departmentsSectionHeight: CGFloat =
-        PersonDetailLayoutProvider.departmentsTitleHeight +
-        PersonDetailLayoutProvider.departmentsCellHeight +
-        PersonDetailLayoutProvider.departmentsTopPadding +
-        PersonDetailLayoutProvider.departmentsBottomPadding
-        
-        let targetHeight = view.frame.size.height - safeAreaTop - departmentsSectionHeight
-        
-        let creditCellHeight: CGFloat = PersonDetailLayoutProvider.creditCellHeight
-        let newCount = person.credits(for: department).count
-        let newSectionHeight = creditCellHeight * CGFloat(newCount)
-        
-        collectionView.showsVerticalScrollIndicator = false //Hide indicator to avoid jump when setting offset and inset
-        let contentOffset = collectionView.contentOffset
-        if newSectionHeight < targetHeight {
-            collectionView.contentInset.bottom = targetHeight - newSectionHeight
-        } else {
-            collectionView.contentInset.bottom = safeAreaBottom
-        }
-        collectionView.setContentOffset(contentOffset, animated: false) //Restore offset to avoid jump when setting inset
-        collectionView.showsVerticalScrollIndicator = true //Restore indicators after setting offset
     }
     
     fileprivate func setupStore()  {
         store.$person
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-            self?.storeDidUpdate()
-        }
-        .store(in: &cancellables)
+                self?.storeDidUpdate()
+            }
+            .store(in: &cancellables)
         
         store.$error
             .compactMap { $0 }
@@ -182,7 +155,7 @@ class PersonDetailViewController: UIViewController {
                 self?.handleError()
             }
             .store(in: &cancellables)
-
+        
         store.refresh()
     }
     
@@ -199,12 +172,40 @@ class PersonDetailViewController: UIViewController {
         router?.handle(error: .refreshError, shouldDismiss: true)
     }
     
+    fileprivate func updateInsets(for selectedDepartment: String) {
+        let safeAreaBottom = view.safeAreaInsets.bottom
+        let safeAreaTop = view.safeAreaInsets.top
+        
+        let departmentsSectionHeight: CGFloat =
+        PersonDetailLayoutProvider.departmentsTitleHeight +
+        PersonDetailLayoutProvider.departmentsCellHeight +
+        PersonDetailLayoutProvider.departmentsTopPadding +
+        PersonDetailLayoutProvider.departmentsBottomPadding
+        
+        let targetHeight = view.frame.size.height - safeAreaTop - departmentsSectionHeight
+        
+        let creditCellHeight: CGFloat = PersonDetailLayoutProvider.creditCellHeight
+        let newCount = person.credits(for: selectedDepartment).count
+        let newSectionHeight = creditCellHeight * CGFloat(newCount)
+        
+        collectionView.showsVerticalScrollIndicator = false //Hide indicator to avoid jump when setting offset and inset
+        let contentOffset = collectionView.contentOffset
+        if newSectionHeight < targetHeight {
+            collectionView.contentInset.bottom = targetHeight - newSectionHeight
+        } else {
+            collectionView.contentInset.bottom = safeAreaBottom
+        }
+        collectionView.setContentOffset(contentOffset, animated: false) //Restore offset to avoid jump when setting inset
+        collectionView.showsVerticalScrollIndicator = true //Restore indicators after setting offset
+    }
+    
     //MARK: - Header Animations
     fileprivate var showingNavBarTitle = false
     
     fileprivate func animateTitleView(show: Bool) {
         if show == showingNavBarTitle { return }
         
+        showingNavBarTitle = show
         UIView.animate(withDuration: show ? 0.15 : 0.2, delay: 0) {
             if show {
                 self.titleView.alpha = 1
@@ -217,14 +218,14 @@ class PersonDetailViewController: UIViewController {
             }
         }
     }
-
+    
     fileprivate func updateHeader() {
         let titleHeight: CGFloat = 60
         let headerHeight = collectionView.contentInset.top
         let threshold = -view.safeAreaInsets.top
         let topInset = view.safeAreaInsets.top
         let offset = collectionView.contentOffset.y
-
+        
         //Adjust header size
         var newHeight = headerHeight
         if offset <= threshold {
@@ -232,30 +233,28 @@ class PersonDetailViewController: UIViewController {
         } else {
             newHeight = topInset
         }
-
+        
         //Animate title
         if offset > threshold - 10 {
             animateTitleView(show: true)
         } else if offset < threshold + titleHeight + 30 {
             animateTitleView(show: false)
         }
-
+        
         //Set blur animation progress
-        var ratio: CGFloat
-        ratio = 1 - newHeight / (headerHeight * 0.75)
+        let ratio: CGFloat = 1 - newHeight / (headerHeight * 0.75)
         headerView.blurAnimator.fractionComplete = ratio
         
         let alpha = (newHeight - topInset - 5) / (headerHeight * 0.5)
         headerView.nameLabel.alpha = alpha
-
+        
         //Adjust header size
         if offset < -threshold {
             headerView.headerHeightConstraint.constant = newHeight
-            let bottomInset = UIWindow.mainWindow.bottomInset
-            collectionView.scrollIndicatorInsets  = UIEdgeInsets(top: max(newHeight, headerHeight), left: 0, bottom: bottomInset, right: 0)
+            collectionView.verticalScrollIndicatorInsets.top = max(newHeight, headerHeight)
         }
     }
-
+    
 }
 
 //MARK: - CollectionView Delegate
@@ -284,7 +283,6 @@ extension PersonDetailViewController: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//       print(collectionView.contentOffset.y)
         updateHeader()
     }
     
