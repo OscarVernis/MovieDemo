@@ -20,6 +20,10 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
 
     var didSelectedItem: ((Any) -> ())?
     
+    lazy var loadingView: UIActivityIndicatorView = {
+        UIActivityIndicatorView(style: .large)
+    }()
+    
     init(dataSourceProvider: @escaping DataSourceProvider,
          layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(),
          router: ErrorHandlingRouter? = nil) {
@@ -62,13 +66,30 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
     
     static func defaultLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { _, _ in
-            let sectionBuilder = CompositionalLayoutBuilder.self
-            
-            let section = sectionBuilder.createListSection()
+            let section = CompositionalLayoutBuilder.createListSection()
             section.contentInsets.bottom = 30
             
             return section
         }
+    }
+    
+    static func loadingLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
+            switch sectionIndex {
+            case 0:
+                let section = CompositionalLayoutBuilder.createListSection()
+                return section
+            case 1:
+                let section = CompositionalLayoutBuilder.createListSection(height: 44)
+                section.contentInsets.top = 20
+                section.contentInsets.bottom = 30
+                return section
+            default:
+                return nil
+            }
+        }
+        
+        return layout
     }
         
     fileprivate func setup() {
@@ -83,18 +104,22 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
                 
         dataSource.didUpdate = { [weak self] error in
             guard let self = self else { return }
-            
+            self.collectionView.backgroundView = nil
+            self.collectionView.refreshControl?.endRefreshing()
+
             if error != nil {
                 self.router?.handle(error: .refreshError)
             }
-                                    
-            self.collectionView.refreshControl?.endRefreshing()
         }
         
         refresh()
     }
     
     @objc func refresh() {
+        if dataSource.isRefreshable, collectionView.visibleCells.count == 0 {
+            collectionView.backgroundView = loadingView
+            loadingView.startAnimating()
+        }
         dataSource.refresh()
     }
     
@@ -118,7 +143,7 @@ extension ListViewController {
         self.init(dataSourceProvider: provider, layout: layout, router: router)
     }
     
-    convenience init<Provider: DataProvider, Cell: UICollectionViewCell>(provider: Provider, cellConfigurator: ProviderPagingDataSource<Provider, Cell>.CellConfigurator? = nil, layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(), router: ErrorHandlingRouter? = nil) {
+    convenience init<Provider: DataProvider, Cell: UICollectionViewCell>(provider: Provider, cellConfigurator: ProviderPagingDataSource<Provider, Cell>.CellConfigurator? = nil, layout: UICollectionViewCompositionalLayout = ListViewController.loadingLayout(), router: ErrorHandlingRouter? = nil) {
         let provider = { ProviderPagingDataSource(collectionView: $0, dataProvider: provider, cellConfigurator: cellConfigurator) }
         self.init(dataSourceProvider: provider, layout: layout, router: router)
     }

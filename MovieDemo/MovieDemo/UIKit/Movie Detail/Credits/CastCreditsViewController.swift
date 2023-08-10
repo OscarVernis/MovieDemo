@@ -14,6 +14,10 @@ class CastCreditsViewController: UIViewController {
         
     var didSelectedItem: ((CastCreditViewModel) -> ())?
     
+    var dataSource: ArrayPagingDataSource<CastCreditViewModel, CreditPhotoListCell> {
+        listViewController.dataSource as! ArrayPagingDataSource<CastCreditViewModel, CreditPhotoListCell>
+    }
+    
     init(credits: [CastCreditViewModel]) {
         self.credits = credits
         
@@ -52,9 +56,6 @@ class CastCreditsViewController: UIViewController {
     }
     
     private func updateSearchResults(query: String) {
-        guard let dataSource = listViewController.dataSource as? ArrayPagingDataSource<CastCreditViewModel, CreditPhotoListCell>
-        else { return }
-
         if query.isEmpty {
             dataSource.models = credits
             dataSource.reload(animated: false)

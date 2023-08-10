@@ -43,10 +43,10 @@ class CrewCreditsViewController: UIViewController {
         let departmentsHeaderRegistration = UICollectionView.SupplementaryRegistration<CategorySelectionHeaderView>(elementKind: CrewCreditsViewController.globalHeaderKind) { [unowned self] header, elementKind, indexPath in
             header.selectionView.unselectedBackgroundgColor = .systemGray5
             
-            header.selectionView.items = self.viewModel.departments
+            header.selectionView.items = viewModel.departments
             header.selectionView.didSelectItem = { [unowned self] idx in
-                selectedDepartment = self.viewModel.departments[idx]
-                let credits = self.viewModel.jobs(in: selectedDepartment)
+                selectedDepartment = viewModel.departments[idx]
+                let credits = viewModel.jobs(in: selectedDepartment)
                 self.dataSource.models = credits
                 self.dataSource.reload(animated: true)
             }
@@ -54,9 +54,9 @@ class CrewCreditsViewController: UIViewController {
             self.selectionView = header.selectionView
         }
         
-        let provider = { [unowned self] collectionView in
-            let firstDepartment = self.viewModel.departments.first!
-            let credits = self.viewModel.jobs(in: firstDepartment)
+        let dataSourceProvider = { [unowned self] collectionView in
+            let firstDepartment = viewModel.departments.first!
+            let credits = viewModel.jobs(in: firstDepartment)
             let dataSource = ArrayPagingDataSource(collectionView: collectionView, models: credits, cellConfigurator: CreditPhotoListCell.configure)
             
             dataSource.dataSource.supplementaryViewProvider = { view, kind, indexPath in
@@ -68,7 +68,7 @@ class CrewCreditsViewController: UIViewController {
             return dataSource
         }
         
-        listViewController = ListViewController(dataSourceProvider: provider, layout: createLayout(), router: nil)
+        listViewController = ListViewController(dataSourceProvider: dataSourceProvider, layout: createLayout(), router: nil)
         
         listViewController.didSelectedItem = { [weak self] model in
             if let crewCredit = model as? CrewCreditViewModel {
@@ -96,9 +96,6 @@ class CrewCreditsViewController: UIViewController {
     }
     
     private func updateSearchResults(query: String) {
-        guard let dataSource = listViewController.dataSource as? ArrayPagingDataSource<CrewCreditViewModel, CreditPhotoListCell>
-        else { return }
-
         var selectedIndex: Int = 0
         viewModel.query = query
         if viewModel.departments.firstIndex(of: selectedDepartment) == nil {

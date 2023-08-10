@@ -60,12 +60,11 @@ class CategorySelectionView: UIView {
     
     private func layout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [unowned self] _, _ in
-            let sectionBuilder = CompositionalLayoutBuilder.self
-            let section = sectionBuilder.createSection(itemWidth: .estimated(1),
-                                                       itemHeight: .absolute(32),
-                                                       groupWidth: .estimated(1),
-                                                       groupHeight: .absolute(32),
-                                                       margin: self.margin)
+            let section = CompositionalLayoutBuilder.createSection(itemWidth: .estimated(1),
+                                                                   itemHeight: .absolute(32),
+                                                                   groupWidth: .estimated(1),
+                                                                   groupHeight: .absolute(32),
+                                                                   margin: self.margin)
             
             section.orthogonalScrollingBehavior = .continuous
             section.interGroupSpacing = 12

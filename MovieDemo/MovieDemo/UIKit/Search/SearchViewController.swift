@@ -36,7 +36,7 @@ class SearchViewController: UIViewController {
         let dataSourceProvider = { [unowned self] in
             ProviderPagingDataSource(collectionView: $0, dataProvider: searchProvider, cellProvider: cellProvider)
         }
-        listViewController = ListViewController(dataSourceProvider: dataSourceProvider, router: router)
+        listViewController = ListViewController(dataSourceProvider: dataSourceProvider, layout: ListViewController.loadingLayout(), router: router)
         
         listViewController.didSelectedItem = { [unowned self] item in
             //Avoid the navigation bar showing after the Person Detail is shown

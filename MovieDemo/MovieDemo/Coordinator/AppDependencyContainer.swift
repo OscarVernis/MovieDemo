@@ -31,7 +31,7 @@ class AppDependencyContainer {
     }()
     
     var remoteClient: TMDBClient {
-        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient())
+        TMDBClient(sessionId: sessionId, httpClient: URLSessionHTTPClient(session: urlSessionWithoutCache))
     }
 
     var isLoggedIn: Bool {

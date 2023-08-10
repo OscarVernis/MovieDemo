@@ -20,7 +20,7 @@ class PaginatedProvider<T>: DataProvider, ObservableObject {
     var totalPages = 1
     
     var isLastPage: Bool {
-        currentPage == totalPages || currentPage == 0
+        currentPage >= totalPages || currentPage == 0
     }
     
     var didUpdate: ((Error?) -> Void)?
