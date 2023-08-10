@@ -19,6 +19,8 @@
 		5506BAB02512E2B10052B0F2 /* CompositionalLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAAC2512E2B10052B0F2 /* CompositionalLayoutBuilder.swift */; };
 		5506BAB82512EC9F0052B0F2 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5506BAB72512EC9F0052B0F2 /* CreditCell.swift */; };
 		5506BABB2512ECB00052B0F2 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5506BABA2512ECB00052B0F2 /* CreditCell.xib */; };
+		550815A52A848043004071BF /* PersonHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550815A42A848043004071BF /* PersonHeaderView.swift */; };
+		550815A72A848096004071BF /* PersonHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 550815A62A848096004071BF /* PersonHeaderView.xib */; };
 		550869B22855765700465008 /* UIWindow+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550869B12855765700465008 /* UIWindow+Utils.swift */; };
 		5508D7692A50F29900B22A96 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508D7682A50F29900B22A96 /* HTTPClient.swift */; };
 		5508D76B2A50F2B500B22A96 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */; };
@@ -34,7 +36,6 @@
 		5511CD302A70DB3600A9CCDD /* CodableUserList+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */; };
 		5511CD322A70DC4900A9CCDD /* UserListsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD312A70DC4900A9CCDD /* UserListsServices.swift */; };
 		5511CD352A70DE0C00A9CCDD /* UserListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */; };
-		5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */; };
 		5511D95525317056004B3697 /* BlurButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511D95425317056004B3697 /* BlurButton.swift */; };
 		5511FF81285A6F9600B9C12A /* SwiftUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */; };
 		5511FF84285A703700B9C12A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5511FF83285A703700B9C12A /* Home.swift */; };
@@ -325,6 +326,8 @@
 		5506BAAC2512E2B10052B0F2 /* CompositionalLayoutBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionalLayoutBuilder.swift; sourceTree = "<group>"; };
 		5506BAB72512EC9F0052B0F2 /* CreditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCell.swift; sourceTree = "<group>"; };
 		5506BABA2512ECB00052B0F2 /* CreditCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditCell.xib; sourceTree = "<group>"; };
+		550815A42A848043004071BF /* PersonHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonHeaderView.swift; sourceTree = "<group>"; };
+		550815A62A848096004071BF /* PersonHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonHeaderView.xib; sourceTree = "<group>"; };
 		550869B12855765700465008 /* UIWindow+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Utils.swift"; sourceTree = "<group>"; };
 		5508D7682A50F29900B22A96 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		5508D76A2A50F2B500B22A96 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -340,7 +343,6 @@
 		5511CD2F2A70DB3600A9CCDD /* CodableUserList+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableUserList+Mapping.swift"; sourceTree = "<group>"; };
 		5511CD312A70DC4900A9CCDD /* UserListsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsServices.swift; sourceTree = "<group>"; };
 		5511CD342A70DE0C00A9CCDD /* UserListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListsViewController.swift; sourceTree = "<group>"; };
-		5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonDetailViewController.storyboard; sourceTree = "<group>"; };
 		5511D95425317056004B3697 /* BlurButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurButton.swift; sourceTree = "<group>"; };
 		5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICoordinator.swift; sourceTree = "<group>"; };
 		5511FF83285A703700B9C12A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -665,6 +667,15 @@
 				552774F72A7F338700BDA342 /* HomeDataSource.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		550815A82A848759004071BF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				550815A42A848043004071BF /* PersonHeaderView.swift */,
+				550815A62A848096004071BF /* PersonHeaderView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5508D7672A50F28B00B22A96 /* HTTPClient */ = {
@@ -1114,9 +1125,9 @@
 		556807C42530E85300F8DF16 /* Person Detail */ = {
 			isa = PBXGroup;
 			children = (
+				550815A82A848759004071BF /* Views */,
 				55EDA70F2810F6500055696F /* Cells */,
 				556807C52530E87A00F8DF16 /* PersonDetailViewController.swift */,
-				5511D9502531578B004B3697 /* PersonDetailViewController.storyboard */,
 				551693162857CBBC00FD147F /* PersonDetailLayoutProvider.swift */,
 				55FBFBFF2A762CB2002FC9FE /* PersonDetailDataSource.swift */,
 			);
@@ -1636,6 +1647,7 @@
 				55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */,
 				55664850284DC4ED000BE2F3 /* Movie.strings in Resources */,
 				554BB8CC2A75837400762F44 /* UserListCell.xib in Resources */,
+				550815A72A848096004071BF /* PersonHeaderView.xib in Resources */,
 				5566483E284DC4B5000BE2F3 /* Error.strings in Resources */,
 				55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */,
 				55D006BC2A74B4950089E8B1 /* EmptyView.xib in Resources */,
@@ -1643,7 +1655,6 @@
 				551A2930251F194F003746EE /* UserProfileHeaderView.xib in Resources */,
 				55664844284DC4CC000BE2F3 /* Genre.strings in Resources */,
 				55911C482A76D47B00E661D2 /* CategoryCell.xib in Resources */,
-				5511D9512531578B004B3697 /* PersonDetailViewController.storyboard in Resources */,
 				55DD1B93251FB59500EC8C55 /* YoutubeVideoCell.xib in Resources */,
 				55206B82253291D100AD13AE /* PersonCreditCell.xib in Resources */,
 				5566485C284DC507000BE2F3 /* Service.strings in Resources */,
@@ -1919,6 +1930,7 @@
 				557ACF8C285BB05300FFA4CD /* RatedMovieList.swift in Sources */,
 				55EECCE525119A1A0041EAE7 /* MainCoordinator.swift in Sources */,
 				5511FF91285A8D1D00B9C12A /* Image+Utils.swift in Sources */,
+				550815A52A848043004071BF /* PersonHeaderView.swift in Sources */,
 				55741CE2251CFCAC00A6281B /* Double+Math.swift in Sources */,
 				559547BD2A6EDBE900AC03E3 /* UIView+Border.swift in Sources */,
 				553CD314286D33C30022F72E /* InfoItem.swift in Sources */,

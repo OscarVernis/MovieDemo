@@ -11,25 +11,11 @@ import Combine
 
 class PersonDetailViewController: UIViewController {
     var router: PersonDetailRouter?
-    
-    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var collectionView: UICollectionView!
+        
+    var collectionView: UICollectionView!
     var dataSource: PersonDetailDataSource!
     
-    @IBOutlet weak var personImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var nameLabelBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var blurView: UIVisualEffectView!
-    @IBOutlet weak var separator: UIView!
-    
-    fileprivate var showingNavBarTitle = false {
-        didSet {
-            if oldValue != showingNavBarTitle {
-                animateTitleView(show: showingNavBarTitle)
-            }
-        }
-    }
+    weak var headerView: PersonHeaderView!
     
     var store: PersonDetailStore!
     var person: PersonViewModel! {
@@ -38,9 +24,6 @@ class PersonDetailViewController: UIViewController {
     
     private var cancellables = Set<AnyCancellable>()
     
-    private var gradient: CAGradientLayer!
-    private var blurAnimator: UIViewPropertyAnimator!
-    
     var titleView = UILabel()
     var titleViewTopConstraint: NSLayoutConstraint!
     
@@ -48,20 +31,16 @@ class PersonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        setupCustomBackButton()
-        setupTitleView()
-        setupBlurAnimator()
+        createViews()
         setup()
         setupDataSource()
         setupStore()
+        setupCustomBackButton()
+        setupTitleView()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
-    }
-    
-    deinit {
-        blurAnimator?.stopAnimation(true)
     }
     
     //MARK: - Bar Appearance
@@ -70,6 +49,16 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Setup
+    fileprivate func createViews() {
+        collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
+        view.addSubview(collectionView)
+        collectionView.anchor(to: view)
+        
+        headerView = PersonHeaderView.instantiateFromNib()
+        view.addSubview(headerView)
+        headerView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+    }
+    
     fileprivate func setupTitleView() {
         //Create Title
         let titleViewContainer = UIView()
@@ -105,17 +94,8 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func setup() {
-        //Gradient
-        gradient = CAGradientLayer()
-        gradient.frame = personImageView.bounds
-        gradient.colors = [UIColor.black.cgColor,
-                           UIColor.clear.cgColor]
-        gradient.locations = [0.7, 1]
-        personImageView.layer.mask = gradient
-        
         //Setup CollectionView
         collectionView.delegate = self
-        collectionView.collectionViewLayout = createLayout()
         
         //Set NavigationBar/ScrollView settings for design
         navigationItem.largeTitleDisplayMode = .never
@@ -127,7 +107,7 @@ class PersonDetailViewController: UIViewController {
         let width = UIWindow.mainWindow.frame.width
         let height = width * 1.5
         let bottomInset = UIWindow.mainWindow.bottomInset
-        headerHeightConstraint.constant = height
+        headerView.headerHeightConstraint.constant = height
         collectionView.contentInset = UIEdgeInsets(top: height, left: 0, bottom: bottomInset, right: 0)
         
         //Set so the scrollIndicator stops before the status bar
@@ -136,10 +116,10 @@ class PersonDetailViewController: UIViewController {
         //Setup Person
         self.title = person.name
         titleView.text = person.name
-        nameLabel.text = person.name
+        headerView.nameLabel.text = person.name
         
         let imageURL = self.person.profileImageURL
-        personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
+        headerView.personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
     }
     
     fileprivate func setupDataSource() {
@@ -218,11 +198,13 @@ class PersonDetailViewController: UIViewController {
     fileprivate func handleError() {
         router?.handle(error: .refreshError, shouldDismiss: true)
     }
-}
-
-//MARK: - Header Animations
-extension PersonDetailViewController {
+    
+    //MARK: - Header Animations
+    fileprivate var showingNavBarTitle = false
+    
     fileprivate func animateTitleView(show: Bool) {
+        if show == showingNavBarTitle { return }
+        
         UIView.animate(withDuration: show ? 0.15 : 0.2, delay: 0) {
             if show {
                 self.titleView.alpha = 1
@@ -234,16 +216,6 @@ extension PersonDetailViewController {
                 self.titleView.superview?.layoutIfNeeded()
             }
         }
-    }
-    
-    fileprivate func setupBlurAnimator() {
-        blurView.effect = nil
-        blurAnimator = UIViewPropertyAnimator(duration: 1, curve: .easeIn) {
-            self.blurView.effect = UIBlurEffect(style: .light)
-            self.separator.alpha = 1
-        }
-
-        blurAnimator.pausesOnCompletion = true
     }
 
     fileprivate func updateHeader() {
@@ -263,32 +235,24 @@ extension PersonDetailViewController {
 
         //Animate title
         if offset > threshold - 10 {
-            showingNavBarTitle = true
+            animateTitleView(show: true)
         } else if offset < threshold + titleHeight + 30 {
-            showingNavBarTitle = false
+            animateTitleView(show: false)
         }
 
         //Set blur animation progress
         var ratio: CGFloat
         ratio = 1 - newHeight / (headerHeight * 0.75)
-        blurAnimator.fractionComplete = ratio
+        headerView.blurAnimator.fractionComplete = ratio
         
         let alpha = (newHeight - topInset - 5) / (headerHeight * 0.5)
-        nameLabel.alpha = alpha
+        headerView.nameLabel.alpha = alpha
 
         //Adjust header size
         if offset < -threshold {
-            headerHeightConstraint.constant = newHeight
+            headerView.headerHeightConstraint.constant = newHeight
             let bottomInset = UIWindow.mainWindow.bottomInset
             collectionView.scrollIndicatorInsets  = UIEdgeInsets(top: max(newHeight, headerHeight), left: 0, bottom: bottomInset, right: 0)
-
-            //Adjust gradient
-            var gradientFrame = personImageView.bounds
-            gradientFrame.size.height = newHeight
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
-            gradient.frame = gradientFrame
-            CATransaction.commit()
         }
     }
 
