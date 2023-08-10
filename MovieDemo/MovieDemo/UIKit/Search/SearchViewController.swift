@@ -2,47 +2,84 @@
 //  SearchViewController.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 17/05/22.
-//  Copyright © 2022 Oscar Vernis. All rights reserved.
+//  Created by Oscar Vernis on 10/08/23.
+//  Copyright © 2023 Oscar Vernis. All rights reserved.
 //
 
 import UIKit
 
-class SearchViewController: ListViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupSearch()
+class SearchViewController: UIViewController {
+    var listViewController: ListViewController!
+    var searchProvider: SearchProvider
+    var router: SearchViewRouter?
+    
+    typealias DataSource = ProviderPagingDataSource<SearchProvider, UICollectionViewCell>
+    
+    init(searchProvider: SearchProvider, router: SearchViewRouter? = nil) {
+        self.searchProvider = searchProvider
+        self.router = router
+        super.init(nibName: nil, bundle: nil)
     }
     
-    fileprivate var searchRouter: SearchViewRouter? {
-        router as? SearchViewRouter
-    }
-    
-    init(dataSourceProvider: @escaping (UICollectionView) -> any PagingDataSource, router: SearchViewRouter?) {
-        super.init(dataSourceProvider: dataSourceProvider, router: router)
-    }
-    
+    @available (*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupSearch() {
-        didSelectedItem = { [weak self] item in
-            guard let self = self else { return }
-            
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupListViewController()
+    }
+    
+    private func setupListViewController() {
+        let dataSourceProvider = { [unowned self] in
+            ProviderPagingDataSource(collectionView: $0, dataProvider: searchProvider, cellProvider: cellProvider)
+        }
+        listViewController = ListViewController(dataSourceProvider: dataSourceProvider, router: router)
+        
+        listViewController.didSelectedItem = { [unowned self] item in
             //Avoid the navigation bar showing after the Person Detail is shown
-            self.navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
+            navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
             
             let searchItem = item as! SearchProviderResultItem
             switch searchItem {
             case .movie(let movie):
-                self.searchRouter?.showMovieDetail(movie: movie)
+                router?.showMovieDetail(movie: movie)
             case .person(let person):
-                self.searchRouter?.showPersonProfile(person)
+                router?.showPersonProfile(person)
             }
+        }
+        
+        listViewController.embed(in: self)
+        registerViews(collectionView: listViewController.collectionView)
+    }
+    
+    private lazy var cellProvider: DataSource.CellProvider = { [unowned self] collectionView, indexPath, item in
+        let section = DataSource.Section(rawValue: indexPath.section)!
+        switch section {
+        case .main:
+            return mainCell(collectionView: collectionView, for: item, at: indexPath)
+        case .loading:
+            return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         }
     }
     
+    private func mainCell(collectionView: UICollectionView, for item: AnyHashable, at indexPath: IndexPath) -> UICollectionViewCell {
+        let searchItem = item as! SearchProviderResultItem
+        switch searchItem {
+        case .movie(let movie):
+            return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MovieInfoListCell.configure)
+        case .person(let person):
+            return collectionView.cell(at: indexPath, model: person, cellConfigurator: CreditPhotoListCell.configure)
+        }
+    }
+    
+    private func registerViews(collectionView: UICollectionView) {
+        MovieInfoListCell.register(to: collectionView)
+        CreditPhotoListCell.register(to: collectionView)
+        LoadingCell.register(to: collectionView)
+    }
 }
 
 // MARK: - Searching
@@ -50,18 +87,18 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     func scrollListViewControllerToTop() {
         //Scroll results list to top everytime is shown.
         let firstIndexPath = IndexPath(row: 0, section: 0)
-        if self.collectionView.cellForItem(at: firstIndexPath) != nil {
-            self.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
+        if listViewController.collectionView.cellForItem(at: firstIndexPath) != nil {
+            listViewController.collectionView.scrollToItem(at: firstIndexPath, at: .top, animated: false)
         }
     }
     
     func willPresentSearchController(_ searchController: UISearchController) {
-       scrollListViewControllerToTop()
+        scrollListViewControllerToTop()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        if let searchQuery = searchController.searchBar.text, let searchDataSource = dataSource as? SearchDataSource {
-            searchDataSource.query = searchQuery
+        if let searchQuery = searchController.searchBar.text {
+            searchProvider.query = searchQuery
         } else {
             scrollListViewControllerToTop()
         }

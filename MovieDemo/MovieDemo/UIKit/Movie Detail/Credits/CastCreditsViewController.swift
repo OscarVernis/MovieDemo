@@ -20,6 +20,7 @@ class CastCreditsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available (*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -33,10 +34,7 @@ class CastCreditsViewController: UIViewController {
     }
     
     private func setupListViewController() {
-        let provider = { [unowned self] in
-            ArrayPagingDataSource(collectionView: $0, models: self.credits, cellConfigurator: CreditPhotoListCell.configure)
-        }
-        listViewController = ListViewController(dataSourceProvider: provider, router: nil)
+        listViewController = ListViewController(models: credits, cellConfigurator: CreditPhotoListCell.configure)
         
         listViewController.didSelectedItem = { [weak self] model in
             if let castCredit = model as? CastCreditViewModel {

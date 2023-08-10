@@ -26,6 +26,7 @@ class CrewCreditsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available (*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,7 +40,7 @@ class CrewCreditsViewController: UIViewController {
     }
     
     private func setupListViewController() {
-        let globalHeaderRegistration = UICollectionView.SupplementaryRegistration<CategorySelectionHeaderView>(elementKind: CrewCreditsViewController.globalHeaderKind) { [unowned self] header, elementKind, indexPath in
+        let departmentsHeaderRegistration = UICollectionView.SupplementaryRegistration<CategorySelectionHeaderView>(elementKind: CrewCreditsViewController.globalHeaderKind) { [unowned self] header, elementKind, indexPath in
             header.selectionView.unselectedBackgroundgColor = .systemGray5
             
             header.selectionView.items = self.viewModel.departments
@@ -59,7 +60,7 @@ class CrewCreditsViewController: UIViewController {
             let dataSource = ArrayPagingDataSource(collectionView: collectionView, models: credits, cellConfigurator: CreditPhotoListCell.configure)
             
             dataSource.dataSource.supplementaryViewProvider = { view, kind, indexPath in
-                return collectionView.dequeueConfiguredReusableSupplementary(using: globalHeaderRegistration, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: departmentsHeaderRegistration, for: indexPath)
             }
             
             self.dataSource = dataSource
@@ -67,7 +68,7 @@ class CrewCreditsViewController: UIViewController {
             return dataSource
         }
         
-        listViewController = ListViewController(dataSourceProvider: provider, layout: defaultLayout(), router: nil)
+        listViewController = ListViewController(dataSourceProvider: provider, layout: createLayout(), router: nil)
         
         listViewController.didSelectedItem = { [weak self] model in
             if let crewCredit = model as? CrewCreditViewModel {
@@ -78,9 +79,12 @@ class CrewCreditsViewController: UIViewController {
         listViewController.embed(in: self)
     }
     
-    private func defaultLayout() -> UICollectionViewCompositionalLayout {
+    private func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = ListViewController.defaultLayout()
-        layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .absolute(40), kind: CrewCreditsViewController.globalHeaderKind)
+        
+        if viewModel.departments.count > 0 {
+            layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .absolute(40), kind: CrewCreditsViewController.globalHeaderKind)
+        }
         
         return layout
     }
@@ -97,7 +101,7 @@ class CrewCreditsViewController: UIViewController {
 
         var selectedIndex: Int = 0
         viewModel.query = query
-        if query.isEmpty || viewModel.departments.firstIndex(of: selectedDepartment) == nil {
+        if viewModel.departments.firstIndex(of: selectedDepartment) == nil {
             selectedDepartment = viewModel.departments.first ?? ""
         }
         

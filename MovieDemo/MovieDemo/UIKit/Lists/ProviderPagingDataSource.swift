@@ -17,6 +17,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     }
     
     typealias CellConfigurator = (Cell, Provider.Model) -> Void
+    typealias CellProvider = UICollectionViewDiffableDataSource<Section, AnyHashable>.CellProvider
     
     var dataProvider: Provider
     private var cellConfigurator: CellConfigurator? = nil
@@ -29,11 +30,19 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
     
-    init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil) {
+    init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil, cellProvider: @escaping CellProvider) {
         self.dataProvider = dataProvider
         self.cellConfigurator = cellConfigurator
         
-        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: cellProvider)
+                
+        self.dataProvider.didUpdate = { [weak self] error in
+            self?.providerDidUpdate(error: error)
+        }
+    }
+    
+    convenience init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil) {
+        self.init(collectionView: collectionView, dataProvider: dataProvider, cellConfigurator: cellConfigurator, cellProvider: { collectionView, indexPath, itemIdentifier in
             let section = Section(rawValue: indexPath.section)!
             switch section {
             case .main:
@@ -45,10 +54,6 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
         })
         
         registerViews(collectionView: collectionView)
-        
-        self.dataProvider.didUpdate = { [weak self] error in
-            self?.providerDidUpdate(error: error)
-        }
     }
     
     func registerViews(collectionView: UICollectionView) {

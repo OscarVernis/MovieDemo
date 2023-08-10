@@ -9,6 +9,7 @@
 import UIKit
 
 class ListViewController: UIViewController, UICollectionViewDelegate {
+    typealias DataSourceProvider = (UICollectionView) -> any PagingDataSource
     var collectionView: UICollectionView!
     
     var dataSource: (any PagingDataSource)!
@@ -19,7 +20,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
 
     var didSelectedItem: ((Any) -> ())?
     
-    init(dataSourceProvider: @escaping (UICollectionView) -> any PagingDataSource,
+    init(dataSourceProvider: @escaping DataSourceProvider,
          layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(),
          router: ErrorHandlingRouter? = nil) {
         self.dataSourceProvider = dataSourceProvider
@@ -109,5 +110,16 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
             didSelectedItem?(model)
         }
     }
+}
+
+extension ListViewController {
+    convenience init<Model: Hashable, Cell: UICollectionViewCell>(models: [Model], cellConfigurator: @escaping ArrayPagingDataSource<Model, Cell>.CellConfigurator, layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(), router: ErrorHandlingRouter? = nil) {
+        let provider = { ArrayPagingDataSource(collectionView: $0, models: models, cellConfigurator: cellConfigurator) }
+        self.init(dataSourceProvider: provider, layout: layout, router: router)
+    }
     
+    convenience init<Provider: DataProvider, Cell: UICollectionViewCell>(provider: Provider, cellConfigurator: ProviderPagingDataSource<Provider, Cell>.CellConfigurator? = nil, layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(), router: ErrorHandlingRouter? = nil) {
+        let provider = { ProviderPagingDataSource(collectionView: $0, dataProvider: provider, cellConfigurator: cellConfigurator) }
+        self.init(dataSourceProvider: provider, layout: layout, router: router)
+    }
 }

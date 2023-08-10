@@ -152,8 +152,7 @@ class MainCoordinator {
     }
     
     var homeSearchController: UISearchController {
-        let provider = { SearchDataSource(collectionView: $0, searchProvider: self.dependencies.searchProvider) }
-        let searchViewController = SearchViewController(dataSourceProvider: provider, router: self)
+        let searchViewController = SearchViewController(searchProvider: self.dependencies.searchProvider, router: self)
         let searchController = UISearchController(searchResultsController: searchViewController)
         searchController.searchResultsUpdater = searchViewController
         searchController.delegate = searchViewController
@@ -197,9 +196,7 @@ class MainCoordinator {
     }
     
     func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
-        let provider = { ProviderPagingDataSource(collectionView: $0, dataProvider: dataProvider, cellConfigurator: MovieInfoListCell.configure) }
-        let lvc = ListViewController(dataSourceProvider: provider, router: self)
-        
+        let lvc = ListViewController(provider: dataProvider, cellConfigurator: MovieInfoListCell.configure, router: self)
         lvc.title = title
         
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
