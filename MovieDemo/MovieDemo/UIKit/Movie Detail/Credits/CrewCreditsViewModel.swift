@@ -48,7 +48,7 @@ class CrewCreditsViewModel {
     }
     
     private static func departments(from credits: [CrewCreditViewModel]) -> [String] {
-        let uniqueDepartments = Set(Array(credits.compactMap(\.department)))
+        let uniqueDepartments = Set(credits.compactMap(\.department))
         return uniqueDepartments.sorted().map(CrewCreditsViewModel.localizedDepartment)
     }
     

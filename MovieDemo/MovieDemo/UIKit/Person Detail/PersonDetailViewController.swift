@@ -241,6 +241,8 @@ class PersonDetailViewController: UIViewController {
             headerView.imageHeightConstraint.constant = imageHeight + abs(offset)
             return
         }
+                
+        headerView.topImageConstraint.constant = 0
         
         let navBarHeight = view.safeAreaInsets.top
         let threshold = imageHeight - navBarHeight

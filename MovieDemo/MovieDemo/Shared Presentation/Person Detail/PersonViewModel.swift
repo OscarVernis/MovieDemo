@@ -84,7 +84,13 @@ extension PersonViewModel {
             .compactMap(\.title)
             .joined(separator: ", ")
     }
-
+    
+    func localizedDepartment(_ department: String?) -> String {
+        guard let department else { return "" }
+        
+        return CrewDepartment(rawValue: department)?.localized ?? department
+    }
+    
     func credits(for department: String) -> [PersonCreditViewModel] {
         departmentCredits[department] ?? []
     }
@@ -98,24 +104,18 @@ extension PersonViewModel {
         
         allCredits.sort(by: PersonCreditViewModel.sortByRelease)
         
-        let uniqueDepartments = NSOrderedSet(array: allCredits.compactMap(\.department)).array as! [String]
+        let uniqueDepartments = Set(allCredits.compactMap(\.department)).map { localizedDepartment($0) }
                 
         departmentCredits = [:]
         for department in uniqueDepartments {
-            let credits = allCredits.filter { localizedDepartment($0.department) == department }
+            let credits = allCredits.filter { department == localizedDepartment($0.department) }
             departmentCredits[department] = credits
         }
         
-        departments = uniqueDepartments.map { localizedDepartment($0) }.sorted {
+        departments = uniqueDepartments.sorted {
             departmentCredits[$0]?.count ?? 0 > departmentCredits[$1]?.count ?? 0
         }
 
-    }
-    
-    private func localizedDepartment(_ department: String?) -> String {
-        guard let department else { return "" }
-        
-        return CrewDepartment(rawValue: department)?.localized ?? department
     }
     
     fileprivate func updatePopularMovies() {
