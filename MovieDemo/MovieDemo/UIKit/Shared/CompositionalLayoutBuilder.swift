@@ -14,11 +14,13 @@ struct CompositionalLayoutBuilder {
     }
     
     //MARK: - General
-    static func createGlobalHeaderConfiguration(height: NSCollectionLayoutDimension, kind: String, contentInsets: NSDirectionalEdgeInsets = .zero) -> UICollectionViewCompositionalLayoutConfiguration {
+    static func createGlobalHeaderConfiguration(height: NSCollectionLayoutDimension, kind: String, contentInsets: NSDirectionalEdgeInsets = .zero, pinToVisibleBounds: Bool = false) -> UICollectionViewCompositionalLayoutConfiguration {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: height)
         let globlarHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: kind, alignment: .top)
 
         globlarHeader.contentInsets = contentInsets
+        globlarHeader.pinToVisibleBounds = pinToVisibleBounds
+        globlarHeader.zIndex = .max
 
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.boundarySupplementaryItems = [globlarHeader]

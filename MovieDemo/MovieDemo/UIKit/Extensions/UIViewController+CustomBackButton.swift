@@ -14,7 +14,7 @@ extension UIViewController {
     }
     
     func setupCustomBackButton() {
-        let backButton = BlurButton(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
+        let backButton = BlurButton(frame: CGRect(x: 0, y: 0, width: 32, height: 32))
         backButton.setImage(.asset(.back), for: .normal)
         backButton.tintColor = .white
         backButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)

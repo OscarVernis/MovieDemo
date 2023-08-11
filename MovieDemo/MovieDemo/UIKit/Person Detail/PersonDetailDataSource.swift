@@ -52,15 +52,13 @@ class PersonDetailDataSource {
     
     var willChangeSelectedDepartment: ((String) -> Void)? = nil
     
-    init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, supplementaryViewProvider: UICollectionViewDiffableDataSource<Section, AnyHashable>.SupplementaryViewProvider?) {
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
             
-            self.cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
+            cell(for: collectionView, with: indexPath, identifier: itemIdentifier)
         })
         
-        dataSource.supplementaryViewProvider = { [unowned self] collectionView, elementKind, indexPath in
-            self.sectionTitleView(collectionView: collectionView, at: indexPath)
-        }
+        dataSource.supplementaryViewProvider = supplementaryViewProvider
         
         registerReusableViews(collectionView: collectionView)
     }
@@ -88,7 +86,7 @@ class PersonDetailDataSource {
         return sectionTitleView
     }
     
-    func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
+    private func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
         let section = sections[indexPath.section]
     
         switch section {

@@ -9,8 +9,13 @@
 import UIKit
 import Combine
 
-class PersonHeaderView: UIView {
+class PersonHeaderView: UICollectionReusableView {
+    static var headerkind = "PersonHeaderView.globalHeader"
+
+    
+    @IBOutlet weak var topImageConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var personImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
