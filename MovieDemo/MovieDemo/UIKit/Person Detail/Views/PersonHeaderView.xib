@@ -13,73 +13,59 @@
             <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JG5-yh-USz">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="sLF-WK-peQ">
                     <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
-                    <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="sLF-WK-peQ">
-                            <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="600" id="4N0-Ti-oxg"/>
-                            </constraints>
-                        </imageView>
-                        <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3R-fe-urw">
-                            <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
-                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wzI-gv-Opp">
-                                <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </view>
-                            <blurEffect style="light"/>
-                        </visualEffectView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Leu-80-4fR">
-                            <rect key="frame" x="20" y="527.66666666666663" width="487" height="72.333333333333371"/>
-                            <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="53"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HkO-mY-arL">
-                            <rect key="frame" x="0.0" y="599" width="527" height="1"/>
-                            <color key="backgroundColor" white="1" alpha="0.15104166666666666" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="znF-IT-LHZ"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="u3R-fe-urw" firstAttribute="top" secondItem="sLF-WK-peQ" secondAttribute="top" id="2oE-nh-NgI"/>
-                        <constraint firstItem="HkO-mY-arL" firstAttribute="trailing" secondItem="sLF-WK-peQ" secondAttribute="trailing" id="8tk-c6-e07"/>
-                        <constraint firstItem="HkO-mY-arL" firstAttribute="leading" secondItem="sLF-WK-peQ" secondAttribute="leading" id="BEi-hP-mNn"/>
-                        <constraint firstItem="u3R-fe-urw" firstAttribute="bottom" secondItem="sLF-WK-peQ" secondAttribute="bottom" id="G3x-sM-V3Y"/>
-                        <constraint firstItem="Leu-80-4fR" firstAttribute="bottom" secondItem="sLF-WK-peQ" secondAttribute="bottom" id="MZX-hP-wE8"/>
-                        <constraint firstAttribute="trailing" secondItem="sLF-WK-peQ" secondAttribute="trailing" id="NZv-xj-XZr"/>
-                        <constraint firstItem="HkO-mY-arL" firstAttribute="bottom" secondItem="sLF-WK-peQ" secondAttribute="bottom" id="PRx-cQ-c2k"/>
-                        <constraint firstItem="u3R-fe-urw" firstAttribute="trailing" secondItem="sLF-WK-peQ" secondAttribute="trailing" id="Tjh-gx-ZUE"/>
-                        <constraint firstItem="u3R-fe-urw" firstAttribute="leading" secondItem="sLF-WK-peQ" secondAttribute="leading" id="Vhd-pL-czp"/>
-                        <constraint firstAttribute="height" constant="600" id="aTB-9V-TtL"/>
-                        <constraint firstItem="Leu-80-4fR" firstAttribute="trailing" secondItem="sLF-WK-peQ" secondAttribute="trailing" constant="-20" id="dLV-a6-wPQ"/>
-                        <constraint firstItem="sLF-WK-peQ" firstAttribute="top" secondItem="JG5-yh-USz" secondAttribute="top" id="gpe-QY-ibk"/>
-                        <constraint firstItem="Leu-80-4fR" firstAttribute="leading" secondItem="sLF-WK-peQ" secondAttribute="leading" constant="20" id="kps-c9-zBD"/>
-                        <constraint firstItem="sLF-WK-peQ" firstAttribute="leading" secondItem="JG5-yh-USz" secondAttribute="leading" id="zZM-aC-6Sr"/>
+                        <constraint firstAttribute="height" constant="600" id="4N0-Ti-oxg"/>
+                    </constraints>
+                </imageView>
+                <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3R-fe-urw">
+                    <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wzI-gv-Opp">
+                        <rect key="frame" x="0.0" y="0.0" width="527" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="light"/>
+                </visualEffectView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Leu-80-4fR">
+                    <rect key="frame" x="20" y="527.66666666666663" width="487" height="72.333333333333371"/>
+                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="53"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HkO-mY-arL">
+                    <rect key="frame" x="0.0" y="599" width="527" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="0.15104166666666666" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="znF-IT-LHZ"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="JG5-yh-USz" secondAttribute="trailing" id="Q8a-uQ-x74"/>
-                <constraint firstItem="JG5-yh-USz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="e8a-jv-AtL"/>
-                <constraint firstItem="JG5-yh-USz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zLC-LA-uEP"/>
-                <constraint firstAttribute="bottom" secondItem="JG5-yh-USz" secondAttribute="bottom" id="zkY-Fh-1fX"/>
+                <constraint firstItem="HkO-mY-arL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AZ0-NQ-JsL"/>
+                <constraint firstItem="sLF-WK-peQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TIq-4V-U5V"/>
+                <constraint firstAttribute="bottom" secondItem="u3R-fe-urw" secondAttribute="bottom" id="Tg1-hz-Wbo"/>
+                <constraint firstAttribute="trailing" secondItem="u3R-fe-urw" secondAttribute="trailing" id="YiH-Y7-fgX"/>
+                <constraint firstItem="u3R-fe-urw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Zr5-k9-xHe"/>
+                <constraint firstAttribute="bottom" secondItem="sLF-WK-peQ" secondAttribute="bottom" id="cYV-rE-h8p"/>
+                <constraint firstAttribute="trailing" secondItem="HkO-mY-arL" secondAttribute="trailing" id="dVw-l7-Z4p"/>
+                <constraint firstAttribute="bottom" secondItem="HkO-mY-arL" secondAttribute="bottom" id="dfK-0v-cHI"/>
+                <constraint firstItem="sLF-WK-peQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="m2w-KL-0R8"/>
+                <constraint firstAttribute="trailing" secondItem="Leu-80-4fR" secondAttribute="trailing" constant="20" id="n6E-v1-zZo"/>
+                <constraint firstItem="u3R-fe-urw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="o8Q-5i-5uJ"/>
+                <constraint firstItem="Leu-80-4fR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="r4U-Qu-CmH"/>
+                <constraint firstAttribute="bottom" secondItem="Leu-80-4fR" secondAttribute="bottom" id="uFK-oQ-bje"/>
+                <constraint firstAttribute="trailing" secondItem="sLF-WK-peQ" secondAttribute="trailing" id="z65-cX-77r"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="blurView" destination="u3R-fe-urw" id="44T-fi-tdI"/>
-                <outlet property="headerHeightConstraint" destination="aTB-9V-TtL" id="U4j-3C-sQJ"/>
-                <outlet property="imageHeightConstraint" destination="4N0-Ti-oxg" id="s4U-Uf-F6t"/>
+                <outlet property="heightConstraint" destination="4N0-Ti-oxg" id="UTu-Kv-hGq"/>
                 <outlet property="nameLabel" destination="Leu-80-4fR" id="2bK-PX-dQT"/>
                 <outlet property="personImageView" destination="sLF-WK-peQ" id="rRN-bc-b9F"/>
                 <outlet property="separator" destination="HkO-mY-arL" id="5eh-nU-sNq"/>
-                <outlet property="topImageConstraint" destination="gpe-QY-ibk" id="cpL-F3-WY8"/>
             </connections>
             <point key="canvasLocation" x="132.06106870229007" y="5.6338028169014089"/>
         </view>

@@ -35,9 +35,10 @@ class PersonDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createCollectionView()
+        createViews()
         setup()
         setupTitleView()
+        configurePerson()
         setupDataSource()
         setupStore()
         setupCustomBackButton()
@@ -53,10 +54,14 @@ class PersonDetailViewController: UIViewController {
     }
     
     //MARK: - Setup
-    fileprivate func createCollectionView() {
+    fileprivate func createViews() {
         collectionView = UICollectionView(frame: view.frame, collectionViewLayout: createLayout())
         view.addSubview(collectionView)
         collectionView.anchor(to: view)
+        
+        headerView = PersonHeaderView.instantiateFromNib()
+        view.addSubview(headerView)
+        headerView.anchor(top: view.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
     }
     
     fileprivate func createLayout() -> UICollectionViewLayout {
@@ -64,8 +69,6 @@ class PersonDetailViewController: UIViewController {
             let section = dataSource.sections[sectionIndex]
             return PersonDetailLayoutProvider.layout(for: section)
         }
-        
-        layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .estimated(500), kind: PersonHeaderView.headerkind, pinToVisibleBounds: true)
         
         layout.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: SectionBackgroundDecorationView.elementKind)
         
@@ -82,10 +85,11 @@ class PersonDetailViewController: UIViewController {
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.automaticallyAdjustsScrollIndicatorInsets = false
         
+        collectionView.contentInset.top = imageHeight
         collectionView.contentInset.bottom = UIWindow.mainWindow.bottomInset
 
         //Set so the scrollIndicator stops before the status bar
-        collectionView.verticalScrollIndicatorInsets.top = UIWindow.mainWindow.topInset
+        collectionView.verticalScrollIndicatorInsets.top = imageHeight
         collectionView.verticalScrollIndicatorInsets.bottom = UIWindow.mainWindow.bottomInset
     }
     
@@ -110,18 +114,20 @@ class PersonDetailViewController: UIViewController {
         navigationItem.titleView = titleViewContainer
     }
     
-    fileprivate func setupDataSource() {
-        let personHeaderRegistration = UICollectionView.SupplementaryRegistration<PersonHeaderView>(supplementaryNib: PersonHeaderView.namedNib(), elementKind: PersonHeaderView.headerkind) { [unowned self] header, _, _ in
-            configurePersonHeader(header: header)
-        }
+    fileprivate func configurePerson() {
+        headerView.heightConstraint.constant = imageHeight
         
-        dataSource = PersonDetailDataSource(collectionView: collectionView, supplementaryViewProvider: { [unowned self] collectionView, elementKind, indexPath in
-            if elementKind == PersonHeaderView.headerkind {
-                return collectionView.dequeueConfiguredReusableSupplementary(using: personHeaderRegistration, for: indexPath)
-            } else {
-                return dataSource.sectionTitleView(collectionView: collectionView, at: indexPath)
-            }
-        })
+        //Setup Person
+        title = person.name
+        titleView.text = person.name
+        headerView.nameLabel.text = person.name
+                
+        let imageURL = person.profileImageURL
+        headerView.personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
+    }
+    
+    fileprivate func setupDataSource() {
+        dataSource = PersonDetailDataSource(collectionView: collectionView)
         
         dataSource.overviewExpandAction = { [unowned self] in
             UIView.transition(with: collectionView, duration: 0.2, options: .transitionCrossDissolve) {
@@ -136,21 +142,6 @@ class PersonDetailViewController: UIViewController {
         dataSource.willChangeSelectedDepartment = { [unowned self] department in
             updateInsets(for: department)
         }
-    }
-    
-    fileprivate func configurePersonHeader(header: PersonHeaderView) {
-        header.headerHeightConstraint.constant = imageHeight
-        header.imageHeightConstraint.constant = imageHeight
-        
-        //Setup Person
-        title = person.name
-        titleView.text = person.name
-        header.nameLabel.text = person.name
-        
-        let imageURL = person.profileImageURL
-        header.personImageView.setRemoteImage(withURL: imageURL, placeholder: .asset(.PersonPlaceholder))
-        
-        self.headerView = header
     }
     
     fileprivate func setupStore()  {
@@ -233,16 +224,18 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func updateHeader() {
-        let offset = collectionView.contentOffset.y
-        
+        let offset = collectionView.contentOffset.y + collectionView.contentInset.top
+
         //Stretch image if pulled down
         if offset <= 0 {
-            headerView.topImageConstraint.constant = offset
-            headerView.imageHeightConstraint.constant = imageHeight + abs(offset)
+            let newHeight = imageHeight + abs(offset)
+            headerView.heightConstraint.constant = newHeight
+            collectionView.verticalScrollIndicatorInsets.top = max(newHeight, imageHeight)
             return
         }
                 
-        headerView.topImageConstraint.constant = 0
+        headerView.heightConstraint.constant = 0
+        collectionView.verticalScrollIndicatorInsets.top = imageHeight
         
         let navBarHeight = view.safeAreaInsets.top
         let threshold = imageHeight - navBarHeight
@@ -250,7 +243,7 @@ class PersonDetailViewController: UIViewController {
         
         //Adjust header image size
         let newHeight = max(imageHeight - offset, navBarHeight)
-        headerView.imageHeightConstraint.constant = newHeight
+        headerView.heightConstraint.constant = newHeight
 
         //Animate title
         if offset > threshold - 10 {
@@ -261,11 +254,11 @@ class PersonDetailViewController: UIViewController {
 
         //Set blur animation progress
         let ratio: CGFloat = 1 - newHeight / (imageHeight * 0.75)
-        headerView.blurAnimator.fractionComplete = ratio
+        headerView.blurAnimator.fractionComplete = ratio.clamped(to: 0...1)
 
         //Set name opacity
         let alpha = (newHeight - navBarHeight - 5) / (imageHeight * 0.5)
-        headerView.nameLabel.alpha = alpha
+        headerView.nameLabel.alpha = alpha.clamped(to: 0...1)
     }
     
 }
