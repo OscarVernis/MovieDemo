@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import Combine
 
 protocol DataProvider {
     associatedtype Model
     
     var items: [Model] { get }
+    var itemsPublisher: AnyPublisher<[Model], Error> { get }
     
     var isLastPage: Bool { get }
     var didUpdate: ((Error?) -> Void)? { get set }

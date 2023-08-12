@@ -10,6 +10,8 @@ import Foundation
 import Combine
 
 class PaginatedProvider<T>: DataProvider, ObservableObject {
+    var itemsPublisher: AnyPublisher<[T], Error> = PassthroughSubject<[T], Error>().eraseToAnyPublisher()
+    
     typealias Model = T
     
     @Published var items = [T]()

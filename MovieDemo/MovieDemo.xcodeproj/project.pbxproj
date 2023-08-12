@@ -161,6 +161,7 @@
 		557ACF88285BAC7000FFA4CD /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACF87285BAC7000FFA4CD /* TextStyles.swift */; };
 		557ACF8A285BAEC800FFA4CD /* RatedMovieItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACF89285BAEC800FFA4CD /* RatedMovieItem.swift */; };
 		557ACF8C285BB05300FFA4CD /* RatedMovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACF8B285BB05300FFA4CD /* RatedMovieList.swift */; };
+		557B67192A8830A80014D002 /* ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557B67182A8830A80014D002 /* ItemProvider.swift */; };
 		557E0DCB285BF6D800D21D93 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557E0DCA285BF6D800D21D93 /* RemoteImage.swift */; };
 		557FFA8B251A625900D79F68 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557FFA8A251A625900D79F68 /* SessionManager.swift */; };
 		557FFA8F251A65B700D79F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 557FFA8E251A65B700D79F68 /* KeychainAccess */; };
@@ -178,7 +179,6 @@
 		5587114A25108079005A0975 /* MovieInfoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587114825108079005A0975 /* MovieInfoListCell.swift */; };
 		5587114B25108079005A0975 /* MovieInfoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5587114925108079005A0975 /* MovieInfoListCell.xib */; };
 		55893B6E2513F56D00233677 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55893B6D2513F56D00233677 /* DataProvider.swift */; };
-		55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55893B7A2513FEEE00233677 /* BasicProvider.swift */; };
 		558A5A8C251053C600E5FB40 /* MovieBannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A5A8A251053C600E5FB40 /* MovieBannerCell.swift */; };
 		558A5A8D251053C600E5FB40 /* MovieBannerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558A5A8B251053C600E5FB40 /* MovieBannerCell.xib */; };
 		558A5A9825106C1400E5FB40 /* SectionBackgroundDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558A5A9725106C1400E5FB40 /* SectionBackgroundDecorationView.swift */; };
@@ -482,6 +482,7 @@
 		557ACF87285BAC7000FFA4CD /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		557ACF89285BAEC800FFA4CD /* RatedMovieItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatedMovieItem.swift; sourceTree = "<group>"; };
 		557ACF8B285BB05300FFA4CD /* RatedMovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatedMovieList.swift; sourceTree = "<group>"; };
+		557B67182A8830A80014D002 /* ItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemProvider.swift; sourceTree = "<group>"; };
 		557E0DCA285BF6D800D21D93 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		557FFA8A251A625900D79F68 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		557FFA96251A6D7100D79F68 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -498,7 +499,6 @@
 		5587114825108079005A0975 /* MovieInfoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoListCell.swift; sourceTree = "<group>"; };
 		5587114925108079005A0975 /* MovieInfoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieInfoListCell.xib; sourceTree = "<group>"; };
 		55893B6D2513F56D00233677 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
-		55893B7A2513FEEE00233677 /* BasicProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicProvider.swift; sourceTree = "<group>"; };
 		558A5A8A251053C600E5FB40 /* MovieBannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieBannerCell.swift; sourceTree = "<group>"; };
 		558A5A8B251053C600E5FB40 /* MovieBannerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieBannerCell.xib; sourceTree = "<group>"; };
 		558A5A9725106C1400E5FB40 /* SectionBackgroundDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionBackgroundDecorationView.swift; sourceTree = "<group>"; };
@@ -1444,7 +1444,7 @@
 			isa = PBXGroup;
 			children = (
 				55893B6D2513F56D00233677 /* DataProvider.swift */,
-				55893B7A2513FEEE00233677 /* BasicProvider.swift */,
+				557B67182A8830A80014D002 /* ItemProvider.swift */,
 				55ED2E1827F785BB0067F635 /* PaginatedProvider.swift */,
 				5519CB2727F78FC000AAE38E /* MoviesProvider.swift */,
 				5519CB2927F78FE500AAE38E /* SearchProvider.swift */,
@@ -1811,7 +1811,6 @@
 				5511CD2E2A70DA9C00A9CCDD /* CodableUserList.swift in Sources */,
 				55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */,
 				55B739572A720E7A003BB6F5 /* UserListDetailViewController.swift in Sources */,
-				55893B7B2513FEEE00233677 /* BasicProvider.swift in Sources */,
 				55677462251735E90066B6E4 /* UICollectionViewCell+Register.swift in Sources */,
 				5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */,
 				55BB1A96285D5273000BC3A0 /* SectionBackground.swift in Sources */,
@@ -1895,6 +1894,7 @@
 				5584AF292A82B3E700027F1C /* CastCreditsViewController.swift in Sources */,
 				553AF9B32856CD58007D1B20 /* UserProfileLayoutProvider.swift in Sources */,
 				559B08D3283D4EBF002DA8DF /* AnyPublisher+Async.swift in Sources */,
+				557B67192A8830A80014D002 /* ItemProvider.swift in Sources */,
 				55E5871E27DBC66000159201 /* ServiceModelsResult.swift in Sources */,
 				551C64D92A7C8BF7004EE10A /* UIViewController+NavBarAppearance.swift in Sources */,
 				550C685E2A79A88D00C64C87 /* ArrayPagingDataSource.swift in Sources */,
