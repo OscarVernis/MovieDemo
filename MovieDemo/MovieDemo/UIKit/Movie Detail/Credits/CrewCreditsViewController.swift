@@ -9,7 +9,7 @@
 import UIKit
 
 class CrewCreditsViewController: UIViewController {
-    private static let globalHeaderKind = "GlobalCategorySelectionHeader"
+    private let globalHeaderKind = "GlobalCategorySelectionHeader"
     
     private var listViewController: ListViewController!
     private weak var dataSource: ArrayPagingDataSource<CrewCreditViewModel, CreditPhotoListCell>!
@@ -39,36 +39,33 @@ class CrewCreditsViewController: UIViewController {
         setupSearch()
     }
     
+    typealias HeaderRegistration = UICollectionView.SupplementaryRegistration<CategorySelectionHeaderView>
     private func setupListViewController() {
-        let departmentsHeaderRegistration = UICollectionView.SupplementaryRegistration<CategorySelectionHeaderView>(elementKind: CrewCreditsViewController.globalHeaderKind) { [unowned self] header, elementKind, indexPath in
+        let departmentsHeaderRegistration = HeaderRegistration(elementKind: globalHeaderKind) { [unowned self] header, elementKind, indexPath in
             header.selectionView.unselectedBackgroundgColor = .systemGray5
             
             header.selectionView.items = viewModel.departments
             header.selectionView.didSelectItem = { [unowned self] idx in
                 selectedDepartment = viewModel.departments[idx]
-                let credits = viewModel.jobs(in: selectedDepartment)
-                self.dataSource.models = credits
-                self.dataSource.reload(animated: true)
+                updateSelectedDepartment()
             }
             
             self.selectionView = header.selectionView
         }
         
         let dataSourceProvider = { [unowned self] collectionView in
-            let firstDepartment = viewModel.departments.first!
+            let firstDepartment = viewModel.departments.first ?? ""
             let credits = viewModel.jobs(in: firstDepartment)
-            let dataSource = ArrayPagingDataSource(collectionView: collectionView, models: credits, cellConfigurator: CreditPhotoListCell.configure)
-            
-            dataSource.dataSource.supplementaryViewProvider = { view, kind, indexPath in
+            let dataSource = ArrayPagingDataSource(collectionView: collectionView, models: credits, cellConfigurator: CreditPhotoListCell.configure, supplementaryViewProvider: { collectionView, elementKind, indexPath in
                 return collectionView.dequeueConfiguredReusableSupplementary(using: departmentsHeaderRegistration, for: indexPath)
-            }
+            })
             
             self.dataSource = dataSource
             
             return dataSource
         }
         
-        listViewController = ListViewController(dataSourceProvider: dataSourceProvider, layout: createLayout(), router: nil)
+        listViewController = ListViewController(dataSourceProvider: dataSourceProvider, layout: createLayout())
         
         listViewController.didSelectedItem = { [weak self] model in
             if let crewCredit = model as? CrewCreditViewModel {
@@ -82,8 +79,8 @@ class CrewCreditsViewController: UIViewController {
     private func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = ListViewController.defaultLayout()
         
-        if viewModel.departments.count > 0 {
-            layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .absolute(40), kind: CrewCreditsViewController.globalHeaderKind)
+        if !viewModel.departments.isEmpty {
+            layout.configuration = CompositionalLayoutBuilder.createGlobalHeaderConfiguration(height: .absolute(40), kind: globalHeaderKind)
         }
         
         return layout
@@ -95,19 +92,29 @@ class CrewCreditsViewController: UIViewController {
         self.navigationItem.searchController = searchController
     }
     
+    private func updateSelectedDepartment() {
+        let credits = viewModel.jobs(in: selectedDepartment)
+        self.dataSource.models = credits
+        self.dataSource.reload(animated: true)
+    }
+    
     private func updateSearchResults(query: String) {
-        var selectedIndex: Int = 0
+        //Query will filter credits and departments that include those credits
         viewModel.query = query
-        if viewModel.departments.firstIndex(of: selectedDepartment) == nil {
+        
+        //Update selected deparment index in case filter departments are different than previous query
+        var selectedIndex: Int
+        if let index = viewModel.departments.firstIndex(of: selectedDepartment) {
+            selectedIndex = index
+        } else { //If filtered credits don't included credits with current selected deparment, change to first available deparment
             selectedDepartment = viewModel.departments.first ?? ""
+            selectedIndex = 0
         }
         
-        selectedIndex = viewModel.departments.firstIndex(of: selectedDepartment) ?? 0
-        
+        //Update selectionView with new departments
         selectionView.items = viewModel.departments
         selectionView.setSelectedCategory(index: selectedIndex, animated: true)
-        dataSource.models = viewModel.jobs(in: selectedDepartment)
-        dataSource.reload(animated: true)
+        updateSelectedDepartment()
     }
     
 }

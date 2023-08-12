@@ -10,7 +10,9 @@ import UIKit
 
 class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: PagingDataSource {
     typealias CellConfigurator = (Cell, Model) -> Void
-    
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
+    typealias SupplementaryViewProvider = DataSource.SupplementaryViewProvider
+
     enum Section: Int, CaseIterable {
         case main
     }
@@ -21,15 +23,17 @@ class ArrayPagingDataSource<Model: Hashable, Cell: UICollectionViewCell>: Paging
     
     var models: [Model]
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    var dataSource: DataSource!
     
-    init(collectionView: UICollectionView, models: [Model], cellConfigurator: @escaping CellConfigurator) {
+    init(collectionView: UICollectionView, models: [Model], cellConfigurator: @escaping CellConfigurator, supplementaryViewProvider: SupplementaryViewProvider? = nil) {
         self.models = models
         
-        dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let model = itemIdentifier as! Model
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: cellConfigurator)
         })
+        
+        dataSource.supplementaryViewProvider = supplementaryViewProvider
         
         registerViews(collectionView: collectionView)
     }
