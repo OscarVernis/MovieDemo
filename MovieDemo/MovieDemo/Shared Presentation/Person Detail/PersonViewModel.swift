@@ -120,8 +120,8 @@ extension PersonViewModel {
     
     fileprivate func updatePopularMovies() {
         var credits: [Movie] = []
-        
-        if departments.contains(knownForDepartment ?? "") {
+                
+        if knownForDepartment != CrewDepartment.Acting.rawValue, departments.contains(knownForDepartment ?? "") {
             if let crewCredits = person.crewCredits {
                 credits.append(contentsOf: crewCredits.filter({ $0.department == knownForDepartment }).compactMap { $0.movie } )
             }
@@ -130,7 +130,7 @@ extension PersonViewModel {
                 credits.append(contentsOf: castCredits.compactMap { $0.movie } )
             }
         }
-        
+                
         var filteredMovies = [Movie]()
         for movie in credits where !filteredMovies.contains(movie)  {
             filteredMovies.append(movie)
