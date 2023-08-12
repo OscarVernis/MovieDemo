@@ -106,7 +106,7 @@ class UserProfileViewController: UIViewController {
     
     fileprivate func setudDataSource() {
         dataSource = UserProfileDataSource(collectionView: collectionView, supplementaryViewProvider: { [unowned self] collectionView, elementKind, indexPath in
-            return self.header(with: collectionView, at: indexPath)
+            return header(with: collectionView, at: indexPath)
         })
         
         dataSource.registerReusableViews(collectionView: collectionView)
@@ -121,7 +121,7 @@ class UserProfileViewController: UIViewController {
             return userHeaderView
         } else {
             let sectionTitleView = dataSource.titleHeader(with: collectionView, section: section, at: indexPath)
-            self.configureTitleHeader(sectionTitleView, section: section)
+            configureTitleHeader(sectionTitleView, section: section)
             
             return sectionTitleView
         }
@@ -176,19 +176,36 @@ extension UserProfileViewController {
     
     func configureTitleHeader(_ header: UICollectionReusableView, section: UserProfileDataSource.Section) {
         guard let titleHeader = header as? SectionTitleView else { return }
-                
-        titleHeader.tapHandler = { [weak self] in
-            switch section {
-            case .favorites:
-                self?.router?.showUserFavorites()
-            case .watchlist:
-                self?.router?.showUserWatchlist()
-            case .rated:
-                self?.router?.showUserRated()
-            default:
-                break
+        
+        switch section {
+        case .favorites:
+            if user.favorites.count > 0 {
+                titleHeader.tapHandler = { [weak self] in
+                    self?.router?.showUserFavorites()
+                }
+            } else {
+                titleHeader.tapHandler = nil
             }
+        case .watchlist:
+            if user.watchlist.count > 0 {
+                titleHeader.tapHandler = { [weak self] in
+                    self?.router?.showUserWatchlist()
+                }
+            } else {
+                titleHeader.tapHandler = nil
+            }
+        case .rated:
+            if user.rated.count > 0 {
+                titleHeader.tapHandler = { [weak self] in
+                    self?.router?.showUserRated()
+                }
+            } else {
+                titleHeader.tapHandler = nil
+            }
+        default:
+            break
         }
+                
     }
     
 }
