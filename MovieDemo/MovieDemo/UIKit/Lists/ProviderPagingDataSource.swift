@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCell>: PagingDataSource {
     typealias Model = Provider.Model
@@ -26,19 +27,25 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     var isLoading: Bool = false
     private(set) var isRefreshable: Bool = true
     
-    let loadingSectionID = UUID().uuidString
+    private let loadingSectionID = UUID().uuidString
     
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
+    private var providerCancellable: AnyCancellable?
     
     init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil, cellProvider: @escaping CellProvider) {
         self.dataProvider = dataProvider
         self.cellConfigurator = cellConfigurator
         
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: cellProvider)
-                
-        self.dataProvider.didUpdate = { [weak self] error in
-            self?.providerDidUpdate(error: error)
-        }
+              
+        providerCancellable = self.dataProvider.itemsPublisher
+            .handleError({ [unowned self] error in
+                providerDidUpdate(error: error)
+            })
+            .sink(receiveValue: { [unowned self] _ in
+                providerDidUpdate(error: nil)
+            })
     }
     
     convenience init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil) {

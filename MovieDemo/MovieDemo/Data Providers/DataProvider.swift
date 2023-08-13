@@ -16,7 +16,6 @@ protocol DataProvider<Model> {
     var itemsPublisher: AnyPublisher<[Model], Error> { get }
     
     var isLastPage: Bool { get }
-    var didUpdate: ((Error?) -> Void)? { get set }
     
     var itemCount: Int { get }
     func item(atIndex: Int) -> Model
