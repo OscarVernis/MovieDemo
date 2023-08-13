@@ -14,8 +14,6 @@ enum SearchResultItem {
     case movie(Movie)
 }
 
-typealias SearchResult = (items: [SearchResultItem], totalPages: Int)
+typealias SearchService = (_ query: String, _ page: Int) -> AnyPublisher<[SearchResultItem], Error>
 
-typealias SearchService = (_ query: String, _ page: Int) -> AnyPublisher<SearchResult, Error>
-
-typealias MovieSearchService = (_ query: String, _ page: Int) -> AnyPublisher<MoviesResult, Error>
+typealias MovieSearchService = (_ query: String, _ page: Int) -> AnyPublisher<[Movie], Error>

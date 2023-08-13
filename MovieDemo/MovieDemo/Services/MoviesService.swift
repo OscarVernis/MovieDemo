@@ -9,7 +9,5 @@
 import Foundation
 import Combine
 
-typealias MoviesResult = (movies: [Movie], totalPages: Int)
-
-typealias MoviesService = (_ page: Int) -> AnyPublisher<MoviesResult, Error>
+typealias MoviesService = (_ page: Int) -> AnyPublisher<[Movie], Error>
 

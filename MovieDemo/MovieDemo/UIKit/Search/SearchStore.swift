@@ -53,7 +53,6 @@ class SearchStore {
                 .eraseToAnyPublisher()
         } else {
             return searchService(query, page)
-                .map(\.items)
                 .map { $0.map(SearchProviderResultItem.init) }
                 .eraseToAnyPublisher()
         }

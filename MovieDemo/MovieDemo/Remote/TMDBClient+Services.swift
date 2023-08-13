@@ -11,14 +11,11 @@ import Combine
 
 //MARK: - Movies
 extension TMDBClient {
-    func getMovies(endpoint: MoviesEndpoint,  page: Int) -> AnyPublisher<MoviesResult, Error> {
+    func getMovies(endpoint: MoviesEndpoint,  page: Int) -> AnyPublisher<[Movie], Error> {
         let publisher: AnyPublisher<ServiceModelsResult<CodableMovie>, Error> = getModels(endpoint: .movies(endpoint), page: page)
         
         return publisher
-            .map { result in
-                let movies = result.items.toMovies()
-                return MoviesResult(movies: movies, totalPages: result.totalPages)
-            }
+            .map { $0.items.toMovies() }
             .eraseToAnyPublisher()
     }
     
@@ -60,35 +57,19 @@ extension TMDBClient {
 
 //MARK: - Search Service
 extension TMDBClient {
-    func search(query: String, page: Int = 1) -> AnyPublisher<SearchResult, Error>  {
+    func search(query: String, page: Int = 1) -> AnyPublisher<[SearchResultItem], Error>  {
         let publisher: AnyPublisher<ServiceModelsResult<MediaItem>, Error> = getModels(endpoint: .search, parameters: ["query" : query], page: page)
         
         return publisher
-            .compactMap { result in
-                let searchResults: [SearchResultItem] = result.items.compactMap { item -> SearchResultItem? in
-                    switch item {
-                    case .person(let codablePerson):
-                        return .person(codablePerson.toPerson())
-                    case .movie(let codableMovie):
-                        return .movie(codableMovie.toMovie())
-                    case .unknown:
-                        return nil
-                    }
-                }
-                
-                return (searchResults, result.totalPages)
-            }
+            .map { $0.items.compactMap { $0.toSearchResultItem() } }
             .eraseToAnyPublisher()
     }
     
-    func movieSearch(query: String, page: Int = 1) -> AnyPublisher<MoviesResult, Error>  {
+    func movieSearch(query: String, page: Int = 1) -> AnyPublisher<[Movie], Error>  {
         let publisher: AnyPublisher<ServiceModelsResult<CodableMovie>, Error> = getModels(endpoint: .movieSearch, parameters: ["query" : query], page: page)
         
         return publisher
-            .map { result in
-                let movies = result.items.toMovies()
-                return MoviesResult(movies: movies, totalPages: result.totalPages)
-            }
+            .map { $0.items.toMovies() }
             .eraseToAnyPublisher()
     }
 }

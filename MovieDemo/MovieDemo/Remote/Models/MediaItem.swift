@@ -13,6 +13,19 @@ enum MediaItem {
     case movie(CodableMovie)
     case unknown
 }
+
+extension MediaItem {
+    func toSearchResultItem() -> SearchResultItem?{
+        switch self {
+        case .person(let codablePerson):
+            return .person(codablePerson.toPerson())
+        case .movie(let codableMovie):
+            return .movie(codableMovie.toMovie())
+        case .unknown:
+            return nil
+        }
+    }
+}
     
 extension MediaItem: Codable {
     enum CodingKeys: String, CodingKey, CaseIterable {

@@ -51,8 +51,6 @@ class AppDependencyContainer {
         
         let remoteService = { [unowned self] (page: Int) in
             self.remoteClient.getMovies(endpoint: movieList, page: page)
-                .map(\.movies)
-                .eraseToAnyPublisher()
         }
         
         let serviceWithCache = {
@@ -134,7 +132,7 @@ class AppDependencyContainer {
     
     var movieSearchService: (String) -> AnyPublisher<[MovieViewModel], Error> {
         { self.remoteClient.movieSearch(query: $0, page: 1)
-            .map { $0.movies.map(MovieViewModel.init) }
+            .map { $0.map(MovieViewModel.init) }
             .eraseToAnyPublisher()
         }
     }
