@@ -27,7 +27,7 @@ class MoviesProvider: PaginatedProvider<MovieViewModel> {
         else { return }
         
         let cacheItems = try? cache.load().map(MovieViewModel.init)
-
+        
         if let cacheItems {
             items = cacheItems
         }

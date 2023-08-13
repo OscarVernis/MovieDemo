@@ -43,20 +43,7 @@ class AppDependencyContainer {
     }
     
     //MARK: - Helpers
-    func moviesProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> MoviesProvider {
-        var cache: (any ModelCache<[Movie]>)? = nil
-        if let cacheList {
-            cache = CodableCache.cache(for: cacheList)
-        }
-        
-        let service = { [unowned self] (page: Int) in
-            self.remoteClient.getMovies(endpoint: movieList, page: page)
-        }
-        
-        return MoviesProvider(service: service, cache: cache)
-    }
-    
-    func moviesItemProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> ItemProvider<MovieViewModel> {
+    func moviesProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> ItemProvider<MovieViewModel> {
         var cache: CodableCache<[Movie]>?
         if let cacheList {
             cache = CodableCache.cache(for: cacheList)

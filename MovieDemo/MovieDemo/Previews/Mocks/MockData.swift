@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 struct MockData {
     
@@ -19,20 +20,18 @@ struct MockData {
         moviesMock.model!.items.toMovies().map(MovieViewModel.init)
     }
     
-    static var moviesService: MoviesService {
+    static var moviesService: (Int) -> AnyPublisher<[MovieViewModel], Error> {
         { (page: Int) in
             moviesMock.publisher()
                 .map { result in
-                    let movies = result.items.toMovies()
-                    return MoviesResult(movies: movies, totalPages: result.totalPages)
+                    return result.items.toMovies().map(MovieViewModel.init)
                 }
                 .eraseToAnyPublisher()
-            
         }
     }
     
-    static var moviesProvider: MoviesProvider {
-        MoviesProvider(service: moviesService)
+    static var moviesProvider: ItemProvider<MovieViewModel> {
+        ItemProvider(service: moviesService)
     }
     
     //MARK: - Movie

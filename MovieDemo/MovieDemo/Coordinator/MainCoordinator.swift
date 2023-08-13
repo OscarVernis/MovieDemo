@@ -207,7 +207,7 @@ class MainCoordinator {
     }
     
     fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
-        let dataProvider = dependencies.moviesItemProvider(for: endpoint)
+        let dataProvider = dependencies.moviesProvider(for: endpoint)
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
     

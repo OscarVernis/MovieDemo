@@ -19,17 +19,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     
     var cancellables = Set<AnyCancellable>()
     
-    var nowPlayingProvider: MoviesProvider
-    var upcomingProvider: MoviesProvider
-    var popularProvider: MoviesProvider
-    var topRatedProvider: MoviesProvider
+    var nowPlayingProvider: ItemProvider<MovieViewModel>
+    var upcomingProvider: ItemProvider<MovieViewModel>
+    var popularProvider: ItemProvider<MovieViewModel>
+    var topRatedProvider: ItemProvider<MovieViewModel>
     
     //MARK: - Setup
     required init(router: HomeRouter?,
-                  nowPlayingProvider: MoviesProvider,
-                  upcomingProvider: MoviesProvider,
-                  popularProvider: MoviesProvider,
-                  topRatedProvider: MoviesProvider) {
+                  nowPlayingProvider: ItemProvider<MovieViewModel>,
+                  upcomingProvider: ItemProvider<MovieViewModel>,
+                  popularProvider: ItemProvider<MovieViewModel>,
+                  topRatedProvider: ItemProvider<MovieViewModel>) {
         self.router = router
         self.nowPlayingProvider = nowPlayingProvider
         self.upcomingProvider = upcomingProvider
@@ -109,15 +109,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupProviders() {
-        subscribe(to: nowPlayingProvider.$items)
-        subscribe(to: upcomingProvider.$items)
-        subscribe(to: popularProvider.$items)
-        subscribe(to: topRatedProvider.$items)
+        subscribe(to: nowPlayingProvider.itemsPublisher)
+        subscribe(to: upcomingProvider.itemsPublisher)
+        subscribe(to: popularProvider.itemsPublisher)
+        subscribe(to: topRatedProvider.itemsPublisher)
     }
     
-    fileprivate func subscribe(to publisher: Published<[MovieViewModel]>.Publisher) {
+    fileprivate func subscribe(to publisher: AnyPublisher<[MovieViewModel], Error>) {
         publisher
             .receive(on: DispatchQueue.main)
+            .ignoreError()
             .sink { [weak self] _ in
                 self?.reloadDataSource()
             }
