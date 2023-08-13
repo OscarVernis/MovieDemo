@@ -61,7 +61,7 @@ class AppDependencyContainer {
                 .eraseToAnyPublisher()
         }
         
-        return ItemProvider(service: serviceWithCache)
+        return PaginatedProvider(service: serviceWithCache)
         
     }
     
@@ -89,8 +89,8 @@ class AppDependencyContainer {
     }
     
     //MARK: - View Dependencies
-    var searchProvider: SearchProvider {
-        SearchProvider(searchService: remoteClient.search)
+    var searchService: SearchService {
+        remoteClient.search
     }
     
     var loginViewStore: LoginViewStore {

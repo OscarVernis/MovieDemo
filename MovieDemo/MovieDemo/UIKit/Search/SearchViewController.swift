@@ -7,17 +7,17 @@
 //
 
 import UIKit
+import Combine
 
 class SearchViewController: UIViewController {
     var listViewController: ListViewController!
-    var searchProvider: SearchProvider
+    var store: SearchStore
     var router: SearchViewRouter?
     
-    typealias DataSource = ProviderPagingDataSource<SearchProvider, UICollectionViewCell>
-    
-    init(searchProvider: SearchProvider, router: SearchViewRouter? = nil) {
-        self.searchProvider = searchProvider
+    init(searchService: @escaping SearchService, router: SearchViewRouter? = nil) {
+        self.store = SearchStore(searchService: searchService)
         self.router = router
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,7 +34,7 @@ class SearchViewController: UIViewController {
     
     private func setupListViewController() {
         let dataSourceProvider = { [unowned self] in
-            ProviderPagingDataSource(collectionView: $0, dataProvider: searchProvider, cellProvider: cellProvider)
+            ProviderPagingDataSource(collectionView: $0, dataProvider: store.searchProvider, cellProvider: cellProvider)
         }
         listViewController = ListViewController(dataSourceProvider: dataSourceProvider, layout: ListViewController.loadingLayout(), router: router)
         
@@ -55,6 +55,7 @@ class SearchViewController: UIViewController {
         registerViews(collectionView: listViewController.collectionView)
     }
     
+    typealias DataSource = ProviderPagingDataSource<PaginatedProvider<SearchProviderResultItem>, UICollectionViewCell>
     private lazy var cellProvider: DataSource.CellProvider = { [unowned self] collectionView, indexPath, item in
         let section = DataSource.Section(rawValue: indexPath.section)!
         switch section {
@@ -80,6 +81,7 @@ class SearchViewController: UIViewController {
         CreditPhotoListCell.register(to: collectionView)
         LoadingCell.register(to: collectionView)
     }
+    
 }
 
 // MARK: - Searching
@@ -98,7 +100,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     
     func updateSearchResults(for searchController: UISearchController) {
         if let searchQuery = searchController.searchBar.text {
-            searchProvider.query = searchQuery
+            store.query = searchQuery
         } else {
             scrollListViewControllerToTop()
         }

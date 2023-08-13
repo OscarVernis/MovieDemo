@@ -1,29 +1,36 @@
 //
-//  PaginatedDataProvider.swift
+//  PaginatedProvider.swift
 //  MovieDemo
 //
-//  Created by Oscar Vernis on 01/04/22.
-//  Copyright © 2022 Oscar Vernis. All rights reserved.
+//  Created by Oscar Vernis on 12/08/23.
+//  Copyright © 2023 Oscar Vernis. All rights reserved.
 //
 
 import Foundation
 import Combine
 
 class PaginatedProvider<T>: DataProvider, ObservableObject {
-    var itemsPublisher: AnyPublisher<[T], Error> = PassthroughSubject<[T], Error>().eraseToAnyPublisher()
-    
     typealias Model = T
     
-    @Published var items = [T]()
+    let service: (Int) -> AnyPublisher<[Model], Error>
+    let cache: (any ModelCache<[Model]>)?
+    var serviceCancellable: AnyCancellable?
     
-    init() {}
+    var items = [T]()
+    var itemsPublisher: AnyPublisher<[Model], Error> {
+        passthroughSubject.eraseToAnyPublisher()
+    }
+    
+    private var passthroughSubject = PassthroughSubject<[Model], Error>()
+    
+    init(service: @escaping (Int) -> AnyPublisher<[Model], Error>, cache: (any ModelCache<[Model]>)? = nil) {
+        self.service = service
+        self.cache = cache
+    }
     
     var currentPage = 0
-    var totalPages = 1
-    
-    var isLastPage: Bool {
-        currentPage >= totalPages || currentPage == 0
-    }
+
+    var isLastPage: Bool = true
     
     var didUpdate: ((Error?) -> Void)?
     
@@ -34,13 +41,63 @@ class PaginatedProvider<T>: DataProvider, ObservableObject {
     }
     
     func refresh() {
+        isLastPage = false
         currentPage = 0
-        totalPages = 1
         getItems()
     }
     
-     func getItems() {
-        fatalError("")
+    fileprivate func loadFromCache() {
+        //Only load from Cache on first page and when items are empty.
+        guard let cache = cache,
+              currentPage == 0,
+              items.count == 0
+        else { return }
+        
+        let cacheItems = try? cache.load()
+        
+        if let cacheItems {
+            items = cacheItems
+        }
+    }
+    
+    func getItems() {
+        let page = currentPage + 1
+        loadFromCache()
+        
+        serviceCancellable = service(page)
+            .sink { [weak self] completion in
+                guard let self = self else { return }
+                
+                switch completion {
+                case .finished:
+                    self.currentPage += 1
+                    self.didUpdate?(nil)
+                    passthroughSubject.send(items)
+                case .failure(let error):
+                    self.didUpdate?(error)
+                    passthroughSubject.send(completion: .failure(error))
+                }
+            } receiveValue: { [weak self] resultModels in
+                guard let self = self else { return }
+                
+                if resultModels.isEmpty {
+                    isLastPage = true
+                    self.items = []
+                    return
+                }
+                                
+                var models: [Model]
+                if self.currentPage == 0 {
+                    models = []
+                    self.cache?.delete()
+                } else {
+                    models = items
+                }
+                
+                self.cache?.save(resultModels)
+                models.append(contentsOf: resultModels)
+                self.items = models
+            }
     }
     
 }

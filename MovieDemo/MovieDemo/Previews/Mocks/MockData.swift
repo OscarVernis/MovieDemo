@@ -31,7 +31,7 @@ struct MockData {
     }
     
     static var moviesProvider: MoviesProvider {
-        ItemProvider(service: moviesService)
+        PaginatedProvider(service: moviesService)
     }
     
     //MARK: - Movie

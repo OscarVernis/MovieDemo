@@ -1,5 +1,5 @@
 //
-//  ItemProvider+Helpers.swift
+//  PaginatedProvider+Helpers.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 12/08/23.
@@ -8,4 +8,4 @@
 
 import Foundation
 
-typealias MoviesProvider = ItemProvider<MovieViewModel>
+typealias MoviesProvider = PaginatedProvider<MovieViewModel>
