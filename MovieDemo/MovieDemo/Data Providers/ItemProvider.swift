@@ -29,8 +29,7 @@ class ItemProvider<T>: DataProvider, ObservableObject {
     }
     
     var currentPage = 0
-    var totalPages = 1
-    
+
     var isLastPage: Bool = true
     
     var didUpdate: ((Error?) -> Void)?
@@ -42,8 +41,8 @@ class ItemProvider<T>: DataProvider, ObservableObject {
     }
     
     func refresh() {
+        isLastPage = false
         currentPage = 0
-        totalPages = 1
         getItems()
     }
     

@@ -56,6 +56,28 @@ class AppDependencyContainer {
         return MoviesProvider(service: service, cache: cache)
     }
     
+    func moviesItemProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> ItemProvider<MovieViewModel> {
+        var cache: CodableCache<[Movie]>?
+        if let cacheList {
+            cache = CodableCache.cache(for: cacheList)
+        }
+        
+        let remoteService = { [unowned self] (page: Int) in
+            self.remoteClient.getMovies(endpoint: movieList, page: page)
+                .map(\.movies)
+                .eraseToAnyPublisher()
+        }
+        
+        let serviceWithCache = {
+            self.paginatedPublisher(remoteService($0), page: $0, withCache: cache)
+                .map { $0.map(MovieViewModel.init) }
+                .eraseToAnyPublisher()
+        }
+        
+        return ItemProvider(service: serviceWithCache)
+        
+    }
+    
     func publisher<Model: Codable>(_ main: AnyPublisher<Model, Error>, withCache cache: any ModelCache<Model>) -> AnyPublisher<Model, Error> {
         //The resulting publisher loads from the cache first while the remote service completes and the caches the result from that service
         let mainWithCache = main
@@ -66,6 +88,17 @@ class AppDependencyContainer {
             .eraseToAnyPublisher()
         
         return cacheThenMain
+    }
+    
+    func paginatedPublisher<Model: Codable>(_ main: AnyPublisher<[Model], Error>, page: Int, withCache cache: (any ModelCache<[Model]>)?) -> AnyPublisher<[Model], Error> {
+        guard let cache else { return main }
+        
+        if page == 1 {
+            return publisher(main, withCache: cache)
+        }
+
+        return main
+            .eraseToAnyPublisher()
     }
     
     //MARK: - View Dependencies

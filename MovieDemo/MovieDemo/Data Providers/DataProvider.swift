@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-protocol DataProvider {
+protocol DataProvider<Model> {
     associatedtype Model
     
     var items: [Model] { get }

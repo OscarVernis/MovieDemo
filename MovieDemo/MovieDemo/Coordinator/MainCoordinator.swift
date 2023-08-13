@@ -182,9 +182,6 @@ class MainCoordinator {
         }
         
         rootNavigationViewController?.viewControllers = [hvc]
-//        showUserLists()
-//        showPersonProfile(MockData.personVM)
-//        showMovieDetail(movie: MockData.movieVM)
     }
     
     //MARK: - Common
@@ -210,7 +207,7 @@ class MainCoordinator {
     }
     
     fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
-        let dataProvider = dependencies.moviesProvider(for: endpoint)
+        let dataProvider = dependencies.moviesItemProvider(for: endpoint)
         showMovieList(title: title, dataProvider: dataProvider, animated: animated)
     }
     

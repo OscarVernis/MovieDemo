@@ -16,7 +16,7 @@ extension CodableCache<[Movie]> {
         case Upcoming
     }
     
-    static func cache(for list: CacheList) -> any ModelCache<[Movie]> {
+    static func cache(for list: CacheList) -> CodableCache<[Movie]> {
         switch list {
         case .NowPlaying:
             return CodableCache<[Movie]>(filename: "nowplaying-cache")
