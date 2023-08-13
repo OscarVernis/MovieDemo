@@ -35,6 +35,7 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
     }
     
     func refresh() {
+        self.items = []
         isLastPage = false
         currentPage = 0
         getItems()
@@ -59,19 +60,14 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
                 
                 if resultModels.isEmpty {
                     isLastPage = true
-                    self.items = []
                     return
                 }
-                
-                var models: [Model]
+                                
                 if self.currentPage == 0 {
-                    models = []
-                } else {
-                    models = items
+                    self.items = []
                 }
                 
-                models.append(contentsOf: resultModels)
-                self.items = models
+                self.items.append(contentsOf: resultModels)
             }
     }
     

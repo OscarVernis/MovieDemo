@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-enum SearchProviderResultItem: Hashable {
+enum SearchResultViewModel: Hashable {
     case person(PersonViewModel)
     case movie(MovieViewModel)
     
@@ -26,7 +26,7 @@ enum SearchProviderResultItem: Hashable {
 class SearchStore {
     @Published var query: String = ""
     
-    var searchProvider: PaginatedProvider<SearchProviderResultItem>!
+    var searchProvider: PaginatedProvider<SearchResultViewModel>!
     var searchService: SearchService
     var queryCancellable: AnyCancellable?
     
@@ -40,7 +40,7 @@ class SearchStore {
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .sink { [unowned self] _ in
-                refresh()
+                searchProvider.refresh()
             }
         
         searchProvider = PaginatedProvider(service: providerService)
@@ -48,18 +48,14 @@ class SearchStore {
     
     private lazy var providerService = { [unowned self] (page: Int) in
         if query.isEmpty {
-            return Just([SearchProviderResultItem]())
+            return Just([SearchResultViewModel]())
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         } else {
             return searchService(query, page)
-                .map { $0.map(SearchProviderResultItem.init) }
+                .map { $0.map(SearchResultViewModel.init) }
                 .eraseToAnyPublisher()
         }
-    }
-    
-    private func refresh() {
-        searchProvider.refresh()
     }
     
 }

@@ -1003,17 +1003,17 @@
 		555498FF2822329600E89119 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				5523970227D17F6100E4C18F /* MoviesService.swift */,
-				5570994B282485780028ED44 /* SearchService.swift */,
-				5511FF99285A90E800B9C12A /* MovieDetailsService.swift */,
-				5553B3A62A59E99600969AE7 /* PersonDetailsService.swift */,
-				55D317FC284EF6A40090CF34 /* UserService.swift */,
-				558B87542A58B44500416FBB /* UserStateService.swift */,
-				55549900282232BF00E89119 /* SessionService.swift */,
 				55BA58E32A6CAD2D00375F95 /* LoginService.swift */,
 				55BA58E52A6CB2EF00375F95 /* LogoutService.swift */,
 				5572C04E2A5A115A00F164EA /* ModelCache.swift */,
+				5511FF99285A90E800B9C12A /* MovieDetailsService.swift */,
+				5523970227D17F6100E4C18F /* MoviesService.swift */,
+				5553B3A62A59E99600969AE7 /* PersonDetailsService.swift */,
+				5570994B282485780028ED44 /* SearchService.swift */,
+				55549900282232BF00E89119 /* SessionService.swift */,
 				5511CD312A70DC4900A9CCDD /* UserListsServices.swift */,
+				55D317FC284EF6A40090CF34 /* UserService.swift */,
+				558B87542A58B44500416FBB /* UserStateService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";

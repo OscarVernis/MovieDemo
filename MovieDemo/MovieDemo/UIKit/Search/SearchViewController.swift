@@ -42,7 +42,7 @@ class SearchViewController: UIViewController {
             //Avoid the navigation bar showing after the Person Detail is shown
             navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
             
-            let searchItem = item as! SearchProviderResultItem
+            let searchItem = item as! SearchResultViewModel
             switch searchItem {
             case .movie(let movie):
                 router?.showMovieDetail(movie: movie)
@@ -55,7 +55,7 @@ class SearchViewController: UIViewController {
         registerViews(collectionView: listViewController.collectionView)
     }
     
-    typealias DataSource = ProviderPagingDataSource<PaginatedProvider<SearchProviderResultItem>, UICollectionViewCell>
+    typealias DataSource = ProviderPagingDataSource<PaginatedProvider<SearchResultViewModel>, UICollectionViewCell>
     private lazy var cellProvider: DataSource.CellProvider = { [unowned self] collectionView, indexPath, item in
         let section = DataSource.Section(rawValue: indexPath.section)!
         switch section {
@@ -67,7 +67,7 @@ class SearchViewController: UIViewController {
     }
     
     private func mainCell(collectionView: UICollectionView, for item: AnyHashable, at indexPath: IndexPath) -> UICollectionViewCell {
-        let searchItem = item as! SearchProviderResultItem
+        let searchItem = item as! SearchResultViewModel
         switch searchItem {
         case .movie(let movie):
             return collectionView.cell(at: indexPath, model: movie, cellConfigurator: MovieInfoListCell.configure)
