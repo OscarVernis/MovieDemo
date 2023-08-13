@@ -10,10 +10,10 @@ import SwiftUI
 
 struct Home: View {
     var router: HomeRouter?
-    @ObservedObject var nowPlayingProvider: ItemProvider<MovieViewModel>
-    @ObservedObject var upcomingProvider: ItemProvider<MovieViewModel>
-    @ObservedObject var popularProvider: ItemProvider<MovieViewModel>
-    @ObservedObject var topRatedProvider: ItemProvider<MovieViewModel>
+    @ObservedObject var nowPlayingProvider: MoviesProvider
+    @ObservedObject var upcomingProvider: MoviesProvider
+    @ObservedObject var popularProvider: MoviesProvider
+    @ObservedObject var topRatedProvider: MoviesProvider
     
     private var topSectionPadding: CGFloat = 10
 
@@ -52,10 +52,10 @@ struct Home: View {
     
     //MARK: - Init
     init(router: HomeRouter? = nil,
-         nowPlayingProvider: ItemProvider<MovieViewModel>,
-         upcomingProvider: ItemProvider<MovieViewModel>,
-         popularProvider: ItemProvider<MovieViewModel>,
-         topRatedProvider: ItemProvider<MovieViewModel>) {
+         nowPlayingProvider: MoviesProvider,
+         upcomingProvider: MoviesProvider,
+         popularProvider: MoviesProvider,
+         topRatedProvider: MoviesProvider) {
         self.router = router
         self.nowPlayingProvider = nowPlayingProvider
         self.upcomingProvider = upcomingProvider

@@ -43,7 +43,7 @@ class AppDependencyContainer {
     }
     
     //MARK: - Helpers
-    func moviesProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> ItemProvider<MovieViewModel> {
+    func moviesProvider(for movieList: MoviesEndpoint, cacheList: CodableCache<[Movie]>.CacheList? = nil) -> MoviesProvider {
         var cache: CodableCache<[Movie]>?
         if let cacheList {
             cache = CodableCache.cache(for: cacheList)

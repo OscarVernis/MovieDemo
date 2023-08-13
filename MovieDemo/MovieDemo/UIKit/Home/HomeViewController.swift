@@ -19,17 +19,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     
     var cancellables = Set<AnyCancellable>()
     
-    var nowPlayingProvider: ItemProvider<MovieViewModel>
-    var upcomingProvider: ItemProvider<MovieViewModel>
-    var popularProvider: ItemProvider<MovieViewModel>
-    var topRatedProvider: ItemProvider<MovieViewModel>
+    var nowPlayingProvider: MoviesProvider
+    var upcomingProvider: MoviesProvider
+    var popularProvider: MoviesProvider
+    var topRatedProvider: MoviesProvider
     
     //MARK: - Setup
     required init(router: HomeRouter?,
-                  nowPlayingProvider: ItemProvider<MovieViewModel>,
-                  upcomingProvider: ItemProvider<MovieViewModel>,
-                  popularProvider: ItemProvider<MovieViewModel>,
-                  topRatedProvider: ItemProvider<MovieViewModel>) {
+                  nowPlayingProvider: MoviesProvider,
+                  upcomingProvider: MoviesProvider,
+                  popularProvider: MoviesProvider,
+                  topRatedProvider: MoviesProvider) {
         self.router = router
         self.nowPlayingProvider = nowPlayingProvider
         self.upcomingProvider = upcomingProvider

@@ -30,7 +30,7 @@ struct MockData {
         }
     }
     
-    static var moviesProvider: ItemProvider<MovieViewModel> {
+    static var moviesProvider: MoviesProvider {
         ItemProvider(service: moviesService)
     }
     
