@@ -132,7 +132,6 @@ class MainCoordinator {
     
     func logout() {
         Task { @MainActor in
-            
             do {
                 try await dependencies.logoutService()
                 if self.isLoginRequired {
@@ -192,11 +191,10 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
     
-    func showMovieList<T: DataProvider>(title: String, dataProvider: T, animated: Bool = true) where T.Model == MovieViewModel {
+    fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
+        let dataProvider = dependencies.moviesProvider(for: endpoint)
         let lvc = ListViewController(provider: dataProvider, cellConfigurator: MovieInfoListCell.configure, router: self)
         lvc.title = title
-        
-        rootNavigationViewController?.pushViewController(lvc, animated: animated)
         
         lvc.didSelectedItem = { [weak self] model in
             if let movie = model as? MovieViewModel {
@@ -204,11 +202,7 @@ class MainCoordinator {
             }
         }
         
-    }
-    
-    fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
-        let dataProvider = dependencies.moviesProvider(for: endpoint)
-        showMovieList(title: title, dataProvider: dataProvider, animated: animated)
+        rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
     //MARK: - Login
@@ -229,7 +223,6 @@ class MainCoordinator {
     
     func showUserListDetail(list: UserList, animated: Bool = true) {
         let uldvc = UserListDetailViewController(store: dependencies.userListDetailStore(list: list), router: self)
-        
         rootNavigationViewController?.pushViewController(uldvc, animated: animated)
     }
     

@@ -136,10 +136,7 @@ class PersonDetailDataSource {
             return socialCell
         } else {
             let infoItem = identifier as! [String: String]
-            return collectionView.cell(at: indexPath, model: infoItem, cellConfigurator: { (cell: InfoListCell, infoItem) in
-                InfoListCell.configure(cell: cell, info: infoItem)
-                cell.separator.isHidden = true
-            })
+            return collectionView.cell(at: indexPath, model: infoItem, cellConfigurator: InfoListCell.configureWithoutSeparator)
         }
     }
     

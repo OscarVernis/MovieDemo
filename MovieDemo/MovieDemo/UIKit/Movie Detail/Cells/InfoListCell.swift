@@ -27,4 +27,9 @@ extension InfoListCell {
         cell.infoLabel.text = info.first?.value
         cell.infoLabel.font = cell.infoLabel.font.withSize(16)
     }
+    
+    static func configureWithoutSeparator(cell: InfoListCell, info: [String : String]) {
+        configure(cell: cell, info: info)
+        cell.separator.isHidden = true
+    }
 }

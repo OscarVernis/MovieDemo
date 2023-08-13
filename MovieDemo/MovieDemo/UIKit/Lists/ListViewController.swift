@@ -24,6 +24,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
         UIActivityIndicatorView(style: .large)
     }()
     
+    //MARK: - View Controller
     init(dataSourceProvider: @escaping DataSourceProvider,
          layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(),
          router: ErrorHandlingRouter? = nil) {
@@ -53,6 +54,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
         return .portrait
     }
     
+    //MARK: - Setup
     func createCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: layout)
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -61,35 +63,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
         collectionView.delegate = self
         
         view.addSubview(collectionView)
-    }
-    
-    
-    static func defaultLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout { _, _ in
-            let section = CompositionalLayoutBuilder.createListSection()
-            section.contentInsets.bottom = 30
-            
-            return section
-        }
-    }
-    
-    static func loadingLayout() -> UICollectionViewCompositionalLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
-            switch sectionIndex {
-            case 0:
-                let section = CompositionalLayoutBuilder.createListSection()
-                return section
-            case 1:
-                let section = CompositionalLayoutBuilder.createListSection(height: 44)
-                section.contentInsets.top = 20
-                section.contentInsets.bottom = 30
-                return section
-            default:
-                return nil
-            }
-        }
-        
-        return layout
     }
         
     fileprivate func setup() {
@@ -137,6 +110,38 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
     }
 }
 
+//MARK: - Default Layouts
+extension ListViewController {
+    static func defaultLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { _, _ in
+            let section = CompositionalLayoutBuilder.createListSection()
+            section.contentInsets.bottom = 30
+            
+            return section
+        }
+    }
+    
+    static func loadingLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
+            switch sectionIndex {
+            case 0:
+                let section = CompositionalLayoutBuilder.createListSection()
+                return section
+            case 1:
+                let section = CompositionalLayoutBuilder.createListSection(height: 44)
+                section.contentInsets.top = 20
+                section.contentInsets.bottom = 30
+                return section
+            default:
+                return nil
+            }
+        }
+        
+        return layout
+    }
+}
+
+//MARK: - Convenience Initializers
 extension ListViewController {
     convenience init<Model: Hashable, Cell: UICollectionViewCell>(models: [Model], cellConfigurator: @escaping ArrayPagingDataSource<Model, Cell>.CellConfigurator, layout: UICollectionViewCompositionalLayout = ListViewController.defaultLayout(), router: ErrorHandlingRouter? = nil) {
         let provider = { ArrayPagingDataSource(collectionView: $0, models: models, cellConfigurator: cellConfigurator) }

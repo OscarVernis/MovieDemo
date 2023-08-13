@@ -9,3 +9,5 @@
 import Foundation
 
 typealias MoviesProvider = PaginatedProvider<MovieViewModel>
+
+typealias SearchProvider = PaginatedProvider<SearchResultViewModel>

@@ -26,7 +26,7 @@ enum SearchResultViewModel: Hashable {
 class SearchStore {
     @Published var query: String = ""
     
-    var searchProvider: PaginatedProvider<SearchResultViewModel>!
+    var searchProvider: SearchProvider!
     var searchService: SearchService
     var queryCancellable: AnyCancellable?
     
@@ -43,7 +43,7 @@ class SearchStore {
                 searchProvider.refresh()
             }
         
-        searchProvider = PaginatedProvider(service: providerService)
+        searchProvider = SearchProvider(service: providerService)
     }
     
     private lazy var providerService = { [unowned self] (page: Int) in

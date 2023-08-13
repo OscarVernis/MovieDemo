@@ -118,7 +118,6 @@ class PersonDetailViewController: UIViewController {
         headerView.heightConstraint.constant = imageHeight
         
         //Setup Person
-        title = person.name
         titleView.text = person.name
         headerView.nameLabel.text = person.name
                 
@@ -147,16 +146,16 @@ class PersonDetailViewController: UIViewController {
     fileprivate func setupStore()  {
         store.$person
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.storeDidUpdate()
+            .sink { [unowned self] _ in
+                storeDidUpdate()
             }
             .store(in: &cancellables)
         
         store.$error
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.handleError()
+            .sink { [unowned self] error in
+                handleError()
             }
             .store(in: &cancellables)
         
@@ -176,6 +175,8 @@ class PersonDetailViewController: UIViewController {
         router?.handle(error: .refreshError, shouldDismiss: true)
     }
     
+    /// Adds bottom insets to the collectioView when the selected category doesn't have enough credits to fill the screen.
+    /// - Parameter selectedDepartment: New selected department.
     fileprivate func updateInsets(for selectedDepartment: String) {
         let safeAreaBottom = view.safeAreaInsets.bottom
         let safeAreaTop = view.safeAreaInsets.top
