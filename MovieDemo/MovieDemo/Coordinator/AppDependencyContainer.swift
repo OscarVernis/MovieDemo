@@ -76,19 +76,15 @@ class AppDependencyContainer {
     }
     
     func paginatedPublisher<Model: Codable>(_ main: AnyPublisher<[Model], Error>, page: Int, withCache cache: (any ModelCache<[Model]>)?) -> AnyPublisher<[Model], Error> {
-        guard let cache else { return main }
+        guard let cache, page == 1 else { return main }
         
-        if page == 1 {
-            return publisher(main, withCache: cache)
-        }
-
-        return main
-            .eraseToAnyPublisher()
+        //Caches and returns only first page
+        return publisher(main, withCache: cache)
     }
     
     //MARK: - View Dependencies
-    var searchService: SearchService {
-        remoteClient.search
+    var searchStore: SearchStore {
+        SearchStore(searchService: remoteClient.search)
     }
     
     var loginViewStore: LoginViewStore {

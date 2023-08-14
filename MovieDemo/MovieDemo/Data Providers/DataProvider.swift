@@ -20,9 +20,8 @@ protocol DataProvider<Model> {
     var itemCount: Int { get }
     func item(atIndex: Int) -> Model
 
-    func loadMore()
     func refresh()
-
+    func loadMore()
 }
 
 extension DataProvider {

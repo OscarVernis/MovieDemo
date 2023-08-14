@@ -13,9 +13,9 @@ class SearchViewController: UIViewController {
     var listViewController: ListViewController!
     var store: SearchStore
     var router: SearchViewRouter?
-    
-    init(searchService: @escaping SearchService, router: SearchViewRouter? = nil) {
-        self.store = SearchStore(searchService: searchService)
+        
+    init(store: SearchStore, router: SearchViewRouter? = nil) {
+        self.store = store
         self.router = router
         
         super.init(nibName: nil, bundle: nil)
@@ -101,6 +101,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     func updateSearchResults(for searchController: UISearchController) {
         if let searchQuery = searchController.searchBar.text {
             store.query = searchQuery
+            listViewController.showLoadingIndicator()
         } else {
             scrollListViewControllerToTop()
         }

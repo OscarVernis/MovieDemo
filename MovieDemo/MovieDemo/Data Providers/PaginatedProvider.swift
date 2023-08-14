@@ -28,12 +28,6 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
     
     var isLastPage: Bool = true
     
-    func loadMore() {
-        if !isLastPage {
-            getItems()
-        }
-    }
-    
     func refresh() {
         self.items = []
         isLastPage = false
@@ -41,7 +35,13 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
         getItems()
     }
     
-    func getItems() {
+    func loadMore() {
+        if !isLastPage {
+            getItems()
+        }
+    }
+    
+    private func getItems() {
         let page = currentPage + 1
         
         serviceCancellable = service(page)

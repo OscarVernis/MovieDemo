@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 
 class ListViewController: UIViewController, UICollectionViewDelegate {
     typealias DataSourceProvider = (UICollectionView) -> any PagingDataSource
@@ -19,6 +20,8 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
     var router: ErrorHandlingRouter?
 
     var didSelectedItem: ((Any) -> ())?
+    
+    var loadingCancellable: AnyCancellable?
     
     lazy var loadingView: UIActivityIndicatorView = {
         UIActivityIndicatorView(style: .large)
@@ -75,25 +78,33 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
         
         collectionView.keyboardDismissMode = .onDrag
                 
-        dataSource.didUpdate = { [weak self] error in
-            guard let self = self else { return }
-            self.collectionView.backgroundView = nil
-            self.collectionView.refreshControl?.endRefreshing()
+        dataSource.didUpdate = { [unowned self] error in
+            hideLoadingIndicator()
 
             if error != nil {
-                self.router?.handle(error: .refreshError)
+                router?.handle(error: .refreshError)
             }
         }
+        
         
         refresh()
     }
     
     @objc func refresh() {
+        showLoadingIndicator()
+        dataSource.refresh()
+    }
+    
+    func showLoadingIndicator() {
         if dataSource.isRefreshable, collectionView.visibleCells.count == 0 {
             collectionView.backgroundView = loadingView
             loadingView.startAnimating()
         }
-        dataSource.refresh()
+    }
+    
+    func hideLoadingIndicator() {
+        self.collectionView.backgroundView = nil
+        self.collectionView.refreshControl?.endRefreshing()
     }
     
     //MARK: - CollectionView Delegate
