@@ -13,8 +13,13 @@ protocol DataProvider<Model> {
     associatedtype Model
     
     var items: [Model] { get }
-    var itemsPublisher: AnyPublisher<[Model], Error> { get }
+    var itemsPublished: Published<[Model]> { get }
+    var itemsPublisher: Published<[Model]>.Publisher { get }
     
+    var error: Error? { get }
+    var errorPublished: Published<Error?> { get }
+    var errorPublisher: Published<Error?>.Publisher { get }
+        
     var isLastPage: Bool { get }
     
     var itemCount: Int { get }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol HomeRouter {
+protocol HomeRouter: ErrorHandlingRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
     
     func showNowPlaying()

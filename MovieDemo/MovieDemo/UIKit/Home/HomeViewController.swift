@@ -18,6 +18,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     var didSelectItem: ((Movie) -> ())?
     
     var cancellables = Set<AnyCancellable>()
+    var errorCancellable: AnyCancellable?
     
     var nowPlayingProvider: MoviesProvider
     var upcomingProvider: MoviesProvider
@@ -115,14 +116,23 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         subscribe(to: topRatedProvider.itemsPublisher)
     }
     
-    fileprivate func subscribe(to publisher: AnyPublisher<[MovieViewModel], Error>) {
+    fileprivate func subscribe(to publisher: Published<[MovieViewModel]>.Publisher) {
         publisher
             .receive(on: DispatchQueue.main)
-            .ignoreError()
             .sink { [weak self] _ in
                 self?.reloadDataSource()
             }
             .store(in: &cancellables)
+    }
+    
+    fileprivate func subscribeToErrors() {
+        errorCancellable = Publishers.Merge4(nowPlayingProvider.$error, upcomingProvider.$error, popularProvider.$error, topRatedProvider.$error)
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
+            .first()
+            .sink { [unowned self] error in
+                router.handle(error: .refreshError)
+            }
     }
     
     fileprivate func reloadDataSource() {
@@ -153,6 +163,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
         upcomingProvider.refresh()
         popularProvider.refresh()
         topRatedProvider.refresh()
+        
+        subscribeToErrors()
     }
     
     //MARK: - Actions

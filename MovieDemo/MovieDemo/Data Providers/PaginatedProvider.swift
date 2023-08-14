@@ -13,13 +13,14 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
     let service: (Int) -> AnyPublisher<[Model], Error>
     var serviceCancellable: AnyCancellable?
     
-    var items = [Model]()
-    var itemsPublisher: AnyPublisher<[Model], Error> {
-        passthroughSubject.eraseToAnyPublisher()
-    }
+    @Published var items = [Model]()
+    var itemsPublished: Published<[Model]> { _items }
+    var itemsPublisher: Published<[Model]>.Publisher { $items }
     
-    private var passthroughSubject = PassthroughSubject<[Model], Error>()
-    
+    @Published var error: Error?
+    var errorPublished: Published<Error?> { _error }
+    var errorPublisher: Published<Error?>.Publisher { $error }
+        
     init(service: @escaping (Int) -> AnyPublisher<[Model], Error>) {
         self.service = service
     }
@@ -29,6 +30,7 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
     var isLastPage: Bool = true
     
     func refresh() {
+        error = nil
         self.items = []
         isLastPage = false
         currentPage = 0
@@ -51,9 +53,9 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
                 switch completion {
                 case .finished:
                     self.currentPage += 1
-                    passthroughSubject.send(items)
                 case .failure(let error):
-                    passthroughSubject.send(completion: .failure(error))
+                    self.error = error
+                    break
                 }
             } receiveValue: { [weak self] resultModels in
                 guard let self = self else { return }
@@ -62,12 +64,16 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
                     isLastPage = true
                     return
                 }
-                                
+                          
+                var newItems: [Model]
                 if self.currentPage == 0 {
-                    self.items = []
+                    newItems = []
+                } else {
+                    newItems = items
                 }
                 
-                self.items.append(contentsOf: resultModels)
+                newItems.append(contentsOf: resultModels)
+                self.items = newItems
             }
     }
     
