@@ -52,6 +52,6 @@ class ViewModelsTests: XCTestCase {
         XCTAssertEqual(viewModel.id, 10859)
         XCTAssertEqual(viewModel.name, "Ryan Reynolds")
         XCTAssertEqual(viewModel.popularMovies.count, 8)
-        XCTAssertEqual(viewModel.credits.count, 84)
+        XCTAssertEqual(viewModel.credits.count, 102)
     }
 }

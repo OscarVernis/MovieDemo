@@ -191,7 +191,7 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(mdvc, animated: animated)
     }
     
-    fileprivate func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
+    func showMovieList(title: String, endpoint: MoviesEndpoint, animated: Bool = true)  {
         let dataProvider = dependencies.moviesProvider(for: endpoint)
         let lvc = ListViewController(provider: dataProvider, cellConfigurator: MovieInfoListCell.configure, router: self)
         lvc.title = title

@@ -21,14 +21,21 @@ class MovieLoaderMock {
         self.error = error
     }
     
-    func getMovies(page: Int) -> AnyPublisher<MoviesResult, Error> {
+    func getMovies(page: Int) -> AnyPublisher<[Movie], Error> {
         if let error = error {
-            return Fail(outputType: MoviesResult.self, failure: error)
+            return Fail(outputType: [Movie].self, failure: error)
                 .eraseToAnyPublisher()
         }
         
-        return Just( MoviesResult(movies: movies, totalPages: pageCount) )
+        let resultMovies = page <= pageCount ? movies : [Movie]()
+        return Just(resultMovies)
             .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    func getViewModels(page: Int) -> AnyPublisher<[MovieViewModel], Error> {
+        return getMovies(page: page)
+            .map { $0.map(MovieViewModel.init) }
             .eraseToAnyPublisher()
     }
     

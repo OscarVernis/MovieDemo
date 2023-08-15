@@ -104,6 +104,8 @@ extension PersonViewModel {
         
         allCredits.sort(by: PersonCreditViewModel.sortByRelease)
         
+        credits = allCredits
+        
         let uniqueDepartments = Set(allCredits.compactMap(\.department)).map { localizedDepartment($0) }
                 
         departmentCredits = [:]

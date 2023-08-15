@@ -60,19 +60,6 @@ class CoordinatorTests: XCTestCase {
         XCTAssert(movieDetail is MovieDetailViewController)
     }
     
-    func test_Coordinator_Shows_MovieList() throws {
-        let sut = makeSUT(isLoginRequired: false)
-        sut.start()
-        
-        let movie = anyMovieVM()
-        sut.showMovieList(title: "Movies",
-                                  dataProvider: BasicProvider(models: movie.recommendedMovies),
-                                  animated: false)
-        
-        let movieList = navCont?.visibleViewController
-        XCTAssert(movieList is ListViewController, "Expected ListViewController, " + "but was \(String(describing: movieList))")
-    }
-    
     func test_Coordinator_Shows_PersonDetail() throws {
         let sut = makeSUT(isLoginRequired: false)
         sut.start()

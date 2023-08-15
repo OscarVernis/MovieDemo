@@ -52,10 +52,12 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
                 
                 switch completion {
                 case .finished:
-                    self.currentPage += 1
+                    if !isLastPage {
+                        self.currentPage += 1
+                    }
                 case .failure(let error):
+                    isLastPage = true
                     self.error = error
-                    break
                 }
             } receiveValue: { [weak self] resultModels in
                 guard let self = self else { return }

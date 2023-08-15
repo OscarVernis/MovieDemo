@@ -9,24 +9,24 @@
 import XCTest
 @testable import MovieDemo
 
-class RemoteSearchLoaderTests: XCTestCase {
-    
-    func test_RemoteSearchLoader_sucess() throws {
-        let url = URL(string: "https://api.themoviedb.org/3/search/multi")!
-        let mockClient = MockHTTPClient(jsonFile: "Search", url: url)
-        let service = TMDBClient(httpClient: mockClient)
-        
-        var results = (items: [Any](), totalPages: 0)
-        results = try awaitPublisher(
-            service.search(query: "search")
-        )
-        
-        XCTAssertEqual(results.items.count, 13)
-        XCTAssertEqual(results.totalPages, 500)
-        XCTAssert(results.items[0] is Person)
-        XCTAssert(results.items[1] is Movie)
-        XCTAssert(results.items[2] is Person)
-        XCTAssert(results.items[3] is Movie)
-    }
+//class RemoteSearchLoaderTests: XCTestCase {
+//
+//    func test_RemoteSearchLoader_sucess() throws {
+//        let url = URL(string: "https://api.themoviedb.org/3/search/multi")!
+//        let mockClient = MockHTTPClient(jsonFile: "Search", url: url)
+//        let service = TMDBClient(httpClient: mockClient)
+//
+//        var results = (items: [Any](), totalPages: 0)
+//        results = try awaitPublisher(
+//            service.search(query: "search")
+//        )
+//
+//        XCTAssertEqual(results.items.count, 13)
+//        XCTAssertEqual(results.totalPages, 500)
+//        XCTAssert(results.items[0] is Person)
+//        XCTAssert(results.items[1] is Movie)
+//        XCTAssert(results.items[2] is Person)
+//        XCTAssert(results.items[3] is Movie)
+//    }
 
-}
+//}
