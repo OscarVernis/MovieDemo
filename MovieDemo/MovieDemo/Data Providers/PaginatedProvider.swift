@@ -31,7 +31,9 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
     
     func refresh() {
         error = nil
-        self.items = []
+        if !items.isEmpty {
+            items = []
+        }
         isLastPage = false
         currentPage = 0
         getItems()
@@ -64,7 +66,6 @@ class PaginatedProvider<Model>: DataProvider, ObservableObject {
                 
                 if resultModels.isEmpty {
                     isLastPage = true
-                    return
                 }
                           
                 var newItems: [Model]

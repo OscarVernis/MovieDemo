@@ -32,6 +32,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
     
     private var providerCancellable: AnyCancellable?
+    private var errorCancellable: AnyCancellable?
     
     init(collectionView: UICollectionView, dataProvider: Provider, cellConfigurator: CellConfigurator? = nil, cellProvider: @escaping CellProvider) {
         self.dataProvider = dataProvider
@@ -39,12 +40,18 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
         
         dataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>(collectionView: collectionView, cellProvider: cellProvider)
               
-        providerCancellable = self.dataProvider.itemsPublisher
-            .handleError({ [unowned self] error in
-                providerDidUpdate(error: error)
-            })
-            .sink(receiveValue: { [unowned self] _ in
+        providerCancellable = dataProvider.itemsPublisher
+            .receive(on: DispatchQueue.main)
+            .dropFirst()
+            .sink(receiveValue: { [unowned self] items in
                 providerDidUpdate(error: nil)
+            })
+        
+        errorCancellable = dataProvider.errorPublisher
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0 }
+            .sink(receiveValue: { [unowned self] error in
+                providerDidUpdate(error: error)
             })
     }
     
@@ -79,7 +86,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
         var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
         snapshot.appendSections([.main])
         snapshot.appendItems(dataProvider.items as! [AnyHashable], toSection: .main)
-        if !dataProvider.isLastPage {
+        if !dataProvider.isLastPage, dataProvider.itemCount > 0 {
             snapshot.appendSections([.loading])
             snapshot.appendItems([loadingSectionID], toSection: .loading)
         }

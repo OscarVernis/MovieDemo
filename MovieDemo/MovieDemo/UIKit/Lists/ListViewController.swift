@@ -86,7 +86,6 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
             }
         }
         
-        
         refresh()
     }
     
