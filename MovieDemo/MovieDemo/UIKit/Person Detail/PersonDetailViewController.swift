@@ -172,7 +172,7 @@ class PersonDetailViewController: UIViewController {
     }
     
     fileprivate func handleError() {
-        router?.handle(error: .refreshError, shouldDismiss: true)
+        router?.handle(error: .refreshError, shouldDismiss: self)
     }
     
     /// Adds bottom insets to the collectioView when the selected category doesn't have enough credits to fill the screen.

@@ -43,10 +43,10 @@ class MainCoordinator {
     }
     
     //MARK: - Helpers
-    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
+    func handle(error: UserFacingError, shouldDismiss viewController: UIViewController? = nil) {
         guard let sender = rootNavigationViewController?.visibleViewController else { return }
         let completion = {
-            if shouldDismiss {
+            if viewController == self.rootNavigationViewController?.topViewController {
                 self.rootNavigationViewController?.popViewController(animated: true)
             }
         }

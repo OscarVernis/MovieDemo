@@ -187,8 +187,8 @@ class MovieDetailViewController: UIViewController {
         store.$error
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.show(error: .refreshError, shouldDismiss: true)
+            .sink { [unowned self] error in
+                show(error: .refreshError, shouldDismiss: true)
             }
             .store(in: &cancellables)
         
@@ -203,7 +203,7 @@ class MovieDetailViewController: UIViewController {
 
     //MARK: - Actions
     fileprivate func show(error: UserFacingError, shouldDismiss: Bool = false) {
-        router?.handle(error: error, shouldDismiss: shouldDismiss)
+        router?.handle(error: error, shouldDismiss: self)
     }
 
     fileprivate lazy var showImage: (() -> Void) = { [unowned self] in

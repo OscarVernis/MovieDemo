@@ -161,7 +161,7 @@ extension UserProfileViewController {
     }
     
     fileprivate func handleError() {
-        router?.handle(error: .refreshError, shouldDismiss: true)
+        router?.handle(error: .refreshError, shouldDismiss: self)
     }
     
     @objc fileprivate func logout() {

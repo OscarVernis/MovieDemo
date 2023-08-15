@@ -6,14 +6,14 @@
 //  Copyright © 2023 Oscar Vernis. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ErrorHandlingRouter {
-    func handle(error: UserFacingError, shouldDismiss: Bool)
+    func handle(error: UserFacingError, shouldDismiss: UIViewController?)
 }
 
 extension ErrorHandlingRouter {
-    func handle(error: UserFacingError, shouldDismiss: Bool = false) {
-        handle(error: error, shouldDismiss: shouldDismiss)
+    func handle(error: UserFacingError, shouldDismiss viewController: UIViewController? = nil) {
+        handle(error: error, shouldDismiss: viewController)
     }
 }
