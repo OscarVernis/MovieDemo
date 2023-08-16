@@ -43,7 +43,7 @@ class ProviderPagingDataSource<Provider: DataProvider, Cell: UICollectionViewCel
         providerCancellable = dataProvider.itemsPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst()
-            .sink(receiveValue: { [unowned self] items in
+            .sink(receiveValue: { [unowned self] _ in
                 providerDidUpdate(error: nil)
             })
         

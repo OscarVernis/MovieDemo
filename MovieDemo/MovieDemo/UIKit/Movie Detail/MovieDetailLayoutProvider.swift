@@ -86,11 +86,8 @@ struct MovieDetailLayoutProvider {
     private static func makeInfo() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 52)
         
-        section.contentInsets.top = 0
+        section.contentInsets.top = 8
         section.contentInsets.bottom = 0
-        
-        let sectionHeader = sectionBuilder.createTitleSectionHeader()
-        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }

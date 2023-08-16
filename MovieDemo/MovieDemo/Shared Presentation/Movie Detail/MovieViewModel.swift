@@ -237,7 +237,7 @@ extension MovieViewModel {
     }
     
     var recommendedMovies: [MovieViewModel] {
-        movie.recommendedMovies?.compactMap { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
+        movie.recommendedMovies?.sorted(by: Movie.sortByPopularity).compactMap { MovieViewModel(movie: $0) } ?? [MovieViewModel]()
     }
     
     var socialLinks: [SocialLink] {
