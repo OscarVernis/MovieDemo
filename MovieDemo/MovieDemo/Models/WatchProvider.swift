@@ -22,13 +22,13 @@ struct Country: Hashable {
     }
 }
 
-struct WatchProvider: Codable {
+struct WatchProvider: Hashable {
     var logoPath: String
     var providerName: String
     var displayPriority: Int
 }
 
-struct CountryWatchProviders: Codable {
+struct CountryWatchProviders {
     var link: String
     var rent: [WatchProvider]
     var flatrate: [WatchProvider]

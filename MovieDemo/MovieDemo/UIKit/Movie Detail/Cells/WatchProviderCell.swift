@@ -18,4 +18,17 @@ class WatchProviderCell: UICollectionViewCell {
         // Initialization code
     }
 
+    override func prepareForReuse() {
+        imageView.cancelImageRequest()
+    }
+}
+
+extension WatchProviderCell {
+    static func configure(cell: WatchProviderCell, provider: WatchProvider) {
+        cell.providerLabel.text = provider.providerName
+        
+        let url = MovieServiceImageUtils.watchProviderImageURL(forPath: provider.logoPath)
+        cell.imageView.setRemoteImage(withURL: url)
+    }
+    
 }

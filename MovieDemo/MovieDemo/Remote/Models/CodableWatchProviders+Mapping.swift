@@ -25,12 +25,12 @@ extension CodableCountryWatchProviders {
         let rentWP = rent?.compactMap { $0.toWatchProvider() } ?? []
         let flatrateWP = flatrate?.compactMap { $0.toWatchProvider() } ?? []
         let buyWP = buy?.compactMap { $0.toWatchProvider() } ?? []
-
+        
         if !rentWP.isEmpty || !flatrateWP.isEmpty || !buyWP.isEmpty {
             return CountryWatchProviders(link: link ?? "",
-                                          rent: rentWP,
-                                          flatrate: flatrateWP,
-                                          buy: buyWP)
+                                         rent: rentWP.sorted { $0.displayPriority < $1.displayPriority },
+                                         flatrate: flatrateWP.sorted { $0.displayPriority < $1.displayPriority },
+                                         buy: buyWP.sorted { $0.displayPriority < $1.displayPriority })
         } else {
             return nil
         }

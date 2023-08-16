@@ -13,6 +13,7 @@ class MovieDetailDataSource {
         case loading
         case cast
         case crew
+        case whereToWatch
         case videos
         case recommended
         case info
@@ -22,8 +23,13 @@ class MovieDetailDataSource {
     var isLoading: Bool = false
     
     var loadingCellId = UUID().uuidString
+
     var socialItemId = UUID().uuidString
     var openSocialLink: ((SocialLink) -> ())?
+    
+    var whereToWatchId = UUID().uuidString
+    var showWhereToWatch = true
+    var whereToWatchAction: (() -> ())? = nil
     
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
     
@@ -49,6 +55,7 @@ class MovieDetailDataSource {
         YoutubeVideoCell.register(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         SocialCell.register(to: collectionView)
+        WhereToWatchCell.register(to: collectionView)
     }
     
     func cell(for collectionView: UICollectionView, with indexPath: IndexPath, identifier: AnyHashable) -> UICollectionViewCell {
@@ -62,6 +69,10 @@ class MovieDetailDataSource {
         case .crew:
             let model = movie.topCrew[indexPath.row]
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: InfoListCell.configure)
+        case .whereToWatch:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WhereToWatchCell.reuseIdentifier, for: indexPath) as! WhereToWatchCell
+            cell.buttonAction = whereToWatchAction
+            return cell
         case .videos:
             let model = movie.videos[indexPath.row]
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: YoutubeVideoCell.configure)
@@ -88,10 +99,16 @@ class MovieDetailDataSource {
     
     //MARK: - Reload    
     fileprivate func setupSections() {
+        if isLoading {
+            sections = [.loading]
+            return
+        }
+        
         sections = [
             .loading,
             .cast,
             .crew,
+            .whereToWatch,
             .videos,
             .recommended,
             .info
@@ -108,12 +125,14 @@ class MovieDetailDataSource {
             if !movie.topCast.isEmpty { return true }
         case .crew:
             if !movie.topCrew.isEmpty { return true }
+        case .whereToWatch:
+            return showWhereToWatch
         case .videos:
             if !movie.videos.isEmpty { return true }
         case .recommended:
             if !movie.recommendedMovies.isEmpty { return true }
         case .info:
-            if !movie.infoArray.isEmpty && !isLoading { return true }
+            if !movie.infoArray.isEmpty { return true }
         }
         
         return false
@@ -133,6 +152,8 @@ class MovieDetailDataSource {
                 snapshot.appendItems(movie.topCast, toSection: .cast)
             case .crew:
                 snapshot.appendItems(movie.topCrew, toSection: .crew)
+            case .whereToWatch:
+                snapshot.appendItems([whereToWatchId], toSection: .whereToWatch)
             case .videos:
                 snapshot.appendItems(movie.videos, toSection: .videos)
             case .recommended:
@@ -151,8 +172,6 @@ class MovieDetailDataSource {
     //MARK: - Headers
     func sectionTitle(for section: Section) -> String {
         switch section {
-        case .loading:
-            return ""
         case .cast:
             return .localized(MovieString.Cast)
         case .crew:
@@ -163,6 +182,8 @@ class MovieDetailDataSource {
             return .localized(MovieString.RecommendedMovies)
         case .info:
             return .localized(MovieString.Info)
+        default:
+            return ""
         }
     }
     

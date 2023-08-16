@@ -19,6 +19,8 @@ struct MovieDetailLayoutProvider {
             return makeCast()
         case .crew:
             return makeCrew()
+        case .whereToWatch:
+            return makeWhereToWatch()
         case .videos:
             return makeVideos()
         case .recommended:
@@ -57,6 +59,16 @@ struct MovieDetailLayoutProvider {
         
         return section
     }
+    
+    private static func makeWhereToWatch() -> NSCollectionLayoutSection {
+        let section = sectionBuilder.createSection(groupHeight: .absolute(44))
+        
+        section.contentInsets.top = 16
+        section.contentInsets.bottom = 2
+                
+        return section
+    }
+
     
     private static func makeRecommended() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalPosterSection()

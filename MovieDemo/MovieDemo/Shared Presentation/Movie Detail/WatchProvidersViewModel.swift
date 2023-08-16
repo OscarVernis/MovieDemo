@@ -12,6 +12,10 @@ class WatchProvidersViewModel {
     let countries: [Country]
     let availableWatchProviders: [WatchProvider]
     
+    convenience init() {
+        self.init(countriesWatchProviders: [:])
+    }
+    
     init(countriesWatchProviders: [Country: CountryWatchProviders]) {
         self.countries = countriesWatchProviders.keys.sorted { $0.name < $1.name }
         

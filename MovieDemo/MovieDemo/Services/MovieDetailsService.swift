@@ -10,3 +10,6 @@ import Foundation
 import Combine
 
 typealias MovieDetailsService = () -> AnyPublisher<Movie, Error>
+
+typealias WatchProviderServiceResult = [Country: CountryWatchProviders]
+typealias WatchProvidersService = () -> AnyPublisher<WatchProviderServiceResult, Error>

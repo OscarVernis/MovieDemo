@@ -22,7 +22,7 @@ class MovieViewModel {
     
     //Store the movie videos
     var videos = [MovieVideoViewModel]()
-    
+        
     init(movie: Movie) {
         self.movie = movie
         updateInfo()

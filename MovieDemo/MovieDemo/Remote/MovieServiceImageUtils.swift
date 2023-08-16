@@ -52,4 +52,11 @@ struct MovieServiceImageUtils {
         return url
     }
     
+    static func watchProviderImageURL(forPath path: String) -> URL {
+        var url = URL(string: baseImageURL)!
+        url.appendPathComponent(MoviePosterSize.original.rawValue)
+        
+        return url.appendingPathComponent(path)
+    }
+    
 }

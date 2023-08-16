@@ -130,6 +130,10 @@ class MovieDetailViewController: UIViewController {
             }
         })
         
+        dataSource.whereToWatchAction = {
+            print("Where to Watch")
+        }
+        
         dataSource.openSocialLink = { socialLink in
             UIApplication.shared.open(socialLink.url)
         }
@@ -184,6 +188,13 @@ class MovieDetailViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        store.$watchProviders
+            .receive(on: DispatchQueue.main)
+            .sink { [unowned self] movie in
+                storeDidUpdate()
+            }
+            .store(in: &cancellables)
+        
         store.$error
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
@@ -198,6 +209,7 @@ class MovieDetailViewController: UIViewController {
     fileprivate func storeDidUpdate() {
         dataSource.movie = movie
         dataSource.isLoading = store.isLoading
+        dataSource.showWhereToWatch = store.hasWatchProviders
         self.dataSource.reload()
     }
 

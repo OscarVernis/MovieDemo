@@ -11,24 +11,33 @@ import Combine
 
 class MovieDetailStore: ObservableObject {
     @Published var movie: MovieViewModel
+    @Published var watchProviders: WatchProvidersViewModel? = nil
+    
     private var movieService: MovieDetailsService?
     private let userStateService: UserStateService?
-        
-    init(movie: MovieViewModel, movieService: @autoclosure @escaping MovieDetailsService, userStateService: UserStateService? = nil) {
+    private let watchProvidersService: WatchProvidersService?
+            
+    init(movie: MovieViewModel, movieService: @autoclosure @escaping MovieDetailsService, userStateService: UserStateService? = nil, watchProvidersService: WatchProvidersService? = nil) {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService
+        self.watchProvidersService = watchProvidersService
     }
     
-    init(movie: MovieViewModel, movieService: MovieDetailsService? = nil, userStateService: UserStateService? = nil) {
+    init(movie: MovieViewModel, movieService: MovieDetailsService? = nil, userStateService: UserStateService? = nil, watchProvidersService: WatchProvidersService? = nil) {
         self.movie = movie
         self.movieService = movieService
         self.userStateService = userStateService
+        self.watchProvidersService = watchProvidersService
     }
 
     //MARK: - Get Movie Details
     @Published var error: Error? = nil
     private(set) var isLoading = false
+    var hasWatchProviders: Bool {
+        guard let watchProviders else { return false }
+        return !watchProviders.availableWatchProviders.isEmpty
+    }
     
     func refresh() {
         guard let movieService else { return }
@@ -40,6 +49,14 @@ class MovieDetailStore: ObservableObject {
             .onCompletion { self.isLoading = false }
             .map(MovieViewModel.init)
             .assign(to: &$movie)
+        
+        if let watchProvidersService {
+            watchProvidersService()
+                .ignoreError()
+                .map(WatchProvidersViewModel.init)
+                .assign(to: &$watchProviders)
+        }
+
     }
     
     //MARK: - User Actions

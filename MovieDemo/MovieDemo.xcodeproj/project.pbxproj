@@ -230,6 +230,8 @@
 		55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ADD2F12A78C09200A06E6B /* SocialCell.xib */; };
 		55ADD2F52A78C46400A06E6B /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F42A78C46400A06E6B /* SocialLink.swift */; };
 		55ADD2F72A78D28C00A06E6B /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */; };
+		55B0949A2A8D3DCD00220CC6 /* WhereToWatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */; };
+		55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */; };
 		55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */; };
 		55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */; };
 		55B0DA15284EA46A0043A8B3 /* WebLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */; };
@@ -557,6 +559,8 @@
 		55ADD2F12A78C09200A06E6B /* SocialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialCell.xib; sourceTree = "<group>"; };
 		55ADD2F42A78C46400A06E6B /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
 		55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchCell.swift; sourceTree = "<group>"; };
+		55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhereToWatchCell.xib; sourceTree = "<group>"; };
 		55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
 		55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebLoginViewController.storyboard; sourceTree = "<group>"; };
 		55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewControllerTests.swift; sourceTree = "<group>"; };
@@ -1381,6 +1385,8 @@
 				55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */,
 				55AD947E2A8C7F430008B390 /* WatchProviderCell.swift */,
 				55AD947F2A8C7F430008B390 /* WatchProviderCell.xib */,
+				55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */,
+				55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1662,6 +1668,7 @@
 				55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */,
 				55664850284DC4ED000BE2F3 /* Movie.strings in Resources */,
 				554BB8CC2A75837400762F44 /* UserListCell.xib in Resources */,
+				55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */,
 				550815A72A848096004071BF /* PersonHeaderView.xib in Resources */,
 				5566483E284DC4B5000BE2F3 /* Error.strings in Resources */,
 				55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */,
@@ -1811,6 +1818,7 @@
 				5511CD352A70DE0C00A9CCDD /* UserListsViewController.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,
 				55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */,
+				55B0949A2A8D3DCD00220CC6 /* WhereToWatchCell.swift in Sources */,
 				555463ED286E211A0010AEB0 /* VideoItem.swift in Sources */,
 				55F4E4432A723BEC004CACCC /* ListMovieCell.swift in Sources */,
 				55DD1B92251FB59500EC8C55 /* YoutubeVideoCell.swift in Sources */,
