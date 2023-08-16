@@ -223,6 +223,9 @@
 		55AD94772A8C68F20008B390 /* CodableWatchProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD94762A8C68F20008B390 /* CodableWatchProviders.swift */; };
 		55AD94792A8C6A0B0008B390 /* WatchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD94782A8C6A0B0008B390 /* WatchProvider.swift */; };
 		55AD947B2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD947A2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift */; };
+		55AD947D2A8C7BF90008B390 /* WatchProvidersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD947C2A8C7BF90008B390 /* WatchProvidersViewModel.swift */; };
+		55AD94802A8C7F430008B390 /* WatchProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD947E2A8C7F430008B390 /* WatchProviderCell.swift */; };
+		55AD94812A8C7F430008B390 /* WatchProviderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55AD947F2A8C7F430008B390 /* WatchProviderCell.xib */; };
 		55ADD2F22A78C09200A06E6B /* SocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F02A78C09200A06E6B /* SocialCell.swift */; };
 		55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ADD2F12A78C09200A06E6B /* SocialCell.xib */; };
 		55ADD2F52A78C46400A06E6B /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F42A78C46400A06E6B /* SocialLink.swift */; };
@@ -547,6 +550,9 @@
 		55AD94762A8C68F20008B390 /* CodableWatchProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableWatchProviders.swift; sourceTree = "<group>"; };
 		55AD94782A8C6A0B0008B390 /* WatchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProvider.swift; sourceTree = "<group>"; };
 		55AD947A2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableWatchProviders+Mapping.swift"; sourceTree = "<group>"; };
+		55AD947C2A8C7BF90008B390 /* WatchProvidersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProvidersViewModel.swift; sourceTree = "<group>"; };
+		55AD947E2A8C7F430008B390 /* WatchProviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderCell.swift; sourceTree = "<group>"; };
+		55AD947F2A8C7F430008B390 /* WatchProviderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WatchProviderCell.xib; sourceTree = "<group>"; };
 		55ADD2F02A78C09200A06E6B /* SocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCell.swift; sourceTree = "<group>"; };
 		55ADD2F12A78C09200A06E6B /* SocialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialCell.xib; sourceTree = "<group>"; };
 		55ADD2F42A78C46400A06E6B /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
@@ -1373,6 +1379,8 @@
 				551E79262513CBD700EE2FCA /* InfoListCell.xib */,
 				55DD1B90251FB59500EC8C55 /* YoutubeVideoCell.swift */,
 				55DD1B91251FB59500EC8C55 /* YoutubeVideoCell.xib */,
+				55AD947E2A8C7F430008B390 /* WatchProviderCell.swift */,
+				55AD947F2A8C7F430008B390 /* WatchProviderCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1527,6 +1535,7 @@
 				55C4F409251814AF002B73A9 /* CastCreditViewModel.swift */,
 				55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */,
 				55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */,
+				55AD947C2A8C7BF90008B390 /* WatchProvidersViewModel.swift */,
 			);
 			path = "Movie Detail";
 			sourceTree = "<group>";
@@ -1657,6 +1666,7 @@
 				5566483E284DC4B5000BE2F3 /* Error.strings in Resources */,
 				55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */,
 				55D006BC2A74B4950089E8B1 /* EmptyView.xib in Resources */,
+				55AD94812A8C7F430008B390 /* WatchProviderCell.xib in Resources */,
 				559D132B22D98E4B00C96FC8 /* LaunchScreen.storyboard in Resources */,
 				551A2930251F194F003746EE /* UserProfileHeaderView.xib in Resources */,
 				55664844284DC4CC000BE2F3 /* Genre.strings in Resources */,
@@ -1755,6 +1765,7 @@
 				559674562A5A47A100C2144A /* AnyPublisher+ErrorHandling.swift in Sources */,
 				550DA0752A59E0DE00541312 /* SearchViewRouter.swift in Sources */,
 				55B5D7512515D8B700E1076D /* RatingsView.swift in Sources */,
+				55AD94802A8C7F430008B390 /* WatchProviderCell.swift in Sources */,
 				55477A7027E26DDA00131179 /* ManagedCache.swift in Sources */,
 				559263322A70E95D002E6014 /* UserListsDataSource.swift in Sources */,
 				5505779E284DAA0F007ED892 /* MovieString.swift in Sources */,
@@ -1812,6 +1823,7 @@
 				558BA4882A8563C600C7E3C5 /* SearchViewController.swift in Sources */,
 				55EE51AB251ECF5800915AB3 /* RoundImageView.swift in Sources */,
 				554DDE232862578100DD864A /* BlurBackground.swift in Sources */,
+				55AD947D2A8C7BF90008B390 /* WatchProvidersViewModel.swift in Sources */,
 				5511CD2E2A70DA9C00A9CCDD /* CodableUserList.swift in Sources */,
 				55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */,
 				55B739572A720E7A003BB6F5 /* UserListDetailViewController.swift in Sources */,
