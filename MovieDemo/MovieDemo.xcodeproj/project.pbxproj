@@ -220,6 +220,9 @@
 		55ABEB79283365AF009DCE7C /* LoginViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ABEB78283365AF009DCE7C /* LoginViewStore.swift */; };
 		55AC532128243CD300836A30 /* ViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC532028243CD300836A30 /* ViewModelsTests.swift */; };
 		55AC53232824422C00836A30 /* DataProvidersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AC53222824422C00836A30 /* DataProvidersTests.swift */; };
+		55AD94772A8C68F20008B390 /* CodableWatchProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD94762A8C68F20008B390 /* CodableWatchProviders.swift */; };
+		55AD94792A8C6A0B0008B390 /* WatchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD94782A8C6A0B0008B390 /* WatchProvider.swift */; };
+		55AD947B2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD947A2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift */; };
 		55ADD2F22A78C09200A06E6B /* SocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F02A78C09200A06E6B /* SocialCell.swift */; };
 		55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ADD2F12A78C09200A06E6B /* SocialCell.xib */; };
 		55ADD2F52A78C46400A06E6B /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F42A78C46400A06E6B /* SocialLink.swift */; };
@@ -541,6 +544,9 @@
 		55ABEB78283365AF009DCE7C /* LoginViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewStore.swift; sourceTree = "<group>"; };
 		55AC532028243CD300836A30 /* ViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsTests.swift; sourceTree = "<group>"; };
 		55AC53222824422C00836A30 /* DataProvidersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvidersTests.swift; sourceTree = "<group>"; };
+		55AD94762A8C68F20008B390 /* CodableWatchProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableWatchProviders.swift; sourceTree = "<group>"; };
+		55AD94782A8C6A0B0008B390 /* WatchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProvider.swift; sourceTree = "<group>"; };
+		55AD947A2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableWatchProviders+Mapping.swift"; sourceTree = "<group>"; };
 		55ADD2F02A78C09200A06E6B /* SocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialCell.swift; sourceTree = "<group>"; };
 		55ADD2F12A78C09200A06E6B /* SocialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialCell.xib; sourceTree = "<group>"; };
 		55ADD2F42A78C46400A06E6B /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
@@ -1249,6 +1255,8 @@
 			children = (
 				55AB8ADB2A62666E00414A6E /* CodableMovie.swift */,
 				55AB8ADD2A626EBA00414A6E /* CodableMovie+Mapping.swift */,
+				55AD94762A8C68F20008B390 /* CodableWatchProviders.swift */,
+				55AD947A2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift */,
 				5584ADE12A6300C700F0907E /* CodablePerson.swift */,
 				5584ADE32A63074800F0907E /* CodablePerson+Mapping.swift */,
 				55AB8ADF2A6275FB00414A6E /* CodableUser.swift */,
@@ -1343,6 +1351,7 @@
 				553660F922DAFC0B00BE03BB /* CastCredit.swift */,
 				5536610522DB037500BE03BB /* CrewCredit.swift */,
 				5545203622D99CB0004B7924 /* Movie.swift */,
+				55AD94782A8C6A0B0008B390 /* WatchProvider.swift */,
 				55A6A98E2511A6C400305C29 /* MovieGenre.swift */,
 				5570356D251ED37A0083089C /* MovieVideo.swift */,
 				556807CB2530EB0600F8DF16 /* Person.swift */,
@@ -1716,6 +1725,7 @@
 			files = (
 				55A60DD62527AAB30082810C /* MediaViewerTransitionDelegate.swift in Sources */,
 				55915773251438390085DB69 /* BlurBackgroundView.swift in Sources */,
+				55AD94792A8C6A0B0008B390 /* WatchProvider.swift in Sources */,
 				5511FF9A285A90E800B9C12A /* MovieDetailsService.swift in Sources */,
 				55DC6B822A86B4770045268E /* NumberClamping.swift in Sources */,
 				55B6CBB427E02248007DB4C2 /* MovieDemo.xcdatamodeld in Sources */,
@@ -1815,6 +1825,7 @@
 				5511FF84285A703700B9C12A /* Home.swift in Sources */,
 				55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */,
 				55D317F8284EF44D0090CF34 /* UserMO.swift in Sources */,
+				55AD94772A8C68F20008B390 /* CodableWatchProviders.swift in Sources */,
 				5584AF332A82DB4600027F1C /* UIView+Constraints.swift in Sources */,
 				555072CB285B9EAD00C15EF4 /* MovieListItem.swift in Sources */,
 				5584ADE62A63122800F0907E /* CodableCache+Utils.swift in Sources */,
@@ -1920,6 +1931,7 @@
 				55E724792A7DDBDA006F3BCE /* MovieDetailDataSource.swift in Sources */,
 				55911C472A76D47B00E661D2 /* CategoryCell.swift in Sources */,
 				550DA06E2A59DB0000541312 /* UserProfileRouter.swift in Sources */,
+				55AD947B2A8C71E80008B390 /* CodableWatchProviders+Mapping.swift in Sources */,
 				55C4F40A251814AF002B73A9 /* CastCreditViewModel.swift in Sources */,
 				55F4E43E2A7232EA004CACCC /* UserListDetailRouter.swift in Sources */,
 				55EDD3532513E346004F8117 /* LoadingCell.swift in Sources */,

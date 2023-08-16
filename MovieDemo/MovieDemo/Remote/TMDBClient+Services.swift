@@ -33,6 +33,14 @@ extension TMDBClient {
             .eraseToAnyPublisher()
     }
     
+    func getWatchProviders(movieId: Int) -> AnyPublisher<[Country: CountryWatchProviders], Error> {
+        let publisher: AnyPublisher<CodableWatchProvidersResult, Error> = getModel(endpoint: .watchProviders(movieId: movieId))
+
+        return publisher
+            .map { $0.toWatchProviders() }
+            .eraseToAnyPublisher()
+    }
+    
     func getPersonDetails(personId: Int) -> AnyPublisher<Person, Error> {
         let params = ["append_to_response": "movie_credits,external_ids"]
         

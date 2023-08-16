@@ -119,6 +119,13 @@ extension Endpoint {
     
 }
 
+//MARK: - Details
+extension Endpoint {
+    static func watchProviders(movieId: Int) -> Endpoint {
+        Endpoint(path: "/movie/\(movieId)/watch/providers")
+    }
+}
+
 //MARK: - User
 extension Endpoint {
     static var userDetails: Endpoint {

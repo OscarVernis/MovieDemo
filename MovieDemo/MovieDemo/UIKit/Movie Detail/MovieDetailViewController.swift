@@ -179,8 +179,8 @@ class MovieDetailViewController: UIViewController {
     fileprivate func setupStore()  {
         store.$movie
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] movie in
-                self?.storeDidUpdate()
+            .sink { [unowned self] movie in
+                storeDidUpdate()
             }
             .store(in: &cancellables)
         
