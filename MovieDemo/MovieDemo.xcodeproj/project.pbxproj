@@ -230,6 +230,7 @@
 		55ADD2F52A78C46400A06E6B /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F42A78C46400A06E6B /* SocialLink.swift */; };
 		55ADD2F72A78D28C00A06E6B /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */; };
 		55AE94362A8EBA4100BFFD96 /* WatchProviderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */; };
+		55AE94382A8EC14000BFFD96 /* CustomHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */; };
 		55B0949A2A8D3DCD00220CC6 /* WhereToWatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */; };
 		55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */; };
 		55B0949E2A8D6E0B00220CC6 /* WhereToWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */; };
@@ -564,6 +565,7 @@
 		55ADD2F42A78C46400A06E6B /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
 		55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderViewModel.swift; sourceTree = "<group>"; };
+		55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHostingController.swift; sourceTree = "<group>"; };
 		55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchCell.swift; sourceTree = "<group>"; };
 		55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhereToWatchCell.xib; sourceTree = "<group>"; };
 		55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchView.swift; sourceTree = "<group>"; };
@@ -1062,6 +1064,7 @@
 				55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */,
 				5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */,
 				55CFB2692A5DFA4400A5D4E6 /* AppDependencyContainer.swift */,
+				55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1809,6 +1812,7 @@
 				55B6CBC127E02708007DB4C2 /* MovieGenreMO.swift in Sources */,
 				550DA0712A59DDF700541312 /* ErrorHandlingRouter.swift in Sources */,
 				5563A5E82A745027004528EA /* UserListHeaderView.swift in Sources */,
+				55AE94382A8EC14000BFFD96 /* CustomHostingController.swift in Sources */,
 				554BB8CB2A75837400762F44 /* UserListCell.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				557E0DCB285BF6D800D21D93 /* RemoteImage.swift in Sources */,

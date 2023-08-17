@@ -282,8 +282,10 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     
     func showWhereToWatch(watchProviders: WatchProvidersViewModel) {
         let watchView = WhereToWatchView(viewModel: watchProviders, router: self)
-        let vc = UIHostingController(rootView: watchView)
-        rootNavigationViewController?.topViewController?.present(vc, animated: true)
+        let vc = CustomHostingController(rootView: watchView)
+        vc.navigationItem.largeTitleDisplayMode = .always
+        vc.title = "Where to Watch"
+        rootNavigationViewController?.pushViewController(vc, animated: true)
     }
     
     func showRecommendedMovies(for movieId: Int) {

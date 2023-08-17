@@ -81,16 +81,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate {
     }
     
     fileprivate func setupNavigationBar() {
-        configureWithDefaultNavigationBarAppearance()
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .asset(.AppTintColor)
-        navigationController?.navigationBar.standardAppearance.titleTextAttributes = [
-            .font: UIFont(name: "AvenirNextCondensed-DemiBold", size: 22)!
-        ]
-        navigationController?.navigationBar.standardAppearance.largeTitleTextAttributes = [
-            .font: UIFont(name: "AvenirNextCondensed-Bold", size: 34)!,
-        ]
+        configureHomeTitleNavigationBarAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {

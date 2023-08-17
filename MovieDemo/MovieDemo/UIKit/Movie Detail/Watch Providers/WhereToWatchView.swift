@@ -12,34 +12,28 @@ struct WhereToWatchView: View {
     @ObservedObject var viewModel: WatchProvidersViewModel
     var router: URLHandlingRouter?
     
-    @Environment(\.dismiss) var dismiss
+    var dismiss: (() -> ())?
     
     private let margin: CGFloat = 20
     private let bottomPadding: CGFloat = 12
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                List {
-                    countrySelectionView
-                        .padding(.top, 8)
-                        .padding(.bottom, 12)
-                    
-                    if !viewModel.selectedWatchProviders.isEmpty {
-                        sectionHeader(title: "Available On")
-                        availableProviders
-                    }
-                    
-                    justWatchView
-                    
+        VStack(spacing: 0) {
+            List {
+                countrySelectionView
+                    .padding(.bottom, 12)
+                
+                if !viewModel.selectedWatchProviders.isEmpty {
+                    sectionHeader(title: "Available On")
+                    availableProviders
                 }
-                .listStyle(.plain)
+                
+                justWatchView
+                
             }
-            .toolbar { dismissButton }
-            .navigationTitle("Where to Watch")
-            .navigationBarTitleDisplayMode(.large)
-            .background(Color(asset: .AppBackgroundColor))
+            .listStyle(.plain)
         }
+        .background(Color(asset: .AppBackgroundColor))
     }
     
     var availableProviders: some View {
@@ -109,7 +103,7 @@ struct WhereToWatchView: View {
     
     var dismissButton: some View {
         Button {
-            dismiss()
+            dismiss?()
         } label: {
             Text("Done")
                 .tint(.init(asset: .AppTintColor))
@@ -124,6 +118,8 @@ struct WhereToWatchView: View {
 
 struct MovieWatchProvidersView_Previews: PreviewProvider {
     static var previews: some View {
-        WhereToWatchView(viewModel: MockData.watchProviders)
+        NavigationStack {
+            WhereToWatchView(viewModel: MockData.watchProviders)
+        }
     }
 }

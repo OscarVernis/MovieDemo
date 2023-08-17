@@ -24,9 +24,7 @@ class WatchProvidersViewModel: ObservableObject {
     init(countriesWatchProviders: [Country: CountryWatchProviders]) {
         self.countriesWatchProviders = countriesWatchProviders
         var countries = countriesWatchProviders.keys.sorted { $0.name < $1.name }
-        
-        self.selectedCountry = Country(countryCode: "MX")!
-        
+                
         //Try to find device region
         if let currentRegionCode = Locale.current.region?.identifier,
            let currentCountry = Country(countryCode: currentRegionCode) {
@@ -38,6 +36,7 @@ class WatchProvidersViewModel: ObservableObject {
                 countries.insert(currentCountry, at: 0)
                 
                 self.countries = countries
+                updateSelectedWatchProviders()
                 return
             }
             
@@ -48,11 +47,13 @@ class WatchProvidersViewModel: ObservableObject {
         //Use US region as fallback
         if let currentCountry = Country(countryCode: "US") {
             self.selectedCountry = currentCountry
+            updateSelectedWatchProviders()
             return
         }
         
         //Just use first country
         self.selectedCountry = countries.first!
+        updateSelectedWatchProviders()
     }
     
     func updateSelectedWatchProviders() {
