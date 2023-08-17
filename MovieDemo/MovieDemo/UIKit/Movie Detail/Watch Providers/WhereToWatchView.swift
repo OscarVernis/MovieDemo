@@ -17,82 +17,53 @@ struct WhereToWatchView: View {
     private let margin: CGFloat = 20
     private let bottomPadding: CGFloat = 12
     
-    var countryWatchProviders: CountryWatchProviders {
-        viewModel.selectedWatchProvider
-    }
-
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 List {
-                    VStack(alignment: .leading, spacing: 0) {
-                        justWatchView
-                            .padding(.bottom, 20)
-                        
-                        countrySelectionView
-                    }
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 0, leading: margin, bottom: 20, trailing: margin))
-                    .listRowSeparator(.hidden)
+                    countrySelectionView
+                        .padding(.top, 8)
+                        .padding(.bottom, 12)
                     
-                    if !countryWatchProviders.flatrate.isEmpty {
-                        watchProviders(title: "Streaming", watchProviders: countryWatchProviders.flatrate)
+                    if !viewModel.selectedWatchProviders.isEmpty {
+                        sectionHeader(title: "Available On")
+                        availableProviders
                     }
                     
-                    if !countryWatchProviders.buy.isEmpty  {
-                        watchProviders(title: "Buy", watchProviders: countryWatchProviders.buy)
-                    }
+                    justWatchView
                     
-                    if !countryWatchProviders.rent.isEmpty {
-                        watchProviders(title: "Rent", watchProviders: countryWatchProviders.rent)
-                    }
-
                 }
                 .listStyle(.plain)
             }
-            .toolbar(content: {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Done")
-                        .tint(.init(asset: .AppTintColor))
-                        .font(.avenirNextMedium(size: 18))
-                }
-
-            })
+            .toolbar { dismissButton }
             .navigationTitle("Where to Watch")
             .navigationBarTitleDisplayMode(.large)
             .background(Color(asset: .AppBackgroundColor))
         }
     }
     
-    func watchProviders(title: String, watchProviders: [WatchProvider]) -> some View {
-        Group {
-            sectionHeader(title: title)
-            ForEach(watchProviders) { provider in
-                WatchProviderRow(providerName: provider.providerName,
-                                 url: viewModel.providerImageURL(for: provider.logoPath))
-                    .onTapGesture {
-                        if let url = self.viewModel.providerURL {
-                            router?.open(url: url)
-                        }
-                    }
-                    .listRowSeparator(.hidden)
+    var availableProviders: some View {
+        ForEach(viewModel.selectedWatchProviders) { provider in
+            WatchProviderRow(title: provider.name,
+                             description: provider.servicesString,
+                             url: provider.logoURL)
+            .onTapGesture {
+                if let url = self.viewModel.providerURL {
+                    router?.open(url: url)
+                }
             }
-            .listRowInsets(EdgeInsets(top: 0, leading: margin, bottom: bottomPadding, trailing: margin))
+            .listRowSeparator(.hidden)
         }
+        .listRowInsets(EdgeInsets(top: 0, leading: margin, bottom: bottomPadding, trailing: margin))
     }
     
-    var justWatchView: some View {
-        HStack(alignment: .lastTextBaseline, spacing: 6) {
-            Text("PROVIDED BY")
-                .foregroundColor(.secondaryLabel)
-                .font(.avenirNextCondensedDemiBold(size: 14))
-            Image("JustWatch-logo")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 14)
-        }
+    func sectionHeader(title: String) -> some View {
+        Text(title)
+            .foregroundColor(.label)
+            .font(.avenirNextCondensedDemiBold(size: 22))
+            .listRowInsets(EdgeInsets(top: 0, leading: margin, bottom: bottomPadding, trailing: margin))
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
     }
     
     var countrySelectionView: some View {
@@ -114,19 +85,36 @@ struct WhereToWatchView: View {
                 tx.disablesAnimations = true
                 tx.animation = nil
             }
-
             .accentColor(Color.purple)
             .buttonStyle(.bordered)
             .buttonBorderShape(.capsule)
         }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
     }
     
-    func sectionHeader(title: String) -> some View {
-        Text(title)
-            .foregroundColor(.label)
-            .font(.avenirNextDemiBold(size: 24))
-            .listRowBackground(Color.clear)
-            .listRowSeparator(.hidden)
+    var justWatchView: some View {
+        HStack(alignment: .lastTextBaseline, spacing: 6) {
+            Text("PROVIDED BY")
+                .foregroundColor(.secondaryLabel)
+                .font(.avenirNextCondensedDemiBold(size: 14))
+            Image("JustWatch-logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 14)
+        }
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
+    }
+    
+    var dismissButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            Text("Done")
+                .tint(.init(asset: .AppTintColor))
+                .font(.avenirNextMedium(size: 18))
+        }
     }
     
     func setSelectedCountry(_ country: Country) {

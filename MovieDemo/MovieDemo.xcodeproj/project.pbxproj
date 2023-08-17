@@ -229,6 +229,7 @@
 		55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55ADD2F12A78C09200A06E6B /* SocialCell.xib */; };
 		55ADD2F52A78C46400A06E6B /* SocialLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F42A78C46400A06E6B /* SocialLink.swift */; };
 		55ADD2F72A78D28C00A06E6B /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */; };
+		55AE94362A8EBA4100BFFD96 /* WatchProviderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */; };
 		55B0949A2A8D3DCD00220CC6 /* WhereToWatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */; };
 		55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */; };
 		55B0949E2A8D6E0B00220CC6 /* WhereToWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */; };
@@ -562,6 +563,7 @@
 		55ADD2F12A78C09200A06E6B /* SocialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SocialCell.xib; sourceTree = "<group>"; };
 		55ADD2F42A78C46400A06E6B /* SocialLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLink.swift; sourceTree = "<group>"; };
 		55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderViewModel.swift; sourceTree = "<group>"; };
 		55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchCell.swift; sourceTree = "<group>"; };
 		55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhereToWatchCell.xib; sourceTree = "<group>"; };
 		55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchView.swift; sourceTree = "<group>"; };
@@ -1560,6 +1562,7 @@
 				55DD1B8D251FB1B000EC8C55 /* MovieVideoViewModel.swift */,
 				55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */,
 				55AD947C2A8C7BF90008B390 /* WatchProvidersViewModel.swift */,
+				55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */,
 			);
 			path = "Movie Detail";
 			sourceTree = "<group>";
@@ -1824,6 +1827,7 @@
 				558C99A82A83217C009599C5 /* CategorySelectionCell.swift in Sources */,
 				5511FF95285A900500B9C12A /* MovieBannerItem.swift in Sources */,
 				5565DDF327E96D2700D7F4EB /* WatchlistRequestBody.swift in Sources */,
+				55AE94362A8EBA4100BFFD96 /* WatchProviderViewModel.swift in Sources */,
 				55D317FD284EF6A40090CF34 /* UserService.swift in Sources */,
 				550045EF2A5DDABA00DF4790 /* TMDBClient+Services.swift in Sources */,
 				55C4F40725180E9F002B73A9 /* CrewCreditViewModel.swift in Sources */,
