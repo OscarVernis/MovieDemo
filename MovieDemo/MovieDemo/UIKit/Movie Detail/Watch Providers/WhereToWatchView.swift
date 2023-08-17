@@ -11,9 +11,7 @@ import SwiftUI
 struct WhereToWatchView: View {
     @ObservedObject var viewModel: WatchProvidersViewModel
     var router: URLHandlingRouter?
-    
-    var dismiss: (() -> ())?
-    
+        
     private let margin: CGFloat = 20
     private let bottomPadding: CGFloat = 12
     
@@ -21,15 +19,14 @@ struct WhereToWatchView: View {
         VStack(spacing: 0) {
             List {
                 countrySelectionView
-                    .padding(.bottom, 12)
+                    .padding(.bottom, bottomPadding)
                 
                 if !viewModel.selectedWatchProviders.isEmpty {
                     sectionHeader(title: "Available On")
                     availableProviders
                 }
                 
-                justWatchView
-                
+                attributionView
             }
             .listStyle(.plain)
         }
@@ -87,7 +84,7 @@ struct WhereToWatchView: View {
         .listRowSeparator(.hidden)
     }
     
-    var justWatchView: some View {
+    var attributionView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 6) {
             Text("PROVIDED BY")
                 .foregroundColor(.secondaryLabel)
@@ -96,19 +93,16 @@ struct WhereToWatchView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 14)
+            Text("AND")
+                .foregroundColor(.secondaryLabel)
+                .font(.avenirNextCondensedDemiBold(size: 14))
+            Image("TMDB-logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 13)
         }
         .listRowBackground(Color.clear)
         .listRowSeparator(.hidden)
-    }
-    
-    var dismissButton: some View {
-        Button {
-            dismiss?()
-        } label: {
-            Text("Done")
-                .tint(.init(asset: .AppTintColor))
-                .font(.avenirNextMedium(size: 18))
-        }
     }
     
     func setSelectedCountry(_ country: Country) {
@@ -120,6 +114,7 @@ struct MovieWatchProvidersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             WhereToWatchView(viewModel: MockData.watchProviders)
+                .navigationTitle("Where to Watch")
         }
     }
 }

@@ -83,6 +83,7 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     //MARK: - App Start
     func start() {
         rootNavigationViewController = UINavigationController()
+        rootNavigationViewController?.navigationBar.tintColor = .asset(.AppTintColor)
         
         window.rootViewController = rootNavigationViewController
         window.makeKeyAndVisible()
@@ -283,7 +284,6 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     func showWhereToWatch(watchProviders: WatchProvidersViewModel) {
         let watchView = WhereToWatchView(viewModel: watchProviders, router: self)
         let vc = CustomHostingController(rootView: watchView)
-        vc.navigationItem.largeTitleDisplayMode = .always
         vc.title = "Where to Watch"
         rootNavigationViewController?.pushViewController(vc, animated: true)
     }
