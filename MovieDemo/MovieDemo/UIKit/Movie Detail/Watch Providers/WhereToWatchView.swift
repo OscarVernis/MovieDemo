@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WhereToWatchView: View {
-    var watchProviders: WatchProvidersViewModel
+    @ObservedObject var watchProviders: WatchProvidersViewModel
     @Environment(\.dismiss) var dismiss
     
     private let margin: CGFloat = 20
@@ -86,14 +86,21 @@ struct WhereToWatchView: View {
         VStack(alignment: .leading, spacing: 5) {
             Text("WHERE ARE YOU WATCHING?")
                 .font(.custom("Avenir Next Demi Bold", size: 14.0))
-            Button(action: {
-                
-            }, label: {
-                HStack {
+            Menu {
+                ForEach(watchProviders.countries, id: \.self) { country in
+                    Button(country.name, action: { setSelectedCountry(country) })
+                }
+            } label: {
+                HStack(spacing: 4) {
                     Text(watchProviders.selectedCountry.name)
                     Image(systemName: "chevron.up.chevron.down")
                 }
-            })
+            }
+            .transaction { (tx: inout Transaction) in // Disable animation
+                tx.disablesAnimations = true
+                tx.animation = nil
+            }
+
             .accentColor(Color.purple)
             .buttonStyle(.bordered)
             .buttonBorderShape(.capsule)
@@ -106,6 +113,10 @@ struct WhereToWatchView: View {
             .font(.custom("Avenir Next Demi Bold", size: 24.0))
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
+    }
+    
+    func setSelectedCountry(_ country: Country) {
+        watchProviders.selectedCountry = country
     }
 }
 

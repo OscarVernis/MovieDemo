@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import Combine
 
-class WatchProvidersViewModel {
+class WatchProvidersViewModel: ObservableObject {
+    @Published var selectedCountry: Country
+
     let countries: [Country]
-    var selectedCountry: Country
     let countriesWatchProviders: [Country: CountryWatchProviders]
     
     convenience init() {
