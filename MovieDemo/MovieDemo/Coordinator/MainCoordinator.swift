@@ -8,7 +8,6 @@
 
 import UIKit
 import SPStorkController
-import SDWebImage
 import SafariServices
 import SwiftUI
 import Kingfisher
@@ -72,9 +71,6 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     
     func deleteCache() {
         CodableCache.deleteCache()
-        
-        SDImageCache.shared.clearMemory()
-        SDImageCache.shared.clearDisk()
         
         //Kingfisher
         let cache = ImageCache.default

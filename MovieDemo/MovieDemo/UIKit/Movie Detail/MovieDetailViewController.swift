@@ -216,7 +216,7 @@ class MovieDetailViewController: UIViewController {
         dataSource.movie = movie
         dataSource.isLoading = store.isLoading
         dataSource.showWhereToWatch = store.hasWatchProviders
-        self.dataSource.reload()
+        dataSource.reload()
     }
 
     //MARK: - Actions

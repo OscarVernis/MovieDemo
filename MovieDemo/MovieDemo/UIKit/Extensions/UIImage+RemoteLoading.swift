@@ -7,12 +7,14 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 
 extension UIImage {
     static func loadRemoteImage(url: URL, completion: ((UIImage?) -> ())? = nil) {
-        SDWebImageManager.shared.loadImage(with: url, progress: nil) { image, _, _, _, _, _ in
-            completion?(image)
+        KingfisherManager.shared.retrieveImage(with: url) { result in
+            if case let .success(image) = result {
+                completion?(image.image)
+            }
         }
     }
     

@@ -110,7 +110,6 @@
 		555498FB2822284B00E89119 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FA2822284B00E89119 /* SessionStore.swift */; };
 		555498FD282228D000E89119 /* KeychainSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555498FC282228D000E89119 /* KeychainSessionStore.swift */; };
 		55549901282232BF00E89119 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55549900282232BF00E89119 /* SessionService.swift */; };
-		5554DA49281343C900845F9E /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 5554DA48281343C900845F9E /* SDWebImage */; };
 		5554DA4B2813482500845F9E /* UIImage+RemoteLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */; };
 		555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */; };
 		55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E0F251317AC00A2B821 /* UIView+Nib.swift */; };
@@ -660,7 +659,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5559D1F92A8DDE36004D6CF5 /* Kingfisher in Frameworks */,
-				5554DA49281343C900845F9E /* SDWebImage in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
 				55604684251BCC320037D08B /* SPStorkController in Frameworks */,
 				557FFA8F251A65B700D79F68 /* KeychainAccess in Frameworks */,
@@ -1606,7 +1604,6 @@
 				55D35E1B2517DE0D00114602 /* Loaf */,
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55604683251BCC320037D08B /* SPStorkController */,
-				5554DA48281343C900845F9E /* SDWebImage */,
 				5559D1F82A8DDE36004D6CF5 /* Kingfisher */,
 			);
 			productName = MovieDemo;
@@ -1648,7 +1645,6 @@
 				55D35E1A2517DE0D00114602 /* XCRemoteSwiftPackageReference "Loaf" */,
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
-				5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 559D131E22D98E4800C96FC8 /* Products */;
@@ -2384,14 +2380,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.17.0;
-			};
-		};
 		5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -2427,11 +2415,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5554DA48281343C900845F9E /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
 		5559D1F82A8DDE36004D6CF5 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */;

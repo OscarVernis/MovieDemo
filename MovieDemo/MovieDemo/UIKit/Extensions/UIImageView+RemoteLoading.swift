@@ -7,24 +7,26 @@
 //
 
 import UIKit
-import SDWebImage
+import Kingfisher
 
 extension UIImageView {
     func setRemoteImage(withURL url: URL?, placeholder: UIImage? = nil, animated: Bool = true, completion: (() -> ())? = nil) {
         guard let url else { return }
         
-        self.sd_imageTransition = animated ? .fade(duration: 0.2) : .none
-        self.sd_setImage(with: url, placeholderImage: placeholder) { _,_,_,_ in
-            completion?()
+        let options: KingfisherOptionsInfo? = animated ? [.transition(.fade(0.2))] : nil
+        kf.setImage(with: url, placeholder: image, options: options) { result in
+            if case .success(_) = result  {
+                completion?()
+            }
         }
     }
     
     var isLoadingRemoteImage: Bool {
-        sd_imageLoadOperation(forKey: sd_latestOperationKey) != nil
+        return kf.taskIdentifier != nil
     }
     
     func cancelImageRequest() {
-        self.sd_cancelCurrentImageLoad()
+        kf.cancelDownloadTask()
     }
     
 }

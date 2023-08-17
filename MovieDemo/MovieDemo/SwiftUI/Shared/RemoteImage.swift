@@ -29,6 +29,7 @@ struct RemoteImage: View {
                 placeholder
             }
             .fade(duration: 0.2)
+            .aspectRatio(contentMode: .fit)
     }
 }
 

@@ -51,9 +51,14 @@ struct WhereToWatchView: View {
                 .listStyle(.plain)
             }
             .toolbar(content: {
-                Button("Done") {
+                Button {
                     dismiss()
+                } label: {
+                    Text("Done")
+                        .tint(.init(asset: .AppTintColor))
+                        .font(.avenirNextMedium(size: 18))
                 }
+
             })
             .navigationTitle("Where to Watch")
             .navigationBarTitleDisplayMode(.large)
@@ -93,7 +98,7 @@ struct WhereToWatchView: View {
     var countrySelectionView: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("WHERE ARE YOU WATCHING?")
-                .font(.avenirNextCondensedDemiBold(size: 14))
+                .font(.avenirNextCondensedDemiBold(size: 18))
             Menu {
                 ForEach(viewModel.countries, id: \.self) { country in
                     Button(country.name, action: { setSelectedCountry(country) })
@@ -101,7 +106,7 @@ struct WhereToWatchView: View {
             } label: {
                 HStack(spacing: 8) {
                     Text(viewModel.selectedCountry.name)
-                        .font(.avenirNextMedium(size: 18))
+                        .font(.avenirNextMedium(size: 17))
                     Image(systemName: "chevron.up.chevron.down")
                 }
             }
