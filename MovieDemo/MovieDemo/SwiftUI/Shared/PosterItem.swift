@@ -13,8 +13,7 @@ struct PosterItem: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            RemoteImage(url: model.imageURL,
-                        placeholder: Image(asset: .PosterPlaceholder))
+            RemoteImage(url: model.imageURL)
                 .frame(width: 140, height: 210)
                 .padding([.leading, .trailing], 0)
                 .padding(.bottom, 5)

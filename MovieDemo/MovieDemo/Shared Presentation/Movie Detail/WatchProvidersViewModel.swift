@@ -11,7 +11,7 @@ import Combine
 
 class WatchProvidersViewModel: ObservableObject {
     @Published var selectedCountry: Country
-
+    
     let countries: [Country]
     let countriesWatchProviders: [Country: CountryWatchProviders]
     
@@ -26,7 +26,7 @@ class WatchProvidersViewModel: ObservableObject {
         //Try to find device region
         if let currentRegionCode = Locale.current.region?.identifier,
            let currentCountry = Country(countryCode: currentRegionCode) {
-                        
+            
             //Put Device Country first on the list
             if let currentIdx = countries.firstIndex(of: currentCountry) {
                 self.selectedCountry = currentCountry
@@ -36,7 +36,7 @@ class WatchProvidersViewModel: ObservableObject {
                 self.countries = countries
                 return
             }
-    
+            
         }
         
         self.countries = countries
@@ -57,6 +57,10 @@ class WatchProvidersViewModel: ObservableObject {
     
     var providerURL: URL? {
         URL(string: selectedWatchProvider.link)
+    }
+    
+    func providerImageURL(for path: String) -> URL {
+        return MovieServiceImageUtils.watchProviderImageURL(forPath: path)
     }
 
 }

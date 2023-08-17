@@ -10,30 +10,27 @@ import SwiftUI
 
 struct WatchProviderRow: View {
     let providerName: String
+    let url: URL?
     
     var body: some View {
         HStack() {
-            Image(systemName: "tv")
-                .foregroundColor(Color(uiColor: .systemGray2))
-                .frame(width: 45, height: 45)
-                .background(Color(asset: .SectionBackgroundColor))
-                .cornerRadius(12)
+            RemoteImage(url: url, placeholder: {
+                Image(systemName: "tv")
+            })
+            .foregroundColor(Color(uiColor: .systemGray2))
+            .frame(width: 45, height: 45)
+            .background(Color(asset: .SectionBackgroundColor))
+            .cornerRadius(12)
             Text(providerName)
-                .font(.custom("Avenir Next Medium", size: 16.0))
+                .font(.avenirNextMedium(size: 16))
             Spacer()
         }
         .listRowBackground(Color.clear)
     }
 }
 
-extension WatchProviderRow {
-    init(watchProvider: WatchProvider) {
-        self.providerName = watchProvider.providerName
-    }
-}
-
 struct WatchProviderRow_Previews: PreviewProvider {
     static var previews: some View {
-        WatchProviderRow(providerName: "Apple TV")
+        WatchProviderRow(providerName: "Apple TV", url: nil)
     }
 }

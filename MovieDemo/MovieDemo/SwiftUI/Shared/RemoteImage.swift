@@ -7,26 +7,28 @@
 //
 
 import SwiftUI
-import SDWebImageSwiftUI
+import Kingfisher
 
 struct RemoteImage: View {
     var url: URL?
-    var placeholder: Image?
+    var placeholder: AnyView? = nil
+    
+    init(url: URL? = nil) {
+        self.url = url
+    }
+    
+    init<T: View>(url: URL? = nil, @ViewBuilder placeholder: () -> T) {
+        self.url = url
+        self.placeholder = AnyView(placeholder())
+    }
     
     var body: some View {
-        WebImage(url: url)
-            .placeholder {
-                if let placeholder = placeholder {
-                    placeholder
-                        .resizable()
-//                        .scaledToFit()
-                        .cornerRadius(12)
-                }
-            }
+        KFImage(url)
             .resizable()
-            .scaledToFit()
-            .transition(.fade(duration: 0.5))
-            .cornerRadius(12)
+            .placeholder { _ in
+                placeholder
+            }
+            .fade(duration: 0.2)
     }
 }
 

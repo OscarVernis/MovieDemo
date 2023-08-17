@@ -13,8 +13,7 @@ struct MovieBannerItem: View {
     
     var body: some View {
             VStack(alignment: .leading, spacing: 0) {
-                RemoteImage(url: movie.backdropImageURL(size: .w780),
-                            placeholder: Image(asset: .BackdropPlaceholder))
+                RemoteImage(url: movie.backdropImageURL(size: .w780))
                 .frame(width: 300, height: 170)
                 .padding(.bottom, 5)
                 HStack {

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct WhereToWatchView: View {
-    @ObservedObject var watchProviders: WatchProvidersViewModel
+    @ObservedObject var viewModel: WatchProvidersViewModel
     var router: URLHandlingRouter?
     
     @Environment(\.dismiss) var dismiss
@@ -18,7 +18,7 @@ struct WhereToWatchView: View {
     private let bottomPadding: CGFloat = 12
     
     var countryWatchProviders: CountryWatchProviders {
-        watchProviders.selectedWatchProvider
+        viewModel.selectedWatchProvider
     }
 
     var body: some View {
@@ -65,9 +65,10 @@ struct WhereToWatchView: View {
         Group {
             sectionHeader(title: title)
             ForEach(watchProviders) { provider in
-                WatchProviderRow(watchProvider: provider)
+                WatchProviderRow(providerName: provider.providerName,
+                                 url: viewModel.providerImageURL(for: provider.logoPath))
                     .onTapGesture {
-                        if let url = self.watchProviders.providerURL {
+                        if let url = self.viewModel.providerURL {
                             router?.open(url: url)
                         }
                     }
@@ -81,7 +82,7 @@ struct WhereToWatchView: View {
         HStack(alignment: .lastTextBaseline, spacing: 6) {
             Text("PROVIDED BY")
                 .foregroundColor(.secondaryLabel)
-                .font(.custom("Avenir Next Condensed Demi Bold", size: 14.0))
+                .font(.avenirNextCondensedDemiBold(size: 14))
             Image("JustWatch-logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -92,14 +93,15 @@ struct WhereToWatchView: View {
     var countrySelectionView: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text("WHERE ARE YOU WATCHING?")
-                .font(.custom("Avenir Next Demi Bold", size: 14.0))
+                .font(.avenirNextCondensedDemiBold(size: 14))
             Menu {
-                ForEach(watchProviders.countries, id: \.self) { country in
+                ForEach(viewModel.countries, id: \.self) { country in
                     Button(country.name, action: { setSelectedCountry(country) })
                 }
             } label: {
-                HStack(spacing: 4) {
-                    Text(watchProviders.selectedCountry.name)
+                HStack(spacing: 8) {
+                    Text(viewModel.selectedCountry.name)
+                        .font(.avenirNextMedium(size: 18))
                     Image(systemName: "chevron.up.chevron.down")
                 }
             }
@@ -117,18 +119,18 @@ struct WhereToWatchView: View {
     func sectionHeader(title: String) -> some View {
         Text(title)
             .foregroundColor(.label)
-            .font(.custom("Avenir Next Demi Bold", size: 24.0))
+            .font(.avenirNextDemiBold(size: 24))
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
     }
     
     func setSelectedCountry(_ country: Country) {
-        watchProviders.selectedCountry = country
+        viewModel.selectedCountry = country
     }
 }
 
 struct MovieWatchProvidersView_Previews: PreviewProvider {
     static var previews: some View {
-        WhereToWatchView(watchProviders: MockData.watchProviders)
+        WhereToWatchView(viewModel: MockData.watchProviders)
     }
 }

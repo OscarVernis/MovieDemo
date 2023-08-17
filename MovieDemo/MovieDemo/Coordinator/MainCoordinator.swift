@@ -11,6 +11,7 @@ import SPStorkController
 import SDWebImage
 import SafariServices
 import SwiftUI
+import Kingfisher
 
 class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     //If set to true, it will force you to login before showing Home
@@ -71,8 +72,15 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     
     func deleteCache() {
         CodableCache.deleteCache()
+        
         SDImageCache.shared.clearMemory()
         SDImageCache.shared.clearDisk()
+        
+        //Kingfisher
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        
         //try CoreDataStore.shared.resetStore()
     }
     
@@ -88,7 +96,6 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
         } else {
             showHome()
         }
-        
     }
     
     func showLogin(animated: Bool = true) {
@@ -278,7 +285,7 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     }
     
     func showWhereToWatch(watchProviders: WatchProvidersViewModel) {
-        let watchView = WhereToWatchView(watchProviders: watchProviders, router: self)
+        let watchView = WhereToWatchView(viewModel: watchProviders, router: self)
         let vc = UIHostingController(rootView: watchView)
         rootNavigationViewController?.topViewController?.present(vc, animated: true)
     }

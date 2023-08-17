@@ -74,7 +74,6 @@
 		553CD316286D35780022F72E /* InfoTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CD315286D35780022F72E /* InfoTable.swift */; };
 		553CECCD2A801E7D00F6D37A /* CrewDepartment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553CECCC2A801E7D00F6D37A /* CrewDepartment.swift */; };
 		553CECD02A801F9200F6D37A /* Department.strings in Resources */ = {isa = PBXBuildFile; fileRef = 553CECD22A801F9200F6D37A /* Department.strings */; };
-		553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 553EE5852A6386D400750793 /* SDWebImageSwiftUI */; };
 		553F0F5C27E5B51500F5EE47 /* ServiceSuccessResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F0F5B27E5B51500F5EE47 /* ServiceSuccessResult.swift */; };
 		5541467F2A71834200BF1B16 /* UserListsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5541467E2A71834200BF1B16 /* UserListsStore.swift */; };
 		554146812A718C2400BF1B16 /* CreateListRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554146802A718C2400BF1B16 /* CreateListRequestBody.swift */; };
@@ -115,6 +114,7 @@
 		5554DA4B2813482500845F9E /* UIImage+RemoteLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5554DA4A2813482500845F9E /* UIImage+RemoteLoading.swift */; };
 		555725A82538C7AF007F2EDB /* PersonCrewCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555725A72538C7AF007F2EDB /* PersonCrewCredit.swift */; };
 		55596E10251317AC00A2B821 /* UIView+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55596E0F251317AC00A2B821 /* UIView+Nib.swift */; };
+		5559D1F92A8DDE36004D6CF5 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5559D1F82A8DDE36004D6CF5 /* Kingfisher */; };
 		555A144B2523D97B0024AFAA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A14452523D97B0024AFAA /* HomeViewController.swift */; };
 		555CF12527DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555CF12427DAE7F100CC7B43 /* UIImageView+RemoteLoading.swift */; };
 		555D760527EA3D3B00B8FFAB /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555D760427EA3D3B00B8FFAB /* XCTestCase+Helpers.swift */; };
@@ -659,7 +659,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553EE5862A6386D400750793 /* SDWebImageSwiftUI in Frameworks */,
+				5559D1F92A8DDE36004D6CF5 /* Kingfisher in Frameworks */,
 				5554DA49281343C900845F9E /* SDWebImage in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
 				55604684251BCC320037D08B /* SPStorkController in Frameworks */,
@@ -1607,7 +1607,7 @@
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55604683251BCC320037D08B /* SPStorkController */,
 				5554DA48281343C900845F9E /* SDWebImage */,
-				553EE5852A6386D400750793 /* SDWebImageSwiftUI */,
+				5559D1F82A8DDE36004D6CF5 /* Kingfisher */,
 			);
 			productName = MovieDemo;
 			productReference = 559D131D22D98E4800C96FC8 /* MovieDemo.app */;
@@ -1649,7 +1649,7 @@
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
 				5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				553EE5842A6386D400750793 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 559D131E22D98E4800C96FC8 /* Products */;
 			projectDirPath = "";
@@ -2384,20 +2384,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		553EE5842A6386D400750793 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.3;
-			};
-		};
 		5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.17.0;
+			};
+		};
+		5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
 			};
 		};
 		55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */ = {
@@ -2427,15 +2427,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		553EE5852A6386D400750793 /* SDWebImageSwiftUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 553EE5842A6386D400750793 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
-			productName = SDWebImageSwiftUI;
-		};
 		5554DA48281343C900845F9E /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5554DA47281343C900845F9E /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		5559D1F82A8DDE36004D6CF5 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		55604683251BCC320037D08B /* SPStorkController */ = {
 			isa = XCSwiftPackageProductDependency;

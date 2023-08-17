@@ -49,7 +49,7 @@ struct MovieDetail: View {
     //MARK: - Header
     fileprivate func movieHeader() -> some View {
         return VStack(spacing: 10) {
-            RemoteImage(url: movie.posterImageURL(size: .w500), placeholder: Image(asset: .PosterPlaceholder))
+            RemoteImage(url: movie.posterImageURL(size: .w500))
                 .frame(width: 160)
             Text(movie.title)
                 .multilineTextAlignment(.center)

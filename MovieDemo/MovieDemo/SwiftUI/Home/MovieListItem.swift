@@ -20,7 +20,7 @@ struct MovieListItem: View {
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 16) {
-                RemoteImage(url: movie.posterImageURL(size: .w500), placeholder: Image(asset: .PosterPlaceholder))
+                RemoteImage(url: movie.posterImageURL(size: .w500))
                 VStack(alignment: .leading, spacing: 0) {
                     Text(movie.title)
                         .titleStyle()
