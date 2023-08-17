@@ -10,8 +10,9 @@ import Foundation
 
 extension CodableWatchProvider {
     func toWatchProvider() -> WatchProvider? {
-        if let provider_name {
-            return WatchProvider(logoPath: logo_path ?? "",
+        if let provider_name, let provider_id {
+            return WatchProvider(id: provider_id,
+                                 logoPath: logo_path ?? "",
                                  providerName: provider_name,
                                  displayPriority: display_priority ?? .max)
         } else {

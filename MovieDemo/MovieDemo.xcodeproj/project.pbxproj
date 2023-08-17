@@ -232,6 +232,9 @@
 		55ADD2F72A78D28C00A06E6B /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */; };
 		55B0949A2A8D3DCD00220CC6 /* WhereToWatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */; };
 		55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */; };
+		55B0949E2A8D6E0B00220CC6 /* WhereToWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */; };
+		55B094A02A8D6EB800220CC6 /* watch_providers.json in Resources */ = {isa = PBXBuildFile; fileRef = 55B0949F2A8D6EB800220CC6 /* watch_providers.json */; };
+		55B094A42A8DAA7200220CC6 /* WatchProviderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094A32A8DAA7200220CC6 /* WatchProviderRow.swift */; };
 		55B0DA11284E642B0043A8B3 /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */; };
 		55B0DA13284E643C0043A8B3 /* WebLoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */; };
 		55B0DA15284EA46A0043A8B3 /* WebLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */; };
@@ -561,6 +564,9 @@
 		55ADD2F62A78D28C00A06E6B /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchCell.swift; sourceTree = "<group>"; };
 		55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhereToWatchCell.xib; sourceTree = "<group>"; };
+		55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchView.swift; sourceTree = "<group>"; };
+		55B0949F2A8D6EB800220CC6 /* watch_providers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = watch_providers.json; sourceTree = "<group>"; };
+		55B094A32A8DAA7200220CC6 /* WatchProviderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderRow.swift; sourceTree = "<group>"; };
 		55B0DA10284E642B0043A8B3 /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
 		55B0DA12284E643C0043A8B3 /* WebLoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebLoginViewController.storyboard; sourceTree = "<group>"; };
 		55B0DA14284EA46A0043A8B3 /* WebLoginViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewControllerTests.swift; sourceTree = "<group>"; };
@@ -773,6 +779,7 @@
 				559547BE2A6F191500AC03E3 /* person.json */,
 				5511FF96285A90A300B9C12A /* movie.json */,
 				55E8A7CF285CF5BC00588D62 /* user.json */,
+				55B0949F2A8D6EB800220CC6 /* watch_providers.json */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -1006,6 +1013,7 @@
 		55518D4A251151B300DAEB7F /* Movie Detail */ = {
 			isa = PBXGroup;
 			children = (
+				55B0949C2A8D6DE600220CC6 /* Watch Providers */,
 				5584AF342A82F78D00027F1C /* Credits */,
 				55EDA70C2810F4D70055696F /* Cells */,
 				556B78612524F21700F212D1 /* Views */,
@@ -1305,6 +1313,15 @@
 				55D6D9DE2A79872100DEB798 /* ProviderPagingDataSource.swift */,
 			);
 			path = Lists;
+			sourceTree = "<group>";
+		};
+		55B0949C2A8D6DE600220CC6 /* Watch Providers */ = {
+			isa = PBXGroup;
+			children = (
+				55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */,
+				55B094A32A8DAA7200220CC6 /* WatchProviderRow.swift */,
+			);
+			path = "Watch Providers";
 			sourceTree = "<group>";
 		};
 		55B0DA16284EA8180043A8B3 /* Username */ = {
@@ -1671,6 +1688,7 @@
 				55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */,
 				550815A72A848096004071BF /* PersonHeaderView.xib in Resources */,
 				5566483E284DC4B5000BE2F3 /* Error.strings in Resources */,
+				55B094A02A8D6EB800220CC6 /* watch_providers.json in Resources */,
 				55ADD2F32A78C09200A06E6B /* SocialCell.xib in Resources */,
 				55D006BC2A74B4950089E8B1 /* EmptyView.xib in Resources */,
 				55AD94812A8C7F430008B390 /* WatchProviderCell.xib in Resources */,
@@ -1815,6 +1833,7 @@
 				556774652517385F0066B6E4 /* UICollectionReusableView+Register.swift in Sources */,
 				55D05CC2251AED9300FD5F8C /* UserViewModel.swift in Sources */,
 				556465D52A58C636008ADC3A /* MockUserStatesService.swift in Sources */,
+				55B094A42A8DAA7200220CC6 /* WatchProviderRow.swift in Sources */,
 				5511CD352A70DE0C00A9CCDD /* UserListsViewController.swift in Sources */,
 				55D309DC281325D0004F2725 /* URLSession+Extensions.swift in Sources */,
 				55B8548D2A592515009870B2 /* PersonDetailRouter.swift in Sources */,
@@ -1876,6 +1895,7 @@
 				5570994C282485780028ED44 /* SearchService.swift in Sources */,
 				5554DA4B2813482500845F9E /* UIImage+RemoteLoading.swift in Sources */,
 				556AB1942514680A0023D278 /* DotRatingsView.swift in Sources */,
+				55B0949E2A8D6E0B00220CC6 /* WhereToWatchView.swift in Sources */,
 				55135E722512C866004C4361 /* MovieDetailHeaderView.swift in Sources */,
 				550577A6284DAA4D007ED892 /* HomeString.swift in Sources */,
 				5553B3A72A59E99600969AE7 /* PersonDetailsService.swift in Sources */,

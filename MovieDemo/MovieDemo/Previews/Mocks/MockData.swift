@@ -49,6 +49,12 @@ struct MockData {
         return MovieDetailStore(movie: movieVM, userStateService: service)
     }
     
+    static var watchProviders: WatchProvidersViewModel {
+        let jsonLoader = JSONLoader<CodableWatchProvidersResult>(filename: "watch_providers")
+        let watchProviders = jsonLoader.model!.toWatchProviders()
+        return WatchProvidersViewModel(countriesWatchProviders: watchProviders)
+    }
+    
     //MARK: - User
     static var userMock: JSONLoader<CodableUser> {
         JSONLoader<CodableUser>(filename: "user")

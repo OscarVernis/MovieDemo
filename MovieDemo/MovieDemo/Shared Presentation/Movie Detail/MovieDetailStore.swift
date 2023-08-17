@@ -36,7 +36,7 @@ class MovieDetailStore: ObservableObject {
     private(set) var isLoading = false
     var hasWatchProviders: Bool {
         guard let watchProviders else { return false }
-        return !watchProviders.availableWatchProviders.isEmpty
+        return !watchProviders.countries.isEmpty
     }
     
     func refresh() {

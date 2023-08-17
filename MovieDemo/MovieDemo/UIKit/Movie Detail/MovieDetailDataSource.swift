@@ -166,7 +166,7 @@ class MovieDetailDataSource {
             }
         }
         
-        dataSource.apply(snapshot, animatingDifferences: animated)
+        dataSource.applySnapshotUsingReloadData(snapshot)
     }
     
     //MARK: - Headers

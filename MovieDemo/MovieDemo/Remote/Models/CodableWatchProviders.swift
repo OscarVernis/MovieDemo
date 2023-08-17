@@ -20,6 +20,7 @@ struct CodableCountryWatchProviders: Codable {
 }
 
 struct CodableWatchProvider: Codable {
+    var provider_id: Int?
     var logo_path: String?
     var provider_name: String?
     var display_priority: Int?

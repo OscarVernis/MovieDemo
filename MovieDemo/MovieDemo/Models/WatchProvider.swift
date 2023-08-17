@@ -22,7 +22,8 @@ struct Country: Hashable {
     }
 }
 
-struct WatchProvider: Hashable {
+struct WatchProvider: Identifiable, Hashable {
+    var id: Int
     var logoPath: String
     var providerName: String
     var displayPriority: Int

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Combine
 
 class MovieDetailViewController: UIViewController {
@@ -131,7 +132,9 @@ class MovieDetailViewController: UIViewController {
         })
         
         dataSource.whereToWatchAction = {
-            print("Where to Watch")
+            let watchView = WhereToWatchView(watchProviders: self.store.watchProviders!)
+            let vc = UIHostingController(rootView: watchView)
+            self.present(vc, animated: true)
         }
         
         dataSource.openSocialLink = { socialLink in
@@ -183,22 +186,25 @@ class MovieDetailViewController: UIViewController {
     fileprivate func setupStore()  {
         store.$movie
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] movie in
+            .sink { [unowned self] _ in
                 storeDidUpdate()
             }
             .store(in: &cancellables)
         
         store.$watchProviders
+            .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] movie in
-                storeDidUpdate()
+            .sink { [unowned self] _ in
+                if !store.isLoading {
+                    storeDidUpdate()
+                }
             }
             .store(in: &cancellables)
         
         store.$error
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [unowned self] error in
+            .sink { [unowned self] _ in
                 show(error: .refreshError, shouldDismiss: true)
             }
             .store(in: &cancellables)
