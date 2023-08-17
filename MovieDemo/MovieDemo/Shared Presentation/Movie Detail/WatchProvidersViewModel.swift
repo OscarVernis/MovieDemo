@@ -21,14 +21,25 @@ class WatchProvidersViewModel: ObservableObject {
     
     init(countriesWatchProviders: [Country: CountryWatchProviders]) {
         self.countriesWatchProviders = countriesWatchProviders
-        self.countries = countriesWatchProviders.keys.sorted { $0.name < $1.name }
+        var countries = countriesWatchProviders.keys.sorted { $0.name < $1.name }
         
         //Try to find device region
         if let currentRegionCode = Locale.current.region?.identifier,
            let currentCountry = Country(countryCode: currentRegionCode) {
-            self.selectedCountry = currentCountry
-            return
+                        
+            //Put Device Country first on the list
+            if let currentIdx = countries.firstIndex(of: currentCountry) {
+                self.selectedCountry = currentCountry
+                countries.remove(at: currentIdx)
+                countries.insert(currentCountry, at: 0)
+                
+                self.countries = countries
+                return
+            }
+    
         }
+        
+        self.countries = countries
         
         //Use US region as fallback
         if let currentCountry = Country(countryCode: "US") {
@@ -42,6 +53,10 @@ class WatchProvidersViewModel: ObservableObject {
     
     var selectedWatchProvider: CountryWatchProviders {
         return countriesWatchProviders[selectedCountry] ?? CountryWatchProviders(link: "", rent: [], flatrate: [], buy: [])
+    }
+    
+    var providerURL: URL? {
+        URL(string: selectedWatchProvider.link)
     }
 
 }

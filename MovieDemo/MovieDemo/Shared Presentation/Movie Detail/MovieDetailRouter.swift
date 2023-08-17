@@ -13,6 +13,7 @@ protocol MovieDetailRouter: ErrorHandlingRouter {
     func showMovieDetail(movie: MovieViewModel, animated: Bool)
     func showCrewCreditList(credits: [CrewCreditViewModel], animated: Bool)
     func showCastCreditList(credits: [CastCreditViewModel], animated: Bool)
+    func showWhereToWatch(watchProviders: WatchProvidersViewModel)
     func showRecommendedMovies(for: Int)
     func showPersonProfile(_ viewModel: PersonViewModel, animated: Bool)
     func showMovieRatingView(store: MovieDetailStore, successHandler: @escaping () -> ())

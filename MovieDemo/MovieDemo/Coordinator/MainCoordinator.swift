@@ -9,8 +9,10 @@
 import UIKit
 import SPStorkController
 import SDWebImage
+import SafariServices
+import SwiftUI
 
-class MainCoordinator {
+class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     //If set to true, it will force you to login before showing Home
     private var isLoginRequired: Bool = false
     
@@ -56,6 +58,15 @@ class MainCoordinator {
                                     image: error.alertImage,
                                     sender: sender,
                                     completion: completion)
+    }
+    
+    func open(url: URL) {
+        let vc = SFSafariViewController(url: url)
+        vc.transitioningDelegate = self
+        
+        let presenting = rootNavigationViewController?.topViewController?.presentedViewController ?? rootNavigationViewController?.topViewController
+        
+        presenting?.present(vc, animated: true)
     }
     
     func deleteCache() {
@@ -266,6 +277,12 @@ class MainCoordinator {
         rootNavigationViewController?.pushViewController(lvc, animated: animated)
     }
     
+    func showWhereToWatch(watchProviders: WatchProvidersViewModel) {
+        let watchView = WhereToWatchView(watchProviders: watchProviders, router: self)
+        let vc = UIHostingController(rootView: watchView)
+        rootNavigationViewController?.topViewController?.present(vc, animated: true)
+    }
+    
     func showRecommendedMovies(for movieId: Int) {
         showMovieList(title: .localized(MovieString.RecommendedMovies), endpoint: .Recommended(movieId: movieId))
     }
@@ -339,5 +356,6 @@ extension MainCoordinator: HomeRouter,
                            UserProfileRouter,
                            SearchViewRouter,
                            UserListsRouter,
-                           UserListDetailRouter
+                           UserListDetailRouter,
+                           URLHandlingRouter
 { }

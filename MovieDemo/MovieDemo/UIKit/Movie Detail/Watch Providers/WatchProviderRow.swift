@@ -16,10 +16,11 @@ struct WatchProviderRow: View {
             Image(systemName: "tv")
                 .foregroundColor(Color(uiColor: .systemGray2))
                 .frame(width: 45, height: 45)
-                .background(Color(uiColor: .systemGray6))
+                .background(Color(asset: .SectionBackgroundColor))
                 .cornerRadius(12)
             Text(providerName)
                 .font(.custom("Avenir Next Medium", size: 16.0))
+            Spacer()
         }
         .listRowBackground(Color.clear)
     }

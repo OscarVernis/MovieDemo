@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 class MovieDetailViewController: UIViewController {
-    private var router: MovieDetailRouter?
+    private var router: (MovieDetailRouter & URLHandlingRouter)?
     private var dataSource: MovieDetailDataSource!
       
     private var store: MovieDetailStore
@@ -24,7 +24,7 @@ class MovieDetailViewController: UIViewController {
     private weak var headerView: MovieDetailHeaderView?
     var collectionView: UICollectionView!
             
-    required init(store: MovieDetailStore, router: MovieDetailRouter?) {
+    required init(store: MovieDetailStore, router: (MovieDetailRouter & URLHandlingRouter)?) {
         self.store = store
         self.router = router
         super.init(nibName: nil, bundle: nil)
@@ -131,10 +131,10 @@ class MovieDetailViewController: UIViewController {
             }
         })
         
-        dataSource.whereToWatchAction = {
-            let watchView = WhereToWatchView(watchProviders: self.store.watchProviders!)
-            let vc = UIHostingController(rootView: watchView)
-            self.present(vc, animated: true)
+        dataSource.whereToWatchAction = {  [unowned self] in
+            if let viewModel = store.watchProviders {
+                router?.showWhereToWatch(watchProviders: viewModel)
+            }
         }
         
         dataSource.openSocialLink = { socialLink in

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct WhereToWatchView: View {
     @ObservedObject var watchProviders: WatchProvidersViewModel
+    var router: URLHandlingRouter?
+    
     @Environment(\.dismiss) var dismiss
     
     private let margin: CGFloat = 20
@@ -64,6 +66,11 @@ struct WhereToWatchView: View {
             sectionHeader(title: title)
             ForEach(watchProviders) { provider in
                 WatchProviderRow(watchProvider: provider)
+                    .onTapGesture {
+                        if let url = self.watchProviders.providerURL {
+                            router?.open(url: url)
+                        }
+                    }
                     .listRowSeparator(.hidden)
             }
             .listRowInsets(EdgeInsets(top: 0, leading: margin, bottom: bottomPadding, trailing: margin))
