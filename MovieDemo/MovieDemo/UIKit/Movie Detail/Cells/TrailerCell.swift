@@ -1,5 +1,5 @@
 //
-//  YoutubeCell.swift
+//  TrailerCell.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 17/08/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YoutubeCell: UICollectionViewCell {
+class TrailerCell: UICollectionViewCell {
     var youtubeView: YoutubeView!
     
     override func prepareForReuse() {
@@ -29,8 +29,8 @@ class YoutubeCell: UICollectionViewCell {
     }
 }
 
-extension YoutubeCell {
-    static func configure(cell: YoutubeCell, with viewModel: MovieVideoViewModel) {
+extension TrailerCell {
+    static func configure(cell: TrailerCell, with viewModel: MovieVideoViewModel) {
         cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeURL: viewModel.youtubeURL)
     }
 }

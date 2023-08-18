@@ -128,7 +128,6 @@ class YoutubeView: UIView {
             })
         
         hostingView.player.cue(source: .url(youtubeURL.absoluteString))
-
     }
 }
 

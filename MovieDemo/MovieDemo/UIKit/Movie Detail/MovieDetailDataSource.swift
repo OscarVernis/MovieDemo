@@ -53,8 +53,8 @@ class MovieDetailDataSource {
         LoadingCell.register(to: collectionView)
         CreditCell.register(to: collectionView)
         InfoListCell.register(to: collectionView)
-        YoutubeVideoCell.register(to: collectionView)
-        YoutubeCell.registerClass(to: collectionView)
+        MovieVideoCell.registerClass(to: collectionView)
+        TrailerCell.registerClass(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         SocialCell.register(to: collectionView)
         WhereToWatchCell.register(to: collectionView)
@@ -66,7 +66,7 @@ class MovieDetailDataSource {
         case .loading:
             return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         case .trailer:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeCell.reuseIdentifier, for: indexPath) as! YoutubeCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrailerCell.reuseIdentifier, for: indexPath) as! TrailerCell
             if let viewModel = movie.trailerViewModel {
                 cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeURL: viewModel.youtubeURL)
             }
@@ -83,7 +83,7 @@ class MovieDetailDataSource {
             return cell
         case .videos:
             let model = movie.videos[indexPath.row]
-            return collectionView.cell(at: indexPath, model: model, cellConfigurator: YoutubeVideoCell.configure)
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MovieVideoCell.configure)
         case .recommended:
             let model = movie.recommendedMovies[indexPath.row]
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: MoviePosterInfoCell.configureWithDate)
