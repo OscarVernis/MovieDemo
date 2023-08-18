@@ -12,7 +12,7 @@ import YouTubePlayerKit
 
 class YoutubeView: UIView {
     var previewImageURL: URL?
-    var youtubeId: String
+    var youtubeURL: URL
     
     let buttonSize: CGFloat = 70
     
@@ -22,12 +22,9 @@ class YoutubeView: UIView {
     }()
     
     private var previewImageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView = UIImageView(image: .asset(.BackdropPlaceholder))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.setupBorder()
-        imageView.layer.cornerRadius = 12
-        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -56,10 +53,11 @@ class YoutubeView: UIView {
     }()
     
     private var stateCancellable: AnyCancellable?
-    
-    init(previewURL: URL?, youtubeId: String) {
+    private var playbackStateCancellable: AnyCancellable?
+
+    init(previewURL: URL?, youtubeURL: URL) {
         self.previewImageURL = previewURL
-        self.youtubeId = youtubeId
+        self.youtubeURL = youtubeURL
         super.init(frame: .zero)
         setup()
     }
@@ -74,6 +72,11 @@ class YoutubeView: UIView {
     }
     
     private func setup() {
+        backgroundColor = .asset(.SectionBackgroundColor)
+        setupBorder()
+        layer.cornerRadius = 12
+        layer.masksToBounds = true
+        
         addSubview(hostingView)
         hostingView.alpha = 0
         hostingView.anchor(to: self)
@@ -98,18 +101,34 @@ class YoutubeView: UIView {
     @objc private func play() {
         playButton.configuration?.showsActivityIndicator = true
         
-        stateCancellable = hostingView.player.playbackStatePublisher
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { state in
-                if state == .cued {
-                    self.hostingView.player.play()
-                }
-                if state == .playing {
-                    self.playButton.configuration?.showsActivityIndicator = false
+        playbackStateCancellable = hostingView.player.statePublisher
+            .sink(receiveValue: { [unowned self] state in
+                if case let .error(error) = state {
+                    playButton.configuration?.showsActivityIndicator = false
+                    
+                    switch error {
+                    case .embeddedVideoPlayingNotAllowed:
+                        UIApplication.shared.open(youtubeURL)
+                    default:
+                        break
+                    }
                 }
             })
         
-        hostingView.player.cue(source: .video(id: youtubeId))
+        stateCancellable = hostingView.player.playbackStatePublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [unowned self] state in
+                if state == .cued {
+                    hostingView.player.play()
+                }
+                
+                if state == .playing {
+                    playButton.configuration?.showsActivityIndicator = false
+                }
+            })
+        
+        hostingView.player.cue(source: .url(youtubeURL.absoluteString))
 
     }
 }
+

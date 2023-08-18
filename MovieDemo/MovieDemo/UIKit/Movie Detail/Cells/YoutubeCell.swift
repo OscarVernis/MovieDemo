@@ -11,14 +11,26 @@ import UIKit
 class YoutubeCell: UICollectionViewCell {
     var youtubeView: YoutubeView!
     
-    func setupYoutubeView(previewURL: URL?, youtubeId: String) {
-        youtubeView = YoutubeView(previewURL: previewURL, youtubeId: youtubeId)
+    override func prepareForReuse() {
+        youtubeView.removeFromSuperview()
+        youtubeView = nil
+    }
+    
+    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
+        youtubeView = YoutubeView(previewURL: previewURL, youtubeURL: youtubeURL)
 
-        addSubview(youtubeView)
-        youtubeView.anchor(to: self)
+        contentView.addSubview(youtubeView)
+        youtubeView.anchor(to: contentView)
         
-        youtubeView.layer.shadowOffset = CGSize(width: 0, height: 7)
-        youtubeView.layer.shadowRadius = 8
-        youtubeView.layer.shadowOpacity = 0.15
+        contentView.layer.cornerRadius = 12
+        
+        layer.shadowOffset = CGSize(width: 0, height: 7)
+        layer.shadowOpacity = 0.15
+    }
+}
+
+extension YoutubeCell {
+    static func configure(cell: YoutubeCell, with viewModel: MovieVideoViewModel) {
+        cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeURL: viewModel.youtubeURL)
     }
 }

@@ -68,7 +68,7 @@ class MovieDetailDataSource {
         case .trailer:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeCell.reuseIdentifier, for: indexPath) as! YoutubeCell
             if let viewModel = movie.trailerViewModel {
-                cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeId: viewModel.key)
+                cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeURL: viewModel.youtubeURL)
             }
             return cell
         case .cast:

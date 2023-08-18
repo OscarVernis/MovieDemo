@@ -413,9 +413,6 @@ extension MovieDetailViewController: UICollectionViewDelegate {
         case .recommended:
             let recommendedMovie = movie.recommendedMovies[indexPath.row]
             router?.showMovieDetail(movie: recommendedMovie)
-        case .videos:
-            let video = movie.videos[indexPath.row]
-            UIApplication.shared.open(video.youtubeURL)
         default:
             break
         }
