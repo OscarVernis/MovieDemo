@@ -91,7 +91,7 @@ struct MovieDetail: View {
             RoundedButton(title: "Play Trailer",
                           image: Image(asset: .trailer),
                           tintColor: Color.pink,
-                          action: playTrailer)
+                          action: {})
         }
     }
     
@@ -178,10 +178,6 @@ struct MovieDetail: View {
         UIApplication.shared.open(video.youtubeURL)
     }
     
-    func playTrailer() {
-        guard let youtubeURL = movie.trailerURL else { return }
-        UIApplication.shared.open(youtubeURL)
-    }
 }
 
 struct MovieDetail_Previews: PreviewProvider {

@@ -11,34 +11,62 @@ import Combine
 import YouTubePlayerKit
 
 class YoutubeView: UIView {
-    var previewImageURL = URL(string: "https://i.ytimg.com/vi/n9xhJrPXop4/hqdefault.jpg")!
-    var youtubeId: String = "_YUzQa_1RCE"
+    var previewImageURL: URL?
+    var youtubeId: String
+    
+    let buttonSize: CGFloat = 70
     
     private var hostingView: YouTubePlayerHostingView = {
-        let configuration = YouTubePlayer.Configuration(autoPlay: true, playInline: true)
+        let configuration = YouTubePlayer.Configuration(autoPlay: false, playInline: false)
         return YouTubePlayerHostingView(player: YouTubePlayer(source: nil, configuration: configuration))
     }()
     
-    private var previewImageView = UIImageView()
+    private var previewImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.setupBorder()
+        imageView.layer.cornerRadius = 12
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
+    private lazy var buttonBgView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.layer.masksToBounds = true
+        visualEffectView.layer.cornerRadius = buttonSize / 2
+        visualEffectView.alpha = 0.9
+        
+        return visualEffectView
+    } ()
     
     private var playButton: UIButton = {
-        var configuration = UIButton.Configuration.borderedProminent()
+        var configuration = UIButton.Configuration.borderless()
         configuration.cornerStyle = .capsule
         let button = UIButton(configuration: configuration)
-        button.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
+        button.setImage(UIImage(systemName: "play.fill", withConfiguration: largeConfig), for: .normal)
+        button.tintColor = .white
+        
+        button.alpha = 0.7
         
         return button
     }()
     
     private var stateCancellable: AnyCancellable?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(previewURL: URL?, youtubeId: String) {
+        self.previewImageURL = previewURL
+        self.youtubeId = youtubeId
+        super.init(frame: .zero)
         setup()
     }
     
+    @available (*, unavailable)
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError()
     }
     
     override func awakeFromNib() {
@@ -46,61 +74,42 @@ class YoutubeView: UIView {
     }
     
     private func setup() {
+        addSubview(hostingView)
+        hostingView.alpha = 0
+        hostingView.anchor(to: self)
+        
         addSubview(previewImageView)
         previewImageView.anchor(to: self)
         previewImageView.setRemoteImage(withURL: previewImageURL, animated: true)
         
-        addSubview(hostingView)
-        anchor(to: self)
-        
-        addSubview(playButton)
-        playButton.anchor(width: 45, height: 45)
+        addSubview(buttonBgView)
+        buttonBgView.anchor(width: buttonSize, height: buttonSize)
         NSLayoutConstraint.activate([
-            playButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            playButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+            buttonBgView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            buttonBgView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+       
+        addSubview(playButton)
+        playButton.anchor(to: self)
         
         playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
     }
     
     @objc private func play() {
-        stateCancellable = nil
-        hostingView.player.cue(source: .video(id: youtubeId))
+        playButton.configuration?.showsActivityIndicator = true
         
-        if hostingView.player.state == .ready {
-            print("play")
-            hostingView.player.play()
-        } else {
-            print("cue")
-            hostingView.player.cue(source: .video(id: youtubeId))
-            
-            stateCancellable = hostingView.player.statePublisher
-                .sink(receiveValue: { state in
-                    if state == .ready {
-                        print("ready")
-                        self.hostingView.player.play()
-                        self.stateCancellable = nil
-                    }
-                })
-        }
-    }
-}
+        stateCancellable = hostingView.player.playbackStatePublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { state in
+                if state == .cued {
+                    self.hostingView.player.play()
+                }
+                if state == .playing {
+                    self.playButton.configuration?.showsActivityIndicator = false
+                }
+            })
+        
+        hostingView.player.cue(source: .video(id: youtubeId))
 
-import SwiftUI
-
-struct SwiftUIYoutubeView: UIViewRepresentable {
-    func makeUIView(context: Context) -> YoutubeView {
-        return YoutubeView(frame: CGRect(x: 0, y: 0, width: 300, height: 100))
-
-    }
-    
-    func updateUIView(_ view: YoutubeView, context: Context) {}
-}
-
-struct HelloWorldView_Previews: PreviewProvider {
-    static var previews: some View {
-        SwiftUIYoutubeView()
-            .previewLayout(.fixed(width: /*@START_MENU_TOKEN@*/300.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/300.0/*@END_MENU_TOKEN@*/))
-            
     }
 }

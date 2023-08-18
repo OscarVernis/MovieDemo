@@ -100,7 +100,6 @@ class AppDependencyContainer {
     func movieDetailsStore(movie: MovieViewModel) -> MovieDetailStore {
         let movieService = remoteClient.getMovieDetails(movieId: movie.id)
         let userStateService: UserStateService? = isLoggedIn ? remoteClient : nil
-        let watchProvidersService = { self.remoteClient.getWatchProviders(movieId: movie.id) }
 
         return MovieDetailStore(movie: movie,
                                      movieService: movieService,

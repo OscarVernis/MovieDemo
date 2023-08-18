@@ -15,6 +15,8 @@ struct MovieDetailLayoutProvider {
         switch section {
         case .loading:
             return makeLoading()
+        case .trailer:
+            return makeTrailer()
         case .cast:
             return makeCast()
         case .crew:
@@ -32,6 +34,18 @@ struct MovieDetailLayoutProvider {
 
     private static func makeLoading() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 100, margin: 0)
+        
+        return section
+    }
+    
+    private static func makeTrailer() -> NSCollectionLayoutSection {
+        let section = sectionBuilder.createSection(groupHeight: .fractionalWidth(9/16))
+        
+        section.contentInsets.top = 6
+        section.contentInsets.bottom = 0
+        
+        let sectionHeader = sectionBuilder.createTitleSectionHeader()
+        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }

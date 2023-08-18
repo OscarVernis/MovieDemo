@@ -11,6 +11,7 @@ import UIKit
 class MovieDetailDataSource {
     enum Section: Int, CaseIterable {
         case loading
+        case trailer
         case cast
         case crew
         case whereToWatch
@@ -53,6 +54,7 @@ class MovieDetailDataSource {
         CreditCell.register(to: collectionView)
         InfoListCell.register(to: collectionView)
         YoutubeVideoCell.register(to: collectionView)
+        YoutubeCell.registerClass(to: collectionView)
         MoviePosterInfoCell.register(to: collectionView)
         SocialCell.register(to: collectionView)
         WhereToWatchCell.register(to: collectionView)
@@ -63,6 +65,12 @@ class MovieDetailDataSource {
         switch section {
         case .loading:
             return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
+        case .trailer:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YoutubeCell.reuseIdentifier, for: indexPath) as! YoutubeCell
+            if let viewModel = movie.trailerViewModel {
+                cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeId: viewModel.key)
+            }
+            return cell
         case .cast:
             let model = movie.topCast[indexPath.row]
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: CreditCell.configure)
@@ -106,9 +114,10 @@ class MovieDetailDataSource {
         
         sections = [
             .loading,
+            .trailer,
+            .whereToWatch,
             .cast,
             .crew,
-            .whereToWatch,
             .videos,
             .recommended,
             .info
@@ -121,6 +130,8 @@ class MovieDetailDataSource {
         switch section {
         case .loading:
             return isLoading
+        case .trailer:
+            return movie.trailerViewModel != nil
         case .cast:
             if !movie.topCast.isEmpty { return true }
         case .crew:
@@ -148,6 +159,8 @@ class MovieDetailDataSource {
             switch section {
             case .loading:
                 snapshot.appendItems([loadingCellId], toSection: .loading)
+            case .trailer:
+                snapshot.appendItems([UUID().uuidString], toSection: .trailer)
             case .cast:
                 snapshot.appendItems(movie.topCast, toSection: .cast)
             case .crew:
@@ -172,6 +185,8 @@ class MovieDetailDataSource {
     //MARK: - Headers
     func sectionTitle(for section: Section) -> String {
         switch section {
+        case .trailer:
+            return "Trailer"
         case .cast:
             return .localized(MovieString.Cast)
         case .crew:

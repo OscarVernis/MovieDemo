@@ -150,8 +150,6 @@ class MovieDetailViewController: UIViewController {
                              showUserActions: store.showUserActions)
         
         if !store.isLoading {
-            header.playTrailerButton.addTarget(self, action: #selector(playYoutubeTrailer), for: .touchUpInside)
-            
             header.favoriteButton?.addTarget(self, action: #selector(favoriteTapped), for: .touchUpInside)
             header.watchlistButton?.addTarget(self, action: #selector(watchlistTapped), for: .touchUpInside)
             header.rateButton?.addTarget(self, action: #selector(addRating), for: .touchUpInside)
@@ -234,12 +232,6 @@ class MovieDetailViewController: UIViewController {
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
         router?.showRecommendedMovies(for: movie.id)
-    }
-    
-    @objc fileprivate func playYoutubeTrailer() {
-        guard let youtubeURL = movie.trailerURL else { return }
-        
-        UIApplication.shared.open(youtubeURL)
     }
     
     //MARK: - User Actions

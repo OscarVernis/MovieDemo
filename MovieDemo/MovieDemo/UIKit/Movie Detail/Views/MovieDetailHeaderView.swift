@@ -22,9 +22,7 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var taglineLabel: UILabel!
     @IBOutlet weak var overviewTitleLabel: UILabel!
-    
-    @IBOutlet weak var trailerView: UIView!
-    
+        
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingsView: RatingsView!
@@ -36,9 +34,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
     @IBOutlet weak var watchlistButton: CustomButton!
     @IBOutlet weak var rateButton: CustomButton!
     
-    
-    @IBOutlet weak var playTrailerButton: CustomButton!
-                
     var imageTapHandler: (()->Void)? = nil
     
     var gradient: CAGradientLayer!
@@ -123,7 +118,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
         overviewTitleLabel.isHidden = movie.overview.isEmpty
         overviewLabel.isHidden = movie.overview.isEmpty
         overviewView.isHidden = movie.overview.isEmpty && movie.tagline.isEmpty
-        trailerView.isHidden = (movie.trailerURL == nil)
         
         //Update User Action State
         updateUserActionButtons(animated: true)
@@ -132,7 +126,6 @@ class MovieDetailHeaderView: UICollectionReusableView {
             userActionsView.isHidden = true
             taglineLabel.isHidden = true
             overviewView.isHidden = true
-            trailerView.isHidden = true
         }
     }
 

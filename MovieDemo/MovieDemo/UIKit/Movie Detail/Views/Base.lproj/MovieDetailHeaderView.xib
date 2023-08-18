@@ -180,7 +180,7 @@
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="GTA-P5-YGa">
-                            <rect key="frame" x="0.0" y="169.5" width="374" height="214"/>
+                            <rect key="frame" x="0.0" y="169.5" width="374" height="274"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Tagline" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRW-qS-JW6">
                                     <rect key="frame" x="0.0" y="0.0" width="51" height="22"/>
@@ -189,49 +189,19 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRk-rq-TzY">
-                                    <rect key="frame" x="0.0" y="28" width="86.5" height="159.5"/>
+                                    <rect key="frame" x="0.0" y="28" width="86.5" height="219.5"/>
                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="apS-Y2-MeI">
-                                    <rect key="frame" x="0.0" y="193.5" width="62.5" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="253.5" width="62.5" height="20.5"/>
                                     <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="15"/>
                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WTQ-ap-eGy">
-                            <rect key="frame" x="0.0" y="399.5" width="374" height="44"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qcp-E3-PKm" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="44" id="oqq-fV-yIh"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
-                                    <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="Play Trailer" image="play.circle.fill" catalog="system"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="color" keyPath="baseColor">
-                                            <color key="value" systemColor="systemPinkColor"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                            <real key="value" value="8"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="showsBorder" value="NO"/>
-                                    </userDefinedRuntimeAttributes>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <constraints>
-                                <constraint firstItem="Qcp-E3-PKm" firstAttribute="top" secondItem="WTQ-ap-eGy" secondAttribute="top" id="AA5-qW-oU1"/>
-                                <constraint firstAttribute="bottom" secondItem="Qcp-E3-PKm" secondAttribute="bottom" id="HcZ-FQ-bR3"/>
-                                <constraint firstAttribute="trailing" secondItem="Qcp-E3-PKm" secondAttribute="trailing" id="jtW-Fi-VVK"/>
-                                <constraint firstItem="Qcp-E3-PKm" firstAttribute="leading" secondItem="WTQ-ap-eGy" secondAttribute="leading" id="jz2-js-hWf"/>
-                            </constraints>
-                        </view>
                     </subviews>
                 </stackView>
             </subviews>
@@ -258,7 +228,6 @@
                 <outlet property="overviewLabel" destination="apS-Y2-MeI" id="d2U-QG-xVK"/>
                 <outlet property="overviewTitleLabel" destination="NRk-rq-TzY" id="4L1-0u-eAC"/>
                 <outlet property="overviewView" destination="GTA-P5-YGa" id="gzL-ES-i59"/>
-                <outlet property="playTrailerButton" destination="Qcp-E3-PKm" id="2MO-dh-atz"/>
                 <outlet property="posterImageView" destination="ya2-WD-uos" id="zhb-Jr-HDQ"/>
                 <outlet property="rateButton" destination="RQF-K0-V1z" id="ZMu-Hh-jQJ"/>
                 <outlet property="ratingsLabel" destination="ax3-Ua-dpM" id="nSc-4f-UdZ"/>
@@ -267,7 +236,6 @@
                 <outlet property="taglineLabel" destination="sRW-qS-JW6" id="f8k-qf-PeZ"/>
                 <outlet property="titleLabel" destination="wfA-iS-qhX" id="e6b-RM-a2K"/>
                 <outlet property="topImageConstraint" destination="VzI-kt-ykG" id="mI7-31-KwO"/>
-                <outlet property="trailerView" destination="WTQ-ap-eGy" id="LoZ-dI-fgd"/>
                 <outlet property="userActionsView" destination="bub-XJ-hjL" id="cEa-l8-17Z"/>
                 <outlet property="watchlistButton" destination="hmd-EO-EFe" id="NUD-QJ-YEi"/>
             </connections>
@@ -280,9 +248,6 @@
         </designable>
         <designable name="KW3-ni-2DH">
             <size key="intrinsicContentSize" width="80.5" height="21"/>
-        </designable>
-        <designable name="Qcp-E3-PKm">
-            <size key="intrinsicContentSize" width="105" height="24"/>
         </designable>
         <designable name="RQF-K0-V1z">
             <size key="intrinsicContentSize" width="53" height="22.5"/>
@@ -297,7 +262,6 @@
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
         <image name="heart" catalog="system" width="128" height="107"/>
         <image name="heart.fill" catalog="system" width="128" height="107"/>
-        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="FavoriteColor">
@@ -311,9 +275,6 @@
         </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29803921568627451" colorSpace="custom" customColorSpace="sRGB"/>

@@ -160,7 +160,7 @@ extension MovieViewModel {
         return url
     }
     
-    var trailerURL: URL? {
+    var trailerViewModel: MovieVideoViewModel? {
         let videoViewModel: MovieVideoViewModel
         if let trailer = movie.videos?.last(where: { $0.type == "Trailer" }) {
             videoViewModel = MovieVideoViewModel(video: trailer)
@@ -172,13 +172,7 @@ extension MovieViewModel {
             }
         }
         
-        return videoViewModel.youtubeURL
-    }
-    
-    var youtubeKey: String? {
-        guard let trailer = movie.videos?.last else { return nil }
-
-        return trailer.key
+        return videoViewModel
     }
     
     var status: String? {
