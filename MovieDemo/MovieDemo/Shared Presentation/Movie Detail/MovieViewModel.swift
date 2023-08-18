@@ -244,6 +244,11 @@ extension MovieViewModel {
         movie.socialLinks
     }
     
+    var watchProviders: WatchProvidersViewModel? {
+        guard let wp = movie.watchProviders else { return nil }
+        return WatchProvidersViewModel(countriesWatchProviders: wp)
+    }
+    
 }
 
 //MARK: - Generated data

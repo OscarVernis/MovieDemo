@@ -132,7 +132,7 @@ class MovieDetailViewController: UIViewController {
         })
         
         dataSource.whereToWatchAction = {  [unowned self] in
-            if let viewModel = store.watchProviders {
+            if let viewModel = movie.watchProviders {
                 router?.showWhereToWatch(watchProviders: viewModel)
             }
         }
@@ -188,16 +188,6 @@ class MovieDetailViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [unowned self] _ in
                 storeDidUpdate()
-            }
-            .store(in: &cancellables)
-        
-        store.$watchProviders
-            .compactMap { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [unowned self] _ in
-                if !store.isLoading {
-                    storeDidUpdate()
-                }
             }
             .store(in: &cancellables)
         

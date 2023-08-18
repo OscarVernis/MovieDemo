@@ -39,6 +39,8 @@ struct Movie {
     var watchlist: Bool? = false
     
     var socialLinks: [SocialLink] = []
+    
+    var watchProviders: [Country: CountryWatchProviders]?
 }
 
 //MARK: - Utils

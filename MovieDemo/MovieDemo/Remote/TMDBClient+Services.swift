@@ -24,7 +24,7 @@ extension TMDBClient {
 //MARK: - Details
 extension TMDBClient {
     func getMovieDetails(movieId: Int) -> AnyPublisher<Movie, Error> {
-        let params = ["append_to_response" : "credits,recommendations,account_states,videos,external_ids"]
+        let params = ["append_to_response" : "credits,recommendations,account_states,videos,external_ids,watch/providers"]
         
         let publisher: AnyPublisher<CodableMovie, Error> = getModel(endpoint: .movieDetails(movieId: movieId), parameters: params)
         

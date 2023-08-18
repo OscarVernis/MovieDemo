@@ -40,6 +40,7 @@ struct CodableMovie: Codable {
     let accountStates: CodableAccountStates?
     let homepage: String?
     let externalIds: ExternalIds?
+    let watchProviders: CodableWatchProvidersResult?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -67,6 +68,7 @@ struct CodableMovie: Codable {
         case accountStates = "account_states"
         case homepage
         case externalIds = "external_ids"
+        case watchProviders = "watch/providers"
     }
     
     init(from decoder: Decoder) throws {
@@ -97,6 +99,7 @@ struct CodableMovie: Codable {
         accountStates = try? container.decodeIfPresent(CodableAccountStates.self, forKey: .accountStates)
         homepage = try? container.decodeIfPresent(String.self, forKey: .homepage)
         externalIds = try? container.decodeIfPresent(ExternalIds.self, forKey: .externalIds)
+        watchProviders = try? container.decodeIfPresent(CodableWatchProvidersResult.self, forKey: .watchProviders)
     }
     
 }

@@ -70,6 +70,8 @@ extension CodableMovie {
         
         movie.socialLinks = socialLinks
         
+        movie.watchProviders = watchProviders?.toWatchProviders()
+        
         return movie
     }
 }

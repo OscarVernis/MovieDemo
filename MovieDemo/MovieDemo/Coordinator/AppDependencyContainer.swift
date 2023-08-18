@@ -104,8 +104,7 @@ class AppDependencyContainer {
 
         return MovieDetailStore(movie: movie,
                                      movieService: movieService,
-                                     userStateService: userStateService,
-                                watchProvidersService: watchProvidersService)
+                                     userStateService: userStateService)
     }
     
     func personDetailStore(person: PersonViewModel) -> PersonDetailStore {

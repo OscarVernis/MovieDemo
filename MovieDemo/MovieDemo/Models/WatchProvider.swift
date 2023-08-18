@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Country: Hashable {
+struct Country: Hashable, Codable {
     var name: String
     var countryCode: String
     
@@ -22,14 +22,14 @@ struct Country: Hashable {
     }
 }
 
-struct WatchProvider: Identifiable, Hashable {
+struct WatchProvider: Identifiable, Hashable, Codable {
     var id: Int
     var logoPath: String
     var providerName: String
     var displayPriority: Int
 }
 
-struct CountryWatchProviders {
+struct CountryWatchProviders: Codable {
     var link: String
     var rent: [WatchProvider]
     var flatrate: [WatchProvider]
