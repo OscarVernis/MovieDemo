@@ -66,11 +66,8 @@ class MovieDetailDataSource {
         case .loading:
             return collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.reuseIdentifier, for: indexPath)
         case .trailer:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrailerCell.reuseIdentifier, for: indexPath) as! TrailerCell
-            if let viewModel = movie.trailerViewModel {
-                cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeURL: viewModel.youtubeURL)
-            }
-            return cell
+            let model = identifier as! MovieVideoViewModel
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: TrailerCell.configure)
         case .cast:
             let model = movie.topCast[indexPath.row]
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: CreditCell.configure)
@@ -86,7 +83,7 @@ class MovieDetailDataSource {
             return collectionView.cell(at: indexPath, model: model, cellConfigurator: MovieVideoCell.configure)
         case .recommended:
             let model = movie.recommendedMovies[indexPath.row]
-            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MoviePosterInfoCell.configureWithDate)
+            return collectionView.cell(at: indexPath, model: model, cellConfigurator: MoviePosterInfoCell.configureWithRating)
         case .info:
             return infoCell(at: indexPath, with: collectionView, identifier: identifier)
         }
@@ -160,7 +157,7 @@ class MovieDetailDataSource {
             case .loading:
                 snapshot.appendItems([loadingCellId], toSection: .loading)
             case .trailer:
-                snapshot.appendItems([UUID().uuidString], toSection: .trailer)
+                snapshot.appendItems([movie.trailerViewModel], toSection: .trailer)
             case .cast:
                 snapshot.appendItems(movie.topCast, toSection: .cast)
             case .crew:
@@ -186,7 +183,7 @@ class MovieDetailDataSource {
     func sectionTitle(for section: Section) -> String {
         switch section {
         case .trailer:
-            return "Trailer"
+            return .localized(MovieString.Trailer)
         case .cast:
             return .localized(MovieString.Cast)
         case .crew:

@@ -11,13 +11,23 @@ import UIKit
 class TrailerCell: UICollectionViewCell {
     var youtubeView: YoutubeView!
     
-    override func prepareForReuse() {
-        youtubeView.removeFromSuperview()
-        youtubeView = nil
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
     }
     
-    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
-        youtubeView = YoutubeView(previewURL: previewURL, youtubeURL: youtubeURL)
+    @available (*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        youtubeView.previewImageURL = nil
+        youtubeView.youtubeURL = nil
+    }
+    
+    func setup() {
+        youtubeView = YoutubeView()
 
         contentView.addSubview(youtubeView)
         youtubeView.anchor(to: contentView)
@@ -26,6 +36,11 @@ class TrailerCell: UICollectionViewCell {
         
         layer.shadowOffset = CGSize(width: 0, height: 7)
         layer.shadowOpacity = 0.15
+    }
+    
+    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
+        youtubeView.previewImageURL = previewURL
+        youtubeView.youtubeURL = youtubeURL
     }
 }
 

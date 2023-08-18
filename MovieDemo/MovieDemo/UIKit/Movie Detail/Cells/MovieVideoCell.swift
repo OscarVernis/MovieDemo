@@ -35,15 +35,8 @@ class MovieVideoCell: UICollectionViewCell {
         titleLabel.anchor(bottom: contentView.bottomAnchor,
                           leading: contentView.leadingAnchor, paddingLeading: 5,
                           trailing: contentView.trailingAnchor)
-    }
-
-    override func prepareForReuse() {
-        youtubeView.removeFromSuperview()
-        youtubeView = nil
-    }
-    
-    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
-        youtubeView = YoutubeView(previewURL: previewURL, youtubeURL: youtubeURL)
+        
+        youtubeView = YoutubeView()
 
         contentView.addSubview(youtubeView)
         youtubeView.anchor(top: contentView.topAnchor,
@@ -52,6 +45,16 @@ class MovieVideoCell: UICollectionViewCell {
                            trailing: contentView.trailingAnchor)
         
         NSLayoutConstraint.activate([youtubeView.heightAnchor.constraint(equalTo: youtubeView.widthAnchor, multiplier: 9/16)])
+    }
+
+    override func prepareForReuse() {
+        youtubeView.previewImageURL = nil
+        youtubeView.youtubeURL = nil
+    }
+    
+    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
+        youtubeView.previewImageURL = previewURL
+        youtubeView.youtubeURL = youtubeURL
     }
 }
 

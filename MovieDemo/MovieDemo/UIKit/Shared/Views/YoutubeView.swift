@@ -11,8 +11,16 @@ import Combine
 import YouTubePlayerKit
 
 class YoutubeView: UIView {
-    var previewImageURL: URL?
-    var youtubeURL: URL
+    var youtubeURL: URL? {
+        didSet {
+            updateYoutubeURL()
+        }
+    }
+    var previewImageURL: URL? {
+        didSet {
+            updatePreviewImage()
+        }
+    }
     
     let buttonSize: CGFloat = 70
     
@@ -55,7 +63,7 @@ class YoutubeView: UIView {
     private var stateCancellable: AnyCancellable?
     private var playbackStateCancellable: AnyCancellable?
 
-    init(previewURL: URL?, youtubeURL: URL) {
+    init(previewURL: URL? = nil, youtubeURL: URL? = nil) {
         self.previewImageURL = previewURL
         self.youtubeURL = youtubeURL
         super.init(frame: .zero)
@@ -83,7 +91,6 @@ class YoutubeView: UIView {
         
         addSubview(previewImageView)
         previewImageView.anchor(to: self)
-        previewImageView.setRemoteImage(withURL: previewImageURL, animated: true)
         
         addSubview(buttonBgView)
         buttonBgView.anchor(width: buttonSize, height: buttonSize)
@@ -98,6 +105,21 @@ class YoutubeView: UIView {
         playButton.addTarget(self, action: #selector(play), for: .touchUpInside)
     }
     
+    private func updatePreviewImage() {
+        previewImageView.cancelImageRequest()
+        
+        previewImageView.image = .asset(.BackdropPlaceholder)
+        previewImageView.setRemoteImage(withURL: previewImageURL, animated: true)
+    }
+    
+    func updateYoutubeURL() {
+        if youtubeURL == nil {
+            stateCancellable = nil
+            playbackStateCancellable = nil
+            hostingView.player.cue(source: nil)
+        }
+    }
+    
     @objc private func play() {
         playButton.configuration?.showsActivityIndicator = true
         
@@ -108,7 +130,9 @@ class YoutubeView: UIView {
                     
                     switch error {
                     case .embeddedVideoPlayingNotAllowed:
-                        UIApplication.shared.open(youtubeURL)
+                        if let youtubeURL {
+                            UIApplication.shared.open(youtubeURL)
+                        }
                     default:
                         break
                     }
@@ -127,7 +151,9 @@ class YoutubeView: UIView {
                 }
             })
         
-        hostingView.player.cue(source: .url(youtubeURL.absoluteString))
+        if let youtubeURL {
+            hostingView.player.cue(source: .url(youtubeURL.absoluteString))
+        }
     }
 }
 
