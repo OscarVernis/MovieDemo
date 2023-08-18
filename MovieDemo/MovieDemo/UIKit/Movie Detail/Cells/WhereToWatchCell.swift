@@ -14,6 +14,8 @@ class WhereToWatchCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        button.setTitle(WatchProviderString.WhereToWatch.localized, for: .normal)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     

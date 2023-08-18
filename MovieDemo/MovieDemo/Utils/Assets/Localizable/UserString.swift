@@ -16,6 +16,6 @@ enum UserString: String, Localizable, CaseIterable {
     case EmptyUserWatchlist
     case EmptyUserFavorites
     case EmptyUserRated
-
+    
     var tableName: String { "User" }
 }

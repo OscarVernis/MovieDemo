@@ -22,7 +22,7 @@ struct WhereToWatchView: View {
                     .padding(.bottom, bottomPadding)
                 
                 if !viewModel.selectedWatchProviders.isEmpty {
-                    sectionHeader(title: "Available On")
+                    sectionHeader(title: WatchProviderString.AvailableOn.localized)
                     availableProviders
                 }
                 
@@ -59,7 +59,7 @@ struct WhereToWatchView: View {
     
     var countrySelectionView: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text("WHERE ARE YOU WATCHING?")
+            Text(WatchProviderString.WhereAreYouWatching.localized)
                 .font(.avenirNextCondensedDemiBold(size: 18))
             Menu {
                 ForEach(viewModel.countries, id: \.self) { country in
@@ -69,7 +69,7 @@ struct WhereToWatchView: View {
                 HStack(spacing: 8) {
                     Text(viewModel.selectedCountry.name)
                         .font(.avenirNextMedium(size: 17))
-                    Image(systemName: "chevron.up.chevron.down")
+                    Image(asset: .updownchevron)
                 }
             }
             .transaction { (tx: inout Transaction) in // Disable animation
@@ -86,18 +86,20 @@ struct WhereToWatchView: View {
     
     var attributionView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 6) {
-            Text("PROVIDED BY")
+            Text(WatchProviderString.ProvidedBy.localized)
                 .foregroundColor(.secondaryLabel)
                 .font(.avenirNextCondensedDemiBold(size: 14))
-            Image("JustWatch-logo")
+            Image(asset: .justWatchLogo)
                 .resizable()
+                .renderingMode(.original)
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 14)
-            Text("AND")
+            Text(WatchProviderString.And.localized)
                 .foregroundColor(.secondaryLabel)
                 .font(.avenirNextCondensedDemiBold(size: 14))
-            Image("TMDB-logo")
+            Image(asset: .tmdbLogo)
                 .resizable()
+                .renderingMode(.original)
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 13)
         }

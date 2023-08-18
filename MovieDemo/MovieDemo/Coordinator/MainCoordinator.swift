@@ -284,7 +284,7 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     func showWhereToWatch(watchProviders: WatchProvidersViewModel) {
         let watchView = WhereToWatchView(viewModel: watchProviders, router: self)
         let vc = CustomHostingController(rootView: watchView)
-        vc.title = "Where to Watch"
+        vc.title = WatchProviderString.WhereToWatch.localized
         rootNavigationViewController?.pushViewController(vc, animated: true)
     }
     

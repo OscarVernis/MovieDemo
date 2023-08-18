@@ -16,11 +16,11 @@ enum WatchProviderType: Hashable {
     var localizedString: String {
         switch self {
         case .streaming:
-            return "Streaming"
+            return WatchProviderString.Streaming.localized
         case .buy:
-            return "Buy"
+            return WatchProviderString.Buy.localized
         case .rent:
-            return "Rent"
+            return WatchProviderString.Rent.localized
         }
     }
 }

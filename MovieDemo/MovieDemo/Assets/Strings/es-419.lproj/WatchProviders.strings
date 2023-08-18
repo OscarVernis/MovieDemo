@@ -1,0 +1,23 @@
+/* 
+  WatchProviders.strings
+  MovieDemo
+
+  Created by Oscar Vernis on 17/08/23.
+  Copyright © 2023 Oscar Vernis. All rights reserved.
+*/
+
+"AvailableOn" = "Disponible En";
+
+"WhereAreYouWatching" = "DÓNDE ESTÁS VIENDO?";
+
+"WhereToWatch" = "Dónde Ver";
+
+"ProvidedBy" = "PROPORCIONADO POR";
+
+"Streaming" = "Streaming";
+
+"Buy" = "Comprar";
+
+"Rent" = "Rentar";
+
+"And" = "Y";

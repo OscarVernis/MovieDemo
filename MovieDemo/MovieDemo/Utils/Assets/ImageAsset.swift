@@ -25,10 +25,14 @@ enum ImageAsset: String, CaseIterable {
     case pause = "pause.fill"
     case trailer = "play.circle.fill"
     case back = "arrow.left"
+    case tv = "tv"
+    case updownchevron = "chevron.up.chevron.down"
+    case justWatchLogo = "JustWatch-logo"
+    case tmdbLogo = "TMDB-logo"
     
     var image: UIImage {
         switch self {
-        case .BackdropPlaceholder, .PersonPlaceholder, .PosterPlaceholder, .Thumb:
+        case .BackdropPlaceholder, .PersonPlaceholder, .PosterPlaceholder, .Thumb, .justWatchLogo, .tmdbLogo:
             return UIImage(named: rawValue)!
         default:
             return UIImage(systemName: rawValue)!

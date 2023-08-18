@@ -16,7 +16,7 @@ struct WatchProviderRow: View {
     var body: some View {
         HStack(spacing: 10) {
             RemoteImage(url: url, placeholder: {
-                Image(systemName: "tv")
+                Image(asset: .tv)
             })
             .foregroundColor(Color(uiColor: .systemGray2))
             .frame(width: 50, height: 50)
