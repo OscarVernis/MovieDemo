@@ -313,6 +313,8 @@
 		55FBFC002A762CB2002FC9FE /* PersonDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBFBFF2A762CB2002FC9FE /* PersonDetailDataSource.swift */; };
 		55FD051F2A8F017300DF9E13 /* WatchProviders.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD05212A8F017300DF9E13 /* WatchProviders.strings */; };
 		55FD05242A8F029B00DF9E13 /* WatchProviderString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD05232A8F029B00DF9E13 /* WatchProviderString.swift */; };
+		55FD05272A8F08F000DF9E13 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 55FD05262A8F08F000DF9E13 /* YouTubePlayerKit */; };
+		55FD05292A8F091800DF9E13 /* YoutubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD05282A8F091800DF9E13 /* YoutubeView.swift */; };
 		55FEF45025141A40009363F8 /* CreditPhotoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */; };
 		55FEF45125141A40009363F8 /* CreditPhotoListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55FEF44F25141A40009363F8 /* CreditPhotoListCell.xib */; };
 /* End PBXBuildFile section */
@@ -651,6 +653,7 @@
 		55FD05202A8F017300DF9E13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WatchProviders.strings; sourceTree = "<group>"; };
 		55FD05222A8F017400DF9E13 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/WatchProviders.strings"; sourceTree = "<group>"; };
 		55FD05232A8F029B00DF9E13 /* WatchProviderString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderString.swift; sourceTree = "<group>"; };
+		55FD05282A8F091800DF9E13 /* YoutubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeView.swift; sourceTree = "<group>"; };
 		55FEF44E25141A40009363F8 /* CreditPhotoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPhotoListCell.swift; sourceTree = "<group>"; };
 		55FEF44F25141A40009363F8 /* CreditPhotoListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreditPhotoListCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -669,6 +672,7 @@
 			files = (
 				5559D1F92A8DDE36004D6CF5 /* Kingfisher in Frameworks */,
 				55D35E1C2517DE0D00114602 /* Loaf in Frameworks */,
+				55FD05272A8F08F000DF9E13 /* YouTubePlayerKit in Frameworks */,
 				55604684251BCC320037D08B /* SPStorkController in Frameworks */,
 				557FFA8F251A65B700D79F68 /* KeychainAccess in Frameworks */,
 			);
@@ -885,6 +889,7 @@
 				5511D95425317056004B3697 /* BlurButton.swift */,
 				55D006B92A74B4830089E8B1 /* EmptyView.swift */,
 				55D006BB2A74B4950089E8B1 /* EmptyView.xib */,
+				55FD05282A8F091800DF9E13 /* YoutubeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1618,6 +1623,7 @@
 				557FFA8E251A65B700D79F68 /* KeychainAccess */,
 				55604683251BCC320037D08B /* SPStorkController */,
 				5559D1F82A8DDE36004D6CF5 /* Kingfisher */,
+				55FD05262A8F08F000DF9E13 /* YouTubePlayerKit */,
 			);
 			productName = MovieDemo;
 			productReference = 559D131D22D98E4800C96FC8 /* MovieDemo.app */;
@@ -1659,6 +1665,7 @@
 				557FFA8D251A65B700D79F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				55604682251BCC310037D08B /* XCRemoteSwiftPackageReference "SPStorkController" */,
 				5559D1F72A8DDE36004D6CF5 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				55FD05252A8F08F000DF9E13 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 			);
 			productRefGroup = 559D131E22D98E4800C96FC8 /* Products */;
 			projectDirPath = "";
@@ -1963,6 +1970,7 @@
 				550577AA284DAA8E007ED892 /* ServiceString.swift in Sources */,
 				5584AF2D2A82BA6E00027F1C /* CrewCreditsViewController.swift in Sources */,
 				5584ADE22A6300C700F0907E /* CodablePerson.swift in Sources */,
+				55FD05292A8F091800DF9E13 /* YoutubeView.swift in Sources */,
 				5517D03A2A72F4AB00CFF094 /* AddMovieToListDataSource.swift in Sources */,
 				55A60DDA2527AAB30082810C /* MediaViewerViewController.swift in Sources */,
 				5545203822D99CB0004B7924 /* Movie.swift in Sources */,
@@ -2438,6 +2446,14 @@
 				minimumVersion = 0.7.0;
 			};
 		};
+		55FD05252A8F08F000DF9E13 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2460,6 +2476,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 55D35E1A2517DE0D00114602 /* XCRemoteSwiftPackageReference "Loaf" */;
 			productName = Loaf;
+		};
+		55FD05262A8F08F000DF9E13 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55FD05252A8F08F000DF9E13 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 
