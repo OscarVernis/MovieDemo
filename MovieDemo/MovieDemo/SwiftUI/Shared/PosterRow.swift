@@ -40,12 +40,12 @@ struct PosterRow<Model: Hashable>: View {
     fileprivate func empty(_ emptyMessage: NSAttributedString) -> some View {
         return VStack(spacing: 20) {
             Image(systemName: "film")
-                .foregroundColor(Color(uiColor: .secondarySystemFill))
+                .foregroundColor(.secondarySystemFill)
                 .font(.system(size: 145))
             Text(AttributedString(emptyMessage))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .foregroundColor(Color(uiColor: .placeholderText))
+                .foregroundColor(.placeholderText)
                 .font(.custom("Avenir Next Regular", size: 17))
         }
         .frame(height: 260)

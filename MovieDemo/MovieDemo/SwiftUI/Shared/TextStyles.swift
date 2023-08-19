@@ -11,7 +11,7 @@ import SwiftUI
 struct TitleStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.label)
+            .foregroundColor(.primary)
             .font(.titleFont)
     }
 }
@@ -19,7 +19,7 @@ struct TitleStyle: ViewModifier {
 struct SubtitleStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.secondaryLabel)
+            .foregroundColor(.secondary)
             .font(.subtitleFont)
     }
 }
@@ -27,7 +27,7 @@ struct SubtitleStyle: ViewModifier {
 struct DescriptionStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.secondaryLabel)
+            .foregroundColor(.secondary)
             .font(.descriptionFont)
     }
 }

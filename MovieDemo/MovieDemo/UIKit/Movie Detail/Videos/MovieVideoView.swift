@@ -33,7 +33,7 @@ struct MovieVideoView: View {
                 }
             }
             .font(.avenirNextMedium(size: 15))
-            .foregroundColor(.secondaryLabel)
+            .foregroundColor(.secondary)
             .padding(.bottom, 6)
             .padding(.horizontal, horizontalPadding)
 
@@ -53,7 +53,7 @@ struct MovieVideoView: View {
                         Text(MovieString.OpenOnYoutube.localized)
                             .font(.avenirNextCondensedDemiBold(size: 17))
                     }
-                    .tint(.label)
+                    .tint(.primary)
                 }
            
             }

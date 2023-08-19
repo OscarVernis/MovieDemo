@@ -23,7 +23,7 @@ struct SectionTitle: View {
         HStack(alignment: .firstTextBaseline) {
             Text(title)
                 .font(font)
-                .foregroundColor(.label)
+                .foregroundColor(.primary)
             Spacer()
             if let tapAction = tapAction {
                 Button(action: tapAction) {

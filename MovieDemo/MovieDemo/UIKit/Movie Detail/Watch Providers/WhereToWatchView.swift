@@ -50,7 +50,7 @@ struct WhereToWatchView: View {
     
     func sectionHeader(title: String) -> some View {
         Text(title)
-            .foregroundColor(.label)
+            .foregroundColor(.primary)
             .font(.avenirNextCondensedDemiBold(size: 22))
             .listRowInsets(EdgeInsets(top: 0, leading: margin, bottom: bottomPadding, trailing: margin))
             .listRowBackground(Color.clear)
@@ -84,7 +84,7 @@ struct WhereToWatchView: View {
     var attributionView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 6) {
             Text(WatchProviderString.ProvidedBy.localized)
-                .foregroundColor(.secondaryLabel)
+                .foregroundColor(.secondary)
                 .font(.avenirNextCondensedDemiBold(size: 14))
             Image(asset: .justWatchLogo)
                 .resizable()
@@ -92,7 +92,7 @@ struct WhereToWatchView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 14)
             Text(WatchProviderString.And.localized)
-                .foregroundColor(.secondaryLabel)
+                .foregroundColor(.secondary)
                 .font(.avenirNextCondensedDemiBold(size: 14))
             Image(asset: .tmdbLogo)
                 .resizable()

@@ -18,7 +18,7 @@ struct WatchProviderRow: View {
             RemoteImage(url: url, placeholder: {
                 Image(asset: .tv)
             })
-            .foregroundColor(Color(uiColor: .systemGray2))
+            .foregroundColor(.systemGray2)
             .frame(width: 50, height: 50)
             .background(Color(asset: .SectionBackgroundColor))
             .cornerRadius(12)
@@ -27,7 +27,7 @@ struct WatchProviderRow: View {
                     .font(.avenirNextMedium(size: 16))
                 if !description.isEmpty {
                     Text(description)
-                        .foregroundColor(.secondaryLabel)
+                        .foregroundColor(.secondary)
                         .font(.avenirNextDemiBold(size: 13))
                 }
             }

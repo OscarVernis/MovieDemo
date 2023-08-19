@@ -13,11 +13,11 @@ struct CategorySelectionView: View {
     var items: [String]
     
     private func textColor(for index: Int) -> Color {
-        index == selected ? Color(uiColor: .systemBackground) : Color(uiColor: .systemGray)
+        index == selected ? .systemBackground : .systemGray
     }
     
     private func bgColor(for index: Int) -> Color {
-        index == selected ? .label : Color(uiColor: .systemGray5)
+        index == selected ? .primary : .systemGray5
     }
     
     var body: some View {
