@@ -117,6 +117,6 @@ extension CodableVideo {
             date = dateFormatter.date(from: publishedAt)
         }
         
-        return MovieVideo(id: id, key: key, name: name, type: type, publishedDate: date)
+        return MovieVideo(id: id, key: key, name: name, type: type, publishedDate: date, site: site)
     }
 }

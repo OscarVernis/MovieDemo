@@ -43,12 +43,22 @@ class UIYoutubeView: UIView {
         return visualEffectView
     } ()
     
+    private static var playImage: UIImage {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
+        return UIImage(systemName: "play.fill", withConfiguration: largeConfig)!
+    }
+    
+    private static var errorImage: UIImage {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
+        return UIImage(systemName: "xmark", withConfiguration: largeConfig)!
+    }
+    
     private var playButton: UIButton = {
         var configuration = UIButton.Configuration.borderless()
         let button = UIButton(configuration: configuration)
         
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
-        button.setImage(UIImage(systemName: "play.fill", withConfiguration: largeConfig), for: .normal)
+        button.setImage(UIYoutubeView.playImage, for: .normal)
         button.tintColor = .white
         
         button.alpha = 0.8
@@ -102,6 +112,9 @@ class UIYoutubeView: UIView {
     }
     
     func updateYoutubeURL() {
+        playButton.configuration?.showsActivityIndicator = false
+        playButton.setImage(UIYoutubeView.playImage, for: .normal)
+        
         if youtubeURL == nil {
             stateCancellable = nil
             playbackStateCancellable = nil
@@ -132,12 +145,13 @@ class UIYoutubeView: UIView {
                     playButton.configuration?.showsActivityIndicator = false
                     
                     switch error {
-                    case .embeddedVideoPlayingNotAllowed:
+                    case .notFound:
+                        playButton.setImage(UIYoutubeView.errorImage, for: .normal)
+                        break
+                    default:
                         if let youtubeURL {
                             UIApplication.shared.open(youtubeURL)
                         }
-                    default:
-                        break
                     }
                 }
             })

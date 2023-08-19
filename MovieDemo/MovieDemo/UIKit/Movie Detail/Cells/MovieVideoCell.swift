@@ -64,7 +64,7 @@ class MovieVideoCell: UICollectionViewCell {
 //MARK: - Configure
 extension MovieVideoCell {
     static func configure(cell: MovieVideoCell, video: MovieVideoViewModel) {
-        cell.setupYoutubeView(previewURL: video.thumbnailURLForYoutubeVideo, youtubeURL: video.youtubeURL)
+        cell.setupYoutubeView(previewURL: video.thumbnailURL, youtubeURL: video.trailerURL)
         cell.titleLabel.text = video.name
     }
 }

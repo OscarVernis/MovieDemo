@@ -206,6 +206,7 @@ struct CodableVideo: Codable {
     let key: String?
     let type: String?
     let publishedAt: String?
+    let site: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -213,6 +214,7 @@ struct CodableVideo: Codable {
         case key
         case type
         case publishedAt = "published_at"
+        case site
     }
     
     init(from decoder: Decoder) throws {
@@ -222,5 +224,6 @@ struct CodableVideo: Codable {
         self.key = try container.decodeIfPresent(String.self, forKey: .key)
         self.type = try? container.decodeIfPresent(String.self, forKey: .type)
         self.publishedAt = try? container.decodeIfPresent(String.self, forKey: .publishedAt)
+        self.site = try? container.decodeIfPresent(String.self, forKey: .site)
     }
 }

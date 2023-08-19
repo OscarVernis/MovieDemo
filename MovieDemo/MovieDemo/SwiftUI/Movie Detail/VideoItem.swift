@@ -14,7 +14,7 @@ struct VideoItem: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ZStack {
-                RemoteImage(url: video.thumbnailURLForYoutubeVideo)
+                RemoteImage(url: video.thumbnailURL)
                 .frame(width: 300, height: 225)
                 .padding(.bottom, 5)
                 Image(systemName: "play.rectangle.fill")

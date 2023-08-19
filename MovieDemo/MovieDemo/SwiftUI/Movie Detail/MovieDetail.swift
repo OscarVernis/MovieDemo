@@ -175,7 +175,7 @@ struct MovieDetail: View {
     }
     
     func playVideo(video: MovieVideoViewModel) {
-        UIApplication.shared.open(video.youtubeURL)
+        UIApplication.shared.open(video.trailerURL)
     }
     
 }

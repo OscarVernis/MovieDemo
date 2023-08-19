@@ -14,6 +14,7 @@ struct MovieVideo  {
     var name: String?
     var type: String
     var publishedDate: Date?
+    var site: String?
 }
 
 extension MovieVideo: Codable, Hashable {}

@@ -12,7 +12,7 @@ struct MovieVideosView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
     @ObservedObject  var viewModel: MovieVideosViewModel
-    
+        
     var shadowOpacity: CGFloat {
         colorScheme == .light ? 0.05 : 0
     }
@@ -21,11 +21,15 @@ struct MovieVideosView: View {
         List {
             if viewModel.types.count > 1 {
                 CategorySelectionView(selected: $viewModel.selectedType, items: viewModel.types)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
             }
             
             ForEach(viewModel.selectedVideos) { video in
                 MovieVideoView(movieVideo: video)
                     .shadow(color: .black.opacity(shadowOpacity), radius: 7, x: 0, y: 3)
+                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
             }
         }

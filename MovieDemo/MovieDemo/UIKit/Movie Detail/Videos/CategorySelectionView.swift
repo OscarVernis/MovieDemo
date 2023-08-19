@@ -38,14 +38,10 @@ struct CategorySelectionView: View {
                     }
                     .buttonStyle(.plain)
                 }
-       
             }
             .padding(.horizontal, 20)
         }
         .scrollIndicators(.never)
-        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-        .listRowBackground(Color.clear)
-        .listRowSeparator(.hidden)
     }
 }
 

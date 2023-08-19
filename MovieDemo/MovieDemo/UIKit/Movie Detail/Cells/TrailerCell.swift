@@ -45,6 +45,6 @@ class TrailerCell: UICollectionViewCell {
 
 extension TrailerCell {
     static func configure(cell: TrailerCell, with viewModel: MovieVideoViewModel) {
-        cell.setupYoutubeView(previewURL: viewModel.thumbnailURLForYoutubeVideo, youtubeURL: viewModel.youtubeURL)
+        cell.setupYoutubeView(previewURL: viewModel.thumbnailURL, youtubeURL: viewModel.trailerURL)
     }
 }

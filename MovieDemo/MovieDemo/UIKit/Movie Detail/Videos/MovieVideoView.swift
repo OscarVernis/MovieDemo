@@ -55,7 +55,6 @@ struct MovieVideoView: View {
                     }
                     .tint(.primary)
                 }
-           
             }
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, 8)
@@ -63,14 +62,13 @@ struct MovieVideoView: View {
         }
         .background(Color(asset: .SectionBackgroundColor))
         .cornerRadius(12)
-        .listRowSeparator(.hidden)
     }
 }
 
 extension MovieVideoView {
     init(movieVideo: MovieVideoViewModel) {
-        self.init(youtubeURL: movieVideo.youtubeURL,
-                  remoteImageURL: movieVideo.thumbnailURLForYoutubeVideo,
+        self.init(youtubeURL: movieVideo.trailerURL,
+                  remoteImageURL: movieVideo.thumbnailURL,
                   title: movieVideo.name,
                   type: movieVideo.type,
                   dateString: movieVideo.publishedDate)
