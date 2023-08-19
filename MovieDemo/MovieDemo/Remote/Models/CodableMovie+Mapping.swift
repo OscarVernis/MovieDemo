@@ -108,13 +108,15 @@ extension CodableCrew {
 }
 
 extension CodableVideo {
-    func toMovieVideo() -> MovieVideo {
-        var video = MovieVideo()
-    
-        video.key = key
-        video.name = name
-        video.type = type
+    func toMovieVideo() -> MovieVideo? {
+        guard let id, let key, let type else { return nil }
+        var date: Date? = nil
+        if let publishedAt {
+            let dateFormatter = ISO8601DateFormatter()
+            dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            date = dateFormatter.date(from: publishedAt)
+        }
         
-        return video
+        return MovieVideo(id: id, key: key, name: name, type: type, publishedDate: date)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MovieVideoViewModel {
+class MovieVideoViewModel: Identifiable {
     private var video: MovieVideo
     
     
@@ -31,20 +31,34 @@ extension MovieVideoViewModel {
 
 //MARK: - Properties
 extension MovieVideoViewModel {
+    var id: String {
+        video.id
+    }
+    
     var name: String {
-        return video.name ?? ""
+        video.name ?? ""
     }
     
     var key: String {
-        return video.key
+        video.key
     }
     
     var type: String {
-        return video.type ?? ""
+        video.type
+    }
+    
+    var publishedDate: String? {
+        guard let date = video.publishedDate else { return nil }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.dateStyle = .long
+        
+        return dateFormatter.string(from: date)
     }
     
     var youtubeURL: URL {
-        return URL(string: baseTrailerURL.appending(key))!
+        URL(string: baseTrailerURL.appending(key))!
     }
     
     var thumbnailURLForYoutubeVideo: URL {

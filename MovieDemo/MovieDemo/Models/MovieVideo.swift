@@ -9,9 +9,11 @@
 import Foundation
 
 struct MovieVideo  {
-    var key: String!
+    var id: String
+    var key: String
     var name: String?
-    var type: String?
+    var type: String
+    var publishedDate: Date?
 }
 
 extension MovieVideo: Codable, Hashable {}

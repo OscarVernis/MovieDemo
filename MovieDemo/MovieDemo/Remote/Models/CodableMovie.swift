@@ -201,7 +201,26 @@ struct CodableVideos: Codable {
 
 //MARK: - VideosResult
 struct CodableVideo: Codable {
+    let id: String!
     let name: String?
     let key: String?
     let type: String?
+    let publishedAt: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case key
+        case type
+        case publishedAt = "published_at"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decodeIfPresent(String.self, forKey: .id)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.key = try container.decodeIfPresent(String.self, forKey: .key)
+        self.type = try? container.decodeIfPresent(String.self, forKey: .type)
+        self.publishedAt = try? container.decodeIfPresent(String.self, forKey: .publishedAt)
+    }
 }
