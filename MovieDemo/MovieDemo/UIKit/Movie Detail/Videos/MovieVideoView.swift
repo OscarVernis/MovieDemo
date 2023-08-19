@@ -9,17 +9,16 @@
 import SwiftUI
 
 struct MovieVideoView: View {
-    let remoteImageURL: URL?
+    @State var youtubeURL: URL?
+    @State var remoteImageURL: URL?
     let title: String
     let type: String
     let dateString: String?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            RemoteImage(url: remoteImageURL)
-                .scaledToFill()
-                .frame(width: .infinity, height: 198)
-                .clipped()
+            YoutubeView(youtubeURL: $youtubeURL, previewImageURL: $remoteImageURL)
+                .aspectRatio(16/9, contentMode: .fit)
             Text(title)
                 .font(.avenirNextMedium(size: 17))
                 .padding(.horizontal, 12)
@@ -37,19 +36,19 @@ struct MovieVideoView: View {
             .padding(.horizontal, 12)
 
             Divider()
-//                .padding(.horizontal, 12)
             
             HStack(alignment: .center, spacing: 0) {
-//                Spacer()
                 Button {
-
+                    if let youtubeURL {
+                        UIApplication.shared.open(youtubeURL)
+                    }
                 } label: {
                     HStack(alignment: .center, spacing: 3) {
-                        Text("OPEN ON YOUTUBE")
-                            .font(.avenirNextCondensedDemiBold(size: 17))
                         Image("youtube")
                             .font(.system(size: 18))
                             .offset(CGSize(width: 0, height: -1))
+                        Text("OPEN ON YOUTUBE")
+                            .font(.avenirNextCondensedDemiBold(size: 17))
                     }
                     .tint(.label)
                 }
@@ -68,10 +67,11 @@ struct MovieVideoView: View {
 
 extension MovieVideoView {
     init(movieVideo: MovieVideoViewModel) {
-        self.remoteImageURL = movieVideo.thumbnailURLForYoutubeVideo
-        self.title = movieVideo.name
-        self.type = movieVideo.type
-        self.dateString = movieVideo.publishedDate
+        self.init(youtubeURL: movieVideo.youtubeURL,
+                  remoteImageURL: movieVideo.thumbnailURLForYoutubeVideo,
+                  title: movieVideo.name,
+                  type: movieVideo.type,
+                  dateString: movieVideo.publishedDate)
     }
 }
 

@@ -173,6 +173,8 @@ class MovieDetailViewController: UIViewController {
             header.tapHandler = showCrew
         case .recommended:
             header.tapHandler = showRecommendedMovies
+        case .videos:
+            header.tapHandler = showVideos
         default:
             header.tapHandler = nil
         }
@@ -232,6 +234,13 @@ class MovieDetailViewController: UIViewController {
     
     fileprivate lazy var showRecommendedMovies: (() -> Void) = { [unowned self] in
         router?.showRecommendedMovies(for: movie.id)
+    }
+    
+    fileprivate lazy var showVideos: (() -> Void) = { [unowned self] in
+        let view = MovieVideosView(videos: movie.videos)
+        let vc = CustomHostingController(rootView: view)
+        vc.title = "Videos"
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     //MARK: - User Actions

@@ -1,5 +1,5 @@
 //
-//  YoutubeView.swift
+//  UIYoutubeView.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 17/08/23.
@@ -10,7 +10,7 @@ import UIKit
 import Combine
 import YouTubePlayerKit
 
-class YoutubeView: UIView {
+class UIYoutubeView: UIView {
     var youtubeURL: URL? {
         didSet {
             updateYoutubeURL()
@@ -41,7 +41,7 @@ class YoutubeView: UIView {
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.layer.masksToBounds = true
         visualEffectView.layer.cornerRadius = buttonSize / 2
-        visualEffectView.alpha = 0.9
+        visualEffectView.alpha = 1
         
         return visualEffectView
     } ()
@@ -55,7 +55,7 @@ class YoutubeView: UIView {
         button.setImage(UIImage(systemName: "play.fill", withConfiguration: largeConfig), for: .normal)
         button.tintColor = .white
         
-        button.alpha = 0.7
+        button.alpha = 0.8
         
         return button
     }()
@@ -81,9 +81,6 @@ class YoutubeView: UIView {
     
     private func setup() {
         backgroundColor = .asset(.SectionBackgroundColor)
-        setupBorder()
-        layer.cornerRadius = 12
-        layer.masksToBounds = true
         
         addSubview(hostingView)
         hostingView.alpha = 0
@@ -156,4 +153,3 @@ class YoutubeView: UIView {
         }
     }
 }
-

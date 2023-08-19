@@ -9,7 +9,7 @@
 import UIKit
 
 class TrailerCell: UICollectionViewCell {
-    var youtubeView: YoutubeView!
+    var youtubeView: UIYoutubeView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,12 +27,14 @@ class TrailerCell: UICollectionViewCell {
     }
     
     func setup() {
-        youtubeView = YoutubeView()
+        youtubeView = UIYoutubeView()
 
         contentView.addSubview(youtubeView)
         youtubeView.anchor(to: contentView)
         
+        contentView.setupBorder()
         contentView.layer.cornerRadius = 12
+        contentView.layer.masksToBounds = true
         
         layer.shadowOffset = CGSize(width: 0, height: 7)
         layer.shadowOpacity = 0.15

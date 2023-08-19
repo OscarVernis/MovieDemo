@@ -18,7 +18,7 @@ class MovieVideoCell: UICollectionViewCell {
         return label
     }()
     
-    var youtubeView: YoutubeView!
+    var youtubeView: UIYoutubeView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +36,10 @@ class MovieVideoCell: UICollectionViewCell {
                           leading: contentView.leadingAnchor, paddingLeading: 5,
                           trailing: contentView.trailingAnchor)
         
-        youtubeView = YoutubeView()
+        youtubeView = UIYoutubeView()
+        youtubeView.setupBorder()
+        youtubeView.layer.cornerRadius = 12
+        youtubeView.layer.masksToBounds = true
 
         contentView.addSubview(youtubeView)
         youtubeView.anchor(top: contentView.topAnchor,
