@@ -9,10 +9,10 @@
 import UIKit
 
 class CategorySelectionHeaderView: UICollectionReusableView {
-    var selectionView: CategorySelectionView
+    var selectionView: UICategorySelectionView
     
     override init(frame: CGRect) {
-        selectionView = CategorySelectionView()
+        selectionView = UICategorySelectionView()
         super.init(frame: frame)
         
         addSubview(selectionView)

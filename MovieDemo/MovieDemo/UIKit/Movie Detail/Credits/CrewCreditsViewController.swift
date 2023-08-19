@@ -15,7 +15,7 @@ class CrewCreditsViewController: UIViewController {
     private weak var dataSource: ArrayPagingDataSource<CrewCreditViewModel, CreditPhotoListCell>!
     private let viewModel: CrewCreditsViewModel
     
-    private weak var selectionView: CategorySelectionView!
+    private weak var selectionView: UICategorySelectionView!
     private var selectedDepartment: String = ""
         
     var didSelectedItem: ((CrewCreditViewModel) -> ())?

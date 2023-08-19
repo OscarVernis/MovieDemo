@@ -1,5 +1,5 @@
 //
-//  CategorySelectionView.swift
+//  UICategorySelectionView.swift
 //  MovieDemo
 //
 //  Created by Oscar Vernis on 08/08/23.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategorySelectionView: UIView {
+class UICategorySelectionView: UIView {
     private enum Section {
         case main
     }
@@ -105,7 +105,7 @@ class CategorySelectionView: UIView {
 }
 
 //MARK: - CollectionView Delegate
-extension CategorySelectionView: UICollectionViewDelegate {
+extension UICategorySelectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row != selectedIndex {
             updateSelectedCell(at: indexPath)
