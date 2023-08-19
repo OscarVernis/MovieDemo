@@ -15,13 +15,15 @@ struct MovieVideoView: View {
     let type: String
     let dateString: String?
     
+    let horizontalPadding: CGFloat = 12
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             YoutubeView(youtubeURL: $youtubeURL, previewImageURL: $remoteImageURL)
                 .aspectRatio(16/9, contentMode: .fit)
             Text(title)
                 .font(.avenirNextMedium(size: 17))
-                .padding(.horizontal, 12)
+                .padding(.horizontal, horizontalPadding)
                 .padding(.top, 10)
             HStack(spacing: 0) {
                 Text(type)
@@ -33,10 +35,11 @@ struct MovieVideoView: View {
             .font(.avenirNextMedium(size: 15))
             .foregroundColor(.secondaryLabel)
             .padding(.bottom, 6)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, horizontalPadding)
 
             Divider()
-            
+                .padding(.horizontal, horizontalPadding)
+
             HStack(alignment: .center, spacing: 0) {
                 Button {
                     if let youtubeURL {
@@ -54,9 +57,8 @@ struct MovieVideoView: View {
                 }
            
             }
-            .padding(.horizontal, 12)
-            .padding(.top, 8)
-            .padding(.bottom, 8)
+            .padding(.horizontal, horizontalPadding)
+            .padding(.vertical, 8)
             
         }
         .background(Color(asset: .SectionBackgroundColor))
