@@ -11,8 +11,7 @@ import SwiftUI
 struct MovieVideosView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
-    var videos: [MovieVideoViewModel]
-    @State var selection: Int = 0
+    @ObservedObject  var viewModel: MovieVideosViewModel
     
     var shadowOpacity: CGFloat {
         colorScheme == .light ? 0.05 : 0
@@ -20,14 +19,15 @@ struct MovieVideosView: View {
     
     var body: some View {
         List {
-            CategorySelectionView(selected: $selection, items: ["All", "Teaser", "Trailer", "Behind the Scenes", "Clips", "Bloopers", "Featurettes"])
+            if viewModel.types.count > 1 {
+                CategorySelectionView(selected: $viewModel.selectedType, items: viewModel.types)
+            }
             
-            ForEach(videos) { video in
+            ForEach(viewModel.selectedVideos) { video in
                 MovieVideoView(movieVideo: video)
                     .shadow(color: .black.opacity(shadowOpacity), radius: 7, x: 0, y: 3)
                     .listRowBackground(Color.clear)
             }
-   
         }
         .listStyle(.plain)
         .background(Color(asset: .AppBackgroundColor))
@@ -38,7 +38,8 @@ struct MovieVideosView: View {
 struct MovieVideosView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            MovieVideosView(videos: MockData.movieVideos)
+            MovieVideosView(viewModel: MovieVideosViewModel(videos: MockData.movieVideos))
+                .preferredColorScheme(.dark)
                 .navigationTitle("Videos")
         }
     }

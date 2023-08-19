@@ -34,7 +34,7 @@ class CrewCreditsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = MovieString.Cast.localized
+        title = MovieString.Crew.localized
         setupListViewController()
         setupSearch()
     }

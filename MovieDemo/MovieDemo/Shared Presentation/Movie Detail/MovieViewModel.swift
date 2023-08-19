@@ -162,10 +162,10 @@ extension MovieViewModel {
     
     var trailerViewModel: MovieVideoViewModel? {
         let videoViewModel: MovieVideoViewModel
-        if let trailer = movie.videos?.last(where: { $0.type == "Trailer" }) {
+        if let trailer = movie.videos?.first(where: { $0.type == "Trailer" }) {
             videoViewModel = MovieVideoViewModel(video: trailer)
         } else {
-            if let teaser = movie.videos?.last(where: { $0.type == "Teaser" }) {
+            if let teaser = movie.videos?.first(where: { $0.type == "Teaser" }) {
                 videoViewModel = MovieVideoViewModel(video: teaser)
             } else {
                 return nil
@@ -173,6 +173,11 @@ extension MovieViewModel {
         }
         
         return videoViewModel
+    }
+    
+    var topVideos: [MovieVideoViewModel] {
+        let firstVideos = videos.prefix(10)
+        return Array(firstVideos)
     }
     
     var status: String? {
@@ -295,7 +300,7 @@ extension MovieViewModel {
     }
     
     private func updateVideos() {
-        guard let videos = movie.videos, videos.count > 1 else { return }
+        guard let videos = movie.videos, videos.count > 0 else { return }
         
         self.videos = videos.map(MovieVideoViewModel.init)
     }

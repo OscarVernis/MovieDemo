@@ -25,8 +25,9 @@ struct CategorySelectionView: View {
             LazyHStack {
                 ForEach(Array(items.enumerated()), id: \.offset) { item in
                     Button {
-                        selected = item.offset
-                        
+                        withAnimation {
+                            selected = item.offset
+                        }
                     } label: {
                         Text(item.element)
                             .foregroundColor(textColor(for: item.offset))

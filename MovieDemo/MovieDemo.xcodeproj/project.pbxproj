@@ -309,6 +309,7 @@
 		55FA40392A901F0B00C5DC83 /* MovieVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA40382A901F0B00C5DC83 /* MovieVideoView.swift */; };
 		55FA403B2A904E0700C5DC83 /* YoutubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA403A2A904E0700C5DC83 /* YoutubeView.swift */; };
 		55FA403D2A9061AB00C5DC83 /* CategorySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA403C2A9061AB00C5DC83 /* CategorySelectionView.swift */; };
+		55FA403F2A9068C300C5DC83 /* MovieVideosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FA403E2A9068C300C5DC83 /* MovieVideosViewModel.swift */; };
 		55FACCF52A590CD800FB13B5 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FACCF42A590CD800FB13B5 /* HomeRouter.swift */; };
 		55FACCF72A591ACE00FB13B5 /* MovieDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */; };
 		55FBFC002A762CB2002FC9FE /* PersonDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FBFBFF2A762CB2002FC9FE /* PersonDetailDataSource.swift */; };
@@ -650,6 +651,7 @@
 		55FA40382A901F0B00C5DC83 /* MovieVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieVideoView.swift; sourceTree = "<group>"; };
 		55FA403A2A904E0700C5DC83 /* YoutubeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeView.swift; sourceTree = "<group>"; };
 		55FA403C2A9061AB00C5DC83 /* CategorySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySelectionView.swift; sourceTree = "<group>"; };
+		55FA403E2A9068C300C5DC83 /* MovieVideosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieVideosViewModel.swift; sourceTree = "<group>"; };
 		55FACCF42A590CD800FB13B5 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		55FACCF62A591ACE00FB13B5 /* MovieDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailRouter.swift; sourceTree = "<group>"; };
 		55FBFBFF2A762CB2002FC9FE /* PersonDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailDataSource.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 			isa = PBXGroup;
 			children = (
 				550FBD9A2A8FF2D300F9E678 /* MovieVideosView.swift */,
+				55FA403E2A9068C300C5DC83 /* MovieVideosViewModel.swift */,
 				55FA403C2A9061AB00C5DC83 /* CategorySelectionView.swift */,
 				55FA40382A901F0B00C5DC83 /* MovieVideoView.swift */,
 				55FA403A2A904E0700C5DC83 /* YoutubeView.swift */,
@@ -894,16 +897,17 @@
 		551583A52A81DA0D00EDE09E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				551583A62A81DA4B00EDE09E /* RatingsView */,
 				55A60DCF2527AAB30082810C /* MediaViewer */,
+				551583A62A81DA4B00EDE09E /* RatingsView */,
 				55915772251438390085DB69 /* BlurBackgroundView.swift */,
 				55915775251438450085DB69 /* BlurBackgroundView.xib */,
-				5502F500251C2D38003EEC0A /* CustomButton.swift */,
-				55EE51AA251ECF5800915AB3 /* RoundImageView.swift */,
-				556AB1932514680A0023D278 /* DotRatingsView.swift */,
 				5511D95425317056004B3697 /* BlurButton.swift */,
+				5502F500251C2D38003EEC0A /* CustomButton.swift */,
+				556AB1932514680A0023D278 /* DotRatingsView.swift */,
 				55D006B92A74B4830089E8B1 /* EmptyView.swift */,
 				55D006BB2A74B4950089E8B1 /* EmptyView.xib */,
+				55EE51AA251ECF5800915AB3 /* RoundImageView.swift */,
+				5584AF302A82C7ED00027F1C /* UICategorySelectionView.swift */,
 				55FD05282A8F091800DF9E13 /* UIYoutubeView.swift */,
 			);
 			path = Views;
@@ -1251,7 +1255,6 @@
 			children = (
 				55911C452A76D47B00E661D2 /* CategoryCell.swift */,
 				55911C462A76D47B00E661D2 /* CategoryCell.xib */,
-				5584AF302A82C7ED00027F1C /* UICategorySelectionView.swift */,
 				55518D422511292E00DAEB7F /* SectionTitleView.swift */,
 				551A292B251F18E9003746EE /* SectionTitleView.xib */,
 			);
@@ -1843,6 +1846,7 @@
 				5563A5E82A745027004528EA /* UserListHeaderView.swift in Sources */,
 				55AE94382A8EC14000BFFD96 /* CustomHostingController.swift in Sources */,
 				554BB8CB2A75837400762F44 /* UserListCell.swift in Sources */,
+				55FA403F2A9068C300C5DC83 /* MovieVideosViewModel.swift in Sources */,
 				559D132122D98E4800C96FC8 /* AppDelegate.swift in Sources */,
 				557E0DCB285BF6D800D21D93 /* RemoteImage.swift in Sources */,
 				55549901282232BF00E89119 /* SessionService.swift in Sources */,

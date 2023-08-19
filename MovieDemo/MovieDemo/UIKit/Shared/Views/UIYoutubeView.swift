@@ -34,7 +34,7 @@ class UIYoutubeView: UIView {
     }()
     
     private lazy var buttonBgView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffect = UIBlurEffect(style: .systemThinMaterialDark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
         visualEffectView.layer.masksToBounds = true
         visualEffectView.layer.cornerRadius = buttonSize / 2
@@ -45,7 +45,6 @@ class UIYoutubeView: UIView {
     
     private var playButton: UIButton = {
         var configuration = UIButton.Configuration.borderless()
-        configuration.cornerStyle = .capsule
         let button = UIButton(configuration: configuration)
         
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
@@ -104,7 +103,6 @@ class UIYoutubeView: UIView {
     
     func updateYoutubeURL() {
         if youtubeURL == nil {
-            print("reuse")
             stateCancellable = nil
             playbackStateCancellable = nil
             hostingView?.removeFromSuperview()
@@ -160,4 +158,5 @@ class UIYoutubeView: UIView {
             hostingView?.player.cue(source: .url(youtubeURL.absoluteString))
         }
     }
+    
 }

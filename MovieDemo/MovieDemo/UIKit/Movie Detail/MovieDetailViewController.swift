@@ -237,9 +237,9 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate lazy var showVideos: (() -> Void) = { [unowned self] in
-        let view = MovieVideosView(videos: movie.videos)
+        let view = MovieVideosView(viewModel: MovieVideosViewModel(videos: movie.videos))
         let vc = CustomHostingController(rootView: view)
-        vc.title = "Videos"
+        vc.title = MovieString.Videos.localized
         navigationController?.pushViewController(vc, animated: true)
     }
     

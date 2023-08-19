@@ -24,6 +24,8 @@ enum MovieString: String, Localizable, CaseIterable {
     case RecommendedMovies
     case Overview
     case Trailer
+    case All
+    case OpenOnYoutube
 
     var tableName: String { "Movie" }
 }

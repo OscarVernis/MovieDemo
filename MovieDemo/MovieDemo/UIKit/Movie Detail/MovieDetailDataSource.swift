@@ -165,7 +165,7 @@ class MovieDetailDataSource {
             case .whereToWatch:
                 snapshot.appendItems([whereToWatchId], toSection: .whereToWatch)
             case .videos:
-                snapshot.appendItems(movie.videos, toSection: .videos)
+                snapshot.appendItems(movie.topVideos, toSection: .videos)
             case .recommended:
                 snapshot.appendItems(movie.recommendedMovies, toSection: .recommended)
             case .info:

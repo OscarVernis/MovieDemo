@@ -50,7 +50,7 @@ struct MovieVideoView: View {
                         Image("youtube")
                             .font(.system(size: 18))
                             .offset(CGSize(width: 0, height: -1))
-                        Text("OPEN ON YOUTUBE")
+                        Text(MovieString.OpenOnYoutube.localized)
                             .font(.avenirNextCondensedDemiBold(size: 17))
                     }
                     .tint(.label)

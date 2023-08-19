@@ -69,13 +69,10 @@ struct WhereToWatchView: View {
                 HStack(spacing: 8) {
                     Text(viewModel.selectedCountry.name)
                         .font(.avenirNextMedium(size: 17))
-                    Image(asset: .updownchevron)
+//                    Image(asset: .updownchevron)
                 }
             }
-            .transaction { (tx: inout Transaction) in // Disable animation
-                tx.disablesAnimations = true
-                tx.animation = nil
-            }
+            .transaction { $0.animation = nil } //Disable menu button animation
             .accentColor(Color.purple)
             .buttonStyle(.bordered)
             .buttonBorderShape(.capsule)

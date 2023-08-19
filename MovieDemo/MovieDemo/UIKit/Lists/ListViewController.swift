@@ -50,7 +50,7 @@ class ListViewController: UIViewController, UICollectionViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        configureWithDefaultNavigationBarAppearance()
+        configureHomeTitleNavigationBarAppearance()
     }
     
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

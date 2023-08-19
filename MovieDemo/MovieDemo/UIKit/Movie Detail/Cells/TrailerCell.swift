@@ -35,9 +35,6 @@ class TrailerCell: UICollectionViewCell {
         contentView.setupBorder()
         contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
-        
-        layer.shadowOffset = CGSize(width: 0, height: 7)
-        layer.shadowOpacity = 0.15
     }
     
     func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
