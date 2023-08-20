@@ -55,7 +55,7 @@ class MovieVideoCell: UICollectionViewCell {
         youtubeView.youtubeURL = nil
     }
     
-    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
+    func setupYoutubeView(previewURL: URL?, youtubeURL: URL?) {
         youtubeView.previewImageURL = previewURL
         youtubeView.youtubeURL = youtubeURL
     }

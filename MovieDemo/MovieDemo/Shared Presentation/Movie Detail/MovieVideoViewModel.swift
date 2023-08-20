@@ -14,14 +14,14 @@ class MovieVideoViewModel: Identifiable {
         case Vimeo
         case Unknown
         
-        func url(key: String) -> URL {
+        func url(key: String) -> URL? {
             switch self {
             case .YouTube:
                 return URL(string: "https://www.youtube.com/watch?v=\(key)")!
             case .Vimeo:
                 return URL(string: "https://vimeo.com/\(key)")!
             case .Unknown:
-                return URL(string: "https://www.youtube.com/watch?v=\(key)")!
+                return nil
             }
         }
     }
@@ -72,7 +72,7 @@ extension MovieVideoViewModel {
         return dateFormatter.string(from: date)
     }
     
-    var trailerURL: URL {
+    var trailerURL: URL? {
         let videoSite = VideoSite(rawValue: video.site ?? "Unknown")!
         return videoSite.url(key: video.key)
     }

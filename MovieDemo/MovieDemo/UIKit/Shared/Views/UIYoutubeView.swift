@@ -68,7 +68,7 @@ class UIYoutubeView: UIView {
     
     private var stateCancellable: AnyCancellable?
     private var playbackStateCancellable: AnyCancellable?
-
+    
     init(previewURL: URL? = nil, youtubeURL: URL? = nil) {
         self.previewImageURL = previewURL
         self.youtubeURL = youtubeURL
@@ -97,7 +97,7 @@ class UIYoutubeView: UIView {
             buttonBgView.centerXAnchor.constraint(equalTo: centerXAnchor),
             buttonBgView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
-       
+        
         addSubview(playButton)
         playButton.anchor(to: self)
         
@@ -133,6 +133,11 @@ class UIYoutubeView: UIView {
     }
     
     @objc private func play() {
+        guard let youtubeURL else {
+            playButton.setImage(UIYoutubeView.errorImage, for: .normal)
+            return
+        }
+        
         if hostingView == nil {
             createHostingView()
         }
@@ -149,9 +154,7 @@ class UIYoutubeView: UIView {
                         playButton.setImage(UIYoutubeView.errorImage, for: .normal)
                         break
                     default:
-                        if let youtubeURL {
-                            UIApplication.shared.open(youtubeURL)
-                        }
+                        UIApplication.shared.open(youtubeURL)
                     }
                 }
             })
@@ -168,9 +171,7 @@ class UIYoutubeView: UIView {
                 }
             })
         
-        if let youtubeURL {
-            hostingView?.player.cue(source: .url(youtubeURL.absoluteString))
-        }
+        hostingView?.player.cue(source: .url(youtubeURL.absoluteString))
     }
     
 }

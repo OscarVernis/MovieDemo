@@ -37,7 +37,7 @@ class TrailerCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
     
-    func setupYoutubeView(previewURL: URL?, youtubeURL: URL) {
+    func setupYoutubeView(previewURL: URL?, youtubeURL: URL?) {
         youtubeView.previewImageURL = previewURL
         youtubeView.youtubeURL = youtubeURL
     }
