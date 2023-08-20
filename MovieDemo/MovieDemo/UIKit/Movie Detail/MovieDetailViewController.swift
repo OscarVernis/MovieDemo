@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 class MovieDetailViewController: UIViewController {
-    private var router: (MovieDetailRouter & URLHandlingRouter)?
+    private var router: MovieDetailRouter?
     private var dataSource: MovieDetailDataSource!
       
     private var store: MovieDetailStore
@@ -237,10 +237,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     fileprivate lazy var showVideos: (() -> Void) = { [unowned self] in
-        let view = MovieVideosView(viewModel: MovieVideosViewModel(videos: movie.videos))
-        let vc = CustomHostingController(rootView: view)
-        vc.title = MovieString.Videos.localized
-        navigationController?.pushViewController(vc, animated: true)
+        router?.showMovieVideos(videos: movie.videos)
     }
     
     //MARK: - User Actions

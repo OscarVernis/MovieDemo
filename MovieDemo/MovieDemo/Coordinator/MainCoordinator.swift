@@ -288,6 +288,14 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
         rootNavigationViewController?.pushViewController(vc, animated: true)
     }
     
+    func showMovieVideos(videos: [MovieVideoViewModel]) {
+        let view = MovieVideosView(viewModel: MovieVideosViewModel(videos: videos))
+        let vc = CustomHostingController(rootView: view)
+        vc.title = MovieString.Videos.localized
+        rootNavigationViewController?.pushViewController(vc, animated: true)
+    }
+
+    
     func showRecommendedMovies(for movieId: Int) {
         showMovieList(title: .localized(MovieString.RecommendedMovies), endpoint: .Recommended(movieId: movieId))
     }
