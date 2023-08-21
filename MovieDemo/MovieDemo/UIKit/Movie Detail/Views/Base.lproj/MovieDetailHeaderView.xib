@@ -107,12 +107,13 @@
                             <rect key="frame" x="0.0" y="109.5" width="374" height="44"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KW3-ni-2DH" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="115.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="119.5" height="44"/>
                                     <color key="backgroundColor" red="1" green="0.27058823529999998" blue="0.2274509804" alpha="0.094425516919999994" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="GyQ-E4-C8V"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                    <inset key="imageEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     <state key="normal" title=" Favorite" image="heart" catalog="system"/>
                                     <state key="selected" image="heart.fill" catalog="system"/>
                                     <userDefinedRuntimeAttributes>
@@ -126,12 +127,12 @@
                                     </userDefinedRuntimeAttributes>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmd-EO-EFe" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                                    <rect key="frame" x="129.5" y="0.0" width="115" height="44"/>
+                                    <rect key="frame" x="127.5" y="0.0" width="119" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="gLT-NJ-Cmj"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                    <inset key="imageEdgeInsets" minX="-5" minY="-1" maxX="0.0" maxY="0.0"/>
                                     <state key="normal" title="Watchlist" image="bookmark" catalog="system"/>
                                     <state key="selected" image="bookmark.fill" catalog="system"/>
                                     <userDefinedRuntimeAttributes>
@@ -144,12 +145,12 @@
                                     </userDefinedRuntimeAttributes>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RQF-K0-V1z" customClass="CustomButton" customModule="MovieDemo" customModuleProvider="target">
-                                    <rect key="frame" x="258.5" y="0.0" width="115.5" height="44"/>
+                                    <rect key="frame" x="254.5" y="0.0" width="119.5" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="nEY-vK-uhz"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
-                                    <inset key="imageEdgeInsets" minX="-6" minY="-2" maxX="0.0" maxY="0.0"/>
+                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                    <inset key="imageEdgeInsets" minX="-4" minY="-2" maxX="0.0" maxY="0.0"/>
                                     <state key="normal" title="Rate" image="star" catalog="system">
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                     </state>
@@ -170,13 +171,13 @@
                                 <constraint firstAttribute="height" constant="44" id="7EY-Ae-Eir"/>
                                 <constraint firstItem="RQF-K0-V1z" firstAttribute="width" secondItem="KW3-ni-2DH" secondAttribute="width" id="9zF-G1-fZS"/>
                                 <constraint firstItem="hmd-EO-EFe" firstAttribute="width" secondItem="KW3-ni-2DH" secondAttribute="width" id="Gh9-c0-eeq"/>
-                                <constraint firstItem="hmd-EO-EFe" firstAttribute="leading" secondItem="KW3-ni-2DH" secondAttribute="trailing" constant="14" id="JDX-tY-5bg"/>
+                                <constraint firstItem="hmd-EO-EFe" firstAttribute="leading" secondItem="KW3-ni-2DH" secondAttribute="trailing" constant="8" id="JDX-tY-5bg"/>
                                 <constraint firstItem="RQF-K0-V1z" firstAttribute="centerY" secondItem="bub-XJ-hjL" secondAttribute="centerY" id="L4R-5c-oKK"/>
                                 <constraint firstAttribute="trailing" secondItem="RQF-K0-V1z" secondAttribute="trailing" id="N4B-Lv-VXd"/>
                                 <constraint firstItem="hmd-EO-EFe" firstAttribute="centerY" secondItem="bub-XJ-hjL" secondAttribute="centerY" id="RrK-fR-oux"/>
                                 <constraint firstItem="KW3-ni-2DH" firstAttribute="leading" secondItem="bub-XJ-hjL" secondAttribute="leading" id="Sap-iM-SDC"/>
                                 <constraint firstItem="KW3-ni-2DH" firstAttribute="centerY" secondItem="bub-XJ-hjL" secondAttribute="centerY" id="odL-h0-Iq5"/>
-                                <constraint firstItem="RQF-K0-V1z" firstAttribute="leading" secondItem="hmd-EO-EFe" secondAttribute="trailing" constant="14" id="r5H-jF-ada"/>
+                                <constraint firstItem="RQF-K0-V1z" firstAttribute="leading" secondItem="hmd-EO-EFe" secondAttribute="trailing" constant="8" id="r5H-jF-ada"/>
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="GTA-P5-YGa">
@@ -243,17 +244,14 @@
         </collectionReusableView>
     </objects>
     <designables>
-        <designable name="1VZ-S8-68h">
-            <size key="intrinsicContentSize" width="40" height="40"/>
-        </designable>
         <designable name="KW3-ni-2DH">
-            <size key="intrinsicContentSize" width="80.5" height="21"/>
+            <size key="intrinsicContentSize" width="84.5" height="22"/>
         </designable>
         <designable name="RQF-K0-V1z">
-            <size key="intrinsicContentSize" width="53" height="22.5"/>
+            <size key="intrinsicContentSize" width="55" height="22.5"/>
         </designable>
         <designable name="hmd-EO-EFe">
-            <size key="intrinsicContentSize" width="80.5" height="22"/>
+            <size key="intrinsicContentSize" width="84.5" height="22"/>
         </designable>
     </designables>
     <resources>

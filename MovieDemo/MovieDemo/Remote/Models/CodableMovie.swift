@@ -23,6 +23,7 @@ struct CodableMovie: Codable {
     let backdropPath: String?
     let releaseDate: Date?
     let runtime: Int?
+    let video: Bool?
     let voteAverage: Float?
     let voteCount: Int?
     let credits: CodableCredits?
@@ -51,6 +52,7 @@ struct CodableMovie: Codable {
         case backdropPath = "backdrop_path"
         case releaseDate = "release_date"
         case runtime
+        case video
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
         case credits
@@ -82,6 +84,7 @@ struct CodableMovie: Codable {
         backdropPath = try? container.decodeIfPresent(String.self, forKey: .backdropPath)
         releaseDate = try? container.decodeIfPresent(Date.self, forKey: .releaseDate)
         runtime = try? container.decodeIfPresent(Int.self, forKey: .runtime)
+        video = try? container.decodeIfPresent(Bool.self, forKey: .video)
         voteAverage = try? container.decodeIfPresent(Float.self, forKey: .voteAverage)
         voteCount = try? container.decodeIfPresent(Int.self, forKey: .voteCount)
         credits = try? container.decodeIfPresent(CodableCredits.self, forKey: .credits)

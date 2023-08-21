@@ -16,6 +16,7 @@ enum ColorAsset: String, CaseIterable {
     case SectionBackgroundColor
     case TextfieldBgColor
     case WatchlistColor
+    case DefaultButtonColor
     
     var color: UIColor {
         UIColor(named: rawValue)!

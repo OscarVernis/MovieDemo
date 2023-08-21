@@ -11,9 +11,9 @@ import SwiftUI
 struct MovieVideosView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
 
-    @ObservedObject  var viewModel: MovieVideosViewModel
+    @ObservedObject var viewModel: MovieVideosViewModel
         
-    var shadowOpacity: CGFloat {
+    private var shadowOpacity: CGFloat {
         colorScheme == .light ? 0.05 : 0
     }
     
@@ -29,8 +29,8 @@ struct MovieVideosView: View {
             ForEach(viewModel.selectedVideos) { video in
                 MovieVideoView(movieVideo: video)
                     .shadow(color: .black.opacity(shadowOpacity), radius: 7, x: 0, y: 3)
-                    .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
             }
         }
         .listStyle(.plain)

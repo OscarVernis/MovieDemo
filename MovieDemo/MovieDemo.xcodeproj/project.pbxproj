@@ -231,7 +231,6 @@
 		55AE94362A8EBA4100BFFD96 /* WatchProviderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */; };
 		55AE94382A8EC14000BFFD96 /* CustomHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */; };
 		55B0949A2A8D3DCD00220CC6 /* WhereToWatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */; };
-		55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */; };
 		55B0949E2A8D6E0B00220CC6 /* WhereToWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */; };
 		55B094A02A8D6EB800220CC6 /* watch_providers.json in Resources */ = {isa = PBXBuildFile; fileRef = 55B0949F2A8D6EB800220CC6 /* watch_providers.json */; };
 		55B094A42A8DAA7200220CC6 /* WatchProviderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B094A32A8DAA7200220CC6 /* WatchProviderRow.swift */; };
@@ -302,6 +301,7 @@
 		55EEF7472512B8AF006C4B11 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */; };
 		55F06CE32A5E3DE900DB8348 /* JSONLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F06CE22A5E3DE900DB8348 /* JSONLoader.swift */; };
 		55F06CE52A5E41EB00DB8348 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F06CE42A5E41EB00DB8348 /* MockData.swift */; };
+		55F4314F2A91AFC300C3408A /* WhereToWatchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F431512A91AFC300C3408A /* WhereToWatchCell.xib */; };
 		55F4E43E2A7232EA004CACCC /* UserListDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */; };
 		55F4E4432A723BEC004CACCC /* ListMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4E4412A723BEC004CACCC /* ListMovieCell.swift */; };
 		55F4E4442A723BEC004CACCC /* ListMovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55F4E4422A723BEC004CACCC /* ListMovieCell.xib */; };
@@ -573,7 +573,6 @@
 		55AE94352A8EBA4100BFFD96 /* WatchProviderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderViewModel.swift; sourceTree = "<group>"; };
 		55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHostingController.swift; sourceTree = "<group>"; };
 		55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchCell.swift; sourceTree = "<group>"; };
-		55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WhereToWatchCell.xib; sourceTree = "<group>"; };
 		55B0949D2A8D6E0B00220CC6 /* WhereToWatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhereToWatchView.swift; sourceTree = "<group>"; };
 		55B0949F2A8D6EB800220CC6 /* watch_providers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = watch_providers.json; sourceTree = "<group>"; };
 		55B094A32A8DAA7200220CC6 /* WatchProviderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchProviderRow.swift; sourceTree = "<group>"; };
@@ -644,6 +643,8 @@
 		55EEF7462512B8AF006C4B11 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		55F06CE22A5E3DE900DB8348 /* JSONLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONLoader.swift; sourceTree = "<group>"; };
 		55F06CE42A5E41EB00DB8348 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		55F431502A91AFC300C3408A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhereToWatchCell.xib; sourceTree = "<group>"; };
+		55F431532A91AFCA00C3408A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/WhereToWatchCell.strings"; sourceTree = "<group>"; };
 		55F4E43D2A7232EA004CACCC /* UserListDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListDetailRouter.swift; sourceTree = "<group>"; };
 		55F4E4412A723BEC004CACCC /* ListMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMovieCell.swift; sourceTree = "<group>"; };
 		55F4E4422A723BEC004CACCC /* ListMovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListMovieCell.xib; sourceTree = "<group>"; };
@@ -1437,7 +1438,7 @@
 				55DD1B90251FB59500EC8C55 /* MovieVideoCell.swift */,
 				55FD052A2A8F152300DF9E13 /* TrailerCell.swift */,
 				55B094982A8D3DCD00220CC6 /* WhereToWatchCell.swift */,
-				55B094992A8D3DCD00220CC6 /* WhereToWatchCell.xib */,
+				55F431512A91AFC300C3408A /* WhereToWatchCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1721,7 +1722,7 @@
 				55A60DD92527AAB30082810C /* MediaViewerPlayerControls.xib in Resources */,
 				55664850284DC4ED000BE2F3 /* Movie.strings in Resources */,
 				554BB8CC2A75837400762F44 /* UserListCell.xib in Resources */,
-				55B0949B2A8D3DCD00220CC6 /* WhereToWatchCell.xib in Resources */,
+				55F4314F2A91AFC300C3408A /* WhereToWatchCell.xib in Resources */,
 				550815A72A848096004071BF /* PersonHeaderView.xib in Resources */,
 				5566483E284DC4B5000BE2F3 /* Error.strings in Resources */,
 				55B094A02A8D6EB800220CC6 /* watch_providers.json in Resources */,
@@ -2178,6 +2179,15 @@
 				55BB8643251FA1CF00F17D7F /* es-419 */,
 			);
 			name = MovieRatingViewController.storyboard;
+			sourceTree = "<group>";
+		};
+		55F431512A91AFC300C3408A /* WhereToWatchCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55F431502A91AFC300C3408A /* Base */,
+				55F431532A91AFCA00C3408A /* es-419 */,
+			);
+			name = WhereToWatchCell.xib;
 			sourceTree = "<group>";
 		};
 		55FD05212A8F017300DF9E13 /* WatchProviders.strings */ = {

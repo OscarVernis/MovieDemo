@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="J4z-UZ-0g7">
+                <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="4" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J4z-UZ-0g7">
                     <rect key="frame" x="0.0" y="14" width="334" height="30"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v3i-Vq-6C9">
@@ -72,7 +72,7 @@
                 <outlet property="imageView" destination="lXK-d2-vvG" id="WV4-ac-3m8"/>
                 <outlet property="titleLabel" destination="N3c-lq-fnQ" id="qCP-LQ-dqW"/>
             </connections>
-            <point key="canvasLocation" x="187" y="38"/>
+            <point key="canvasLocation" x="6" y="35"/>
         </collectionReusableView>
     </objects>
     <resources>

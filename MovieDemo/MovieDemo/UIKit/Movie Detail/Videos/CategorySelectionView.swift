@@ -24,19 +24,15 @@ struct CategorySelectionView: View {
         ScrollView(.horizontal) {
             LazyHStack {
                 ForEach(Array(items.enumerated()), id: \.offset) { item in
-                    Button {
-                        withAnimation {
-                            selected = item.offset
+                    Text(item.element)
+                        .foregroundColor(textColor(for: item.offset))
+                        .font(.avenirNextMedium(size: 17))
+                        .padding(.horizontal, 10)
+                        .frame(height: 32)
+                        .background(bgColor(for: item.offset), in: Capsule())
+                        .onTapGesture {
+                            withAnimation { selected = item.offset }
                         }
-                    } label: {
-                        Text(item.element)
-                            .foregroundColor(textColor(for: item.offset))
-                            .font(.avenirNextMedium(size: 17))
-                            .padding(.horizontal, 10)
-                            .frame(height: 32)
-                            .background(bgColor(for: item.offset), in: Capsule())
-                    }
-                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 20)

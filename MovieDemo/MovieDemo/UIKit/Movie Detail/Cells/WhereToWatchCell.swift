@@ -14,8 +14,8 @@ class WhereToWatchCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        button.setTitle(WatchProviderString.WhereToWatch.localized, for: .normal)
+
+        button.configuration?.image = button.configuration?.image?.withAlignmentRectInsets(UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0))
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     

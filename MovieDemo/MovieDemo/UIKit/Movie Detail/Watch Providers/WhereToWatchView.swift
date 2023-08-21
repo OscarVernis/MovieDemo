@@ -66,11 +66,8 @@ struct WhereToWatchView: View {
                     Button(country.name, action: { setSelectedCountry(country) })
                 }
             } label: {
-                HStack(spacing: 8) {
-                    Text(viewModel.selectedCountry.name)
-                        .font(.avenirNextMedium(size: 17))
-//                    Image(asset: .updownchevron)
-                }
+                Text(viewModel.selectedCountry.name)
+                    .font(.avenirNextMedium(size: 18))
             }
             .transaction { $0.animation = nil } //Disable menu button animation
             .accentColor(Color.purple)

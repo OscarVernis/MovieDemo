@@ -14,13 +14,13 @@ struct Rating: View {
         case line
     }
     
-    private let greenRatingColor = Color(uiColor: #colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4784313725, alpha: 1))
-    private let greenTrackColor = Color(uiColor: #colorLiteral(red: 0.06365625043, green: 0.4012272754, blue: 0.2353352288, alpha: 0.5))
-    private let yellowRatingColor = Color(uiColor: #colorLiteral(red: 1, green: 0.8392156863, blue: 0.03921568627, alpha: 1))
-    private let yellowTrackColor = Color(uiColor: #colorLiteral(red: 0.4769007564, green: 0.3958523571, blue: 0.01167693827, alpha: 0.5))
-    private let redRatingColor = Color(uiColor: #colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1))
-    private let redTrackColor = Color(uiColor: #colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.5))
-    private let grayTrackColor = Color(uiColor: UIColor.systemGray3)
+    private let greenRatingColor = Color(#colorLiteral(red: 0.1294117647, green: 0.8156862745, blue: 0.4784313725, alpha: 1))
+    private let greenTrackColor = Color(#colorLiteral(red: 0.06365625043, green: 0.4012272754, blue: 0.2353352288, alpha: 0.5))
+    private let yellowRatingColor = Color(#colorLiteral(red: 1, green: 0.8392156863, blue: 0.03921568627, alpha: 1))
+    private let yellowTrackColor = Color(#colorLiteral(red: 0.4769007564, green: 0.3958523571, blue: 0.01167693827, alpha: 0.5))
+    private let redRatingColor = Color(#colorLiteral(red: 0.8588235294, green: 0.137254902, blue: 0.3764705882, alpha: 1))
+    private let redTrackColor = Color(#colorLiteral(red: 0.4028055548, green: 0.06437531699, blue: 0.176572298, alpha: 0.5))
+    private let grayTrackColor = Color.systemGray3
     
     var lineWidth: CGFloat
     var progress: CGFloat? = nil

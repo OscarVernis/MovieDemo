@@ -21,6 +21,7 @@ struct MovieVideoView: View {
         VStack(alignment: .leading, spacing: 0) {
             YoutubeView(youtubeURL: $youtubeURL, previewImageURL: $remoteImageURL)
                 .aspectRatio(16/9, contentMode: .fit)
+            
             Text(title)
                 .font(.avenirNextMedium(size: 17))
                 .padding(.horizontal, horizontalPadding)
@@ -40,22 +41,20 @@ struct MovieVideoView: View {
             Divider()
                 .padding(.horizontal, horizontalPadding)
 
-            HStack(alignment: .center, spacing: 0) {
-                Button {
-                    if let youtubeURL {
-                        UIApplication.shared.open(youtubeURL)
-                    }
-                } label: {
-                    HStack(alignment: .center, spacing: 3) {
-                        Image("youtube")
-                            .font(.system(size: 18))
-                            .offset(CGSize(width: 0, height: -1))
-                        Text(MovieString.OpenOnYoutube.localized)
-                            .font(.avenirNextCondensedDemiBold(size: 17))
-                    }
-                    .tint(.primary)
+            Button {
+                if let youtubeURL {
+                    UIApplication.shared.open(youtubeURL)
+                }
+            } label: {
+                HStack(alignment: .center, spacing: 3) {
+                    Image("youtube")
+                        .font(.system(size: 18))
+                        .offset(CGSize(width: 0, height: -1))
+                    Text(MovieString.OpenOnYoutube.localized)
+                        .font(.avenirNextCondensedDemiBold(size: 17))
                 }
             }
+            .tint(.primary)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, 8)
             
@@ -81,6 +80,7 @@ struct MovieVideoView_Previews: PreviewProvider {
             MovieVideoView(movieVideo: MockData.movieVideos.first!)
                 .padding(20)
         }
+        .preferredColorScheme(.dark)
         .frame(maxHeight: .infinity)
         .background(Color.init(asset: .AppBackgroundColor))
     }

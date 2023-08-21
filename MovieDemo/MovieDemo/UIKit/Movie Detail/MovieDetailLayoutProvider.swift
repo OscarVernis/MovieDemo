@@ -50,10 +50,19 @@ struct MovieDetailLayoutProvider {
         return section
     }
     
+    private static func makeWhereToWatch() -> NSCollectionLayoutSection {
+        let section = sectionBuilder.createSection(groupHeight: .absolute(44))
+        
+        section.contentInsets.top = 16
+        section.contentInsets.bottom = 2
+                
+        return section
+    }
+    
     private static func makeCast() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalCreditSection()
 
-        section.contentInsets.top = 8
+        section.contentInsets.top = 6
         section.contentInsets.bottom = 0
 
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -65,7 +74,7 @@ struct MovieDetailLayoutProvider {
     private static func makeCrew() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createListSection(height: 50, columns: 2)
 
-        section.contentInsets.top = 5
+        section.contentInsets.top = 0
         section.contentInsets.bottom = 10
 
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -73,21 +82,11 @@ struct MovieDetailLayoutProvider {
         
         return section
     }
-    
-    private static func makeWhereToWatch() -> NSCollectionLayoutSection {
-        let section = sectionBuilder.createSection(groupHeight: .absolute(44))
-        
-        section.contentInsets.top = 16
-        section.contentInsets.bottom = 2
-                
-        return section
-    }
 
-    
     private static func makeRecommended() -> NSCollectionLayoutSection {
         let section = sectionBuilder.createHorizontalPosterSection()
         
-        section.contentInsets.top = 12
+        section.contentInsets.top = 6
         section.contentInsets.bottom = 10
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()
@@ -100,7 +99,7 @@ struct MovieDetailLayoutProvider {
         let section = sectionBuilder.createVideoBannerSection()
         
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets.top = 10
+        section.contentInsets.top = 6
         section.contentInsets.bottom = 0
         
         let sectionHeader = sectionBuilder.createTitleSectionHeader()

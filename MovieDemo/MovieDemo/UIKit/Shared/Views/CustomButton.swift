@@ -71,11 +71,11 @@ class CustomButton: UIButton {
         layer.borderWidth = showsBorder ? 1 : 0
         
         if isSelected {
-            backgroundColor = baseColor
-            setTitleColor(.white, for: .normal)
-            tintColor = .white
+            backgroundColor = baseColor.withAlphaComponent(0.2)
+            setTitleColor(baseColor, for: .normal)
+            tintColor = baseColor
         } else {
-            backgroundColor = baseColor.withAlphaComponent(0.1)
+            backgroundColor = .asset(.DefaultButtonColor).withAlphaComponent(0.2)
             setTitleColor(baseColor, for: .normal)
             tintColor = baseColor
         }

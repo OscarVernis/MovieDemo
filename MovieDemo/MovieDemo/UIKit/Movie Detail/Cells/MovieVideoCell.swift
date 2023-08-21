@@ -34,7 +34,10 @@ class MovieVideoCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.anchor(bottom: contentView.bottomAnchor,
                           leading: contentView.leadingAnchor, paddingLeading: 5,
-                          trailing: contentView.trailingAnchor)
+                          trailing: contentView.trailingAnchor,
+                          height: 22)
+        
+        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         
         youtubeView = UIYoutubeView()
         youtubeView.setupBorder()

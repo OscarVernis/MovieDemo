@@ -62,7 +62,7 @@ struct CompositionalLayoutBuilder {
     
     //MARK: - Headers
     static func createTitleSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        return createHeader(height: .absolute(48))
+        return createHeader(height: .absolute(40))
     }
     
     //The Header section for MovieDetailViewController
@@ -136,7 +136,7 @@ struct CompositionalLayoutBuilder {
     }
     
     static func createVideoBannerSection() ->  NSCollectionLayoutSection {
-        let section = createSection(itemWidth: .absolute(300), itemHeight: .absolute(190), groupWidth: .estimated(1), groupHeight: .estimated(1))
+        let section = createSection(groupWidth: .absolute(300), groupHeight: .estimated(200))
 
         section.orthogonalScrollingBehavior = .groupPaging
         section.interGroupSpacing = 20

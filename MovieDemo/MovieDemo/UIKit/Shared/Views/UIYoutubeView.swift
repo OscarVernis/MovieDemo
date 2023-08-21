@@ -57,7 +57,6 @@ class UIYoutubeView: UIView {
         var configuration = UIButton.Configuration.borderless()
         let button = UIButton(configuration: configuration)
         
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
         button.setImage(UIYoutubeView.playImage, for: .normal)
         button.tintColor = .white
         
