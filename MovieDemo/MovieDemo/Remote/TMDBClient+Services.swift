@@ -12,6 +12,10 @@ import Combine
 //MARK: - Movies
 extension TMDBClient {
     func getMovies(endpoint: MoviesEndpoint,  page: Int) -> AnyPublisher<[Movie], Error> {
+        if endpoint == .Upcoming {
+            return getUpcomingMovies(page: page)
+        }
+        
         let publisher: AnyPublisher<ServiceModelsResult<CodableMovie>, Error> = getModels(endpoint: .movies(endpoint), page: page)
         
         return publisher
@@ -19,6 +23,31 @@ extension TMDBClient {
             .eraseToAnyPublisher()
     }
     
+    func getUpcomingMovies(page: Int) -> AnyPublisher<[Movie], Error> {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.month = 3
+        let futureDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+        
+        let params = [
+            "include_adult": "false",
+            "include_video": "false",
+            "region": "US",
+            "release_date.gte": dateFormatter.string(from: currentDate),
+            "release_date.lte": dateFormatter.string(from: futureDate),
+            "sort_by": "popularity.desc",
+            "with_release_type": "3"
+        ]
+        
+        let publisher: AnyPublisher<ServiceModelsResult<CodableMovie>, Error> = getModels(endpoint: .movies(.Upcoming), parameters: params, page: page)
+        
+        return publisher
+            .map { $0.items.filter{ $0.releaseDate ?? .distantPast >= .now }.toMovies() }
+            .eraseToAnyPublisher()
+    }
 }
 
 //MARK: - Details

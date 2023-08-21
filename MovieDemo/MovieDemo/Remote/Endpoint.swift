@@ -72,6 +72,7 @@ enum MoviesEndpoint: Equatable {
     case UserFavorites
     case UserWatchList
     case UserRated
+    case Discover
     
     var path: String {
         switch self {
@@ -82,7 +83,7 @@ enum MoviesEndpoint: Equatable {
         case .TopRated:
             return "/movie/top_rated"
         case .Upcoming:
-            return "/movie/upcoming"
+            return "/discover/movie"
         case .Recommended(movieId: let movieId):
             return "/movie/\(movieId)/recommendations"
         case .UserFavorites:
@@ -91,6 +92,8 @@ enum MoviesEndpoint: Equatable {
             return "/account/id/watchlist/movies"
         case .UserRated:
             return "/account/id/rated/movies"
+        case .Discover:
+            return "/discover/movie"
         }
     }
     
