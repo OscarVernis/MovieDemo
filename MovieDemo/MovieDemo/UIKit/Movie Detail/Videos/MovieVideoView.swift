@@ -35,11 +35,8 @@ struct MovieVideoView: View {
             }
             .font(.avenirNextMedium(size: 15))
             .foregroundColor(.secondary)
-            .padding(.bottom, 6)
+            .padding(.bottom, 2)
             .padding(.horizontal, horizontalPadding)
-
-            Divider()
-                .padding(.horizontal, horizontalPadding)
 
             Button {
                 if let youtubeURL {
@@ -53,11 +50,14 @@ struct MovieVideoView: View {
                     Text(MovieString.OpenOnYoutube.localized)
                         .font(.avenirNextCondensedDemiBold(size: 17))
                 }
+                .frame(maxWidth: .infinity)
             }
-            .tint(.primary)
-            .padding(.horizontal, horizontalPadding)
+            .buttonStyle(.bordered)
+            .buttonBorderShape(.roundedRectangle(radius: 10))
+            .foregroundColor(.primary)
+            .tint(.systemGray3)
+            .padding(.horizontal, horizontalPadding - 4)
             .padding(.vertical, 8)
-            
         }
         .background(Color(asset: .SectionBackgroundColor))
         .cornerRadius(12)
