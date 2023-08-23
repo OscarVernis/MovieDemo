@@ -25,7 +25,7 @@ struct MovieVideoView: View {
             Text(title)
                 .font(.avenirNextMedium(size: 17))
                 .padding(.horizontal, horizontalPadding)
-                .padding(.top, 10)
+                .padding(.top, 6)
             HStack(spacing: 0) {
                 Text(type)
                 if let dateString = dateString {
@@ -33,9 +33,8 @@ struct MovieVideoView: View {
                     Text(dateString)
                 }
             }
-            .font(.avenirNextMedium(size: 15))
+            .font(.avenirNextMedium(size: 16))
             .foregroundColor(.secondary)
-            .padding(.bottom, 2)
             .padding(.horizontal, horizontalPadding)
 
             Button {
@@ -50,6 +49,7 @@ struct MovieVideoView: View {
                     Text(MovieString.OpenOnYoutube.localized)
                         .font(.avenirNextCondensedDemiBold(size: 17))
                 }
+                .padding(.top, 2)
                 .frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered)
