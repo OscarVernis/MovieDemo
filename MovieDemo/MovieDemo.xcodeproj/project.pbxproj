@@ -1092,10 +1092,10 @@
 		556246192515610F005E63AB /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				55702B852A95D92D00010523 /* Helpers */,
 				55EECCE425119A1A0041EAE7 /* MainCoordinator.swift */,
 				5511FF80285A6F9600B9C12A /* SwiftUICoordinator.swift */,
 				55CFB2692A5DFA4400A5D4E6 /* AppDependencyContainer.swift */,
-				55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1203,6 +1203,14 @@
 				55BB8640251FA1CB00F17D7F /* MovieRatingViewController.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		55702B852A95D92D00010523 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				55AE94372A8EC14000BFFD96 /* CustomHostingController.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		557FFA95251A6D5400D79F68 /* Login */ = {

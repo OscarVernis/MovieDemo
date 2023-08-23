@@ -12,7 +12,7 @@ import SafariServices
 import SwiftUI
 import Kingfisher
 
-class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
+class MainCoordinator {
     //If set to true, it will force you to login before showing Home
     private var isLoginRequired: Bool = false
     
@@ -61,12 +61,13 @@ class MainCoordinator: NSObject, UIViewControllerTransitioningDelegate {
     }
     
     func open(url: URL) {
-        let vc = SFSafariViewController(url: url)
-        vc.transitioningDelegate = self
-        
-        let presenting = rootNavigationViewController?.topViewController?.presentedViewController ?? rootNavigationViewController?.topViewController
-        
-        presenting?.present(vc, animated: true)
+        let config = SFSafariViewController.Configuration()
+        config.barCollapsingEnabled = false
+        let vc = SFSafariViewController(url: url, configuration: config)
+        vc.transitioningDelegate = nil
+        vc.modalPresentationStyle = .automatic
+
+        rootNavigationViewController?.present(vc, animated: true)
     }
     
     func deleteCache() {
