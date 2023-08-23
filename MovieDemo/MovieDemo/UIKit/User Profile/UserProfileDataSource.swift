@@ -132,8 +132,7 @@ class UserProfileDataSource {
         let sectionTitleView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleView.reuseIdentifier, for: indexPath) as! SectionTitleView
         
         SectionTitleView.configureForDetail(headerView: sectionTitleView,
-                                            title: title(for: section),
-                                            image: image(for: section))
+                                            title: title(for: section))
         
         return sectionTitleView
     }
